@@ -27,6 +27,27 @@ WHITE_SPACE_CHAR=[\ \n\t\f]
 ({WHITE_SPACE_CHAR})+ { return FortranTokens.WHITE_SPACE; }
 {LINE_COMMENT} { return FortranTokens.LINE_COMMENT; }
 
+":" { return FortranTokens.COLON; }
+"+" { return FortranTokens.PLUS; }
+"-" { return FortranTokens.MINUS; }
+"*" { return FortranTokens.MUL; }
+"/" { return FortranTokens.DIV; }
+"(" { return FortranTokens.LPAR; }
+")" { return FortranTokens.RPAR; }
+"[" { return FortranTokens.LBRACKET; }
+"]" { return FortranTokens.RBRACKET; }
+"," { return FortranTokens.COMMA; }
+"." { return FortranTokens.DOT; }
+"$" { return FortranTokens.DOLLAR; }
+"'" { return FortranTokens.QUOTE; }
+"\"" { return FortranTokens.DOUBLEQUOTE; }
+"%" { return FortranTokens.PERC; }
+"&" { return FortranTokens.AMP; }
+";" { return FortranTokens.SEMICOLON; }
+"<" { return FortranTokens.LT; }
+">" { return FortranTokens.GT; }
+"?" { return FortranTokens.QUEST; }
+
 "allocatable" { return FortranTokens.ALLOCATABLE_KEYWORD; }
 "allocate" { return FortranTokens.ALLOCATE_KEYWORD; }
 "assign" { return FortranTokens.ASSIGN_KEYWORD; }
@@ -106,5 +127,7 @@ WHITE_SPACE_CHAR=[\ \n\t\f]
 "rewind" { return FortranTokens.REWIND_KEYWORD; }
 "write" { return FortranTokens.WRITE_KEYWORD; }
 "end" { return FortranTokens.END_KEYWORD; }
+
+{IDENTIFIER} { return FortranTokens.IDENTIFIER; }
 
 <YYINITIAL> . { return TokenType.BAD_CHARACTER; }

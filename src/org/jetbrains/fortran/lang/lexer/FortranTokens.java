@@ -8,6 +8,29 @@ public interface FortranTokens {
     IElementType WHITE_SPACE = TokenType.WHITE_SPACE;
     FortranToken LINE_COMMENT = new FortranToken("LINE_COMMENT");
 
+    FortranToken IDENTIFIER = new FortranToken("IDENTIFIER");
+
+    FortranSingleValueToken COLON = new FortranSingleValueToken("COLON", ":");
+    FortranSingleValueToken PLUS = new FortranSingleValueToken("PLUS", "+");
+    FortranSingleValueToken MINUS = new FortranSingleValueToken("MINUS", "-");
+    FortranSingleValueToken MUL = new FortranSingleValueToken("MUL", "*");
+    FortranSingleValueToken DIV = new FortranSingleValueToken("DIV", "/");
+    FortranSingleValueToken LPAR = new FortranSingleValueToken("LPAR", "(");
+    FortranSingleValueToken RPAR = new FortranSingleValueToken("RPAR", ")");
+    FortranSingleValueToken LBRACKET = new FortranSingleValueToken("LBRACKET", "[");
+    FortranSingleValueToken RBRACKET = new FortranSingleValueToken("RBRACKET", "]");
+    FortranSingleValueToken COMMA = new FortranSingleValueToken("COMMA", ",");
+    FortranSingleValueToken DOT = new FortranSingleValueToken("DOT", ".");
+    FortranSingleValueToken SEMICOLON = new FortranSingleValueToken("SEMICOLON", ";");
+    FortranSingleValueToken LT = new FortranSingleValueToken("LT", "<");
+    FortranSingleValueToken GT = new FortranSingleValueToken("GT", ">");
+    FortranSingleValueToken QUEST = new FortranSingleValueToken("QUEST", "?");
+    FortranSingleValueToken AMP = new FortranSingleValueToken("AMP", "&");
+    FortranSingleValueToken PERC = new FortranSingleValueToken("PERC", "%");
+    FortranSingleValueToken QUOTE = new FortranSingleValueToken("QUOTE", "'");
+    FortranSingleValueToken DOUBLEQUOTE = new FortranSingleValueToken("DOUBLEQUOTE", "\"");
+    FortranSingleValueToken DOLLAR = new FortranSingleValueToken("DOLLAR", "$");
+
     FortranToken ALLOCATABLE_KEYWORD = FortranKeywordToken.keyword("allocatable");
     FortranToken ALLOCATE_KEYWORD = FortranKeywordToken.keyword("allocate");
     FortranToken ASSIGN_KEYWORD = FortranKeywordToken.keyword("assign");
