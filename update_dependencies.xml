@@ -1,0 +1,12 @@
+<project name="Update Dependencies" default="update">
+    <target name="fetch-third-party">
+        <mkdir dir="dependencies"/>
+        <mkdir dir="dependencies/jflex"/>
+        <get src="https://github.com/JetBrains/intellij-community/raw/master/tools/lexer/jflex-1.7.0-SNAPSHOT.jar"
+             dest="dependencies/jflex/JFlex.jar" usetimestamp="true"/>
+        <get src="https://raw.github.com/JetBrains/intellij-community/master/tools/lexer/idea-flex.skeleton"
+             dest="dependencies/jflex/idea-flex.skeleton" usetimestamp="true"/>
+    </target>
+
+    <target name="update" depends="fetch-third-party"/>
+</project>
