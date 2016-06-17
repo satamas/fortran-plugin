@@ -10,22 +10,45 @@ import java.util.Stack;
 %class _FortranLexer
 %implements FlexLexer
 %unicode
-%ignorecase
+%caseless
 %function advance
 %type IElementType
 %eof{  return;
 %eof}
 
+%xstate STRING DQ_STRING
+
 IDENTIFIER_PART=[:digit:]|[:letter:]|_
-IDENTIFIER=[:letter]{IDENTIFIER_PART}*
+IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
 
 LINE_COMMENT="!"[^\n]*
 WHITE_SPACE_CHAR=[\ \n\t\f]
+
+INTEGER_LITERAL=0|([1-9]([:digit:])*)
+
+EXPONENT_PART=[e]["+""-"]?([:digit:])*
+FLOATING_POINT_LITERAL=([:digit:])+"."([:digit:])+({EXPONENT_PART})?
+
+REGULAR_STRING_PART=[^\\\'\n]+
+REGULAR_DQ_STRING_PART=[^\\\"\n]+
 
 %%
 
 ({WHITE_SPACE_CHAR})+ { return FortranTokens.WHITE_SPACE; }
 {LINE_COMMENT} { return FortranTokens.LINE_COMMENT; }
+{INTEGER_LITERAL} { return FortranTokens.INTEGER_LITERAL; }
+
+<STRING> \' { yybegin(YYINITIAL); return FortranTokens.CLOSING_QUOTE; }
+<DQ_STRING> \" { yybegin(YYINITIAL); return FortranTokens.CLOSING_QUOTE; }
+<STRING, DQ_STRING> \n { yybegin(YYINITIAL); return FortranTokens.DANGLING_NEWLINE; }
+<STRING> {REGULAR_STRING_PART} { return FortranTokens.REGULAR_STRING_PART; }
+<DQ_STRING> {REGULAR_DQ_STRING_PART} { return FortranTokens.REGULAR_STRING_PART; }
+
+\' { yybegin(STRING); return FortranTokens.OPENING_QUOTE; }
+\" { yybegin(DQ_STRING); return FortranTokens.OPENING_QUOTE; }
+
+{INTEGER_LITERAL} { return FortranTokens.INTEGER_LITERAL; }
+{FLOATING_POINT_LITERAL} { return FortranTokens.FLOATING_POINT_LITERAL; }
 
 ":" { return FortranTokens.COLON; }
 "+" { return FortranTokens.PLUS; }
@@ -39,14 +62,15 @@ WHITE_SPACE_CHAR=[\ \n\t\f]
 "," { return FortranTokens.COMMA; }
 "." { return FortranTokens.DOT; }
 "$" { return FortranTokens.DOLLAR; }
-"'" { return FortranTokens.QUOTE; }
-"\"" { return FortranTokens.DOUBLEQUOTE; }
 "%" { return FortranTokens.PERC; }
 "&" { return FortranTokens.AMP; }
 ";" { return FortranTokens.SEMICOLON; }
 "<" { return FortranTokens.LT; }
 ">" { return FortranTokens.GT; }
 "?" { return FortranTokens.QUEST; }
+
+".true." { return FortranTokens.TRUE_KEYWORD; }
+".false." { return FortranTokens.FALSE_KEYWORD; }
 
 "allocatable" { return FortranTokens.ALLOCATABLE_KEYWORD; }
 "allocate" { return FortranTokens.ALLOCATE_KEYWORD; }
@@ -130,4 +154,4 @@ WHITE_SPACE_CHAR=[\ \n\t\f]
 
 {IDENTIFIER} { return FortranTokens.IDENTIFIER; }
 
-<YYINITIAL> . { return TokenType.BAD_CHARACTER; }
+<YYINITIAL, STRING, DQ_STRING> . { return TokenType.BAD_CHARACTER; }

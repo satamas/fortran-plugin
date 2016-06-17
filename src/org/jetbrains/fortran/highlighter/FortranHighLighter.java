@@ -4,6 +4,7 @@ import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.fortran.lang.lexer.FortranLexer;
@@ -34,6 +35,15 @@ public class FortranHighLighter extends SyntaxHighlighterBase {
         keys2 = new HashMap<>();
 
         fillMap(keys1, FortranTokens.KEYWORDS, FortranHighlightingColors.KEYWORD);
+
+        keys1.put(FortranTokens.INTEGER_LITERAL, FortranHighlightingColors.NUMBER);
+        keys1.put(FortranTokens.FLOATING_POINT_LITERAL, FortranHighlightingColors.NUMBER);
+
         keys1.put(FortranTokens.LINE_COMMENT, FortranHighlightingColors.LINE_COMMENT);
+        keys1.put(FortranTokens.REGULAR_STRING_PART, FortranHighlightingColors.STRING);
+        keys1.put(FortranTokens.OPENING_QUOTE, FortranHighlightingColors.STRING);
+        keys1.put(FortranTokens.CLOSING_QUOTE, FortranHighlightingColors.STRING);
+
+        keys1.put(TokenType.BAD_CHARACTER, FortranHighlightingColors.BAD_CHARACTER);
     }
 }

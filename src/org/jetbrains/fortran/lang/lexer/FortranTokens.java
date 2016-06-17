@@ -8,7 +8,10 @@ public interface FortranTokens {
     IElementType WHITE_SPACE = TokenType.WHITE_SPACE;
     FortranToken LINE_COMMENT = new FortranToken("LINE_COMMENT");
 
+    FortranToken INTEGER_LITERAL    = new FortranToken("INTEGER_LITERAL");
+    FortranToken FLOATING_POINT_LITERAL    = new FortranToken("INTEGER_LITERAL");
     FortranToken IDENTIFIER = new FortranToken("IDENTIFIER");
+    FortranToken DANGLING_NEWLINE = new FortranToken("DANGLING_NEWLINE");
 
     FortranSingleValueToken COLON = new FortranSingleValueToken("COLON", ":");
     FortranSingleValueToken PLUS = new FortranSingleValueToken("PLUS", "+");
@@ -27,9 +30,14 @@ public interface FortranTokens {
     FortranSingleValueToken QUEST = new FortranSingleValueToken("QUEST", "?");
     FortranSingleValueToken AMP = new FortranSingleValueToken("AMP", "&");
     FortranSingleValueToken PERC = new FortranSingleValueToken("PERC", "%");
-    FortranSingleValueToken QUOTE = new FortranSingleValueToken("QUOTE", "'");
-    FortranSingleValueToken DOUBLEQUOTE = new FortranSingleValueToken("DOUBLEQUOTE", "\"");
     FortranSingleValueToken DOLLAR = new FortranSingleValueToken("DOLLAR", "$");
+
+    FortranToken OPENING_QUOTE = new FortranToken("OPENING_QUOTE");
+    FortranToken CLOSING_QUOTE = new FortranToken("CLOSING_QUOTE");
+    FortranToken REGULAR_STRING_PART = new FortranToken("REGULAR_STRING_PART");
+
+    FortranToken TRUE_KEYWORD = FortranKeywordToken.keyword(".true.");
+    FortranToken FALSE_KEYWORD = FortranKeywordToken.keyword(".false.");
 
     FortranToken ALLOCATABLE_KEYWORD = FortranKeywordToken.keyword("allocatable");
     FortranToken ALLOCATE_KEYWORD = FortranKeywordToken.keyword("allocate");
@@ -110,6 +118,7 @@ public interface FortranTokens {
     FortranToken END_KEYWORD = FortranKeywordToken.keyword("end");
 
     TokenSet KEYWORDS = TokenSet.create(
+            TRUE_KEYWORD, FALSE_KEYWORD,
             ALLOCATABLE_KEYWORD, ALLOCATE_KEYWORD, ASSIGN_KEYWORD, ASSIGNMENT_KEYWORD, BLOCK_KEYWORD,
             CALL_KEYWORD, CASE_KEYWORD, CHARACTER_KEYWORD, COMMON_KEYWORD, COMPLEX_KEYWORD, CONTAINS_KEYWORD,
             CONTINUE_KEYWORD, CYCLE_KEYWORD, DATA_KEYWORD, DEALLOCATE_KEYWORD, DEFAULT_KEYWORD, DO_KEYWORD,
