@@ -25,7 +25,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="org.jetbrains.fortran.FortranFileTypeFactory"/>
-        <!--<lang.parserDefinition language="Form" implementationClass="com.form.lang.parser.FormParserDefinition"/>-->
+        <lang.parserDefinition language="Fortran" implementationClass="org.jetbrains.fortran.lang.parser.FortranParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran"
                                        implementationClass="org.jetbrains.fortran.highlighter.FortranSyntaxHighlighterFactory"/>
         <!--<colorSettingsPage implementation="com.form.plugin.highlighter.FormColorSettingsPage"/>-->
