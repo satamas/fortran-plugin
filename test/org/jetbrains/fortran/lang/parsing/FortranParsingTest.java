@@ -1,0 +1,13 @@
+package org.jetbrains.fortran.lang.parsing;
+
+import org.jetbrains.fortran.test.FortranTestDataFixture;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+@SuppressWarnings("all")
+public class FortranParsingTest extends FortranBaseParsingTestCase {
+
+    public void testPrintWrite() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("PrintWrite.f"));
+    }
+}

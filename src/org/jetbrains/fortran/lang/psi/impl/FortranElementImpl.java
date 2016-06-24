@@ -27,7 +27,7 @@ public class FortranElementImpl extends ASTWrapperPsiElement implements FortranE
         visitor.visitFormElement(this);
     }
 
-    public String toString() {
-        return "";
-    }
+//    public String toString() {
+//        return "";
+//    }
 }
