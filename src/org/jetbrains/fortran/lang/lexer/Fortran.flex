@@ -50,10 +50,13 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 {INTEGER_LITERAL} { return FortranTokens.INTEGER_LITERAL; }
 {FLOATING_POINT_LITERAL} { return FortranTokens.FLOATING_POINT_LITERAL; }
 
+"=" { return FortranTokens.EQ; }
+"==" { return FortranTokens.EQEQ; }
 ":" { return FortranTokens.COLON; }
 "+" { return FortranTokens.PLUS; }
 "-" { return FortranTokens.MINUS; }
 "*" { return FortranTokens.MUL; }
+"**" { return FortranTokens.POWER; }
 "/" { return FortranTokens.DIV; }
 "(" { return FortranTokens.LPAR; }
 ")" { return FortranTokens.RPAR; }

@@ -3,12 +3,12 @@ package org.jetbrains.fortran.lang.parser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
 
-import static org.jetbrains.fortran.lang.FortranNodeTypes.FORTRAN_FILE;
-import static org.jetbrains.fortran.lang.FortranNodeTypes.PRINT_STATEMENT;
-import static org.jetbrains.fortran.lang.FortranNodeTypes.PROGRAM;
+import static org.jetbrains.fortran.lang.FortranNodeTypes.*;
 import static org.jetbrains.fortran.lang.lexer.FortranTokens.*;
 
 public class FortranParsing extends AbstractFortranParsing {
+    private final FortranExpressionParsing expressionParsing = new FortranExpressionParsing(builder);
+
     public FortranParsing(PsiBuilder builder) {
         super(builder);
     }
@@ -31,7 +31,11 @@ public class FortranParsing extends AbstractFortranParsing {
         advance();
         expect(IDENTIFIER, "Program name expected");
         while (!eof() && !at(END_KEYWORD)) {
-            parsePrintStatement();
+            if(at(PRINT_KEYWORD)) {
+                parsePrintStatement();
+            } else {
+                errorAndAdvance("Statement expected");
+            }
         }
         expect(END_KEYWORD, "End of program expected");
         expect(PROGRAM_KEYWORD, "End of program expected");
@@ -44,17 +48,19 @@ public class FortranParsing extends AbstractFortranParsing {
         PsiBuilder.Marker printStatementElement = mark();
         advance();
         expect(MUL, "");
-        expect(COMMA, "");
-        parseString();
-        printStatementElement.done(PRINT_STATEMENT);
-    }
 
-    private void parseString() {
-        expect(OPENING_QUOTE, "");
-        while (!eof() && at(REGULAR_STRING_PART)){
+        if(at(COMMA)) {
             advance();
+            PsiBuilder.Marker valueArgumentsList = mark();
+            expressionParsing.parseExpression();
+            while (!eof() && at(COMMA)) {
+                advance();
+                expressionParsing.parseExpression();
+            }
+            valueArgumentsList.done(VALUE_ARGUMENT_LIST);
         }
-        expect(CLOSING_QUOTE, "");
+
+        printStatementElement.done(PRINT_STATEMENT);
     }
 
 }

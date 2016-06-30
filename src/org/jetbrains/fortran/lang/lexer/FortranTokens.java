@@ -13,10 +13,13 @@ public interface FortranTokens {
     FortranToken IDENTIFIER = new FortranToken("IDENTIFIER");
     FortranToken DANGLING_NEWLINE = new FortranToken("DANGLING_NEWLINE");
 
+    FortranSingleValueToken EQ = new FortranSingleValueToken("EQ", "=");
+    FortranSingleValueToken EQEQ = new FortranSingleValueToken("EQEQ", "==");
     FortranSingleValueToken COLON = new FortranSingleValueToken("COLON", ":");
     FortranSingleValueToken PLUS = new FortranSingleValueToken("PLUS", "+");
     FortranSingleValueToken MINUS = new FortranSingleValueToken("MINUS", "-");
     FortranSingleValueToken MUL = new FortranSingleValueToken("MUL", "*");
+    FortranSingleValueToken POWER = new FortranSingleValueToken("MUL", "**");
     FortranSingleValueToken DIV = new FortranSingleValueToken("DIV", "/");
     FortranSingleValueToken LPAR = new FortranSingleValueToken("LPAR", "(");
     FortranSingleValueToken RPAR = new FortranSingleValueToken("RPAR", ")");
