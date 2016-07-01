@@ -10,4 +10,8 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
     public void testPrintWrite() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("PrintWrite.f"));
     }
+
+    public void testImplicit() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("Implicit.f"));
+    }
 }

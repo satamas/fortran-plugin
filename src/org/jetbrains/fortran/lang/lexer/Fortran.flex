@@ -117,6 +117,7 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 "logical" { return FortranTokens.LOGICAL_KEYWORD; }
 "module" { return FortranTokens.MODULE_KEYWORD; }
 "namelist" { return FortranTokens.NAMELIST_KEYWORD; }
+"none" { return FortranTokens.NONE_KEYWORD; }
 "nullify" { return FortranTokens.NULLIFY_KEYWORD; }
 "only" { return FortranTokens.ONLY_KEYWORD; }
 "operator" { return FortranTokens.OPERATOR_KEYWORD; }

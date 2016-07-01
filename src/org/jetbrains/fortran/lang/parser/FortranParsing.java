@@ -31,7 +31,9 @@ public class FortranParsing extends AbstractFortranParsing {
         advance();
         expect(IDENTIFIER, "Program name expected");
         while (!eof() && !at(END_KEYWORD)) {
-            if(at(PRINT_KEYWORD)) {
+            if (at(IMPLICIT_KEYWORD)) {
+                parseImplicitStatement();
+            } else if (at(PRINT_KEYWORD)) {
                 parsePrintStatement();
             } else {
                 errorAndAdvance("Statement expected");
@@ -43,13 +45,21 @@ public class FortranParsing extends AbstractFortranParsing {
         programElement.done(PROGRAM);
     }
 
+    private void parseImplicitStatement() {
+        assert at(IMPLICIT_KEYWORD);
+        PsiBuilder.Marker printStatementElement = mark();
+        advance();
+        expect(NONE_KEYWORD, "");
+        printStatementElement.done(IMPLICIT_STATEMENT);
+    }
+
     private void parsePrintStatement() {
         assert (at(PRINT_KEYWORD));
         PsiBuilder.Marker printStatementElement = mark();
         advance();
         expect(MUL, "");
 
-        if(at(COMMA)) {
+        if (at(COMMA)) {
             advance();
             PsiBuilder.Marker valueArgumentsList = mark();
             expressionParsing.parseExpression();

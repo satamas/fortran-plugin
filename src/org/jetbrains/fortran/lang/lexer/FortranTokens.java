@@ -8,8 +8,8 @@ public interface FortranTokens {
     IElementType WHITE_SPACE = TokenType.WHITE_SPACE;
     FortranToken LINE_COMMENT = new FortranToken("LINE_COMMENT");
 
-    FortranToken INTEGER_LITERAL    = new FortranToken("INTEGER_LITERAL");
-    FortranToken FLOATING_POINT_LITERAL    = new FortranToken("INTEGER_LITERAL");
+    FortranToken INTEGER_LITERAL = new FortranToken("INTEGER_LITERAL");
+    FortranToken FLOATING_POINT_LITERAL = new FortranToken("INTEGER_LITERAL");
     FortranToken IDENTIFIER = new FortranToken("IDENTIFIER");
     FortranToken DANGLING_NEWLINE = new FortranToken("DANGLING_NEWLINE");
 
@@ -82,6 +82,7 @@ public interface FortranTokens {
     FortranToken LOGICAL_KEYWORD = FortranKeywordToken.keyword("logical");
     FortranToken MODULE_KEYWORD = FortranKeywordToken.keyword("module");
     FortranToken NAMELIST_KEYWORD = FortranKeywordToken.keyword("namelist");
+    FortranToken NONE_KEYWORD = FortranKeywordToken.softKeyword("none");
     FortranToken NULLIFY_KEYWORD = FortranKeywordToken.keyword("nullify");
     FortranToken ONLY_KEYWORD = FortranKeywordToken.keyword("only");
     FortranToken OPERATOR_KEYWORD = FortranKeywordToken.keyword("operator");
@@ -135,6 +136,8 @@ public interface FortranTokens {
             SUBROUTINE_KEYWORD, TARGET_KEYWORD, THEN_KEYWORD, TYPE_KEYWORD, USE_KEYWORD, WHERE_KEYWORD,
             WHILE_KEYWORD, BACKSPACE_KEYWORD, CLOSE_KEYWORD, ENDFILE_KEYWORD, FORMAT_KEYWORD, INQUIRE_KEYWORD,
             OPEN_KEYWORD, PRINT_KEYWORD, READ_KEYWORD, REWIND_KEYWORD, WRITE_KEYWORD, PROGRAM_KEYWORD, END_KEYWORD);
+
+    TokenSet SOFT_KEYWORDS = TokenSet.create(NONE_KEYWORD);
 
     TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE);
 
