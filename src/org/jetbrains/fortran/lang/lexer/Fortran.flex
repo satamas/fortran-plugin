@@ -53,6 +53,7 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 "=" { return FortranTokens.EQ; }
 "==" { return FortranTokens.EQEQ; }
 ":" { return FortranTokens.COLON; }
+"::" { return FortranTokens.COLONCOLON; }
 "+" { return FortranTokens.PLUS; }
 "-" { return FortranTokens.MINUS; }
 "*" { return FortranTokens.MUL; }

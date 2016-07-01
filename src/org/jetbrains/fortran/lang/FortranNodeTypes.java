@@ -14,6 +14,10 @@ public interface FortranNodeTypes {
     FortranNodeType INTEGER_CONSTANT = new FortranNodeType("INTEGER_CONSTANT", FortranElementImpl.class);
     FortranNodeType STRING_LITERAL = new FortranNodeType("STRING_LITERAL", FortranElementImpl.class);
 
+    FortranNodeType VARIABLE_DECLARATION = new FortranNodeType("VARIABLE_DECLARATION", FortranElementImpl.class);
+    FortranNodeType TYPE_REFERENCE = new FortranNodeType("TYPE_REFERENCE", FortranElementImpl.class);
+
+    FortranNodeType ASSIGNMENT_EXPRESSION = new FortranNodeType("ASSIGNMENT_EXPRESSION", FortranElementImpl.class);
     FortranNodeType BINARY_EXPRESSION = new FortranNodeType("BINARY_EXPRESSION", FortranBinaryExpression.class);
     FortranNodeType REFERENCE_EXPRESSION = new FortranNodeType("REFERENCE_EXPRESSION", FortranReferenceExpression.class);
     FortranNodeType OPERATION_REFERENCE = new FortranNodeType("OPERATION_REFERENCE", FortranOperationReference.class);

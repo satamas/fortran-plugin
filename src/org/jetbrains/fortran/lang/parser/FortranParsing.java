@@ -36,7 +36,7 @@ public class FortranParsing extends AbstractFortranParsing {
             } else if (at(PRINT_KEYWORD)) {
                 parsePrintStatement();
             } else {
-                errorAndAdvance("Statement expected");
+                expressionParsing.parseStatement();
             }
         }
         expect(END_KEYWORD, "End of program expected");
@@ -51,6 +51,10 @@ public class FortranParsing extends AbstractFortranParsing {
         advance();
         expect(NONE_KEYWORD, "");
         printStatementElement.done(IMPLICIT_STATEMENT);
+    }
+
+    private void parseVariableDeclarationStatement() {
+
     }
 
     private void parsePrintStatement() {

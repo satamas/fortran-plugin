@@ -16,6 +16,7 @@ public interface FortranTokens {
     FortranSingleValueToken EQ = new FortranSingleValueToken("EQ", "=");
     FortranSingleValueToken EQEQ = new FortranSingleValueToken("EQEQ", "==");
     FortranSingleValueToken COLON = new FortranSingleValueToken("COLON", ":");
+    FortranSingleValueToken COLONCOLON = new FortranSingleValueToken("COLONCOLON", "::");
     FortranSingleValueToken PLUS = new FortranSingleValueToken("PLUS", "+");
     FortranSingleValueToken MINUS = new FortranSingleValueToken("MINUS", "-");
     FortranSingleValueToken MUL = new FortranSingleValueToken("MUL", "*");

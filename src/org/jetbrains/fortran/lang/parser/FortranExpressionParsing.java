@@ -10,6 +10,9 @@ import static org.jetbrains.fortran.lang.FortranNodeTypes.*;
 import static org.jetbrains.fortran.lang.lexer.FortranTokens.*;
 
 public class FortranExpressionParsing extends AbstractFortranParsing {
+    TokenSet TYPE_FIRST = TokenSet.create(
+            REAL_KEYWORD, INTEGER_KEYWORD, TYPE_KEYWORD, LOGICAL_KEYWORD, COMPLEX_KEYWORD);
+
     static final TokenSet EXPRESSION_FIRST = TokenSet.create(
             LPAR,
             OPENING_QUOTE,
@@ -27,8 +30,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         },
         MULTIPLICATIVE(MUL, DIV),
         ADDITIVE(PLUS, MINUS),
-        EQUALITY(EQEQ),
-        ASSIGNMENT(EQ);
+        EQUALITY(EQEQ);
 
         static {
             Precedence[] values = Precedence.values();
@@ -70,12 +72,61 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         super(builder);
     }
 
+
+    public void parseStatement() {
+        if (atSet(TYPE_FIRST)) {
+            parseTypeStatement();
+        } else if (at(IDENTIFIER)) {
+            parseAssignment();
+        } else {
+            errorAndAdvance("Expecting a statement");
+        }
+    }
+
+    public void parseTypeStatement() {
+        assert atSet(TYPE_FIRST);
+        PsiBuilder.Marker variableDeclaration = builder.mark();
+        PsiBuilder.Marker typeReference = builder.mark();
+        advance();
+        typeReference.done(TYPE_REFERENCE);
+
+        if (!at(COLONCOLON)) {
+            variableDeclaration.drop();
+            error(":: expected");
+            return;
+        }
+
+        advance();
+        expect(IDENTIFIER, "Identifier expected");
+
+        if (!at(EQ)) {
+            variableDeclaration.done(VARIABLE_DECLARATION);
+            return;
+        }
+        advance();
+        parseExpression();
+        variableDeclaration.done(VARIABLE_DECLARATION);
+    }
+
+    public void parseAssignment() {
+        assert at(IDENTIFIER);
+        PsiBuilder.Marker assignment = builder.mark();
+        if (!at(EQ)) {
+            error("= expected");
+            assignment.drop();
+            return;
+        }
+        advance();
+        parseExpression();
+        assignment.done(ASSIGNMENT_EXPRESSION);
+    }
+
     public void parseExpression() {
         if (!atSet(EXPRESSION_FIRST)) {
             error("Expecting an expression");
             return;
         }
-        parseBinaryExpression(Precedence.ASSIGNMENT);
+        parseBinaryExpression(Precedence.EQUALITY);
     }
 
     private void parsePostfixExpression() {
@@ -156,7 +207,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         PsiBuilder.Marker stringLiteral = mark();
         assert at(OPENING_QUOTE);
         advance();
-        while (!eof() && at(REGULAR_STRING_PART)){
+        while (!eof() && at(REGULAR_STRING_PART)) {
             advance();
         }
         expect(CLOSING_QUOTE, "\" expected");
