@@ -10,11 +10,18 @@ public interface FortranNodeTypes {
 
     FortranNodeType PROGRAM = new FortranNodeType("PROGRAM", FortranProgram.class);
     FortranNodeType PRINT_STATEMENT = new FortranNodeType("PRINT", FortranPrintStatement.class);
+
     FortranNodeType IMPLICIT_STATEMENT = new FortranNodeType("IMPLICIT_STATEMENT", FortranElementImpl.class);
     FortranNodeType IMPLICIT_SPECIFICATION = new FortranNodeType("IMPLICIT_SPECIFICATION", FortranElementImpl.class);
     FortranNodeType LETTER_RANGE_LIST = new FortranNodeType("LETTER_RANGE_LIST", FortranElementImpl.class);
     FortranNodeType LETTER_RANGE = new FortranNodeType("LETTER_RANGE", FortranElementImpl.class);
+
+    FortranNodeType PARAMETER_STATEMENT = new FortranNodeType("PARAMETER_STATEMENT", FortranElementImpl.class);
+    FortranNodeType PARAMETER = new FortranNodeType("PARAMETER", FortranElementImpl.class);
+
     FortranNodeType INTEGER_CONSTANT = new FortranNodeType("INTEGER_CONSTANT", FortranElementImpl.class);
+    FortranNodeType BOOLEAN_CONSTANT = new FortranNodeType("BOOLEAN_CONSTANT", FortranElementImpl.class);
+    FortranNodeType FLOATING_POINT_CONSTANT = new FortranNodeType("FLOATING_POINT_CONSTANT", FortranElementImpl.class);
     FortranNodeType STRING_LITERAL = new FortranNodeType("STRING_LITERAL", FortranElementImpl.class);
 
     FortranNodeType VARIABLE_DECLARATION = new FortranNodeType("VARIABLE_DECLARATION", FortranElementImpl.class);

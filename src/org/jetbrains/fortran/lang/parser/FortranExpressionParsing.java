@@ -17,6 +17,9 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
             LPAR,
             OPENING_QUOTE,
             INTEGER_LITERAL,
+            FLOATING_POINT_LITERAL,
+            TRUE_KEYWORD,
+            FALSE_KEYWORD,
             IDENTIFIER
     );
 
@@ -245,6 +248,10 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
     private boolean parseLiteralConstant() {
         if (at(INTEGER_LITERAL)) {
             parseOneTokenExpression(INTEGER_CONSTANT);
+        } else if (atSet(TRUE_KEYWORD, FALSE_KEYWORD)) {
+            parseOneTokenExpression(BOOLEAN_CONSTANT);
+        } else if (at(FLOATING_POINT_LITERAL)) {
+            parseOneTokenExpression(FLOATING_POINT_CONSTANT);
         } else {
             return false;
         }

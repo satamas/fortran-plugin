@@ -37,6 +37,8 @@ public class FortranParsing extends AbstractFortranParsing {
 
             if (at(IMPLICIT_KEYWORD)) {
                 statementType = parseImplicitStatement();
+            } else if (at(PARAMETER_KEYWORD)) {
+                statementType = parseParameterStatement();
             } else if (at(PRINT_KEYWORD)) {
                 statementType = parsePrintStatement();
             } else {
@@ -64,10 +66,30 @@ public class FortranParsing extends AbstractFortranParsing {
         return IMPLICIT_STATEMENT;
     }
 
-//    private void parameterStatement() {
-//        assert at(PARAMETER_KEYWORD);
-//
-//    }
+    private IElementType parseParameterStatement() {
+        assert at(PARAMETER_KEYWORD);
+        advance();
+        expect(LPAR, "Parameters list expected");
+        parseParametersList();
+        expect(RPAR, ") expected");
+        return PARAMETER_STATEMENT;
+    }
+
+    private void parseParametersList() {
+        parseParameter();
+        while (!eof() && at(COMMA)){
+            advance();
+            parseParameter();
+        }
+    }
+
+    private void parseParameter(){
+        PsiBuilder.Marker parameter = mark();
+        expect(IDENTIFIER, "Parameter name expected");
+        expect(EQ, "= expected");
+        expressionParsing.parseExpression();
+        parameter.done(PARAMETER);
+    }
 
     private void parseImplicitSpecificationList() {
         if (at(NONE_KEYWORD)) {
