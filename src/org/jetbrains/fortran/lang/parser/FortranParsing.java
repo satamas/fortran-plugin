@@ -31,12 +31,24 @@ public class FortranParsing extends AbstractFortranParsing {
         advance();
         expect(IDENTIFIER, "Program name expected");
         while (!eof() && !at(END_KEYWORD)) {
+            PsiBuilder.Marker marker = mark();
+            IElementType statementType;
+            parseLabelDefinition();
+
             if (at(IMPLICIT_KEYWORD)) {
-                parseImplicitStatement();
+                statementType = parseImplicitStatement();
             } else if (at(PRINT_KEYWORD)) {
-                parsePrintStatement();
+                statementType = parsePrintStatement();
             } else {
-                expressionParsing.parseStatement();
+                statementType = expressionParsing.parseStatement();
+            }
+
+            parseEndOfStatement();
+
+            if (statementType != null) {
+                marker.done(statementType);
+            } else {
+                marker.drop();
             }
         }
         expect(END_KEYWORD, "End of program expected");
@@ -45,65 +57,67 @@ public class FortranParsing extends AbstractFortranParsing {
         programElement.done(PROGRAM);
     }
 
-    private void parseImplicitStatement() {
+    private IElementType parseImplicitStatement() {
         assert at(IMPLICIT_KEYWORD);
-        labelDefinition();
-        PsiBuilder.Marker printStatementElement = mark();
         advance();
-        implicitSpecificationList();
-        endOfStatement();
-        printStatementElement.done(IMPLICIT_STATEMENT);
+        parseImplicitSpecificationList();
+        return IMPLICIT_STATEMENT;
     }
 
-    private void implicitSpecificationList() {
-        if(at(NONE_KEYWORD)){
-            implicitSpecification();
+//    private void parameterStatement() {
+//        assert at(PARAMETER_KEYWORD);
+//
+//    }
+
+    private void parseImplicitSpecificationList() {
+        if (at(NONE_KEYWORD)) {
+            parseImplicitSpecification();
             return;
         }
 
-        implicitSpecification();
+        parseImplicitSpecification();
         while (!eof() && at(COMMA)) {
             advance();
-            implicitSpecification();
+            parseImplicitSpecification();
         }
     }
 
-    private void implicitSpecification() {
+    private void parseImplicitSpecification() {
         PsiBuilder.Marker implicitSpecification = mark();
         if (at(NONE_KEYWORD)) {
             advance();
-        } else if(atSet(FortranExpressionParsing.TYPE_FIRST)) {
-            typeSpecification();
-            letterRangeSpecificationsList();
+        } else if (atSet(FortranExpressionParsing.TYPE_FIRST)) {
+            parseTypeSpecification();
+            parseLetterRangeSpecificationsList();
         } else {
             error("Implicit specification expected");
         }
         implicitSpecification.done(IMPLICIT_SPECIFICATION);
     }
 
-    private void letterRangeSpecificationsList() {
+    private void parseLetterRangeSpecificationsList() {
         PsiBuilder.Marker letterSpecificationList = mark();
         expect(LPAR, "Letter specification expected");
-        letterRangeSpecification();
+        parseLetterRangeSpecification();
         while (!eof() && at(COMMA)) {
             advance();
-            letterRangeSpecification();
+            parseLetterRangeSpecification();
         }
         expect(RPAR, ") expected");
         letterSpecificationList.done(LETTER_RANGE_LIST);
     }
 
-    private void letterRangeSpecification() {
+    private void parseLetterRangeSpecification() {
         PsiBuilder.Marker letterRange = mark();
-        letterSpecification();
+        parseLetterSpecification();
         if (at(MINUS)) {
             advance();
-            letterSpecification();
+            parseLetterSpecification();
         }
         letterRange.done(LETTER_RANGE);
     }
 
-    private void letterSpecification() {
+    private void parseLetterSpecification() {
         if (at(IDENTIFIER)) {
             String letter = builder.getTokenText();
             if (letter == null || letter.length() != 1) {
@@ -116,7 +130,7 @@ public class FortranParsing extends AbstractFortranParsing {
         }
     }
 
-    private void typeSpecification() {
+    private void parseTypeSpecification() {
         if (!atSet(
                 INTEGER_KEYWORD,
                 REAL_KEYWORD,
@@ -139,7 +153,7 @@ public class FortranParsing extends AbstractFortranParsing {
         if (typeKeyword == CHARACTER_KEYWORD) {
             if (at(MUL)) {
                 advance();
-                characterLength();
+                parseCharacterLength();
             }
 //          TODO: return F90 style char length
 //            else {
@@ -149,19 +163,19 @@ public class FortranParsing extends AbstractFortranParsing {
         typeSpecification.done(TYPE_REFERENCE);
     }
 
-    private void characterLength() {
+    private void parseCharacterLength() {
         if (at(INTEGER_LITERAL)) {
             advance();
         } else if (at(LPAR)) {
             advance();
-            typeParamValue();
+            parseTypeParamValue();
             expect(RPAR, ") expected");
         } else {
             error("Character length expected");
         }
     }
 
-    private void typeParamValue() {
+    private void parseTypeParamValue() {
         if (at(MUL)) {
             advance();
         } else if (atSet(FortranExpressionParsing.EXPRESSION_FIRST)) {
@@ -182,7 +196,7 @@ public class FortranParsing extends AbstractFortranParsing {
             advance();
             if (at(EQ)) {
                 advance();
-                typeParamValue();
+                parseTypeParamValue();
             } else {
                 error("= expected");
             }
@@ -217,8 +231,8 @@ public class FortranParsing extends AbstractFortranParsing {
         }
     }
 
-    private void labelDefinition() {
-        if (!at(INTEGER_CONSTANT)) {
+    private void parseLabelDefinition() {
+        if (!at(INTEGER_LITERAL)) {
             return;
         }
         PsiBuilder.Marker labelDefinition = builder.mark();
@@ -226,7 +240,7 @@ public class FortranParsing extends AbstractFortranParsing {
         labelDefinition.done(LABEL_DEFINITION);
     }
 
-    private void endOfStatement() {
+    private void parseEndOfStatement() {
         while (!eof()) {
             if (at(SEMICOLON)) {
                 advance();
@@ -239,9 +253,8 @@ public class FortranParsing extends AbstractFortranParsing {
         }
     }
 
-    private void parsePrintStatement() {
+    private IElementType parsePrintStatement() {
         assert (at(PRINT_KEYWORD));
-        PsiBuilder.Marker printStatementElement = mark();
         advance();
         expect(MUL, "");
 
@@ -256,8 +269,8 @@ public class FortranParsing extends AbstractFortranParsing {
             valueArgumentsList.done(VALUE_ARGUMENT_LIST);
         }
 
-        endOfStatement();
-        printStatementElement.done(PRINT_STATEMENT);
+        parseEndOfStatement();
+        return PRINT_STATEMENT;
     }
 
 }

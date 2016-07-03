@@ -73,54 +73,50 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
     }
 
 
-    public void parseStatement() {
+    public IElementType parseStatement() {
         if (atSet(TYPE_FIRST)) {
-            parseTypeStatement();
+            return parseTypeStatement();
         } else if (at(IDENTIFIER)) {
-            parseAssignment();
+            return parseAssignment();
         } else {
             errorAndAdvance("Expecting a statement");
+            return null;
         }
     }
 
-    public void parseTypeStatement() {
+    public IElementType parseTypeStatement() {
         assert atSet(TYPE_FIRST);
-        PsiBuilder.Marker variableDeclaration = builder.mark();
         PsiBuilder.Marker typeReference = builder.mark();
         advance();
         typeReference.done(TYPE_REFERENCE);
 
         if (!at(COLONCOLON)) {
-            variableDeclaration.drop();
             error(":: expected");
-            return;
+            return null;
         }
 
         advance();
         expect(IDENTIFIER, "Identifier expected");
 
         if (!at(EQ)) {
-            variableDeclaration.done(VARIABLE_DECLARATION);
-            return;
+            return VARIABLE_DECLARATION;
         }
         advance();
         parseExpression();
-        variableDeclaration.done(VARIABLE_DECLARATION);
+        return VARIABLE_DECLARATION;
     }
 
-    public void parseAssignment() {
+    public IElementType parseAssignment() {
         assert at(IDENTIFIER);
-        PsiBuilder.Marker assignment = builder.mark();
         advance();
 
         if (!at(EQ)) {
             error("= expected");
-            assignment.drop();
-            return;
+            return null;
         }
         advance();
         parseExpression();
-        assignment.done(ASSIGNMENT_EXPRESSION);
+        return ASSIGNMENT_EXPRESSION;
     }
 
     public void parseExpression() {
