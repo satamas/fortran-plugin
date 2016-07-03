@@ -10,10 +10,10 @@ import static org.jetbrains.fortran.lang.FortranNodeTypes.*;
 import static org.jetbrains.fortran.lang.lexer.FortranTokens.*;
 
 public class FortranExpressionParsing extends AbstractFortranParsing {
-    TokenSet TYPE_FIRST = TokenSet.create(
-            REAL_KEYWORD, INTEGER_KEYWORD, TYPE_KEYWORD, LOGICAL_KEYWORD, COMPLEX_KEYWORD);
+    static final public TokenSet TYPE_FIRST = TokenSet.create(
+            REAL_KEYWORD, INTEGER_KEYWORD, TYPE_KEYWORD, LOGICAL_KEYWORD, CHARACTER_KEYWORD, COMPLEX_KEYWORD);
 
-    static final TokenSet EXPRESSION_FIRST = TokenSet.create(
+    static final public TokenSet EXPRESSION_FIRST = TokenSet.create(
             LPAR,
             OPENING_QUOTE,
             INTEGER_LITERAL,
@@ -68,7 +68,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         }
     }
 
-    public FortranExpressionParsing(PsiBuilder builder) {
+    public FortranExpressionParsing(WhitespaceAwarePsiBuilder builder) {
         super(builder);
     }
 
@@ -111,6 +111,8 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
     public void parseAssignment() {
         assert at(IDENTIFIER);
         PsiBuilder.Marker assignment = builder.mark();
+        advance();
+
         if (!at(EQ)) {
             error("= expected");
             assignment.drop();

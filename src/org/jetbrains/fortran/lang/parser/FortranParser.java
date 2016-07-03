@@ -11,7 +11,7 @@ public class FortranParser implements PsiParser{
     @NotNull
     @Override
     public ASTNode parse(@NotNull IElementType iElementType, @NotNull PsiBuilder psiBuilder) {
-        new FortranParsing(psiBuilder).parseFile(iElementType);
+        new FortranParsing(new WhitespaceAwarePsiBuilderImpl(psiBuilder)).parseFile(iElementType);
         return psiBuilder.getTreeBuilt();
     }
 }

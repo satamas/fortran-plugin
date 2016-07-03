@@ -14,10 +14,10 @@ import static org.jetbrains.fortran.lang.lexer.FortranTokens.IDENTIFIER;
 import static org.jetbrains.fortran.lang.lexer.FortranTokens.WHITE_SPACES;
 
 public class AbstractFortranParsing {
-    protected final PsiBuilder builder;
+    protected final WhitespaceAwarePsiBuilder builder;
     private static final Map<String, FortranKeywordToken> SOFT_KEYWORD_TEXTS = new HashMap<>();
 
-    public AbstractFortranParsing(PsiBuilder builder) {
+    public AbstractFortranParsing(WhitespaceAwarePsiBuilder builder) {
         this.builder = builder;
     }
 

@@ -11,6 +11,9 @@ public interface FortranNodeTypes {
     FortranNodeType PROGRAM = new FortranNodeType("PROGRAM", FortranProgram.class);
     FortranNodeType PRINT_STATEMENT = new FortranNodeType("PRINT", FortranPrintStatement.class);
     FortranNodeType IMPLICIT_STATEMENT = new FortranNodeType("IMPLICIT_STATEMENT", FortranElementImpl.class);
+    FortranNodeType IMPLICIT_SPECIFICATION = new FortranNodeType("IMPLICIT_SPECIFICATION", FortranElementImpl.class);
+    FortranNodeType LETTER_RANGE_LIST = new FortranNodeType("LETTER_RANGE_LIST", FortranElementImpl.class);
+    FortranNodeType LETTER_RANGE = new FortranNodeType("LETTER_RANGE", FortranElementImpl.class);
     FortranNodeType INTEGER_CONSTANT = new FortranNodeType("INTEGER_CONSTANT", FortranElementImpl.class);
     FortranNodeType STRING_LITERAL = new FortranNodeType("STRING_LITERAL", FortranElementImpl.class);
 
@@ -25,4 +28,6 @@ public interface FortranNodeTypes {
     FortranNodeType ARGUMENT_LIST = new FortranNodeType("ARGUMENT_LIST", FortranArgumentsList.class);
     FortranNodeType CALL_OR_ACCESS_EXPRESSION = new FortranNodeType("CALL_OR_ACCESS_EXPRESSION", FortranArgumentsList.class);
     FortranNodeType VALUE_ARGUMENT_LIST = new FortranNodeType("VALUE_ARGUMENT_LIST", FortranElementImpl.class);
+
+    FortranNodeType LABEL_DEFINITION = new FortranNodeType("LABEL_DEFINITION", FortranElementImpl.class);
 }
