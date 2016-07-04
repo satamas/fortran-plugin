@@ -48,7 +48,11 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private void parseFunction() {
-        advance();
+        PsiBuilder.Marker function = mark();
+        parseFunctionStatement();
+        parseBody();
+        parseEndFunctionStatement();
+        function.done(FUNCTION);
     }
 
     private void parseSubroutine() {
@@ -62,7 +66,7 @@ public class FortranParsing extends AbstractFortranParsing {
     private void parseProgram() {
         PsiBuilder.Marker programElement = mark();
         parseProgramStatement();
-        parseProgramBody();
+        parseBody();
         parseEndProgramStatement();
         programElement.done(PROGRAM);
     }
@@ -76,10 +80,11 @@ public class FortranParsing extends AbstractFortranParsing {
         }
         advance();
         expect(IDENTIFIER, "Program name expected");
+        parseEndOfStatement();
         programStatement.done(PROGRAM_STATEMENT);
     }
 
-    private void parseProgramBody() {
+    private void parseBody() {
         while (!eof()) {
             PsiBuilder.Marker marker = mark();
             IElementType statementType;
@@ -119,8 +124,50 @@ public class FortranParsing extends AbstractFortranParsing {
         if(at(IDENTIFIER)) {
             advance();
         }
+        parseEndOfStatement();
         endProgramStatement.done(END_PROGRAM_STATEMENT);
         return true;
+    }
+
+    private void parseFunctionStatement() {
+        PsiBuilder.Marker functionStatement = mark();
+        parseLabelDefinition();
+        if(atSet(FortranExpressionParsing.TYPE_FIRST)){
+            parseTypeSpecification();
+        }
+        assert at(FUNCTION_KEYWORD);
+        advance();
+        expect(IDENTIFIER, "Function name expected");
+        if(at(LPAR)){
+            advance();
+            parseFunctionParameters();
+            expect(RPAR, ") expected");
+        } else {
+            error("Parameters list expected");
+        }
+        parseEndOfStatement();
+        functionStatement.done(FUNCTION_STATEMENT);
+    }
+
+    private void parseFunctionParameters() {
+        PsiBuilder.Marker params = mark();
+        if(at(IDENTIFIER)) {
+            advance();
+        }
+        while (at(COMMA)){
+            advance();
+            expect(IDENTIFIER, "Parameter name expected");
+        }
+        params.done(FUNCTION_PARAMS);
+    }
+
+    private void parseEndFunctionStatement() {
+        PsiBuilder.Marker endFunctionStatement = mark();
+        parseLabelDefinition();
+        assert at(END_KEYWORD);
+        advance();
+        parseEndOfStatement();
+        endFunctionStatement.done(END_FUNCTION_STATEMENT);
     }
 
     private IElementType parseImplicitStatement() {

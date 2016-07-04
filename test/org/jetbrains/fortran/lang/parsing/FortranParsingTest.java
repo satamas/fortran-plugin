@@ -30,4 +30,9 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
     public void testLabels() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Labels.f"));
     }
+
+    public void testFunction() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("Function.f"));
+    }
+
 }
