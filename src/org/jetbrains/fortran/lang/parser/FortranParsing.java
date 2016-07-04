@@ -30,10 +30,10 @@ public class FortranParsing extends AbstractFortranParsing {
             } else if (at(BLOCK_KEYWORD)) {
                 marker.rollbackTo();
                 parseBlockData();
-            } else if (atSet(FortranExpressionParsing.TYPE_FIRST)){
+            } else if (atSet(FortranExpressionParsing.TYPE_FIRST)) {
                 parseTypeSpecification();
 
-                if(at(FUNCTION_KEYWORD)){
+                if (at(FUNCTION_KEYWORD)) {
                     marker.rollbackTo();
                     parseFunction();
                 } else {
@@ -62,7 +62,25 @@ public class FortranParsing extends AbstractFortranParsing {
     private void parseProgram() {
         PsiBuilder.Marker programElement = mark();
         parseProgramStatement();
-        while (!eof() && !at(END_KEYWORD)) {
+        parseProgramBody();
+        parseEndProgramStatement();
+        programElement.done(PROGRAM);
+    }
+
+    private void parseProgramStatement() {
+        PsiBuilder.Marker programStatement = mark();
+        parseLabelDefinition();
+        if (!at(PROGRAM_KEYWORD)) {
+            programStatement.rollbackTo();
+            return;
+        }
+        advance();
+        expect(IDENTIFIER, "Program name expected");
+        programStatement.done(PROGRAM_STATEMENT);
+    }
+
+    private void parseProgramBody() {
+        while (!eof()) {
             PsiBuilder.Marker marker = mark();
             IElementType statementType;
             parseLabelDefinition();
@@ -73,36 +91,36 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseParameterStatement();
             } else if (at(PRINT_KEYWORD)) {
                 statementType = parsePrintStatement();
+            } else if (at(END_KEYWORD)) {
+                marker.rollbackTo();
+                break;
             } else {
                 statementType = expressionParsing.parseStatement();
             }
 
             parseEndOfStatement();
-
             if (statementType != null) {
                 marker.done(statementType);
             } else {
                 marker.drop();
             }
         }
-        expect(END_KEYWORD, "End of program expected");
-        expect(PROGRAM_KEYWORD, "End of program expected");
-        if(at(IDENTIFIER)){
-            advance();
-        }
-        programElement.done(PROGRAM);
     }
 
-    private void parseProgramStatement(){
-        PsiBuilder.Marker programStatement = mark();
+    private boolean parseEndProgramStatement() {
+        PsiBuilder.Marker endProgramStatement = mark();
         parseLabelDefinition();
-        if(!at(PROGRAM_KEYWORD)){
-            programStatement.rollbackTo();
-            return;
+        if (!at(END_KEYWORD)) {
+            endProgramStatement.rollbackTo();
+            return false;
         }
         advance();
-        expect(IDENTIFIER, "Program name expected");
-        programStatement.done(PROGRAM_STATEMENT);
+        expect(PROGRAM_KEYWORD, "'Program' expected");
+        if(at(IDENTIFIER)) {
+            advance();
+        }
+        endProgramStatement.done(END_PROGRAM_STATEMENT);
+        return true;
     }
 
     private IElementType parseImplicitStatement() {

@@ -16,6 +16,7 @@ public interface FortranNodeTypes {
     FortranNodeType PRINT_STATEMENT = new FortranNodeType("PRINT", FortranPrintStatement.class);
 
     FortranNodeType PROGRAM_STATEMENT = new FortranNodeType("PROGRAM_STATEMENT", FortranElementImpl.class);
+    FortranNodeType END_PROGRAM_STATEMENT = new FortranNodeType("END_PROGRAM_STATEMENT", FortranElementImpl.class);
 
     FortranNodeType IMPLICIT_STATEMENT = new FortranNodeType("IMPLICIT_STATEMENT", FortranElementImpl.class);
     FortranNodeType IMPLICIT_SPECIFICATION = new FortranNodeType("IMPLICIT_SPECIFICATION", FortranElementImpl.class);
