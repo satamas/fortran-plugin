@@ -11,6 +11,8 @@ public interface FortranNodeTypes {
     FortranNodeType PROGRAM = new FortranNodeType("PROGRAM", FortranProgram.class);
     FortranNodeType PRINT_STATEMENT = new FortranNodeType("PRINT", FortranPrintStatement.class);
 
+    FortranNodeType PROGRAM_STATEMENT = new FortranNodeType("PROGRAM_STATEMENT", FortranElementImpl.class);
+
     FortranNodeType IMPLICIT_STATEMENT = new FortranNodeType("IMPLICIT_STATEMENT", FortranElementImpl.class);
     FortranNodeType IMPLICIT_SPECIFICATION = new FortranNodeType("IMPLICIT_SPECIFICATION", FortranElementImpl.class);
     FortranNodeType LETTER_RANGE_LIST = new FortranNodeType("LETTER_RANGE_LIST", FortranElementImpl.class);

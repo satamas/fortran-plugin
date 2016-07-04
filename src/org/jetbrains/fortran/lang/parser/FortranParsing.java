@@ -18,18 +18,45 @@ public class FortranParsing extends AbstractFortranParsing {
         while (!eof()) {
             if (at(PROGRAM_KEYWORD)) {
                 parseProgram();
+            } else if (at(FUNCTION_KEYWORD)) {
+                parseFunction();
+            } else if (at(SUBROUTINE_KEYWORD)) {
+                parseSubroutine();
+            } else if (at(BLOCK_KEYWORD)) {
+                parseBlockData();
+            } else if (atSet(FortranExpressionParsing.TYPE_FIRST)){
+                PsiBuilder.Marker marker = builder.mark();
+                parseTypeSpecification();
+
+                if(at(FUNCTION_KEYWORD)){
+                    marker.rollbackTo();
+                    parseFunction();
+                } else {
+                    marker.rollbackTo();
+                    parseProgram();
+                }
             } else {
-                errorAndAdvance("Program expected");
+                errorAndAdvance("Top level declaration expected");
             }
         }
         rootMarker.done(FORTRAN_FILE);
     }
 
-    private void parseProgram() {
-        assert (at(PROGRAM_KEYWORD));
-        PsiBuilder.Marker programElement = mark();
+    private void parseFunction() {
         advance();
-        expect(IDENTIFIER, "Program name expected");
+    }
+
+    private void parseSubroutine() {
+        advance();
+    }
+
+    private void parseBlockData() {
+        advance();
+    }
+
+    private void parseProgram() {
+        PsiBuilder.Marker programElement = mark();
+        parseProgramStatement();
         while (!eof() && !at(END_KEYWORD)) {
             PsiBuilder.Marker marker = mark();
             IElementType statementType;
@@ -55,8 +82,22 @@ public class FortranParsing extends AbstractFortranParsing {
         }
         expect(END_KEYWORD, "End of program expected");
         expect(PROGRAM_KEYWORD, "End of program expected");
-        expect(IDENTIFIER, "Program name expected");
+        if(at(IDENTIFIER)){
+            advance();
+        }
         programElement.done(PROGRAM);
+    }
+
+    private void parseProgramStatement(){
+        PsiBuilder.Marker programStatement = mark();
+        parseLabelDefinition();
+        if(!at(PROGRAM_KEYWORD)){
+            programStatement.rollbackTo();
+            return;
+        }
+        advance();
+        expect(IDENTIFIER, "Program name expected");
+        programStatement.done(PROGRAM_STATEMENT);
     }
 
     private IElementType parseImplicitStatement() {
@@ -77,13 +118,13 @@ public class FortranParsing extends AbstractFortranParsing {
 
     private void parseParametersList() {
         parseParameter();
-        while (!eof() && at(COMMA)){
+        while (!eof() && at(COMMA)) {
             advance();
             parseParameter();
         }
     }
 
-    private void parseParameter(){
+    private void parseParameter() {
         PsiBuilder.Marker parameter = mark();
         expect(IDENTIFIER, "Parameter name expected");
         expect(EQ, "= expected");

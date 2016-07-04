@@ -1,8 +1,9 @@
 FILE
   FortranProgram(PROGRAM)
-    PsiElement(program)('program')
-    PsiWhiteSpace(' ')
-    PsiElement(IDENTIFIER)('a')
+    FortranElementImpl(PROGRAM_STATEMENT)
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(IDENTIFIER)('a')
     PsiWhiteSpace('\n  ')
     FortranPrintStatement(PRINT)
       PsiElement(print)('Print')

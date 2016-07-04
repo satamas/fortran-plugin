@@ -1,8 +1,9 @@
 FILE
   FortranProgram(PROGRAM)
-    PsiElement(program)('program')
-    PsiWhiteSpace(' ')
-    PsiElement(IDENTIFIER)('a')
+    FortranElementImpl(PROGRAM_STATEMENT)
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(IDENTIFIER)('a')
     PsiWhiteSpace('\n    ')
     FortranElementImpl(PARAMETER_STATEMENT)
       PsiElement(parameter)('parameter')
@@ -51,5 +52,3 @@ FILE
     PsiElement(end)('end')
     PsiWhiteSpace(' ')
     PsiElement(program)('program')
-    PsiErrorElement:Program name expected
-      <empty list>
