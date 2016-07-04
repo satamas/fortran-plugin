@@ -9,6 +9,10 @@ public interface FortranNodeTypes {
     IFileElementType FORTRAN_FILE = new IFileElementType(FortranLanguage.INSTANCE);
 
     FortranNodeType PROGRAM = new FortranNodeType("PROGRAM", FortranProgram.class);
+    FortranNodeType FUNCTION = new FortranNodeType("FUNCTION", FortranProgram.class);
+    FortranNodeType SUBROUTINE = new FortranNodeType("SUBROUTINE", FortranProgram.class);
+    FortranNodeType BLOCK_DATA = new FortranNodeType("BLOCK_DATA", FortranProgram.class);
+
     FortranNodeType PRINT_STATEMENT = new FortranNodeType("PRINT", FortranPrintStatement.class);
 
     FortranNodeType PROGRAM_STATEMENT = new FortranNodeType("PROGRAM_STATEMENT", FortranElementImpl.class);

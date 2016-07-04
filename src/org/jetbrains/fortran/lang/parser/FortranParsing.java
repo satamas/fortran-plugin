@@ -16,16 +16,21 @@ public class FortranParsing extends AbstractFortranParsing {
     public void parseFile(IElementType root) {
         final PsiBuilder.Marker rootMarker = mark();
         while (!eof()) {
+            PsiBuilder.Marker marker = builder.mark();
+            parseLabelDefinition();
             if (at(PROGRAM_KEYWORD)) {
+                marker.rollbackTo();
                 parseProgram();
             } else if (at(FUNCTION_KEYWORD)) {
+                marker.rollbackTo();
                 parseFunction();
             } else if (at(SUBROUTINE_KEYWORD)) {
+                marker.rollbackTo();
                 parseSubroutine();
             } else if (at(BLOCK_KEYWORD)) {
+                marker.rollbackTo();
                 parseBlockData();
             } else if (atSet(FortranExpressionParsing.TYPE_FIRST)){
-                PsiBuilder.Marker marker = builder.mark();
                 parseTypeSpecification();
 
                 if(at(FUNCTION_KEYWORD)){

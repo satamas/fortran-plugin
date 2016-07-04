@@ -1,0 +1,13 @@
+FILE
+  FortranProgram(PROGRAM)
+    FortranElementImpl(PROGRAM_STATEMENT)
+      FortranElementImpl(LABEL_DEFINITION)
+        PsiElement(INTEGER_LITERAL)('1')
+      PsiWhiteSpace(' ')
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(IDENTIFIER)('a')
+    PsiWhiteSpace('\n')
+    PsiElement(end)('end')
+    PsiWhiteSpace(' ')
+    PsiElement(program)('program')
