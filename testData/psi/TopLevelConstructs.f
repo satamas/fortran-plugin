@@ -11,3 +11,6 @@ end
 subroutine input(x, y, z)
  	x = y + z
 end
+
+block data setup
+end

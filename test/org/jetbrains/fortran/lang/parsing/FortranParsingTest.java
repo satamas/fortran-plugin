@@ -32,7 +32,7 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
     }
 
     public void testFunction() throws Exception {
-        doParsingTest(FortranTestDataFixture.navigationMetadata("Function.f"));
+        doParsingTest(FortranTestDataFixture.navigationMetadata("TopLevelConstructs.f"));
     }
 
 }

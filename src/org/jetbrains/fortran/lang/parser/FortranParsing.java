@@ -56,7 +56,24 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private void parseBlockData() {
+        PsiBuilder.Marker function = mark();
+        parseBlockDataStatement();
+        parseBody();
+        parseEndStatement();
+        function.done(BLOCK_DATA);
+    }
+
+    private void parseBlockDataStatement() {
+        PsiBuilder.Marker functionStatement = mark();
+        parseLabelDefinition();
+        assert at(BLOCK_KEYWORD);
         advance();
+        expect(DATA_KEYWORD, "'data' expected");
+        if (at(IDENTIFIER)) {
+            advance();
+        }
+        parseEndOfStatement();
+        functionStatement.done(BLOCK_DATA_STATEMENT);
     }
 
     private void parseProgram() {
@@ -117,7 +134,7 @@ public class FortranParsing extends AbstractFortranParsing {
         }
         advance();
         expect(PROGRAM_KEYWORD, "'Program' expected");
-        if(at(IDENTIFIER)) {
+        if (at(IDENTIFIER)) {
             advance();
         }
         parseEndOfStatement();
@@ -128,13 +145,13 @@ public class FortranParsing extends AbstractFortranParsing {
     private void parseFunctionOrSubroutineStatement(boolean isFunction) {
         PsiBuilder.Marker functionStatement = mark();
         parseLabelDefinition();
-        if(isFunction && atSet(FortranExpressionParsing.TYPE_FIRST)){
+        if (isFunction && atSet(FortranExpressionParsing.TYPE_FIRST)) {
             parseTypeSpecification();
         }
         assert atSet(FUNCTION_KEYWORD, SUBROUTINE_KEYWORD);
         advance();
         expect(IDENTIFIER, (isFunction ? "Function" : "Subroutine") + " name expected");
-        if(at(LPAR)){
+        if (at(LPAR)) {
             advance();
             parseParameters();
             expect(RPAR, ") expected");
@@ -147,10 +164,10 @@ public class FortranParsing extends AbstractFortranParsing {
 
     private void parseParameters() {
         PsiBuilder.Marker params = mark();
-        if(at(IDENTIFIER)) {
+        if (at(IDENTIFIER)) {
             advance();
         }
-        while (at(COMMA)){
+        while (at(COMMA)) {
             advance();
             expect(IDENTIFIER, "Parameter name expected");
         }
