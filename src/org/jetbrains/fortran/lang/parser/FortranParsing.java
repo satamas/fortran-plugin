@@ -23,10 +23,10 @@ public class FortranParsing extends AbstractFortranParsing {
                 parseProgram();
             } else if (at(FUNCTION_KEYWORD)) {
                 marker.rollbackTo();
-                parseFunction();
+                parseFunctionOrSubroutine(true);
             } else if (at(SUBROUTINE_KEYWORD)) {
                 marker.rollbackTo();
-                parseSubroutine();
+                parseFunctionOrSubroutine(false);
             } else if (at(BLOCK_KEYWORD)) {
                 marker.rollbackTo();
                 parseBlockData();
@@ -35,7 +35,7 @@ public class FortranParsing extends AbstractFortranParsing {
 
                 if (at(FUNCTION_KEYWORD)) {
                     marker.rollbackTo();
-                    parseFunction();
+                    parseFunctionOrSubroutine(true);
                 } else {
                     marker.rollbackTo();
                     parseProgram();
@@ -47,16 +47,12 @@ public class FortranParsing extends AbstractFortranParsing {
         rootMarker.done(FORTRAN_FILE);
     }
 
-    private void parseFunction() {
+    private void parseFunctionOrSubroutine(boolean isFunction) {
         PsiBuilder.Marker function = mark();
-        parseFunctionStatement();
+        parseFunctionOrSubroutineStatement(isFunction);
         parseBody();
-        parseEndFunctionStatement();
-        function.done(FUNCTION);
-    }
-
-    private void parseSubroutine() {
-        advance();
+        parseEndStatement();
+        function.done(isFunction ? FUNCTION : SUBROUTINE);
     }
 
     private void parseBlockData() {
@@ -129,27 +125,27 @@ public class FortranParsing extends AbstractFortranParsing {
         return true;
     }
 
-    private void parseFunctionStatement() {
+    private void parseFunctionOrSubroutineStatement(boolean isFunction) {
         PsiBuilder.Marker functionStatement = mark();
         parseLabelDefinition();
-        if(atSet(FortranExpressionParsing.TYPE_FIRST)){
+        if(isFunction && atSet(FortranExpressionParsing.TYPE_FIRST)){
             parseTypeSpecification();
         }
-        assert at(FUNCTION_KEYWORD);
+        assert atSet(FUNCTION_KEYWORD, SUBROUTINE_KEYWORD);
         advance();
-        expect(IDENTIFIER, "Function name expected");
+        expect(IDENTIFIER, (isFunction ? "Function" : "Subroutine") + " name expected");
         if(at(LPAR)){
             advance();
-            parseFunctionParameters();
+            parseParameters();
             expect(RPAR, ") expected");
         } else {
             error("Parameters list expected");
         }
         parseEndOfStatement();
-        functionStatement.done(FUNCTION_STATEMENT);
+        functionStatement.done(isFunction ? FUNCTION_STATEMENT : SUBROUTINE_STATEMENT);
     }
 
-    private void parseFunctionParameters() {
+    private void parseParameters() {
         PsiBuilder.Marker params = mark();
         if(at(IDENTIFIER)) {
             advance();
@@ -158,16 +154,16 @@ public class FortranParsing extends AbstractFortranParsing {
             advance();
             expect(IDENTIFIER, "Parameter name expected");
         }
-        params.done(FUNCTION_PARAMS);
+        params.done(PARAMS);
     }
 
-    private void parseEndFunctionStatement() {
+    private void parseEndStatement() {
         PsiBuilder.Marker endFunctionStatement = mark();
         parseLabelDefinition();
         assert at(END_KEYWORD);
         advance();
         parseEndOfStatement();
-        endFunctionStatement.done(END_FUNCTION_STATEMENT);
+        endFunctionStatement.done(END_STATEMENT);
     }
 
     private IElementType parseImplicitStatement() {

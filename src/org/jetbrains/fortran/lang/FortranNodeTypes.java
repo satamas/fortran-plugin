@@ -15,9 +15,10 @@ public interface FortranNodeTypes {
 
     FortranNodeType PRINT_STATEMENT = new FortranNodeType("PRINT", FortranPrintStatement.class);
 
+    FortranNodeType SUBROUTINE_STATEMENT = new FortranNodeType("SUBROUTINE_STATEMENT", FortranElementImpl.class);
     FortranNodeType FUNCTION_STATEMENT = new FortranNodeType("FUNCTION_STATEMENT", FortranElementImpl.class);
-    FortranNodeType FUNCTION_PARAMS = new FortranNodeType("FUNCTION_PARAMS", FortranElementImpl.class);
-    FortranNodeType END_FUNCTION_STATEMENT = new FortranNodeType("END_FUNCTION_STATEMENT", FortranElementImpl.class);
+    FortranNodeType PARAMS = new FortranNodeType("PARAMS", FortranElementImpl.class);
+    FortranNodeType END_STATEMENT = new FortranNodeType("END_STATEMENT", FortranElementImpl.class);
 
     FortranNodeType PROGRAM_STATEMENT = new FortranNodeType("PROGRAM_STATEMENT", FortranElementImpl.class);
     FortranNodeType END_PROGRAM_STATEMENT = new FortranNodeType("END_PROGRAM_STATEMENT", FortranElementImpl.class);

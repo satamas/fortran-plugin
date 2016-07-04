@@ -8,7 +8,7 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(IDENTIFIER)('average')
       PsiElement(LPAR)('(')
-      FortranElementImpl(FUNCTION_PARAMS)
+      FortranElementImpl(PARAMS)
         PsiElement(IDENTIFIER)('x')
         PsiElement(COMMA)(',')
         PsiElement(IDENTIFIER)('y')
@@ -55,7 +55,7 @@ FILE
     PsiErrorElement:Expecting a statement
       PsiElement(return)('return')
     PsiWhiteSpace('\n')
-    FortranElementImpl(END_FUNCTION_STATEMENT)
+    FortranElementImpl(END_STATEMENT)
       PsiElement(end)('end')
   PsiWhiteSpace('\n\n')
   FortranProgram(FUNCTION)
@@ -67,7 +67,7 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(IDENTIFIER)('zero')
       PsiElement(LPAR)('(')
-      FortranElementImpl(FUNCTION_PARAMS)
+      FortranElementImpl(PARAMS)
         <empty list>
       PsiElement(RPAR)(')')
     PsiWhiteSpace('\n    ')
@@ -79,5 +79,5 @@ FILE
       FortranElementImpl(INTEGER_CONSTANT)
         PsiElement(INTEGER_LITERAL)('0')
     PsiWhiteSpace('\n')
-    FortranElementImpl(END_FUNCTION_STATEMENT)
+    FortranElementImpl(END_STATEMENT)
       PsiElement(end)('end')

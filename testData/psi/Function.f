@@ -7,3 +7,7 @@ end
 integer function zero()
     zero = 0
 end
+
+subroutine input(x, y, z)
+ 	x = y + z
+end
