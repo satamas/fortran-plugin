@@ -109,6 +109,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseParameterStatement();
             } else if (at(FORMAT_KEYWORD)) {
                 statementType = parseFormatStatement();
+            } else if (at(ENTRY_KEYWORD)) {
+                statementType = parseEntryStatement();
             } else if (at(PRINT_KEYWORD)) {
                 statementType = parsePrintStatement();
             } else if (at(END_KEYWORD)) {
@@ -153,27 +155,27 @@ public class FortranParsing extends AbstractFortranParsing {
         assert atSet(FUNCTION_KEYWORD, SUBROUTINE_KEYWORD);
         advance();
         expect(IDENTIFIER, (isFunction ? "Function" : "Subroutine") + " name expected");
-        if (at(LPAR)) {
-            advance();
-            parseParameters();
-            expect(RPAR, ") expected");
-        } else {
-            error("Parameters list expected");
-        }
+        parseParameters();
         parseEndOfStatement();
         functionStatement.done(isFunction ? FUNCTION_STATEMENT : SUBROUTINE_STATEMENT);
     }
 
     private void parseParameters() {
-        PsiBuilder.Marker params = mark();
-        if (at(IDENTIFIER)) {
+        if (at(LPAR)) {
             advance();
+            PsiBuilder.Marker params = mark();
+            if (at(IDENTIFIER)) {
+                advance();
+            }
+            while (at(COMMA)) {
+                advance();
+                expect(IDENTIFIER, "Parameter name expected");
+            }
+            params.done(PARAMS);
+            expect(RPAR, ") expected");
+        } else {
+            error("Parameters list expected");
         }
-        while (at(COMMA)) {
-            advance();
-            expect(IDENTIFIER, "Parameter name expected");
-        }
-        params.done(PARAMS);
     }
 
     private void parseEndStatement() {
@@ -190,6 +192,14 @@ public class FortranParsing extends AbstractFortranParsing {
         advance();
         parseImplicitSpecificationList();
         return IMPLICIT_STATEMENT;
+    }
+
+    private IElementType parseEntryStatement() {
+        assert at(ENTRY_KEYWORD);
+        advance();
+        expect(IDENTIFIER, "Entry name expected");
+        parseParameters();
+        return ENTRY_STATEMENT;
     }
 
     private IElementType parseFormatStatement() {
@@ -212,7 +222,7 @@ public class FortranParsing extends AbstractFortranParsing {
 
     private void parseFormatSpecification() {
         PsiBuilder.Marker parameter = mark();
-        while(!eof() && !at(RPAR)) {
+        while (!eof() && !at(RPAR)) {
             advance();
         }
         parameter.done(FORMAT_SPECIFICATION);

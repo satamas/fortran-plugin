@@ -1,6 +1,7 @@
 real function average(x,y,z)
     sum = x + y + z
     average = sum /3.0
+    entry average2(x, y)
     return
 end
 

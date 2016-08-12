@@ -25,6 +25,8 @@ public interface FortranNodeTypes {
     FortranNodeType PROGRAM_STATEMENT = new FortranNodeType("PROGRAM_STATEMENT", FortranElementImpl.class);
     FortranNodeType END_PROGRAM_STATEMENT = new FortranNodeType("END_PROGRAM_STATEMENT", FortranElementImpl.class);
 
+    FortranNodeType ENTRY_STATEMENT = new FortranNodeType("ENTRY_STATEMENT", FortranElementImpl.class);
+
     FortranNodeType FORMAT_STATEMENT = new FortranNodeType("FORMAT_STATEMENT", FortranElementImpl.class);
     FortranNodeType FORMAT_SPECIFICATION = new FortranNodeType("FORMAT_SPECIFICATION", FortranElementImpl.class);
 
