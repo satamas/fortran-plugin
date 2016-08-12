@@ -5,6 +5,7 @@ import com.intellij.psi.tree.IElementType;
 
 import static org.jetbrains.fortran.lang.FortranNodeTypes.*;
 import static org.jetbrains.fortran.lang.lexer.FortranTokens.*;
+import static org.jetbrains.fortran.lang.parser.FortranExpressionParsing.TYPE_FIRST;
 
 public class FortranParsing extends AbstractFortranParsing {
     private final FortranExpressionParsing expressionParsing = new FortranExpressionParsing(builder);
@@ -30,7 +31,7 @@ public class FortranParsing extends AbstractFortranParsing {
             } else if (at(BLOCK_KEYWORD)) {
                 marker.rollbackTo();
                 parseBlockData();
-            } else if (atSet(FortranExpressionParsing.TYPE_FIRST)) {
+            } else if (atSet(TYPE_FIRST)) {
                 parseTypeSpecification();
 
                 if (at(FUNCTION_KEYWORD)) {
@@ -116,6 +117,8 @@ public class FortranParsing extends AbstractFortranParsing {
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
+            } else if (atSet(TYPE_FIRST)) {
+                statementType = parseTypeStatement();
             } else {
                 statementType = expressionParsing.parseStatement();
             }
@@ -149,7 +152,7 @@ public class FortranParsing extends AbstractFortranParsing {
     private void parseFunctionOrSubroutineStatement(boolean isFunction) {
         PsiBuilder.Marker functionStatement = mark();
         parseLabelDefinition();
-        if (isFunction && atSet(FortranExpressionParsing.TYPE_FIRST)) {
+        if (isFunction && atSet(TYPE_FIRST)) {
             parseTypeSpecification();
         }
         assert atSet(FUNCTION_KEYWORD, SUBROUTINE_KEYWORD);
@@ -211,6 +214,68 @@ public class FortranParsing extends AbstractFortranParsing {
         return FORMAT_STATEMENT;
     }
 
+    private IElementType parseTypeStatement() {
+        assert atSet(TYPE_FIRST);
+        parseTypeSpecification();
+        parseEntityDeclarationList();
+        return TYPE_DECLARATION_STATEMENT;
+    }
+
+    private void parseEntityDeclarationList() {
+        parseEntityDeclaration();
+        while (!eof() && at(COMMA)) {
+            advance();
+            parseEntityDeclaration();
+        }
+    }
+
+    private void parseEntityDeclaration() {
+        PsiBuilder.Marker entityDeclaration = mark();
+        expect(IDENTIFIER, "Identifier expected");
+        if (at(LPAR)) {
+            PsiBuilder.Marker shapeSpecification = mark();
+            advance();
+            parseArraySpecification();
+            expect(RPAR, ") expected");
+            shapeSpecification.done(ARRAY_SPECIFICATION);
+        }
+        if (at(MUL)) {
+            advance();
+            parseCharacterLength();
+        }
+        entityDeclaration.done(ENTITY_DECLARATION);
+    }
+
+    private void parseArraySpecification() {
+        parseShapeSpecification();
+        while (!eof() && at(COMMA)) {
+            advance();
+            parseShapeSpecification();
+        }
+    }
+
+    private void parseShapeSpecification() {
+        PsiBuilder.Marker shapeSpecification = mark();
+        if (at(MUL)) {
+            advance();
+            shapeSpecification.done(SIZE_SPECIFICATION);
+            return;
+        }
+        expressionParsing.parseExpression();
+        if (!at(COLON)) {
+            shapeSpecification.done(SIZE_SPECIFICATION);
+            return;
+        }
+        advance();
+        if (at(MUL)) {
+            advance();
+            shapeSpecification.done(SIZE_SPECIFICATION);
+            return;
+        }
+        expressionParsing.parseExpression();
+        shapeSpecification.done(SIZE_SPECIFICATION);
+    }
+
     private IElementType parseParameterStatement() {
         assert at(PARAMETER_KEYWORD);
         advance();
@@ -262,7 +327,7 @@ public class FortranParsing extends AbstractFortranParsing {
         PsiBuilder.Marker implicitSpecification = mark();
         if (at(NONE_KEYWORD)) {
             advance();
-        } else if (atSet(FortranExpressionParsing.TYPE_FIRST)) {
+        } else if (atSet(TYPE_FIRST)) {
             parseTypeSpecification();
             parseLetterRangeSpecificationsList();
         } else {

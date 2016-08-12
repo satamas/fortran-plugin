@@ -43,8 +43,12 @@ public interface FortranNodeTypes {
     FortranNodeType FLOATING_POINT_CONSTANT = new FortranNodeType("FLOATING_POINT_CONSTANT", FortranElementImpl.class);
     FortranNodeType STRING_LITERAL = new FortranNodeType("STRING_LITERAL", FortranElementImpl.class);
 
-    FortranNodeType VARIABLE_DECLARATION = new FortranNodeType("VARIABLE_DECLARATION", FortranElementImpl.class);
+    FortranNodeType TYPE_DECLARATION_STATEMENT = new FortranNodeType("TYPE_DECLARATION_STATEMENT", FortranElementImpl.class);
+    FortranNodeType ENTITY_DECLARATION = new FortranNodeType("ENTITY_DECLARATION", FortranElementImpl.class);
     FortranNodeType TYPE_REFERENCE = new FortranNodeType("TYPE_REFERENCE", FortranElementImpl.class);
+
+    FortranNodeType ARRAY_SPECIFICATION = new FortranNodeType("ARRAY_SPECIFICATION", FortranElementImpl.class);
+    FortranNodeType SIZE_SPECIFICATION = new FortranNodeType("SIZE_SPECIFICATION", FortranElementImpl.class);
 
     FortranNodeType ASSIGNMENT_EXPRESSION = new FortranNodeType("ASSIGNMENT_EXPRESSION", FortranElementImpl.class);
     FortranNodeType BINARY_EXPRESSION = new FortranNodeType("BINARY_EXPRESSION", FortranBinaryExpression.class);

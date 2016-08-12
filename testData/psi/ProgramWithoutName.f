@@ -1,3 +1,3 @@
-integer :: a
-integer :: b = 7
+integer a
+integer b, c
 end program
