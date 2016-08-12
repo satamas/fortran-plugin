@@ -107,6 +107,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseImplicitStatement();
             } else if (at(PARAMETER_KEYWORD)) {
                 statementType = parseParameterStatement();
+            } else if (at(FORMAT_KEYWORD)) {
+                statementType = parseFormatStatement();
             } else if (at(PRINT_KEYWORD)) {
                 statementType = parsePrintStatement();
             } else if (at(END_KEYWORD)) {
@@ -190,6 +192,15 @@ public class FortranParsing extends AbstractFortranParsing {
         return IMPLICIT_STATEMENT;
     }
 
+    private IElementType parseFormatStatement() {
+        assert at(FORMAT_KEYWORD);
+        advance();
+        expect(LPAR, "Format specification expected");
+        parseFormatSpecification();
+        expect(RPAR, ") expected");
+        return FORMAT_STATEMENT;
+    }
+
     private IElementType parseParameterStatement() {
         assert at(PARAMETER_KEYWORD);
         advance();
@@ -198,6 +209,15 @@ public class FortranParsing extends AbstractFortranParsing {
         expect(RPAR, ") expected");
         return PARAMETER_STATEMENT;
     }
+
+    private void parseFormatSpecification() {
+        PsiBuilder.Marker parameter = mark();
+        while(!eof() && !at(RPAR)) {
+            advance();
+        }
+        parameter.done(FORMAT_SPECIFICATION);
+    }
+
 
     private void parseParametersList() {
         parseParameter();
