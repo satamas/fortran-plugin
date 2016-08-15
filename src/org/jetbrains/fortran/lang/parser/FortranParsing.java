@@ -114,6 +114,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseEntryStatement();
             } else if (at(PRINT_KEYWORD)) {
                 statementType = parsePrintStatement();
+            } else if (at(COMMON_KEYWORD)) {
+                statementType = parseCommonStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -190,6 +192,53 @@ public class FortranParsing extends AbstractFortranParsing {
         endFunctionStatement.done(END_STATEMENT);
     }
 
+    private IElementType parseCommonStatement() {
+        assert at(COMMON_KEYWORD);
+        advance();
+        parseCommonList();
+        return COMMON_STATEMENT;
+    }
+
+    private void parseCommonList() {
+        PsiBuilder.Marker commonBlockList = builder.mark();
+        parseCommonBlock();
+        while (at(COMMA) || at(DIV)) {
+            if(at(COMMA)) {
+                advance();
+            }
+            parseCommonBlock();
+        }
+        commonBlockList.done(COMMON_BLOCK_LIST);
+    }
+
+    private void parseCommonBlock() {
+        PsiBuilder.Marker commonBlock = builder.mark();
+        if(at(DIV)) {
+            advance();
+            if(at(IDENTIFIER)) {
+                advance();
+            }
+            expect(DIV, "/ expected");
+        }
+        parseCommonDeclarationList();
+        commonBlock.done(COMMON_BLOCK);
+    }
+
+    private void parseCommonDeclarationList() {
+        parseEntityDeclaration(false);
+        while (!eof() && at(COMMA)) {
+            PsiBuilder.Marker marker = mark();
+            advance();
+            if(!at(IDENTIFIER)) {
+                marker.rollbackTo();
+                return;
+            }
+
+            marker.drop();
+            parseEntityDeclaration(false);
+        }
+    }
+
     private IElementType parseImplicitStatement() {
         assert at(IMPLICIT_KEYWORD);
         advance();
@@ -222,14 +271,14 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private void parseEntityDeclarationList() {
-        parseEntityDeclaration();
+        parseEntityDeclaration(true);
         while (!eof() && at(COMMA)) {
             advance();
-            parseEntityDeclaration();
+            parseEntityDeclaration(true);
         }
     }
 
-    private void parseEntityDeclaration() {
+    private void parseEntityDeclaration(boolean charLengthAllowed) {
         PsiBuilder.Marker entityDeclaration = mark();
         expect(IDENTIFIER, "Identifier expected");
         if (at(LPAR)) {
@@ -239,7 +288,7 @@ public class FortranParsing extends AbstractFortranParsing {
             expect(RPAR, ") expected");
             shapeSpecification.done(ARRAY_SPECIFICATION);
         }
-        if (at(MUL)) {
+        if (charLengthAllowed && at(MUL)) {
             advance();
             parseCharacterLength();
         }
