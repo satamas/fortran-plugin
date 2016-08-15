@@ -1,0 +1,9 @@
+real function average()
+    integer c, z
+    common /x/ c
+    save
+    save z
+    save z, /x/
+    entry average2(x, y)
+    return
+end

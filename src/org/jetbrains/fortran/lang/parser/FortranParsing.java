@@ -116,6 +116,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parsePrintStatement();
             } else if (at(COMMON_KEYWORD)) {
                 statementType = parseCommonStatement();
+            } else if (at(SAVE_KEYWORD)) {
+                statementType = parseSaveStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -203,7 +205,7 @@ public class FortranParsing extends AbstractFortranParsing {
         PsiBuilder.Marker commonBlockList = builder.mark();
         parseCommonBlock();
         while (at(COMMA) || at(DIV)) {
-            if(at(COMMA)) {
+            if (at(COMMA)) {
                 advance();
             }
             parseCommonBlock();
@@ -213,29 +215,63 @@ public class FortranParsing extends AbstractFortranParsing {
 
     private void parseCommonBlock() {
         PsiBuilder.Marker commonBlock = builder.mark();
-        if(at(DIV)) {
-            advance();
-            if(at(IDENTIFIER)) {
-                advance();
-            }
-            expect(DIV, "/ expected");
+        if (at(DIV)) {
+            parseCommonBlockName(false);
         }
         parseCommonDeclarationList();
         commonBlock.done(COMMON_BLOCK);
     }
 
+    private void parseCommonBlockName(boolean nameRequired){
+        assert at(DIV);
+        PsiBuilder.Marker commonBlockName = builder.mark();
+        advance();
+        if (nameRequired && !at(IDENTIFIER)) {
+            error("Identifier expected");
+        }
+        if (at(IDENTIFIER)) {
+            advance();
+        }
+        expect(DIV, "/ expected");
+        commonBlockName.done(COMMON_BLOCK_NAME);
+    }
+
     private void parseCommonDeclarationList() {
-        parseEntityDeclaration(false);
+        parseEntityDeclaration(false, true);
         while (!eof() && at(COMMA)) {
             PsiBuilder.Marker marker = mark();
             advance();
-            if(!at(IDENTIFIER)) {
+            if (!at(IDENTIFIER)) {
                 marker.rollbackTo();
                 return;
             }
 
             marker.drop();
-            parseEntityDeclaration(false);
+            parseEntityDeclaration(false, true);
+        }
+    }
+
+    private IElementType parseSaveStatement() {
+        assert at(SAVE_KEYWORD);
+        advance();
+        parseSavedEntityList();
+        return SAVE_STATMENT;
+    }
+
+    private void parseSavedEntityList() {
+        if(!at(IDENTIFIER) && !at(DIV)) return;
+        parseSavedEntity();
+        while (!eof() && at(COMMA)){
+            advance();
+            parseSavedEntity();
+        }
+    }
+
+    private void parseSavedEntity() {
+        if (at(DIV)) {
+            parseCommonBlockName(true);
+        } else {
+            parseEntityDeclaration(false, false);
         }
     }
 
@@ -271,17 +307,17 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private void parseEntityDeclarationList() {
-        parseEntityDeclaration(true);
+        parseEntityDeclaration(true, true);
         while (!eof() && at(COMMA)) {
             advance();
-            parseEntityDeclaration(true);
+            parseEntityDeclaration(true, true);
         }
     }
 
-    private void parseEntityDeclaration(boolean charLengthAllowed) {
+    private void parseEntityDeclaration(boolean charLengthAllowed, boolean arraySpecifierAllowed) {
         PsiBuilder.Marker entityDeclaration = mark();
         expect(IDENTIFIER, "Identifier expected");
-        if (at(LPAR)) {
+        if (arraySpecifierAllowed && at(LPAR)) {
             PsiBuilder.Marker shapeSpecification = mark();
             advance();
             parseArraySpecification();
