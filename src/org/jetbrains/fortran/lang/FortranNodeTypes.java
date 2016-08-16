@@ -40,6 +40,8 @@ public interface FortranNodeTypes {
     FortranNodeType PARAMETER_STATEMENT = new FortranNodeType("PARAMETER_STATEMENT", FortranElementImpl.class);
     FortranNodeType PARAMETER = new FortranNodeType("PARAMETER", FortranElementImpl.class);
 
+    FortranNodeType INTRINSIC_STATEMENT = new FortranNodeType("INTRINSIC_STATEMENT", FortranElementImpl.class);
+
     FortranNodeType COMMON_STATEMENT = new FortranNodeType("COMMON_STATEMENT", FortranElementImpl.class);
     FortranNodeType COMMON_BLOCK_LIST = new FortranNodeType("COMMON_BLOCK_LIST", FortranElementImpl.class);
     FortranNodeType COMMON_BLOCK = new FortranNodeType("COMMON_BLOCK", FortranElementImpl.class);

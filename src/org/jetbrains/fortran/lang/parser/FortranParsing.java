@@ -118,6 +118,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseCommonStatement();
             } else if (at(SAVE_KEYWORD)) {
                 statementType = parseSaveStatement();
+            } else if (at(INTRINSIC_KEYWORD)) {
+                statementType = parseIntrinsicStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -194,6 +196,17 @@ public class FortranParsing extends AbstractFortranParsing {
         endFunctionStatement.done(END_STATEMENT);
     }
 
+    private IElementType parseIntrinsicStatement() {
+        assert at(INTRINSIC_KEYWORD);
+        advance();
+        expect(IDENTIFIER, "Procedure name expected");
+        while (!eof() && at(COMMA)) {
+            advance();
+            expect(IDENTIFIER, "Procedure name expected");
+        }
+        return INTRINSIC_STATEMENT;
+    }
+
     private IElementType parseCommonStatement() {
         assert at(COMMON_KEYWORD);
         advance();
@@ -222,7 +235,7 @@ public class FortranParsing extends AbstractFortranParsing {
         commonBlock.done(COMMON_BLOCK);
     }
 
-    private void parseCommonBlockName(boolean nameRequired){
+    private void parseCommonBlockName(boolean nameRequired) {
         assert at(DIV);
         PsiBuilder.Marker commonBlockName = builder.mark();
         advance();
@@ -259,9 +272,9 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private void parseSavedEntityList() {
-        if(!at(IDENTIFIER) && !at(DIV)) return;
+        if (!at(IDENTIFIER) && !at(DIV)) return;
         parseSavedEntity();
-        while (!eof() && at(COMMA)){
+        while (!eof() && at(COMMA)) {
             advance();
             parseSavedEntity();
         }
