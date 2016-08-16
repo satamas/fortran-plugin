@@ -120,6 +120,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseSaveStatement();
             } else if (at(INTRINSIC_KEYWORD)) {
                 statementType = parseIntrinsicStatement();
+            } else if (at(EXTERNAL_KEYWORD)) {
+                statementType = parseExternalStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -194,6 +196,17 @@ public class FortranParsing extends AbstractFortranParsing {
         advance();
         parseEndOfStatement();
         endFunctionStatement.done(END_STATEMENT);
+    }
+
+    private IElementType parseExternalStatement() {
+        assert at(EXTERNAL_KEYWORD);
+        advance();
+        expect(IDENTIFIER, "Procedure name expected");
+        while (!eof() && at(COMMA)) {
+            advance();
+            expect(IDENTIFIER, "Procedure name expected");
+        }
+        return EXTERNAL_STATEMENT;
     }
 
     private IElementType parseIntrinsicStatement() {
