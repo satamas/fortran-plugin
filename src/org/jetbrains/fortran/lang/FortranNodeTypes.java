@@ -40,6 +40,9 @@ public interface FortranNodeTypes {
     FortranNodeType PARAMETER_STATEMENT = new FortranNodeType("PARAMETER_STATEMENT", FortranElementImpl.class);
     FortranNodeType PARAMETER = new FortranNodeType("PARAMETER", FortranElementImpl.class);
 
+    FortranNodeType EQUIVALENCE_STATEMENT = new FortranNodeType("EQUIVALENCE_STATEMENT", FortranElementImpl.class);
+    FortranNodeType EQUIVALENCE_SET = new FortranNodeType("EQUIVALENCE_SET", FortranElementImpl.class);
+
     FortranNodeType EXTERNAL_STATEMENT = new FortranNodeType("EXTERNAL_STATEMENT", FortranElementImpl.class);
     FortranNodeType INTRINSIC_STATEMENT = new FortranNodeType("INTRINSIC_STATEMENT", FortranElementImpl.class);
 
@@ -68,6 +71,10 @@ public interface FortranNodeTypes {
     FortranNodeType ARGUMENT_LIST = new FortranNodeType("ARGUMENT_LIST", FortranArgumentsList.class);
     FortranNodeType CALL_OR_ACCESS_EXPRESSION = new FortranNodeType("CALL_OR_ACCESS_EXPRESSION", FortranArgumentsList.class);
     FortranNodeType VALUE_ARGUMENT_LIST = new FortranNodeType("VALUE_ARGUMENT_LIST", FortranElementImpl.class);
+
+    FortranNodeType VARIABLE = new FortranNodeType("VARIABLE", FortranElementImpl.class);
+    FortranNodeType SUBSTRING_RANGE = new FortranNodeType("SUBSTRING_RANGE", FortranElementImpl.class);
+    FortranNodeType SUBSCRIPT_LIST = new FortranNodeType("SUBSCRIPT_LIST", FortranElementImpl.class);
 
     FortranNodeType LABEL_DEFINITION = new FortranNodeType("LABEL_DEFINITION", FortranElementImpl.class);
 }

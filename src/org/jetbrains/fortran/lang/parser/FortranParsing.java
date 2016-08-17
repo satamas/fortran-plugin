@@ -5,6 +5,7 @@ import com.intellij.psi.tree.IElementType;
 
 import static org.jetbrains.fortran.lang.FortranNodeTypes.*;
 import static org.jetbrains.fortran.lang.lexer.FortranTokens.*;
+import static org.jetbrains.fortran.lang.parser.FortranExpressionParsing.EXPRESSION_FIRST;
 import static org.jetbrains.fortran.lang.parser.FortranExpressionParsing.TYPE_FIRST;
 
 public class FortranParsing extends AbstractFortranParsing {
@@ -118,6 +119,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseCommonStatement();
             } else if (at(SAVE_KEYWORD)) {
                 statementType = parseSaveStatement();
+            } else if (at(EQUIVALENCE_KEYWORD)) {
+                statementType = parseEquivalenceStatement();
             } else if (at(INTRINSIC_KEYWORD)) {
                 statementType = parseIntrinsicStatement();
             } else if (at(EXTERNAL_KEYWORD)) {
@@ -196,6 +199,35 @@ public class FortranParsing extends AbstractFortranParsing {
         advance();
         parseEndOfStatement();
         endFunctionStatement.done(END_STATEMENT);
+    }
+
+    private IElementType parseEquivalenceStatement() {
+        assert at(EQUIVALENCE_KEYWORD);
+        advance();
+        parseEquivalenceSetList();
+        return EQUIVALENCE_STATEMENT;
+    }
+
+    private void parseEquivalenceSetList() {
+        parseEquivalenceSet();
+        while (!eof() && at(COMMA)) {
+            advance();
+            parseEquivalenceSet();
+        }
+    }
+
+    private void parseEquivalenceSet() {
+        expect(LPAR, "( expected");
+        PsiBuilder.Marker marker = mark();
+        parseVariable();
+        expect(COMMA, ", expected");
+        parseVariable();
+        while (!eof() && at(COMMA)) {
+            advance();
+            parseVariable();
+        }
+        marker.done(EQUIVALENCE_SET);
+        expect(RPAR, ") expected");
     }
 
     private IElementType parseExternalStatement() {
@@ -625,4 +657,62 @@ public class FortranParsing extends AbstractFortranParsing {
         return PRINT_STATEMENT;
     }
 
+    private void parseVariable() {
+        PsiBuilder.Marker marker = mark();
+        expect(IDENTIFIER, "Identifier expected");
+        if (at(LPAR)) {
+            parseSubscriptList();
+        }
+        if (at(LPAR)) {
+            parseSubstringRange();
+        }
+        marker.done(VARIABLE);
+    }
+
+    private void parseSubscriptList() {
+        assert at(LPAR);
+        PsiBuilder.Marker marker = mark();
+        advance();
+
+        //Semicolon means that this is substring range
+        if (at(SEMICOLON)) {
+            marker.rollbackTo();
+            return;
+        }
+        expressionParsing.parseExpression();
+
+        //Semicolon means that this is substring range
+        if (at(SEMICOLON)) {
+            marker.rollbackTo();
+            return;
+        }
+
+        while (!eof() && at(COMMA)) {
+            advance();
+            expressionParsing.parseExpression();
+        }
+        expect(RPAR, ") expected");
+        marker.done(SUBSCRIPT_LIST);
+    }
+
+    private void parseSubstringRange() {
+        assert at(LPAR);
+        advance();
+        PsiBuilder.Marker marker = mark();
+        if (at(COLON)) {
+            advance();
+            if (atSet(EXPRESSION_FIRST)) {
+                expressionParsing.parseExpression();
+            }
+        } else {
+            expressionParsing.parseExpression();
+
+            expect(COLON, ": expected");
+            if (atSet(EXPRESSION_FIRST)) {
+                expressionParsing.parseExpression();
+            }
+        }
+        marker.done(SUBSTRING_RANGE);
+        expect(RPAR, ") expected");
+    }
 }
