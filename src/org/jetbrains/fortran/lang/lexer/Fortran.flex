@@ -92,6 +92,7 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 "data" { return FortranTokens.DATA_KEYWORD; }
 "deallocate" { return FortranTokens.DEALLOCATE_KEYWORD; }
 "default" { return FortranTokens.DEFAULT_KEYWORD; }
+"dimension" { return FortranTokens.DIMENSION_KEYWORD; }
 "do" { return FortranTokens.DO_KEYWORD; }
 "double" { return FortranTokens.DOUBLE_KEYWORD; }
 "precision" { return FortranTokens.PRECISION_KEYWORD; }

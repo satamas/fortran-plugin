@@ -119,6 +119,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseCommonStatement();
             } else if (at(SAVE_KEYWORD)) {
                 statementType = parseSaveStatement();
+            } else if(at(DIMENSION_KEYWORD)){
+                statementType = parseDimensionStatement();
             } else if (at(EQUIVALENCE_KEYWORD)) {
                 statementType = parseEquivalenceStatement();
             } else if (at(INTRINSIC_KEYWORD)) {
@@ -309,6 +311,13 @@ public class FortranParsing extends AbstractFortranParsing {
         }
     }
 
+    private IElementType parseDimensionStatement() {
+        assert at(DIMENSION_KEYWORD);
+        advance();
+        parseEntityDeclarationList(false);
+        return SAVE_STATMENT;
+    }
+
     private IElementType parseSaveStatement() {
         assert at(SAVE_KEYWORD);
         advance();
@@ -360,15 +369,15 @@ public class FortranParsing extends AbstractFortranParsing {
     private IElementType parseTypeStatement() {
         assert atSet(TYPE_FIRST);
         parseTypeSpecification();
-        parseEntityDeclarationList();
+        parseEntityDeclarationList(true);
         return TYPE_DECLARATION_STATEMENT;
     }
 
-    private void parseEntityDeclarationList() {
-        parseEntityDeclaration(true, true);
+    private void parseEntityDeclarationList(boolean charLengthAllowed) {
+        parseEntityDeclaration(charLengthAllowed, true);
         while (!eof() && at(COMMA)) {
             advance();
-            parseEntityDeclaration(true, true);
+            parseEntityDeclaration(charLengthAllowed, true);
         }
     }
 

@@ -32,6 +32,8 @@ public interface FortranNodeTypes {
 
     FortranNodeType SAVE_STATMENT = new FortranNodeType("SAVE_STATEMENT", FortranElementImpl.class);
 
+    FortranNodeType DIMENSION_STATEMENT = new FortranNodeType("DIMENSION_STATEMENT", FortranElementImpl.class);
+
     FortranNodeType IMPLICIT_STATEMENT = new FortranNodeType("IMPLICIT_STATEMENT", FortranElementImpl.class);
     FortranNodeType IMPLICIT_SPECIFICATION = new FortranNodeType("IMPLICIT_SPECIFICATION", FortranElementImpl.class);
     FortranNodeType LETTER_RANGE_LIST = new FortranNodeType("LETTER_RANGE_LIST", FortranElementImpl.class);

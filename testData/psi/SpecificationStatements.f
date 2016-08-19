@@ -7,6 +7,7 @@ real function average()
     save z
     save z, /x/
     entry average2(x, y)
+    DIMENSION M( N, N ), A(B : C)
     EQUIVALENCE (A,B)
     EQUIVALENCE (A(1), B)
     EQUIVALENCE (A(1), B(1)(2+1:))
