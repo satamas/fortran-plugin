@@ -10,6 +10,7 @@ public interface FortranTokens {
 
     FortranToken INTEGER_LITERAL = new FortranToken("INTEGER_LITERAL");
     FortranToken FLOATING_POINT_LITERAL = new FortranToken("FLOATING_POINT_LITERAL");
+    FortranToken DOUBLE_PRECISION_LITERAL = new FortranToken("DOUBLE_PRECISION_LITERAL");
     FortranToken IDENTIFIER = new FortranToken("IDENTIFIER");
     FortranToken DANGLING_NEWLINE = new FortranToken("DANGLING_NEWLINE");
 

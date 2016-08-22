@@ -56,6 +56,7 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 
 {INTEGER_LITERAL} { return FortranTokens.INTEGER_LITERAL; }
 {FLOATING_POINT_LITERAL} { return FortranTokens.FLOATING_POINT_LITERAL; }
+{DOUBLE_PRECISION_LITERAL} { return FortranTokens.DOUBLE_PRECISION_LITERAL; }
 
 "=" { return FortranTokens.EQ; }
 "==" { return FortranTokens.EQEQ; }

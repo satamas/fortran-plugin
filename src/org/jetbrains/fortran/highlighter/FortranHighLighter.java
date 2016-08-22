@@ -38,6 +38,7 @@ public class FortranHighLighter extends SyntaxHighlighterBase {
 
         keys1.put(FortranTokens.INTEGER_LITERAL, FortranHighlightingColors.NUMBER);
         keys1.put(FortranTokens.FLOATING_POINT_LITERAL, FortranHighlightingColors.NUMBER);
+        keys1.put(FortranTokens.DOUBLE_PRECISION_LITERAL, FortranHighlightingColors.NUMBER);
 
         keys1.put(FortranTokens.LINE_COMMENT, FortranHighlightingColors.LINE_COMMENT);
         keys1.put(FortranTokens.REGULAR_STRING_PART, FortranHighlightingColors.STRING);
