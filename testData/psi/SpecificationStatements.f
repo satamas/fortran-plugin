@@ -3,6 +3,11 @@ real function average()
     intrinsic sin, cos
     external sin, cos
     common /x/ c
+    data ttl /'Arbitrary Titles'/
+    data m /9/, N /0/
+    data pair(1) /9.0/, VEC /3*9.0, 0.1, 0.9/
+    data ( s(i,i), i=1,4)/4*1.0/
+    data (( r(i,j), j=1,3), i=1,2)/6*1.0/
     save
     save z
     save z, /x/

@@ -3,6 +3,7 @@ package org.jetbrains.fortran.lang;
 
 import com.intellij.psi.tree.IFileElementType;
 import org.jetbrains.fortran.FortranLanguage;
+import org.jetbrains.fortran.lang.psi.FortranElement;
 import org.jetbrains.fortran.lang.psi.impl.*;
 
 public interface FortranNodeTypes {
@@ -42,6 +43,10 @@ public interface FortranNodeTypes {
     FortranNodeType PARAMETER_STATEMENT = new FortranNodeType("PARAMETER_STATEMENT", FortranElementImpl.class);
     FortranNodeType PARAMETER = new FortranNodeType("PARAMETER", FortranElementImpl.class);
 
+    FortranNodeType DATA_STATEMENT = new FortranNodeType("DATA_STATEMENT", FortranElementImpl.class);
+    FortranNodeType DATA_IMPLIED_DO_OBJECT = new FortranNodeType("DATA_IMPLIED_DO_OBJECT", FortranElementImpl.class);
+    FortranNodeType DATA_STATEMENT_VALUE = new FortranNodeType("DATA_STATEMENT_VALUE", FortranElementImpl.class);
+
     FortranNodeType EQUIVALENCE_STATEMENT = new FortranNodeType("EQUIVALENCE_STATEMENT", FortranElementImpl.class);
     FortranNodeType EQUIVALENCE_SET = new FortranNodeType("EQUIVALENCE_SET", FortranElementImpl.class);
 
@@ -54,9 +59,12 @@ public interface FortranNodeTypes {
     FortranNodeType COMMON_BLOCK_NAME = new FortranNodeType("COMMON_BLOCK_NAME", FortranElementImpl.class);
 
     FortranNodeType INTEGER_CONSTANT = new FortranNodeType("INTEGER_CONSTANT", FortranElementImpl.class);
-    FortranNodeType BOOLEAN_CONSTANT = new FortranNodeType("BOOLEAN_CONSTANT", FortranElementImpl.class);
     FortranNodeType FLOATING_POINT_CONSTANT = new FortranNodeType("FLOATING_POINT_CONSTANT", FortranElementImpl.class);
-    FortranNodeType STRING_LITERAL = new FortranNodeType("STRING_LITERAL", FortranElementImpl.class);
+    FortranNodeType DOUBLE_PRECISION_CONSTANT = new FortranNodeType("DOUBLE_PRECISION_CONSTANT", FortranElementImpl.class);
+    FortranNodeType COMPLEX_CONSTANT = new FortranNodeType("COMPLEX_CONSTANT", FortranElementImpl.class);
+
+    FortranNodeType BOOLEAN_CONSTANT = new FortranNodeType("BOOLEAN_CONSTANT", FortranElementImpl.class);
+    FortranNodeType STRING_CONSTANT = new FortranNodeType("STRING_CONSTANT", FortranElementImpl.class);
 
     FortranNodeType TYPE_DECLARATION_STATEMENT = new FortranNodeType("TYPE_DECLARATION_STATEMENT", FortranElementImpl.class);
     FortranNodeType ENTITY_DECLARATION = new FortranNodeType("ENTITY_DECLARATION", FortranElementImpl.class);
@@ -67,6 +75,7 @@ public interface FortranNodeTypes {
 
     FortranNodeType ASSIGNMENT_EXPRESSION = new FortranNodeType("ASSIGNMENT_EXPRESSION", FortranElementImpl.class);
     FortranNodeType BINARY_EXPRESSION = new FortranNodeType("BINARY_EXPRESSION", FortranBinaryExpression.class);
+    FortranNodeType PREFIX_EXPRESSION = new FortranNodeType("PREFIX_EXPRESSION", FortranElementImpl.class);
     FortranNodeType REFERENCE_EXPRESSION = new FortranNodeType("REFERENCE_EXPRESSION", FortranReferenceExpression.class);
     FortranNodeType OPERATION_REFERENCE = new FortranNodeType("OPERATION_REFERENCE", FortranOperationReference.class);
     FortranNodeType PARENTHESIZED = new FortranNodeType("PARENTHESIZED_EXPRESSION", FortranParenthesizedExpression.class);

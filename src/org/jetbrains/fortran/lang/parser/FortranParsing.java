@@ -117,9 +117,11 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parsePrintStatement();
             } else if (at(COMMON_KEYWORD)) {
                 statementType = parseCommonStatement();
+            } else if (at(DATA_KEYWORD)) {
+                statementType = parseDataStatement();
             } else if (at(SAVE_KEYWORD)) {
                 statementType = parseSaveStatement();
-            } else if(at(DIMENSION_KEYWORD)){
+            } else if (at(DIMENSION_KEYWORD)) {
                 statementType = parseDimensionStatement();
             } else if (at(EQUIVALENCE_KEYWORD)) {
                 statementType = parseEquivalenceStatement();
@@ -201,6 +203,126 @@ public class FortranParsing extends AbstractFortranParsing {
         advance();
         parseEndOfStatement();
         endFunctionStatement.done(END_STATEMENT);
+    }
+
+    private IElementType parseDataStatement() {
+        assert at(DATA_KEYWORD);
+        advance();
+        parseDataList();
+        return DATA_STATEMENT;
+    }
+
+    private void parseDataList() {
+        parseDataStatementSet();
+        while (!eof()) {
+            if (at(COMMA)) {
+                advance();
+                if (!at(IDENTIFIER) && !at(LPAR)) {
+                    error("Data statement set expected");
+                    break;
+                }
+            } else {
+                if (!at(IDENTIFIER) && !at(LPAR)) break;
+            }
+            parseDataStatementSet();
+        }
+    }
+
+    private void parseDataStatementSet() {
+        parseDataStatementObjectList();
+        expect(DIV, "/ expected");
+        parseDataStatementValueList();
+        expect(DIV, "/ expected");
+    }
+
+    private void parseDataStatementObjectList() {
+        parseDataStatementObject();
+        while (!eof() && at(COMMA)) {
+            advance();
+            parseDataStatementObject();
+        }
+    }
+
+    private void parseDataStatementObject() {
+        if (at(IDENTIFIER)) {
+            parseVariable();
+        } else if (at(LPAR)) {
+            parseDataImpliedDo();
+        } else {
+            error("Data statement object expected");
+        }
+    }
+
+    private void parseDataImpliedDo() {
+        assert at(LPAR);
+        advance();
+        parseImpliedDoObject();
+        while (!eof() && at(COMMA)) {
+            advance();
+            if (at(IDENTIFIER) && builder.lookAhead(1) == EQ) break;
+            parseImpliedDoObject();
+        }
+
+        expect(IDENTIFIER, "Identifier expected");
+        expect(EQ, "= expected");
+        expressionParsing.parseExpression();
+        expect(COMMA, ", expected");
+        expressionParsing.parseExpression();
+        if (at(COMMA)) {
+            advance();
+            expressionParsing.parseExpression();
+        }
+        expect(RPAR, ") expected");
+    }
+
+    private void parseImpliedDoObject() {
+        PsiBuilder.Marker dataImpliedDoObject = mark();
+        if (at(LPAR)) {
+            parseDataImpliedDo();
+        } else {
+            parseArrayElement();
+        }
+        dataImpliedDoObject.done(DATA_IMPLIED_DO_OBJECT);
+    }
+
+    private void parseArrayElement() {
+        expect(IDENTIFIER, "Identifier expected");
+        expect(LPAR, "( expected");
+        parseSectionSubscriptList();
+        expect(RPAR, ") expected");
+    }
+
+    private void parseSectionSubscriptList() {
+        parseSubscriptTriplet(true);
+        while (!eof() && at(COMMA)) {
+            advance();
+            parseSubscriptTriplet(true);
+        }
+    }
+
+    private void parseDataStatementValueList() {
+        parseDataStatementValue();
+        while (!eof() && at(COMMA)) {
+            advance();
+            parseDataStatementValue();
+        }
+    }
+
+    private void parseDataStatementValue() {
+        PsiBuilder.Marker dataStatementValue = mark();
+        if (at(INTEGER_LITERAL) || at(IDENTIFIER)) {
+            PsiBuilder.Marker marker = mark();
+            IElementType type = tt();
+            advance();
+            marker.done(type == INTEGER_LITERAL ? INTEGER_CONSTANT : REFERENCE_EXPRESSION);
+            if (at(MUL)) {
+                advance();
+                parseConstant();
+            }
+        } else {
+            parseConstant();
+        }
+        dataStatementValue.done(DATA_STATEMENT_VALUE);
     }
 
     private IElementType parseEquivalenceStatement() {
@@ -708,6 +830,12 @@ public class FortranParsing extends AbstractFortranParsing {
         assert at(LPAR);
         advance();
         PsiBuilder.Marker marker = mark();
+        parseSubscriptTriplet(false);
+        marker.done(SUBSTRING_RANGE);
+        expect(RPAR, ") expected");
+    }
+
+    private void parseSubscriptTriplet(boolean allowSingleExpression) {
         if (at(COLON)) {
             advance();
             if (atSet(EXPRESSION_FIRST)) {
@@ -716,12 +844,57 @@ public class FortranParsing extends AbstractFortranParsing {
         } else {
             expressionParsing.parseExpression();
 
-            expect(COLON, ": expected");
+            if (at(COLON)) {
+                advance();
+            } else {
+                if (!allowSingleExpression) error(": expected");
+                return;
+            }
             if (atSet(EXPRESSION_FIRST)) {
                 expressionParsing.parseExpression();
             }
         }
-        marker.done(SUBSTRING_RANGE);
+    }
+
+    private void parseConstant() {
+        PsiBuilder.Marker marker = mark();
+        if (at(IDENTIFIER)) {
+            advance();
+            marker.done(REFERENCE_EXPRESSION);
+        } else if (at(INTEGER_LITERAL)) {
+            advance();
+            marker.done(INTEGER_CONSTANT);
+        } else if (at(FLOATING_POINT_LITERAL)) {
+            advance();
+            marker.done(FLOATING_POINT_CONSTANT);
+        } else if (at(DOUBLE_PRECISION_LITERAL)) {
+            advance();
+            marker.done(DOUBLE_PRECISION_CONSTANT);
+        } else if (at(LPAR)) {
+            parseComplexConstant();
+            marker.drop();
+        } else if (at(PLUS) || at(MINUS)) {
+            PsiBuilder.Marker operatorReference = mark();
+            advance();
+            operatorReference.done(OPERATION_REFERENCE);
+            parseConstant();
+            marker.done(PREFIX_EXPRESSION);
+        } else if (at(OPENING_QUOTE)) {
+            expressionParsing.parseString();
+            marker.drop();
+        } else if (at(TRUE_KEYWORD) || at(FALSE_KEYWORD)) {
+            advance();
+            marker.done(BOOLEAN_CONSTANT);
+        }
+    }
+
+    private void parseComplexConstant() {
+        PsiBuilder.Marker complexConstant = mark();
+        expect(LPAR, "( expected");
+        expressionParsing.parseExpression();
+        expect(COMMA, ", expected");
+        expressionParsing.parseExpression();
         expect(RPAR, ") expected");
+        complexConstant.done(COMPLEX_CONSTANT);
     }
 }

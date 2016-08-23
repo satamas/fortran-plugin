@@ -145,7 +145,7 @@ FILE
       FortranElementImpl(PARAMETER)
         PsiElement(IDENTIFIER)('str')
         PsiElement(EQ)('=')
-        FortranElementImpl(STRING_LITERAL)
+        FortranElementImpl(STRING_CONSTANT)
           PsiElement(OPENING_QUOTE)(''')
           PsiElement(REGULAR_STRING_PART)('msg')
           PsiElement(CLOSING_QUOTE)(''')

@@ -180,7 +180,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         mark.done(PARENTHESIZED);
     }
 
-    private void parseString() {
+    public void parseString() {
         PsiBuilder.Marker stringLiteral = mark();
         assert at(OPENING_QUOTE);
         advance();
@@ -188,7 +188,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
             advance();
         }
         expect(CLOSING_QUOTE, "\" expected");
-        stringLiteral.done(STRING_LITERAL);
+        stringLiteral.done(STRING_CONSTANT);
     }
 
     public void parseSimpleNameExpression() {
