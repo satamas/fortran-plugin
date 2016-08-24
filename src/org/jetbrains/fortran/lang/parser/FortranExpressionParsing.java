@@ -33,7 +33,16 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         },
         MULTIPLICATIVE(MUL, DIV),
         ADDITIVE(PLUS, MINUS),
-        EQUALITY(EQEQ);
+        EQUALITY(EQEQ),
+        NEGATION(NOT),
+        CONJUNCTION(AND) {
+            @Override
+            public void parseHigherPrecedence(FortranExpressionParsing parser) {
+                parser.parseAndOperand();
+            }
+        },
+        DISJUNCTION(OR),
+        EQUIVALENCE(LOGICAL_EQ, LOGICAL_NEQ);
 
         static {
             Precedence[] values = Precedence.values();
@@ -103,7 +112,18 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
             error("Expecting an expression");
             return;
         }
-        parseBinaryExpression(Precedence.EQUALITY);
+        parseBinaryExpression(Precedence.EQUIVALENCE);
+    }
+
+    private void parseAndOperand() {
+        if(atSet(Precedence.NEGATION.getOperations())) {
+            PsiBuilder.Marker prefixExpression = mark();
+            parseOperationReference();
+            parseBinaryExpression(Precedence.EQUALITY);
+            prefixExpression.done(PREFIX_EXPRESSION);
+        } else {
+            parseBinaryExpression(Precedence.EQUALITY);
+        }
     }
 
     private void parsePostfixExpression() {

@@ -81,6 +81,11 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 ">" { return FortranTokens.GT; }
 "?" { return FortranTokens.QUEST; }
 
+".eqv." { return FortranTokens.LOGICAL_EQ; }
+".neqv." { return FortranTokens.LOGICAL_NEQ; }
+".and." { return FortranTokens.AND; }
+".or." { return FortranTokens.OR; }
+".not." { return FortranTokens.NOT; }
 ".true." { return FortranTokens.TRUE_KEYWORD; }
 ".false." { return FortranTokens.FALSE_KEYWORD; }
 

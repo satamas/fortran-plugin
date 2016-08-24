@@ -11,8 +11,8 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
         doParsingTest(FortranTestDataFixture.navigationMetadata("PrintWrite.f"));
     }
 
-    public void testImplicit() throws Exception {
-        doParsingTest(FortranTestDataFixture.navigationMetadata("Implicit.f"));
+    public void testExpressions() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("Expressions.f"));
     }
 
     public void testSpecificationStatements() throws Exception {

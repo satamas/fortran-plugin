@@ -14,6 +14,12 @@ public interface FortranTokens {
     FortranToken IDENTIFIER = new FortranToken("IDENTIFIER");
     FortranToken DANGLING_NEWLINE = new FortranToken("DANGLING_NEWLINE");
 
+    FortranToken LOGICAL_EQ = new FortranToken(".EQV.");
+    FortranToken LOGICAL_NEQ = new FortranToken(".NEQV.");
+    FortranToken OR = new FortranToken(".OR.");
+    FortranToken AND = new FortranToken(".AND.");
+    FortranToken NOT = new FortranToken(".not.");
+
     FortranSingleValueToken EQ = new FortranSingleValueToken("EQ", "=");
     FortranSingleValueToken EQEQ = new FortranSingleValueToken("EQEQ", "==");
     FortranSingleValueToken COLON = new FortranSingleValueToken("COLON", ":");
