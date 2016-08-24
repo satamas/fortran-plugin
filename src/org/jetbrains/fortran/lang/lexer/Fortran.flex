@@ -60,6 +60,7 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 
 "=" { return FortranTokens.EQ; }
 "==" { return FortranTokens.EQEQ; }
+"/=" { return FortranTokens.NEQ; }
 ":" { return FortranTokens.COLON; }
 "::" { return FortranTokens.COLONCOLON; }
 "+" { return FortranTokens.PLUS; }
@@ -67,6 +68,7 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 "*" { return FortranTokens.MUL; }
 "**" { return FortranTokens.POWER; }
 "/" { return FortranTokens.DIV; }
+"//" { return FortranTokens.DIVDIV; }
 "(" { return FortranTokens.LPAR; }
 ")" { return FortranTokens.RPAR; }
 "[" { return FortranTokens.LBRACKET; }
@@ -78,7 +80,9 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 "&" { return FortranTokens.AMP; }
 ";" { return FortranTokens.SEMICOLON; }
 "<" { return FortranTokens.LT; }
+"<=" { return FortranTokens.LE; }
 ">" { return FortranTokens.GT; }
+">=" { return FortranTokens.GE; }
 "?" { return FortranTokens.QUEST; }
 
 ".eqv." { return FortranTokens.LOGICAL_EQ; }
@@ -86,6 +90,13 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 ".and." { return FortranTokens.AND; }
 ".or." { return FortranTokens.OR; }
 ".not." { return FortranTokens.NOT; }
+".eq." { return FortranTokens.EQEQ; }
+'.ne.'{ return FortranTokens.NEQ; }
+'.lt.' { return FortranTokens.LT}
+'.le.' { return FortranTokens.LE}
+'.gt.' { return FortranTokens.GT}
+'.ge.' { return FortranTokens.GE}
+
 ".true." { return FortranTokens.TRUE_KEYWORD; }
 ".false." { return FortranTokens.FALSE_KEYWORD; }
 

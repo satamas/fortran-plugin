@@ -24,16 +24,23 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
     );
 
     public enum Precedence {
+        PREFIX(MINUS, PLUS) { // annotations
+            @Override
+            public void parseHigherPrecedence(FortranExpressionParsing parser) {
+                throw new IllegalStateException("Don't call this method");
+            }
+        },
 
         EXPONENTIATION(POWER) {
             @Override
             public void parseHigherPrecedence(FortranExpressionParsing parser) {
-                parser.parsePostfixExpression();
+                parser.parsePrefixExpression();
             }
         },
         MULTIPLICATIVE(MUL, DIV),
         ADDITIVE(PLUS, MINUS),
-        EQUALITY(EQEQ),
+        CONCAT(DIVDIV),
+        RELATIONAL(EQEQ, NEQ, LT, LE, GT, GE),
         NEGATION(NOT),
         CONJUNCTION(AND) {
             @Override
@@ -119,10 +126,21 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         if(atSet(Precedence.NEGATION.getOperations())) {
             PsiBuilder.Marker prefixExpression = mark();
             parseOperationReference();
-            parseBinaryExpression(Precedence.EQUALITY);
+            parseBinaryExpression(Precedence.RELATIONAL);
             prefixExpression.done(PREFIX_EXPRESSION);
         } else {
-            parseBinaryExpression(Precedence.EQUALITY);
+            parseBinaryExpression(Precedence.RELATIONAL);
+        }
+    }
+
+    private void parsePrefixExpression() {
+        if(atSet(Precedence.PREFIX.getOperations())) {
+            PsiBuilder.Marker prefixExpression = mark();
+            parseOperationReference();
+            parsePostfixExpression();
+            prefixExpression.done(PREFIX_EXPRESSION);
+        } else {
+            parsePostfixExpression();
         }
     }
 

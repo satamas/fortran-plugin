@@ -21,6 +21,7 @@ public interface FortranTokens {
     FortranToken NOT = new FortranToken(".not.");
 
     FortranSingleValueToken EQ = new FortranSingleValueToken("EQ", "=");
+    FortranSingleValueToken NEQ = new FortranSingleValueToken("NEQ", "/=");
     FortranSingleValueToken EQEQ = new FortranSingleValueToken("EQEQ", "==");
     FortranSingleValueToken COLON = new FortranSingleValueToken("COLON", ":");
     FortranSingleValueToken COLONCOLON = new FortranSingleValueToken("COLONCOLON", "::");
@@ -29,6 +30,7 @@ public interface FortranTokens {
     FortranSingleValueToken MUL = new FortranSingleValueToken("MUL", "*");
     FortranSingleValueToken POWER = new FortranSingleValueToken("MUL", "**");
     FortranSingleValueToken DIV = new FortranSingleValueToken("DIV", "/");
+    FortranSingleValueToken DIVDIV = new FortranSingleValueToken("DIVDIV", "//");
     FortranSingleValueToken LPAR = new FortranSingleValueToken("LPAR", "(");
     FortranSingleValueToken RPAR = new FortranSingleValueToken("RPAR", ")");
     FortranSingleValueToken LBRACKET = new FortranSingleValueToken("LBRACKET", "[");
@@ -37,7 +39,9 @@ public interface FortranTokens {
     FortranSingleValueToken DOT = new FortranSingleValueToken("DOT", ".");
     FortranSingleValueToken SEMICOLON = new FortranSingleValueToken("SEMICOLON", ";");
     FortranSingleValueToken LT = new FortranSingleValueToken("LT", "<");
+    FortranSingleValueToken LE = new FortranSingleValueToken("LE", "<=");
     FortranSingleValueToken GT = new FortranSingleValueToken("GT", ">");
+    FortranSingleValueToken GE = new FortranSingleValueToken("GE", ">=");
     FortranSingleValueToken QUEST = new FortranSingleValueToken("QUEST", "?");
     FortranSingleValueToken AMP = new FortranSingleValueToken("AMP", "&");
     FortranSingleValueToken PERC = new FortranSingleValueToken("PERC", "%");
