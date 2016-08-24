@@ -133,7 +133,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         }
     }
 
-    private void parsePrefixExpression() {
+    public void parsePrefixExpression() {
         if(atSet(Precedence.PREFIX.getOperations())) {
             PsiBuilder.Marker prefixExpression = mark();
             parseOperationReference();
@@ -260,16 +260,42 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
     }
 
     private boolean parseLiteralConstant() {
-        if (at(INTEGER_LITERAL)) {
-            parseOneTokenExpression(INTEGER_CONSTANT);
-        } else if (atSet(TRUE_KEYWORD, FALSE_KEYWORD)) {
-            parseOneTokenExpression(BOOLEAN_CONSTANT);
+        PsiBuilder.Marker marker = mark();
+        if (at(IDENTIFIER)) {
+            advance();
+            marker.done(REFERENCE_EXPRESSION);
+        } else if (at(INTEGER_LITERAL)) {
+            advance();
+            marker.done(INTEGER_CONSTANT);
         } else if (at(FLOATING_POINT_LITERAL)) {
-            parseOneTokenExpression(FLOATING_POINT_CONSTANT);
+            advance();
+            marker.done(FLOATING_POINT_CONSTANT);
+        } else if (at(DOUBLE_PRECISION_LITERAL)) {
+            advance();
+            marker.done(DOUBLE_PRECISION_CONSTANT);
+        } else if (at(LPAR)) {
+            parseComplexConstant();
+            marker.drop();
+        } else if (at(OPENING_QUOTE)) {
+            parseString();
+            marker.drop();
+        } else if (at(TRUE_KEYWORD) || at(FALSE_KEYWORD)) {
+            advance();
+            marker.done(BOOLEAN_CONSTANT);
         } else {
             return false;
         }
         return true;
+    }
+
+    private void parseComplexConstant() {
+        PsiBuilder.Marker complexConstant = mark();
+        expect(LPAR, "( expected");
+        parseExpression();
+        expect(COMMA, ", expected");
+        parseExpression();
+        expect(RPAR, ") expected");
+        complexConstant.done(COMPLEX_CONSTANT);
     }
 
     private void parseOneTokenExpression(FortranNodeType type) {

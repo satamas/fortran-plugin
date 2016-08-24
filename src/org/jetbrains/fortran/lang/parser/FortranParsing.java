@@ -319,10 +319,10 @@ public class FortranParsing extends AbstractFortranParsing {
             marker.done(type == INTEGER_LITERAL ? INTEGER_CONSTANT : REFERENCE_EXPRESSION);
             if (at(MUL)) {
                 advance();
-                parseConstant();
+                expressionParsing.parsePrefixExpression();
             }
         } else {
-            parseConstant();
+            expressionParsing.parsePrefixExpression();
         }
         dataStatementValue.done(DATA_STATEMENT_VALUE);
     }
@@ -883,45 +883,5 @@ public class FortranParsing extends AbstractFortranParsing {
         }
     }
 
-    private void parseConstant() {
-        PsiBuilder.Marker marker = mark();
-        if (at(IDENTIFIER)) {
-            advance();
-            marker.done(REFERENCE_EXPRESSION);
-        } else if (at(INTEGER_LITERAL)) {
-            advance();
-            marker.done(INTEGER_CONSTANT);
-        } else if (at(FLOATING_POINT_LITERAL)) {
-            advance();
-            marker.done(FLOATING_POINT_CONSTANT);
-        } else if (at(DOUBLE_PRECISION_LITERAL)) {
-            advance();
-            marker.done(DOUBLE_PRECISION_CONSTANT);
-        } else if (at(LPAR)) {
-            parseComplexConstant();
-            marker.drop();
-        } else if (at(PLUS) || at(MINUS)) {
-            PsiBuilder.Marker operatorReference = mark();
-            advance();
-            operatorReference.done(OPERATION_REFERENCE);
-            parseConstant();
-            marker.done(PREFIX_EXPRESSION);
-        } else if (at(OPENING_QUOTE)) {
-            expressionParsing.parseString();
-            marker.drop();
-        } else if (at(TRUE_KEYWORD) || at(FALSE_KEYWORD)) {
-            advance();
-            marker.done(BOOLEAN_CONSTANT);
-        }
-    }
 
-    private void parseComplexConstant() {
-        PsiBuilder.Marker complexConstant = mark();
-        expect(LPAR, "( expected");
-        expressionParsing.parseExpression();
-        expect(COMMA, ", expected");
-        expressionParsing.parseExpression();
-        expect(RPAR, ") expected");
-        complexConstant.done(COMPLEX_CONSTANT);
-    }
 }
