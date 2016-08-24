@@ -33,6 +33,8 @@ public interface FortranNodeTypes {
 
     FortranNodeType SAVE_STATMENT = new FortranNodeType("SAVE_STATEMENT", FortranElementImpl.class);
 
+    FortranNodeType IF_STATMENT = new FortranNodeType("IF_STATEMENT", FortranElementImpl.class);
+
     FortranNodeType DIMENSION_STATEMENT = new FortranNodeType("DIMENSION_STATEMENT", FortranElementImpl.class);
 
     FortranNodeType IMPLICIT_STATEMENT = new FortranNodeType("IMPLICIT_STATEMENT", FortranElementImpl.class);
@@ -77,6 +79,7 @@ public interface FortranNodeTypes {
     FortranNodeType BINARY_EXPRESSION = new FortranNodeType("BINARY_EXPRESSION", FortranBinaryExpression.class);
     FortranNodeType PREFIX_EXPRESSION = new FortranNodeType("PREFIX_EXPRESSION", FortranElementImpl.class);
     FortranNodeType REFERENCE_EXPRESSION = new FortranNodeType("REFERENCE_EXPRESSION", FortranReferenceExpression.class);
+    FortranNodeType LABEL_REFERENCE = new FortranNodeType("LABEL_REFERENCE", FortranElementImpl.class);
     FortranNodeType OPERATION_REFERENCE = new FortranNodeType("OPERATION_REFERENCE", FortranOperationReference.class);
     FortranNodeType PARENTHESIZED = new FortranNodeType("PARENTHESIZED_EXPRESSION", FortranParenthesizedExpression.class);
     FortranNodeType ARGUMENT_LIST = new FortranNodeType("ARGUMENT_LIST", FortranArgumentsList.class);

@@ -132,6 +132,8 @@ public class FortranParsing extends AbstractFortranParsing {
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
+            } else if (at(IF_KEYWORD)) {
+                statementType = parseIfStatement();
             } else if (atSet(TYPE_FIRST)) {
                 statementType = parseTypeStatement();
             } else {
@@ -557,6 +559,31 @@ public class FortranParsing extends AbstractFortranParsing {
         parseParametersList();
         expect(RPAR, ") expected");
         return PARAMETER_STATEMENT;
+    }
+
+    private IElementType parseIfStatement() {
+        assert at(IF_KEYWORD);
+        advance();
+        expect(LPAR, "( expected");
+        expressionParsing.parseExpression();
+        expect(RPAR, ") expected");
+
+        parseLabelReference();
+        expect(COMMA, ", expected");
+        parseLabelReference();
+        expect(COMMA, ", expected");
+        parseLabelReference();
+        return IF_STATMENT;
+    }
+
+    private void parseLabelReference() {
+        PsiBuilder.Marker marker = mark();
+        if(at(INTEGER_LITERAL)){
+            advance();
+            marker.done(LABEL_REFERENCE);
+        } else {
+            marker.drop();
+        }
     }
 
     private void parseFormatSpecification() {
