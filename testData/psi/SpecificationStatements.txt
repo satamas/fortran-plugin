@@ -239,7 +239,7 @@ FILE
         PsiElement(IDENTIFIER)('y')
       PsiElement(RPAR)(')')
     PsiWhiteSpace('\n    ')
-    FortranElementImpl(SAVE_STATEMENT)
+    FortranElementImpl(DIMENSION_STATEMENT)
       PsiElement(dimension)('DIMENSION')
       PsiWhiteSpace(' ')
       FortranElementImpl(ENTITY_DECLARATION)

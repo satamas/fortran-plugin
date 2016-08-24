@@ -437,7 +437,7 @@ public class FortranParsing extends AbstractFortranParsing {
         assert at(DIMENSION_KEYWORD);
         advance();
         parseEntityDeclarationList(false);
-        return SAVE_STATMENT;
+        return DIMENSION_STATEMENT;
     }
 
     private IElementType parseSaveStatement() {
