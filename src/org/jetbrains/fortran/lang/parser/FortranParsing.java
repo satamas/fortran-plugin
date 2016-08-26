@@ -135,6 +135,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseBackspaceStatement();
             } else if (at(CALL_KEYWORD)) {
                 statementType = parseCallStatement();
+            } else if (at(CLOSE_KEYWORD)) {
+                statementType = parseCloseStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -496,6 +498,19 @@ public class FortranParsing extends AbstractFortranParsing {
         assert at(CALL_KEYWORD);
         advance();
         expressionParsing.parsePostfixExpression();
+        return CALL_STATEMENT;
+    }
+
+    private IElementType parseCloseStatement() {
+        assert at(CLOSE_KEYWORD);
+        advance();
+        expect(LPAR, "( expected");
+        parseUnitIdentifier();
+        while (!eof() && at(COMMA)) {
+            advance();
+            expressionParsing.parseExpression();
+        }
+        expect(RPAR, ") expected");
         return CALL_STATEMENT;
     }
 

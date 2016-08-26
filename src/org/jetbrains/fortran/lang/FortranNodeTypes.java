@@ -81,7 +81,7 @@ public interface FortranNodeTypes {
     FortranNodeType ARRAY_SPECIFICATION = new FortranNodeType("ARRAY_SPECIFICATION", FortranElementImpl.class);
     FortranNodeType SIZE_SPECIFICATION = new FortranNodeType("SIZE_SPECIFICATION", FortranElementImpl.class);
 
-    FortranNodeType ASSIGNMENT_EXPRESSION = new FortranNodeType("ASSIGNMENT_EXPRESSION", FortranElementImpl.class);
+    FortranNodeType WILDCARD = new FortranNodeType("WILDCARD", FortranElementImpl.class);
     FortranNodeType BINARY_EXPRESSION = new FortranNodeType("BINARY_EXPRESSION", FortranBinaryExpression.class);
     FortranNodeType PREFIX_EXPRESSION = new FortranNodeType("PREFIX_EXPRESSION", FortranElementImpl.class);
     FortranNodeType REFERENCE_EXPRESSION = new FortranNodeType("REFERENCE_EXPRESSION", FortranReferenceExpression.class);

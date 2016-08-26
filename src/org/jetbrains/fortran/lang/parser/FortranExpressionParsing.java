@@ -50,7 +50,17 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         },
         DISJUNCTION(OR),
         EQUIVALENCE(LOGICAL_EQ, LOGICAL_NEQ),
-        ASSIGNMENT(EQ);
+        ASSIGNMENT(EQ) {
+            @Override
+            public FortranNodeType parseRightHandSide(IElementType operation, FortranExpressionParsing parser) {
+                if(parser.at(MUL)) {
+                    parser.advance();
+                    return WILDCARD;
+                } else {
+                    return super.parseRightHandSide(operation, parser);
+                }
+            }
+        };
 
         static {
             Precedence[] values = Precedence.values();
