@@ -493,7 +493,27 @@ public class FortranParsing extends AbstractFortranParsing {
     private IElementType parseBackspaceStatement() {
         assert at(BACKSPACE_KEYWORD);
         advance();
-
+        if(at(LPAR)){
+            PsiBuilder.Marker marker = mark();
+            advance();
+            expressionParsing.parseExpression();
+            if(at(RPAR)) {
+                advance();
+                marker.drop();
+            } else if (at(COMMA)) {
+                marker.drop();
+                while (!eof() && at(COMMA)){
+                    advance();
+                    expressionParsing.parseExpression();
+                }
+                expect(RPAR, ") expected");
+            } else {
+                marker.rollbackTo();
+                expressionParsing.parseExpression();
+            }
+        } else {
+            parseUnitIdentifier();
+        }
         return BACKSPACE_STATEMENT;
     }
 
