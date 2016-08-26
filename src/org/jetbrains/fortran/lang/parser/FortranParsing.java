@@ -133,6 +133,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseAssignStatement();
             } else if (at(BACKSPACE_KEYWORD)) {
                 statementType = parseBackspaceStatement();
+            } else if (at(CALL_KEYWORD)) {
+                statementType = parseCallStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -141,7 +143,7 @@ public class FortranParsing extends AbstractFortranParsing {
             } else if (atSet(TYPE_FIRST)) {
                 statementType = parseTypeStatement();
             } else {
-                if(atSet(EXPRESSION_FIRST)){
+                if (atSet(EXPRESSION_FIRST)) {
                     expressionParsing.parseExpression();
                 } else {
                     errorAndAdvance("Expecting a statement");
@@ -490,19 +492,26 @@ public class FortranParsing extends AbstractFortranParsing {
         return ASSIGN_STATEMENT;
     }
 
+    private IElementType parseCallStatement() {
+        assert at(CALL_KEYWORD);
+        advance();
+        expressionParsing.parsePostfixExpression();
+        return CALL_STATEMENT;
+    }
+
     private IElementType parseBackspaceStatement() {
         assert at(BACKSPACE_KEYWORD);
         advance();
-        if(at(LPAR)){
+        if (at(LPAR)) {
             PsiBuilder.Marker marker = mark();
             advance();
             expressionParsing.parseExpression();
-            if(at(RPAR)) {
+            if (at(RPAR)) {
                 advance();
                 marker.drop();
             } else if (at(COMMA)) {
                 marker.drop();
-                while (!eof() && at(COMMA)){
+                while (!eof() && at(COMMA)) {
                     advance();
                     expressionParsing.parseExpression();
                 }
@@ -929,7 +938,7 @@ public class FortranParsing extends AbstractFortranParsing {
 
 
     private void parseUnitIdentifier() {
-        if(at(MUL)) {
+        if (at(MUL)) {
             advance();
         } else {
             expressionParsing.parseExpression();

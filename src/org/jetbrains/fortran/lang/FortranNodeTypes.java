@@ -32,6 +32,8 @@ public interface FortranNodeTypes {
 
     FortranNodeType BACKSPACE_STATEMENT = new FortranNodeType("BACKSPACE_STATEMENT", FortranElementImpl.class);
 
+    FortranNodeType CALL_STATEMENT = new FortranNodeType("CALL_STATEMENT", FortranElementImpl.class);
+
     FortranNodeType FORMAT_STATEMENT = new FortranNodeType("FORMAT_STATEMENT", FortranElementImpl.class);
     FortranNodeType FORMAT_SPECIFICATION = new FortranNodeType("FORMAT_SPECIFICATION", FortranElementImpl.class);
 

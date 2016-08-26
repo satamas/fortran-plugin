@@ -123,7 +123,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         }
     }
 
-    private void parsePostfixExpression() {
+    public void parsePostfixExpression() {
         PsiBuilder.Marker expression = mark();
         parseAtomicExpression();
         if (parseCallOrAccessSuffix()) {

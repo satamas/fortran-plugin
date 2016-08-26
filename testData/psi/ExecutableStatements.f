@@ -4,4 +4,5 @@ program p
     backspace 2
     backspace a
     backspace ( 2, iostat=code, err=9 )
+    call oops ( text )
 end program
