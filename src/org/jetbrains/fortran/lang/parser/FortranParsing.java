@@ -129,6 +129,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseIntrinsicStatement();
             } else if (at(EXTERNAL_KEYWORD)) {
                 statementType = parseExternalStatement();
+            } else if (at(ASSIGN_KEYWORD)) {
+                statementType = parseAssignStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -473,6 +475,15 @@ public class FortranParsing extends AbstractFortranParsing {
         return IMPLICIT_STATEMENT;
     }
 
+    private IElementType parseAssignStatement(){
+        assert at(ASSIGN_KEYWORD);
+        advance();
+        parseLabelReference();
+        expect(TO_KEYWORD, "'to' expected");
+        expressionParsing.parseSimpleNameExpression();
+        return ASSIGN_STATEMENT;
+    }
+
     private IElementType parseEntryStatement() {
         assert at(ENTRY_KEYWORD);
         advance();
@@ -578,7 +589,7 @@ public class FortranParsing extends AbstractFortranParsing {
 
     private void parseLabelReference() {
         PsiBuilder.Marker marker = mark();
-        if(at(INTEGER_LITERAL)){
+        if (at(INTEGER_LITERAL)) {
             advance();
             marker.done(LABEL_REFERENCE);
         } else {

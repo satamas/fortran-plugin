@@ -28,6 +28,8 @@ public interface FortranNodeTypes {
 
     FortranNodeType ENTRY_STATEMENT = new FortranNodeType("ENTRY_STATEMENT", FortranElementImpl.class);
 
+    FortranNodeType ASSIGN_STATEMENT = new FortranNodeType("ASSIGN_STATEMENT", FortranElementImpl.class);
+
     FortranNodeType FORMAT_STATEMENT = new FortranNodeType("FORMAT_STATEMENT", FortranElementImpl.class);
     FortranNodeType FORMAT_SPECIFICATION = new FortranNodeType("FORMAT_SPECIFICATION", FortranElementImpl.class);
 
