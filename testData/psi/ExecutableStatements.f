@@ -7,4 +7,5 @@ program p
     call oops ( text )
     close ( 2, status='delete', iostat=i )
     continue
+    endfile ( unit=nout, iostat=kode, err=9)
 end program

@@ -131,8 +131,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseExternalStatement();
             } else if (at(ASSIGN_KEYWORD)) {
                 statementType = parseAssignStatement();
-            } else if (at(BACKSPACE_KEYWORD)) {
-                statementType = parseBackspaceStatement();
+            } else if (at(BACKSPACE_KEYWORD) || at(ENDFILE_KEYWORD)) {
+                statementType = parseFileOperationStatement();
             } else if (at(CALL_KEYWORD)) {
                 statementType = parseCallStatement();
             } else if (at(CLOSE_KEYWORD)) {
@@ -522,8 +522,7 @@ public class FortranParsing extends AbstractFortranParsing {
         return CALL_STATEMENT;
     }
 
-    private IElementType parseBackspaceStatement() {
-        assert at(BACKSPACE_KEYWORD);
+    private IElementType parseFileOperationStatement() {
         advance();
         if (at(LPAR)) {
             PsiBuilder.Marker marker = mark();
@@ -546,7 +545,7 @@ public class FortranParsing extends AbstractFortranParsing {
         } else {
             parseUnitIdentifier();
         }
-        return BACKSPACE_STATEMENT;
+        return STATEMENT;
     }
 
     private IElementType parseEntryStatement() {
