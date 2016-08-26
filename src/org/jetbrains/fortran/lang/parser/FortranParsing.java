@@ -102,7 +102,7 @@ public class FortranParsing extends AbstractFortranParsing {
     private void parseBody() {
         while (!eof()) {
             PsiBuilder.Marker marker = mark();
-            IElementType statementType;
+            IElementType statementType = null;
             parseLabelDefinition();
 
             if (at(IMPLICIT_KEYWORD)) {
@@ -131,6 +131,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseExternalStatement();
             } else if (at(ASSIGN_KEYWORD)) {
                 statementType = parseAssignStatement();
+            } else if (at(BACKSPACE_KEYWORD)) {
+                statementType = parseBackspaceStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -139,7 +141,11 @@ public class FortranParsing extends AbstractFortranParsing {
             } else if (atSet(TYPE_FIRST)) {
                 statementType = parseTypeStatement();
             } else {
-                statementType = expressionParsing.parseStatement();
+                if(atSet(EXPRESSION_FIRST)){
+                    expressionParsing.parseExpression();
+                } else {
+                    errorAndAdvance("Expecting a statement");
+                }
             }
 
             parseEndOfStatement();
@@ -475,13 +481,20 @@ public class FortranParsing extends AbstractFortranParsing {
         return IMPLICIT_STATEMENT;
     }
 
-    private IElementType parseAssignStatement(){
+    private IElementType parseAssignStatement() {
         assert at(ASSIGN_KEYWORD);
         advance();
         parseLabelReference();
         expect(TO_KEYWORD, "'to' expected");
         expressionParsing.parseSimpleNameExpression();
         return ASSIGN_STATEMENT;
+    }
+
+    private IElementType parseBackspaceStatement() {
+        assert at(BACKSPACE_KEYWORD);
+        advance();
+
+        return BACKSPACE_STATEMENT;
     }
 
     private IElementType parseEntryStatement() {
@@ -895,4 +908,11 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
 
+    private void parseUnitIdentifier() {
+        if(at(MUL)) {
+            advance();
+        } else {
+            expressionParsing.parseExpression();
+        }
+    }
 }

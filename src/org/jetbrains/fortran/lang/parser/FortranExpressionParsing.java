@@ -49,7 +49,8 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
             }
         },
         DISJUNCTION(OR),
-        EQUIVALENCE(LOGICAL_EQ, LOGICAL_NEQ);
+        EQUIVALENCE(LOGICAL_EQ, LOGICAL_NEQ),
+        ASSIGNMENT(EQ);
 
         static {
             Precedence[] values = Precedence.values();
@@ -92,34 +93,12 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
     }
 
 
-    public IElementType parseStatement() {
-         if (at(IDENTIFIER)) {
-            return parseAssignment();
-        } else {
-            errorAndAdvance("Expecting a statement");
-            return null;
-        }
-    }
-
-    public IElementType parseAssignment() {
-        assert at(IDENTIFIER);
-        advance();
-
-        if (!at(EQ)) {
-            error("= expected");
-            return null;
-        }
-        advance();
-        parseExpression();
-        return ASSIGNMENT_EXPRESSION;
-    }
-
     public void parseExpression() {
         if (!atSet(EXPRESSION_FIRST)) {
             error("Expecting an expression");
             return;
         }
-        parseBinaryExpression(Precedence.EQUIVALENCE);
+        parseBinaryExpression(Precedence.ASSIGNMENT);
     }
 
     private void parseAndOperand() {
