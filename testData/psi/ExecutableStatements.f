@@ -8,4 +8,8 @@ program p
     close ( 2, status='delete', iostat=i )
     continue
     endfile ( unit=nout, iostat=kode, err=9)
+    goto 10
+    goto n, (10)
+    go to n ( 10, 20, 30, 40 )
+    go to ( 10, 20, 30, 40 ), n + 2
 end program

@@ -91,11 +91,11 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 ".or." { return FortranTokens.OR; }
 ".not." { return FortranTokens.NOT; }
 ".eq." { return FortranTokens.EQEQ; }
-'.ne.'{ return FortranTokens.NEQ; }
-'.lt.' { return FortranTokens.LT}
-'.le.' { return FortranTokens.LE}
-'.gt.' { return FortranTokens.GT}
-'.ge.' { return FortranTokens.GE}
+".ne." { return FortranTokens.NEQ; }
+".lt." { return FortranTokens.LT; }
+".le." { return FortranTokens.LE; }
+".gt." { return FortranTokens.GT; }
+".ge." { return FortranTokens.GE; }
 
 ".true." { return FortranTokens.TRUE_KEYWORD; }
 ".false." { return FortranTokens.FALSE_KEYWORD; }
@@ -130,6 +130,7 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 "function" { return FortranTokens.FUNCTION_KEYWORD; }
 "go" { return FortranTokens.GO_KEYWORD; }
 "to" { return FortranTokens.TO_KEYWORD; }
+"goto" { return FortranTokens.GOTO_KEYWORD; }
 "if" { return FortranTokens.IF_KEYWORD; }
 "implicit" { return FortranTokens.IMPLICIT_KEYWORD; }
 "in" { return FortranTokens.IN_KEYWORD; }

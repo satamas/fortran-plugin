@@ -139,6 +139,8 @@ public class FortranParsing extends AbstractFortranParsing {
                 statementType = parseCloseStatement();
             } else if (at(CONTINUE_KEYWORD)) {
                 statementType = parseContinueStatement();
+            } else if (at(GO_KEYWORD) || at(GOTO_KEYWORD)) {
+                statementType = parseGoToStatement();
             } else if (at(END_KEYWORD)) {
                 marker.rollbackTo();
                 break;
@@ -413,7 +415,7 @@ public class FortranParsing extends AbstractFortranParsing {
 
     private void parseCommonBlock() {
         PsiBuilder.Marker commonBlock = builder.mark();
-        if (at(DIV)) {
+        if (at(DIV) || at(DIVDIV)) {
             parseCommonBlockName(false);
         }
         parseCommonDeclarationList();
@@ -421,12 +423,18 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private void parseCommonBlockName(boolean nameRequired) {
-        assert at(DIV);
         PsiBuilder.Marker commonBlockName = builder.mark();
-        advance();
-        if (nameRequired && !at(IDENTIFIER)) {
-            error("Identifier expected");
+        if(at(DIVDIV)){
+            if(nameRequired){
+                errorAndAdvance("Identified expected");
+            } else {
+                advance();
+            }
+            commonBlockName.done(COMMON_BLOCK_NAME);
+            return;
         }
+        advance();
+
         if (at(IDENTIFIER)) {
             advance();
         }
@@ -473,7 +481,7 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private void parseSavedEntity() {
-        if (at(DIV)) {
+        if (at(DIV) || at(DIVDIV)) {
             parseCommonBlockName(true);
         } else {
             parseEntityDeclaration(false, false);
@@ -507,6 +515,50 @@ public class FortranParsing extends AbstractFortranParsing {
         assert at(CONTINUE_KEYWORD);
         advance();
         return STATEMENT;
+    }
+
+    private IElementType parseGoToStatement() {
+        if (at(GOTO_KEYWORD)) {
+            advance();
+        } else if (at(GO_KEYWORD)) {
+            advance();
+            expect(TO_KEYWORD, "'to' expected");
+        }
+
+        if (at(INTEGER_LITERAL)) {
+            parseLabelReference();
+        } else if (at(IDENTIFIER)) {
+            PsiBuilder.Marker reference = mark();
+            advance();
+            reference.done(REFERENCE_EXPRESSION);
+            if (at(COMMA) || at(LPAR)) {
+                if (at(COMMA)) advance();
+                expect(LPAR, "( expected");
+                parseLabelReferenceList();
+                expect(RPAR, ") expected");
+            }
+        } else if(at(LPAR)){
+            advance();
+            parseLabelReferenceList();
+            expect(RPAR, ") expected");
+            if(at(COMMA)){
+                advance();
+            }
+            expressionParsing.parseExpression();
+        } else {
+            error("Destination expected");
+        }
+
+
+        return STATEMENT;
+    }
+
+    private void parseLabelReferenceList(){
+        parseLabelReference();
+        while (!eof() && at(COMMA)) {
+            advance();
+            parseLabelReference();
+        }
     }
 
     private IElementType parseCloseStatement() {
