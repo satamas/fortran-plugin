@@ -14,6 +14,9 @@ public interface FortranNodeTypes {
     FortranNodeType SUBROUTINE = new FortranNodeType("SUBROUTINE", FortranProgram.class);
     FortranNodeType BLOCK_DATA = new FortranNodeType("BLOCK_DATA", FortranProgram.class);
 
+    FortranNodeType STATEMENT = new FortranNodeType("STATEMENT", FortranElementImpl.class);
+//    FortranNodeType STATEMENT_TYPE = new FortranNodeType("STATEMENT_TYPE", FortranElement.class);
+
     FortranNodeType PRINT_STATEMENT = new FortranNodeType("PRINT", FortranPrintStatement.class);
 
     FortranNodeType BLOCK_DATA_STATEMENT = new FortranNodeType("BLOCK_DATA_STATEMENT", FortranElementImpl.class);

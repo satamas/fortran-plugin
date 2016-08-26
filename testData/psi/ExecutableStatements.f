@@ -6,4 +6,5 @@ program p
     backspace ( 2, iostat=code, err=9 )
     call oops ( text )
     close ( 2, status='delete', iostat=i )
+    continue
 end program
