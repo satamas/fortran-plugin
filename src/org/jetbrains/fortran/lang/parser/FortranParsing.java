@@ -100,69 +100,77 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private void parseBody() {
-        while (!eof()) {
-            PsiBuilder.Marker marker = mark();
-            IElementType statementType = null;
-            parseLabelDefinition();
+        boolean statementParsed = true;
+        PsiBuilder.Marker marker = mark();
+        while (!eof() && statementParsed) {
+            statementParsed = parseStatement();
+        }
+        marker.done(CODE_BLOCK);
+    }
 
-            if (at(IMPLICIT_KEYWORD)) {
-                statementType = parseImplicitStatement();
-            } else if (at(PARAMETER_KEYWORD)) {
-                statementType = parseParameterStatement();
-            } else if (at(FORMAT_KEYWORD)) {
-                statementType = parseFormatStatement();
-            } else if (at(ENTRY_KEYWORD)) {
-                statementType = parseEntryStatement();
-            } else if (at(PRINT_KEYWORD)) {
-                statementType = parsePrintStatement();
-            } else if (at(COMMON_KEYWORD)) {
-                statementType = parseCommonStatement();
-            } else if (at(DATA_KEYWORD)) {
-                statementType = parseDataStatement();
-            } else if (at(SAVE_KEYWORD)) {
-                statementType = parseSaveStatement();
-            } else if (at(DIMENSION_KEYWORD)) {
-                statementType = parseDimensionStatement();
-            } else if (at(EQUIVALENCE_KEYWORD)) {
-                statementType = parseEquivalenceStatement();
-            } else if (at(INTRINSIC_KEYWORD)) {
-                statementType = parseIntrinsicStatement();
-            } else if (at(EXTERNAL_KEYWORD)) {
-                statementType = parseExternalStatement();
-            } else if (at(ASSIGN_KEYWORD)) {
-                statementType = parseAssignStatement();
-            } else if (at(BACKSPACE_KEYWORD) || at(ENDFILE_KEYWORD)) {
-                statementType = parseFileOperationStatement();
-            } else if (at(CALL_KEYWORD)) {
-                statementType = parseCallStatement();
-            } else if (at(CLOSE_KEYWORD)) {
-                statementType = parseCloseStatement();
-            } else if (at(CONTINUE_KEYWORD)) {
-                statementType = parseContinueStatement();
-            } else if (at(GO_KEYWORD) || at(GOTO_KEYWORD)) {
-                statementType = parseGoToStatement();
-            } else if (at(END_KEYWORD)) {
-                marker.rollbackTo();
-                break;
-            } else if (at(IF_KEYWORD)) {
-                statementType = parseIfStatement();
-            } else if (atSet(TYPE_FIRST)) {
-                statementType = parseTypeStatement();
-            } else {
-                if (atSet(EXPRESSION_FIRST)) {
-                    expressionParsing.parseExpression();
-                } else {
-                    errorAndAdvance("Expecting a statement");
-                }
-            }
+    private boolean parseStatement(){
+        PsiBuilder.Marker marker = mark();
+        IElementType statementType = null;
+        parseLabelDefinition();
 
-            parseEndOfStatement();
-            if (statementType != null) {
-                marker.done(statementType);
+        if (at(IMPLICIT_KEYWORD)) {
+            statementType = parseImplicitStatement();
+        } else if (at(PARAMETER_KEYWORD)) {
+            statementType = parseParameterStatement();
+        } else if (at(FORMAT_KEYWORD)) {
+            statementType = parseFormatStatement();
+        } else if (at(ENTRY_KEYWORD)) {
+            statementType = parseEntryStatement();
+        } else if (at(PRINT_KEYWORD)) {
+            statementType = parsePrintStatement();
+        } else if (at(COMMON_KEYWORD)) {
+            statementType = parseCommonStatement();
+        } else if (at(DATA_KEYWORD)) {
+            statementType = parseDataStatement();
+        } else if (at(SAVE_KEYWORD)) {
+            statementType = parseSaveStatement();
+        } else if (at(DIMENSION_KEYWORD)) {
+            statementType = parseDimensionStatement();
+        } else if (at(EQUIVALENCE_KEYWORD)) {
+            statementType = parseEquivalenceStatement();
+        } else if (at(INTRINSIC_KEYWORD)) {
+            statementType = parseIntrinsicStatement();
+        } else if (at(EXTERNAL_KEYWORD)) {
+            statementType = parseExternalStatement();
+        } else if (at(ASSIGN_KEYWORD)) {
+            statementType = parseAssignStatement();
+        } else if (at(BACKSPACE_KEYWORD) || at(ENDFILE_KEYWORD)) {
+            statementType = parseFileOperationStatement();
+        } else if (at(CALL_KEYWORD)) {
+            statementType = parseCallStatement();
+        } else if (at(CLOSE_KEYWORD)) {
+            statementType = parseCloseStatement();
+        } else if (at(CONTINUE_KEYWORD)) {
+            statementType = parseContinueStatement();
+        } else if (at(GO_KEYWORD) || at(GOTO_KEYWORD)) {
+            statementType = parseGoToStatement();
+        } else if (at(END_KEYWORD)) {
+            marker.rollbackTo();
+            return false;
+        } else if (at(IF_KEYWORD)) {
+            statementType = parseIfStatement();
+        } else if (atSet(TYPE_FIRST)) {
+            statementType = parseTypeStatement();
+        } else {
+            if (atSet(EXPRESSION_FIRST)) {
+                expressionParsing.parseExpression();
             } else {
-                marker.drop();
+                errorAndAdvance("Expecting a statement");
             }
         }
+
+        parseEndOfStatement();
+        if (statementType != null) {
+            marker.done(statementType);
+        } else {
+            marker.drop();
+        }
+        return true;
     }
 
     private boolean parseEndProgramStatement() {
@@ -695,11 +703,17 @@ public class FortranParsing extends AbstractFortranParsing {
         expressionParsing.parseExpression();
         expect(RPAR, ") expected");
 
-        parseLabelReference();
-        expect(COMMA, ", expected");
-        parseLabelReference();
-        expect(COMMA, ", expected");
-        parseLabelReference();
+        if(at(INTEGER_LITERAL)) {
+            parseLabelReference();
+            expect(COMMA, ", expected");
+            parseLabelReference();
+            expect(COMMA, ", expected");
+            parseLabelReference();
+        } else {
+            PsiBuilder.Marker thenBlock = mark();
+            parseStatement();
+            thenBlock.done(CODE_BLOCK);
+        }
         return IF_STATMENT;
     }
 

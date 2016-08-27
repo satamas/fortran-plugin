@@ -41,6 +41,7 @@ public interface FortranNodeTypes {
     FortranNodeType SAVE_STATMENT = new FortranNodeType("SAVE_STATEMENT", FortranElementImpl.class);
 
     FortranNodeType IF_STATMENT = new FortranNodeType("IF_STATEMENT", FortranElementImpl.class);
+    FortranNodeType CODE_BLOCK = new FortranNodeType("CODE_BLOCK", FortranElementImpl.class);
 
     FortranNodeType DIMENSION_STATEMENT = new FortranNodeType("DIMENSION_STATEMENT", FortranElementImpl.class);
 

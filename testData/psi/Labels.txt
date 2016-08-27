@@ -8,6 +8,8 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(IDENTIFIER)('a')
     PsiWhiteSpace('\n')
+    FortranElementImpl(CODE_BLOCK)
+      <empty list>
     FortranElementImpl(END_PROGRAM_STATEMENT)
       PsiElement(end)('end')
       PsiWhiteSpace(' ')

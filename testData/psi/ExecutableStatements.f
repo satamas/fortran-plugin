@@ -1,5 +1,6 @@
 program p
     if(1-2) 10, 20, 30
+    if ( value .le. atad ) call punt
     assign 10 to a
     backspace 2
     backspace a
