@@ -20,4 +20,5 @@ program p
     return 2
     rewind 3
     rewind (unit = 3, iostat = code, err = 100)
+    sphere ( r ) = 4.0 * pi * (r**3) / 3.0
 end program
