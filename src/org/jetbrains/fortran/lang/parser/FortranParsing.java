@@ -123,8 +123,8 @@ public class FortranParsing extends AbstractFortranParsing {
             statementType = parseEntryStatement();
         } else if (at(PRINT_KEYWORD)) {
             statementType = parsePrintStatement();
-        } else if (at(READ_KEYWORD)) {
-            statementType = parseReadStatement();
+        } else if (at(READ_KEYWORD) || at(WRITE_KEYWORD)) {
+            statementType = parseReadWriteStatement();
         } else if (at(COMMON_KEYWORD)) {
             statementType = parseCommonStatement();
         } else if (at(DATA_KEYWORD)) {
@@ -980,8 +980,7 @@ public class FortranParsing extends AbstractFortranParsing {
 
     }
 
-    private IElementType parseReadStatement() {
-        assert at(READ_KEYWORD);
+    private IElementType parseReadWriteStatement() {
         advance();
         parseExpressionOrExpressionList();
         if (at(COMMA)) {

@@ -12,4 +12,7 @@ program a
   read*, a, v
   read( 3, '(5f4.1)') v
   read(unit=1, nml=g)
+  write( 1, 2, err=8, iostat=n ) x, y
+  write( *, * ) a, v
+  write( unit=1, nml=g )
 end program a
