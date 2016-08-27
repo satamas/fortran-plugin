@@ -123,6 +123,8 @@ public class FortranParsing extends AbstractFortranParsing {
             statementType = parseEntryStatement();
         } else if (at(PRINT_KEYWORD)) {
             statementType = parsePrintStatement();
+        } else if (at(READ_KEYWORD)) {
+            statementType = parseReadStatement();
         } else if (at(COMMON_KEYWORD)) {
             statementType = parseCommonStatement();
         } else if (at(DATA_KEYWORD)) {
@@ -563,10 +565,10 @@ public class FortranParsing extends AbstractFortranParsing {
         return STATEMENT;
     }
 
-    private IElementType parsePauseStatement(){
+    private IElementType parsePauseStatement() {
         assert at(PAUSE_KEYWORD);
         advance();
-        if(at(INTEGER_LITERAL) || at(STRING_LITERAL)){
+        if (at(INTEGER_LITERAL) || at(STRING_LITERAL)) {
             expressionParsing.parseLiteralConstant();
         }
         return STATEMENT;
@@ -595,27 +597,7 @@ public class FortranParsing extends AbstractFortranParsing {
 
     private IElementType parseFileOperationStatement() {
         advance();
-        if (at(LPAR)) {
-            PsiBuilder.Marker marker = mark();
-            advance();
-            expressionParsing.parseExpression();
-            if (at(RPAR)) {
-                advance();
-                marker.drop();
-            } else if (at(COMMA)) {
-                marker.drop();
-                while (!eof() && at(COMMA)) {
-                    advance();
-                    expressionParsing.parseExpression();
-                }
-                expect(RPAR, ") expected");
-            } else {
-                marker.rollbackTo();
-                expressionParsing.parseExpression();
-            }
-        } else {
-            parseUnitIdentifier();
-        }
+        parseExpressionOrExpressionList();
         return STATEMENT;
     }
 
@@ -954,19 +936,19 @@ public class FortranParsing extends AbstractFortranParsing {
 
         while (at(COMMA)) {
             advance();
-            parseOutputItem();
+            parseExpressionOrExpressionList();
         }
 
         return PRINT_STATEMENT;
     }
 
-    public void parseOutputItem() {
+    public void parseExpressionOrExpressionList() {
         if (at(LPAR)) {
             PsiBuilder.Marker marker = mark();
             advance();
-            expressionParsing.parseExpression();
-            if(at(LPAR)){
-                parseOutputItem();
+            parseExpressionOrExpressionList();
+            if (at(LPAR)) {
+                parseExpressionOrExpressionList();
                 marker.drop();
             } else if (at(RPAR)) {
                 advance();
@@ -975,7 +957,7 @@ public class FortranParsing extends AbstractFortranParsing {
                 marker.drop();
                 while (!eof() && at(COMMA)) {
                     advance();
-                    expressionParsing.parseExpression();
+                    parseExpressionOrExpressionList();
                 }
                 expect(RPAR, ") expected");
             } else {
@@ -983,15 +965,34 @@ public class FortranParsing extends AbstractFortranParsing {
                 expressionParsing.parseExpression();
             }
         } else {
-            expressionParsing.parseExpression();
+            parseUnitIdentifier();
         }
 
     }
 
-    private void parseFormatIdentifier() {
-        if(at(MUL)) {
+    private IElementType parseReadStatement() {
+        assert at(READ_KEYWORD);
+        advance();
+        parseExpressionOrExpressionList();
+        if(at(COMMA)) {
             advance();
-        } else if(at(INTEGER_LITERAL)){
+        }
+
+        if((at(IDENTIFIER) && !builder.newlineBeforeCurrentToken())|| at(LPAR)) {
+            parseExpressionOrExpressionList();
+            while (at(COMMA)) {
+                advance();
+                parseExpressionOrExpressionList();
+            }
+        }
+
+        return STATEMENT;
+    }
+
+    private void parseFormatIdentifier() {
+        if (at(MUL)) {
+            advance();
+        } else if (at(INTEGER_LITERAL)) {
             parseLabelReference();
         } else {
             expressionParsing.parseExpression();

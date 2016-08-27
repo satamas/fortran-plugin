@@ -7,4 +7,9 @@ program a
   Print *, item1 * 5, item2 + 3, "Hello World!
   print '(12 i2)', i, j, vector
   print *, i, j, (vector(i), i = 1, 5)
+  read( 1, 2, err=8, end=9, iostat=n ) x, y
+  read(*,*) a, v
+  read*, a, v
+  read( 3, '(5f4.1)') v
+  read(unit=1, nml=g)
 end program a

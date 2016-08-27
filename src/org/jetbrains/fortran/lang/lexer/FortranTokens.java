@@ -131,7 +131,7 @@ public interface FortranTokens {
     FortranToken REWIND_KEYWORD = FortranKeywordToken.keyword("rewind");
     FortranToken WRITE_KEYWORD = FortranKeywordToken.keyword("write");
     FortranToken FUNCTION_KEYWORD = FortranKeywordToken.keyword("function");
-    FortranToken END_KEYWORD = FortranKeywordToken.keyword("end");
+    FortranToken END_KEYWORD = FortranKeywordToken.softKeyword("end");
 
     TokenSet KEYWORDS = TokenSet.create(
             TRUE_KEYWORD, FALSE_KEYWORD,
@@ -149,7 +149,7 @@ public interface FortranTokens {
             WHILE_KEYWORD, BACKSPACE_KEYWORD, CLOSE_KEYWORD, ENDFILE_KEYWORD, FORMAT_KEYWORD, INQUIRE_KEYWORD,
             OPEN_KEYWORD, PRINT_KEYWORD, READ_KEYWORD, REWIND_KEYWORD, WRITE_KEYWORD, PROGRAM_KEYWORD, END_KEYWORD);
 
-    TokenSet SOFT_KEYWORDS = TokenSet.create(NONE_KEYWORD);
+    TokenSet SOFT_KEYWORDS = TokenSet.create(NONE_KEYWORD, END_KEYWORD);
 
     TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE);
 
