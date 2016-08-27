@@ -108,7 +108,7 @@ public class FortranParsing extends AbstractFortranParsing {
         marker.done(CODE_BLOCK);
     }
 
-    private boolean parseStatement(){
+    private boolean parseStatement() {
         PsiBuilder.Marker marker = mark();
         IElementType statementType = null;
         parseLabelDefinition();
@@ -149,6 +149,8 @@ public class FortranParsing extends AbstractFortranParsing {
             statementType = parseContinueStatement();
         } else if (at(GO_KEYWORD) || at(GOTO_KEYWORD)) {
             statementType = parseGoToStatement();
+        } else if (at(PAUSE_KEYWORD)) {
+            statementType = parsePauseStatement();
         } else if (at(END_KEYWORD)) {
             marker.rollbackTo();
             return false;
@@ -432,8 +434,8 @@ public class FortranParsing extends AbstractFortranParsing {
 
     private void parseCommonBlockName(boolean nameRequired) {
         PsiBuilder.Marker commonBlockName = builder.mark();
-        if(at(DIVDIV)){
-            if(nameRequired){
+        if (at(DIVDIV)) {
+            if (nameRequired) {
                 errorAndAdvance("Identified expected");
             } else {
                 advance();
@@ -545,11 +547,11 @@ public class FortranParsing extends AbstractFortranParsing {
                 parseLabelReferenceList();
                 expect(RPAR, ") expected");
             }
-        } else if(at(LPAR)){
+        } else if (at(LPAR)) {
             advance();
             parseLabelReferenceList();
             expect(RPAR, ") expected");
-            if(at(COMMA)){
+            if (at(COMMA)) {
                 advance();
             }
             expressionParsing.parseExpression();
@@ -561,7 +563,20 @@ public class FortranParsing extends AbstractFortranParsing {
         return STATEMENT;
     }
 
-    private void parseLabelReferenceList(){
+    private IElementType parsePauseStatement(){
+        assert at(PAUSE_KEYWORD);
+        advance();
+        if(at(INTEGER_LITERAL)){
+            PsiBuilder.Marker integerConstant = mark();
+            advance();
+            integerConstant.done(INTEGER_CONSTANT);
+        } else if(at(OPENING_QUOTE)){
+            expressionParsing.parseString();
+        }
+        return STATEMENT;
+    }
+
+    private void parseLabelReferenceList() {
         parseLabelReference();
         while (!eof() && at(COMMA)) {
             advance();
@@ -703,7 +718,7 @@ public class FortranParsing extends AbstractFortranParsing {
         expressionParsing.parseExpression();
         expect(RPAR, ") expected");
 
-        if(at(INTEGER_LITERAL)) {
+        if (at(INTEGER_LITERAL)) {
             parseLabelReference();
             expect(COMMA, ", expected");
             parseLabelReference();

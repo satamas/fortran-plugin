@@ -15,4 +15,6 @@ program p
     go to ( 10, 20, 30, 40 ), n + 2
     inquire ( 3, opened=ok, named=hasname, name=fn )
     open(unit=8, file='projecta/data.test', err=99)
+    pause 1
+    pause "p"
 end program
