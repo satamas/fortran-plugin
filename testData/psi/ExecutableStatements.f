@@ -17,4 +17,5 @@ program p
     open(unit=8, file='projecta/data.test', err=99)
     pause 1
     pause "p"
+    return 2
 end program

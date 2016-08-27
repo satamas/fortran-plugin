@@ -158,6 +158,8 @@ public class FortranParsing extends AbstractFortranParsing {
             return false;
         } else if (at(IF_KEYWORD)) {
             statementType = parseIfStatement();
+        } else if (at(RETURN_KEYWORD)) {
+            statementType = parseReturnStatement();
         } else if (atSet(TYPE_FIRST)) {
             statementType = parseTypeStatement();
         } else {
@@ -689,6 +691,15 @@ public class FortranParsing extends AbstractFortranParsing {
         return PARAMETER_STATEMENT;
     }
 
+    private IElementType parseReturnStatement() {
+        assert at(RETURN_KEYWORD);
+        advance();
+        if (atSet(EXPRESSION_FIRST) && !builder.newlineBeforeCurrentToken()) {
+            expressionParsing.parseExpression();
+        }
+        return STATEMENT;
+    }
+
     private IElementType parseIfStatement() {
         assert at(IF_KEYWORD);
         advance();
@@ -974,11 +985,11 @@ public class FortranParsing extends AbstractFortranParsing {
         assert at(READ_KEYWORD);
         advance();
         parseExpressionOrExpressionList();
-        if(at(COMMA)) {
+        if (at(COMMA)) {
             advance();
         }
 
-        if((at(IDENTIFIER) && !builder.newlineBeforeCurrentToken())|| at(LPAR)) {
+        if ((at(IDENTIFIER) && !builder.newlineBeforeCurrentToken()) || at(LPAR)) {
             parseExpressionOrExpressionList();
             while (at(COMMA)) {
                 advance();

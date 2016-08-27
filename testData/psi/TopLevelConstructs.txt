@@ -69,7 +69,7 @@ FILE
           PsiElement(IDENTIFIER)('y')
         PsiElement(RPAR)(')')
       PsiWhiteSpace('\n    ')
-      PsiErrorElement:Expecting a statement
+      FortranElementImpl(STATEMENT)
         PsiElement(return)('return')
     PsiWhiteSpace('\n')
     FortranElementImpl(END_STATEMENT)

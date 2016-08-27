@@ -554,7 +554,7 @@ FILE
             PsiElement(RPAR)(')')
         PsiElement(RPAR)(')')
       PsiWhiteSpace('\n    ')
-      PsiErrorElement:Expecting a statement
+      FortranElementImpl(STATEMENT)
         PsiElement(return)('return')
     PsiWhiteSpace('\n')
     FortranElementImpl(END_STATEMENT)
