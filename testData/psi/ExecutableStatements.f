@@ -18,4 +18,6 @@ program p
     pause 1
     pause "p"
     return 2
+    rewind 3
+    rewind (unit = 3, iostat = code, err = 100)
 end program

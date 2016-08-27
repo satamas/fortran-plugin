@@ -141,7 +141,7 @@ public class FortranParsing extends AbstractFortranParsing {
             statementType = parseExternalStatement();
         } else if (at(ASSIGN_KEYWORD)) {
             statementType = parseAssignStatement();
-        } else if (at(BACKSPACE_KEYWORD) || at(ENDFILE_KEYWORD) || at(INQUIRE_KEYWORD) || at(OPEN_KEYWORD)) {
+        } else if (at(BACKSPACE_KEYWORD) || at(ENDFILE_KEYWORD) | at(REWIND_KEYWORD) || at(INQUIRE_KEYWORD) || at(OPEN_KEYWORD)) {
             statementType = parseFileOperationStatement();
         } else if (at(CALL_KEYWORD)) {
             statementType = parseCallStatement();
