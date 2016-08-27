@@ -151,8 +151,8 @@ public class FortranParsing extends AbstractFortranParsing {
             statementType = parseContinueStatement();
         } else if (at(GO_KEYWORD) || at(GOTO_KEYWORD)) {
             statementType = parseGoToStatement();
-        } else if (at(PAUSE_KEYWORD)) {
-            statementType = parsePauseStatement();
+        } else if (at(PAUSE_KEYWORD) || at(STOP_KEYWORD)) {
+            statementType = parsePauseOrStopStatement();
         } else if (at(END_KEYWORD)) {
             marker.rollbackTo();
             return false;
@@ -567,8 +567,7 @@ public class FortranParsing extends AbstractFortranParsing {
         return STATEMENT;
     }
 
-    private IElementType parsePauseStatement() {
-        assert at(PAUSE_KEYWORD);
+    private IElementType parsePauseOrStopStatement() {
         advance();
         if (at(INTEGER_LITERAL) || at(STRING_LITERAL)) {
             expressionParsing.parseLiteralConstant();
