@@ -16,8 +16,6 @@ import java.util.Stack;
 %eof{  return;
 %eof}
 
-%xstate STRING DQ_STRING
-
 IDENTIFIER_PART=[:digit:]|[:letter:]|_
 IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
 
@@ -36,8 +34,12 @@ FLOATING_POINT_LITERAL={DIGIT}{FLOATING_POINT_EXPONENT_PART}|{SIGNIFICAND}({FLOA
 //xDcon
 DOUBLE_PRECISION_LITERAL={DIGIT}{DOUBLE_PRECISION_EXPONENT_PART}|{SIGNIFICAND}{DOUBLE_PRECISION_EXPONENT_PART}
 
-REGULAR_STRING_PART=[^\\\'\n]+
-REGULAR_DQ_STRING_PART=[^\\\"\n]+
+EOL_ESC=\\[\ \t]*\n
+ESCAPE_SEQUENCE=\\[^\n]|{EOL_ESC}
+STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_SEQUENCE})*('|\\)?)
+
+//REGULAR_STRING_PART=[^\\\'\n]+
+//REGULAR_DQ_STRING_PART=[^\\\"\n]+
 
 %%
 
@@ -45,14 +47,7 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 {LINE_COMMENT} { return FortranTokens.LINE_COMMENT; }
 {INTEGER_LITERAL} { return FortranTokens.INTEGER_LITERAL; }
 
-<STRING> \' { yybegin(YYINITIAL); return FortranTokens.CLOSING_QUOTE; }
-<DQ_STRING> \" { yybegin(YYINITIAL); return FortranTokens.CLOSING_QUOTE; }
-<STRING, DQ_STRING> \n { yybegin(YYINITIAL); return FortranTokens.DANGLING_NEWLINE; }
-<STRING> {REGULAR_STRING_PART} { return FortranTokens.REGULAR_STRING_PART; }
-<DQ_STRING> {REGULAR_DQ_STRING_PART} { return FortranTokens.REGULAR_STRING_PART; }
-
-\' { yybegin(STRING); return FortranTokens.OPENING_QUOTE; }
-\" { yybegin(DQ_STRING); return FortranTokens.OPENING_QUOTE; }
+{STRING_LITERAL} { return FortranTokens.STRING_LITERAL; }
 
 {INTEGER_LITERAL} { return FortranTokens.INTEGER_LITERAL; }
 {FLOATING_POINT_LITERAL} { return FortranTokens.FLOATING_POINT_LITERAL; }
@@ -185,4 +180,4 @@ REGULAR_DQ_STRING_PART=[^\\\"\n]+
 
 {IDENTIFIER} { return FortranTokens.IDENTIFIER; }
 
-<YYINITIAL, STRING, DQ_STRING> . { return TokenType.BAD_CHARACTER; }
+. { return TokenType.BAD_CHARACTER; }

@@ -566,12 +566,8 @@ public class FortranParsing extends AbstractFortranParsing {
     private IElementType parsePauseStatement(){
         assert at(PAUSE_KEYWORD);
         advance();
-        if(at(INTEGER_LITERAL)){
-            PsiBuilder.Marker integerConstant = mark();
-            advance();
-            integerConstant.done(INTEGER_CONSTANT);
-        } else if(at(OPENING_QUOTE)){
-            expressionParsing.parseString();
+        if(at(INTEGER_LITERAL) || at(STRING_LITERAL)){
+            expressionParsing.parseLiteralConstant();
         }
         return STATEMENT;
     }
@@ -954,21 +950,52 @@ public class FortranParsing extends AbstractFortranParsing {
     private IElementType parsePrintStatement() {
         assert (at(PRINT_KEYWORD));
         advance();
-        expect(MUL, "");
+        parseFormatIdentifier();
 
-        if (at(COMMA)) {
+        while (at(COMMA)) {
             advance();
-            PsiBuilder.Marker valueArgumentsList = mark();
-            expressionParsing.parseExpression();
-            while (!eof() && at(COMMA)) {
-                advance();
-                expressionParsing.parseExpression();
-            }
-            valueArgumentsList.done(VALUE_ARGUMENT_LIST);
+            parseOutputItem();
         }
 
-        parseEndOfStatement();
         return PRINT_STATEMENT;
+    }
+
+    public void parseOutputItem() {
+        if (at(LPAR)) {
+            PsiBuilder.Marker marker = mark();
+            advance();
+            expressionParsing.parseExpression();
+            if(at(LPAR)){
+                parseOutputItem();
+                marker.drop();
+            } else if (at(RPAR)) {
+                advance();
+                marker.drop();
+            } else if (at(COMMA)) {
+                marker.drop();
+                while (!eof() && at(COMMA)) {
+                    advance();
+                    expressionParsing.parseExpression();
+                }
+                expect(RPAR, ") expected");
+            } else {
+                marker.rollbackTo();
+                expressionParsing.parseExpression();
+            }
+        } else {
+            expressionParsing.parseExpression();
+        }
+
+    }
+
+    private void parseFormatIdentifier() {
+        if(at(MUL)) {
+            advance();
+        } else if(at(INTEGER_LITERAL)){
+            parseLabelReference();
+        } else {
+            expressionParsing.parseExpression();
+        }
     }
 
     private void parseVariable() {

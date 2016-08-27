@@ -15,7 +15,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
 
     static final public TokenSet EXPRESSION_FIRST = TokenSet.create(
             LPAR,
-            OPENING_QUOTE,
+            STRING_LITERAL,
             INTEGER_LITERAL,
             FLOATING_POINT_LITERAL,
             TRUE_KEYWORD,
@@ -178,8 +178,6 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
     private boolean parseAtomicExpression() {
         if (at(LPAR)) {
             parseParenthesizedExpression();
-        } else if (at(OPENING_QUOTE)) {
-            parseString();
         } else if (at(IDENTIFIER)) {
             parseSimpleNameExpression();
         } else if (!parseLiteralConstant()) {
@@ -205,17 +203,6 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         expect(RPAR, "Expecting ')'");
 
         mark.done(PARENTHESIZED);
-    }
-
-    public void parseString() {
-        PsiBuilder.Marker stringLiteral = mark();
-        assert at(OPENING_QUOTE);
-        advance();
-        while (!eof() && at(REGULAR_STRING_PART)) {
-            advance();
-        }
-        expect(CLOSING_QUOTE, "\" expected");
-        stringLiteral.done(STRING_CONSTANT);
     }
 
     public void parseSimpleNameExpression() {
@@ -248,7 +235,7 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         expression.drop();
     }
 
-    private boolean parseLiteralConstant() {
+    public boolean parseLiteralConstant() {
         PsiBuilder.Marker marker = mark();
         if (at(IDENTIFIER)) {
             advance();
@@ -265,9 +252,9 @@ public class FortranExpressionParsing extends AbstractFortranParsing {
         } else if (at(LPAR)) {
             parseComplexConstant();
             marker.drop();
-        } else if (at(OPENING_QUOTE)) {
-            parseString();
-            marker.drop();
+        } else if (at(STRING_LITERAL)) {
+            advance();
+            marker.done(STRING_CONSTANT);
         } else if (at(TRUE_KEYWORD) || at(FALSE_KEYWORD)) {
             advance();
             marker.done(BOOLEAN_CONSTANT);

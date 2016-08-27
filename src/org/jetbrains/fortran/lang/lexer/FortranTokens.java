@@ -47,9 +47,7 @@ public interface FortranTokens {
     FortranSingleValueToken PERC = new FortranSingleValueToken("PERC", "%");
     FortranSingleValueToken DOLLAR = new FortranSingleValueToken("DOLLAR", "$");
 
-    FortranToken OPENING_QUOTE = new FortranToken("OPENING_QUOTE");
-    FortranToken CLOSING_QUOTE = new FortranToken("CLOSING_QUOTE");
-    FortranToken REGULAR_STRING_PART = new FortranToken("REGULAR_STRING_PART");
+    FortranToken STRING_LITERAL = new FortranToken("STRING_LITERAL");
 
     FortranToken TRUE_KEYWORD = FortranKeywordToken.keyword(".true.");
     FortranToken FALSE_KEYWORD = FortranKeywordToken.keyword(".false.");
@@ -157,5 +155,5 @@ public interface FortranTokens {
 
     TokenSet COMMENTS = TokenSet.create(LINE_COMMENT);
 
-    TokenSet STRINGS = TokenSet.create(REGULAR_STRING_PART);
+    TokenSet STRINGS = TokenSet.create(STRING_LITERAL);
 }
