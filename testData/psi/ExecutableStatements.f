@@ -13,4 +13,5 @@ program p
     goto n, (10)
     go to n ( 10, 20, 30, 40 )
     go to ( 10, 20, 30, 40 ), n + 2
+    inquire ( 3, opened=ok, named=hasname, name=fn )
 end program
