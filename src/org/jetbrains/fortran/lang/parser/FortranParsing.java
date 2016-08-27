@@ -2,6 +2,7 @@ package org.jetbrains.fortran.lang.parser;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
 
 import static org.jetbrains.fortran.lang.FortranNodeTypes.*;
 import static org.jetbrains.fortran.lang.lexer.FortranTokens.*;
@@ -10,6 +11,13 @@ import static org.jetbrains.fortran.lang.parser.FortranExpressionParsing.TYPE_FI
 
 public class FortranParsing extends AbstractFortranParsing {
     private final FortranExpressionParsing expressionParsing = new FortranExpressionParsing(builder);
+
+    private final TokenSet JOINED_END_KEYWORDS = TokenSet.create(END_KEYWORD, ENDIF_KEYWORD, ENDFILE_KEYWORD,
+            ENDPROGRAM_KEYWORD, ENDFUNCTION_KEYWORD, ENDSUBROUTINE_KEYWORD, ENDTYPE_KEYWORD, ENDWHERE_KEYWORD,
+            ENDSELECT_KEYWORD, ENDDO_KEYWORD, ENDMODULE_KEYWORD, ENDBLOCKDATA_KEYWORD, ENDBLOCK_KEYWORD, ENDINTERFACE_KEYWORD);
+    private final TokenSet END_KEYWORDS = TokenSet.create(IF_KEYWORD, FILE_KEYWORD,
+            PROGRAM_KEYWORD, FUNCTION_KEYWORD, SUBROUTINE_KEYWORD, TYPE_KEYWORD, WHERE_KEYWORD,
+            SELECT_KEYWORD, DO_KEYWORD, MODULE_KEYWORD, BLOCKDATA_KEYWORD, BLOCK_KEYWORD, INTERFACE_KEYWORD);
 
     public FortranParsing(WhitespaceAwarePsiBuilder builder) {
         super(builder);
@@ -53,7 +61,7 @@ public class FortranParsing extends AbstractFortranParsing {
         PsiBuilder.Marker function = mark();
         parseFunctionOrSubroutineStatement(isFunction);
         parseBody();
-        parseEndStatement();
+        parseEndStatement(isFunction ? FUNCTION_KEYWORD : SUBROUTINE_KEYWORD);
         function.done(isFunction ? FUNCTION : SUBROUTINE);
     }
 
@@ -61,7 +69,7 @@ public class FortranParsing extends AbstractFortranParsing {
         PsiBuilder.Marker function = mark();
         parseBlockDataStatement();
         parseBody();
-        parseEndStatement();
+        parseEndBlockData();
         function.done(BLOCK_DATA);
     }
 
@@ -82,7 +90,7 @@ public class FortranParsing extends AbstractFortranParsing {
         PsiBuilder.Marker programElement = mark();
         parseProgramStatement();
         parseBody();
-        parseEndProgramStatement();
+        parseEndStatement(PROGRAM_KEYWORD);
         programElement.done(PROGRAM);
     }
 
@@ -153,7 +161,7 @@ public class FortranParsing extends AbstractFortranParsing {
             statementType = parseGoToStatement();
         } else if (at(PAUSE_KEYWORD) || at(STOP_KEYWORD)) {
             statementType = parsePauseOrStopStatement();
-        } else if (at(END_KEYWORD)) {
+        } else if (atSet(JOINED_END_KEYWORDS)) {
             marker.rollbackTo();
             return false;
         } else if (at(IF_KEYWORD)) {
@@ -176,23 +184,6 @@ public class FortranParsing extends AbstractFortranParsing {
         } else {
             marker.drop();
         }
-        return true;
-    }
-
-    private boolean parseEndProgramStatement() {
-        PsiBuilder.Marker endProgramStatement = mark();
-        parseLabelDefinition();
-        if (!at(END_KEYWORD)) {
-            endProgramStatement.rollbackTo();
-            return false;
-        }
-        advance();
-        expect(PROGRAM_KEYWORD, "'Program' expected");
-        if (at(IDENTIFIER)) {
-            advance();
-        }
-        parseEndOfStatement();
-        endProgramStatement.done(END_PROGRAM_STATEMENT);
         return true;
     }
 
@@ -228,13 +219,92 @@ public class FortranParsing extends AbstractFortranParsing {
         }
     }
 
-    private void parseEndStatement() {
-        PsiBuilder.Marker endFunctionStatement = mark();
+    private boolean parseEndStatement(IElementType keyword) {
+        PsiBuilder.Marker endStatement = mark();
         parseLabelDefinition();
-        assert at(END_KEYWORD);
-        advance();
+
+        IElementType endKeyword = getEndKeyword(keyword);
+        TokenSet keywordRequiredSet = TokenSet.create(IF_KEYWORD);
+
+        if (at(endKeyword)) {
+            advance();
+        } else if (at(END_KEYWORD)) {
+            advance();
+            if (at(keyword) && !builder.newlineBeforeCurrentToken()) {
+                advance();
+            } else if (atSet(END_KEYWORDS) && !builder.newlineBeforeCurrentToken()) {
+                endStatement.rollbackTo();
+                return false;
+            } else if (keywordRequiredSet.contains(keyword)) {
+                error(keyword.toString() + "expected");
+            }
+        } else {
+            endStatement.rollbackTo();
+            return false;
+        }
+
+        if (at(IDENTIFIER)) {
+            PsiBuilder.Marker reference = mark();
+            advance();
+            reference.done(REFERENCE_EXPRESSION);
+        }
+
         parseEndOfStatement();
-        endFunctionStatement.done(END_STATEMENT);
+        endStatement.done(END_STATEMENT);
+        return true;
+    }
+
+    private boolean parseEndBlockData() {
+        PsiBuilder.Marker endStatement = mark();
+        parseLabelDefinition();
+
+        if (at(ENDBLOCKDATA_KEYWORD)) {
+            advance();
+        } else if (at(ENDBLOCK_KEYWORD)) {
+            advance();
+            if (at(DATA_KEYWORD) && !builder.newlineBeforeCurrentToken()) {
+                advance();
+            } else if (atSet(END_KEYWORDS) && !builder.newlineBeforeCurrentToken()) {
+                endStatement.rollbackTo();
+                return false;
+            } else {
+                error("'data' expected");
+            }
+        } else if (at(END_KEYWORD)) {
+            advance();
+            if (at(BLOCK_KEYWORD) && !builder.newlineBeforeCurrentToken()) {
+                advance();
+                if (at(DATA_KEYWORD) && !builder.newlineBeforeCurrentToken()) {
+                    advance();
+                } else {
+                    error("Data expected");
+                }
+            } else if (atSet(END_KEYWORDS) && !builder.newlineBeforeCurrentToken()) {
+                endStatement.rollbackTo();
+                return false;
+            }
+        } else {
+            endStatement.rollbackTo();
+            return false;
+        }
+
+        parseEndOfStatement();
+        endStatement.done(END_STATEMENT);
+        return true;
+    }
+
+    private IElementType getEndKeyword(IElementType keyword) {
+        if (keyword == IF_KEYWORD) {
+            return ENDIF_KEYWORD;
+        } else if (keyword == FUNCTION_KEYWORD) {
+            return ENDFUNCTION_KEYWORD;
+        } else if (keyword == SUBROUTINE_KEYWORD) {
+            return ENDSUBROUTINE_KEYWORD;
+        } else if (keyword == PROGRAM_KEYWORD) {
+            return ENDSUBROUTINE_KEYWORD;
+        } else {
+            throw new IllegalArgumentException("No end keyword for " + keyword.toString());
+        }
     }
 
     private IElementType parseDataStatement() {
@@ -706,18 +776,41 @@ public class FortranParsing extends AbstractFortranParsing {
         expressionParsing.parseExpression();
         expect(RPAR, ") expected");
 
-        if (at(INTEGER_LITERAL)) {
+        if (at(THEN_KEYWORD)) {
+            advance();
+            parseIfBlock();
+            while (at(ELSE_KEYWORD) || at(ELSEIF_KEYWORD)) {
+                if (at(ELSE_KEYWORD)) advance();
+                if (at(IF_KEYWORD) || at(ELSEIF_KEYWORD)) {
+                    advance();
+                    expect(LPAR, "( expected");
+                    expressionParsing.parseExpression();
+                    expect(RPAR, ") expected");
+                    expect(THEN_KEYWORD, "'then' expected");
+                }
+                parseIfBlock();
+            }
+            if (!parseEndStatement(IF_KEYWORD)) {
+                error("endif expected");
+            }
+        } else if (at(INTEGER_LITERAL)) {
             parseLabelReference();
             expect(COMMA, ", expected");
             parseLabelReference();
             expect(COMMA, ", expected");
             parseLabelReference();
         } else {
-            PsiBuilder.Marker thenBlock = mark();
             parseStatement();
-            thenBlock.done(CODE_BLOCK);
         }
         return IF_STATMENT;
+    }
+
+    private void parseIfBlock() {
+        PsiBuilder.Marker codeBlock = mark();
+        while (!eof() && !atSet(JOINED_END_KEYWORDS) && !at(ELSEIF_KEYWORD) && !at(ELSE_KEYWORD)) {
+            parseStatement();
+        }
+        codeBlock.done(CODE_BLOCK);
     }
 
     private void parseLabelReference() {
@@ -943,6 +1036,8 @@ public class FortranParsing extends AbstractFortranParsing {
         assert (at(PRINT_KEYWORD));
         advance();
         parseFormatIdentifier();
+
+        if (at(PRINT_KEYWORD)) System.console();
 
         while (at(COMMA)) {
             advance();

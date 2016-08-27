@@ -10,7 +10,7 @@ FILE
     PsiWhiteSpace('\n')
     FortranElementImpl(CODE_BLOCK)
       <empty list>
-    FortranElementImpl(END_PROGRAM_STATEMENT)
+    FortranElementImpl(END_STATEMENT)
       PsiElement(end)('end')
       PsiWhiteSpace(' ')
       PsiElement(program)('program')

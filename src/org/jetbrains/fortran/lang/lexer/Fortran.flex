@@ -100,6 +100,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "assign" { return FortranTokens.ASSIGN_KEYWORD; }
 "assignment" { return FortranTokens.ASSIGNMENT_KEYWORD; }
 "block" { return FortranTokens.BLOCK_KEYWORD; }
+"blockdata" { return FortranTokens.BLOCKDATA_KEYWORD; }
 "call" { return FortranTokens.CALL_KEYWORD; }
 "case" { return FortranTokens.CASE_KEYWORD; }
 "character" { return FortranTokens.CHARACTER_KEYWORD; }
@@ -116,6 +117,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "double" { return FortranTokens.DOUBLE_KEYWORD; }
 "precision" { return FortranTokens.PRECISION_KEYWORD; }
 "else" { return FortranTokens.ELSE_KEYWORD; }
+"elseif" { return FortranTokens.ELSEIF_KEYWORD; }
 "if" { return FortranTokens.IF_KEYWORD; }
 "elsewhere" { return FortranTokens.ELSEWHERE_KEYWORD; }
 "entry" { return FortranTokens.ENTRY_KEYWORD; }
@@ -123,6 +125,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "exit" { return FortranTokens.EXIT_KEYWORD; }
 "external" { return FortranTokens.EXTERNAL_KEYWORD; }
 "function" { return FortranTokens.FUNCTION_KEYWORD; }
+"file" { return FortranTokens.FILE_KEYWORD; }
 "go" { return FortranTokens.GO_KEYWORD; }
 "to" { return FortranTokens.TO_KEYWORD; }
 "goto" { return FortranTokens.GOTO_KEYWORD; }
@@ -168,7 +171,6 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "while" { return FortranTokens.WHILE_KEYWORD; }
 "backspace" { return FortranTokens.BACKSPACE_KEYWORD; }
 "close" { return FortranTokens.CLOSE_KEYWORD; }
-"endfile" { return FortranTokens.ENDFILE_KEYWORD; }
 "format" { return FortranTokens.FORMAT_KEYWORD; }
 "inquire" { return FortranTokens.INQUIRE_KEYWORD; }
 "open" { return FortranTokens.OPEN_KEYWORD; }
@@ -176,7 +178,22 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "read" { return FortranTokens.READ_KEYWORD; }
 "rewind" { return FortranTokens.REWIND_KEYWORD; }
 "write" { return FortranTokens.WRITE_KEYWORD; }
+
 "end" { return FortranTokens.END_KEYWORD; }
+"endfile" { return FortranTokens.ENDFILE_KEYWORD; }
+"endif" { return FortranTokens.ENDIF_KEYWORD; }
+"endprogram" { return FortranTokens.ENDPROGRAM_KEYWORD; }
+
+"endfunction" { return FortranTokens.ENDFUNCTION_KEYWORD; }
+"endsubroutine" { return FortranTokens.ENDSUBROUTINE_KEYWORD; }
+"endtype" { return FortranTokens.ENDTYPE_KEYWORD; }
+"endwhere" { return FortranTokens.ENDWHERE_KEYWORD; }
+"endselect" { return FortranTokens.ENDSELECT_KEYWORD; }
+"enddo" { return FortranTokens.ENDDO_KEYWORD; }
+"endmodule" { return FortranTokens.ENDMODULE_KEYWORD; }
+"endblockdata"    { return FortranTokens.ENDBLOCKDATA_KEYWORD; }
+"endblock"    { return FortranTokens.ENDBLOCK_KEYWORD; }
+"endinterface"    { return FortranTokens.ENDINTERFACE_KEYWORD; }
 
 {IDENTIFIER} { return FortranTokens.IDENTIFIER; }
 

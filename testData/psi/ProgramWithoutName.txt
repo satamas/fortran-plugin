@@ -19,7 +19,7 @@ FILE
         FortranElementImpl(ENTITY_DECLARATION)
           PsiElement(IDENTIFIER)('c')
     PsiWhiteSpace('\n')
-    FortranElementImpl(END_PROGRAM_STATEMENT)
+    FortranElementImpl(END_STATEMENT)
       PsiElement(end)('end')
       PsiWhiteSpace(' ')
       PsiElement(program)('program')

@@ -57,6 +57,7 @@ public interface FortranTokens {
     FortranToken ASSIGN_KEYWORD = FortranKeywordToken.keyword("assign");
     FortranToken ASSIGNMENT_KEYWORD = FortranKeywordToken.keyword("assignment");
     FortranToken BLOCK_KEYWORD = FortranKeywordToken.keyword("block");
+    FortranToken BLOCKDATA_KEYWORD = FortranKeywordToken.keyword("block");
     FortranToken CALL_KEYWORD = FortranKeywordToken.keyword("call");
     FortranToken CASE_KEYWORD = FortranKeywordToken.keyword("case");
     FortranToken CHARACTER_KEYWORD = FortranKeywordToken.keyword("character");
@@ -73,12 +74,14 @@ public interface FortranTokens {
     FortranToken DOUBLE_KEYWORD = FortranKeywordToken.keyword("double");
     FortranToken PRECISION_KEYWORD = FortranKeywordToken.keyword("precision");
     FortranToken ELSE_KEYWORD = FortranKeywordToken.keyword("else");
+    FortranToken ELSEIF_KEYWORD = FortranKeywordToken.keyword("elseif");
     FortranToken IF_KEYWORD = FortranKeywordToken.keyword("if");
     FortranToken ELSEWHERE_KEYWORD = FortranKeywordToken.keyword("elsewhere");
     FortranToken ENTRY_KEYWORD = FortranKeywordToken.keyword("entry");
     FortranToken EQUIVALENCE_KEYWORD = FortranKeywordToken.keyword("equivalence");
     FortranToken EXIT_KEYWORD = FortranKeywordToken.keyword("exit");
     FortranToken EXTERNAL_KEYWORD = FortranKeywordToken.keyword("external");
+    FortranToken FILE_KEYWORD = FortranKeywordToken.softKeyword("file");
     FortranToken GO_KEYWORD = FortranKeywordToken.keyword("go");
     FortranToken TO_KEYWORD = FortranKeywordToken.keyword("to");
     FortranToken GOTO_KEYWORD = FortranKeywordToken.keyword("goto");
@@ -122,7 +125,6 @@ public interface FortranTokens {
     FortranToken WHILE_KEYWORD = FortranKeywordToken.keyword("while");
     FortranToken BACKSPACE_KEYWORD = FortranKeywordToken.keyword("backspace");
     FortranToken CLOSE_KEYWORD = FortranKeywordToken.keyword("close");
-    FortranToken ENDFILE_KEYWORD = FortranKeywordToken.keyword("endfile");
     FortranToken FORMAT_KEYWORD = FortranKeywordToken.keyword("format");
     FortranToken INQUIRE_KEYWORD = FortranKeywordToken.keyword("inquire");
     FortranToken OPEN_KEYWORD = FortranKeywordToken.keyword("open");
@@ -131,14 +133,28 @@ public interface FortranTokens {
     FortranToken REWIND_KEYWORD = FortranKeywordToken.keyword("rewind");
     FortranToken WRITE_KEYWORD = FortranKeywordToken.keyword("write");
     FortranToken FUNCTION_KEYWORD = FortranKeywordToken.keyword("function");
+
     FortranToken END_KEYWORD = FortranKeywordToken.softKeyword("end");
+    FortranToken ENDFILE_KEYWORD = FortranKeywordToken.keyword("endfile");
+    FortranToken ENDIF_KEYWORD = FortranKeywordToken.softKeyword("endif");
+    FortranToken ENDPROGRAM_KEYWORD = FortranKeywordToken.keyword("endprogram");
+    FortranToken ENDFUNCTION_KEYWORD = FortranKeywordToken.keyword("endfunction");
+    FortranToken ENDSUBROUTINE_KEYWORD = FortranKeywordToken.keyword("endsubroutine");
+    FortranToken ENDTYPE_KEYWORD = FortranKeywordToken.softKeyword("endtype");
+    FortranToken ENDWHERE_KEYWORD = FortranKeywordToken.softKeyword("endwhere");
+    FortranToken ENDSELECT_KEYWORD = FortranKeywordToken.softKeyword("endselect");
+    FortranToken ENDDO_KEYWORD = FortranKeywordToken.softKeyword("enddo");
+    FortranToken ENDMODULE_KEYWORD = FortranKeywordToken.softKeyword("endmodule");
+    FortranToken ENDBLOCKDATA_KEYWORD = FortranKeywordToken.softKeyword("endblockdata");
+    FortranToken ENDBLOCK_KEYWORD = FortranKeywordToken.softKeyword("endblock");
+    FortranToken ENDINTERFACE_KEYWORD = FortranKeywordToken.softKeyword("endinterface");
 
     TokenSet KEYWORDS = TokenSet.create(
             TRUE_KEYWORD, FALSE_KEYWORD,
             ALLOCATABLE_KEYWORD, ALLOCATE_KEYWORD, ASSIGN_KEYWORD, ASSIGNMENT_KEYWORD, BLOCK_KEYWORD,
             CALL_KEYWORD, CASE_KEYWORD, CHARACTER_KEYWORD, COMMON_KEYWORD, COMPLEX_KEYWORD, CONTAINS_KEYWORD,
             CONTINUE_KEYWORD, CYCLE_KEYWORD, DATA_KEYWORD, DEALLOCATE_KEYWORD, DEFAULT_KEYWORD, DIMENSION_KEYWORD, DO_KEYWORD,
-            DOUBLE_KEYWORD, PRECISION_KEYWORD, ELSE_KEYWORD, IF_KEYWORD, ELSEWHERE_KEYWORD, ENTRY_KEYWORD,
+            DOUBLE_KEYWORD, PRECISION_KEYWORD, ELSE_KEYWORD, ELSEIF_KEYWORD, IF_KEYWORD, ELSEWHERE_KEYWORD, ENTRY_KEYWORD,
             EQUIVALENCE_KEYWORD, EXIT_KEYWORD, EXTERNAL_KEYWORD, FUNCTION_KEYWORD, GO_KEYWORD, TO_KEYWORD, GOTO_KEYWORD,
             IMPLICIT_KEYWORD, IN_KEYWORD, INOUT_KEYWORD, INTEGER_KEYWORD, INTENT_KEYWORD, INTERFACE_KEYWORD,
             INTRINSIC_KEYWORD, KIND_KEYWORD, LEN_KEYWORD, LOGICAL_KEYWORD, LINE_COMMENT, MODULE_KEYWORD,
@@ -147,9 +163,12 @@ public interface FortranTokens {
             RECURSIVE_KEYWORD, RESULT_KEYWORD, RETURN_KEYWORD, SAVE_KEYWORD, SELECT_KEYWORD, STOP_KEYWORD,
             SUBROUTINE_KEYWORD, TARGET_KEYWORD, THEN_KEYWORD, TYPE_KEYWORD, USE_KEYWORD, WHERE_KEYWORD,
             WHILE_KEYWORD, BACKSPACE_KEYWORD, CLOSE_KEYWORD, ENDFILE_KEYWORD, FORMAT_KEYWORD, INQUIRE_KEYWORD,
-            OPEN_KEYWORD, PRINT_KEYWORD, READ_KEYWORD, REWIND_KEYWORD, WRITE_KEYWORD, PROGRAM_KEYWORD, END_KEYWORD);
+            OPEN_KEYWORD, PRINT_KEYWORD, READ_KEYWORD, REWIND_KEYWORD, WRITE_KEYWORD, PROGRAM_KEYWORD, END_KEYWORD,
+            ENDIF_KEYWORD, ENDPROGRAM_KEYWORD, ENDFUNCTION_KEYWORD, ENDSUBROUTINE_KEYWORD, ENDTYPE_KEYWORD,
+            ENDWHERE_KEYWORD, ENDSELECT_KEYWORD, ENDDO_KEYWORD, ENDMODULE_KEYWORD, ENDBLOCKDATA_KEYWORD,
+            ENDBLOCK_KEYWORD, ENDINTERFACE_KEYWORD, FILE_KEYWORD);
 
-    TokenSet SOFT_KEYWORDS = TokenSet.create(NONE_KEYWORD, END_KEYWORD);
+    TokenSet SOFT_KEYWORDS = TokenSet.create(NONE_KEYWORD, END_KEYWORD, FILE_KEYWORD);
 
     TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE);
 

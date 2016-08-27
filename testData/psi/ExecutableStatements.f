@@ -1,4 +1,25 @@
 program p
+    if ( l ) then
+      k=k+1
+    end if
+    if ( l ) then
+      n=n+1
+    else
+      k=k+1
+    end if
+    if ( pressure .gt. 1000.0 ) then
+      if ( n .lt. 0.0 ) then
+        x = 0.0
+        y = 0.0
+      else
+        z = 0.0
+      end if
+    else if ( temperature .gt. 547.0 ) then
+      z = 1.0
+    else
+      x = 1.0
+      y = 1.0
+    end if
     if(1-2) 10, 20, 30
     if ( value .le. atad ) call punt
     assign 10 to a
