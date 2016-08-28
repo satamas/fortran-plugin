@@ -10,6 +10,8 @@ public interface FortranNodeTypes {
     IFileElementType FORTRAN_FILE = new IFileElementType(FortranLanguage.INSTANCE);
 
     FortranNodeType PROGRAM = new FortranNodeType("PROGRAM", FortranProgram.class);
+    FortranNodeType MODULE = new FortranNodeType("MODULE", FortranProgram.class);
+    FortranNodeType MODULE_BODY = new FortranNodeType("MODULE_BODY", FortranProgram.class);
     FortranNodeType FUNCTION = new FortranNodeType("FUNCTION", FortranProgram.class);
     FortranNodeType SUBROUTINE = new FortranNodeType("SUBROUTINE", FortranProgram.class);
     FortranNodeType BLOCK_DATA = new FortranNodeType("BLOCK_DATA", FortranProgram.class);
@@ -27,6 +29,7 @@ public interface FortranNodeTypes {
     FortranNodeType END_STATEMENT = new FortranNodeType("END_STATEMENT", FortranElementImpl.class);
 
     FortranNodeType PROGRAM_STATEMENT = new FortranNodeType("PROGRAM_STATEMENT", FortranElementImpl.class);
+    FortranNodeType MODULE_STATEMENT = new FortranNodeType("MODULE_STATEMENT", FortranElementImpl.class);
     FortranNodeType END_PROGRAM_STATEMENT = new FortranNodeType("END_PROGRAM_STATEMENT", FortranElementImpl.class);
 
     FortranNodeType ENTRY_STATEMENT = new FortranNodeType("ENTRY_STATEMENT", FortranElementImpl.class);

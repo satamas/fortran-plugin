@@ -26,35 +26,42 @@ public class FortranParsing extends AbstractFortranParsing {
     public void parseFile(IElementType root) {
         final PsiBuilder.Marker rootMarker = mark();
         while (!eof()) {
-            PsiBuilder.Marker marker = builder.mark();
-            parseLabelDefinition();
-            if (at(PROGRAM_KEYWORD)) {
-                marker.rollbackTo();
-                parseProgram();
-            } else if (at(FUNCTION_KEYWORD)) {
-                marker.rollbackTo();
-                parseFunctionOrSubroutine(true);
-            } else if (at(SUBROUTINE_KEYWORD)) {
-                marker.rollbackTo();
-                parseFunctionOrSubroutine(false);
-            } else if (at(BLOCK_KEYWORD)) {
-                marker.rollbackTo();
-                parseBlockData();
-            } else if (atSet(TYPE_FIRST)) {
-                parseTypeSpecification();
-
-                if (at(FUNCTION_KEYWORD)) {
-                    marker.rollbackTo();
-                    parseFunctionOrSubroutine(true);
-                } else {
-                    marker.rollbackTo();
-                    parseProgram();
-                }
-            } else {
-                errorAndAdvance("Top level declaration expected");
-            }
+            parseProgramUnit();
         }
         rootMarker.done(FORTRAN_FILE);
+    }
+
+    private void parseProgramUnit() {
+        PsiBuilder.Marker marker = builder.mark();
+        parseLabelDefinition();
+        if (at(PROGRAM_KEYWORD)) {
+            marker.rollbackTo();
+            parseProgram();
+        } else if (at(FUNCTION_KEYWORD)) {
+            marker.rollbackTo();
+            parseFunctionOrSubroutine(true);
+        } else if (at(SUBROUTINE_KEYWORD)) {
+            marker.rollbackTo();
+            parseFunctionOrSubroutine(false);
+        } else if (at(BLOCK_KEYWORD)) {
+            marker.rollbackTo();
+            parseBlockData();
+        } else if (at(MODULE_KEYWORD)) {
+            marker.rollbackTo();
+            parseModule();
+        } else if (atSet(TYPE_FIRST)) {
+            parseTypeSpecification();
+
+            if (at(FUNCTION_KEYWORD)) {
+                marker.rollbackTo();
+                parseFunctionOrSubroutine(true);
+            } else {
+                marker.rollbackTo();
+                parseProgram();
+            }
+        } else {
+            errorAndAdvance("Top level declaration expected");
+        }
     }
 
     private void parseFunctionOrSubroutine(boolean isFunction) {
@@ -94,6 +101,47 @@ public class FortranParsing extends AbstractFortranParsing {
         programElement.done(PROGRAM);
     }
 
+    private void parseModule() {
+        PsiBuilder.Marker programElement = mark();
+        parseModuleStatement();
+
+        PsiBuilder.Marker body = mark();
+        while (!eof()) {
+            PsiBuilder.Marker marker = builder.mark();
+            parseLabelDefinition();
+
+            if (at(FUNCTION_KEYWORD)) {
+                marker.rollbackTo();
+                parseFunctionOrSubroutine(true);
+            } else if (at(SUBROUTINE_KEYWORD)) {
+                marker.rollbackTo();
+                parseFunctionOrSubroutine(false);
+            } else if (at(END_KEYWORD) || at(ENDMODULE_KEYWORD)) {
+                marker.rollbackTo();
+                body.done(MODULE_BODY);
+                if (parseEndStatement(MODULE_KEYWORD)) {
+                    break;
+                } else {
+                    body = body.precede();
+                }
+            } else if (atSet(TYPE_FIRST)) {
+                parseTypeSpecification();
+
+                if (at(FUNCTION_KEYWORD)) {
+                    marker.rollbackTo();
+                    parseFunctionOrSubroutine(true);
+                } else {
+                    marker.rollbackTo();
+                    parseStatement();
+                }
+            } else {
+                parseStatement();
+            }
+        }
+
+        programElement.done(MODULE);
+    }
+
     private void parseProgramStatement() {
         PsiBuilder.Marker programStatement = mark();
         parseLabelDefinition();
@@ -105,6 +153,16 @@ public class FortranParsing extends AbstractFortranParsing {
         expect(IDENTIFIER, "Program name expected");
         parseEndOfStatement();
         programStatement.done(PROGRAM_STATEMENT);
+    }
+
+    private void parseModuleStatement() {
+        assert at(MODULE_KEYWORD);
+        PsiBuilder.Marker moduleStatement = mark();
+        parseLabelDefinition();
+        advance();
+        expect(IDENTIFIER, "Module name expected");
+        parseEndOfStatement();
+        moduleStatement.done(MODULE_STATEMENT);
     }
 
     private void parseBody() {
@@ -121,7 +179,11 @@ public class FortranParsing extends AbstractFortranParsing {
         IElementType statementType = null;
         parseLabelDefinition();
 
-        if (at(IMPLICIT_KEYWORD)) {
+        if (at(FUNCTION_KEYWORD) || at(SUBROUTINE_KEYWORD)) {
+            marker.rollbackTo();
+            parseProgramUnit();
+            return true;
+        } else if (at(IMPLICIT_KEYWORD)) {
             statementType = parseImplicitStatement();
         } else if (at(PARAMETER_KEYWORD)) {
             statementType = parseParameterStatement();
@@ -222,6 +284,7 @@ public class FortranParsing extends AbstractFortranParsing {
     }
 
     private boolean parseEndStatement(IElementType keyword) {
+        boolean result = true;
         PsiBuilder.Marker endStatement = mark();
         parseLabelDefinition();
 
@@ -235,17 +298,17 @@ public class FortranParsing extends AbstractFortranParsing {
             if (at(keyword) && !builder.newlineBeforeCurrentToken()) {
                 advance();
             } else if (atSet(END_KEYWORDS) && !builder.newlineBeforeCurrentToken()) {
-                endStatement.rollbackTo();
-                return false;
+                errorAndAdvance("" + keyword + " expected, " + tt() + "found");
+                result = false;
             } else if (keywordRequiredSet.contains(keyword)) {
                 error(keyword.toString() + "expected");
             }
         } else {
-            endStatement.rollbackTo();
-            return false;
+            errorAndAdvance("End " + keyword + " expected, " + tt() + "found");
+            result = false;
         }
 
-        if (at(IDENTIFIER)) {
+        if (at(IDENTIFIER) && !builder.newlineBeforeCurrentToken()) {
             PsiBuilder.Marker reference = mark();
             advance();
             reference.done(REFERENCE_EXPRESSION);
@@ -253,7 +316,7 @@ public class FortranParsing extends AbstractFortranParsing {
 
         parseEndOfStatement();
         endStatement.done(END_STATEMENT);
-        return true;
+        return result;
     }
 
     private boolean parseEndBlockData() {
@@ -304,6 +367,8 @@ public class FortranParsing extends AbstractFortranParsing {
             return ENDSUBROUTINE_KEYWORD;
         } else if (keyword == PROGRAM_KEYWORD) {
             return ENDSUBROUTINE_KEYWORD;
+        } else if (keyword == MODULE_KEYWORD) {
+            return ENDMODULE_KEYWORD;
         } else {
             throw new IllegalArgumentException("No end keyword for " + keyword.toString());
         }
