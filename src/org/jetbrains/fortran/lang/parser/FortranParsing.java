@@ -166,6 +166,8 @@ public class FortranParsing extends AbstractFortranParsing {
             return false;
         } else if (at(IF_KEYWORD)) {
             statementType = parseIfStatement();
+        } else if (at(DO_KEYWORD)) {
+            statementType = parseDoStatement();
         } else if (at(RETURN_KEYWORD)) {
             statementType = parseReturnStatement();
         } else if (atSet(TYPE_FIRST)) {
@@ -764,6 +766,23 @@ public class FortranParsing extends AbstractFortranParsing {
         assert at(RETURN_KEYWORD);
         advance();
         if (atSet(EXPRESSION_FIRST) && !builder.newlineBeforeCurrentToken()) {
+            expressionParsing.parseExpression();
+        }
+        return STATEMENT;
+    }
+
+    private IElementType parseDoStatement() {
+        assert at(DO_KEYWORD);
+        advance();
+        parseLabelReference();
+        if (at(COMMA)) {
+            advance();
+        }
+        expressionParsing.parseExpression();
+        expect(COMMA, ", expected");
+        expressionParsing.parseExpression();
+        if (at(COMMA)) {
+            advance();
             expressionParsing.parseExpression();
         }
         return STATEMENT;

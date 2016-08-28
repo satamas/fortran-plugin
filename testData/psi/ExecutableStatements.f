@@ -20,6 +20,7 @@ program p
       x = 1.0
       y = 1.0
     end if
+    do 200 k = 5, 1
     if(1-2) 10, 20, 30
     if ( value .le. atad ) call punt
     assign 10 to a
