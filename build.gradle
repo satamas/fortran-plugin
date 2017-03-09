@@ -25,17 +25,10 @@ allprojects {
         downloadSources Boolean.valueOf(downloadIdeaSources)
         updateSinceUntilBuild = false
         instrumentCode = false
-
-        publish {
-            username publishUsername
-            password publishPassword
-            channel publishChannel
-        }
     }
 
     repositories {
         mavenCentral()
-        maven { url 'http://dl.bintray.com/jetbrains/markdown' }
         maven { url 'https://jitpack.io' }
     }
 
@@ -56,12 +49,10 @@ allprojects {
     }
 }
 
-// simple tests
 test {
     useJUnit ()
 }
 
-// Lexer Generation from the intellij-rust plugin
 lexerTask(project, 'FortranLexer', 'org/jetbrains/fortran/lang/lexer')
 
 static def codegenTask(project, task) {
