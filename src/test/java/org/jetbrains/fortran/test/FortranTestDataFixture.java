@@ -22,5 +22,5 @@ public class FortranTestDataFixture {
     }
 
     @NotNull
-    public static File getLangTestData() { return new File(getHomeDirectory(), "testData"); }
+    public static File getLangTestData() { return new File(getHomeDirectory(), "src/test/resources/"); }
 }

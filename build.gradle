@@ -1,0 +1,90 @@
+// general part
+buildscript {
+    ext.javaVersion = '1.8'
+
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
+
+    }
+    dependencies {
+        classpath "gradle.plugin.org.jetbrains:gradle-intellij-plugin:0.1.10"
+    }
+}
+
+plugins {
+    id 'org.jetbrains.intellij' version "0.2.0"
+}
+
+allprojects {
+    apply plugin: 'org.jetbrains.intellij'
+    intellij {
+        version ideaVersion
+        downloadSources Boolean.valueOf(downloadIdeaSources)
+        updateSinceUntilBuild = false
+        instrumentCode = false
+
+        publish {
+            username publishUsername
+            password publishPassword
+            channel publishChannel
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'http://dl.bintray.com/jetbrains/markdown' }
+        maven { url 'https://jitpack.io' }
+    }
+
+    apply plugin: 'java'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+
+    dependencies {
+        compileOnly('com.github.JetBrains:Grammar-Kit:1.5.0') {
+            exclude group: 'org.jetbrains.plugins'
+            exclude module: 'idea'
+        }
+
+        testCompile 'junit:junit:4.+'
+    }
+}
+
+// simple tests
+test {
+    useJUnit ()
+}
+
+// Lexer Generation from the intellij-rust plugin
+lexerTask(project, 'FortranLexer', 'org/jetbrains/fortran/lang/lexer')
+
+static def codegenTask(project, task) {
+    project.compileJava.dependsOn task
+    project.compileTestJava.dependsOn task
+    return task
+}
+
+def lexerTask(project, lexerName, pkg) {
+    return codegenTask(project, tasks.create("generate${lexerName}", JavaExec) {
+        def src = "$project.projectDir/src/main/java/org/jetbrains/fortran/lang/lexer/${lexerName}.flex"
+        def dst = "$project.projectDir/src/main/java/$pkg"
+
+        main = 'jflex.Main'
+        classpath = files('lib/jflex/JFlex.jar')
+
+        args = ['--skel', 'lib/jflex/idea-flex.skeleton',
+                '-d', dst,
+                src
+        ]
+
+        inputs.file file(src)
+        outputs.dir file("$dst/_${lexerName}.java")
+    })
+}
+
