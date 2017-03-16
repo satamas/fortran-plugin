@@ -12,10 +12,10 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.fortran.FortranLanguage;
-import org.jetbrains.fortran.lang.FortranNodeType;
+import org.jetbrains.fortran.lang.FortranTypes;
 import org.jetbrains.fortran.lang.lexer.FortranLexer;
-import org.jetbrains.fortran.lang.lexer.FortranTokens;
 import org.jetbrains.fortran.lang.psi.FortranFile;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.*;
 
 public class FortranParserDefinition implements ParserDefinition {
     public static final IFileElementType FILE = new IFileElementType(FortranLanguage.INSTANCE);
@@ -39,26 +39,25 @@ public class FortranParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return FortranTokens.WHITE_SPACES;
+        return WHITE_SPACES;
     }
 
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return FortranTokens.COMMENTS;
+        return COMMENTS;
     }
 
     @NotNull
     @Override
     public TokenSet getStringLiteralElements() {
-        return FortranTokens.STRINGS;
+        return STRINGS;
     }
 
     @NotNull
     @Override
     public PsiElement createElement(ASTNode astNode) {
-        FortranNodeType elementType = (FortranNodeType) astNode.getElementType();
-        return elementType.createPsi(astNode);
+        return FortranTypes.Factory.createElement(astNode);
     }
 
     @Override

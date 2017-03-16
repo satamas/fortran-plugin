@@ -1,0 +1,107 @@
+FILE
+  PsiComment(line_comment)('! Note: test now is accepted but really works bad')
+  PsiWhiteSpace('\n')
+  PsiComment(line_comment)('! We must remove 'cap' from the grammar!!!')
+  PsiWhiteSpace('\n')
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+    PsiWhiteSpace('\n  ')
+    EXECUTION_PART_CONSTRUCT
+      IF_STMT
+        PsiElement(if)('if')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        EXPR
+          CAP
+            PsiElement(identifier)('a')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        CAP
+          PsiElement(identifier)('b')
+    PsiWhiteSpace('\n  ')
+    EXECUTION_PART_CONSTRUCT
+      IF_CONSTRUCT
+        IF_THEN_STMT
+          PsiElement(if)('if')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          EXPR
+            CAP
+              PsiElement(identifier)('c')
+          PsiElement())(')')
+          PsiWhiteSpace(' ')
+          PsiElement(then)('then')
+        PsiWhiteSpace('\n    ')
+        BLOCK
+          EXECUTION_PART_CONSTRUCT
+            CAP
+              PsiElement(identifier)('d')
+        PsiWhiteSpace('\n  ')
+        ELSE_IF_STMT
+          PsiElement(elseif)('elseif')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          EXPR
+            CAP
+              PsiElement(identifier)('d')
+          PsiElement())(')')
+          PsiWhiteSpace(' ')
+          PsiElement(then)('then')
+          PsiWhiteSpace('\n    ')
+          PsiElement(identifier)('f')
+        PsiWhiteSpace('\n  ')
+        BLOCK
+          <empty list>
+        END_IF_STMT
+          PsiElement(endif)('endif')
+    PsiWhiteSpace('\n  ')
+    EXECUTION_PART_CONSTRUCT
+      IF_CONSTRUCT
+        IF_THEN_STMT
+          PsiElement(if)('if')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          EXPR
+            CAP
+              PsiElement(identifier)('m')
+          PsiElement())(')')
+          PsiWhiteSpace(' ')
+          PsiElement(then)('then')
+        PsiWhiteSpace('\n    ')
+        BLOCK
+          EXECUTION_PART_CONSTRUCT
+            CAP
+              PsiElement(identifier)('n')
+        PsiWhiteSpace('\n  ')
+        ELSE_IF_STMT
+          PsiElement(else)('else')
+          PsiWhiteSpace(' ')
+          PsiElement(if)('if')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          EXPR
+            CAP
+              PsiElement(identifier)('n')
+          PsiElement())(')')
+          PsiWhiteSpace(' ')
+          PsiElement(then)('then')
+          PsiWhiteSpace('\n    ')
+          PsiElement(identifier)('l')
+        PsiWhiteSpace('\n  ')
+        BLOCK
+          <empty list>
+        ELSE_STMT
+          PsiElement(else)('else')
+          PsiWhiteSpace('\n    ')
+          PsiElement(identifier)('k')
+        PsiWhiteSpace('\n  ')
+        BLOCK
+          <empty list>
+        END_IF_STMT
+          PsiElement(endif)('endif')
+    PsiWhiteSpace('\n')
+    END_PROGRAM_STMT
+      PsiElement(endprogram)('endprogram')

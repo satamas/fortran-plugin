@@ -1,0 +1,9 @@
+FILE
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+    PsiWhiteSpace('\n')
+    END_PROGRAM_STMT
+      PsiElement(endprogram)('endprogram')

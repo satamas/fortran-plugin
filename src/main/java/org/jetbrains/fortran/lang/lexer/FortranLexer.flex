@@ -5,6 +5,8 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
 import java.util.Stack;
 
+import static org.jetbrains.fortran.lang.FortranTypes.*;
+
 %%
 
 %class _FortranLexer
@@ -43,17 +45,15 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 
 %%
 
-({WHITE_SPACE_CHAR})+ { return FortranTokens.WHITE_SPACE; }
-{LINE_COMMENT} { return FortranTokens.LINE_COMMENT; }
-{INTEGER_LITERAL} { return FortranTokens.INTEGER_LITERAL; }
+({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+{LINE_COMMENT} { return LINE_COMMENT; }
 
-{STRING_LITERAL} { return FortranTokens.STRING_LITERAL; }
+{STRING_LITERAL} { return STRING_LITERAL; }
+{INTEGER_LITERAL} { return INTEGER_LITERAL; }
+{FLOATING_POINT_LITERAL} { return FLOATING_POINT_LITERAL; }
+{DOUBLE_PRECISION_LITERAL} { return DOUBLE_PRECISION_LITERAL; }
 
-{INTEGER_LITERAL} { return FortranTokens.INTEGER_LITERAL; }
-{FLOATING_POINT_LITERAL} { return FortranTokens.FLOATING_POINT_LITERAL; }
-{DOUBLE_PRECISION_LITERAL} { return FortranTokens.DOUBLE_PRECISION_LITERAL; }
-
-"=" { return FortranTokens.EQ; }
+/*"=" { return FortranTokens.EQ; }
 "==" { return FortranTokens.EQEQ; }
 "/=" { return FortranTokens.NEQ; }
 ":" { return FortranTokens.COLON; }
@@ -63,10 +63,10 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "*" { return FortranTokens.MUL; }
 "**" { return FortranTokens.POWER; }
 "/" { return FortranTokens.DIV; }
-"//" { return FortranTokens.DIVDIV; }
-"(" { return FortranTokens.LPAR; }
-")" { return FortranTokens.RPAR; }
-"[" { return FortranTokens.LBRACKET; }
+"//" { return FortranTokens.DIVDIV; }*/
+"(" { return LPAR; }
+")" { return RPAR; }
+/*"[" { return FortranTokens.LBRACKET; }
 "]" { return FortranTokens.RBRACKET; }
 "," { return FortranTokens.COMMA; }
 "." { return FortranTokens.DOT; }
@@ -78,9 +78,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "<=" { return FortranTokens.LE; }
 ">" { return FortranTokens.GT; }
 ">=" { return FortranTokens.GE; }
-"?" { return FortranTokens.QUEST; }
+"?" { return FortranTokens.QUEST; }*/
 
-".eqv." { return FortranTokens.LOGICAL_EQ; }
+/*".eqv." { return FortranTokens.LOGICAL_EQ; }
 ".neqv." { return FortranTokens.LOGICAL_NEQ; }
 ".and." { return FortranTokens.AND; }
 ".or." { return FortranTokens.OR; }
@@ -115,11 +115,10 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "dimension" { return FortranTokens.DIMENSION_KEYWORD; }
 "do" { return FortranTokens.DO_KEYWORD; }
 "double" { return FortranTokens.DOUBLE_KEYWORD; }
-"precision" { return FortranTokens.PRECISION_KEYWORD; }
-"else" { return FortranTokens.ELSE_KEYWORD; }
-"elseif" { return FortranTokens.ELSEIF_KEYWORD; }
-"if" { return FortranTokens.IF_KEYWORD; }
-"elsewhere" { return FortranTokens.ELSEWHERE_KEYWORD; }
+"precision" { return FortranTokens.PRECISION_KEYWORD; }*/
+"else" { return ELSE; }
+"elseif" { return ELSEIF; }
+/*"elsewhere" { return FortranTokens.ELSEWHERE_KEYWORD; }
 "entry" { return FortranTokens.ENTRY_KEYWORD; }
 "equivalence" { return FortranTokens.EQUIVALENCE_KEYWORD; }
 "exit" { return FortranTokens.EXIT_KEYWORD; }
@@ -128,9 +127,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "file" { return FortranTokens.FILE_KEYWORD; }
 "go" { return FortranTokens.GO_KEYWORD; }
 "to" { return FortranTokens.TO_KEYWORD; }
-"goto" { return FortranTokens.GOTO_KEYWORD; }
-"if" { return FortranTokens.IF_KEYWORD; }
-"implicit" { return FortranTokens.IMPLICIT_KEYWORD; }
+"goto" { return FortranTokens.GOTO_KEYWORD; }*/
+"if" { return IF; }
+/*"implicit" { return FortranTokens.IMPLICIT_KEYWORD; }
 "in" { return FortranTokens.IN_KEYWORD; }
 "inout" { return FortranTokens.INOUT_KEYWORD; }
 "integer" { return FortranTokens.INTEGER_KEYWORD; }
@@ -151,9 +150,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "parameter" { return FortranTokens.PARAMETER_KEYWORD; }
 "pause" { return FortranTokens.PAUSE_KEYWORD; }
 "pointer" { return FortranTokens.POINTER_KEYWORD; }
-"private" { return FortranTokens.PRIVATE_KEYWORD; }
-"program" { return FortranTokens.PROGRAM_KEYWORD; }
-"public" { return FortranTokens.PUBLIC_KEYWORD; }
+"private" { return FortranTokens.PRIVATE_KEYWORD; }*/
+"program" { return PROGRAM; }
+/*"public" { return FortranTokens.PUBLIC_KEYWORD; }
 "real" { return FortranTokens.REAL_KEYWORD; }
 "recursive" { return FortranTokens.RECURSIVE_KEYWORD; }
 "result" { return FortranTokens.RESULT_KEYWORD; }
@@ -163,9 +162,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "case" { return FortranTokens.CASE_KEYWORD; }
 "stop" { return FortranTokens.STOP_KEYWORD; }
 "subroutine" { return FortranTokens.SUBROUTINE_KEYWORD; }
-"target" { return FortranTokens.TARGET_KEYWORD; }
-"then" { return FortranTokens.THEN_KEYWORD; }
-"type" { return FortranTokens.TYPE_KEYWORD; }
+"target" { return FortranTokens.TARGET_KEYWORD; }*/
+"then" { return THEN; }
+/*"type" { return FortranTokens.TYPE_KEYWORD; }
 "use" { return FortranTokens.USE_KEYWORD; }
 "where" { return FortranTokens.WHERE_KEYWORD; }
 "while" { return FortranTokens.WHILE_KEYWORD; }
@@ -177,13 +176,13 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "print" { return FortranTokens.PRINT_KEYWORD; }
 "read" { return FortranTokens.READ_KEYWORD; }
 "rewind" { return FortranTokens.REWIND_KEYWORD; }
-"write" { return FortranTokens.WRITE_KEYWORD; }
+"write" { return FortranTokens.WRITE_KEYWORD; }*/
 
-"end" { return FortranTokens.END_KEYWORD; }
-"endfile" { return FortranTokens.ENDFILE_KEYWORD; }
-"endif" { return FortranTokens.ENDIF_KEYWORD; }
-"endprogram" { return FortranTokens.ENDPROGRAM_KEYWORD; }
-
+"end" { return END; }
+//"endfile" { return FortranTokens.ENDFILE_KEYWORD; }
+"endif" { return ENDIF; }
+"endprogram" { return ENDPROGRAM; }
+/*
 "endfunction" { return FortranTokens.ENDFUNCTION_KEYWORD; }
 "endsubroutine" { return FortranTokens.ENDSUBROUTINE_KEYWORD; }
 "endtype" { return FortranTokens.ENDTYPE_KEYWORD; }
@@ -193,8 +192,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endmodule" { return FortranTokens.ENDMODULE_KEYWORD; }
 "endblockdata"    { return FortranTokens.ENDBLOCKDATA_KEYWORD; }
 "endblock"    { return FortranTokens.ENDBLOCK_KEYWORD; }
-"endinterface"    { return FortranTokens.ENDINTERFACE_KEYWORD; }
+"endinterface"    { return FortranTokens.ENDINTERFACE_KEYWORD; }*/
 
-{IDENTIFIER} { return FortranTokens.IDENTIFIER; }
+{IDENTIFIER} { return IDENTIFIER; }
 
-. { return TokenType.BAD_CHARACTER; }
+//. { return TokenType.BAD_CHARACTER; }

@@ -19,6 +19,13 @@ plugins {
 }
 
 allprojects {
+    apply plugin: 'idea'
+    idea {
+        module {
+            generatedSourceDirs += file('src/gen')
+        }
+    }
+
     apply plugin: 'org.jetbrains.intellij'
     intellij {
         version ideaVersion
@@ -38,7 +45,11 @@ allprojects {
     targetCompatibility = javaVersion
 
     tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
-
+    sourceSets {
+        main {
+            java.srcDirs += 'src/gen'
+        }
+    }
     dependencies {
         compileOnly('com.github.JetBrains:Grammar-Kit:1.5.0') {
             exclude group: 'org.jetbrains.plugins'
@@ -54,6 +65,7 @@ test {
 }
 
 lexerTask(project, 'FortranLexer', 'org/jetbrains/fortran/lang/lexer')
+parserTask(project, 'FortranParser', 'org/jetbrains/fortran/lang/parser')
 
 static def codegenTask(project, task) {
     project.compileJava.dependsOn task
@@ -79,3 +91,22 @@ def lexerTask(project, lexerName, pkg) {
     })
 }
 
+def parserTask(project, parserName, pkg) {
+    return codegenTask(project, tasks.create("generate${parserName}", JavaExec) {
+        def dstRoot = "$project.projectDir/src/gen/"
+        def src = "$project.projectDir/src/main/java/org/jetbrains/fortran/lang/parser/${parserName}.bnf"
+        def dst = "$dstRoot/$pkg"
+        doFirst {
+            delete file(dst)
+            delete file("$dstRoot/org/jetbrains/fortran/lang/")
+        }
+
+        main = 'org.intellij.grammar.Main'
+        classpath(configurations.compileOnly)
+
+        args = [dstRoot, file(src)]
+
+        inputs.file file(src)
+        outputs.dir dst
+    })
+}

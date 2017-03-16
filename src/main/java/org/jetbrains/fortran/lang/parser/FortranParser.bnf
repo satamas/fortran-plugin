@@ -1,0 +1,112 @@
+{
+  parserClass='org.jetbrains.fortran.lang.parser.FortranParser'
+
+  implements='org.jetbrains.fortran.lang.psi.FortranCompositeElement'
+  extends='org.jetbrains.fortran.lang.psi.impl.FortranCompositeElementImpl'
+
+  elementTypeHolderClass='org.jetbrains.fortran.lang.FortranTypes'
+  elementTypeClass='org.jetbrains.fortran.lang.psi.FortranCompositeElementType'
+  tokenTypeClass='org.jetbrains.fortran.lang.psi.FortranTokenType'
+
+  psiClassPrefix='Fortran'
+  psiImplClassSuffix='Impl'
+  psiPackage='org.jetbrains.fortran.lang.psi'
+  psiImplPackage='org.jetbrains.fortran.lang.psi.impl'
+
+//  parserUtilClass='org.rust.lang.core.parser.RustParserUtil'
+//  psiImplUtilClass = ''
+//  psiTreeUtilClass = ''
+  generateTokenAccessors=true
+  tokens=[
+    LPAR      =  '('
+    RPAR      =  ')'
+  ]
+// какая-то магия
+//  name(".*expr")='expression'
+//  extends(".*expr")=expr
+}
+
+program_unit ::= main_program
+
+
+
+// R209
+execution_part_construct ::= executable_construct // | format-stmt | entry-stmt | data-stmt
+
+// R213
+private executable_construct ::= action_stmt /*| associate_construct | block_construct | case_construct
+                       | critical_construct | do_construct | forall_construct*/ | if_construct
+                     /*  | select_type_construct | where_construct*/
+// R214
+private action_stmt ::= cap /*allocate-stmt
+                | assignment-stmt
+                | backspace-stmt
+                | call-stmt
+                | close-stmt
+                | continue-stmt
+                | cycle-stmt
+                | deallocate-stmt
+                | end-function-stmt
+                | end-mp-subprogram-stmt
+                | end-program-stmt
+                | end-subroutine-stmt
+                | endfile-stmt
+                | error-stop-stmt
+                | exit-stmt
+                | flush-stmt
+                | forall-stmt
+                | goto-stmt
+               */ | if_stmt/*
+                | inquire-stmt
+                | lock-stmt
+                | nullify-stmt
+                | open-stmt
+                | pointer-assignment-stmt
+                | print-stmt
+                | read-stmt
+                | return-stmt
+                | rewind-stmt
+                | stop-stmt
+                | sync-all-stmt
+                | sync-images-stmt
+                | sync-memory-stmt
+                | unlock-stmt
+                | wait-stmt
+                | where-stmt
+                | write-stmt
+                | arithmetic-if-stmt
+                | computed-goto-stmt*/
+
+// Clause 8
+// R801
+block ::= execution_part_construct*
+
+// R832
+if_construct ::= if_then_stmt block (else_if_stmt block)* (else_stmt block)? end_if_stmt { pin = 3 }
+
+// R833
+if_then_stmt ::= (identifier ':')? if '(' expr ')' then
+// R834
+else_if_stmt ::= ((else if)|elseif) '(' expr ')' then identifier?
+// R835
+else_stmt ::= else identifier?
+// R836
+end_if_stmt ::= ((end if)|endif) identifier?
+// R837
+if_stmt ::= if '(' expr ')' action_stmt
+
+// R1101
+main_program ::= program_stmt? /*specification_part?*/ execution_part_construct* /*internal_subprogram_part*/ end_program_stmt
+
+// R1102 +
+program_stmt ::= program identifier
+
+// R1103 +
+end_program_stmt ::= endprogram | (end (program identifier?)?)
+
+
+expr ::= cap
+
+// That's a cap. Must be removed in the final version
+cap ::= identifier | integer_literal | floating_point_literal
+      | double_precision_literal | string_literal | line_comment | white_space

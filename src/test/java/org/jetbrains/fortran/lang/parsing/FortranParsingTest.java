@@ -6,8 +6,14 @@ import org.junit.runners.Parameterized;
 
 @SuppressWarnings("all")
 public class FortranParsingTest extends FortranBaseParsingTestCase {
+    public void testSimpleProgram() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("SimpleProgram.f"));
+    }
 
-    public void testPrintWrite() throws Exception {
+    public void testIfStatements() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("IfStatements.f"));
+    }
+/*    public void testPrintWrite() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("PrintWrite.f"));
     }
 
@@ -37,6 +43,6 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
 
     public void testFunction() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("TopLevelConstructs.f"));
-    }
+    }*/
 
 }
