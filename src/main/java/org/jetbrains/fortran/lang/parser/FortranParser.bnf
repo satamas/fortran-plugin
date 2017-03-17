@@ -1,6 +1,5 @@
 {
   parserClass='org.jetbrains.fortran.lang.parser.FortranParser'
-
   implements='org.jetbrains.fortran.lang.psi.FortranCompositeElement'
   extends='org.jetbrains.fortran.lang.psi.impl.FortranCompositeElementImpl'
 
@@ -18,28 +17,62 @@
 //  psiTreeUtilClass = ''
   generateTokenAccessors=true
   tokens=[
-    LPAR      =  '('
-    RPAR      =  ')'
+    EQ        = '='
+    EQEQ      = 'regexp:==|.eq.'
+    NEQ       = 'regexp:/=|.neq.'
+    COLON     = ':'
+    COLONCOLON = '::'
+    PLUS      = '+'
+    MINUS     = '-'
+    MUL       = '*'
+    POWER     = '**'
+    DIV       = '/'
+    DIVDIV    = '//'
+    LPAR      = '('
+    RPAR      = ')'
+    LBRACKET  = '['
+    RBRACKET  = ']'
+    COMMA     = ','
+    DOT       = '.'
+    DOLLAR    = '$'
+    PERC      = '%'
+    AMP       = '&'
+    SEMICOLON = ';'
+    LT        = 'regexp:<|.lt.'
+    LE        = 'regexp:<=|.le.'
+    GT        = 'regexp:>|.gt.'
+    GE        = 'regexp:>=|.ge.'
+    QUEST     = '?'
+
+    LOGICAL_EQ  = '.eqv.'
+    LOGICAL_NEQ = '.neqv.'
+    AND         = '.and.'
+    OR          = '.or.'
+    NOT         = '.not.'
+
+    TRUE_KEYWORD  = '.true.'
+    FALSE_KEYWORD = '.false.'
   ]
 // какая-то магия
-//  name(".*expr")='expression'
-//  extends(".*expr")=expr
+  extends(".*expr")=expr
+  consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 }
 
 program_unit ::= main_program
 
-
+// R208
+execution_part ::= execution_part_construct*
 
 // R209
-execution_part_construct ::= executable_construct // | format-stmt | entry-stmt | data-stmt
+private execution_part_construct ::= executable_construct // | format-stmt | entry-stmt | data-stmt
 
 // R213
 private executable_construct ::= action_stmt /*| associate_construct | block_construct | case_construct
                        | critical_construct | do_construct | forall_construct*/ | if_construct
                      /*  | select_type_construct | where_construct*/
 // R214
-private action_stmt ::= cap /*allocate-stmt
-                | assignment-stmt
+private action_stmt ::= /*allocate-stmt
+                |*/ assignment_stmt /*
                 | backspace-stmt
                 | call-stmt
                 | close-stmt
@@ -77,6 +110,52 @@ private action_stmt ::= cap /*allocate-stmt
                 | arithmetic-if-stmt
                 | computed-goto-stmt*/
 
+// Clause 6
+// R602
+private variable ::= designator | expr
+
+// Clause 7
+// R701
+expr ::= def_binary_operator_expr
+       | equiv_expr
+       | or_expr
+       | and_expr
+       | not_expr
+       | rel_expr
+       | concat_expr
+       | add_expr_group
+       | mult_expr
+       | power_expr
+       | def_unary_operator_expr
+       | primary
+
+private add_expr_group ::= add_expr | unary_add_expr
+def_binary_operator_expr ::= expr defined_binary_op expr
+defined_binary_op ::= '.' identifier '.'
+equiv_expr  ::= expr ('.eqv.' | '.neqv.') expr
+or_expr     ::= expr '.or.' expr
+and_expr    ::= expr '.and.' expr
+not_expr    ::= '.not.' expr
+rel_expr    ::= expr rel_op expr
+private rel_op ::= '.eq.' | '.ne.' | '.lt.' | '.le.' | '.gt.' | '.ge.'
+                 | '=='   | '/='   | '<'    | '<='   | '>'    | '>='
+concat_expr ::= expr '//' expr
+add_expr    ::= expr ('+' | '-') expr
+unary_add_expr ::= ('+' | '-') expr
+mult_expr   ::= expr ('*' | '/') expr
+power_expr  ::= expr '**' expr { rightAssociative=true } { extends=expr }
+def_unary_operator_expr ::= defined_unary_op expr
+private defined_unary_op ::= '.' identifier '.'
+private primary ::= constant | designator | paren
+paren ::= '(' expr ')'
+
+designator ::= identifier
+constant ::= integer_literal | floating_point_literal | double_precision_literal
+           | string_literal | logical_constant
+logical_constant ::= '.true.' | '.false.'
+// R732
+assignment_stmt ::= variable '=' expr
+
 // Clause 8
 // R801
 block ::= execution_part_construct*
@@ -87,16 +166,16 @@ if_construct ::= if_then_stmt block (else_if_stmt block)* (else_stmt block)? end
 // R833
 if_then_stmt ::= (identifier ':')? if '(' expr ')' then
 // R834
-else_if_stmt ::= ((else if)|elseif) '(' expr ')' then identifier?
+else_if_stmt ::= ((else if)|elseif) '(' expr ')' then //identifier?
 // R835
-else_stmt ::= else identifier?
+else_stmt ::= else //identifier?
 // R836
-end_if_stmt ::= ((end if)|endif) identifier?
+end_if_stmt ::= ((end if)|endif) //identifier?
 // R837
 if_stmt ::= if '(' expr ')' action_stmt
 
 // R1101
-main_program ::= program_stmt? /*specification_part?*/ execution_part_construct* /*internal_subprogram_part*/ end_program_stmt
+main_program ::= program_stmt? /*specification_part?*/ execution_part? /*internal_subprogram_part*/ end_program_stmt
 
 // R1102 +
 program_stmt ::= program identifier
@@ -104,9 +183,5 @@ program_stmt ::= program identifier
 // R1103 +
 end_program_stmt ::= endprogram | (end (program identifier?)?)
 
-
-expr ::= cap
-
 // That's a cap. Must be removed in the final version
-cap ::= identifier | integer_literal | floating_point_literal
-      | double_precision_literal | string_literal | line_comment | white_space
+cap ::= identifier | line_comment | white_space

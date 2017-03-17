@@ -9,72 +9,105 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
     PsiWhiteSpace('\n  ')
-    EXECUTION_PART_CONSTRUCT
+    EXECUTION_PART
       IF_STMT
         PsiElement(if)('if')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
-        EXPR
-          CAP
-            PsiElement(identifier)('a')
+        REL_EXPR
+          ADD_EXPR
+            DESIGNATOR
+              PsiElement(identifier)('a')
+            PsiWhiteSpace(' ')
+            PsiElement(+)('+')
+            PsiWhiteSpace(' ')
+            DESIGNATOR
+              PsiElement(identifier)('x')
+          PsiWhiteSpace(' ')
+          PsiElement(GT)('>')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('0')
         PsiElement())(')')
         PsiWhiteSpace(' ')
-        CAP
-          PsiElement(identifier)('b')
-    PsiWhiteSpace('\n  ')
-    EXECUTION_PART_CONSTRUCT
+        ASSIGNMENT_STMT
+          DESIGNATOR
+            PsiElement(identifier)('b')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('1')
+      PsiWhiteSpace('\n  ')
       IF_CONSTRUCT
         IF_THEN_STMT
           PsiElement(if)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
-          EXPR
-            CAP
+          NOT_EXPR
+            PsiElement(.not.)('.not.')
+            DESIGNATOR
               PsiElement(identifier)('c')
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
         PsiWhiteSpace('\n    ')
-        BLOCK
-          EXECUTION_PART_CONSTRUCT
-            CAP
-              PsiElement(identifier)('d')
+        ASSIGNMENT_STMT
+          DESIGNATOR
+            PsiElement(identifier)('d')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(floating_point_literal)('3.1')
         PsiWhiteSpace('\n  ')
         ELSE_IF_STMT
           PsiElement(elseif)('elseif')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
-          EXPR
-            CAP
+          AND_EXPR
+            DESIGNATOR
+              PsiElement(identifier)('d')
+            PsiWhiteSpace(' ')
+            PsiElement(.and.)('.and.')
+            PsiWhiteSpace(' ')
+            DESIGNATOR
               PsiElement(identifier)('d')
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
-          PsiWhiteSpace('\n    ')
-          PsiElement(identifier)('f')
+        PsiWhiteSpace('\n    ')
+        ASSIGNMENT_STMT
+          DESIGNATOR
+            PsiElement(identifier)('f')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('14')
         PsiWhiteSpace('\n  ')
-        BLOCK
-          <empty list>
         END_IF_STMT
           PsiElement(endif)('endif')
-    PsiWhiteSpace('\n  ')
-    EXECUTION_PART_CONSTRUCT
+      PsiWhiteSpace('\n  ')
       IF_CONSTRUCT
         IF_THEN_STMT
           PsiElement(if)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
-          EXPR
-            CAP
-              PsiElement(identifier)('m')
+          LOGICAL_CONSTANT
+            PsiElement(.true.)('.true.')
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
         PsiWhiteSpace('\n    ')
-        BLOCK
-          EXECUTION_PART_CONSTRUCT
-            CAP
-              PsiElement(identifier)('n')
+        ASSIGNMENT_STMT
+          DESIGNATOR
+            PsiElement(identifier)('n')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          LOGICAL_CONSTANT
+            PsiElement(.false.)('.false.')
         PsiWhiteSpace('\n  ')
         ELSE_IF_STMT
           PsiElement(else)('else')
@@ -82,24 +115,39 @@ FILE
           PsiElement(if)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
-          EXPR
-            CAP
+          OR_EXPR
+            DESIGNATOR
               PsiElement(identifier)('n')
+            PsiWhiteSpace(' ')
+            PsiElement(.or.)('.or.')
+            PsiWhiteSpace(' ')
+            LOGICAL_CONSTANT
+              PsiElement(.true.)('.true.')
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
-          PsiWhiteSpace('\n    ')
-          PsiElement(identifier)('l')
+        PsiWhiteSpace('\n    ')
+        ASSIGNMENT_STMT
+          DESIGNATOR
+            PsiElement(identifier)('l')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('1')
         PsiWhiteSpace('\n  ')
-        BLOCK
-          <empty list>
         ELSE_STMT
           PsiElement(else)('else')
-          PsiWhiteSpace('\n    ')
-          PsiElement(identifier)('k')
+        PsiWhiteSpace('\n    ')
+        ASSIGNMENT_STMT
+          DESIGNATOR
+            PsiElement(identifier)('k')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('1')
         PsiWhiteSpace('\n  ')
-        BLOCK
-          <empty list>
         END_IF_STMT
           PsiElement(endif)('endif')
     PsiWhiteSpace('\n')

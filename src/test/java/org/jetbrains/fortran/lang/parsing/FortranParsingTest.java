@@ -9,19 +9,18 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
     public void testSimpleProgram() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("SimpleProgram.f"));
     }
-
-    public void testIfStatements() throws Exception {
+   public void testIfStatements() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("IfStatements.f"));
     }
-/*    public void testPrintWrite() throws Exception {
+   /* public void testPrintWrite() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("PrintWrite.f"));
-    }
+    }*/
 
     public void testExpressions() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Expressions.f"));
     }
 
-    public void testSpecificationStatements() throws Exception {
+ /*   public void testSpecificationStatements() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("SpecificationStatements.f"));
     }
 

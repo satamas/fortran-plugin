@@ -5,5 +5,7 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
     PsiWhiteSpace('\n')
+    EXECUTION_PART
+      <empty list>
     END_PROGRAM_STMT
       PsiElement(endprogram)('endprogram')
