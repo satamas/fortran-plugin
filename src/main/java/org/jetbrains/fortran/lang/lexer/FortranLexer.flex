@@ -46,8 +46,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 
 %%
 
+(("&"){WHITE_SPACE_CHAR}*{EOL}) { return WHITE_SPACE; }
 ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
-{EOL} { return EOL; }
+(({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
 {LINE_COMMENT} { return LINE_COMMENT; }
 
 {STRING_LITERAL} { return STRING_LITERAL; }
@@ -75,7 +76,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "$" { return DOLLAR; }
 "%" { return PERC; }
 "&" { return AMP; }
-";" { return SEMICOLON; }
+//";" { return SEMICOLON; }
 "<" { return LT; }
 "<=" { return LE; }
 ">" { return GT; }
@@ -104,20 +105,21 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "block" { return FortranTokens.BLOCK_KEYWORD; }
 "blockdata" { return FortranTokens.BLOCKDATA_KEYWORD; }
 "call" { return FortranTokens.CALL_KEYWORD; }
-"case" { return FortranTokens.CASE_KEYWORD; }
-"character" { return FortranTokens.CHARACTER_KEYWORD; }
-"common" { return FortranTokens.COMMON_KEYWORD; }
-"complex" { return FortranTokens.COMPLEX_KEYWORD; }
-"contains" { return FortranTokens.CONTAINS_KEYWORD; }
-"continue" { return FortranTokens.CONTINUE_KEYWORD; }
+"case" { return FortranTokens.CASE_KEYWORD; }*/
+"character" { return CHARACTER; }/*
+"common" { return FortranTokens.COMMON_KEYWORD; }*/
+"complex" { return COMPLEX; }
+"concurrent" { return CONCURRENT; } /*
+"contains" { return FortranTokens.CONTAINS_KEYWORD; }*/
+"continue" { return CONTINUE; }/*
 "cycle" { return FortranTokens.CYCLE_KEYWORD; }
 "data" { return FortranTokens.DATA_KEYWORD; }
 "deallocate" { return FortranTokens.DEALLOCATE_KEYWORD; }
 "default" { return FortranTokens.DEFAULT_KEYWORD; }
-"dimension" { return FortranTokens.DIMENSION_KEYWORD; }
-"do" { return FortranTokens.DO_KEYWORD; }
-"double" { return FortranTokens.DOUBLE_KEYWORD; }
-"precision" { return FortranTokens.PRECISION_KEYWORD; }*/
+"dimension" { return FortranTokens.DIMENSION_KEYWORD; }*/
+"do" { return DO; }
+"double" { return DOUBLE; }
+"precision" { return PRECISION; }
 "else" { return ELSE; }
 "elseif" { return ELSEIF; }
 /*"elsewhere" { return FortranTokens.ELSEWHERE_KEYWORD; }
@@ -133,14 +135,14 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "if" { return IF; }
 /*"implicit" { return FortranTokens.IMPLICIT_KEYWORD; }
 "in" { return FortranTokens.IN_KEYWORD; }
-"inout" { return FortranTokens.INOUT_KEYWORD; }
-"integer" { return FortranTokens.INTEGER_KEYWORD; }
+"inout" { return FortranTokens.INOUT_KEYWORD; }*/
+"integer" { return INTEGER; }/*
 "intent" { return FortranTokens.INTENT_KEYWORD; }
 "interface" { return FortranTokens.INTERFACE_KEYWORD; }
-"intrinsic" { return FortranTokens.INTRINSIC_KEYWORD; }
-"kind" { return FortranTokens.KIND_KEYWORD; }
-"len" { return FortranTokens.LEN_KEYWORD; }
-"logical" { return FortranTokens.LOGICAL_KEYWORD; }
+"intrinsic" { return FortranTokens.INTRINSIC_KEYWORD; }*/
+"kind" { return KIND; }
+/*"len" { return FortranTokens.LEN_KEYWORD; }*/
+"logical" { return LOGICAL; }/*
 "module" { return FortranTokens.MODULE_KEYWORD; }
 "namelist" { return FortranTokens.NAMELIST_KEYWORD; }
 "none" { return FortranTokens.NONE_KEYWORD; }
@@ -154,8 +156,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "pointer" { return FortranTokens.POINTER_KEYWORD; }
 "private" { return FortranTokens.PRIVATE_KEYWORD; }*/
 "program" { return PROGRAM; }
-/*"public" { return FortranTokens.PUBLIC_KEYWORD; }
-"real" { return FortranTokens.REAL_KEYWORD; }
+/*"public" { return FortranTokens.PUBLIC_KEYWORD; }*/
+"real" { return REAL; }/*
 "recursive" { return FortranTokens.RECURSIVE_KEYWORD; }
 "result" { return FortranTokens.RESULT_KEYWORD; }
 "return" { return FortranTokens.RETURN_KEYWORD; }
@@ -168,8 +170,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "then" { return THEN; }
 /*"type" { return FortranTokens.TYPE_KEYWORD; }
 "use" { return FortranTokens.USE_KEYWORD; }
-"where" { return FortranTokens.WHERE_KEYWORD; }
-"while" { return FortranTokens.WHILE_KEYWORD; }
+"where" { return FortranTokens.WHERE_KEYWORD; }*/
+"while" { return WHILE; }/*
 "backspace" { return FortranTokens.BACKSPACE_KEYWORD; }
 "close" { return FortranTokens.CLOSE_KEYWORD; }
 "format" { return FortranTokens.FORMAT_KEYWORD; }
@@ -189,8 +191,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endsubroutine" { return FortranTokens.ENDSUBROUTINE_KEYWORD; }
 "endtype" { return FortranTokens.ENDTYPE_KEYWORD; }
 "endwhere" { return FortranTokens.ENDWHERE_KEYWORD; }
-"endselect" { return FortranTokens.ENDSELECT_KEYWORD; }
-"enddo" { return FortranTokens.ENDDO_KEYWORD; }
+"endselect" { return FortranTokens.ENDSELECT_KEYWORD; }*/
+"enddo" { return ENDDO; }/*
 "endmodule" { return FortranTokens.ENDMODULE_KEYWORD; }
 "endblockdata"    { return FortranTokens.ENDBLOCKDATA_KEYWORD; }
 "endblock"    { return FortranTokens.ENDBLOCK_KEYWORD; }

@@ -14,14 +14,27 @@ public class FortranTokenType extends IElementType {
     }
 
     public static TokenSet KEYWORDS = TokenSet.create(
+            CHARACTER,
+            COMPLEX,
+            CONTINUE,
+            CONCURRENT,
+            DO,
+            DOUBLE,
             ELSE,
             ELSEIF,
             END,
+            ENDDO,
             ENDIF,
             ENDPROGRAM,
             IF,
+            INTEGER,
+            KIND,
+            LOGICAL,
+            PRECISION,
             PROGRAM,
-            THEN
+            REAL,
+            THEN,
+            WHILE
 
     );
 

@@ -1,0 +1,203 @@
+FILE
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('  ')
+    EXECUTION_PART
+      BLOCK_DO_CONSTRUCT
+        NONLABEL_DO_STMT
+          PsiElement(do)('do')
+          PsiWhiteSpace(' ')
+          LOOP_CONTROL
+            PsiElement(identifier)('i')
+            PsiElement(=)('=')
+            CONSTANT
+              PsiElement(integer_literal)('1')
+            PsiElement(,)(',')
+            CONSTANT
+              PsiElement(integer_literal)('5')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('j')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            ADD_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('j')
+              PsiElement(+)('+')
+              CONSTANT
+                PsiElement(integer_literal)('1')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_DO_STMT
+          PsiElement(enddo)('enddo')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      BLOCK_DO_CONSTRUCT
+        NONLABEL_DO_STMT
+          PsiElement(do)('do')
+          PsiWhiteSpace(' ')
+          LOOP_CONTROL
+            PsiElement(identifier)('i')
+            PsiElement(=)('=')
+            CONSTANT
+              PsiElement(integer_literal)('1')
+            PsiElement(,)(',')
+            CONSTANT
+              PsiElement(integer_literal)('5')
+            PsiElement(,)(',')
+            CONSTANT
+              PsiElement(integer_literal)('7')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('j')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            ADD_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('j')
+              PsiElement(-)('-')
+              CONSTANT
+                PsiElement(integer_literal)('1')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        PsiElement(continue)('continue')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      BLOCK_DO_CONSTRUCT
+        NONLABEL_DO_STMT
+          PsiElement(identifier)('loop')
+          PsiElement(:)(':')
+          PsiWhiteSpace(' ')
+          PsiElement(do)('do')
+          PsiWhiteSpace(' ')
+          LOOP_CONTROL
+            PsiElement(while)('while')
+            PsiWhiteSpace(' ')
+            PsiElement(()('(')
+            REL_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('j')
+              PsiWhiteSpace(' ')
+              PsiElement(LT)('<')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integer_literal)('100')
+            PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('j')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            ADD_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('j')
+              PsiWhiteSpace(' ')
+              PsiElement(+)('+')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integer_literal)('10')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_DO_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(do)('do')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('loop')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      BLOCK_DO_CONSTRUCT
+        NONLABEL_DO_STMT
+          PsiElement(do)('do')
+          PsiWhiteSpace(' ')
+          LOOP_CONTROL
+            PsiElement(concurrent)('concurrent')
+            PsiWhiteSpace(' ')
+            FORALL_HEADER
+              PsiElement(()('(')
+              TYPE_SPEC
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(integer)('integer')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              FORALL_TRIPLET_SPEC
+                PsiElement(identifier)('a')
+                PsiWhiteSpace(' ')
+                PsiElement(=)('=')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integer_literal)('1')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integer_literal)('10')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integer_literal)('2')
+              PsiWhiteSpace(' ')
+              REL_EXPR
+                DESIGNATOR
+                  PsiElement(identifier)('a')
+                PsiWhiteSpace(' ')
+                PsiElement(GT)('>')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integer_literal)('5')
+              PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('j')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            ADD_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('j')
+              PsiElement(-)('-')
+              CONSTANT
+                PsiElement(integer_literal)('1')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('j')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            ADD_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('j')
+              PsiWhiteSpace(' ')
+              PsiElement(+)('+')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integer_literal)('1')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        PsiElement(continue)('continue')
+      PsiElement(eol)('\n\n')
+    END_PROGRAM_STMT
+      PsiElement(end)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
