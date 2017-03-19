@@ -1,14 +1,13 @@
 FILE
-  PsiComment(line_comment)('! Note: test now is accepted but really works bad')
-  PsiWhiteSpace('\n')
-  PsiComment(line_comment)('! We must remove 'cap' from the grammar!!!')
-  PsiWhiteSpace('\n')
+  PsiComment(line_comment)('! Note: test now is accepted but really works bad\n')
+  PsiComment(line_comment)('! We must remove 'cap' from the grammar!!!\n')
   MAIN_PROGRAM
     PROGRAM_STMT
       PsiElement(program)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
-    PsiWhiteSpace('\n  ')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('  ')
     EXECUTION_PART
       IF_STMT
         PsiElement(if)('if')
@@ -38,7 +37,8 @@ FILE
           PsiWhiteSpace(' ')
           CONSTANT
             PsiElement(integer_literal)('1')
-      PsiWhiteSpace('\n  ')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
       IF_CONSTRUCT
         IF_THEN_STMT
           PsiElement(if)('if')
@@ -51,16 +51,19 @@ FILE
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
-        PsiWhiteSpace('\n    ')
-        ASSIGNMENT_STMT
-          DESIGNATOR
-            PsiElement(identifier)('d')
-          PsiWhiteSpace(' ')
-          PsiElement(=)('=')
-          PsiWhiteSpace(' ')
-          CONSTANT
-            PsiElement(floating_point_literal)('3.1')
-        PsiWhiteSpace('\n  ')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('d')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(floating_point_literal)('3.1')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
         ELSE_IF_STMT
           PsiElement(elseif)('elseif')
           PsiWhiteSpace(' ')
@@ -76,19 +79,23 @@ FILE
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
-        PsiWhiteSpace('\n    ')
-        ASSIGNMENT_STMT
-          DESIGNATOR
-            PsiElement(identifier)('f')
-          PsiWhiteSpace(' ')
-          PsiElement(=)('=')
-          PsiWhiteSpace(' ')
-          CONSTANT
-            PsiElement(integer_literal)('14')
-        PsiWhiteSpace('\n  ')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('f')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integer_literal)('14')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
         END_IF_STMT
           PsiElement(endif)('endif')
-      PsiWhiteSpace('\n  ')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
       IF_CONSTRUCT
         IF_THEN_STMT
           PsiElement(if)('if')
@@ -99,16 +106,19 @@ FILE
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
-        PsiWhiteSpace('\n    ')
-        ASSIGNMENT_STMT
-          DESIGNATOR
-            PsiElement(identifier)('n')
-          PsiWhiteSpace(' ')
-          PsiElement(=)('=')
-          PsiWhiteSpace(' ')
-          LOGICAL_CONSTANT
-            PsiElement(.false.)('.false.')
-        PsiWhiteSpace('\n  ')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('n')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            LOGICAL_CONSTANT
+              PsiElement(.false.)('.false.')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
         ELSE_IF_STMT
           PsiElement(else)('else')
           PsiWhiteSpace(' ')
@@ -126,30 +136,36 @@ FILE
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
-        PsiWhiteSpace('\n    ')
-        ASSIGNMENT_STMT
-          DESIGNATOR
-            PsiElement(identifier)('l')
-          PsiWhiteSpace(' ')
-          PsiElement(=)('=')
-          PsiWhiteSpace(' ')
-          CONSTANT
-            PsiElement(integer_literal)('1')
-        PsiWhiteSpace('\n  ')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('l')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integer_literal)('1')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
         ELSE_STMT
           PsiElement(else)('else')
-        PsiWhiteSpace('\n    ')
-        ASSIGNMENT_STMT
-          DESIGNATOR
-            PsiElement(identifier)('k')
-          PsiWhiteSpace(' ')
-          PsiElement(=)('=')
-          PsiWhiteSpace(' ')
-          CONSTANT
-            PsiElement(integer_literal)('1')
-        PsiWhiteSpace('\n  ')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('k')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integer_literal)('1')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
         END_IF_STMT
           PsiElement(endif)('endif')
-    PsiWhiteSpace('\n')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(endprogram)('endprogram')

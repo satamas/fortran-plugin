@@ -4,7 +4,7 @@ FILE
       PsiElement(program)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
-    PsiWhiteSpace('\n')
+      PsiElement(eol)('\n')
     EXECUTION_PART
       <empty list>
     END_PROGRAM_STMT

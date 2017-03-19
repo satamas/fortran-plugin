@@ -4,7 +4,8 @@ FILE
       PsiElement(program)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('p')
-    PsiWhiteSpace('\n    ')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('    ')
     EXECUTION_PART
       ASSIGNMENT_STMT
         DESIGNATOR
@@ -32,7 +33,8 @@ FILE
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integer_literal)('0')
-      PsiWhiteSpace('\n    ')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
       ASSIGNMENT_STMT
         DESIGNATOR
           PsiElement(identifier)('variable')
@@ -62,7 +64,7 @@ FILE
                 PsiWhiteSpace(' ')
                 CONSTANT
                   PsiElement(integer_literal)('0')
-    PsiWhiteSpace('\n')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')
