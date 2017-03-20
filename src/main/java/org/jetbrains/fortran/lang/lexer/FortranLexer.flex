@@ -21,7 +21,7 @@ import static org.jetbrains.fortran.lang.FortranTypes.*;
 IDENTIFIER_PART=[:digit:]|[:letter:]|_
 IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
 
-LINE_COMMENT="!"[^\n]*\n
+LINE_COMMENT="!"[^\r\n]*
 WHITE_SPACE_CHAR=[\ \t\f]
 EOL=(\n|\r|\r\n)
 
