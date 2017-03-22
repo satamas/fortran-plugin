@@ -1,6 +1,8 @@
 FILE
-  PsiComment(line_comment)('! Note: test now is accepted but really works bad\n')
-  PsiComment(line_comment)('! We must remove 'cap' from the grammar!!!\n')
+  PsiComment(line_comment)('! Comment line1')
+  PsiElement(eol)('\n')
+  PsiComment(line_comment)('! Comment line2')
+  PsiElement(eol)('\n')
   MAIN_PROGRAM
     PROGRAM_STMT
       PsiElement(program)('program')
@@ -8,6 +10,8 @@ FILE
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
+    SPECIFICATION_PART
+      <empty list>
     EXECUTION_PART
       IF_STMT
         PsiElement(if)('if')

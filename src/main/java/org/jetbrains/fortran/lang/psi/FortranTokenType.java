@@ -3,6 +3,8 @@ package org.jetbrains.fortran.lang.psi;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.fortran.FortranLanguage;
+
+import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
 
 /**
@@ -14,10 +16,18 @@ public class FortranTokenType extends IElementType {
     }
 
     public static TokenSet KEYWORDS = TokenSet.create(
+            ALLOCATABLE,
+            ASSIGNMENT,
+            ASYNCHRONOUS,
+            BIND,
+            BINDNAME,
             CHARACTER,
+            CODIMENSION,
             COMPLEX,
-            CONTINUE,
             CONCURRENT,
+            CONTIGUOUS,
+            CONTINUE,
+            DIMENSION,
             DO,
             DOUBLE,
             ELSE,
@@ -26,15 +36,43 @@ public class FortranTokenType extends IElementType {
             ENDDO,
             ENDIF,
             ENDPROGRAM,
+            EXTERNAL,
+            FORMATTED,
             IF,
+            IMPLICIT,
+            IMPORT,
+            IN,
+            INITIALIZATION,
+            INOUT,
             INTEGER,
+            INTENT,
+            INTRINSIC,
             KIND,
             LOGICAL,
+            NONE,
+            NON_INTRINSIC,
+            ONLY,
+            OPERATOR,
+            OPTIONAL,
+            OUT,
+            PARAMETER,
+            POINTER,
             PRECISION,
+            PRIVATE,
             PROGRAM,
+            PROTECTED,
+            PUBLIC,
+            READ,
             REAL,
+            SAVE,
+            TARGET,
             THEN,
-            WHILE
+            UNFORMATTED,
+            USE,
+            VALUE,
+            VOLATILE,
+            WHILE,
+            WRITE
 
     );
 

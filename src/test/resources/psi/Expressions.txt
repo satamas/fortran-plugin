@@ -6,6 +6,8 @@ FILE
       PsiElement(identifier)('p')
       PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
+    SPECIFICATION_PART
+      <empty list>
     EXECUTION_PART
       ASSIGNMENT_STMT
         DESIGNATOR

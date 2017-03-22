@@ -1,25 +1,36 @@
 FILE
-  FortranProgram(PROGRAM)
-    FortranElementImpl(CODE_BLOCK)
-      FortranElementImpl(TYPE_DECLARATION_STATEMENT)
-        FortranElementImpl(TYPE_REFERENCE)
-          PsiElement(integer)('integer')
-        PsiWhiteSpace(' ')
-        FortranElementImpl(ENTITY_DECLARATION)
-          PsiElement(IDENTIFIER)('a')
-      PsiWhiteSpace('\n')
-      FortranElementImpl(TYPE_DECLARATION_STATEMENT)
-        FortranElementImpl(TYPE_REFERENCE)
-          PsiElement(integer)('integer')
-        PsiWhiteSpace(' ')
-        FortranElementImpl(ENTITY_DECLARATION)
-          PsiElement(IDENTIFIER)('b')
-        PsiElement(COMMA)(',')
-        PsiWhiteSpace(' ')
-        FortranElementImpl(ENTITY_DECLARATION)
-          PsiElement(IDENTIFIER)('c')
-    PsiWhiteSpace('\n')
-    FortranElementImpl(END_STATEMENT)
+  MAIN_PROGRAM
+    SPECIFICATION_PART
+      DECLARATION_CONSTRUCT
+        TYPE_DECLARATION_STMT
+          INTRINSIC_TYPE_SPEC
+            PsiElement(integer)('integer')
+            KIND_SELECTOR
+              PsiElement(()('(')
+              PsiElement(kind)('kind')
+              PsiElement(=)('=')
+              CONSTANT
+                PsiElement(integer_literal)('4')
+              PsiElement())(')')
+          PsiWhiteSpace(' ')
+          ENTITY_DECL
+            PsiElement(identifier)('a')
+          PsiElement(eol)('\n')
+      DECLARATION_CONSTRUCT
+        TYPE_DECLARATION_STMT
+          INTRINSIC_TYPE_SPEC
+            PsiElement(integer)('integer')
+          PsiWhiteSpace(' ')
+          ENTITY_DECL
+            PsiElement(identifier)('b')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          ENTITY_DECL
+            PsiElement(identifier)('c')
+          PsiElement(eol)('\n')
+    EXECUTION_PART
+      <empty list>
+    END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')
       PsiElement(program)('program')

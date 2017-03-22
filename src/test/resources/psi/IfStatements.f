@@ -1,5 +1,5 @@
-! Note: test now is accepted but really works bad
-! We must remove 'cap' from the grammar!!!
+! Comment line1
+! Comment line2
 program a
   if (a + x > 0) b = 1
   if (.not.c) then

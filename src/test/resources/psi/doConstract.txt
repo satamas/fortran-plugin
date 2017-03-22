@@ -6,6 +6,8 @@ FILE
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
+    SPECIFICATION_PART
+      <empty list>
     EXECUTION_PART
       BLOCK_DO_CONSTRUCT
         NONLABEL_DO_STMT

@@ -52,22 +52,36 @@
 
     TRUE_KEYWORD  = '.true.'
     FALSE_KEYWORD = '.false.'
+
+    POINTER_ASSMNT = '=>'
   ]
 // какая-то магия
   extends(".*expr")=expr
   consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 }
 
-program_unit ::= main_program
+program_unit ::= eol* main_program
 
 private block_recover ::= !(eol | start_keys | end_keys)
 private start_keys ::= identifier | if | do
 private end_keys ::= end_program_stmt | else_if_stmt | else_stmt | end_if_stmt | end_do
+
+// R204
+specification_part ::= use_stmt* import_stmt* implicit_part? declaration_construct*
+// R205
+implicit_part ::= implicit_part_stmt* implicit_stmt
+// R206
+implicit_part_stmt ::= implicit_stmt | parameter_stmt /*| format_stmt | entry_stmt*/
+// R207
+declaration_construct ::= /*derived-type-def | entry-stmt | enum-def | format-stmt
+                        | interface-block | */parameter_stmt/* | procedure-declaration-stmt
+                        | other-specification-stmt*/ | type_declaration_stmt// | stmt-function-stmt
+
 // R208
 execution_part ::= execution_part_construct*
 
 // R209
-private execution_part_construct ::= !end_keys executable_construct eol {
+private execution_part_construct ::= !end_keys executable_construct? eol {
   pin=1
   recoverWhile=block_recover
 }// | format-stmt | entry-stmt | data-stmt
@@ -121,13 +135,67 @@ private action_stmt ::= /*allocate-stmt
 label ::= integer_literal
 
 // Clause 4
+// R401
+private type_param_value ::= '*' | ':' | expr
 // R402
 type_spec ::= intrinsic_type_spec //| derived_type_spec
+// R403
+private declaration_type_spec ::= intrinsic_type_spec // | много всего другого
 // R404
 intrinsic_type_spec ::= ((integer | real | complex | character | logical) (kind_selector)?) | (double precision)
 // R405
 kind_selector ::= '(' kind '=' expr ')' {pin = 2}
 
+// Clause 5
+// R501
+type_declaration_stmt ::= declaration_type_spec ((',' attr_spec)* '::')? entity_decl_list eol
+// R502
+attr_spec ::= access_spec | allocatable | asynchronous | (codimension '[' coarray_spec ']')
+             | contiguous | (dimension '(' array_spec ')') | external
+             | (intent '(' intent_spec ')') | intrinsic | language_binding_spec
+             | optional | parameter | pointer | protected | save | target | value | volatile
+// R503
+private entity_decl_list ::= entity_decl (',' entity_decl)*
+entity_decl ::= identifier ('(' array_spec ')')? ('[' coarray_spec ']')?
+                ('*' char_length)? initialization?
+// R507
+private access_spec ::= (public | private)
+// R508
+language_binding_spec ::= bind '(' (',' bindname '=' expr)? ')'
+// R509
+private coarray_spec ::= deferred_coshape_spec_list// | explicit_coshape_spec
+// R510
+deferred_coshape_spec_list ::= ':' (',' ':')*
+// R515
+private array_spec ::= explicit_shape_spec_list | assumed_shape_spec_list
+                | deferred_shape_spec_list //| assumed_size_spec | implied_shape_spec_list
+// R516
+private explicit_shape_spec_list ::= explicit_shape_spec (',' explicit_shape_spec)*
+explicit_shape_spec ::= (expr ':')? expr
+// R519
+private assumed_shape_spec_list ::= assumed_shape_spec (',' assumed_shape_spec)*
+assumed_shape_spec ::= (expr)? ':'
+// R520
+private deferred_shape_spec_list ::= deferred_shape_spec (',' deferred_shape_spec)*
+deferred_shape_spec ::= (expr)? ':'
+
+// R523
+private intent_spec ::= in | out | inout
+// R442
+char_length ::= ('(' type_param_value ')') | integer_literal
+// R548
+parameter_stmt ::= parameter '(' named_constant_def_list ')' {pin=1}
+// R549
+private named_constant_def_list ::= named_constant_def (',' named_constant_def)*
+named_constant_def ::= identifier '=' expr
+// R560
+implicit_stmt ::= implicit (implisit_spec_list | none) { pin = 1}
+// R561
+private implisit_spec_list ::= implicit_spec (',' implicit_spec)*
+implicit_spec ::= declaration_type_spec '(' letter_spec_list ')'
+// R562
+private letter_spec_list ::= letter_spec (',' letter_spec)*
+letter_spec ::= id ('-' id)
 // Clause 6
 // R602
 private variable ::= designator | expr
@@ -165,7 +233,7 @@ power_expr  ::= expr '**' expr { rightAssociative=true } { extends=expr }
 def_unary_operator_expr ::= defined_unary_op expr
 private defined_unary_op ::= '.' identifier '.'
 private primary ::= constant | designator | paren
-paren ::= '(' expr ')'
+paren ::= '(' expr ')' { pin=1}
 
 designator ::= identifier
 constant ::= integer_literal | floating_point_literal | double_precision_literal
@@ -175,9 +243,9 @@ logical_constant ::= '.true.' | '.false.'
 assignment_stmt ::= variable '=' expr {pin = 2}
 
 // R752
-forall_header ::= '(' (type_spec '::')? forall_triplet_spec+ (expr)? ')'
+forall_header ::= '(' (type_spec '::')? forall_triplet_spec+ (expr)? ')' {pin=1}
 // R753 + 754 + 755
-forall_triplet_spec ::= identifier '=' expr ':' expr (':' expr)?
+forall_triplet_spec ::= identifier '=' expr ':' expr (':' expr)? {pin=2}
 
 
 // Clause 8
@@ -195,7 +263,10 @@ label_do_stmt ::= (identifier ':')? do label loop_control? eol { pin = 3 }
 // R817
 nonlabel_do_stmt ::= (identifier ':')? do loop_control? eol { pin = 2 }
 // R818
-loop_control ::= (identifier '=' expr ',' expr (',' expr)?) | (while '(' expr ')') | (concurrent forall_header) {pin = 1}
+loop_control ::= id_loop_stmt | while_loop_stmt | concurrent_loop_stmt
+private id_loop_stmt ::= identifier '=' expr ',' expr (',' expr)? {pin=1}
+private while_loop_stmt ::= while '(' expr ')' {pin=1}
+private concurrent_loop_stmt ::= concurrent forall_header {pin = 1}
 // R821 + 854
 private end_do ::= end_do_stmt | continue
 // R822
@@ -215,7 +286,7 @@ end_if_stmt ::= ((end if)|endif) identifier? {pin=1}
 if_stmt ::= if '(' expr ')' action_stmt {pin=5}
 
 // R1101
-main_program ::= program_stmt? /*specification_part?*/ execution_part?
+main_program ::= program_stmt? specification_part? execution_part?
             /*internal_subprogram_part*/ end_program_stmt {pin=1}
 
 // R1102 +
@@ -224,5 +295,31 @@ program_stmt ::= program identifier eol {pin=1}
 // R1103 +
 end_program_stmt ::=  (endprogram identifier? | end (program identifier?)?) eol? {pin = 1}
 
+// R1109
+use_stmt ::= use (use_stmt_rename | use_stmt_only) {pin = 1}
+private use_stmt_rename ::= ((',' module_nature)? '::')? identifier (',' rename_list)
+private use_stmt_only ::= ((',' module_nature)? '::')? identifier ',' only ':' (only_list) { pin = 4}
+// R1110
+private module_nature ::= intrinsic | non_intrinsic
+// R1111
+private rename_list ::= rename_stmt (',' rename_stmt)*
+rename_stmt ::= (identifier '=>' identifier)
+               |(operator '(' '.' identifier '.' ')' '=>' operator '(' '.' identifier '.' ')')
+// R1112
+private only_list ::= only_stmt (',' only_stmt)*
+only_stmt ::= generic_spec | identifier | rename_stmt
+
+// Clause 12
+// R1207
+generic_spec ::= identifier | (operator '(' '.' identifier '.' ')')
+              | assignment '(' '=' ')' | defined_io_generic_spec
+// R1208
+defined_io_generic_spec ::= read '(' (formatted | unformatted) ')'
+                           | write '(' (formatted | unformatted) ')'
+// R1209
+import_stmt ::= import ('::'? name_list) { pin =1 }
+private name_list ::= identifier (',' identifier)*
+
+
 // That's a cap. Must be removed in the final version
-cap ::= identifier | line_comment | white_space
+cap ::= line_comment //| white_space
