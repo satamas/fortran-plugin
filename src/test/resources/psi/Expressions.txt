@@ -8,7 +8,7 @@ FILE
     PsiWhiteSpace('    ')
     SPECIFICATION_PART
       <empty list>
-    EXECUTION_PART
+    BLOCK
       ASSIGNMENT_STMT
         DESIGNATOR
           PsiElement(identifier)('variable')

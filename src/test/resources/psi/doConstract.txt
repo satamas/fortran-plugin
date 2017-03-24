@@ -8,13 +8,14 @@ FILE
     PsiWhiteSpace('  ')
     SPECIFICATION_PART
       <empty list>
-    EXECUTION_PART
+    BLOCK
       BLOCK_DO_CONSTRUCT
         NONLABEL_DO_STMT
           PsiElement(do)('do')
           PsiWhiteSpace(' ')
           LOOP_CONTROL
-            PsiElement(identifier)('i')
+            DESIGNATOR
+              PsiElement(identifier)('i')
             PsiElement(=)('=')
             CONSTANT
               PsiElement(integer_literal)('1')
@@ -47,7 +48,8 @@ FILE
           PsiElement(do)('do')
           PsiWhiteSpace(' ')
           LOOP_CONTROL
-            PsiElement(identifier)('i')
+            DESIGNATOR
+              PsiElement(identifier)('i')
             PsiElement(=)('=')
             CONSTANT
               PsiElement(integer_literal)('1')

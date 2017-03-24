@@ -16,9 +16,13 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
     public void testdoConstract() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("doConstract.f"));
     }
-   /* public void testPrintWrite() throws Exception {
+
+    public void testArraySpec() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("ArraysSpec.f"));
+    }
+    public void testPrintWrite() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("PrintWrite.f"));
-    }*/
+    }
 
    public void testExpressions() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Expressions.f"));

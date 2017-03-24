@@ -28,7 +28,7 @@ FILE
           ENTITY_DECL
             PsiElement(identifier)('c')
           PsiElement(eol)('\n')
-    EXECUTION_PART
+    BLOCK
       <empty list>
     END_PROGRAM_STMT
       PsiElement(end)('end')

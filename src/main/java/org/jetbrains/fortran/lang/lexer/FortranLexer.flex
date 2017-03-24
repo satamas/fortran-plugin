@@ -25,6 +25,8 @@ LINE_COMMENT="!"[^\r\n]*
 WHITE_SPACE_CHAR=[\ \t\f]
 EOL=(\n|\r|\r\n)
 
+OPERATOR='.'[:letter:]+'.'
+
 DIGIT=[0-9](\040*[0-9])*
 SIGNIFICAND={DIGIT}\040*\.(\040*[0-9])*|\.\040*{DIGIT}
 FLOATING_POINT_EXPONENT_PART=[e]\040*(\+|\-)?\040*{DIGIT}
@@ -99,12 +101,14 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 ".true." { return TRUE_KEYWORD; }
 ".false." { return FALSE_KEYWORD; }
 
+"advance" { return ADVANCE; }
 "allocatable" { return ALLOCATABLE; }/*
 "allocate" { return FortranTokens.ALLOCATE_KEYWORD; }
 "assign" { return FortranTokens.ASSIGN_KEYWORD; }*/
 "assignment" { return ASSIGNMENT; }
 "asynchronous" { return ASYNCHRONOUS; }
 "bind" { return BIND; }
+"blank" { return BLANK; }
 /*"block" { return FortranTokens.BLOCK_KEYWORD; }
 "blockdata" { return FortranTokens.BLOCKDATA_KEYWORD; }
 "call" { return FortranTokens.CALL_KEYWORD; }
@@ -118,7 +122,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "contiguous" { return CONTIGUOUS; }
 "continue" { return CONTINUE; }/*
 "cycle" { return FortranTokens.CYCLE_KEYWORD; }
-"data" { return FortranTokens.DATA_KEYWORD; }
+"data" { return FortranTokens.DATA_KEYWORD; }*/
+"decimal" { return DECIMAL; }
+"delim" { return DELIM; } /*
 "deallocate" { return FortranTokens.DEALLOCATE_KEYWORD; }
 "default" { return FortranTokens.DEFAULT_KEYWORD; }*/
 "dimension" { return DIMENSION; }
@@ -128,7 +134,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "else" { return ELSE; }
 "elseif" { return ELSEIF; }
 /*"elsewhere" { return FortranTokens.ELSEWHERE_KEYWORD; }
-"entry" { return FortranTokens.ENTRY_KEYWORD; }
+"entry" { return FortranTokens.ENTRY_KEYWORD; }*/
+"eor" { return EOR; }
+"err" { return ERR; }/*
 "equivalence" { return FortranTokens.EQUIVALENCE_KEYWORD; }
 "exit" { return FortranTokens.EXIT_KEYWORD; }*/
 "external" { return EXTERNAL; }/*
@@ -138,6 +146,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "go" { return FortranTokens.GO_KEYWORD; }
 "to" { return FortranTokens.TO_KEYWORD; }
 "goto" { return FortranTokens.GOTO_KEYWORD; }*/
+"id" { return ID; }
 "if" { return IF; }
 "implicit" { return IMPLICIT; }
 "import" { return IMPORT; }
@@ -147,12 +156,15 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "intent" { return INTENT; }/*
 "interface" { return FortranTokens.INTERFACE_KEYWORD; }*/
 "intrinsic" { return INTRINSIC; }
+"iomsg" { return IOMSG; }
+"iostat" { return IOSTAT; }
 "kind" { return KIND; }
 /*"len" { return FortranTokens.LEN_KEYWORD; }*/
 "logical" { return LOGICAL; }/*
 "module" { return FortranTokens.MODULE_KEYWORD; }*/
 "name" { return BINDNAME; }/*
 "namelist" { return FortranTokens.NAMELIST_KEYWORD; }*/
+"nml" { return NML; }
 "none" { return NONE; }
 "non_intrinsic" { return NON_INTRINSIC; } /*
 "nullify" { return FortranTokens.NULLIFY_KEYWORD; }*/
@@ -160,19 +172,25 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "operator" { return OPERATOR; }
 "optional" { return OPTIONAL; }
 "out" { return OUT; }
-"parameter" { return PARAMETER; }/*
+"parameter" { return PARAMETER; }
+"pad" { return PAD; }
+"pos" { return POS; }/*
 "pause" { return FortranTokens.PAUSE_KEYWORD; }*/
 "pointer" { return POINTER; }
 "private" { return PRIVATE; }
 "program" { return PROGRAM; }
 "protected" { return PROTECTED; }
 "public" { return PUBLIC; }
-"real" { return REAL; }/*
+"real" { return REAL; }
+"rec" { return REC; }/*
 "recursive" { return FortranTokens.RECURSIVE_KEYWORD; }
 "result" { return FortranTokens.RESULT_KEYWORD; }
 "return" { return FortranTokens.RETURN_KEYWORD; }*/
+"round" { return ROUND; }
 "save" { return SAVE; }/*
-"select" { return FortranTokens.SELECT_KEYWORD; }
+"select" { return FortranTokens.SELECT_KEYWORD; }*/
+"sign" { return SIGN; }
+"size" { return SIZE; }/*
 "case" { return FortranTokens.CASE_KEYWORD; }
 "stop" { return FortranTokens.STOP_KEYWORD; }
 "subroutine" { return FortranTokens.SUBROUTINE_KEYWORD; }*/
@@ -188,12 +206,14 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "while" { return WHILE; }/*
 "backspace" { return FortranTokens.BACKSPACE_KEYWORD; }
 "close" { return FortranTokens.CLOSE_KEYWORD; }
-"format" { return FortranTokens.FORMAT_KEYWORD; }
+"format" { return FortranTokens.FORMAT_KEYWORD; }*/
+"fmt" { return FMT; }/*
 "inquire" { return FortranTokens.INQUIRE_KEYWORD; }
-"open" { return FortranTokens.OPEN_KEYWORD; }
-"print" { return FortranTokens.PRINT_KEYWORD; }*/
+"open" { return FortranTokens.OPEN_KEYWORD; }*/
+"print" { return PRINT; }
 "read" { return READ; }/*
 "rewind" { return FortranTokens.REWIND_KEYWORD; }*/
+"unit" { return UNIT; }
 "write" { return WRITE; }
 
 "end" { return END; }
@@ -213,5 +233,6 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endinterface"    { return FortranTokens.ENDINTERFACE_KEYWORD; }*/
 
 {IDENTIFIER} { return IDENTIFIER; }
+{OPERATOR} { return DEFOPERATOR; }
 
 . { return BAD_CHARACTER; }

@@ -55,16 +55,15 @@
 
     POINTER_ASSMNT = '=>'
   ]
-// какая-то магия
+
   extends(".*expr")=expr
   consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 }
 
 program_unit ::= eol* main_program
 
-private block_recover ::= !(eol | start_keys | end_keys)
-private start_keys ::= identifier | if | do
-private end_keys ::= end_program_stmt | else_if_stmt | else_stmt | end_if_stmt | end_do
+private block_recover ::= !(eol | end_keys) // recover doesn't eat what it is not necessary to eat
+private end_keys ::= end | endprogram | endif | enddo | else | elseif | continue
 
 // R204
 specification_part ::= use_stmt* import_stmt* implicit_part? declaration_construct*
@@ -77,11 +76,9 @@ declaration_construct ::= /*derived-type-def | entry-stmt | enum-def | format-st
                         | interface-block | */parameter_stmt/* | procedure-declaration-stmt
                         | other-specification-stmt*/ | type_declaration_stmt// | stmt-function-stmt
 
-// R208
-execution_part ::= execution_part_construct*
 
 // R209
-private execution_part_construct ::= !end_keys executable_construct? eol {
+private execution_part_construct ::= !end_keys executable_construct {
   pin=1
   recoverWhile=block_recover
 }// | format-stmt | entry-stmt | data-stmt
@@ -115,9 +112,9 @@ private action_stmt ::= /*allocate-stmt
                 | lock-stmt
                 | nullify-stmt
                 | open-stmt
-                | pointer-assignment-stmt
-                | print-stmt
-                | read-stmt
+                | pointer-assignment-stmt*/
+                | print_stmt
+                | read_stmt/*
                 | return-stmt
                 | rewind-stmt
                 | stop-stmt
@@ -126,8 +123,8 @@ private action_stmt ::= /*allocate-stmt
                 | sync-memory-stmt
                 | unlock-stmt
                 | wait-stmt
-                | where-stmt
-                | write-stmt
+                | where-stmt*/
+                | write_stmt/*
                 | arithmetic-if-stmt
                 | computed-goto-stmt*/
 
@@ -144,11 +141,11 @@ private declaration_type_spec ::= intrinsic_type_spec // | много всего
 // R404
 intrinsic_type_spec ::= ((integer | real | complex | character | logical) (kind_selector)?) | (double precision)
 // R405
-kind_selector ::= '(' kind '=' expr ')' {pin = 2}
+kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
 
 // Clause 5
 // R501
-type_declaration_stmt ::= declaration_type_spec ((',' attr_spec)* '::')? entity_decl_list eol
+type_declaration_stmt ::= declaration_type_spec ((',' attr_spec)* '::')? entity_decl_list eol {pin=1}
 // R502
 attr_spec ::= access_spec | allocatable | asynchronous | (codimension '[' coarray_spec ']')
              | contiguous | (dimension '(' array_spec ')') | external
@@ -217,7 +214,7 @@ expr ::= def_binary_operator_expr
 
 private add_expr_group ::= add_expr | unary_add_expr
 def_binary_operator_expr ::= expr defined_binary_op expr
-defined_binary_op ::= '.' identifier '.'
+defined_binary_op ::= defoperator
 equiv_expr  ::= expr ('.eqv.' | '.neqv.') expr
 or_expr     ::= expr '.or.' expr
 and_expr    ::= expr '.and.' expr
@@ -231,7 +228,7 @@ unary_add_expr ::= ('+' | '-') expr
 mult_expr   ::= expr ('*' | '/') expr
 power_expr  ::= expr '**' expr { rightAssociative=true } { extends=expr }
 def_unary_operator_expr ::= defined_unary_op expr
-private defined_unary_op ::= '.' identifier '.'
+private defined_unary_op ::= defoperator
 private primary ::= constant | designator | paren
 paren ::= '(' expr ')' { pin=1}
 
@@ -249,8 +246,8 @@ forall_triplet_spec ::= identifier '=' expr ':' expr (':' expr)? {pin=2}
 
 
 // Clause 8
-// R801
-block ::= execution_part_construct*
+// R801 + R208 we parse statements in any order while the standard has some restrictions. We'll check them in code revisions
+block ::= (eol | execution_part_construct)*
 
 // R813
 private do_construct ::= block_do_construct // | nonblock_do_constract
@@ -264,7 +261,7 @@ label_do_stmt ::= (identifier ':')? do label loop_control? eol { pin = 3 }
 nonlabel_do_stmt ::= (identifier ':')? do loop_control? eol { pin = 2 }
 // R818
 loop_control ::= id_loop_stmt | while_loop_stmt | concurrent_loop_stmt
-private id_loop_stmt ::= identifier '=' expr ',' expr (',' expr)? {pin=1}
+private id_loop_stmt ::= variable '=' expr ',' expr (',' expr)? {pin=1}
 private while_loop_stmt ::= while '(' expr ')' {pin=1}
 private concurrent_loop_stmt ::= concurrent forall_header {pin = 1}
 // R821 + 854
@@ -285,8 +282,44 @@ end_if_stmt ::= ((end if)|endif) identifier? {pin=1}
 // R837
 if_stmt ::= if '(' expr ')' action_stmt {pin=5}
 
+// Clause 9
+// R901
+io_unit ::= '*' | variable | expr
+// R910
+read_stmt ::= read (io_control_read | format_read) {pin = 1}
+private io_control_read ::= '(' io_control_spec_list ')' input_item_list? { pin = 1}
+private format_read ::= format (',' input_item_list)?
+// R911
+write_stmt ::= write '(' io_control_spec_list ')' output_item_list? { pin= 1 }
+// R912
+print_stmt ::= print format (',' output_item_list)? { pin = 1 }
+// R913
+private io_control_spec_list ::= io_control_spec (',' io_control_spec)*
+io_control_spec ::= ((unit '=')? io_unit) | ((fmt '=') format)      | ((nml '=') identifier)
+                   | (advance '=' expr)   | (asynchronous '=' expr) | (blank '=' expr)
+                   | (decimal '=' expr)   | (delim '=' expr)        | (end '=' label)
+                   | (eor '=' label)      | (err '=' label)         | (id '=' variable)
+                   | (iomsg '=' variable) | (iostat '=' variable)   | (pad '=' expr)
+                   | (pos '=' expr)       | (rec '=' expr)          | (round '=' expr)
+                   | (sign '=' expr)      | (size '=' variable)
+// R915
+private format ::= '*' | label | expr
+// R916
+private input_item_list ::= input_item (',' input_item)*
+input_item ::= variable | io_implied_do
+// R917
+private output_item_list ::= output_item (',' output_item)*
+output_item ::= expr | io_implied_do
+// R918 + R920
+io_implied_do ::= '(' io_implied_do_object_list ',' id_loop_stmt ')' { pin = 1}
+// R919
+private io_implied_do_object_list ::= io_implied_do_object (',' io_implied_do_object)*
+io_implied_do_object ::= input_item | output_item
+
+
+// Clause 11
 // R1101
-main_program ::= program_stmt? specification_part? execution_part?
+main_program ::= program_stmt? specification_part block
             /*internal_subprogram_part*/ end_program_stmt {pin=1}
 
 // R1102 +
@@ -304,14 +337,14 @@ private module_nature ::= intrinsic | non_intrinsic
 // R1111
 private rename_list ::= rename_stmt (',' rename_stmt)*
 rename_stmt ::= (identifier '=>' identifier)
-               |(operator '(' '.' identifier '.' ')' '=>' operator '(' '.' identifier '.' ')')
+               |(operator '(' defoperator ')' '=>' operator '(' defoperator ')')
 // R1112
 private only_list ::= only_stmt (',' only_stmt)*
 only_stmt ::= generic_spec | identifier | rename_stmt
 
 // Clause 12
 // R1207
-generic_spec ::= identifier | (operator '(' '.' identifier '.' ')')
+generic_spec ::= identifier | (operator '(' defoperator ')')
               | assignment '(' '=' ')' | defined_io_generic_spec
 // R1208
 defined_io_generic_spec ::= read '(' (formatted | unformatted) ')'

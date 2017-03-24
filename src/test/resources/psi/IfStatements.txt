@@ -12,7 +12,7 @@ FILE
     PsiWhiteSpace('  ')
     SPECIFICATION_PART
       <empty list>
-    EXECUTION_PART
+    BLOCK
       IF_STMT
         PsiElement(if)('if')
         PsiWhiteSpace(' ')

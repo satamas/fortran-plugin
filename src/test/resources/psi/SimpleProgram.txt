@@ -7,7 +7,7 @@ FILE
       PsiElement(eol)('\n')
     SPECIFICATION_PART
       <empty list>
-    EXECUTION_PART
+    BLOCK
       <empty list>
     END_PROGRAM_STMT
       PsiElement(endprogram)('endprogram')
