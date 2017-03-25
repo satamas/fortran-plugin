@@ -129,7 +129,10 @@ private action_stmt ::= /*allocate-stmt
                 | computed-goto-stmt*/
 
 // Clause 3
-label ::= integer_literal
+label ::= integer_literal {
+  implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranNamedElement" ]
+  mixin = "org.jetbrains.fortran.lang.psi.ext.FortranLabelImplMixin"
+}
 
 // Clause 4
 // R401
