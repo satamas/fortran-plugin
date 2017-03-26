@@ -1,0 +1,132 @@
+FILE
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('select_test')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('  ')
+    SPECIFICATION_PART
+      <empty list>
+    BLOCK
+      CASE_CONSTRUCT
+        SELECT_CASE_STMT
+          PsiElement(select)('select')
+          PsiWhiteSpace(' ')
+          PsiElement(case)('case')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          ADD_EXPR
+            DESIGNATOR
+              PsiElement(identifier)('a')
+            PsiElement(+)('+')
+            DESIGNATOR
+              PsiElement(identifier)('b')
+          PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        CASE_STMT
+          PsiElement(case)('case')
+          PsiWhiteSpace(' ')
+          CASE_SELECTOR
+            PsiElement(()('(')
+            CONSTANT
+              PsiElement(integer_literal)('1')
+            PsiElement(,)(',')
+            CONSTANT
+              PsiElement(integer_literal)('2')
+            PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('       ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('c')
+            PsiElement(=)('=')
+            CONSTANT
+              PsiElement(integer_literal)('1')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        CASE_STMT
+          PsiElement(case)('case')
+          PsiWhiteSpace(' ')
+          CASE_SELECTOR
+            PsiElement(()('(')
+            CASE_VALUE_RANGE
+              PsiElement(:)(':')
+              CONSTANT
+                PsiElement(integer_literal)('0')
+            PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('       ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('c')
+            PsiElement(=)('=')
+            CONSTANT
+              PsiElement(integer_literal)('0')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        CASE_STMT
+          PsiElement(case)('case')
+          PsiWhiteSpace(' ')
+          CASE_SELECTOR
+            PsiElement(()('(')
+            CASE_VALUE_RANGE
+              CONSTANT
+                PsiElement(integer_literal)('3')
+              PsiElement(:)(':')
+              CONSTANT
+                PsiElement(integer_literal)('5')
+            PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('       ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('c')
+            PsiElement(=)('=')
+            CONSTANT
+              PsiElement(integer_literal)('2')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        CASE_STMT
+          PsiElement(case)('case')
+          PsiWhiteSpace(' ')
+          CASE_SELECTOR
+            PsiElement(()('(')
+            CASE_VALUE_RANGE
+              CONSTANT
+                PsiElement(integer_literal)('7')
+              PsiElement(:)(':')
+            PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          <empty list>
+        CASE_STMT
+          PsiElement(case)('case')
+          PsiWhiteSpace(' ')
+          CASE_SELECTOR
+            PsiElement(default)('default')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('       ')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('c')
+            PsiElement(=)('=')
+            CONSTANT
+              PsiElement(integer_literal)('4')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_SELECT_STMT
+          PsiElement(endselect)('endselect')
+      PsiElement(eol)('\n')
+    END_PROGRAM_STMT
+      PsiElement(end)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('select_test')

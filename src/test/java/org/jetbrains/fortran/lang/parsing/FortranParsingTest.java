@@ -21,6 +21,10 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Block.f"));
     }
 
+    public void testSelect() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("Select.f"));
+    }
+
     public void testArraySpec() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("ArraysSpec.f"));
     }

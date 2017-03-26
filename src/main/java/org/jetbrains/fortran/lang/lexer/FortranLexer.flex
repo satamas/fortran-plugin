@@ -115,8 +115,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "blank" { return BLANK; }
 "block" { return BLOCK; }
 /*"blockdata" { return FortranTokens.BLOCKDATA_KEYWORD; }
-"call" { return FortranTokens.CALL_KEYWORD; }
-"case" { return FortranTokens.CASE_KEYWORD; }*/
+"call" { return FortranTokens.CALL_KEYWORD; }*/
+"case" { return CASE; }
 "character" { return CHARACTER; }
 "class" { return FCLASS; }
 "close" { return CLOSE; }
@@ -127,13 +127,13 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "contains" { return FortranTokens.CONTAINS_KEYWORD; }*/
 "contiguous" { return CONTIGUOUS; }
 "continue" { return CONTINUE; }
-"critical" { return CRITICAL; }/*
-"cycle" { return FortranTokens.CYCLE_KEYWORD; }
+"critical" { return CRITICAL; }
+"cycle" { return CYCLE; }/*
 "data" { return FortranTokens.DATA_KEYWORD; }*/
 "decimal" { return DECIMAL; }
 "delim" { return DELIM; } /*
-"deallocate" { return FortranTokens.DEALLOCATE_KEYWORD; }
-"default" { return FortranTokens.DEFAULT_KEYWORD; }*/
+"deallocate" { return FortranTokens.DEALLOCATE_KEYWORD; }*/
+"default" { return DEFAULT; }
 "dimension" { return DIMENSION; }
 "direct" { return DIRECT; }
 "do" { return DO; }
@@ -216,8 +216,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "return" { return FortranTokens.RETURN_KEYWORD; }*/
 "round" { return ROUND; }
 "save" { return SAVE; }
-"sequential" { return SEQUENTIAL; }/*
-"select" { return FortranTokens.SELECT_KEYWORD; }*/
+"sequential" { return SEQUENTIAL; }
+"select" { return SELECT; }
 "sign" { return SIGN; }
 "size" { return SIZE; }
 "strem" { return STREAM; }/*
@@ -254,8 +254,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endfunction" { return FortranTokens.ENDFUNCTION_KEYWORD; }
 "endsubroutine" { return FortranTokens.ENDSUBROUTINE_KEYWORD; }
 "endtype" { return FortranTokens.ENDTYPE_KEYWORD; }
-"endwhere" { return FortranTokens.ENDWHERE_KEYWORD; }
-"endselect" { return FortranTokens.ENDSELECT_KEYWORD; }*/
+"endwhere" { return FortranTokens.ENDWHERE_KEYWORD; }*/
+"endselect" { return ENDSELECT; }
 "enddo" { return ENDDO; }/*
 "endmodule" { return FortranTokens.ENDMODULE_KEYWORD; }
 "endblockdata"    { return FortranTokens.ENDBLOCKDATA_KEYWORD; }

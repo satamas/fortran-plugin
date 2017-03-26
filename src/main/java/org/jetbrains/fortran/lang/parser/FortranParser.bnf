@@ -63,7 +63,8 @@
 program_unit ::= eol* main_program
 
 private block_recover ::= !(eol | end_keys) // recover doesn't eat what it is not necessary to eat
-private end_keys ::= end | endprogram | endif | enddo | else | elseif | endblock | endcritical | endassociate
+private end_keys ::= end | endprogram | endif | enddo | else | elseif | endblock | endcritical
+                    | endassociate | case | endselect
 
 
 // Clause 1 (ready)
@@ -91,7 +92,7 @@ private execution_part_construct ::= !end_keys executable_construct {
 
 
 // R213
-private executable_construct ::= action_stmt| associate_construct | block_construct /*| case_construct*/
+private executable_construct ::= action_stmt| associate_construct | block_construct | case_construct
                        | critical_construct | do_construct/* | forall_construct*/ | if_construct
                      /*  | select_type_construct | where_construct*/
 // R214
@@ -100,8 +101,8 @@ private action_stmt ::= /*allocate-stmt
                 | backspace_stmt/*
                 | call-stmt*/
                 | close_stmt
-                | continue_stmt/*
-                | cycle-stmt
+                | continue_stmt
+                | cycle_stmt/*
                 | deallocate-stmt
                 | end-function-stmt
                 | end-mp-subprogram-stmt
@@ -287,7 +288,7 @@ critical_stmt ::= (identifier ':')? critical eol { pin = 2 }
 // R812
 end_critical_stmt ::= ((end critical) | endcritical) (identifier)? { pin = 1 }
 // R813
-private do_construct ::= block_do_construct // | nonblock_do_constract
+private do_construct ::= block_do_construct  | nonblock_do_constract
 // R814
 block_do_construct ::= do_stmt block end_do { pin = 1}
 // R815
@@ -306,11 +307,25 @@ private concurrent_loop_stmt ::= concurrent forall_header {pin = 1}
 private end_do ::= end_do_stmt //| continue at the end of a loop is f77 specific feature
 // R822
 end_do_stmt ::= (end do | enddo) identifier? { pin = 1}
-
-
+// R823 deprecated
+private nonblock_do_constract ::= action_term_do_construct | outer_shared_do_construct
+// R824 deprecated
+action_term_do_construct ::= label_do_stmt block do_term_action_stmt { pin = 1 }
+// R825 is trivial
+// R826 deprecated
+do_term_action_stmt ::= action_stmt // must contain label, don't know how to parse it, maybe tree analyze help later
+// R827 deprecated
+outer_shared_do_construct ::= label_do_stmt block shared_term_do_construct { pin = 3 }
+// R828 deprecated
+private shared_term_do_construct ::= outer_shared_do_construct | inner_shared_do_construct
+// R829 deprecated
+inner_shared_do_construct ::= label_do_stmt block do_term_shared_stmt  { pin = 3 }
+// R830 deprecated
+do_term_shared_stmt ::= action_stmt // must contain label, don't know how to parse it, maybe tree analyze help later
+// R831
+cycle_stmt ::= cycle (identifier)? { pin = 1 }
 // R832
 if_construct ::= if_then_stmt block (else_if_stmt block)* (else_stmt block)? end_if_stmt {pin = 1}
-
 // R833
 if_then_stmt ::= (identifier ':')? if '(' expr ')' then eol {pin=6}
 // R834
@@ -321,6 +336,21 @@ else_stmt ::= else identifier? eol {pin=1}
 end_if_stmt ::= ((end if)|endif) identifier? {pin=1}
 // R837
 if_stmt ::= if '(' expr ')' action_stmt {pin=5}
+// R838
+case_construct ::= select_case_stmt (case_stmt block)* end_select_stmt { pin = 1 }
+// R839
+select_case_stmt ::= (identifier ':')? select case '(' expr ')' eol { pin = 3 }
+// R840
+case_stmt ::= case case_selector (identifier)? eol { pin = 1 }
+// R841
+end_select_stmt ::= ((end select) | endselect ) (identifier)? { pin = 1 }
+// R842 is trivial
+// R843
+case_selector ::= ('(' case_value_range_list ')') | default
+// R844
+private case_value_range_list ::= case_value_range (',' case_value_range)*
+case_value_range ::= (expr ':' expr) | (expr ':') | expr | (':' expr)
+// R845 is trivial
 
 // R854
 continue_stmt ::= continue
