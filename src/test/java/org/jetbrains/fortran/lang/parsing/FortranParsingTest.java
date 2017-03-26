@@ -24,10 +24,13 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
         doParsingTest(FortranTestDataFixture.navigationMetadata("PrintWrite.f"));
     }
 
-   public void testExpressions() throws Exception {
+    public void testExpressions() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Expressions.f"));
-   }
+    }
 
+    public void testFileWork() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("FileWork.f"));
+    }
  /*   public void testSpecificationStatements() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("SpecificationStatements.f"));
     }

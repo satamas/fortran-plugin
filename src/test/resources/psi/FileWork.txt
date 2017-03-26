@@ -1,0 +1,246 @@
+FILE
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('filework')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('    ')
+    SPECIFICATION_PART
+      <empty list>
+    BLOCK
+      OPEN_STMT
+        PsiElement(open)('open')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        CONNECT_SPEC
+          PsiElement(file)('file')
+          PsiElement(=)('=')
+          CONSTANT
+            PsiElement(string_literal)('"data.dat"')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OPEN_STMT
+        PsiElement(open)('open')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONNECT_SPEC
+          PsiElement(unit)('unit')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('2')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        CONNECT_SPEC
+          PsiElement(file)('file')
+          PsiElement(=)('=')
+          CONSTANT
+            PsiElement(string_literal)('"res.dat"')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        CONNECT_SPEC
+          PsiElement(err)('err')
+          PsiElement(=)('=')
+          LABEL
+            PsiElement(integer_literal)('12345')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      WAIT_STMT
+        PsiElement(wait)('wait')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        WAIT_SPEC
+          PsiElement(end)('end')
+          PsiElement(=)('=')
+          LABEL
+            PsiElement(integer_literal)('1')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        WAIT_SPEC
+          PsiElement(eor)('eor')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          LABEL
+            PsiElement(integer_literal)('2')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        WAIT_SPEC
+          PsiElement(err)('err')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          LABEL
+            PsiElement(integer_literal)('3')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        WAIT_SPEC
+          PsiElement(id)('id')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          ADD_EXPR
+            CONSTANT
+              PsiElement(integer_literal)('2')
+            PsiElement(+)('+')
+            CONSTANT
+              PsiElement(integer_literal)('2')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        WAIT_SPEC
+          PsiElement(iomsg)('iomsg')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('aaa')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        WAIT_SPEC
+          PsiElement(iostat)('iostat')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('bbb')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      BACKSPACE_STMT
+        PsiElement(backspace)('backspace')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      BACKSPACE_STMT
+        PsiElement(backspace)('backspace')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        POSITION_AND_FLUSH_SPEC
+          PsiElement(err)('err')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          LABEL
+            PsiElement(integer_literal)('1')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      ENDFILE_STMT
+        PsiElement(endfile)('endfile')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      ENDFILE_STMT
+        PsiElement(endfile)('endfile')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONSTANT
+          PsiElement(integer_literal)('2')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        POSITION_AND_FLUSH_SPEC
+          PsiElement(iomsg)('iomsg')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('ccc')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      REWIND_STMT
+        PsiElement(rewind)('rewind')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      FLUSH_STMT
+        PsiElement(flush)('flush')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integer_literal)('2')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      FLUSH_STMT
+        PsiElement(flush)('flush')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        POSITION_AND_FLUSH_SPEC
+          PsiElement(unit)('unit')
+          PsiElement(=)('=')
+          CONSTANT
+            PsiElement(integer_literal)('2')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        POSITION_AND_FLUSH_SPEC
+          PsiElement(err)('err')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          LABEL
+            PsiElement(integer_literal)('3')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      CLOSE_STMT
+        PsiElement(close)('close')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        CLOSE_SPEC
+          PsiElement(iostat)('iostat')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('i')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        CLOSE_SPEC
+          PsiElement(err)('err')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          LABEL
+            PsiElement(integer_literal)('12345')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      CLOSE_STMT
+        PsiElement(close)('close')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CLOSE_SPEC
+          PsiElement(unit)('unit')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('2')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+    END_PROGRAM_STMT
+      PsiElement(end)('end')

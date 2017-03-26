@@ -90,39 +90,39 @@ private executable_construct ::= action_stmt/*| associate_construct | block_cons
                      /*  | select_type_construct | where_construct*/
 // R214
 private action_stmt ::= /*allocate-stmt
-                |*/ assignment_stmt /*
-                | backspace-stmt
-                | call-stmt
-                | close-stmt
-                | continue-stmt
+                |*/ assignment_stmt
+                | backspace_stmt/*
+                | call-stmt*/
+                | close_stmt
+               /* | continue-stmt
                 | cycle-stmt
                 | deallocate-stmt
                 | end-function-stmt
                 | end-mp-subprogram-stmt
                 | end-program-stmt
-                | end-subroutine-stmt
-                | endfile-stmt
+                | end-subroutine-stmt*/
+                | endfile_stmt/*
                 | error-stop-stmt
-                | exit-stmt
-                | flush-stmt
+                | exit-stmt*/
+                | flush_stmt/*
                 | forall-stmt
                 | goto-stmt
                */ | if_stmt/*
                 | inquire-stmt
                 | lock-stmt
-                | nullify-stmt
-                | open-stmt
-                | pointer-assignment-stmt*/
+                | nullify-stmt*/
+                | open_stmt
+              /*  | pointer-assignment-stmt*/
                 | print_stmt
                 | read_stmt/*
-                | return-stmt
-                | rewind-stmt
+                | return-stmt*/
+                | rewind_stmt/*
                 | stop-stmt
                 | sync-all-stmt
                 | sync-images-stmt
                 | sync-memory-stmt
-                | unlock-stmt
-                | wait-stmt
+                | unlock-stmt*/
+                | wait_stmt/*
                 | where-stmt*/
                 | write_stmt/*
                 | arithmetic-if-stmt
@@ -133,7 +133,6 @@ label ::= integer_literal {
   implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranNamedElement" ]
   mixin = "org.jetbrains.fortran.lang.psi.ext.FortranLabelImplMixin"
 }
-
 // Clause 4
 // R401
 private type_param_value ::= '*' | ':' | expr
@@ -161,7 +160,7 @@ entity_decl ::= identifier ('(' array_spec ')')? ('[' coarray_spec ']')?
 // R507
 private access_spec ::= (public | private)
 // R508
-language_binding_spec ::= bind '(' (',' bindname '=' expr)? ')'
+language_binding_spec ::= bind '(' (',' fname '=' expr)? ')'
 // R509
 private coarray_spec ::= deferred_coshape_spec_list// | explicit_coshape_spec
 // R510
@@ -288,6 +287,24 @@ if_stmt ::= if '(' expr ')' action_stmt {pin=5}
 // Clause 9
 // R901
 io_unit ::= '*' | variable | expr
+// R902, R903 are trivial
+// R904
+open_stmt ::= open '(' connect_spec_list ')' {pin = 1}
+// R905
+private connect_spec_list ::= connect_spec (',' connect_spec)*
+connect_spec ::= ((unit '=')? io_unit)    | (access '=' expr)       | (action '=' expr)
+                | (asynchronous '=' expr) | (blank '=' expr)        | (decimal '=' expr)
+                | (delim '=' expr)        | (encoding '=' expr)     | (err '=' label)
+                | (file '=' expr)         | (form '=' expr)         | (iomsg '=' variable)
+                | (iostat '=' variable)   | (newunit '=' variable)  | (pad '=' expr)
+                | (position '=' expr)     | (recl '=' expr)         | (round '=' expr)
+                | (sign '=' expr)         | (status '=' expr)
+// R906, R907 are trivial
+// R908
+close_stmt ::= close '(' close_spec_list ')' {pin = 1}
+// R909
+private close_spec_list ::= close_spec (',' close_spec)*
+close_spec ::= ((unit '=')? expr) | (iostat '=' variable) | (err '=' label) | (status '=' expr)
 // R910
 read_stmt ::= read (io_control_read | format_read) {pin = 1}
 private io_control_read ::= '(' io_control_spec_list ')' input_item_list? { pin = 1}
@@ -298,13 +315,14 @@ write_stmt ::= write '(' io_control_spec_list ')' output_item_list? { pin= 1 }
 print_stmt ::= print format (',' output_item_list)? { pin = 1 }
 // R913
 private io_control_spec_list ::= io_control_spec (',' io_control_spec)*
-io_control_spec ::= ((unit '=')? io_unit) | ((fmt '=') format)      | ((nml '=') identifier)
-                   | (advance '=' expr)   | (asynchronous '=' expr) | (blank '=' expr)
-                   | (decimal '=' expr)   | (delim '=' expr)        | (end '=' label)
-                   | (eor '=' label)      | (err '=' label)         | (id '=' variable)
-                   | (iomsg '=' variable) | (iostat '=' variable)   | (pad '=' expr)
-                   | (pos '=' expr)       | (rec '=' expr)          | (round '=' expr)
+io_control_spec ::= ((unit '=')? io_unit) | ((fmt '=')? format)      | ((nml '=')? identifier)
+                   | (advance '=' expr)   | (asynchronous '=' expr)  | (blank '=' expr)
+                   | (decimal '=' expr)   | (delim '=' expr)         | (end '=' label)
+                   | (eor '=' label)      | (err '=' label)          | (id '=' variable)
+                   | (iomsg '=' variable) | (iostat '=' variable)    | (pad '=' expr)
+                   | (pos '=' expr)       | (rec '=' expr)           | (round '=' expr)
                    | (sign '=' expr)      | (size '=' variable)
+// R914 is trivial
 // R915
 private format ::= '*' | label | expr
 // R916
@@ -318,7 +336,29 @@ io_implied_do ::= '(' io_implied_do_object_list ',' id_loop_stmt ')' { pin = 1}
 // R919
 private io_implied_do_object_list ::= io_implied_do_object (',' io_implied_do_object)*
 io_implied_do_object ::= input_item | output_item
-
+// R921
+dtv_type_spec ::= (type | fclass) '(' derived_type_spec ')' { pin =1 }
+// R922
+wait_stmt ::= wait '(' wait_spec_list ')' { pin =1 }
+// R923
+private wait_spec_list ::= wait_spec (',' wait_spec)*
+wait_spec ::= ((unit '=')? expr) | (end '=' label)      | (eor '=' label)       | (err '=' label)
+            | (id '=' expr)      | (iomsg '=' variable) | (iostat '=' variable)
+// R924
+backspace_stmt ::= backspace (('(' position_and_flush_spec_list ')') | expr ) { pin = 1 }
+// R925
+endfile_stmt ::= endfile (('(' position_and_flush_spec_list ')') | expr) { pin = 1 }
+// R926
+rewind_stmt ::= rewind (('(' position_and_flush_spec_list ')') | expr) { pin = 1}
+// R927 + R929
+private position_and_flush_spec_list ::= position_and_flush_spec (',' position_and_flush_spec)*
+position_and_flush_spec ::= ((unit '=')? expr) | (iomsg '=' variable) | (iostat '=' variable) | (err '=' label)
+// R928
+flush_stmt ::= flush (('(' position_and_flush_spec_list ')') | expr) { pin = 1}
+// R930
+// inquire
+// R931
+// inquire
 
 // Clause 11
 // R1101
