@@ -63,7 +63,7 @@
 program_unit ::= eol* main_program
 
 private block_recover ::= !(eol | end_keys) // recover doesn't eat what it is not necessary to eat
-private end_keys ::= end | endprogram | endif | enddo | else | elseif | continue
+private end_keys ::= end | endprogram | endif | enddo | else | elseif
 
 // R204
 specification_part ::= use_stmt* import_stmt* implicit_part? declaration_construct*
@@ -94,7 +94,7 @@ private action_stmt ::= /*allocate-stmt
                 | backspace_stmt/*
                 | call-stmt*/
                 | close_stmt
-               /* | continue-stmt
+                | continue_stmt/*
                 | cycle-stmt
                 | deallocate-stmt
                 | end-function-stmt
@@ -107,8 +107,8 @@ private action_stmt ::= /*allocate-stmt
                 | flush_stmt/*
                 | forall-stmt
                 | goto-stmt
-               */ | if_stmt/*
-                | inquire-stmt
+               */ | if_stmt
+                | inquire_stmt/*
                 | lock-stmt
                 | nullify-stmt*/
                 | open_stmt
@@ -267,7 +267,7 @@ private id_loop_stmt ::= variable '=' expr ',' expr (',' expr)? {pin=1}
 private while_loop_stmt ::= while '(' expr ')' {pin=1}
 private concurrent_loop_stmt ::= concurrent forall_header {pin = 1}
 // R821 + 854
-private end_do ::= end_do_stmt | continue
+private end_do ::= end_do_stmt //| continue at the end of a loop is f77 specific feature
 // R822
 end_do_stmt ::= (end do | enddo) identifier? { pin = 1}
 // R832
@@ -284,6 +284,9 @@ end_if_stmt ::= ((end if)|endif) identifier? {pin=1}
 // R837
 if_stmt ::= if '(' expr ')' action_stmt {pin=5}
 
+// R854
+continue_stmt ::= continue
+
 // Clause 9
 // R901
 io_unit ::= '*' | variable | expr
@@ -292,7 +295,7 @@ io_unit ::= '*' | variable | expr
 open_stmt ::= open '(' connect_spec_list ')' {pin = 1}
 // R905
 private connect_spec_list ::= connect_spec (',' connect_spec)*
-connect_spec ::= ((unit '=')? io_unit)    | (access '=' expr)       | (action '=' expr)
+connect_spec ::= ((unit '=')? expr)       | (access '=' expr)       | (action '=' expr)
                 | (asynchronous '=' expr) | (blank '=' expr)        | (decimal '=' expr)
                 | (delim '=' expr)        | (encoding '=' expr)     | (err '=' label)
                 | (file '=' expr)         | (form '=' expr)         | (iomsg '=' variable)
@@ -356,9 +359,22 @@ position_and_flush_spec ::= ((unit '=')? expr) | (iomsg '=' variable) | (iostat 
 // R928
 flush_stmt ::= flush (('(' position_and_flush_spec_list ')') | expr) { pin = 1}
 // R930
-// inquire
+inquire_stmt ::= inquire (inquire_with_iolength | ('(' inquire_spec_list ')'))  { pin = 1}
+private inquire_with_iolength ::= '(' iolength '=' variable ')' output_item_list { pin = 2}
 // R931
-// inquire
+private inquire_spec_list ::= inquire_spec (',' inquire_spec)*
+inquire_spec ::=  ((unit '=')? expr)          | (file '=' expr)             | (access '=' variable)
+                  | (action '=' variable)     | (asynchronous '=' variable) | (blank '=' variable)
+                  | (decimal '=' variable)    | (delim '=' variable)        | (direct '=' variable)
+                  | (encoding '=' variable)   | (err '=' label)             | (exist '=' variable)
+                  | (form '=' variable)       | (formatted '=' variable)    | (id '=' expr)
+                  | (iomsg '=' variable)      | (iostat '=' variable)       | (fname '=' variable)
+                  | (named '=' variable)      | (nextrec '=' variable)      | (number '=' variable)
+                  | (opened '=' variable)     | (pad '=' variable)          | (pending '=' variable)
+                  | (pos '=' variable)        | (position '=' expr)         | (read '=' variable)
+                  | (readwrite '=' variable)  | (recl '=' variable)         | (round '=' variable)
+                  | (sequential '=' variable) | (sign '=' variable)         | (size '=' variable)
+                  | (stream '=' variable)     | (unformatted '=' variable)  | (write '=' variable)
 
 // Clause 11
 // R1101

@@ -76,7 +76,8 @@ FILE
                 PsiElement(integer_literal)('1')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
-        PsiElement(continue)('continue')
+        END_DO_STMT
+          PsiElement(enddo)('enddo')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
       BLOCK_DO_CONSTRUCT
@@ -124,6 +125,10 @@ FILE
           PsiElement(do)('do')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('loop')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      CONTINUE_STMT
+        PsiElement(continue)('continue')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
       BLOCK_DO_CONSTRUCT
@@ -197,7 +202,8 @@ FILE
                 PsiElement(integer_literal)('1')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
-        PsiElement(continue)('continue')
+        END_DO_STMT
+          PsiElement(enddo)('enddo')
       PsiElement(eol)('\n\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')

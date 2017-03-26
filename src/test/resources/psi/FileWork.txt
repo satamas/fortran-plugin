@@ -202,6 +202,65 @@ FILE
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
+      INQUIRE_STMT
+        PsiElement(inquire)('inquire')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        PsiElement(iolength)('iolength')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        ADD_EXPR
+          CONSTANT
+            PsiElement(integer_literal)('1')
+          PsiElement(+)('+')
+          CONSTANT
+            PsiElement(integer_literal)('2')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      INQUIRE_STMT
+        PsiElement(inquire)('inquire')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONSTANT
+          PsiElement(integer_literal)('12')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        INQUIRE_SPEC
+          PsiElement(file)('file')
+          PsiElement(=)('=')
+          CONSTANT
+            PsiElement(string_literal)('"file.dat"')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        INQUIRE_SPEC
+          PsiElement(exist)('exist')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('f')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        INQUIRE_SPEC
+          PsiElement(nextrec)('nextrec')
+          PsiElement(=)('=')
+          DESIGNATOR
+            PsiElement(identifier)('nnn')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        INQUIRE_SPEC
+          PsiElement(readwrite)('readwrite')
+          PsiElement(=)('=')
+          DESIGNATOR
+            PsiElement(identifier)('l')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
       CLOSE_STMT
         PsiElement(close)('close')
         PsiWhiteSpace(' ')

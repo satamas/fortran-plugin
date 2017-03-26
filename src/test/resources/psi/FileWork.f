@@ -9,6 +9,8 @@ program filework
     rewind 1
     flush 2
     flush (unit=2, err = 3)
+    inquire (iolength = 1) 1+2
+    inquire (12, file="file.dat", exist = f, nextrec=nnn, readwrite=l)
     close (1, iostat = i, err = 12345)
     close (unit = 2)
 end
