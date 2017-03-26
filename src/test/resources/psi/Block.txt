@@ -1,0 +1,128 @@
+FILE
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(program)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('  ')
+    PsiComment(line_comment)('! just a comment')
+    SPECIFICATION_PART
+      <empty list>
+    BLOCK
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      BLOCK_CONSTRUCT
+        BLOCK_STMT
+          PsiElement(identifier)('b1')
+          PsiElement(:)(':')
+          PsiWhiteSpace(' ')
+          PsiElement(BLOCK)('block')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('     ')
+        SPECIFICATION_PART
+          DECLARATION_CONSTRUCT
+            TYPE_DECLARATION_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(integer)('integer')
+              PsiWhiteSpace(' ')
+              ENTITY_DECL
+                PsiElement(identifier)('a')
+              PsiElement(eol)('\n\n')
+        PsiWhiteSpace('     ')
+        BLOCK
+          CRITICAL_CONSTRUCT
+            CRITICAL_STMT
+              PsiElement(identifier)('cr')
+              PsiElement(:)(':')
+              PsiWhiteSpace(' ')
+              PsiElement(critical)('critical')
+              PsiWhiteSpace(' ')
+              PsiComment(line_comment)('!comment')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('        ')
+            BLOCK
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('a')
+                PsiWhiteSpace(' ')
+                PsiElement(=)('=')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integer_literal)('4')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('     ')
+            END_CRITICAL_STMT
+              PsiElement(endcritical)('endcritical')
+              PsiWhiteSpace(' ')
+              PsiElement(identifier)('cr')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_BLOCK_STMT
+          PsiElement(endblock)('endblock')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      BLOCK_CONSTRUCT
+        BLOCK_STMT
+          PsiElement(identifier)('b2')
+          PsiElement(:)(':')
+          PsiWhiteSpace(' ')
+          PsiElement(BLOCK)('block')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('     ')
+        SPECIFICATION_PART
+          <empty list>
+        BLOCK
+          ASSOCIATE_CONSTRUCT
+            ASSOCIATE_STMT
+              PsiElement(identifier)('as')
+              PsiElement(:)(':')
+              PsiWhiteSpace(' ')
+              PsiElement(associate)('associate')
+              PsiWhiteSpace(' ')
+              ASSOCIATION
+                PsiElement(identifier)('e')
+                PsiElement(=>)('=>')
+                ADD_EXPR
+                  CONSTANT
+                    PsiElement(integer_literal)('1')
+                  PsiElement(+)('+')
+                  CONSTANT
+                    PsiElement(integer_literal)('4')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              ASSOCIATION
+                PsiElement(identifier)('b')
+                PsiElement(=>)('=>')
+                MULT_EXPR
+                  CONSTANT
+                    PsiElement(integer_literal)('2')
+                  PsiElement(*)('*')
+                  CONSTANT
+                    PsiElement(integer_literal)('3')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('        ')
+            BLOCK
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('c')
+                PsiWhiteSpace(' ')
+                PsiElement(=)('=')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integer_literal)('3')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('     ')
+            END_ASSOCIATE_STMT
+              PsiElement(end)('end')
+              PsiWhiteSpace(' ')
+              PsiElement(associate)('associate')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_BLOCK_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(BLOCK)('block')
+      PsiElement(eol)('\n')
+    END_PROGRAM_STMT
+      PsiElement(endprogram)('endprogram')

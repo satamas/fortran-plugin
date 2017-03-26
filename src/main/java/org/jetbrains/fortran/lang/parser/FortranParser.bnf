@@ -63,8 +63,14 @@
 program_unit ::= eol* main_program
 
 private block_recover ::= !(eol | end_keys) // recover doesn't eat what it is not necessary to eat
-private end_keys ::= end | endprogram | endif | enddo | else | elseif
+private end_keys ::= end | endprogram | endif | enddo | else | elseif | endblock | endcritical | endassociate
 
+
+// Clause 1 (ready)
+// R101 is implemented for every list separately
+// R102 and R103 are trivial
+
+// Clause 2
 // R204
 specification_part ::= use_stmt* import_stmt* implicit_part? declaration_construct*
 // R205
@@ -85,8 +91,8 @@ private execution_part_construct ::= !end_keys executable_construct {
 
 
 // R213
-private executable_construct ::= action_stmt/*| associate_construct | block_construct | case_construct
-                       | critical_construct*/ | do_construct/* | forall_construct*/ | if_construct
+private executable_construct ::= action_stmt| associate_construct | block_construct /*| case_construct*/
+                       | critical_construct | do_construct/* | forall_construct*/ | if_construct
                      /*  | select_type_construct | where_construct*/
 // R214
 private action_stmt ::= /*allocate-stmt
@@ -128,11 +134,17 @@ private action_stmt ::= /*allocate-stmt
                 | arithmetic-if-stmt
                 | computed-goto-stmt*/
 
-// Clause 3
+// Clause 3 (probably ready)
+// R301, R302, R303 are implemented is lexer 'name' is replaced by 'identifier'
+// R304, R305 are implemented in Clause 7
+// R306, R307, R308 are trivial
+// R309, R310, R311 are excess
+// R312
 label ::= integer_literal {
   implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranNamedElement" ]
   mixin = "org.jetbrains.fortran.lang.psi.ext.FortranLabelImplMixin"
 }
+
 // Clause 4
 // R401
 private type_param_value ::= '*' | ':' | expr
@@ -235,9 +247,10 @@ private primary ::= constant | designator | paren
 paren ::= '(' expr ')' { pin=1}
 
 designator ::= identifier
+// R304, R305 modified
 constant ::= integer_literal | floating_point_literal | double_precision_literal
-           | string_literal | logical_constant
-logical_constant ::= '.true.' | '.false.'
+                                 /*| complex_literal */| logical_literal | string_literal /*| boz_literal*/
+logical_literal ::= '.true.' | '.false.'
 // R732
 assignment_stmt ::= variable '=' expr {pin = 2}
 
@@ -250,12 +263,34 @@ forall_triplet_spec ::= identifier '=' expr ':' expr (':' expr)? {pin=2}
 // Clause 8
 // R801 + R208 we parse statements in any order while the standard has some restrictions. We'll check them in code revisions
 block ::= (eol | execution_part_construct)*
-
+// R802
+associate_construct ::= associate_stmt block end_associate_stmt { pin = 1 }
+// R803
+associate_stmt ::= (identifier ':')? associate association_list eol { pin = 2 }
+// R804
+private association_list ::= association (',' association)*
+association ::= identifier '=>' selector { pin = 2 }
+// R805
+private selector ::= expr | variable
+// R806
+end_associate_stmt ::= ((end associate) | endassociate) (identifier)? { pin = 1 }
+// R807
+block_construct ::= block_stmt (specification_part)? block end_block_stmt { pin = 1 }
+// R808
+block_stmt ::= (identifier ':')? 'block' eol { pin = 2 }
+// R809
+end_block_stmt ::= ((end 'block') | endblock) (identifier)? {pin=1}
+// R810
+critical_construct ::= critical_stmt block end_critical_stmt
+// R811
+critical_stmt ::= (identifier ':')? critical eol { pin = 2 }
+// R812
+end_critical_stmt ::= ((end critical) | endcritical) (identifier)? { pin = 1 }
 // R813
 private do_construct ::= block_do_construct // | nonblock_do_constract
-// R814  + 820
+// R814
 block_do_construct ::= do_stmt block end_do { pin = 1}
-// R815 + 818 + 819
+// R815
 private do_stmt ::= label_do_stmt | nonlabel_do_stmt
 // R816
 label_do_stmt ::= (identifier ':')? do label loop_control? eol { pin = 3 }
@@ -266,10 +301,13 @@ loop_control ::= id_loop_stmt | while_loop_stmt | concurrent_loop_stmt
 private id_loop_stmt ::= variable '=' expr ',' expr (',' expr)? {pin=1}
 private while_loop_stmt ::= while '(' expr ')' {pin=1}
 private concurrent_loop_stmt ::= concurrent forall_header {pin = 1}
-// R821 + 854
+// R819, R820 are trivial
+// R821
 private end_do ::= end_do_stmt //| continue at the end of a loop is f77 specific feature
 // R822
 end_do_stmt ::= (end do | enddo) identifier? { pin = 1}
+
+
 // R832
 if_construct ::= if_then_stmt block (else_if_stmt block)* (else_stmt block)? end_if_stmt {pin = 1}
 
@@ -287,7 +325,7 @@ if_stmt ::= if '(' expr ')' action_stmt {pin=5}
 // R854
 continue_stmt ::= continue
 
-// Clause 9
+// Clause 9 (ready)
 // R901
 io_unit ::= '*' | variable | expr
 // R902, R903 are trivial
@@ -339,7 +377,7 @@ io_implied_do ::= '(' io_implied_do_object_list ',' id_loop_stmt ')' { pin = 1}
 // R919
 private io_implied_do_object_list ::= io_implied_do_object (',' io_implied_do_object)*
 io_implied_do_object ::= input_item | output_item
-// R921
+// R921 (unused maybe)
 dtv_type_spec ::= (type | fclass) '(' derived_type_spec ')' { pin =1 }
 // R922
 wait_stmt ::= wait '(' wait_spec_list ')' { pin =1 }

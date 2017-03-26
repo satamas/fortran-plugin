@@ -108,12 +108,13 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "allocate" { return FortranTokens.ALLOCATE_KEYWORD; }
 "assign" { return FortranTokens.ASSIGN_KEYWORD; }*/
 "assignment" { return ASSIGNMENT; }
+"associate" { return ASSOCIATE; }
 "asynchronous" { return ASYNCHRONOUS; }
 "backspace" { return BACKSPACE; }
 "bind" { return BIND; }
 "blank" { return BLANK; }
-/*"block" { return FortranTokens.BLOCK_KEYWORD; }
-"blockdata" { return FortranTokens.BLOCKDATA_KEYWORD; }
+"block" { return BLOCK; }
+/*"blockdata" { return FortranTokens.BLOCKDATA_KEYWORD; }
 "call" { return FortranTokens.CALL_KEYWORD; }
 "case" { return FortranTokens.CASE_KEYWORD; }*/
 "character" { return CHARACTER; }
@@ -125,7 +126,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "concurrent" { return CONCURRENT; } /*
 "contains" { return FortranTokens.CONTAINS_KEYWORD; }*/
 "contiguous" { return CONTIGUOUS; }
-"continue" { return CONTINUE; }/*
+"continue" { return CONTINUE; }
+"critical" { return CRITICAL; }/*
 "cycle" { return FortranTokens.CYCLE_KEYWORD; }
 "data" { return FortranTokens.DATA_KEYWORD; }*/
 "decimal" { return DECIMAL; }
@@ -242,6 +244,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "write" { return WRITE; }
 
 "end" { return END; }
+"endassociate" { return ENDASSOCIATE; }
+"endblock" { return ENDBLOCK; }
+"endcritical" { return ENDCRITICAL; }
 "endfile" { return ENDFILE; }
 "endif" { return ENDIF; }
 "endprogram" { return ENDPROGRAM; }
