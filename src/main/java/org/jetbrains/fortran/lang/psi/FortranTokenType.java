@@ -9,6 +9,8 @@ import static org.jetbrains.fortran.lang.FortranTypes.*;
 
 /**
  * Created by sergei on 13.03.17.
+ * to have keywords highlighting
+ * parameters type keywords must be deleted from here
  */
 public class FortranTokenType extends IElementType {
     public FortranTokenType(String debug) {
@@ -48,6 +50,7 @@ public class FortranTokenType extends IElementType {
             DOUBLE,
             ELSE,
             ELSEIF,
+            ELSEWHERE,
             ENCODING,
             END,
             ENDASSOCIATE,
@@ -55,9 +58,11 @@ public class FortranTokenType extends IElementType {
             ENDCRITICAL,
             ENDDO,
             ENDFILE,
+            ENDFORALL,
             ENDIF,
             ENDPROGRAM,
             ENDSELECT,
+            ENDWHERE,
             EOR,
             ERR,
             ERRMSG,
@@ -68,6 +73,7 @@ public class FortranTokenType extends IElementType {
             FILE,
             FLUSH,
             FMT,
+            FORALL,
             FORM,
             FORMATTED,
             GO,
@@ -147,6 +153,7 @@ public class FortranTokenType extends IElementType {
             VALUE,
             VOLATILE,
             WAIT,
+            WHERE,
             WHILE,
             WRITE
 

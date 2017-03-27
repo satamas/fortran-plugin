@@ -92,9 +92,9 @@ private execution_part_construct ::= !end_keys executable_construct {
 
 
 // R213
-private executable_construct ::= action_stmt| associate_construct | block_construct | case_construct
-                       | critical_construct | do_construct/* | forall_construct*/ | if_construct
-                       | select_type_construct /*| where_construct*/
+private executable_construct ::= action_stmt   | associate_construct | block_construct  | case_construct
+                       | critical_construct    | do_construct        | forall_construct | if_construct
+                       | select_type_construct | where_construct
 // R214
 private action_stmt ::= /*allocate-stmt
                 |*/ assignment_stmt
@@ -107,15 +107,15 @@ private action_stmt ::= /*allocate-stmt
                 | endfile_stmt
                 | error_stop_stmt
                 | exit_stmt
-                | flush_stmt/*
-                | forall-stmt*/
+                | flush_stmt
+                | forall_stmt
                 | goto_stmt
                 | if_stmt
                 | inquire_stmt
                 | lock_stmt/*
                 | nullify-stmt*/
                 | open_stmt
-              /*  | pointer-assignment-stmt*/
+                | pointer_assignment_stmt
                 | print_stmt
                 | read_stmt/*
                 | return-stmt*/
@@ -125,8 +125,8 @@ private action_stmt ::= /*allocate-stmt
                 | sync_images_stmt
                 | sync_memory_stmt
                 | unlock_stmt
-                | wait_stmt/*
-                | where-stmt*/
+                | wait_stmt
+                | where_stmt
                 | write_stmt
                 | arithmetic_if_stmt
                 | computed_goto_stmt
@@ -212,11 +212,13 @@ implicit_spec ::= declaration_type_spec '(' letter_spec_list ')'
 private letter_spec_list ::= letter_spec (',' letter_spec)*
 letter_spec ::= id ('-' id)
 // Clause 6
+// R601 is implemented in clause 7
 // R602
 private variable ::= designator | expr
 
 // Clause 7
-// R701
+// expressions in bnf grammar must be defined in a special order
+// R701 - R722 + R304 + R305 + R601
 expr ::= def_binary_operator_expr
        | equiv_expr
        | or_expr
@@ -249,19 +251,67 @@ def_unary_operator_expr ::= defined_unary_op expr
 private defined_unary_op ::= defoperator
 private primary ::= constant | designator | paren
 paren ::= '(' expr ')' { pin=1}
-
+// R601
 designator ::= identifier
 // R304, R305 modified
 constant ::= integer_literal | floating_point_literal | double_precision_literal
                                  /*| complex_literal */| logical_literal | string_literal /*| boz_literal*/
 logical_literal ::= '.true.' | '.false.'
+// R724 - 731 are trivial
+
 // R732
 assignment_stmt ::= variable '=' expr {pin = 2}
-
+// R733
+pointer_assignment_stmt ::= pointer_a_with_data_pointer | pointer_a_with_proc_pointer
+private pointer_a_with_data_pointer ::= data_pointer_object (('(' bounds_remapping_list ')')
+                                | ('(' bounds_spec_list')')?) '=>' variable { pin = 3 }
+private pointer_a_with_proc_pointer ::= proc_pointer_object '=>' proc_target { pin = 2 }
+// R734
+data_pointer_object ::= (variable '%' identifier) | identifier
+// R735
+private bounds_spec_list ::= bounds_spec (',' bounds_spec)*
+bounds_spec ::= expr ':'
+// R736
+private bounds_remapping_list ::= bounds_remapping (',' bounds_remapping)*
+bounds_remapping ::= expr ':' expr
+// R737 is trivial
+// R738 + R739
+proc_pointer_object ::= (variable '%' identifier) | identifier
+// R740
+proc_target ::= expr | (variable '%' identifier) | identifier // last two options may be parsed as expr. Need to check later
+// R741
+where_stmt ::= where '(' expr ')' assignment_stmt { pin = 5}
+// R742
+where_construct ::= where_construct_stmt (where_body_construct)* (masked_elsewhere_stmt (where_body_construct)*)*
+                    (elsewhere_stmt (where_body_construct)*)? end_where_stmt { pin = 1 }
+// R743
+where_construct_stmt ::= (identifier ':')? where '(' expr ')' eol { pin = 6 }
+// R744
+private where_body_construct ::= !(end | endwhere | else | elsewhere) (eol | assignment_stmt | where_stmt | where_construct) {pin=1}
+// R745, R746 are trivial
+// R747
+masked_elsewhere_stmt ::= ((else where) | elsewhere) '(' expr ')' identifier? eol { pin = 2 }
+// R748
+elsewhere_stmt ::= ((else where) | elsewhere) identifier? eol { pin =3 }
+// R749
+end_where_stmt ::= ((end where) | endwhere) identifier? { pin = 1 }
+// R750
+forall_construct ::= forall_construct_stmt (forall_body_construct)* end_forall_stmt { pin = 1 }
+// R751
+forall_construct_stmt ::= (identifier ':')? forall forall_header eol { pin = 4 }
 // R752
 forall_header ::= '(' (type_spec '::')? forall_triplet_spec+ (expr)? ')' {pin=1}
 // R753 + 754 + 755
 forall_triplet_spec ::= identifier '=' expr ':' expr (':' expr)? {pin=2}
+// R756
+private forall_body_construct ::= !(end | endforall) (eol | forall_assignment_stmt | where_construct | where_stmt
+                        | forall_construct | forall_stmt) { pin = 1 }
+// R757
+private forall_assignment_stmt ::= assignment_stmt | pointer_assignment_stmt
+// R758
+end_forall_stmt ::= ((end forall) | endforall) identifier? { pin = 1 }
+// R759
+forall_stmt ::= forall forall_header forall_assignment_stmt { pin = 3 }
 
 
 // Clause 8

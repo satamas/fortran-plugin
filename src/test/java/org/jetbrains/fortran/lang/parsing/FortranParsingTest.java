@@ -40,6 +40,10 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
         doParsingTest(FortranTestDataFixture.navigationMetadata("FileWork.f"));
     }
 
+    public void testForall() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("Forall.f"));
+    }
+
     public void testSync() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Sync.f"));
     }
