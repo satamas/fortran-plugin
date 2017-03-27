@@ -1,0 +1,125 @@
+FILE
+  MAIN_PROGRAM
+    SPECIFICATION_PART
+      <empty list>
+    BLOCK
+      LOCK_STMT
+        PsiElement(lock)('lock')
+        PsiElement(()('(')
+        DESIGNATOR
+          PsiElement(identifier)('a')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        SYNC_STAT
+          PsiElement(stat)('stat')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('st')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      SYNC_ALL_STMT
+        PsiElement(sync)('sync')
+        PsiWhiteSpace(' ')
+        PsiElement(all)('all')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      SYNC_IMAGES_STMT
+        PsiElement(syncimages)('syncimages')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        IMAGE_SET
+          PsiElement(*)('*')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      SYNC_MEMORY_STMT
+        PsiElement(syncmemory)('syncmemory')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        SYNC_STAT
+          PsiElement(errmsg)('errmsg')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('e')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      EXIT_STMT
+        PsiElement(exit)('exit')
+      PsiElement(eol)('\n')
+      GOTO_STMT
+        PsiElement(goto)('goto')
+        PsiWhiteSpace(' ')
+        LABEL
+          PsiElement(integer_literal)('123')
+      PsiElement(eol)('\n')
+      COMPUTED_GOTO_STMT
+        PsiElement(goto)('goto')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        LABEL
+          PsiElement(integer_literal)('1')
+        PsiElement(,)(',')
+        LABEL
+          PsiElement(integer_literal)('2')
+        PsiElement(,)(',')
+        LABEL
+          PsiElement(integer_literal)('3')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        ADD_EXPR
+          CONSTANT
+            PsiElement(integer_literal)('4')
+          PsiElement(+)('+')
+          CONSTANT
+            PsiElement(integer_literal)('5')
+      PsiElement(eol)('\n')
+      ARITHMETIC_IF_STMT
+        PsiElement(if)('if')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        ADD_EXPR
+          DESIGNATOR
+            PsiElement(identifier)('a')
+          PsiElement(+)('+')
+          DESIGNATOR
+            PsiElement(identifier)('c')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        LABEL
+          PsiElement(integer_literal)('1')
+        PsiElement(,)(',')
+        LABEL
+          PsiElement(integer_literal)('2')
+        PsiElement(,)(',')
+        LABEL
+          PsiElement(integer_literal)('3')
+      PsiElement(eol)('\n')
+      STOP_STMT
+        PsiElement(stop)('stop')
+        PsiWhiteSpace(' ')
+        ADD_EXPR
+          DESIGNATOR
+            PsiElement(identifier)('a')
+          PsiElement(+)('+')
+          DESIGNATOR
+            PsiElement(identifier)('b')
+      PsiElement(eol)('\n')
+      ERROR_STOP_STMT
+        PsiElement(error)('error')
+        PsiWhiteSpace(' ')
+        PsiElement(stop)('stop')
+      PsiElement(eol)('\n')
+      UNLOCK_STMT
+        PsiElement(unlock)('unlock')
+        PsiElement(()('(')
+        DESIGNATOR
+          PsiElement(identifier)('a')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+    END_PROGRAM_STMT
+      PsiElement(endprogram)('endprogram')

@@ -94,7 +94,7 @@ private execution_part_construct ::= !end_keys executable_construct {
 // R213
 private executable_construct ::= action_stmt| associate_construct | block_construct | case_construct
                        | critical_construct | do_construct/* | forall_construct*/ | if_construct
-                     /*  | select_type_construct | where_construct*/
+                       | select_type_construct /*| where_construct*/
 // R214
 private action_stmt ::= /*allocate-stmt
                 |*/ assignment_stmt
@@ -103,37 +103,34 @@ private action_stmt ::= /*allocate-stmt
                 | close_stmt
                 | continue_stmt
                 | cycle_stmt/*
-                | deallocate-stmt
-                | end-function-stmt
-                | end-mp-subprogram-stmt
-                | end-program-stmt
-                | end-subroutine-stmt*/
-                | endfile_stmt/*
-                | error-stop-stmt
-                | exit-stmt*/
+                | deallocate-stmt*/
+                | endfile_stmt
+                | error_stop_stmt
+                | exit_stmt
                 | flush_stmt/*
-                | forall-stmt
-                | goto-stmt
-               */ | if_stmt
-                | inquire_stmt/*
-                | lock-stmt
+                | forall-stmt*/
+                | goto_stmt
+                | if_stmt
+                | inquire_stmt
+                | lock_stmt/*
                 | nullify-stmt*/
                 | open_stmt
               /*  | pointer-assignment-stmt*/
                 | print_stmt
                 | read_stmt/*
                 | return-stmt*/
-                | rewind_stmt/*
-                | stop-stmt
-                | sync-all-stmt
-                | sync-images-stmt
-                | sync-memory-stmt
-                | unlock-stmt*/
+                | rewind_stmt
+                | stop_stmt
+                | sync_all_stmt
+                | sync_images_stmt
+                | sync_memory_stmt
+                | unlock_stmt
                 | wait_stmt/*
                 | where-stmt*/
-                | write_stmt/*
-                | arithmetic-if-stmt
-                | computed-goto-stmt*/
+                | write_stmt
+                | arithmetic_if_stmt
+                | computed_goto_stmt
+// R215 is trivial
 
 // Clause 3 (probably ready)
 // R301, R302, R303 are implemented is lexer 'name' is replaced by 'identifier'
@@ -157,6 +154,12 @@ private declaration_type_spec ::= intrinsic_type_spec // | много всего
 intrinsic_type_spec ::= ((integer | real | complex | character | logical) (kind_selector)?) | (double precision)
 // R405
 kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
+
+// R453
+derived_type_spec ::= identifier ('(' type_param_spec_list ')')?
+// R454
+private type_param_spec_list ::= type_param_spec (',' type_param_spec)*
+type_param_spec ::= (identifier '=')? type_param_value
 
 // Clause 5
 // R501
@@ -351,9 +354,51 @@ case_selector ::= ('(' case_value_range_list ')') | default
 private case_value_range_list ::= case_value_range (',' case_value_range)*
 case_value_range ::= (expr ':' expr) | (expr ':') | expr | (':' expr)
 // R845 is trivial
-
+// R846
+select_type_construct ::= select_type_stmt (type_guard_stmt block)* end_select_stmt { pin = 1 }
+// R847
+select_type_stmt ::= (identifier ':')? select type '(' (identifier '=>')? selector ')' { pin = 3 }
+// R848
+type_guard_stmt ::= (typeis_guard | classis_guard | classdefault_guard) identifier? { pin = 1 }
+private typeis_guard ::= type is '(' type_spec ')' { pin = 1 }
+private classis_guard ::= fclass is '(' derived_type_spec ')' { pin = 2 }
+private classdefault_guard ::= fclass default { pin = 2 }
+// R849 is a copy of R841
+// R850
+exit_stmt ::= exit (identifier)?
+// R851
+goto_stmt ::= ((go to) | goto) label { pin = 2 }
+// R852 deprecated
+computed_goto_stmt ::= ((go to) | goto) '(' label_list ')' (',')? expr { pin = 2 }
+private label_list ::= label (',' label)*
+// R853 deprecated
+arithmetic_if_stmt ::= if '(' expr ')' label ',' label ',' label { pin = 5 }
 // R854
 continue_stmt ::= continue
+// R855
+stop_stmt ::= stop (expr)? { pin = 1 }
+// R856
+error_stop_stmt ::= error stop (expr)? { pin = 1 }
+// R857 it trivial
+// R858
+sync_all_stmt ::= ((sync all) | syncall) ('(' ( sync_stat_list )? ')')? { pin = 1 }
+// R859
+private sync_stat_list ::= sync_stat (',' sync_stat)*
+sync_stat ::= (stat | errmsg) '=' variable { pin = 1 }
+// R860
+sync_images_stmt ::= ((sync images) | syncimages) '(' image_set (',' sync_stat_list)?')' { pin = 1 }
+// R861
+image_set ::= '*' | expr
+// R862
+sync_memory_stmt ::= ((sync memory) | syncmemory) ('(' (sync_stat_list)? ')')? { pin = 1 }
+// R863
+lock_stmt ::= lock '(' variable (',' lock_stat_list)? ')' { pin = 1 }
+// R864
+private lock_stat_list ::= lock_stat (',' lock_stat)*
+lock_stat ::= (acquired lock '=' variable) | sync_stat
+// R865
+unlock_stmt ::= unlock '(' variable (',' sync_stat_list)? ')' { pin = 1 }
+// R866 is trivial
 
 // Clause 9 (ready)
 // R901
