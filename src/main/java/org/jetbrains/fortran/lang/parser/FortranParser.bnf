@@ -62,11 +62,14 @@
 
 program_unit ::= eol* main_program
 
-private block_recover ::= !(eol | end_keys) // recover doesn't eat what it is not necessary to eat
-private end_keys ::= end | endprogram | endif | enddo | else | elseif | endblock | endcritical
-                    | endassociate | case | endselect
-
-
+// Clause 0
+// System parts needed for this implementation
+// format is *, label or expression, matches all possibilities
+private standard_command_parameters_spec ::= !')' ((identifier | end) '=')? format {
+  pin = 1
+  recoverWhile = parameter_spec_recover
+}
+private parameter_spec_recover ::= !(')' | ',')
 // Clause 1 (ready)
 // R101 is implemented for every list separately
 // R102 and R103 are trivial
@@ -85,11 +88,13 @@ declaration_construct ::= /*derived-type-def | entry-stmt | enum-def | format-st
 
 
 // R209
-private execution_part_construct ::= !end_keys executable_construct {
+private execution_part_construct ::= !end_block_keys executable_construct {
   pin=1
   recoverWhile=block_recover
 }// | format-stmt | entry-stmt | data-stmt
-
+private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
+private end_block_keys ::= end | endprogram | endif | enddo | else | elseif | endblock | endcritical
+                    | endassociate | case | endselect
 
 // R213
 private executable_construct ::= action_stmt   | associate_construct | block_construct  | case_construct
@@ -210,7 +215,7 @@ private implisit_spec_list ::= implicit_spec (',' implicit_spec)*
 implicit_spec ::= declaration_type_spec '(' letter_spec_list ')'
 // R562
 private letter_spec_list ::= letter_spec (',' letter_spec)*
-letter_spec ::= id ('-' id)
+letter_spec ::= identifier ('-' identifier)
 // Clause 6
 // R601 is implemented in clause 7
 // R602
@@ -282,12 +287,17 @@ proc_target ::= expr | (variable '%' identifier) | identifier // last two option
 // R741
 where_stmt ::= where '(' expr ')' assignment_stmt { pin = 5}
 // R742
-where_construct ::= where_construct_stmt (where_body_construct)* (masked_elsewhere_stmt (where_body_construct)*)*
-                    (elsewhere_stmt (where_body_construct)*)? end_where_stmt { pin = 1 }
+where_construct ::= where_construct_stmt (eol | where_body_construct)* (masked_elsewhere_stmt (eol | where_body_construct)*)*
+                    (elsewhere_stmt (eol | where_body_construct)*)? end_where_stmt { pin = 1 }
 // R743
 where_construct_stmt ::= (identifier ':')? where '(' expr ')' eol { pin = 6 }
 // R744
-private where_body_construct ::= !(end | endwhere | else | elsewhere) (eol | assignment_stmt | where_stmt | where_construct) {pin=1}
+private where_body_construct ::= !end_where_keys (assignment_stmt | where_stmt | where_construct) {
+  pin = 1
+  recoverWhile = where_recover
+}
+private where_recover ::= !(eol | end_where_keys)
+private end_where_keys ::= end | else | elsewhere | endwhere
 // R745, R746 are trivial
 // R747
 masked_elsewhere_stmt ::= ((else where) | elsewhere) '(' expr ')' identifier? eol { pin = 2 }
@@ -296,7 +306,7 @@ elsewhere_stmt ::= ((else where) | elsewhere) identifier? eol { pin =3 }
 // R749
 end_where_stmt ::= ((end where) | endwhere) identifier? { pin = 1 }
 // R750
-forall_construct ::= forall_construct_stmt (forall_body_construct)* end_forall_stmt { pin = 1 }
+forall_construct ::= forall_construct_stmt (eol | forall_body_construct)* end_forall_stmt { pin = 1 }
 // R751
 forall_construct_stmt ::= (identifier ':')? forall forall_header eol { pin = 4 }
 // R752
@@ -304,8 +314,13 @@ forall_header ::= '(' (type_spec '::')? forall_triplet_spec+ (expr)? ')' {pin=1}
 // R753 + 754 + 755
 forall_triplet_spec ::= identifier '=' expr ':' expr (':' expr)? {pin=2}
 // R756
-private forall_body_construct ::= !(end | endforall) (eol | forall_assignment_stmt | where_construct | where_stmt
-                        | forall_construct | forall_stmt) { pin = 1 }
+private forall_body_construct ::= !end_forall_keys (forall_assignment_stmt | where_construct | where_stmt
+                        | forall_construct | forall_stmt) {
+  pin = 1
+  recoverWhile = forall_recover
+}
+private forall_recover ::= !(eol | end_forall_keys)
+private end_forall_keys ::= end | endforall
 // R757
 private forall_assignment_stmt ::= assignment_stmt | pointer_assignment_stmt
 // R758
@@ -434,7 +449,8 @@ error_stop_stmt ::= error stop (expr)? { pin = 1 }
 sync_all_stmt ::= ((sync all) | syncall) ('(' ( sync_stat_list )? ')')? { pin = 1 }
 // R859
 private sync_stat_list ::= sync_stat (',' sync_stat)*
-sync_stat ::= (stat | errmsg) '=' variable { pin = 1 }
+sync_stat ::= standard_command_parameters_spec
+// sync_stat ::= (stat | errmsg) '=' variable { pin = 1 }
 // R860
 sync_images_stmt ::= ((sync images) | syncimages) '(' image_set (',' sync_stat_list)?')' { pin = 1 }
 // R861
@@ -445,32 +461,37 @@ sync_memory_stmt ::= ((sync memory) | syncmemory) ('(' (sync_stat_list)? ')')? {
 lock_stmt ::= lock '(' variable (',' lock_stat_list)? ')' { pin = 1 }
 // R864
 private lock_stat_list ::= lock_stat (',' lock_stat)*
-lock_stat ::= (acquired lock '=' variable) | sync_stat
+lock_stat ::=  sync_stat | (identifier? identifier '=' variable)
+// lock_stat ::= (acquired lock '=' variable) | sync_stat
 // R865
 unlock_stmt ::= unlock '(' variable (',' sync_stat_list)? ')' { pin = 1 }
 // R866 is trivial
 
 // Clause 9 (ready)
-// R901
-io_unit ::= '*' | variable | expr
+// R901 don't need now
+//io_unit ::= '*' | variable | expr
 // R902, R903 are trivial
 // R904
 open_stmt ::= open '(' connect_spec_list ')' {pin = 1}
 // R905
 private connect_spec_list ::= connect_spec (',' connect_spec)*
-connect_spec ::= ((unit '=')? expr)       | (access '=' expr)       | (action '=' expr)
+connect_spec ::= standard_command_parameters_spec
+// Thats not a real rul. But we'll check parameters names later
+/*connect_spec ::= ((unit '=')? expr)       | (access '=' expr)       | (action '=' expr)
                 | (asynchronous '=' expr) | (blank '=' expr)        | (decimal '=' expr)
                 | (delim '=' expr)        | (encoding '=' expr)     | (err '=' label)
                 | (file '=' expr)         | (form '=' expr)         | (iomsg '=' variable)
                 | (iostat '=' variable)   | (newunit '=' variable)  | (pad '=' expr)
                 | (position '=' expr)     | (recl '=' expr)         | (round '=' expr)
-                | (sign '=' expr)         | (status '=' expr)
+                | (sign '=' expr)         | (status '=' expr)*/
 // R906, R907 are trivial
 // R908
 close_stmt ::= close '(' close_spec_list ')' {pin = 1}
 // R909
 private close_spec_list ::= close_spec (',' close_spec)*
-close_spec ::= ((unit '=')? expr) | (iostat '=' variable) | (err '=' label) | (status '=' expr)
+close_spec ::= standard_command_parameters_spec
+// Thats not a real rul. But we'll check parameters names later
+// close_spec ::= ((unit '=')? expr) | (iostat '=' variable) | (err '=' label) | (status '=' expr)
 // R910
 read_stmt ::= read (io_control_read | format_read) {pin = 1}
 private io_control_read ::= '(' io_control_spec_list ')' input_item_list? { pin = 1}
@@ -481,16 +502,19 @@ write_stmt ::= write '(' io_control_spec_list ')' output_item_list? { pin= 1 }
 print_stmt ::= print format (',' output_item_list)? { pin = 1 }
 // R913
 private io_control_spec_list ::= io_control_spec (',' io_control_spec)*
-io_control_spec ::= ((unit '=')? io_unit) | ((fmt '=')? format)      | ((nml '=')? identifier)
+io_control_spec ::= standard_command_parameters_spec
+// Thats not a real rul. But we'll check parameters names later
+/*io_control_spec ::= ((unit '=')? io_unit) | ((fmt '=')? format)      | ((nml '=')? identifier)
                    | (advance '=' expr)   | (asynchronous '=' expr)  | (blank '=' expr)
                    | (decimal '=' expr)   | (delim '=' expr)         | (end '=' label)
                    | (eor '=' label)      | (err '=' label)          | (id '=' variable)
                    | (iomsg '=' variable) | (iostat '=' variable)    | (pad '=' expr)
                    | (pos '=' expr)       | (rec '=' expr)           | (round '=' expr)
-                   | (sign '=' expr)      | (size '=' variable)
+                   | (sign '=' expr)      | (size '=' variable)*/
 // R914 is trivial
 // R915
-private format ::= '*' | label | expr
+private format ::= '*' /*| label*/ | expr
+// we can match label when it's really an expression, but expression matches a label too
 // R916
 private input_item_list ::= input_item (',' input_item)*
 input_item ::= variable | io_implied_do
@@ -508,8 +532,10 @@ dtv_type_spec ::= (type | fclass) '(' derived_type_spec ')' { pin =1 }
 wait_stmt ::= wait '(' wait_spec_list ')' { pin =1 }
 // R923
 private wait_spec_list ::= wait_spec (',' wait_spec)*
-wait_spec ::= ((unit '=')? expr) | (end '=' label)      | (eor '=' label)       | (err '=' label)
-            | (id '=' expr)      | (iomsg '=' variable) | (iostat '=' variable)
+wait_spec ::= standard_command_parameters_spec
+// Thats not a real rul. But we'll check parameters names later
+/* wait_spec ::= ((unit '=')? expr) | (end '=' label)      | (eor '=' label)       | (err '=' label)
+            | (id '=' expr)      | (iomsg '=' variable) | (iostat '=' variable)*/
 // R924
 backspace_stmt ::= backspace (('(' position_and_flush_spec_list ')') | expr ) { pin = 1 }
 // R925
@@ -518,7 +544,9 @@ endfile_stmt ::= endfile (('(' position_and_flush_spec_list ')') | expr) { pin =
 rewind_stmt ::= rewind (('(' position_and_flush_spec_list ')') | expr) { pin = 1}
 // R927 + R929
 private position_and_flush_spec_list ::= position_and_flush_spec (',' position_and_flush_spec)*
-position_and_flush_spec ::= ((unit '=')? expr) | (iomsg '=' variable) | (iostat '=' variable) | (err '=' label)
+position_and_flush_spec ::= standard_command_parameters_spec
+// Thats not a real rul. But we'll check parameters names later
+// position_and_flush_spec ::= ((unit '=')? expr) | (iomsg '=' variable) | (iostat '=' variable) | (err '=' label)
 // R928
 flush_stmt ::= flush (('(' position_and_flush_spec_list ')') | expr) { pin = 1}
 // R930
@@ -526,7 +554,9 @@ inquire_stmt ::= inquire (inquire_with_iolength | ('(' inquire_spec_list ')'))  
 private inquire_with_iolength ::= '(' iolength '=' variable ')' output_item_list { pin = 2}
 // R931
 private inquire_spec_list ::= inquire_spec (',' inquire_spec)*
-inquire_spec ::=  ((unit '=')? expr)          | (file '=' expr)             | (access '=' variable)
+inquire_spec ::= standard_command_parameters_spec
+// Thats not a real rul. But we'll check parameters names later
+/* inquire_sec ::= ((unit '=')? expr)          | (file '=' expr)             | (access '=' variable)
                   | (action '=' variable)     | (asynchronous '=' variable) | (blank '=' variable)
                   | (decimal '=' variable)    | (delim '=' variable)        | (direct '=' variable)
                   | (encoding '=' variable)   | (err '=' label)             | (exist '=' variable)
@@ -537,7 +567,7 @@ inquire_spec ::=  ((unit '=')? expr)          | (file '=' expr)             | (a
                   | (pos '=' variable)        | (position '=' expr)         | (read '=' variable)
                   | (readwrite '=' variable)  | (recl '=' variable)         | (round '=' variable)
                   | (sequential '=' variable) | (sign '=' variable)         | (size '=' variable)
-                  | (stream '=' variable)     | (unformatted '=' variable)  | (write '=' variable)
+                  | (stream '=' variable)     | (unformatted '=' variable)  | (write '=' variable)*/
 
 // Clause 11
 // R1101

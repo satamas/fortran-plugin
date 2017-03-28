@@ -11,7 +11,7 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         SYNC_STAT
-          PsiElement(stat)('stat')
+          PsiElement(identifier)('stat')
           PsiWhiteSpace(' ')
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
@@ -40,7 +40,7 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         SYNC_STAT
-          PsiElement(errmsg)('errmsg')
+          PsiElement(identifier)('errmsg')
           PsiWhiteSpace(' ')
           PsiElement(=)('=')
           PsiWhiteSpace(' ')

@@ -101,9 +101,6 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 ".true." { return TRUE_KEYWORD; }
 ".false." { return FALSE_KEYWORD; }
 
-"access" { return ACCESS; }
-"action" { return ACTION; }
-"advance" { return ADVANCE; }
 "all" { return ALL; }
 "allocatable" { return ALLOCATABLE; }/*
 "allocate" { return FortranTokens.ALLOCATE_KEYWORD; }
@@ -113,7 +110,6 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "asynchronous" { return ASYNCHRONOUS; }
 "backspace" { return BACKSPACE; }
 "bind" { return BIND; }
-"blank" { return BLANK; }
 "block" { return BLOCK; }
 /*"blockdata" { return FortranTokens.BLOCKDATA_KEYWORD; }
 "call" { return FortranTokens.CALL_KEYWORD; }*/
@@ -130,39 +126,28 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "continue" { return CONTINUE; }
 "critical" { return CRITICAL; }
 "cycle" { return CYCLE; }/*
-"data" { return FortranTokens.DATA_KEYWORD; }*/
-"decimal" { return DECIMAL; }
-"delim" { return DELIM; } /*
+"data" { return FortranTokens.DATA_KEYWORD; }
 "deallocate" { return FortranTokens.DEALLOCATE_KEYWORD; }*/
 "default" { return DEFAULT; }
 "dimension" { return DIMENSION; }
-"direct" { return DIRECT; }
 "do" { return DO; }
 "double" { return DOUBLE; }
 "precision" { return PRECISION; }
 "else" { return ELSE; }
 "elseif" { return ELSEIF; }
-"elsewhere" { return ELSEWHERE; }
-"encoding" { return ENCODING; }/*
+"elsewhere" { return ELSEWHERE; }/*
 "entry" { return FortranTokens.ENTRY_KEYWORD; }*/
-"eor" { return EOR; }
-"err" { return ERR; }
-"error" { return ERROR; }
-"errmsg" { return ERRMSG; }/*
+"error" { return ERROR; }/*
 "equivalence" { return FortranTokens.EQUIVALENCE_KEYWORD; }*/
-"exist" { return EXIST; }
 "exit" { return EXIT; }
 "external" { return EXTERNAL; }
 "flush" { return FLUSH; }
-"file" { return FILE; }/*
+/*
 "function" { return FortranTokens.FUNCTION_KEYWORD; }*/
-"fmt" { return FMT; }
 "forall" { return FORALL; }
-"form" { return FORM; }
 "formatted" { return FORMATTED; }
 "go" { return GO; }
 "goto" { return GOTO; }
-"id" { return ID; }
 "if" { return IF; }
 "images" { return IMAGES; }
 "implicit" { return IMPLICIT; }
@@ -175,35 +160,23 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "intrinsic" { return INTRINSIC; }
 "inquire" { return INQUIRE; }
 "iolength" { return IOLENGTH; }
-"iomsg" { return IOMSG; }
-"iostat" { return IOSTAT; }
 "kind" { return KIND; }
 /*"len" { return FortranTokens.LEN_KEYWORD; }*/
 "lock" { return LOCK; }
 "logical" { return LOGICAL; }/*
 "module" { return FortranTokens.MODULE_KEYWORD; }*/
 "memory" { return MEMORY; }
-"name" { return FNAME; }
-"named" { return NAMED; }/*
+"name" { return FNAME; }/*
 "namelist" { return FortranTokens.NAMELIST_KEYWORD; }*/
-"nextrec" { return NEXTREC; }
-"newunit" { return NEWUNIT; }
-"nml" { return NML; }
 "none" { return NONE; }
 "non_intrinsic" { return NON_INTRINSIC; } /*
 "nullify" { return FortranTokens.NULLIFY_KEYWORD; }*/
-"number" { return NUMBER; }
 "only" { return ONLY; }
 "open" { return OPEN; }
-"opened" { return OPENED; }
 "operator" { return OPERATOR; }
 "optional" { return OPTIONAL; }
 "out" { return OUT; }
-"parameter" { return PARAMETER; }
-"pad" { return PAD; }
-"pending" { return PENDING; }
-"pos" { return POS; }
-"position" { return POSITION; }/*
+"parameter" { return PARAMETER; }/*
 "pause" { return FortranTokens.PAUSE_KEYWORD; }*/
 "pointer" { return POINTER; }
 "print" { return PRINT; }
@@ -212,23 +185,13 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "protected" { return PROTECTED; }
 "public" { return PUBLIC; }
 "read" { return READ; }
-"readwrite" { return READWRITE; }
-"real" { return REAL; }
-"rec" { return REC; }
-"recl" { return RECL; }/*
+"real" { return REAL; }/*
 "recursive" { return FortranTokens.RECURSIVE_KEYWORD; }
 "result" { return FortranTokens.RESULT_KEYWORD; }
 "return" { return FortranTokens.RETURN_KEYWORD; }*/
-"round" { return ROUND; }
 "save" { return SAVE; }
-"sequential" { return SEQUENTIAL; }
 "select" { return SELECT; }
-"sign" { return SIGN; }
-"size" { return SIZE; }
-"stat" { return STAT; }
-"status" { return STATUS; }
 "stop" { return STOP; }
-"stream" { return STREAM; }
 "sync" { return SYNC; }
 "syncall" { return SYNCALL; }
 "syncimages" { return SYNCIMAGES; }
@@ -250,7 +213,6 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 /*
 "inquire" { return FortranTokens.INQUIRE_KEYWORD; }*/
 "rewind" { return REWIND; }
-"unit" { return UNIT; }
 "write" { return WRITE; }
 
 "end" { return END; }
@@ -277,3 +239,47 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 {OPERATOR} { return DEFOPERATOR; }
 
 . { return BAD_CHARACTER; }
+
+// These keywords are used for specification parameters names
+// We probably don't need them in lexer
+/*
+"access" { return ACCESS; }
+"action" { return ACTION; }
+"advance" { return ADVANCE; }
+"acquired" { return ACQIRED; }
+"blank" { return BLANK; }
+"decimal" { return DECIMAL; }
+"delim" { return DELIM; }
+"direct" { return DIRECT; }
+"encoding" { return ENCODING; }
+"eor" { return EOR; }
+"err" { return ERR; }
+"errmsg" { return ERRMSG; }
+"exist" { return EXIST; }
+"file" { return FILE; }
+"fmt" { return FMT; }
+"form" { return FORM; }
+"id" { return ID; }
+"iomsg" { return IOMSG; }
+"iostat" { return IOSTAT; }
+"named" { return NAMED; }
+"nextrec" { return NEXTREC; }
+"newunit" { return NEWUNIT; }
+"nml" { return NML; }
+"number" { return NUMBER; }
+"opened" { return OPENED; }
+"pad" { return PAD; }
+"pending" { return PENDING; }
+"pos" { return POS; }
+"position" { return POSITION; }
+"readwrite" { return READWRITE; }
+"rec" { return REC; }
+"recl" { return RECL; }
+"round" { return ROUND; }
+"sequential" { return SEQUENTIAL; }
+"sign" { return SIGN; }
+"size" { return SIZE; }
+"stat" { return STAT; }
+"status" { return STATUS; }
+"stream" { return STREAM; }
+"unit" { return UNIT; }*/

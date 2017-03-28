@@ -127,21 +127,21 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         IO_CONTROL_SPEC
-          PsiElement(err)('err')
+          PsiElement(identifier)('err')
           PsiElement(=)('=')
-          LABEL
+          CONSTANT
             PsiElement(integer_literal)('8')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         IO_CONTROL_SPEC
           PsiElement(end)('end')
           PsiElement(=)('=')
-          LABEL
+          CONSTANT
             PsiElement(integer_literal)('9')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         IO_CONTROL_SPEC
-          PsiElement(iostat)('iostat')
+          PsiElement(identifier)('iostat')
           PsiElement(=)('=')
           DESIGNATOR
             PsiElement(identifier)('n')
@@ -159,10 +159,10 @@ FILE
       READ_STMT
         PsiElement(read)('read')
         PsiElement(()('(')
-        IO_UNIT
+        IO_CONTROL_SPEC
           PsiElement(*)('*')
         PsiElement(,)(',')
-        IO_UNIT
+        IO_CONTROL_SPEC
           PsiElement(*)('*')
         PsiElement())(')')
         PsiWhiteSpace(' ')
@@ -207,16 +207,17 @@ FILE
         PsiElement(read)('read')
         PsiElement(()('(')
         IO_CONTROL_SPEC
-          PsiElement(unit)('unit')
+          PsiElement(identifier)('unit')
           PsiElement(=)('=')
           CONSTANT
             PsiElement(integer_literal)('1')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         IO_CONTROL_SPEC
-          PsiElement(nml)('nml')
+          PsiElement(identifier)('nml')
           PsiElement(=)('=')
-          PsiElement(identifier)('g')
+          DESIGNATOR
+            PsiElement(identifier)('g')
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -233,14 +234,14 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         IO_CONTROL_SPEC
-          PsiElement(err)('err')
+          PsiElement(identifier)('err')
           PsiElement(=)('=')
-          LABEL
+          CONSTANT
             PsiElement(integer_literal)('8')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         IO_CONTROL_SPEC
-          PsiElement(iostat)('iostat')
+          PsiElement(identifier)('iostat')
           PsiElement(=)('=')
           DESIGNATOR
             PsiElement(identifier)('n')
@@ -259,11 +260,11 @@ FILE
         PsiElement(write)('write')
         PsiElement(()('(')
         PsiWhiteSpace(' ')
-        IO_UNIT
+        IO_CONTROL_SPEC
           PsiElement(*)('*')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        IO_UNIT
+        IO_CONTROL_SPEC
           PsiElement(*)('*')
         PsiWhiteSpace(' ')
         PsiElement())(')')
@@ -281,16 +282,17 @@ FILE
         PsiElement(()('(')
         PsiWhiteSpace(' ')
         IO_CONTROL_SPEC
-          PsiElement(unit)('unit')
+          PsiElement(identifier)('unit')
           PsiElement(=)('=')
           CONSTANT
             PsiElement(integer_literal)('1')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         IO_CONTROL_SPEC
-          PsiElement(nml)('nml')
+          PsiElement(identifier)('nml')
           PsiElement(=)('=')
-          PsiElement(identifier)('g')
+          DESIGNATOR
+            PsiElement(identifier)('g')
         PsiWhiteSpace(' ')
         PsiElement())(')')
       PsiElement(eol)('\n')
