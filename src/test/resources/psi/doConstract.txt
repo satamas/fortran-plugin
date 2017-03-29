@@ -1,14 +1,19 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
+      LABEL
+        PsiElement(integer_literal)('1')
+      PsiWhiteSpace(' ')
       PsiElement(program)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
-    PsiWhiteSpace('  ')
     SPECIFICATION_PART
       <empty list>
     BLOCK
+      LABEL
+        PsiElement(integer_literal)('2')
+      PsiWhiteSpace('  ')
       BLOCK_DO_CONSTRUCT
         NONLABEL_DO_STMT
           PsiElement(do)('do')
@@ -23,8 +28,10 @@ FILE
             CONSTANT
               PsiElement(integer_literal)('5')
           PsiElement(eol)('\n')
-        PsiWhiteSpace('    ')
         BLOCK
+          LABEL
+            PsiElement(integer_literal)('3')
+          PsiWhiteSpace('    ')
           ASSIGNMENT_STMT
             DESIGNATOR
               PsiElement(identifier)('j')
@@ -38,8 +45,10 @@ FILE
               CONSTANT
                 PsiElement(integer_literal)('1')
           PsiElement(eol)('\n')
-        PsiWhiteSpace('  ')
         END_DO_STMT
+          LABEL
+            PsiElement(integer_literal)('4')
+          PsiWhiteSpace('  ')
           PsiElement(enddo)('enddo')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
@@ -206,6 +215,9 @@ FILE
           PsiElement(enddo)('enddo')
       PsiElement(eol)('\n\n')
     END_PROGRAM_STMT
+      LABEL
+        PsiElement(integer_literal)('5')
+      PsiWhiteSpace(' ')
       PsiElement(end)('end')
       PsiWhiteSpace(' ')
       PsiElement(program)('program')

@@ -1,16 +1,18 @@
 FILE
-  FortranProgram(PROGRAM)
-    FortranElementImpl(PROGRAM_STATEMENT)
-      FortranElementImpl(LABEL_DEFINITION)
-        PsiElement(INTEGER_LITERAL)('1')
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      LABEL
+        PsiElement(integer_literal)('1')
       PsiWhiteSpace(' ')
       PsiElement(program)('program')
       PsiWhiteSpace(' ')
-      PsiElement(IDENTIFIER)('a')
-    PsiWhiteSpace('\n')
-    FortranElementImpl(CODE_BLOCK)
+      PsiElement(identifier)('a')
+      PsiElement(eol)('\n')
+    SPECIFICATION_PART
       <empty list>
-    FortranElementImpl(END_STATEMENT)
+    BLOCK
+      <empty list>
+    END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')
       PsiElement(program)('program')

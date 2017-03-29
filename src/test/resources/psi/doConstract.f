@@ -1,7 +1,7 @@
-program a
-  do i=1,5
-    j = j+1
-  enddo
+1 program a
+2  do i=1,5
+3    j = j+1
+4  enddo
 
   do i=1,5,7
     j = j-1
@@ -18,4 +18,4 @@ program a
     j = j + 1
   enddo
 
-end program a
+5 end program a

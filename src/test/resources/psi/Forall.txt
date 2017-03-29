@@ -50,7 +50,10 @@ FILE
             CONSTANT
               PsiElement(integer_literal)('2')
         PsiElement(eol)('\n')
-        PsiWhiteSpace('   ')
+        PsiWhiteSpace(' ')
+        LABEL
+          PsiElement(integer_literal)('1')
+        PsiWhiteSpace(' ')
         FORALL_CONSTRUCT
           FORALL_CONSTRUCT_STMT
             PsiElement(forall)('forall')
@@ -70,7 +73,10 @@ FILE
                   PsiElement(integer_literal)('2')
               PsiElement())(')')
             PsiElement(eol)('\n')
-          PsiWhiteSpace('      ')
+          PsiWhiteSpace(' ')
+          LABEL
+            PsiElement(integer_literal)('2')
+          PsiWhiteSpace('    ')
           ASSIGNMENT_STMT
             DESIGNATOR
               PsiElement(identifier)('v')
@@ -78,8 +84,11 @@ FILE
             CONSTANT
               PsiElement(integer_literal)('1')
           PsiElement(eol)('\n')
-          PsiWhiteSpace('   ')
+          PsiWhiteSpace(' ')
           END_FORALL_STMT
+            LABEL
+              PsiElement(integer_literal)('3')
+            PsiWhiteSpace(' ')
             PsiElement(endforall)('endforall')
         PsiElement(eol)('\n')
         PsiWhiteSpace('   ')

@@ -143,23 +143,21 @@ private action_stmt ::= /*allocate-stmt
 // R306, R307, R308 are trivial
 // R309, R310, R311 are excess
 // R312
-label ::= integer_literal {
-  implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranNamedElement" ]
-  mixin = "org.jetbrains.fortran.lang.psi.ext.FortranLabelImplMixin"
-}
+label ::= integer_literal
 
 // Clause 4
 // R401
 private type_param_value ::= '*' | ':' | expr
 // R402
-type_spec ::= intrinsic_type_spec //| derived_type_spec
+type_spec ::= intrinsic_type_spec | derived_type_spec
 // R403
-private declaration_type_spec ::= intrinsic_type_spec // | много всего другого
+private declaration_type_spec ::= intrinsic_type_spec | (type '(' (intrinsic_type_spec | derived_type_spec)')')
+                                | (fclass '(' (derived_type_spec | '*') ')')
 // R404
 intrinsic_type_spec ::= ((integer | real | complex | character | logical) (kind_selector)?) | (double precision)
 // R405
 kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
-
+// R406 - 416 are trivial or implemented in lexer
 // R453
 derived_type_spec ::= identifier ('(' type_param_spec_list ')')?
 // R454
@@ -265,7 +263,7 @@ logical_literal ::= '.true.' | '.false.'
 // R724 - 731 are trivial
 
 // R732
-assignment_stmt ::= variable '=' expr {pin = 2}
+assignment_stmt ::= designator '=' expr {pin = 2} // it was a variable here in the standard but we don't want to match an expression
 // R733
 pointer_assignment_stmt ::= pointer_a_with_data_pointer | pointer_a_with_proc_pointer
 private pointer_a_with_data_pointer ::= data_pointer_object (('(' bounds_remapping_list ')')
@@ -287,8 +285,8 @@ proc_target ::= expr | (variable '%' identifier) | identifier // last two option
 // R741
 where_stmt ::= where '(' expr ')' assignment_stmt { pin = 5}
 // R742
-where_construct ::= where_construct_stmt (eol | where_body_construct)* (masked_elsewhere_stmt (eol | where_body_construct)*)*
-                    (elsewhere_stmt (eol | where_body_construct)*)? end_where_stmt { pin = 1 }
+where_construct ::= where_construct_stmt (label? (eol | where_body_construct))* (masked_elsewhere_stmt (label? (eol | where_body_construct))*)*
+                    (elsewhere_stmt (label? (eol | where_body_construct))*)? end_where_stmt { pin = 1 }
 // R743
 where_construct_stmt ::= (identifier ':')? where '(' expr ')' eol { pin = 6 }
 // R744
@@ -300,13 +298,13 @@ private where_recover ::= !(eol | end_where_keys)
 private end_where_keys ::= end | else | elsewhere | endwhere
 // R745, R746 are trivial
 // R747
-masked_elsewhere_stmt ::= ((else where) | elsewhere) '(' expr ')' identifier? eol { pin = 2 }
+masked_elsewhere_stmt ::= label? ((else where) | elsewhere) '(' expr ')' identifier? eol { pin = 3 }
 // R748
-elsewhere_stmt ::= ((else where) | elsewhere) identifier? eol { pin =3 }
+elsewhere_stmt ::= label? ((else where) | elsewhere) identifier? eol { pin = 3 }
 // R749
-end_where_stmt ::= ((end where) | endwhere) identifier? { pin = 1 }
+end_where_stmt ::= label? ((end where) | endwhere) identifier? { pin = 2 }
 // R750
-forall_construct ::= forall_construct_stmt (eol | forall_body_construct)* end_forall_stmt { pin = 1 }
+forall_construct ::= forall_construct_stmt (label? (eol | forall_body_construct))* end_forall_stmt { pin = 1 }
 // R751
 forall_construct_stmt ::= (identifier ':')? forall forall_header eol { pin = 4 }
 // R752
@@ -324,14 +322,14 @@ private end_forall_keys ::= end | endforall
 // R757
 private forall_assignment_stmt ::= assignment_stmt | pointer_assignment_stmt
 // R758
-end_forall_stmt ::= ((end forall) | endforall) identifier? { pin = 1 }
+end_forall_stmt ::= label? ((end forall) | endforall) identifier? { pin = 2 }
 // R759
 forall_stmt ::= forall forall_header forall_assignment_stmt { pin = 3 }
 
 
 // Clause 8
 // R801 + R208 we parse statements in any order while the standard has some restrictions. We'll check them in code revisions
-block ::= (eol | execution_part_construct)*
+block ::= (label? (eol | execution_part_construct))*
 // R802
 associate_construct ::= associate_stmt block end_associate_stmt { pin = 1 }
 // R803
@@ -342,19 +340,19 @@ association ::= identifier '=>' selector { pin = 2 }
 // R805
 private selector ::= expr | variable
 // R806
-end_associate_stmt ::= ((end associate) | endassociate) (identifier)? { pin = 1 }
+end_associate_stmt ::= label? ((end associate) | endassociate) (identifier)? { pin = 2 }
 // R807
 block_construct ::= block_stmt (specification_part)? block end_block_stmt { pin = 1 }
 // R808
 block_stmt ::= (identifier ':')? 'block' eol { pin = 2 }
 // R809
-end_block_stmt ::= ((end 'block') | endblock) (identifier)? {pin=1}
+end_block_stmt ::= label? ((end 'block') | endblock) (identifier)? {pin = 2 }
 // R810
 critical_construct ::= critical_stmt block end_critical_stmt
 // R811
 critical_stmt ::= (identifier ':')? critical eol { pin = 2 }
 // R812
-end_critical_stmt ::= ((end critical) | endcritical) (identifier)? { pin = 1 }
+end_critical_stmt ::= label? ((end critical) | endcritical) (identifier)? { pin = 2 }
 // R813
 private do_construct ::= block_do_construct  | nonblock_do_constract
 // R814
@@ -374,7 +372,7 @@ private concurrent_loop_stmt ::= concurrent forall_header {pin = 1}
 // R821
 private end_do ::= end_do_stmt //| continue at the end of a loop is f77 specific feature
 // R822
-end_do_stmt ::= (end do | enddo) identifier? { pin = 1}
+end_do_stmt ::= label? (end do | enddo) identifier? { pin = 2}
 // R823 deprecated
 private nonblock_do_constract ::= action_term_do_construct | outer_shared_do_construct
 // R824 deprecated
@@ -393,15 +391,15 @@ do_term_shared_stmt ::= action_stmt // must contain label, don't know how to par
 // R831
 cycle_stmt ::= cycle (identifier)? { pin = 1 }
 // R832
-if_construct ::= if_then_stmt block (else_if_stmt block)* (else_stmt block)? end_if_stmt {pin = 1}
+if_construct ::= if_then_stmt block (else_if_stmt block)* (else_stmt block)? end_if_stmt { pin = 1 }
 // R833
 if_then_stmt ::= (identifier ':')? if '(' expr ')' then eol {pin=6}
 // R834
-else_if_stmt ::= ((else if)|elseif) '(' expr ')' then identifier? eol {pin=1}
+else_if_stmt ::= label? ((else if)|elseif) '(' expr ')' then identifier? eol { pin = 2 }
 // R835
-else_stmt ::= else identifier? eol {pin=1}
+else_stmt ::= label? else identifier? eol { pin = 2 }
 // R836
-end_if_stmt ::= ((end if)|endif) identifier? {pin=1}
+end_if_stmt ::= label? ((end if)|endif) identifier? { pin = 2 }
 // R837
 if_stmt ::= if '(' expr ')' action_stmt {pin=5}
 // R838
@@ -409,9 +407,9 @@ case_construct ::= select_case_stmt (case_stmt block)* end_select_stmt { pin = 1
 // R839
 select_case_stmt ::= (identifier ':')? select case '(' expr ')' eol { pin = 3 }
 // R840
-case_stmt ::= case case_selector (identifier)? eol { pin = 1 }
+case_stmt ::= label? case case_selector (identifier)? eol { pin = 2 }
 // R841
-end_select_stmt ::= ((end select) | endselect ) (identifier)? { pin = 1 }
+end_select_stmt ::= label? ((end select) | endselect ) (identifier)? { pin = 2 }
 // R842 is trivial
 // R843
 case_selector ::= ('(' case_value_range_list ')') | default
@@ -461,7 +459,7 @@ sync_memory_stmt ::= ((sync memory) | syncmemory) ('(' (sync_stat_list)? ')')? {
 lock_stmt ::= lock '(' variable (',' lock_stat_list)? ')' { pin = 1 }
 // R864
 private lock_stat_list ::= lock_stat (',' lock_stat)*
-lock_stat ::=  sync_stat | (identifier? identifier '=' variable)
+lock_stat ::=  (identifier identifier '=' variable) | sync_stat
 // lock_stat ::= (acquired lock '=' variable) | sync_stat
 // R865
 unlock_stmt ::= unlock '(' variable (',' sync_stat_list)? ')' { pin = 1 }
@@ -575,15 +573,15 @@ main_program ::= program_stmt? specification_part block
             /*internal_subprogram_part*/ end_program_stmt {pin=1}
 
 // R1102 +
-program_stmt ::= program identifier eol {pin=1}
+program_stmt ::= label? program identifier eol { pin = 2 }
 
 // R1103 +
-end_program_stmt ::=  (endprogram identifier? | end (program identifier?)?) eol? {pin = 1}
+end_program_stmt ::=  label? (endprogram identifier? | end (program identifier?)?) eol? { pin = 2 }
 
 // R1109
 use_stmt ::= use (use_stmt_rename | use_stmt_only) {pin = 1}
 private use_stmt_rename ::= ((',' module_nature)? '::')? identifier (',' rename_list)
-private use_stmt_only ::= ((',' module_nature)? '::')? identifier ',' only ':' (only_list) { pin = 4}
+private use_stmt_only ::= ((',' module_nature)? '::')? identifier ',' only ':' (only_list) { pin = 4 }
 // R1110
 private module_nature ::= intrinsic | non_intrinsic
 // R1111

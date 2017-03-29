@@ -5,10 +5,13 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(identifier)('p')
       PsiElement(eol)('\n')
-    PsiWhiteSpace('    ')
+    PsiWhiteSpace('  ')
     SPECIFICATION_PART
       <empty list>
     BLOCK
+      LABEL
+        PsiElement(integer_literal)('1')
+      PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
         DESIGNATOR
           PsiElement(identifier)('variable')
@@ -36,7 +39,7 @@ FILE
             CONSTANT
               PsiElement(integer_literal)('0')
       PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
+      PsiWhiteSpace('     ')
       ASSIGNMENT_STMT
         DESIGNATOR
           PsiElement(identifier)('variable')
