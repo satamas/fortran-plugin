@@ -1,7 +1,7 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(program)('program')
+      PsiElement(programkwd)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('filework')
       PsiElement(eol)('\n')

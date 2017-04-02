@@ -98,8 +98,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 ".gt." { return GT; }
 ".ge." { return GE; }
 
-".true." { return TRUE_KEYWORD; }
-".false." { return FALSE_KEYWORD; }
+".true." { return TRUE; }
+".false." { return FALSE; }
 
 "all" { return ALL; }
 "allocatable" { return ALLOCATABLE; }/*
@@ -110,12 +110,12 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "asynchronous" { return ASYNCHRONOUS; }
 "backspace" { return BACKSPACE; }
 "bind" { return BIND; }
-"block" { return BLOCK; }
-/*"blockdata" { return FortranTokens.BLOCKDATA_KEYWORD; }
-"call" { return FortranTokens.CALL_KEYWORD; }*/
+"block" { return BLOCKKWD; }
+"blockdata" { return BLOCKDATA; }
+/*"call" { return FortranTokens.CALL_KEYWORD; }*/
 "case" { return CASE; }
 "character" { return CHARACTER; }
-"class" { return FCLASS; }
+"class" { return CLASSKWD; }
 "close" { return CLOSE; }
 "codimension" { return CODIMENSION; } /*
 "common" { return FortranTokens.COMMON_KEYWORD; }*/
@@ -125,8 +125,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "contiguous" { return CONTIGUOUS; }
 "continue" { return CONTINUE; }
 "critical" { return CRITICAL; }
-"cycle" { return CYCLE; }/*
-"data" { return FortranTokens.DATA_KEYWORD; }
+"cycle" { return CYCLE; }
+"data" { return DATA; }/*
 "deallocate" { return FortranTokens.DEALLOCATE_KEYWORD; }*/
 "default" { return DEFAULT; }
 "dimension" { return DIMENSION; }
@@ -142,8 +142,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "exit" { return EXIT; }
 "external" { return EXTERNAL; }
 "flush" { return FLUSH; }
-/*
-"function" { return FortranTokens.FUNCTION_KEYWORD; }*/
+"function" { return FUNCTION; }
 "forall" { return FORALL; }
 "formatted" { return FORMATTED; }
 "go" { return GO; }
@@ -163,10 +162,10 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "kind" { return KIND; }
 /*"len" { return FortranTokens.LEN_KEYWORD; }*/
 "lock" { return LOCK; }
-"logical" { return LOGICAL; }/*
-"module" { return FortranTokens.MODULE_KEYWORD; }*/
+"logical" { return LOGICAL; }
+"module" { return MODULEKWD; }
 "memory" { return MEMORY; }
-"name" { return FNAME; }/*
+"name" { return NAMEKWD; }/*
 "namelist" { return FortranTokens.NAMELIST_KEYWORD; }*/
 "none" { return NONE; }
 "non_intrinsic" { return NON_INTRINSIC; } /*
@@ -181,7 +180,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "pointer" { return POINTER; }
 "print" { return PRINT; }
 "private" { return PRIVATE; }
-"program" { return PROGRAM; }
+"program" { return PROGRAMKWD; }
 "protected" { return PROTECTED; }
 "public" { return PUBLIC; }
 "read" { return READ; }
@@ -195,8 +194,9 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "sync" { return SYNC; }
 "syncall" { return SYNCALL; }
 "syncimages" { return SYNCIMAGES; }
-"syncmemory" { return SYNCMEMORY; }/*
-"subroutine" { return FortranTokens.SUBROUTINE_KEYWORD; }*/
+"syncmemory" { return SYNCMEMORY; }
+"subroutine" { return SUBROUTINE; }
+"submodule" { return SUBMODULE; }
 "target" { return TARGET; }
 "then" { return THEN; }
 "to" { return TO; }
@@ -222,17 +222,17 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endfile" { return ENDFILE; }
 "endif" { return ENDIF; }
 "endprogram" { return ENDPROGRAM; }
-/*
-"endfunction" { return FortranTokens.ENDFUNCTION_KEYWORD; }*/
-"endforall" { return ENDFORALL; }/*
-"endsubroutine" { return FortranTokens.ENDSUBROUTINE_KEYWORD; }
+
+"endfunction" { return ENDFUNCTION; }
+"endforall" { return ENDFORALL; }
+"endsubroutine" { return ENDSUBROUTINE; }
+"endsubmodule" { return SUBMODULE; }/*
 "endtype" { return FortranTokens.ENDTYPE_KEYWORD; }*/
 "endwhere" { return ENDWHERE; }
 "endselect" { return ENDSELECT; }
-"enddo" { return ENDDO; }/*
-"endmodule" { return FortranTokens.ENDMODULE_KEYWORD; }
-"endblockdata"    { return FortranTokens.ENDBLOCKDATA_KEYWORD; }
-"endblock"    { return FortranTokens.ENDBLOCK_KEYWORD; }
+"enddo" { return ENDDO; }
+"endmodule" { return ENDMODULE; }
+"endblockdata"    { return ENDBLOCKDATA; }/*
 "endinterface"    { return FortranTokens.ENDINTERFACE_KEYWORD; }*/
 
 {IDENTIFIER} { return IDENTIFIER; }

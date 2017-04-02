@@ -1,7 +1,7 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(program)('program')
+      PsiElement(programkwd)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
@@ -17,7 +17,7 @@ FILE
           PsiElement(identifier)('b1')
           PsiElement(:)(':')
           PsiWhiteSpace(' ')
-          PsiElement(BLOCK)('block')
+          PsiElement(blockkwd)('block')
           PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
         SPECIFICATION_PART
@@ -67,7 +67,7 @@ FILE
           PsiElement(identifier)('b2')
           PsiElement(:)(':')
           PsiWhiteSpace(' ')
-          PsiElement(BLOCK)('block')
+          PsiElement(blockkwd)('block')
           PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
         SPECIFICATION_PART
@@ -122,7 +122,7 @@ FILE
         END_BLOCK_STMT
           PsiElement(end)('end')
           PsiWhiteSpace(' ')
-          PsiElement(BLOCK)('block')
+          PsiElement(blockkwd)('block')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(endprogram)('endprogram')

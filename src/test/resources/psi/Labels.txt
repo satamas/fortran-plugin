@@ -4,7 +4,7 @@ FILE
       LABEL
         PsiElement(integer_literal)('1')
       PsiWhiteSpace(' ')
-      PsiElement(program)('program')
+      PsiElement(programkwd)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
@@ -15,4 +15,4 @@ FILE
     END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')
-      PsiElement(program)('program')
+      PsiElement(programkwd)('program')
