@@ -112,7 +112,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "bind" { return BIND; }
 "block" { return BLOCKKWD; }
 "blockdata" { return BLOCKDATA; }
-/*"call" { return FortranTokens.CALL_KEYWORD; }*/
+"call" { return CALL; }
 "case" { return CASE; }
 "character" { return CHARACTER; }
 "class" { return CLASSKWD; }
@@ -120,8 +120,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "codimension" { return CODIMENSION; } /*
 "common" { return FortranTokens.COMMON_KEYWORD; }*/
 "complex" { return COMPLEX; }
-"concurrent" { return CONCURRENT; } /*
-"contains" { return FortranTokens.CONTAINS_KEYWORD; }*/
+"concurrent" { return CONCURRENT; }
+"contains" { return CONTAINS; }
 "contiguous" { return CONTIGUOUS; }
 "continue" { return CONTINUE; }
 "critical" { return CRITICAL; }
@@ -133,10 +133,11 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "do" { return DO; }
 "double" { return DOUBLE; }
 "precision" { return PRECISION; }
+"elemental" { return ELEMENTAL; }
 "else" { return ELSE; }
 "elseif" { return ELSEIF; }
-"elsewhere" { return ELSEWHERE; }/*
-"entry" { return FortranTokens.ENTRY_KEYWORD; }*/
+"elsewhere" { return ELSEWHERE; }
+"entry" { return ENTRY; }
 "error" { return ERROR; }/*
 "equivalence" { return FortranTokens.EQUIVALENCE_KEYWORD; }*/
 "exit" { return EXIT; }
@@ -151,11 +152,12 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "images" { return IMAGES; }
 "implicit" { return IMPLICIT; }
 "import" { return IMPORT; }
+"impure" { return IMPURE; }
 "in" { return IN; }
 "inout" { return INOUT; }
 "integer" { return INTEGER; }
-"intent" { return INTENT; }/*
-"interface" { return FortranTokens.INTERFACE_KEYWORD; }*/
+"intent" { return INTENT; }
+"interface" { return INTERFACE; }
 "intrinsic" { return INTRINSIC; }
 "inquire" { return INQUIRE; }
 "iolength" { return IOLENGTH; }
@@ -180,14 +182,16 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "pointer" { return POINTER; }
 "print" { return PRINT; }
 "private" { return PRIVATE; }
+"procedure" { return PROCEDURE; }
 "program" { return PROGRAMKWD; }
 "protected" { return PROTECTED; }
 "public" { return PUBLIC; }
+"pure" { return PURE; }
 "read" { return READ; }
-"real" { return REAL; }/*
-"recursive" { return FortranTokens.RECURSIVE_KEYWORD; }
-"result" { return FortranTokens.RESULT_KEYWORD; }
-"return" { return FortranTokens.RETURN_KEYWORD; }*/
+"real" { return REAL; }
+"recursive" { return RECURSIVE; }
+"result" { return RESULT; }
+"return" { return RETURNKWD; }
 "save" { return SAVE; }
 "select" { return SELECT; }
 "stop" { return STOP; }
@@ -210,8 +214,6 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "where" { return WHERE; }
 "while" { return WHILE; }/*
 "format" { return FortranTokens.FORMAT_KEYWORD; }*/
-/*
-"inquire" { return FortranTokens.INQUIRE_KEYWORD; }*/
 "rewind" { return REWIND; }
 "write" { return WRITE; }
 
@@ -221,8 +223,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endcritical" { return ENDCRITICAL; }
 "endfile" { return ENDFILE; }
 "endif" { return ENDIF; }
+"endprocedure" { return ENDPROCEDURE; }
 "endprogram" { return ENDPROGRAM; }
-
 "endfunction" { return ENDFUNCTION; }
 "endforall" { return ENDFORALL; }
 "endsubroutine" { return ENDSUBROUTINE; }
@@ -232,8 +234,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endselect" { return ENDSELECT; }
 "enddo" { return ENDDO; }
 "endmodule" { return ENDMODULE; }
-"endblockdata"    { return ENDBLOCKDATA; }/*
-"endinterface"    { return FortranTokens.ENDINTERFACE_KEYWORD; }*/
+"endblockdata"    { return ENDBLOCKDATA; }
+"endinterface"    { return ENDINTERFACE; }
 
 {IDENTIFIER} { return IDENTIFIER; }
 {OPERATOR} { return DEFOPERATOR; }

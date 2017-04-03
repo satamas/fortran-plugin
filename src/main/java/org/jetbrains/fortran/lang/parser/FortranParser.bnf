@@ -70,6 +70,7 @@ private standard_command_parameters_spec ::= !')' ((identifier | end | namekwd) 
   recoverWhile = parameter_spec_recover
 }
 private parameter_spec_recover ::= !(')' | ',')
+private name_list ::= identifier (',' identifier)*
 // Clause 1 (ready)
 // R101 is implemented for every list separately
 // R102 and R103 are trivial
@@ -91,17 +92,17 @@ specification_part ::= use_stmt* import_stmt* implicit_part? declaration_constru
 // R205
 implicit_part ::= implicit_part_stmt* implicit_stmt
 // R206
-implicit_part_stmt ::= implicit_stmt | parameter_stmt /*| format_stmt | entry_stmt*/
+implicit_part_stmt ::= implicit_stmt | parameter_stmt /*| format_stmt*/ | entry_stmt
 // R207
-declaration_construct ::= /*derived-type-def | entry-stmt | enum-def | format-stmt
-                        | interface-block | */parameter_stmt/* | procedure-declaration-stmt
-                        | other-specification-stmt*/ | type_declaration_stmt// | stmt-function-stmt
+declaration_construct ::= /*derived-type-def |*/ entry_stmt/* | enum-def | format-stmt
+                        |*/ interface_block | parameter_stmt | procedure_declaration_stmt
+                        | other_specification_stmt | type_declaration_stmt | stmt_function_stmt
 // R208 is in R801
 // R209
-private execution_part_construct ::= !end_block_keys executable_construct {
+private execution_part_construct ::= !end_block_keys (executable_construct | entry_stmt) {
   pin=1
   recoverWhile=block_recover
-}// | format-stmt | entry-stmt | data-stmt
+}// | format-stmt  | data-stmt
 private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
 private end_block_keys ::= end | endprogram | endif | enddo | else | elseif | endblock | endcritical
                     | endassociate | case | endselect
@@ -114,7 +115,7 @@ internal_subprogram ::= !end_unit_keys (function_subprogram | subroutine_subprog
 }
 private internal_subprogram_recover ::= !(eol | end | endfunction | endsubprogram)
 // R212
-/*other_specification_stmt ::=  access_stmt
+other_specification_stmt ::= /* access_stmt
                            |  allocatable-stmt
                            |  asynchronous-stmt
                            |  bind-stmt
@@ -123,9 +124,9 @@ private internal_subprogram_recover ::= !(eol | end | endfunction | endsubprogra
                            |  data-stmt
                            |  dimension-stmt
                            |  equivalence-stmt
-                           |  external-stmt
-                           |  intent-stmt
-                           |  intrinsic-stmt
+                           |*/  external_stmt
+                         /*  |  intent-stmt*/
+                           |  intrinsic_stmt/*
                            |  namelist-stmt
                            |  optional-stmt
                            |  pointer-stmt
@@ -141,8 +142,8 @@ private executable_construct ::= action_stmt   | associate_construct | block_con
 // R214
 private action_stmt ::= /*allocate-stmt
                 |*/ assignment_stmt
-                | backspace_stmt/*
-                | call-stmt*/
+                | backspace_stmt
+                | call_stmt
                 | close_stmt
                 | continue_stmt
                 | cycle_stmt/*
@@ -160,8 +161,8 @@ private action_stmt ::= /*allocate-stmt
                 | open_stmt
                 | pointer_assignment_stmt
                 | print_stmt
-                | read_stmt/*
-                | return-stmt*/
+                | read_stmt
+                | return_stmt
                 | rewind_stmt
                 | stop_stmt
                 | sync_all_stmt
@@ -657,6 +658,20 @@ block_data_stmt ::= label? (blockdata | (blockkwd data)) identifier? eol { pin =
 end_block_data_stmt ::= label? (endblockdata | (end ((blockkwd data) | blockdata)) | (endblock data)) identifier? eol? { pin = 2 }
 
 // Clause 12
+// R1201
+interface_block ::= interface_stmt interface_specification* end_interface_stmt
+// R1202
+private interface_specification ::= interface_body | procedure_stmt
+// R1203
+interface_stmt ::= (abstract interface) | (interface (generic_spec)?) eol { pin = 1 }
+// R1204
+end_interface_stmt ::= ((end interface) | endinterface) (generic_spec)?
+// R1205
+interface_body ::= interface_function_body | interface_subroutine_body
+private interface_function_body ::= function_stmt specification_part? end_function_stmt { pin = 1 }
+private interface_subroutine_body ::= subroutine_stmt specification_part? end_subroutine_stmt { pin = 1 }
+// R1206
+procedure_stmt ::= (modulekwd)? procedure ('::')? name_list { pin = 2 }
 // R1207
 generic_spec ::= identifier | (operator '(' defoperator ')')
               | assignment '(' '=' ')' | defined_io_generic_spec
@@ -665,8 +680,73 @@ defined_io_generic_spec ::= read '(' (formatted | unformatted) ')'
                            | write '(' (formatted | unformatted) ')'
 // R1209
 import_stmt ::= import ('::'? name_list) { pin =1 }
-private name_list ::= identifier (',' identifier)*
-
+// R1210
+external_stmt ::= external ('::')? name_list { pin = 1 }
+// R1211
+procedure_declaration_stmt ::= procedure '(' proc_interface? ')' ((',' proc_attr_spec)* '::')? proc_decl_list { pin = 1 }
+// R1212
+proc_interface ::= identifier | declaration_type_spec
+// R1213
+proc_attr_spec ::= access_spec | language_binding_spec | (intent '(' intent_spec ')')
+                  | optional | pointer | save
+// R1214
+private proc_decl_list ::= proc_decl (',' proc_decl)*
+proc_decl ::= identifier ('=>' proc_pointer_init)?
+// R1215 is trivial
+// R1216
+proc_pointer_init ::= function_reference | identifier
+// R1217 is trivial
+// R1218
+intrinsic_stmt ::= intrinsic ('::')? name_list
+// R1219
+function_reference ::= procedure_designator '(' actual_arg_spec_list ')' { pin = 2 }
+// R1220
+call_stmt ::= call procedure_designator ('(' actual_arg_spec_list? ')')?
+// R1221
+procedure_designator ::= (data_ref '%' identifier) | (variable '%' identifier) | identifier
+// R1222
+private actual_arg_spec_list ::= actual_arg_spec (',' actual_arg_spec)*
+actual_arg_spec ::= (identifier '=')? actual_arg
+// 1223
+actual_arg ::= expr | alt_return_spec // expr matches variable, procedure-name and proc-component-ref
+// 1224 deprecated
+alt_return_spec ::= '*' label
+// R1225
+prefix ::= prefix_spec+
+// R1226
+prefix_spec ::= declaration_type_spec | elemental | impure | modulekwd | pure | recursive
+// R1227
+function_subprogram ::= function_stmt specification_part block internal_subprogram_part? end_function_stmt
+// R1228
+function_stmt ::= label? prefix? function identifier '(' name_list ')' suffix? eol { pin = 3 }
+// R1229 and R1230 are trivial
+// R1231
+suffix ::= (language_binding_spec (result '(' identifier ')')?) | (result '(' identifier ')' (language_binding_spec)?)
+// R1232
+end_function_stmt ::= label? ((end (function identifier?)?) | (endfunction identifier?)) eol? { pin = 2 }
+// R1233
+subroutine_subprogram ::= subroutine_stmt specification_part block internal_subprogram_part end_subroutine_stmt { pin = 1 }
+// R1234
+subroutine_stmt ::= label? prefix? subroutine identifier ('(' dummy_arg_list? ')' language_binding_spec? )? eol { pin = 3 }
+// R1235
+private dummy_arg_list ::= dummy_arg (',' dummy_arg)*
+dummy_arg ::= '*' | identifier
+// R1236
+end_subroutine_stmt ::= label? ((end (subroutine identifier?)?) | (endsubroutine identifier?)) eol? { pin = 2 }
+// R1237
+separate_module_subprogram ::= mp_subprogram_stmt specification_part block internal_subprogram_part? end_mp_subprogram_stmt { pin = 1 }
+// R1238
+mp_subprogram_stmt ::= label? modulekwd procedure identifier eol { pin = 3 }
+// R1239
+end_mp_subprogram_stmt ::= label? ((end (procedure identifier?)?) | (endprocedure identifier?)) eol { pin = 2}
+// R1240
+entry_stmt ::= entry identifier ('(' dummy_arg_list? ')' suffix? )? { pin = 1 }
+// R1241
+return_stmt ::= returnkwd (expr)? { pin = 1}
+// R1242
+contains_stmt ::= label? contains eol { pin = 2 }
+// R1243
+stmt_function_stmt ::= identifier '(' name_list ')' '=' expr { pin = 5 }
 
 // That's a cap. Must be removed in the final version
 cap ::= line_comment | function | subroutine | endfunction | endsubroutine
