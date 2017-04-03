@@ -1,244 +1,252 @@
 FILE
-  FortranProgram(MODULE)
-    FortranElementImpl(MODULE_STATEMENT)
-      PsiElement(module)('module')
+  MODULE
+    MODULE_STMT
+      PsiElement(modulekwd)('module')
       PsiWhiteSpace(' ')
-      PsiElement(IDENTIFIER)('circle')
-    PsiWhiteSpace('\n   ')
-    FortranProgram(MODULE_BODY)
-      FortranElementImpl(TYPE_DECLARATION_STATEMENT)
-        FortranElementImpl(TYPE_REFERENCE)
-          PsiElement(real)('real')
-        FortranElementImpl(ENTITY_DECLARATION)
-          PsiErrorElement:Identifier expected
-            <empty list>
-        PsiElement(COMMA)(',')
-        PsiWhiteSpace(' ')
-        FortranElementImpl(ENTITY_DECLARATION)
-          PsiErrorElement:Identifier expected
-            <empty list>
-        PsiErrorElement:Unexpected tokens (use ';' to separate expressions on the same line)
-          PsiElement(parameter)('parameter')
-        PsiWhiteSpace(' ')
-        PsiErrorElement:Unexpected tokens (use ';' to separate expressions on the same line)
-          PsiElement(COLONCOLON)('::')
-        PsiWhiteSpace(' ')
-        PsiErrorElement:Unexpected tokens (use ';' to separate expressions on the same line)
-          PsiElement(IDENTIFIER)('pi')
-        PsiWhiteSpace(' ')
-        PsiErrorElement:Unexpected tokens (use ';' to separate expressions on the same line)
-          PsiElement(EQ)('=')
-        PsiWhiteSpace(' ')
-        PsiErrorElement:Unexpected tokens (use ';' to separate expressions on the same line)
-          PsiElement(FLOATING_POINT_LITERAL)('3.1415927')
-      PsiWhiteSpace('\n   ')
-      FortranElementImpl(TYPE_DECLARATION_STATEMENT)
-        FortranElementImpl(TYPE_REFERENCE)
-          PsiElement(real)('real')
-        PsiWhiteSpace(' ')
-        FortranElementImpl(ENTITY_DECLARATION)
-          PsiErrorElement:Identifier expected
-            <empty list>
-        PsiErrorElement:Unexpected tokens (use ';' to separate expressions on the same line)
-          PsiElement(COLONCOLON)('::')
-        PsiWhiteSpace(' ')
-        PsiErrorElement:Unexpected tokens (use ';' to separate expressions on the same line)
-          PsiElement(IDENTIFIER)('radius')
-      PsiWhiteSpace('\n   ')
-      FortranProgram(SUBROUTINE)
-        FortranElementImpl(SUBROUTINE_STATEMENT)
+      PsiElement(identifier)('circle')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('   ')
+    SPECIFICATION_PART
+      DECLARATION_CONSTRUCT
+        TYPE_DECLARATION_STMT
+          INTRINSIC_TYPE_SPEC
+            PsiElement(real)('real')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          ATTR_SPEC
+            PsiElement(parameter)('parameter')
+          PsiWhiteSpace(' ')
+          PsiElement(::)('::')
+          PsiWhiteSpace(' ')
+          ENTITY_DECL
+            PsiElement(identifier)('pi')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(floating_point_literal)('3.1415927')
+          PsiElement(eol)('\n')
+      PsiWhiteSpace('   ')
+      DECLARATION_CONSTRUCT
+        TYPE_DECLARATION_STMT
+          INTRINSIC_TYPE_SPEC
+            PsiElement(real)('real')
+          PsiWhiteSpace(' ')
+          PsiElement(::)('::')
+          PsiWhiteSpace(' ')
+          ENTITY_DECL
+            PsiElement(identifier)('radius')
+          PsiElement(eol)('\n')
+    MODULE_SUBPROGRAM_PART
+      CONTAINS_STMT
+        PsiElement(contains)('contains')
+        PsiElement(eol)('\n')
+      PsiWhiteSpace('   ')
+      SUBROUTINE_SUBPROGRAM
+        SUBROUTINE_STMT
           PsiElement(subroutine)('subroutine')
           PsiWhiteSpace(' ')
-          PsiElement(IDENTIFIER)('input')
-          PsiElement(LPAR)('(')
-          FortranElementImpl(PARAMS)
-            PsiElement(IDENTIFIER)('x')
-            PsiElement(COMMA)(',')
+          PsiElement(identifier)('input')
+          PsiElement(()('(')
+          DUMMY_ARG
+            PsiElement(identifier)('x')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DUMMY_ARG
+            PsiElement(identifier)('y')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DUMMY_ARG
+            PsiElement(identifier)('z')
+          PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    \t')
+        SPECIFICATION_PART
+          <empty list>
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('x')
             PsiWhiteSpace(' ')
-            PsiElement(IDENTIFIER)('y')
-            PsiElement(COMMA)(',')
+            PsiElement(=)('=')
             PsiWhiteSpace(' ')
-            PsiElement(IDENTIFIER)('z')
-          PsiElement(RPAR)(')')
-        PsiWhiteSpace('\n    \t')
-        FortranElementImpl(CODE_BLOCK)
-          FortranBinaryExpression(BINARY_EXPRESSION)
-            FortranReferenceExpression(REFERENCE_EXPRESSION)
-              PsiElement(IDENTIFIER)('x')
-            PsiWhiteSpace(' ')
-            FortranOperationReference(OPERATION_REFERENCE)
-              PsiElement(EQ)('=')
-            PsiWhiteSpace(' ')
-            FortranBinaryExpression(BINARY_EXPRESSION)
-              FortranReferenceExpression(REFERENCE_EXPRESSION)
-                PsiElement(IDENTIFIER)('y')
+            ADD_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('y')
               PsiWhiteSpace(' ')
-              FortranOperationReference(OPERATION_REFERENCE)
-                PsiElement(PLUS)('+')
+              PsiElement(+)('+')
               PsiWhiteSpace(' ')
-              FortranReferenceExpression(REFERENCE_EXPRESSION)
-                PsiElement(IDENTIFIER)('z')
-        PsiWhiteSpace('\n   ')
-        FortranElementImpl(END_STATEMENT)
-          PsiElement(end)('end')
-    PsiWhiteSpace('\n')
-    FortranElementImpl(END_STATEMENT)
+              DESIGNATOR
+                PsiElement(identifier)('z')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('   ')
+        END_SUBROUTINE_STMT
+          PsiElement(endsubroutine)('endsubroutine')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('input')
+      PsiElement(eol)('\n')
+    END_MODULE_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')
-      PsiElement(module)('module')
+      PsiElement(modulekwd)('module')
       PsiWhiteSpace(' ')
-      FortranReferenceExpression(REFERENCE_EXPRESSION)
-        PsiElement(IDENTIFIER)('circle')
-  PsiWhiteSpace('\n\n')
-  FortranProgram(FUNCTION)
-    FortranElementImpl(FUNCTION_STATEMENT)
-      FortranElementImpl(TYPE_REFERENCE)
-        PsiElement(real)('real')
+      PsiElement(identifier)('circle')
+  PsiElement(eol)('\n\n')
+  FUNCTION_SUBPROGRAM
+    FUNCTION_STMT
+      PREFIX_SPEC
+        INTRINSIC_TYPE_SPEC
+          PsiElement(real)('real')
       PsiWhiteSpace(' ')
       PsiElement(function)('function')
       PsiWhiteSpace(' ')
-      PsiElement(IDENTIFIER)('average')
-      PsiElement(LPAR)('(')
-      FortranElementImpl(PARAMS)
-        PsiElement(IDENTIFIER)('x')
-        PsiElement(COMMA)(',')
-        PsiElement(IDENTIFIER)('y')
-        PsiElement(COMMA)(',')
-        PsiElement(IDENTIFIER)('z')
-      PsiElement(RPAR)(')')
-    PsiWhiteSpace('\n    ')
-    FortranElementImpl(CODE_BLOCK)
-      FortranBinaryExpression(BINARY_EXPRESSION)
-        FortranReferenceExpression(REFERENCE_EXPRESSION)
-          PsiElement(IDENTIFIER)('sum')
+      PsiElement(identifier)('average')
+      PsiElement(()('(')
+      PsiElement(identifier)('x')
+      PsiElement(,)(',')
+      PsiElement(identifier)('y')
+      PsiElement(,)(',')
+      PsiElement(identifier)('z')
+      PsiElement())(')')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('    ')
+    SPECIFICATION_PART
+      <empty list>
+    BLOCK
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('sum')
         PsiWhiteSpace(' ')
-        FortranOperationReference(OPERATION_REFERENCE)
-          PsiElement(EQ)('=')
+        PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        FortranBinaryExpression(BINARY_EXPRESSION)
-          FortranBinaryExpression(BINARY_EXPRESSION)
-            FortranReferenceExpression(REFERENCE_EXPRESSION)
-              PsiElement(IDENTIFIER)('x')
+        ADD_EXPR
+          ADD_EXPR
+            DESIGNATOR
+              PsiElement(identifier)('x')
             PsiWhiteSpace(' ')
-            FortranOperationReference(OPERATION_REFERENCE)
-              PsiElement(PLUS)('+')
+            PsiElement(+)('+')
             PsiWhiteSpace(' ')
-            FortranReferenceExpression(REFERENCE_EXPRESSION)
-              PsiElement(IDENTIFIER)('y')
+            DESIGNATOR
+              PsiElement(identifier)('y')
           PsiWhiteSpace(' ')
-          FortranOperationReference(OPERATION_REFERENCE)
-            PsiElement(PLUS)('+')
+          PsiElement(+)('+')
           PsiWhiteSpace(' ')
-          FortranReferenceExpression(REFERENCE_EXPRESSION)
-            PsiElement(IDENTIFIER)('z')
-      PsiWhiteSpace('\n    ')
-      FortranBinaryExpression(BINARY_EXPRESSION)
-        FortranReferenceExpression(REFERENCE_EXPRESSION)
-          PsiElement(IDENTIFIER)('average')
+          DESIGNATOR
+            PsiElement(identifier)('z')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('average')
         PsiWhiteSpace(' ')
-        FortranOperationReference(OPERATION_REFERENCE)
-          PsiElement(EQ)('=')
+        PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        FortranBinaryExpression(BINARY_EXPRESSION)
-          FortranReferenceExpression(REFERENCE_EXPRESSION)
-            PsiElement(IDENTIFIER)('sum')
+        MULT_EXPR
+          DESIGNATOR
+            PsiElement(identifier)('sum')
           PsiWhiteSpace(' ')
-          FortranOperationReference(OPERATION_REFERENCE)
-            PsiElement(DIV)('/')
-          FortranElementImpl(FLOATING_POINT_CONSTANT)
-            PsiElement(FLOATING_POINT_LITERAL)('3.0')
-      PsiWhiteSpace('\n    ')
-      FortranElementImpl(ENTRY_STATEMENT)
+          PsiElement(/)('/')
+          CONSTANT
+            PsiElement(floating_point_literal)('3.0')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      ENTRY_STMT
         PsiElement(entry)('entry')
         PsiWhiteSpace(' ')
-        PsiElement(IDENTIFIER)('average2')
-        PsiElement(LPAR)('(')
-        FortranElementImpl(PARAMS)
-          PsiElement(IDENTIFIER)('x')
-          PsiElement(COMMA)(',')
-          PsiWhiteSpace(' ')
-          PsiElement(IDENTIFIER)('y')
-        PsiElement(RPAR)(')')
-      PsiWhiteSpace('\n    ')
-      FortranElementImpl(STATEMENT)
-        PsiElement(return)('return')
-    PsiWhiteSpace('\n')
-    FortranElementImpl(END_STATEMENT)
+        PsiElement(identifier)('average2')
+        PsiElement(()('(')
+        DUMMY_ARG
+          PsiElement(identifier)('x')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        DUMMY_ARG
+          PsiElement(identifier)('y')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      RETURN_STMT
+        PsiElement(returnkwd)('return')
+      PsiElement(eol)('\n')
+    END_FUNCTION_STMT
       PsiElement(end)('end')
-  PsiWhiteSpace('\n\n')
-  FortranProgram(FUNCTION)
-    FortranElementImpl(FUNCTION_STATEMENT)
-      FortranElementImpl(TYPE_REFERENCE)
-        PsiElement(integer)('integer')
+  PsiElement(eol)('\n\n')
+  FUNCTION_SUBPROGRAM
+    FUNCTION_STMT
+      PREFIX_SPEC
+        INTRINSIC_TYPE_SPEC
+          PsiElement(integer)('integer')
       PsiWhiteSpace(' ')
       PsiElement(function)('function')
       PsiWhiteSpace(' ')
-      PsiElement(IDENTIFIER)('zero')
-      PsiElement(LPAR)('(')
-      FortranElementImpl(PARAMS)
-        <empty list>
-      PsiElement(RPAR)(')')
-    PsiWhiteSpace('\n    ')
-    FortranElementImpl(CODE_BLOCK)
-      FortranBinaryExpression(BINARY_EXPRESSION)
-        FortranReferenceExpression(REFERENCE_EXPRESSION)
-          PsiElement(IDENTIFIER)('zero')
+      PsiElement(identifier)('zero')
+      PsiElement(()('(')
+      PsiElement())(')')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('    ')
+    SPECIFICATION_PART
+      <empty list>
+    BLOCK
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('zero')
         PsiWhiteSpace(' ')
-        FortranOperationReference(OPERATION_REFERENCE)
-          PsiElement(EQ)('=')
+        PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        FortranElementImpl(INTEGER_CONSTANT)
-          PsiElement(INTEGER_LITERAL)('0')
-    PsiWhiteSpace('\n')
-    FortranElementImpl(END_STATEMENT)
-      PsiElement(end)('end')
-  PsiWhiteSpace('\n\n')
-  FortranProgram(SUBROUTINE)
-    FortranElementImpl(SUBROUTINE_STATEMENT)
+        CONSTANT
+          PsiElement(integer_literal)('0')
+      PsiElement(eol)('\n')
+    END_FUNCTION_STMT
+      PsiElement(endfunction)('endfunction')
+  PsiElement(eol)('\n\n')
+  SUBROUTINE_SUBPROGRAM
+    SUBROUTINE_STMT
       PsiElement(subroutine)('subroutine')
       PsiWhiteSpace(' ')
-      PsiElement(IDENTIFIER)('input')
-      PsiElement(LPAR)('(')
-      FortranElementImpl(PARAMS)
-        PsiElement(IDENTIFIER)('x')
-        PsiElement(COMMA)(',')
+      PsiElement(identifier)('input')
+      PsiElement(()('(')
+      DUMMY_ARG
+        PsiElement(identifier)('x')
+      PsiElement(,)(',')
+      PsiWhiteSpace(' ')
+      DUMMY_ARG
+        PsiElement(identifier)('y')
+      PsiElement(,)(',')
+      PsiWhiteSpace(' ')
+      DUMMY_ARG
+        PsiElement(identifier)('z')
+      PsiElement())(')')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace(' \t')
+    SPECIFICATION_PART
+      <empty list>
+    BLOCK
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('x')
         PsiWhiteSpace(' ')
-        PsiElement(IDENTIFIER)('y')
-        PsiElement(COMMA)(',')
+        PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        PsiElement(IDENTIFIER)('z')
-      PsiElement(RPAR)(')')
-    PsiWhiteSpace('\n \t')
-    FortranElementImpl(CODE_BLOCK)
-      FortranBinaryExpression(BINARY_EXPRESSION)
-        FortranReferenceExpression(REFERENCE_EXPRESSION)
-          PsiElement(IDENTIFIER)('x')
-        PsiWhiteSpace(' ')
-        FortranOperationReference(OPERATION_REFERENCE)
-          PsiElement(EQ)('=')
-        PsiWhiteSpace(' ')
-        FortranBinaryExpression(BINARY_EXPRESSION)
-          FortranReferenceExpression(REFERENCE_EXPRESSION)
-            PsiElement(IDENTIFIER)('y')
+        ADD_EXPR
+          DESIGNATOR
+            PsiElement(identifier)('y')
           PsiWhiteSpace(' ')
-          FortranOperationReference(OPERATION_REFERENCE)
-            PsiElement(PLUS)('+')
+          PsiElement(+)('+')
           PsiWhiteSpace(' ')
-          FortranReferenceExpression(REFERENCE_EXPRESSION)
-            PsiElement(IDENTIFIER)('z')
-    PsiWhiteSpace('\n')
-    FortranElementImpl(END_STATEMENT)
+          DESIGNATOR
+            PsiElement(identifier)('z')
+      PsiElement(eol)('\n')
+    END_SUBROUTINE_STMT
       PsiElement(end)('end')
-  PsiWhiteSpace('\n\n')
-  FortranProgram(BLOCK_DATA)
-    FortranElementImpl(BLOCK_DATA_STATEMENT)
-      PsiElement(block)('block')
+  PsiElement(eol)('\n\n')
+  BLOCK_DATA
+    BLOCK_DATA_STMT
+      PsiElement(blockkwd)('block')
       PsiWhiteSpace(' ')
       PsiElement(data)('data')
       PsiWhiteSpace(' ')
-      PsiElement(IDENTIFIER)('setup')
-    PsiWhiteSpace('\n')
-    FortranElementImpl(CODE_BLOCK)
+      PsiElement(identifier)('setup')
+      PsiElement(eol)('\n')
+    SPECIFICATION_PART
       <empty list>
-    FortranElementImpl(END_STATEMENT)
+    END_BLOCK_DATA_STMT
       PsiElement(end)('end')

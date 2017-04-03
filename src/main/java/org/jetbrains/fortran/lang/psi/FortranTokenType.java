@@ -79,7 +79,6 @@ public class FortranTokenType extends IElementType {
             IMPORT,
             IMPURE,
             IN,
-            INITIALIZATION,
             INOUT,
             INTEGER,
             INTENT,

@@ -77,14 +77,14 @@ private name_list ::= identifier (',' identifier)*
 
 // Clause 2
 // R201
-private program ::= (eol* program_unit)+
+private program ::= (eol | program_unit)*
 // R202
 private program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | main_program) {
   pin = 1
   recoverWhile = program_unit_recover
 }
 private program_unit_recover ::= !(eol | end_unit_keys)
-private end_unit_keys ::= end | endprogram
+private end_unit_keys ::= end | endprogram | endmodule | endfunction | endsubroutine | endsubmodule
 // R203
 private external_subprogram ::= function_subprogram | subroutine_subprogram
 // R204
@@ -104,10 +104,10 @@ private execution_part_construct ::= !end_block_keys (executable_construct | ent
   recoverWhile=block_recover
 }// | format-stmt  | data-stmt
 private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
-private end_block_keys ::= end | endprogram | endif | enddo | else | elseif | endblock | endcritical
-                    | endassociate | case | endselect
+private end_block_keys ::= end | endprogram | endprocedure | endsubroutine | endfunction | endif | enddo | else
+                    | elseif | endblock | endcritical | endassociate | case | endselect
 // R210
-internal_subprogram_part ::= contains_stmt (internal_subprogram)* { pin = 1 }
+internal_subprogram_part ::= contains_stmt (eol | internal_subprogram)* { pin = 1 }
 // R211
 internal_subprogram ::= !end_unit_keys (function_subprogram | subroutine_subprogram) {
   pin = 1
@@ -193,7 +193,7 @@ type_spec ::= intrinsic_type_spec | derived_type_spec
 private declaration_type_spec ::= intrinsic_type_spec | (type '(' (intrinsic_type_spec | derived_type_spec)')')
                                 | (classkwd '(' (derived_type_spec | '*') ')')
 // R404
-intrinsic_type_spec ::= ((integer | real | complex | character | logical) (kind_selector)?) | (double precision)
+intrinsic_type_spec ::= ((integer | real | complex | character | logical) (kind_selector)?) | (double precision) { pin = 1 }
 // R405
 kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
 // R406 - 416 are trivial or implemented in lexer
@@ -215,6 +215,8 @@ attr_spec ::= access_spec | allocatable | asynchronous | (codimension '[' coarra
 private entity_decl_list ::= entity_decl (',' entity_decl)*
 entity_decl ::= identifier ('(' array_spec ')')? ('[' coarray_spec ']')?
                 ('*' char_length)? initialization?
+// R505
+private initialization ::= ('=' expr) | ('=>' designator) | ('=>' function_reference)
 // R507
 private access_spec ::= (public | private)
 // R508
@@ -383,7 +385,7 @@ end_associate_stmt ::= label? ((end associate) | endassociate) (identifier)? { p
 // R807
 block_construct ::= block_stmt (specification_part)? block end_block_stmt { pin = 1 }
 // R808
-block_stmt ::= (identifier ':')? blockkwd eol { pin = 2 }
+block_stmt ::= (identifier ':')? blockkwd eol { pin = 3 }
 // R809
 end_block_stmt ::= label? ((end blockkwd) | endblock) (identifier)? {pin = 2 }
 // R810
@@ -613,15 +615,15 @@ main_program ::= program_stmt? specification_part block
 // R1102 +
 program_stmt ::= label? programkwd identifier eol { pin = 2 }
 // R1103 +
-end_program_stmt ::=  label? (endprogram identifier? | end (programkwd identifier?)?) eol? { pin = 2 }
+end_program_stmt ::=  label? (endprogram identifier? | end (programkwd identifier?)?) { pin = 2 }
 // R1104
-module ::= module_stmt specification_part module_subprogram_part end_module_stmt
+module ::= module_stmt specification_part module_subprogram_part end_module_stmt { pin = 1 }
 // R1105
 module_stmt ::= label? modulekwd identifier eol { pin = 2 }
 // R1106
-end_module_stmt ::= label? (endmodule identifier? | end (modulekwd identifier?)?) eol? { pin = 2 }
+end_module_stmt ::= label? (endmodule identifier? | end (modulekwd identifier?)?) { pin = 2 }
 // R1107
-module_subprogram_part ::= contains_stmt (module_subprogram)*
+module_subprogram_part ::= contains_stmt (eol | module_subprogram)* { pin = 1 }
 // R1108
 module_subprogram ::= !(end | endmodule) (function_subprogram | subroutine_subprogram | separate_module_subprogram) {
   pin = 1
@@ -643,19 +645,20 @@ private only_list ::= only_stmt (',' only_stmt)*
 only_stmt ::= generic_spec | identifier | rename_stmt
 // R1113, R1114, R1115 are trivial
 // R1116
-submodule ::= submodule_stmt specification_part module_subprogram_part? end_submodule_stmt
+submodule ::= submodule_stmt specification_part module_subprogram_part? end_submodule_stmt { pin = 1 }
 // R1117
 submodule_stmt ::= label? submodulekwd '(' parent_identifier ')' identifier eol { pin = 2 }
 // R1118
 parent_identifier ::= identifier (':' identifier)?
 // R1119
-end_submodule_stmt ::= label? (endsubmodule identifier? | end (submodulekwd identifier?)?) eol { pin = 2 }
+end_submodule_stmt ::= label? (endsubmodule identifier? | end (submodulekwd identifier?)?)  { pin = 2 }
 // R1120
-block_data ::= block_data_stmt specification_part end_block_data_stmt
+block_data ::= block_data_stmt specification_part end_block_data_stmt { pin = 1 }
 // R1121
 block_data_stmt ::= label? (blockdata | (blockkwd data)) identifier? eol { pin = 2 }
 // R1122
-end_block_data_stmt ::= label? (endblockdata | (end ((blockkwd data) | blockdata)) | (endblock data)) identifier? eol? { pin = 2 }
+end_block_data_stmt ::= label? ((endblockdata identifier?)| (end (((blockkwd data) | blockdata) identifier?)?)
+                      | (endblock data identifier?))  { pin = 2 }
 
 // Clause 12
 // R1201
@@ -712,33 +715,33 @@ actual_arg ::= expr | alt_return_spec // expr matches variable, procedure-name a
 // 1224 deprecated
 alt_return_spec ::= '*' label
 // R1225
-prefix ::= prefix_spec+
+prefix ::= prefix_spec+ { pin = 1 }
 // R1226
 prefix_spec ::= declaration_type_spec | elemental | impure | modulekwd | pure | recursive
 // R1227
-function_subprogram ::= function_stmt specification_part block internal_subprogram_part? end_function_stmt
+function_subprogram ::= function_stmt specification_part block internal_subprogram_part? end_function_stmt { pin = 1 }
 // R1228
-function_stmt ::= label? prefix? function identifier '(' name_list ')' suffix? eol { pin = 3 }
+function_stmt ::= label? prefix? function identifier '(' name_list? ')' suffix? eol { pin = 3 }
 // R1229 and R1230 are trivial
 // R1231
 suffix ::= (language_binding_spec (result '(' identifier ')')?) | (result '(' identifier ')' (language_binding_spec)?)
 // R1232
-end_function_stmt ::= label? ((end (function identifier?)?) | (endfunction identifier?)) eol? { pin = 2 }
+end_function_stmt ::= label? ((end (function identifier?)?) | (endfunction identifier?)) { pin = 2 }
 // R1233
-subroutine_subprogram ::= subroutine_stmt specification_part block internal_subprogram_part end_subroutine_stmt { pin = 1 }
+subroutine_subprogram ::= subroutine_stmt specification_part block internal_subprogram_part? end_subroutine_stmt { pin = 1 }
 // R1234
 subroutine_stmt ::= label? prefix? subroutine identifier ('(' dummy_arg_list? ')' language_binding_spec? )? eol { pin = 3 }
 // R1235
 private dummy_arg_list ::= dummy_arg (',' dummy_arg)*
 dummy_arg ::= '*' | identifier
 // R1236
-end_subroutine_stmt ::= label? ((end (subroutine identifier?)?) | (endsubroutine identifier?)) eol? { pin = 2 }
+end_subroutine_stmt ::= label? ((end (subroutine identifier?)?) | (endsubroutine identifier?)) { pin = 2 }
 // R1237
 separate_module_subprogram ::= mp_subprogram_stmt specification_part block internal_subprogram_part? end_mp_subprogram_stmt { pin = 1 }
 // R1238
 mp_subprogram_stmt ::= label? modulekwd procedure identifier eol { pin = 3 }
 // R1239
-end_mp_subprogram_stmt ::= label? ((end (procedure identifier?)?) | (endprocedure identifier?)) eol { pin = 2}
+end_mp_subprogram_stmt ::= label? ((end (procedure identifier?)?) | (endprocedure identifier?)) { pin = 2}
 // R1240
 entry_stmt ::= entry identifier ('(' dummy_arg_list? ')' suffix? )? { pin = 1 }
 // R1241
@@ -749,4 +752,4 @@ contains_stmt ::= label? contains eol { pin = 2 }
 stmt_function_stmt ::= identifier '(' name_list ')' '=' expr { pin = 5 }
 
 // That's a cap. Must be removed in the final version
-cap ::= line_comment | function | subroutine | endfunction | endsubroutine
+cap ::= line_comment

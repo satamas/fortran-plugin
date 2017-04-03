@@ -1,9 +1,10 @@
 module circle
    real, parameter :: pi = 3.1415927
    real :: radius
+contains
    subroutine input(x, y, z)
     	x = y + z
-   end
+   endsubroutine input
 end module circle
 
 real function average(x,y,z)
@@ -15,7 +16,7 @@ end
 
 integer function zero()
     zero = 0
-end
+endfunction
 
 subroutine input(x, y, z)
  	x = y + z
