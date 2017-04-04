@@ -1,0 +1,166 @@
+FILE
+  MODULE
+    MODULE_STMT
+      LABEL
+        PsiElement(integer_literal)('1')
+      PsiWhiteSpace(' ')
+      PsiElement(modulekwd)('module')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+      PsiElement(eol)('\n')
+    SPECIFICATION_PART
+      DECLARATION_CONSTRUCT
+        LABEL
+          PsiElement(integer_literal)('2')
+        PsiWhiteSpace('   ')
+        TYPE_DECLARATION_STMT
+          INTRINSIC_TYPE_SPEC
+            PsiElement(real)('real')
+          PsiWhiteSpace(' ')
+          PsiElement(::)('::')
+          PsiWhiteSpace(' ')
+          ENTITY_DECL
+            PsiElement(identifier)('q')
+          PsiElement(eol)('\n')
+    MODULE_SUBPROGRAM_PART
+      CONTAINS_STMT
+        LABEL
+          PsiElement(integer_literal)('3')
+        PsiWhiteSpace(' ')
+        PsiElement(contains)('contains')
+        PsiElement(eol)('\n')
+      SEPARATE_MODULE_SUBPROGRAM
+        MP_SUBPROGRAM_STMT
+          LABEL
+            PsiElement(integer_literal)('4')
+          PsiWhiteSpace('   ')
+          PsiElement(modulekwd)('module')
+          PsiWhiteSpace(' ')
+          PsiElement(procedure)('procedure')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('aa')
+          PsiElement(eol)('\n')
+        SPECIFICATION_PART
+          <empty list>
+        BLOCK
+          LABEL
+            PsiElement(integer_literal)('5')
+          PsiWhiteSpace('     ')
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('x')
+            PsiElement(=)('=')
+            ADD_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('y')
+              PsiElement(+)('+')
+              DESIGNATOR
+                PsiElement(identifier)('z')
+          PsiElement(eol)('\n')
+        INTERNAL_SUBPROGRAM_PART
+          CONTAINS_STMT
+            LABEL
+              PsiElement(integer_literal)('6')
+            PsiWhiteSpace('     ')
+            PsiElement(contains)('contains')
+            PsiElement(eol)('\n')
+          INTERNAL_SUBPROGRAM
+            FUNCTION_SUBPROGRAM
+              FUNCTION_STMT
+                LABEL
+                  PsiElement(integer_literal)('7')
+                PsiWhiteSpace('     ')
+                PREFIX_SPEC
+                  INTRINSIC_TYPE_SPEC
+                    PsiElement(real)('real')
+                PsiWhiteSpace(' ')
+                PsiElement(function)('function')
+                PsiWhiteSpace(' ')
+                PsiElement(identifier)('b')
+                PsiElement(()('(')
+                PsiElement(identifier)('z')
+                PsiElement())(')')
+                PsiElement(eol)('\n')
+              SPECIFICATION_PART
+                <empty list>
+              BLOCK
+                LABEL
+                  PsiElement(integer_literal)('8')
+                PsiWhiteSpace('       ')
+                RETURN_STMT
+                  PsiElement(returnkwd)('return')
+                  PsiWhiteSpace(' ')
+                  MULT_EXPR
+                    DESIGNATOR
+                      PsiElement(identifier)('z')
+                    PsiElement(*)('*')
+                    CONSTANT
+                      PsiElement(integer_literal)('2')
+                PsiElement(eol)('\n')
+              END_FUNCTION_STMT
+                LABEL
+                  PsiElement(integer_literal)('9')
+                PsiWhiteSpace('     ')
+                PsiElement(endfunction)('endfunction')
+          PsiElement(eol)('\n')
+        END_MP_SUBPROGRAM_STMT
+          LABEL
+            PsiElement(integer_literal)('10')
+          PsiWhiteSpace('   ')
+          PsiElement(endprocedure)('endprocedure')
+      PsiElement(eol)('\n')
+    END_MODULE_STMT
+      LABEL
+        PsiElement(integer_literal)('11')
+      PsiWhiteSpace('   ')
+      PsiElement(endmodule)('endmodule')
+  PsiElement(eol)('\n')
+  SUBMODULE
+    SUBMODULE_STMT
+      LABEL
+        PsiElement(integer_literal)('12')
+      PsiWhiteSpace(' ')
+      PsiElement(submodulekwd)('submodule')
+      PsiWhiteSpace(' ')
+      PsiElement(()('(')
+      PARENT_IDENTIFIER
+        PsiElement(identifier)('a')
+      PsiElement())(')')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('suba')
+      PsiElement(eol)('\n')
+    SPECIFICATION_PART
+      <empty list>
+    MODULE_SUBPROGRAM_PART
+      CONTAINS_STMT
+        LABEL
+          PsiElement(integer_literal)('13')
+        PsiWhiteSpace(' ')
+        PsiElement(contains)('contains')
+        PsiElement(eol)('\n')
+      SUBROUTINE_SUBPROGRAM
+        SUBROUTINE_STMT
+          LABEL
+            PsiElement(integer_literal)('14')
+          PsiWhiteSpace(' ')
+          PsiElement(subroutine)('subroutine')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('s')
+          PsiElement(()('(')
+          PsiElement())(')')
+          PsiElement(eol)('\n')
+        SPECIFICATION_PART
+          <empty list>
+        BLOCK
+          <empty list>
+        END_SUBROUTINE_STMT
+          LABEL
+            PsiElement(integer_literal)('15')
+          PsiWhiteSpace(' ')
+          PsiElement(endsubroutine)('endsubroutine')
+      PsiElement(eol)('\n')
+    END_SUBMODULE_STMT
+      LABEL
+        PsiElement(integer_literal)('16')
+      PsiWhiteSpace(' ')
+      PsiElement(endsubmodule)('endsubmodule')

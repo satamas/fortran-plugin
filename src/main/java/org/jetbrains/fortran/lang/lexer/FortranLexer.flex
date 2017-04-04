@@ -200,7 +200,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "syncimages" { return SYNCIMAGES; }
 "syncmemory" { return SYNCMEMORY; }
 "subroutine" { return SUBROUTINE; }
-"submodule" { return SUBMODULE; }
+"submodule" { return SUBMODULEKWD; }
 "target" { return TARGET; }
 "then" { return THEN; }
 "to" { return TO; }
@@ -228,7 +228,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endfunction" { return ENDFUNCTION; }
 "endforall" { return ENDFORALL; }
 "endsubroutine" { return ENDSUBROUTINE; }
-"endsubmodule" { return SUBMODULE; }/*
+"endsubmodule" { return ENDSUBMODULE; }/*
 "endtype" { return FortranTokens.ENDTYPE_KEYWORD; }*/
 "endwhere" { return ENDWHERE; }
 "endselect" { return ENDSELECT; }

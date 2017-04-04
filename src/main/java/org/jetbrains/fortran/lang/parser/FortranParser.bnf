@@ -92,28 +92,28 @@ specification_part ::= use_stmt* import_stmt* implicit_part? declaration_constru
 // R205
 implicit_part ::= implicit_part_stmt* implicit_stmt
 // R206
-implicit_part_stmt ::= implicit_stmt | parameter_stmt /*| format_stmt*/ | entry_stmt
+implicit_part_stmt ::= label? (implicit_stmt | parameter_stmt /*| format_stmt*/ | entry_stmt)
 // R207
-declaration_construct ::= /*derived-type-def |*/ entry_stmt/* | enum-def | format-stmt
+declaration_construct ::= label? (/*derived-type-def |*/ entry_stmt/* | enum-def | format-stmt
                         |*/ interface_block | parameter_stmt | procedure_declaration_stmt
-                        | other_specification_stmt | type_declaration_stmt | stmt_function_stmt
+                        | other_specification_stmt | type_declaration_stmt | stmt_function_stmt)
 // R208 is in R801
 // R209
-private execution_part_construct ::= !end_block_keys (executable_construct | entry_stmt) {
+private execution_part_construct ::= !(label? end_block_keys) (executable_construct | entry_stmt) {
   pin=1
   recoverWhile=block_recover
 }// | format-stmt  | data-stmt
 private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
 private end_block_keys ::= end | endprogram | endprocedure | endsubroutine | endfunction | endif | enddo | else
-                    | elseif | endblock | endcritical | endassociate | case | endselect
+                    | elseif | endblock | endcritical | endassociate | case | endselect | contains
 // R210
 internal_subprogram_part ::= contains_stmt (eol | internal_subprogram)* { pin = 1 }
 // R211
-internal_subprogram ::= !end_unit_keys (function_subprogram | subroutine_subprogram) {
+internal_subprogram ::= !(label? (end_unit_keys | endprocedure)) (function_subprogram | subroutine_subprogram) {
   pin = 1
   recoverWhile=internal_subprogram_recover
 }
-private internal_subprogram_recover ::= !(eol | end | endfunction | endsubprogram)
+private internal_subprogram_recover ::= !(eol | end | endfunction | endsubprogram | endprocedure)
 // R212
 other_specification_stmt ::= /* access_stmt
                            |  allocatable-stmt
@@ -248,7 +248,7 @@ parameter_stmt ::= parameter '(' named_constant_def_list ')' {pin=1}
 private named_constant_def_list ::= named_constant_def (',' named_constant_def)*
 named_constant_def ::= identifier '=' expr
 // R560
-implicit_stmt ::= implicit (implisit_spec_list | none) { pin = 1}
+implicit_stmt ::= label? implicit (implisit_spec_list | none) { pin = 2}
 // R561
 private implisit_spec_list ::= implicit_spec (',' implicit_spec)*
 implicit_spec ::= declaration_type_spec '(' letter_spec_list ')'
@@ -331,7 +331,7 @@ where_construct ::= where_construct_stmt (label? (eol | where_body_construct))* 
 // R743
 where_construct_stmt ::= (identifier ':')? where '(' expr ')' eol { pin = 6 }
 // R744
-private where_body_construct ::= !end_where_keys (assignment_stmt | where_stmt | where_construct) {
+private where_body_construct ::= !(label? end_where_keys) (assignment_stmt | where_stmt | where_construct) {
   pin = 1
   recoverWhile = where_recover
 }
@@ -353,7 +353,7 @@ forall_header ::= '(' (type_spec '::')? forall_triplet_spec+ (expr)? ')' {pin=1}
 // R753 + 754 + 755
 forall_triplet_spec ::= identifier '=' expr ':' expr (':' expr)? {pin=2}
 // R756
-private forall_body_construct ::= !end_forall_keys (forall_assignment_stmt | where_construct | where_stmt
+private forall_body_construct ::= !(label? end_forall_keys) (forall_assignment_stmt | where_construct | where_stmt
                         | forall_construct | forall_stmt) {
   pin = 1
   recoverWhile = forall_recover
@@ -617,7 +617,7 @@ program_stmt ::= label? programkwd identifier eol { pin = 2 }
 // R1103 +
 end_program_stmt ::=  label? (endprogram identifier? | end (programkwd identifier?)?) { pin = 2 }
 // R1104
-module ::= module_stmt specification_part module_subprogram_part end_module_stmt { pin = 1 }
+module ::= module_stmt specification_part module_subprogram_part? end_module_stmt { pin = 1 }
 // R1105
 module_stmt ::= label? modulekwd identifier eol { pin = 2 }
 // R1106
@@ -625,13 +625,13 @@ end_module_stmt ::= label? (endmodule identifier? | end (modulekwd identifier?)?
 // R1107
 module_subprogram_part ::= contains_stmt (eol | module_subprogram)* { pin = 1 }
 // R1108
-module_subprogram ::= !(end | endmodule) (function_subprogram | subroutine_subprogram | separate_module_subprogram) {
+module_subprogram ::= !(label? (end | endmodule | endsubmodule)) (function_subprogram | subroutine_subprogram | separate_module_subprogram) {
   pin = 1
   recoverWhile = module_subprogram_recover
 }
 private module_subprogram_recover ::= !(eol | end | endfunction | endsubprogram | endprocedure)
 // R1109
-use_stmt ::= use (use_stmt_rename | use_stmt_only) {pin = 1}
+use_stmt ::= label? use (use_stmt_rename | use_stmt_only) {pin = 2}
 private use_stmt_rename ::= ((',' module_nature)? '::')? identifier (',' rename_list)
 private use_stmt_only ::= ((',' module_nature)? '::')? identifier ',' only ':' (only_list) { pin = 4 }
 // R1110
@@ -682,7 +682,7 @@ generic_spec ::= identifier | (operator '(' defoperator ')')
 defined_io_generic_spec ::= read '(' (formatted | unformatted) ')'
                            | write '(' (formatted | unformatted) ')'
 // R1209
-import_stmt ::= import ('::'? name_list) { pin =1 }
+import_stmt ::= label? import ('::'? name_list) { pin =2}
 // R1210
 external_stmt ::= external ('::')? name_list { pin = 1 }
 // R1211

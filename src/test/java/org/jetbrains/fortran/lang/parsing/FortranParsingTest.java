@@ -67,8 +67,12 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Labels.f"));
     }
 
-    public void testFunction() throws Exception {
+    public void testTopLevelConstructs() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("TopLevelConstructs.f"));
+    }
+
+    public void testModule() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("Module.f"));
     }
 
 }
