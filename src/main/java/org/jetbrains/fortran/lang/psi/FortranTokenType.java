@@ -70,6 +70,7 @@ public class FortranTokenType extends IElementType {
             EXTERNAL,
             FLUSH,
             FORALL,
+            FORMATKWD,
             FORMATTED,
             GO,
             GOTO,

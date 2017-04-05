@@ -185,21 +185,21 @@ class _FortranLexer implements FlexLexer {
     "\1\120\1\2\1\121\22\2\1\122\1\2\1\123\1\124"+
     "\1\125\1\0\1\126\1\127\1\0\15\2\1\130\3\2"+
     "\1\131\11\2\1\132\1\133\1\2\1\134\1\135\1\2"+
-    "\1\136\1\2\1\137\2\2\1\140\20\2\1\141\4\2"+
-    "\1\142\1\143\1\2\1\144\1\145\1\146\7\2\1\147"+
-    "\1\150\1\151\3\2\1\152\15\2\1\153\12\2\1\154"+
-    "\5\2\1\155\7\2\1\156\4\2\1\157\1\2\1\160"+
-    "\4\2\1\161\2\2\1\162\1\2\1\163\7\2\1\164"+
-    "\4\2\1\165\2\2\1\166\1\2\1\167\5\2\1\170"+
-    "\1\171\3\2\1\172\5\2\1\173\1\174\2\2\1\175"+
-    "\5\2\1\176\1\177\5\2\1\200\1\2\1\201\5\2"+
-    "\1\202\2\2\1\203\1\204\1\205\2\2\1\206\2\2"+
-    "\1\207\1\2\1\210\1\2\1\211\5\2\1\212\1\213"+
-    "\1\214\1\215\1\216\1\217\1\220\1\221\1\222\7\2"+
-    "\1\223\3\2\1\224\2\2\1\225\1\226\1\227\1\2"+
-    "\1\230\1\231\1\2\1\232\2\2\1\233\4\2\1\234"+
-    "\1\2\1\235\1\236\1\237\1\2\1\240\1\241\1\242"+
-    "\1\243\1\2\1\244\1\245\1\246";
+    "\1\136\1\2\1\137\1\140\1\2\1\141\20\2\1\142"+
+    "\4\2\1\143\1\144\1\2\1\145\1\146\1\147\7\2"+
+    "\1\150\1\151\1\152\3\2\1\153\15\2\1\154\12\2"+
+    "\1\155\5\2\1\156\7\2\1\157\4\2\1\160\1\2"+
+    "\1\161\4\2\1\162\2\2\1\163\1\2\1\164\7\2"+
+    "\1\165\4\2\1\166\2\2\1\167\1\2\1\170\5\2"+
+    "\1\171\1\172\3\2\1\173\5\2\1\174\1\175\2\2"+
+    "\1\176\5\2\1\177\1\200\5\2\1\201\1\2\1\202"+
+    "\5\2\1\203\2\2\1\204\1\205\1\206\2\2\1\207"+
+    "\2\2\1\210\1\2\1\211\1\2\1\212\5\2\1\213"+
+    "\1\214\1\215\1\216\1\217\1\220\1\221\1\222\1\223"+
+    "\7\2\1\224\3\2\1\225\2\2\1\226\1\227\1\230"+
+    "\1\2\1\231\1\232\1\2\1\233\2\2\1\234\4\2"+
+    "\1\235\1\2\1\236\1\237\1\240\1\2\1\241\1\242"+
+    "\1\243\1\244\1\2\1\245\1\246\1\247";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[708];
@@ -1498,667 +1498,671 @@ class _FortranLexer implements FlexLexer {
           case 1: 
             { return BAD_CHARACTER;
             }
-          case 167: break;
+          case 168: break;
           case 2: 
             { return IDENTIFIER;
             }
-          case 168: break;
+          case 169: break;
           case 3: 
             { return LINE_COMMENT;
             }
-          case 169: break;
+          case 170: break;
           case 4: 
             { return EOL;
             }
-          case 170: break;
+          case 171: break;
           case 5: 
             { return WHITE_SPACE;
             }
-          case 171: break;
+          case 172: break;
           case 6: 
             { return STRING_LITERAL;
             }
-          case 172: break;
+          case 173: break;
           case 7: 
             { return INTEGER_LITERAL;
             }
-          case 173: break;
+          case 174: break;
           case 8: 
             { return DOT;
             }
-          case 174: break;
+          case 175: break;
           case 9: 
             { return PLUS;
             }
-          case 175: break;
+          case 176: break;
           case 10: 
             { return MINUS;
             }
-          case 176: break;
+          case 177: break;
           case 11: 
             { return AMP;
             }
-          case 177: break;
+          case 178: break;
           case 12: 
             { return EQ;
             }
-          case 178: break;
+          case 179: break;
           case 13: 
             { return DIV;
             }
-          case 179: break;
+          case 180: break;
           case 14: 
             { return COLON;
             }
-          case 180: break;
+          case 181: break;
           case 15: 
             { return MUL;
             }
-          case 181: break;
+          case 182: break;
           case 16: 
             { return LPAR;
             }
-          case 182: break;
+          case 183: break;
           case 17: 
             { return RPAR;
             }
-          case 183: break;
+          case 184: break;
           case 18: 
             { return LBRACKET;
             }
-          case 184: break;
+          case 185: break;
           case 19: 
             { return RBRACKET;
             }
-          case 185: break;
+          case 186: break;
           case 20: 
             { return COMMA;
             }
-          case 186: break;
+          case 187: break;
           case 21: 
             { return DOLLAR;
             }
-          case 187: break;
+          case 188: break;
           case 22: 
             { return PERC;
             }
-          case 188: break;
+          case 189: break;
           case 23: 
             { return LT;
             }
-          case 189: break;
+          case 190: break;
           case 24: 
             { return GT;
             }
-          case 190: break;
+          case 191: break;
           case 25: 
             { return QUEST;
             }
-          case 191: break;
+          case 192: break;
           case 26: 
             { return FLOATING_POINT_LITERAL;
             }
-          case 192: break;
+          case 193: break;
           case 27: 
             { return DO;
             }
-          case 193: break;
+          case 194: break;
           case 28: 
             { return EQEQ;
             }
-          case 194: break;
+          case 195: break;
           case 29: 
             { return POINTER_ASSMNT;
             }
-          case 195: break;
+          case 196: break;
           case 30: 
             { return NEQ;
             }
-          case 196: break;
+          case 197: break;
           case 31: 
             { return DIVDIV;
             }
-          case 197: break;
+          case 198: break;
           case 32: 
             { return COLONCOLON;
             }
-          case 198: break;
+          case 199: break;
           case 33: 
             { return POWER;
             }
-          case 199: break;
+          case 200: break;
           case 34: 
             { return LE;
             }
-          case 200: break;
+          case 201: break;
           case 35: 
             { return GE;
             }
-          case 201: break;
+          case 202: break;
           case 36: 
             { return TO;
             }
-          case 202: break;
+          case 203: break;
           case 37: 
             { return GO;
             }
-          case 203: break;
+          case 204: break;
           case 38: 
             { return IN;
             }
-          case 204: break;
+          case 205: break;
           case 39: 
             { return IF;
             }
-          case 205: break;
+          case 206: break;
           case 40: 
             { return DOUBLE_PRECISION_LITERAL;
             }
-          case 206: break;
+          case 207: break;
           case 41: 
             { return END;
             }
-          case 207: break;
+          case 208: break;
           case 42: 
             { return ALL;
             }
-          case 208: break;
+          case 209: break;
           case 43: 
             { return OUT;
             }
-          case 209: break;
+          case 210: break;
           case 44: 
             { return USE;
             }
-          case 210: break;
+          case 211: break;
           case 45: 
             { return OR;
             }
-          case 211: break;
+          case 212: break;
           case 46: 
             { return ELSE;
             }
-          case 212: break;
+          case 213: break;
           case 47: 
             { return EXIT;
             }
-          case 213: break;
+          case 214: break;
           case 48: 
             { return DATA;
             }
-          case 214: break;
+          case 215: break;
           case 49: 
             { return NAMEKWD;
             }
-          case 215: break;
+          case 216: break;
           case 50: 
             { return NONE;
             }
-          case 216: break;
+          case 217: break;
           case 51: 
             { return ONLY;
             }
-          case 217: break;
+          case 218: break;
           case 52: 
             { return OPEN;
             }
-          case 218: break;
+          case 219: break;
           case 53: 
             { return READ;
             }
-          case 219: break;
+          case 220: break;
           case 54: 
             { return REAL;
             }
-          case 220: break;
+          case 221: break;
           case 55: 
             { return TYPE;
             }
-          case 221: break;
+          case 222: break;
           case 56: 
             { return THEN;
             }
-          case 222: break;
+          case 223: break;
           case 57: 
             { return LOCK;
             }
-          case 223: break;
+          case 224: break;
           case 58: 
             { return GOTO;
             }
-          case 224: break;
+          case 225: break;
           case 59: 
             { return SAVE;
             }
-          case 225: break;
+          case 226: break;
           case 60: 
             { return STOP;
             }
-          case 226: break;
+          case 227: break;
           case 61: 
             { return SYNC;
             }
-          case 227: break;
+          case 228: break;
           case 62: 
             { return CALL;
             }
-          case 228: break;
+          case 229: break;
           case 63: 
             { return CASE;
             }
-          case 229: break;
+          case 230: break;
           case 64: 
             { return BIND;
             }
-          case 230: break;
+          case 231: break;
           case 65: 
             { return KIND;
             }
-          case 231: break;
+          case 232: break;
           case 66: 
             { return PURE;
             }
-          case 232: break;
+          case 233: break;
           case 67: 
             { return WAIT;
             }
-          case 233: break;
+          case 234: break;
           case 68: 
             { return LOGICAL_EQ;
             }
-          case 234: break;
+          case 235: break;
           case 69: 
             { return NOT;
             }
-          case 235: break;
+          case 236: break;
           case 70: 
             { return AND;
             }
-          case 236: break;
+          case 237: break;
           case 71: 
             { return ENDDO;
             }
-          case 237: break;
+          case 238: break;
           case 72: 
             { return ENDIF;
             }
-          case 238: break;
+          case 239: break;
           case 73: 
             { return ENTRY;
             }
-          case 239: break;
+          case 240: break;
           case 74: 
             { return ERROR;
             }
-          case 240: break;
+          case 241: break;
           case 75: 
             { return VALUE;
             }
-          case 241: break;
+          case 242: break;
           case 76: 
             { return FLUSH;
             }
-          case 242: break;
+          case 243: break;
           case 77: 
             { return CLASSKWD;
             }
-          case 243: break;
+          case 244: break;
           case 78: 
             { return CLOSE;
             }
-          case 244: break;
+          case 245: break;
           case 79: 
             { return CYCLE;
             }
-          case 245: break;
+          case 246: break;
           case 80: 
             { return BLOCKKWD;
             }
-          case 246: break;
+          case 247: break;
           case 81: 
             { return INOUT;
             }
-          case 247: break;
+          case 248: break;
           case 82: 
             { return PRINT;
             }
-          case 248: break;
+          case 249: break;
           case 83: 
             { return WRITE;
             }
-          case 249: break;
+          case 250: break;
           case 84: 
             { return WHERE;
             }
-          case 250: break;
+          case 251: break;
           case 85: 
             { return WHILE;
             }
-          case 251: break;
+          case 252: break;
           case 86: 
             { return LOGICAL_NEQ;
             }
-          case 252: break;
+          case 253: break;
           case 87: 
             { return TRUE;
             }
-          case 253: break;
+          case 254: break;
           case 88: 
             { return ELSEIF;
             }
-          case 254: break;
+          case 255: break;
           case 89: 
             { return DOUBLE;
             }
-          case 255: break;
+          case 256: break;
           case 90: 
             { return RETURNKWD;
             }
-          case 256: break;
+          case 257: break;
           case 91: 
             { return RESULT;
             }
-          case 257: break;
+          case 258: break;
           case 92: 
             { return REWIND;
             }
-          case 258: break;
+          case 259: break;
           case 93: 
             { return TARGET;
             }
-          case 259: break;
+          case 260: break;
           case 94: 
             { return UNLOCK;
             }
-          case 260: break;
+          case 261: break;
           case 95: 
             { return FORALL;
             }
-          case 261: break;
-          case 96: 
-            { return SELECT;
-            }
           case 262: break;
-          case 97: 
-            { return INTENT;
+          case 96: 
+            { return FORMATKWD;
             }
           case 263: break;
-          case 98: 
-            { return IMAGES;
+          case 97: 
+            { return SELECT;
             }
           case 264: break;
-          case 99: 
-            { return IMPORT;
+          case 98: 
+            { return INTENT;
             }
           case 265: break;
-          case 100: 
-            { return IMPURE;
+          case 99: 
+            { return IMAGES;
             }
           case 266: break;
-          case 101: 
-            { return MEMORY;
+          case 100: 
+            { return IMPORT;
             }
           case 267: break;
-          case 102: 
-            { return MODULEKWD;
+          case 101: 
+            { return IMPURE;
             }
           case 268: break;
-          case 103: 
-            { return PUBLIC;
+          case 102: 
+            { return MEMORY;
             }
           case 269: break;
-          case 104: 
-            { return DEFOPERATOR;
+          case 103: 
+            { return MODULEKWD;
             }
           case 270: break;
-          case 105: 
-            { return FALSE;
+          case 104: 
+            { return PUBLIC;
             }
           case 271: break;
-          case 106: 
-            { return ENDFILE;
+          case 105: 
+            { return DEFOPERATOR;
             }
           case 272: break;
-          case 107: 
-            { return DEFAULT;
+          case 106: 
+            { return FALSE;
             }
           case 273: break;
-          case 108: 
-            { return LOGICAL;
+          case 107: 
+            { return ENDFILE;
             }
           case 274: break;
-          case 109: 
-            { return SYNCALL;
+          case 108: 
+            { return DEFAULT;
             }
           case 275: break;
-          case 110: 
-            { return COMPLEX;
+          case 109: 
+            { return LOGICAL;
             }
           case 276: break;
-          case 111: 
-            { return INQUIRE;
+          case 110: 
+            { return SYNCALL;
             }
           case 277: break;
-          case 112: 
-            { return INTEGER;
+          case 111: 
+            { return COMPLEX;
             }
           case 278: break;
-          case 113: 
-            { return POINTER;
+          case 112: 
+            { return INQUIRE;
             }
           case 279: break;
-          case 114: 
-            { return PROGRAMKWD;
+          case 113: 
+            { return INTEGER;
             }
           case 280: break;
-          case 115: 
-            { return PRIVATE;
+          case 114: 
+            { return POINTER;
             }
           case 281: break;
-          case 116: 
-            { return ENDBLOCK;
+          case 115: 
+            { return PROGRAMKWD;
             }
           case 282: break;
-          case 117: 
-            { return ENDWHERE;
+          case 116: 
+            { return PRIVATE;
             }
           case 283: break;
-          case 118: 
-            { return EXTERNAL;
+          case 117: 
+            { return ENDBLOCK;
             }
           case 284: break;
-          case 119: 
-            { return VOLATILE;
+          case 118: 
+            { return ENDWHERE;
             }
           case 285: break;
-          case 120: 
-            { return OPERATOR;
+          case 119: 
+            { return EXTERNAL;
             }
           case 286: break;
-          case 121: 
-            { return OPTIONAL;
+          case 120: 
+            { return VOLATILE;
             }
           case 287: break;
-          case 122: 
-            { return FUNCTION;
+          case 121: 
+            { return OPERATOR;
             }
           case 288: break;
-          case 123: 
-            { return CONTAINS;
+          case 122: 
+            { return OPTIONAL;
             }
           case 289: break;
-          case 124: 
-            { return CONTINUE;
+          case 123: 
+            { return FUNCTION;
             }
           case 290: break;
-          case 125: 
-            { return CRITICAL;
+          case 124: 
+            { return CONTAINS;
             }
           case 291: break;
-          case 126: 
-            { return IOLENGTH;
+          case 125: 
+            { return CONTINUE;
             }
           case 292: break;
-          case 127: 
-            { return IMPLICIT;
+          case 126: 
+            { return CRITICAL;
             }
           case 293: break;
-          case 128: 
-            { return ENDFORALL;
+          case 127: 
+            { return IOLENGTH;
             }
           case 294: break;
-          case 129: 
-            { return ENDSELECT;
+          case 128: 
+            { return IMPLICIT;
             }
           case 295: break;
-          case 130: 
-            { return ENDMODULE;
+          case 129: 
+            { return ENDFORALL;
             }
           case 296: break;
-          case 131: 
-            { return ELEMENTAL;
+          case 130: 
+            { return ENDSELECT;
             }
           case 297: break;
-          case 132: 
-            { return ELSEWHERE;
+          case 131: 
+            { return ENDMODULE;
             }
           case 298: break;
-          case 133: 
-            { return DIMENSION;
+          case 132: 
+            { return ELEMENTAL;
             }
           case 299: break;
-          case 134: 
-            { return ASSOCIATE;
+          case 133: 
+            { return ELSEWHERE;
             }
           case 300: break;
-          case 135: 
-            { return RECURSIVE;
+          case 134: 
+            { return DIMENSION;
             }
           case 301: break;
-          case 136: 
-            { return FORMATTED;
+          case 135: 
+            { return ASSOCIATE;
             }
           case 302: break;
-          case 137: 
-            { return SUBMODULEKWD;
+          case 136: 
+            { return RECURSIVE;
             }
           case 303: break;
-          case 138: 
-            { return CHARACTER;
+          case 137: 
+            { return FORMATTED;
             }
           case 304: break;
-          case 139: 
-            { return BACKSPACE;
+          case 138: 
+            { return SUBMODULEKWD;
             }
           case 305: break;
-          case 140: 
-            { return BLOCKDATA;
+          case 139: 
+            { return CHARACTER;
             }
           case 306: break;
-          case 141: 
-            { return INTERFACE;
+          case 140: 
+            { return BACKSPACE;
             }
           case 307: break;
-          case 142: 
-            { return INTRINSIC;
+          case 141: 
+            { return BLOCKDATA;
             }
           case 308: break;
-          case 143: 
-            { return PARAMETER;
+          case 142: 
+            { return INTERFACE;
             }
           case 309: break;
-          case 144: 
-            { return PRECISION;
+          case 143: 
+            { return INTRINSIC;
             }
           case 310: break;
-          case 145: 
-            { return PROTECTED;
+          case 144: 
+            { return PARAMETER;
             }
           case 311: break;
-          case 146: 
-            { return PROCEDURE;
+          case 145: 
+            { return PRECISION;
             }
           case 312: break;
-          case 147: 
-            { return ENDPROGRAM;
+          case 146: 
+            { return PROTECTED;
             }
           case 313: break;
-          case 148: 
-            { return ASSIGNMENT;
+          case 147: 
+            { return PROCEDURE;
             }
           case 314: break;
-          case 149: 
-            { return SUBROUTINE;
+          case 148: 
+            { return ENDPROGRAM;
             }
           case 315: break;
-          case 150: 
-            { return SYNCIMAGES;
+          case 149: 
+            { return ASSIGNMENT;
             }
           case 316: break;
-          case 151: 
-            { return SYNCMEMORY;
+          case 150: 
+            { return SUBROUTINE;
             }
           case 317: break;
-          case 152: 
-            { return CONTIGUOUS;
+          case 151: 
+            { return SYNCIMAGES;
             }
           case 318: break;
-          case 153: 
-            { return CONCURRENT;
+          case 152: 
+            { return SYNCMEMORY;
             }
           case 319: break;
-          case 154: 
-            { return ENDFUNCTION;
+          case 153: 
+            { return CONTIGUOUS;
             }
           case 320: break;
-          case 155: 
-            { return ENDCRITICAL;
+          case 154: 
+            { return CONCURRENT;
             }
           case 321: break;
-          case 156: 
-            { return ALLOCATABLE;
+          case 155: 
+            { return ENDFUNCTION;
             }
           case 322: break;
-          case 157: 
-            { return UNFORMATTED;
+          case 156: 
+            { return ENDCRITICAL;
             }
           case 323: break;
-          case 158: 
-            { return CODIMENSION;
+          case 157: 
+            { return ALLOCATABLE;
             }
           case 324: break;
-          case 159: 
-            { return ENDASSOCIATE;
+          case 158: 
+            { return UNFORMATTED;
             }
           case 325: break;
-          case 160: 
-            { return ENDSUBMODULE;
+          case 159: 
+            { return CODIMENSION;
             }
           case 326: break;
-          case 161: 
-            { return ENDBLOCKDATA;
+          case 160: 
+            { return ENDASSOCIATE;
             }
           case 327: break;
-          case 162: 
-            { return ENDINTERFACE;
+          case 161: 
+            { return ENDSUBMODULE;
             }
           case 328: break;
-          case 163: 
-            { return ENDPROCEDURE;
+          case 162: 
+            { return ENDBLOCKDATA;
             }
           case 329: break;
-          case 164: 
-            { return ASYNCHRONOUS;
+          case 163: 
+            { return ENDINTERFACE;
             }
           case 330: break;
-          case 165: 
-            { return ENDSUBROUTINE;
+          case 164: 
+            { return ENDPROCEDURE;
             }
           case 331: break;
-          case 166: 
-            { return NON_INTRINSIC;
+          case 165: 
+            { return ASYNCHRONOUS;
             }
           case 332: break;
+          case 166: 
+            { return ENDSUBROUTINE;
+            }
+          case 333: break;
+          case 167: 
+            { return NON_INTRINSIC;
+            }
+          case 334: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

@@ -145,6 +145,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "flush" { return FLUSH; }
 "function" { return FUNCTION; }
 "forall" { return FORALL; }
+"format" { return FORMATKWD; }
 "formatted" { return FORMATTED; }
 "go" { return GO; }
 "goto" { return GOTO; }
@@ -212,8 +213,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "volatile" { return VOLATILE; }
 "wait" { return WAIT; }
 "where" { return WHERE; }
-"while" { return WHILE; }/*
-"format" { return FortranTokens.FORMAT_KEYWORD; }*/
+"while" { return WHILE; }
 "rewind" { return REWIND; }
 "write" { return WRITE; }
 

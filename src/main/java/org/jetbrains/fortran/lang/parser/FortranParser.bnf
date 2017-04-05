@@ -92,17 +92,18 @@ specification_part ::= use_stmt* import_stmt* implicit_part? declaration_constru
 // R205
 implicit_part ::= implicit_part_stmt* implicit_stmt
 // R206
-implicit_part_stmt ::= label? (implicit_stmt | parameter_stmt /*| format_stmt*/ | entry_stmt)
+implicit_part_stmt ::= label? (implicit_stmt | parameter_stmt | entry_stmt | format_stmt)
 // R207
-declaration_construct ::= label? (/*derived-type-def |*/ entry_stmt/* | enum-def | format-stmt
+declaration_construct ::= label? (/*derived-type-def |*/ entry_stmt | format_stmt/* | enum-def
                         |*/ interface_block | parameter_stmt | procedure_declaration_stmt
                         | other_specification_stmt | type_declaration_stmt | stmt_function_stmt)
+
 // R208 is in R801
 // R209
-private execution_part_construct ::= !(label? end_block_keys) (executable_construct | entry_stmt) {
+private execution_part_construct ::= !(label? end_block_keys) (executable_construct | entry_stmt | format_stmt) {
   pin=1
   recoverWhile=block_recover
-}// | format-stmt  | data-stmt
+}//   | data-stmt
 private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
 private end_block_keys ::= end | endprogram | endprocedure | endsubroutine | endfunction | endif | enddo | else
                     | elseif | endblock | endcritical | endassociate | case | endselect | contains
@@ -607,6 +608,34 @@ inquire_spec ::= standard_command_parameters_spec
                   | (readwrite '=' variable)  | (recl '=' variable)         | (round '=' variable)
                   | (sequential '=' variable) | (sign '=' variable)         | (size '=' variable)
                   | (stream '=' variable)     | (unformatted '=' variable)  | (write '=' variable)*/
+
+// Clause 10
+// R1001
+format_stmt ::= formatkwd format_specification { pin = 1}
+// R1002
+private format_specification ::= '(' (((format_items ',')? unlimited_format_item) | format_items?) ')' { pin = 1 }
+// R1003
+private format_items ::= format_item (',' format_item)*
+// R1004
+format_item ::= ((integer_literal)? data_edit_desc) | control_edit_desc | string_literal
+               | ((integer_literal)? '(' format_items ')')
+// R1005
+unlimited_format_item ::= '*''(' format_items ')'
+// R1006 is trivial
+// R1007
+data_edit_desc ::= identifier (integer_literal | floating_point_literal | (string_literal? ('(' v_list ')')?))?
+// R1008-1011 are trivial
+// R1012
+private v_list ::= integer_literal (',' integer_literal)* // unary_add_expr (',' unary_add_expr)*
+// R1013
+control_edit_desc ::= position_edit_desc | (integer_literal? '/') | ':'
+                  | identifier | (integer_literal identifier)
+// R1014 is trivial
+// R1015
+position_edit_desc ::= (identifier integer_literal) | (integer_literal identifier)
+// R1016 - R1021 are trivial or should be studied after parsing
+// R1022 is unused probably
+
 
 // Clause 11
 // R1101
