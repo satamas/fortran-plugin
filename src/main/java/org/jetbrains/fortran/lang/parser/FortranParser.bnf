@@ -32,6 +32,8 @@
     RPAR      = ')'
     LBRACKET  = '['
     RBRACKET  = ']'
+    ARRAYLBR  = '(/'
+    ARRAYRBR  = '/)'
     COMMA     = ','
     DOT       = '.'
     DOLLAR    = '$'
@@ -88,14 +90,14 @@ private end_unit_keys ::= end | endprogram | endmodule | endfunction | endsubrou
 // R203
 private external_subprogram ::= function_subprogram | subroutine_subprogram
 // R204
-specification_part ::= use_stmt* import_stmt* implicit_part? declaration_construct*
+specification_part ::= (eol | use_stmt)* (eol | import_stmt)* implicit_part? (eol | declaration_construct)*
 // R205
-implicit_part ::= implicit_part_stmt* implicit_stmt
+implicit_part ::= (eol | implicit_part_stmt)* implicit_stmt eol
 // R206
 implicit_part_stmt ::= label? (implicit_stmt | parameter_stmt | entry_stmt | format_stmt)
 // R207
-declaration_construct ::= label? (derived_type_def | entry_stmt | format_stmt/* | enum-def
-                        |*/ interface_block | parameter_stmt | procedure_declaration_stmt
+declaration_construct ::= label? (derived_type_def | entry_stmt | format_stmt | enum_def
+                        | interface_block | parameter_stmt | procedure_declaration_stmt
                         | other_specification_stmt | type_declaration_stmt | stmt_function_stmt)
 
 // R208 is in R801
@@ -220,14 +222,14 @@ char_length ::= ('(' type_param_value ')') | integer_literal
 derived_type_def ::= derived_type_stmt type_param_def_stmt* private_or_sequence* component_part?
                      type_bound_procedure_part? end_type_stmt { pin = 1 }
 // R426
-derived_type_stmt ::= type ((',' type_attr_spec_list)? '::')? identifier ('(' name_list ')')? { pin = 1 }
-// R427 bind (c) is here bind(identifier)
+derived_type_stmt ::= type ((',' type_attr_spec_list)? '::')? identifier ('(' name_list ')')? eol { pin = 1 }
+// R427
 private type_attr_spec_list ::= type_attr_spec (',' type_attr_spec)*
-type_attr_spec ::= abstract | access_spec | (bind '('identifier')') | (extends '(' identifier ')')
+type_attr_spec ::= abstract | access_spec | bindckwd | (extends '(' identifier ')')
 // R428
 private private_or_sequence ::= label? (private | sequence) eol { pin = 2 }
 // R429
-end_type_stmt ::= ((end type) | endtype) identifier? { pin = 1}
+end_type_stmt ::= label? ((end type) | endtype) identifier? { pin = 2 }
 // R430 is trivial
 // R431
 type_param_def_stmt ::= integer (kind_selector)?','type_param_attr_spec '::' type_param_decl_list
@@ -283,6 +285,41 @@ derived_type_spec ::= identifier ('(' type_param_spec_list ')')?
 // R454
 private type_param_spec_list ::= type_param_spec (',' type_param_spec)*
 type_param_spec ::= (identifier '=')? type_param_value
+// R455 is in clause 7
+// R456
+private component_spec_list ::= component_spec (',' component_spec)*
+component_spec ::= (identifier '=') component_data_source
+// R457
+component_data_source ::= expr /*| variable*/ | proc_target
+// R458
+enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)+ end_enum_stmt { pin = 1 }
+// R459
+enum_def_stmt ::= label? enum ',' bindckwd eol { pin = 4 }
+// R460
+enumerator_def_stmt ::= !(label? end_enum_keys) enumeratorkwd ('::')? enumerator_list {
+  pin = 1
+  recoverWhile = enum_recover
+}
+private end_enum_keys ::= (end enum) | endenum
+private enum_recover ::= !(eol | end_enum_keys)
+// R461
+private enumerator_list ::= enumerator (',' enumerator)*
+enumerator ::= identifier ('=' expr)?
+// R462
+end_enum_stmt ::= label? ((end enum) | endenum) { pin = 2 }
+// R463
+boz_literal ::= binary_literal | octal_literal | hex_literal
+// R464 - R467 are implemented in lexer
+// R468 is in clause 7
+// R469
+ac_spec ::= ((type_spec '::')? ac_value_list ) | (type_spec '::')
+// R470 - 471 are trivial
+// R472
+private ac_value_list ::= ac_value (',' ac_value)*
+ac_value ::= expr | ac_implied_do
+// R473
+ac_implied_do ::= '('ac_value_list ',' id_loop_stmt ')'
+// R474 - 475 are trivial
 
 // Clause 5
 // R501
@@ -373,14 +410,19 @@ mult_expr   ::= expr ('*' | '/') expr
 power_expr  ::= expr '**' expr { rightAssociative=true } { extends=expr }
 def_unary_operator_expr ::= defined_unary_op expr
 private defined_unary_op ::= defoperator
-private primary ::= constant | designator | paren
+private primary ::= constant | designator | structure_constructor | array_constructor | paren
 paren ::= '(' expr ')'
+// R455
+structure_constructor ::= derived_type_spec '(' component_spec_list ')'
+// R468
+array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 // R601
 designator ::= identifier
 // R304, R305 modified
 constant ::= integer_literal | floating_point_literal | double_precision_literal
-           | complex_literal | logical_literal | string_literal /*| boz_literal*/
+           | complex_literal | logical_literal | string_literal | boz_literal
 logical_literal ::= true | false
+
 // R724 - 731 are trivial
 
 // R732

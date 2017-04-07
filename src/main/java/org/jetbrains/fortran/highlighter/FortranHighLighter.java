@@ -38,9 +38,14 @@ public class FortranHighLighter extends SyntaxHighlighterBase {
         keys1.put(INTEGER_LITERAL, FortranHighlightingColors.NUMBER);
         keys1.put(FLOATING_POINT_LITERAL, FortranHighlightingColors.NUMBER);
         keys1.put(DOUBLE_PRECISION_LITERAL, FortranHighlightingColors.NUMBER);
-
+        keys1.put(BINARY_LITERAL, FortranHighlightingColors.NUMBER);
+        keys1.put(OCTAL_LITERAL, FortranHighlightingColors.NUMBER);
+        keys1.put(HEX_LITERAL, FortranHighlightingColors.NUMBER);
+        keys1.put(TRUE, FortranHighlightingColors.STRING);
+        keys1.put(FALSE, FortranHighlightingColors.STRING);
         keys1.put(LINE_COMMENT, FortranHighlightingColors.LINE_COMMENT);
         keys1.put(STRING_LITERAL, FortranHighlightingColors.STRING);
+
 
         keys1.put(TokenType.BAD_CHARACTER, FortranHighlightingColors.BAD_CHARACTER);
     }

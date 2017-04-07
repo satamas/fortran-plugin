@@ -1,0 +1,163 @@
+FILE
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(programkwd)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('literals')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('  ')
+    SPECIFICATION_PART
+      DECLARATION_CONSTRUCT
+        ENUM_DEF
+          ENUM_DEF_STMT
+            PsiElement(enum)('ENUM')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(bindckwd)('BIND(C)')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          ENUMERATOR_DEF_STMT
+            PsiElement(enumeratorkwd)('ENUMERATOR')
+            PsiWhiteSpace(' ')
+            PsiElement(::)('::')
+            PsiWhiteSpace(' ')
+            ENUMERATOR
+              PsiElement(identifier)('RED')
+              PsiWhiteSpace(' ')
+              PsiElement(=)('=')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integer_literal)('4')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            ENUMERATOR
+              PsiElement(identifier)('BLUE')
+              PsiWhiteSpace(' ')
+              PsiElement(=)('=')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integer_literal)('9')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          ENUMERATOR_DEF_STMT
+            PsiElement(enumeratorkwd)('ENUMERATOR')
+            PsiWhiteSpace(' ')
+            ENUMERATOR
+              PsiElement(identifier)('YELLOW')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('  ')
+          END_ENUM_STMT
+            PsiElement(end)('END')
+            PsiWhiteSpace(' ')
+            PsiElement(enum)('ENUM')
+      PsiElement(eol)('\n\n')
+    PsiWhiteSpace('  ')
+    BLOCK
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('a')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integer_literal)('1')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('b')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integer_literal)('1_8')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('c')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(floating_point_literal)('1.1')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('d')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(floating_point_literal)('1.1_4')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('e')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        ADD_EXPR
+          CONSTANT
+            PsiElement(floating_point_literal)('1e4_4')
+          PsiElement(+)('+')
+          CONSTANT
+            PsiElement(floating_point_literal)('2e+4_8')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('f')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(string_literal)('1_"Deidranna rules!"')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('g')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          BOZ_LITERAL
+            PsiElement(binary_literal)('B"101"')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('h')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          BOZ_LITERAL
+            PsiElement(octal_literal)('O"1765"')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('i')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          BOZ_LITERAL
+            PsiElement(hex_literal)('Z'9A7f'')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('j')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        LOGICAL_LITERAL
+          PsiElement(true)('.TRUE._1')
+      PsiElement(eol)('\n')
+    END_PROGRAM_STMT
+      PsiElement(endprogram)('endprogram')

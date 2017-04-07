@@ -8,10 +8,9 @@ FILE
     PsiWhiteSpace('  ')
     PsiComment(line_comment)('! just a comment')
     SPECIFICATION_PART
-      <empty list>
-    BLOCK
       PsiElement(eol)('\n')
-      PsiWhiteSpace('  ')
+    PsiWhiteSpace('  ')
+    BLOCK
       BLOCK_CONSTRUCT
         BLOCK_STMT
           PsiElement(identifier)('b1')

@@ -18,6 +18,15 @@ import static org.jetbrains.fortran.lang.FortranTypes.*;
 %eof{  return;
 %eof}
 
+BDIGIT=[0-1](\040*[0-1])*
+BINARY_LITERAL="B"\'{BDIGIT}\'|"B"\"{BDIGIT}\"
+
+ODIGIT=[0-7](\040*[0-7])*
+OCTAL_LITERAL="O"\'{ODIGIT}\'|"O"\"{ODIGIT}\"
+
+HDIGIT=[0-9A-Fa-f](\040*[0-9A-Fa-f])*
+HEX_LITERAL="Z"\'{HDIGIT}\'|"Z"\"{HDIGIT}\"
+
 IDENTIFIER_PART=[:digit:]|[:letter:]|_
 IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
 
@@ -44,7 +53,7 @@ DOUBLE_PRECISION_LITERAL={DIGIT}{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PARAM})?
 
 EOL_ESC=\\[\ \t]*\n
 ESCAPE_SEQUENCE=\\[^\n]|{EOL_ESC}
-STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_SEQUENCE})*('|\\)?)
+STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIND_PARAM}_)?('([^\\'\n]|{ESCAPE_SEQUENCE})*('|\\)?)
 
 //REGULAR_STRING_PART=[^\\\'\n]+
 //REGULAR_DQ_STRING_PART=[^\\\"\n]+
@@ -58,8 +67,15 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 
 {STRING_LITERAL} { return STRING_LITERAL; }
 {INTEGER_LITERAL} { return INTEGER_LITERAL; }
+{BINARY_LITERAL} { return BINARY_LITERAL; }
+{OCTAL_LITERAL} { return OCTAL_LITERAL; }
+{HEX_LITERAL} { return HEX_LITERAL; }
 {FLOATING_POINT_LITERAL} { return FLOATING_POINT_LITERAL; }
 {DOUBLE_PRECISION_LITERAL} { return DOUBLE_PRECISION_LITERAL; }
+
+".true."(_{KIND_PARAM})? { return TRUE; }
+".false."(_{KIND_PARAM})? { return FALSE; }
+("bind"{WHITE_SPACE_CHAR}*"(c)") { return BINDCKWD; }
 
 "=" { return EQ; }
 "==" { return EQEQ; }
@@ -76,12 +92,13 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 ")" { return RPAR; }
 "[" { return LBRACKET; }
 "]" { return RBRACKET; }
+"(/" { return ARRAYLBR; }
+"/)" { return ARRAYRBR; }
 "," { return COMMA; }
 "." { return DOT; }
 "$" { return DOLLAR; }
 "%" { return PERC; }
 "&" { return AMP; }
-//";" { return SEMICOLON; }
 "<" { return LT; }
 "<=" { return LE; }
 ">" { return GT; }
@@ -100,9 +117,6 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 ".le." { return LE; }
 ".gt." { return GT; }
 ".ge." { return GE; }
-
-".true." { return TRUE; }
-".false." { return FALSE; }
 
 "abstract" { return ABSTRACT; }
 "all" { return ALL; }
@@ -143,6 +157,8 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "elseif" { return ELSEIF; }
 "elsewhere" { return ELSEWHERE; }
 "entry" { return ENTRY; }
+"enum" { return ENUM; }
+"enumerator" { return ENUMERATORKWD; }
 "error" { return ERROR; }/*
 "equivalence" { return FortranTokens.EQUIVALENCE_KEYWORD; }*/
 "exit" { return EXIT; }
@@ -233,6 +249,7 @@ STRING_LITERAL=(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ('([^\\'\n]|{ESCAPE_S
 "endassociate" { return ENDASSOCIATE; }
 "endblock" { return ENDBLOCK; }
 "endcritical" { return ENDCRITICAL; }
+"endenum" { return ENDENUM; }
 "endfile" { return ENDFILE; }
 "endif" { return ENDIF; }
 "endprocedure" { return ENDPROCEDURE; }
