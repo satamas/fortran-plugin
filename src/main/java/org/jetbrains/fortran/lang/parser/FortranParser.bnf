@@ -219,10 +219,10 @@ length_selector ::= ('(' (len '=')? type_param_value ')') | ('*' char_length (',
 char_length ::= ('(' type_param_value ')') | integer_literal
 // R423 - 424 are implemented in lexer
 // R425
-derived_type_def ::= derived_type_stmt type_param_def_stmt* private_or_sequence* component_part?
+derived_type_def ::= derived_type_stmt type_param_def_stmt* private_or_sequence* component_part
                      type_bound_procedure_part? end_type_stmt { pin = 1 }
 // R426
-derived_type_stmt ::= type ((',' type_attr_spec_list)? '::')? identifier ('(' name_list ')')? eol { pin = 1 }
+derived_type_stmt ::= label? type ((',' type_attr_spec_list)? '::')? identifier ('(' name_list ')')? eol { pin = 2 }
 // R427
 private type_attr_spec_list ::= type_attr_spec (',' type_attr_spec)*
 type_attr_spec ::= abstract | access_spec | bindckwd | (extends '(' identifier ')')
@@ -239,9 +239,12 @@ type_param_decl ::= identifier ('=' expr)?
 // R433
 type_param_attr_spec ::= kind | len
 // R434
-component_part ::= component_def_stmt*
+component_part ::= (eol | component_def_stmt)*
 // R435
-component_def_stmt ::= data_component_def_stmt | proc_component_def_stmt
+component_def_stmt ::= !(label? (type_end_keys | contains)) label? (data_component_def_stmt | proc_component_def_stmt) {
+ pin = 1
+ recoverWhile = component_def_stmt_recover }
+private component_def_stmt_recover ::= !(eol | type_end_keys | contains)
 // R436
 data_component_def_stmt ::= declaration_type_spec ((',' component_attr_spec_list)? '::')? component_decl_list
 // R437
@@ -262,24 +265,30 @@ proc_component_attr_spec ::= pointer | (pass ('(' identifier ')')?) | nopass | a
 // R442 is the same as R505
 // R443 - 444 are trivial
 // R445
-type_bound_procedure_part ::= contains_stmt private_stmt? type_bound_proc_binding*
+type_bound_procedure_part ::= contains_stmt private_stmt? (eol | type_bound_proc_binding)*
 // R446
 private_stmt ::= label? private eol { pin = 2 }
 // R447
-private type_bound_proc_binding ::= type_bound_procedure_stmt | type_bound_generic_stmt | final_procedure_stmt
+private type_bound_proc_binding ::= !(label? type_end_keys) (type_bound_procedure_stmt | type_bound_generic_stmt | final_procedure_stmt) {
+ pin = 1
+ recoverWhile = type_proc_recover
+}
+private type_proc_recover ::= !(eol | type_end_keys)
+private type_end_keys ::= (end | endtype)
 // R448
-type_bound_procedure_stmt ::= procedure ((',' binding_attr_list)? '::')? type_bound_proc_decl_list
-                             | procedure '(' identifier ')' ',' binding_attr_list '::' name_list
+type_bound_procedure_stmt ::= procedure (type_bound_procedure_stmt_part1 | type_bound_procedure_stmt_part2 ) { pin = 1 }
+private type_bound_procedure_stmt_part1 ::= '(' identifier ')' ',' binding_attr_list '::' name_list { pin = 1 }
+private type_bound_procedure_stmt_part2 ::= ((',' binding_attr_list)? '::')? type_bound_proc_decl_list
 // R449
 private type_bound_proc_decl_list ::= type_bound_proc_decl (',' type_bound_proc_decl)*
 type_bound_proc_decl ::= identifier ('=>' identifier)?
 // R450
-type_bound_generic_stmt ::= generic (',' access_spec)? '::' generic_spec '=>' name_list
+type_bound_generic_stmt ::= generic (',' access_spec)? '::' generic_spec '=>' name_list { pin = 1}
 // R451
 private binding_attr_list ::= binding_attr (',' binding_attr)*
-binding_attr ::= (pass '(' identifier ')') | nopass | non_overridable | deferred | access_spec
+binding_attr ::= (pass ('(' identifier ')')?) | nopass | non_overridable | deferred | access_spec
 // R452
-final_procedure_stmt ::= final '::' name_list
+final_procedure_stmt ::= final '::' name_list { pin = 1 }
 // R453
 derived_type_spec ::= identifier ('(' type_param_spec_list ')')?
 // R454
@@ -296,7 +305,7 @@ enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)+ end_enum_stmt { pin = 1 
 // R459
 enum_def_stmt ::= label? enum ',' bindckwd eol { pin = 4 }
 // R460
-enumerator_def_stmt ::= !(label? end_enum_keys) enumeratorkwd ('::')? enumerator_list {
+enumerator_def_stmt ::= !(label? end_enum_keys) label? enumeratorkwd ('::')? enumerator_list {
   pin = 1
   recoverWhile = enum_recover
 }

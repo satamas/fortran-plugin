@@ -51,6 +51,10 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
     public void testLiterals() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Literals.f"));
     }
+
+    public void testTypes() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("Types.f"));
+    }
  /*   public void testSpecificationStatements() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("SpecificationStatements.f"));
     }

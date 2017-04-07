@@ -1,0 +1,281 @@
+FILE
+  MODULE
+    MODULE_STMT
+      PsiElement(modulekwd)('module')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('types')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('  ')
+    SPECIFICATION_PART
+      DECLARATION_CONSTRUCT
+        DERIVED_TYPE_DEF
+          DERIVED_TYPE_STMT
+            PsiElement(type)('type')
+            PsiWhiteSpace(' ')
+            PsiElement(::)('::')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('person')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          COMPONENT_PART
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(character)('character')
+                  CHAR_SELECTOR
+                    LENGTH_SELECTOR
+                      PsiElement(()('(')
+                      PsiElement(len)('len')
+                      PsiElement(=)('=')
+                      CONSTANT
+                        PsiElement(integer_literal)('20')
+                      PsiElement())(')')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('forename')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('    ')
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(integer)('integer')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('age')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('  ')
+          END_TYPE_STMT
+            PsiElement(end)('end')
+            PsiWhiteSpace(' ')
+            PsiElement(type)('type')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('person')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      DECLARATION_CONSTRUCT
+        DERIVED_TYPE_DEF
+          DERIVED_TYPE_STMT
+            PsiElement(type)('type')
+            PsiWhiteSpace(' ')
+            PsiElement(::)('::')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('kids')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          COMPONENT_PART
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                PsiElement(type)('type')
+                PsiElement(()('(')
+                DERIVED_TYPE_SPEC
+                  PsiElement(identifier)('person')
+                PsiElement())(')')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('oldest_child')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('    ')
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                PsiElement(type)('type')
+                PsiElement(()('(')
+                DERIVED_TYPE_SPEC
+                  PsiElement(identifier)('person')
+                PsiElement())(')')
+                PsiElement(,)(',')
+                PsiWhiteSpace(' ')
+                COMPONENT_ATTR_SPEC
+                  PsiElement(allocatable)('allocatable')
+                PsiElement(,)(',')
+                PsiWhiteSpace(' ')
+                COMPONENT_ATTR_SPEC
+                  PsiElement(dimension)('dimension')
+                  PsiElement(()('(')
+                  DEFERRED_SHAPE_SPEC
+                    PsiElement(:)(':')
+                  PsiElement())(')')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('other_kids')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('  ')
+          END_TYPE_STMT
+            PsiElement(end)('end')
+            PsiWhiteSpace(' ')
+            PsiElement(type)('type')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('kids')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      DECLARATION_CONSTRUCT
+        DERIVED_TYPE_DEF
+          DERIVED_TYPE_STMT
+            PsiElement(type)('TYPE')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            TYPE_ATTR_SPEC
+              PsiElement(private)('PRIVATE')
+            PsiWhiteSpace(' ')
+            PsiElement(::)('::')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('AUXILIARY')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          COMPONENT_PART
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(logical)('LOGICAL')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('DIAGNOSTIC')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('    ')
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(character)('CHARACTER')
+                  PsiWhiteSpace(' ')
+                  CHAR_SELECTOR
+                    LENGTH_SELECTOR
+                      PsiElement(()('(')
+                      PsiElement(len)('LEN')
+                      PsiWhiteSpace(' ')
+                      PsiElement(=)('=')
+                      PsiWhiteSpace(' ')
+                      CONSTANT
+                        PsiElement(integer_literal)('20')
+                      PsiElement())(')')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('MESSAGE')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('  ')
+          END_TYPE_STMT
+            PsiElement(end)('END')
+            PsiWhiteSpace(' ')
+            PsiElement(type)('TYPE')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('AUXILIARY')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      DECLARATION_CONSTRUCT
+        DERIVED_TYPE_DEF
+          DERIVED_TYPE_STMT
+            PsiElement(type)('TYPE')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('NUMERIC_SEQ')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          PsiElement(sequence)('SEQUENCE')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          COMPONENT_PART
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(integer)('INTEGER')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('INT_VAL')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('    ')
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(real)('REAL')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('REAL_VAL')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('    ')
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(logical)('LOGICAL')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('LOG_VAL')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('  ')
+          END_TYPE_STMT
+            PsiElement(end)('END')
+            PsiWhiteSpace(' ')
+            PsiElement(type)('TYPE')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('NUMERIC_SEQ')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
+      DECLARATION_CONSTRUCT
+        DERIVED_TYPE_DEF
+          DERIVED_TYPE_STMT
+            PsiElement(type)('TYPE')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('POINT')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('      ')
+          COMPONENT_PART
+            COMPONENT_DEF_STMT
+              DATA_COMPONENT_DEF_STMT
+                INTRINSIC_TYPE_SPEC
+                  PsiElement(real)('REAL')
+                PsiWhiteSpace(' ')
+                PsiElement(::)('::')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('X')
+                PsiElement(,)(',')
+                PsiWhiteSpace(' ')
+                COMPONENT_DECL
+                  PsiElement(identifier)('Y')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          TYPE_BOUND_PROCEDURE_PART
+            CONTAINS_STMT
+              PsiElement(contains)('CONTAINS')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('      ')
+            TYPE_BOUND_PROCEDURE_STMT
+              PsiElement(procedure)('PROCEDURE')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              BINDING_ATTR
+                PsiElement(pass)('PASS')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              TYPE_BOUND_PROC_DECL
+                PsiElement(identifier)('LENGTH')
+                PsiWhiteSpace(' ')
+                PsiElement(=>)('=>')
+                PsiWhiteSpace(' ')
+                PsiElement(identifier)('POINT_LENGTH')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('  ')
+          END_TYPE_STMT
+            PsiElement(end)('END')
+            PsiWhiteSpace(' ')
+            PsiElement(type)('TYPE')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('POINT')
+      PsiElement(eol)('\n')
+    END_MODULE_STMT
+      PsiElement(endmodule)('endmodule')
