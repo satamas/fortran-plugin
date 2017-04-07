@@ -94,7 +94,7 @@ implicit_part ::= implicit_part_stmt* implicit_stmt
 // R206
 implicit_part_stmt ::= label? (implicit_stmt | parameter_stmt | entry_stmt | format_stmt)
 // R207
-declaration_construct ::= label? (/*derived-type-def |*/ entry_stmt | format_stmt/* | enum-def
+declaration_construct ::= label? (derived_type_def | entry_stmt | format_stmt/* | enum-def
                         |*/ interface_block | parameter_stmt | procedure_declaration_stmt
                         | other_specification_stmt | type_declaration_stmt | stmt_function_stmt)
 
@@ -189,15 +189,95 @@ label ::= integer_literal
 // R401
 private type_param_value ::= '*' | ':' | expr
 // R402
-type_spec ::= intrinsic_type_spec | derived_type_spec
+private type_spec ::= intrinsic_type_spec | derived_type_spec
 // R403
 private declaration_type_spec ::= intrinsic_type_spec | (type '(' (intrinsic_type_spec | derived_type_spec)')')
                                 | (classkwd '(' (derived_type_spec | '*') ')')
 // R404
-intrinsic_type_spec ::= ((integer | real | complex | character | logical) (kind_selector)?) | (double precision) { pin = 1 }
+intrinsic_type_spec ::= ((integer | real | complex | logical) (kind_selector)?) | (double precision) | (character (char_selector)?)
 // R405
 kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
-// R406 - 416 are trivial or implemented in lexer
+// R406
+signed_int_literal ::= ('+' | '-')? integer_literal
+// R407 - 411 are trivial or implemented in lexer
+// R412
+signed_real_literal ::= ('+' | '-') (floating_point_literal | double_precision_literal)
+// R412 - 416 are implemented in lexer
+// R417
+complex_literal ::= '(' ri_part ',' ri_part ')'
+// R418 - 419
+private ri_part ::= signed_int_literal | signed_real_literal | identifier
+// R420
+char_selector ::= length_selector | ('(' len '=' type_param_value ',' kind '=' expr ')')
+                 | ('(' type_param_value ',' (kind '=')? expr ')')
+                 | ('(' kind '=' expr (',' len '=' type_param_value)? ')')
+// R421
+length_selector ::= ('(' (len '=')? type_param_value ')') | ('*' char_length (',')?)
+// R422
+char_length ::= ('(' type_param_value ')') | integer_literal
+// R423 - 424 are implemented in lexer
+// R425
+derived_type_def ::= derived_type_stmt type_param_def_stmt* private_or_sequence* component_part?
+                     type_bound_procedure_part? end_type_stmt { pin = 1 }
+// R426
+derived_type_stmt ::= type ((',' type_attr_spec_list)? '::')? identifier ('(' name_list ')')? { pin = 1 }
+// R427 bind (c) is here bind(identifier)
+private type_attr_spec_list ::= type_attr_spec (',' type_attr_spec)*
+type_attr_spec ::= abstract | access_spec | (bind '('identifier')') | (extends '(' identifier ')')
+// R428
+private private_or_sequence ::= label? (private | sequence) eol { pin = 2 }
+// R429
+end_type_stmt ::= ((end type) | endtype) identifier? { pin = 1}
+// R430 is trivial
+// R431
+type_param_def_stmt ::= integer (kind_selector)?','type_param_attr_spec '::' type_param_decl_list
+// R432
+private type_param_decl_list ::= type_param_decl (',' type_param_decl)
+type_param_decl ::= identifier ('=' expr)?
+// R433
+type_param_attr_spec ::= kind | len
+// R434
+component_part ::= component_def_stmt*
+// R435
+component_def_stmt ::= data_component_def_stmt | proc_component_def_stmt
+// R436
+data_component_def_stmt ::= declaration_type_spec ((',' component_attr_spec_list)? '::')? component_decl_list
+// R437
+private component_attr_spec_list ::= component_attr_spec (',' component_attr_spec)*
+component_attr_spec ::= access_spec | allocatable | (codimension '[' coarray_spec ']')
+                       | contiguous | (dimension '(' component_array_spec ')') | pointer
+// R438
+private component_decl_list ::= component_decl (',' component_decl)*
+component_decl ::= identifier ('(' component_array_spec ')')? ('[' coarray_spec ']')?
+                   ('*' char_length)? (initialization)?
+// R439
+private component_array_spec ::= explicit_shape_spec_list | deferred_shape_spec_list
+// R440
+proc_component_def_stmt ::= procedure '(' proc_interface? ')'',' proc_component_attr_spec_list '::' proc_decl_list
+// R441
+private proc_component_attr_spec_list ::= proc_component_attr_spec (',' proc_component_attr_spec)*
+proc_component_attr_spec ::= pointer | (pass ('(' identifier ')')?) | nopass | access_spec
+// R442 is the same as R505
+// R443 - 444 are trivial
+// R445
+type_bound_procedure_part ::= contains_stmt private_stmt? type_bound_proc_binding*
+// R446
+private_stmt ::= label? private eol { pin = 2 }
+// R447
+private type_bound_proc_binding ::= type_bound_procedure_stmt | type_bound_generic_stmt | final_procedure_stmt
+// R448
+type_bound_procedure_stmt ::= procedure ((',' binding_attr_list)? '::')? type_bound_proc_decl_list
+                             | procedure '(' identifier ')' ',' binding_attr_list '::' name_list
+// R449
+private type_bound_proc_decl_list ::= type_bound_proc_decl (',' type_bound_proc_decl)*
+type_bound_proc_decl ::= identifier ('=>' identifier)?
+// R450
+type_bound_generic_stmt ::= generic (',' access_spec)? '::' generic_spec '=>' name_list
+// R451
+private binding_attr_list ::= binding_attr (',' binding_attr)*
+binding_attr ::= (pass '(' identifier ')') | nopass | non_overridable | deferred | access_spec
+// R452
+final_procedure_stmt ::= final '::' name_list
 // R453
 derived_type_spec ::= identifier ('(' type_param_spec_list ')')?
 // R454
@@ -241,8 +321,7 @@ deferred_shape_spec ::= (expr)? ':'
 
 // R523
 private intent_spec ::= in | out | inout
-// R442
-char_length ::= ('(' type_param_value ')') | integer_literal
+
 // R548
 parameter_stmt ::= parameter '(' named_constant_def_list ')' {pin=1}
 // R549
@@ -295,12 +374,12 @@ power_expr  ::= expr '**' expr { rightAssociative=true } { extends=expr }
 def_unary_operator_expr ::= defined_unary_op expr
 private defined_unary_op ::= defoperator
 private primary ::= constant | designator | paren
-paren ::= '(' expr ')' { pin=1}
+paren ::= '(' expr ')'
 // R601
 designator ::= identifier
 // R304, R305 modified
 constant ::= integer_literal | floating_point_literal | double_precision_literal
-                                 /*| complex_literal */| logical_literal | string_literal /*| boz_literal*/
+           | complex_literal | logical_literal | string_literal /*| boz_literal*/
 logical_literal ::= true | false
 // R724 - 731 are trivial
 
@@ -626,10 +705,10 @@ unlimited_format_item ::= '*''(' format_items ')'
 data_edit_desc ::= identifier (integer_literal | floating_point_literal | (string_literal? ('(' v_list ')')?))?
 // R1008-1011 are trivial
 // R1012
-private v_list ::= integer_literal (',' integer_literal)* // unary_add_expr (',' unary_add_expr)*
+private v_list ::= signed_int_literal (',' signed_int_literal)* // unary_add_expr (',' unary_add_expr)*
 // R1013
 control_edit_desc ::= position_edit_desc | (integer_literal? '/') | ':'
-                  | identifier | (integer_literal identifier)
+                  | identifier | (signed_int_literal identifier)
 // R1014 is trivial
 // R1015
 position_edit_desc ::= (identifier integer_literal) | (integer_literal identifier)

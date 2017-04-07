@@ -149,9 +149,8 @@ FILE
             PsiWhiteSpace(' ')
             FORALL_HEADER
               PsiElement(()('(')
-              TYPE_SPEC
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(integer)('integer')
+              INTRINSIC_TYPE_SPEC
+                PsiElement(integer)('integer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
