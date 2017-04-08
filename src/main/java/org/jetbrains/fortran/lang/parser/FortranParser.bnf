@@ -118,16 +118,16 @@ internal_subprogram ::= !(label? (end_unit_keys | endprocedure)) (function_subpr
 }
 private internal_subprogram_recover ::= !(eol | end | endfunction | endsubprogram | endprocedure)
 // R212
-other_specification_stmt ::= /* access_stmt
-                           |  allocatable-stmt
-                           |  asynchronous-stmt
-                           |  bind-stmt
-                           |  codimension-stmt
-                           |  common-stmt
-                           |  data-stmt
+other_specification_stmt ::=  access_stmt
+                           |  allocatable_stmt
+                           |  asynchronous_stmt
+                           |  bind_stmt
+                           |  codimension_stmt
+                        /*   |  common-stmt*/
+                           |  data_stmt/*
                            |  dimension-stmt
-                           |  equivalence-stmt
-                           |*/  external_stmt
+                           |  equivalence-stmt*/
+                           | external_stmt
                          /*  |  intent-stmt*/
                            |  intrinsic_stmt/*
                            |  namelist-stmt
@@ -203,10 +203,10 @@ kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
 signed_int_literal ::= ('+' | '-')? integer_literal
 // R407 - 411 are trivial or implemented in lexer
 // R412
-signed_real_literal ::= ('+' | '-') (floating_point_literal | double_precision_literal)
+signed_real_literal ::= ('+' | '-')? (floating_point_literal | double_precision_literal)
 // R412 - 416 are implemented in lexer
 // R417
-complex_literal ::= '(' ri_part ',' ri_part ')'
+complex_literal ::= '(' ri_part ',' ri_part ')' { pin = 3 }
 // R418 - 419
 private ri_part ::= signed_int_literal | signed_real_literal | identifier
 // R420
@@ -342,31 +342,80 @@ attr_spec ::= access_spec | allocatable | asynchronous | (codimension '[' coarra
 private entity_decl_list ::= entity_decl (',' entity_decl)*
 entity_decl ::= identifier ('(' array_spec ')')? ('[' coarray_spec ']')?
                 ('*' char_length)? initialization?
+// R504 is trivial
 // R505
 private initialization ::= ('=' expr) | ('=>' designator) | ('=>' function_reference)
+// R506 is trivial
 // R507
 private access_spec ::= (public | private)
 // R508
-language_binding_spec ::= bind '(' (',' namekwd '=' expr)? ')'
+language_binding_spec ::= bindskwd | (bind '(' identifier (',' namekwd '=' expr)? ')')
 // R509
-private coarray_spec ::= deferred_coshape_spec_list// | explicit_coshape_spec
+private coarray_spec ::= deferred_coshape_spec_list | explicit_coshape_spec
 // R510
 deferred_coshape_spec_list ::= ':' (',' ':')*
+// R511
+explicit_coshape_spec ::= ((expr ':')? expr ',')* (expr ':')? '*'
+// R512 - 513 are trivial
+// R514 is probably unused
 // R515
 private array_spec ::= explicit_shape_spec_list | assumed_shape_spec_list
-                | deferred_shape_spec_list //| assumed_size_spec | implied_shape_spec_list
+                | deferred_shape_spec_list | assumed_size_spec | implied_shape_spec_list
 // R516
 private explicit_shape_spec_list ::= explicit_shape_spec (',' explicit_shape_spec)*
 explicit_shape_spec ::= (expr ':')? expr
+// R517 - 518 are trivial
 // R519
 private assumed_shape_spec_list ::= assumed_shape_spec (',' assumed_shape_spec)*
 assumed_shape_spec ::= (expr)? ':'
 // R520
 private deferred_shape_spec_list ::= deferred_shape_spec (',' deferred_shape_spec)*
-deferred_shape_spec ::= (expr)? ':'
-
+deferred_shape_spec ::= ':'
+// R521
+assumed_size_spec ::= (explicit_shape_spec ',')* (expr ':')? '*'
+// R522
+private implied_shape_spec_list ::= implied_shape_spec (',' implied_shape_spec)*
+implied_shape_spec ::= (expr ':')? '*'
 // R523
 private intent_spec ::= in | out | inout
+// R524
+access_stmt ::= access_spec (('::')? access_id_list)?
+// R525
+private access_id_list ::= access_id (',' access_id)*
+access_id ::= identifier | generic_spec // generic_spec includes identifier
+// R526
+allocatable_stmt ::= allocatable ('::')? allocatable_decl_list
+// R527
+private allocatable_decl_list ::= allocatable_decl (',' allocatable_decl)*
+allocatable_decl ::= identifier ('(' array_spec ')')? ('[' coarray_spec ']')?
+// R528
+asynchronous_stmt ::= asynchronous ('::')? name_list
+// R529
+bind_stmt ::= language_binding_spec ('::')? bind_entity_list
+// R530
+private bind_entity_list ::= bind_entity (',' bind_entity)*
+bind_entity ::= identifier | ('/' identifier '/')
+// R531
+codimension_stmt ::= codimension ('::')? codimension_decl_list
+// R532
+private codimension_decl_list ::= codimension_decl (',' codimension_decl)*
+codimension_decl ::= identifier '[' coarray_spec ']'
+// R533
+contiguous_stmt ::= contiguous ('::')? name_list
+// R534
+data_stmt ::= data data_stmt_set ((',')? data_stmt_set)*
+// R535
+data_stmt_set ::= data_stmt_object_list '/' data_stmt_value_list '/'
+// R536
+private data_stmt_object_list ::= data_stmt_object (',' data_stmt_object)*
+data_stmt_object ::= variable | data_implied_do
+// R537
+data_implied_do ::= '(' data_i_do_object_list ',' identifier '=' expr ',' expr (',' expr)?  ')'
+// R538
+private data_i_do_object_list ::= data_i_do_object (',' data_i_do_object)*
+data_i_do_object ::= data_ref | data_implied_do
+// R539 is trivial
+// R540
 
 // R548
 parameter_stmt ::= parameter '(' named_constant_def_list ')' {pin=1}

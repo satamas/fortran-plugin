@@ -14,4 +14,7 @@ program literals
   h = O"1765"
   i = Z'9A7f'
   j = .TRUE._1
+  k = ( 10.0, +4_8)
+  l = (/ 10, 9, 8, 7 /)
+  m = [ 1, 2, 3 ]
 endprogram
