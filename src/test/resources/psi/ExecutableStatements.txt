@@ -327,7 +327,19 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement())(')')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    call oops ( text )')
+          PsiWhiteSpace('    ')
+          CALL_STMT
+            PsiElement(call)('call')
+            PsiWhiteSpace(' ')
+            PROCEDURE_DESIGNATOR
+              PsiElement(identifier)('oops')
+            PsiWhiteSpace(' ')
+            PsiElement(()('(')
+            PsiWhiteSpace(' ')
+            DESIGNATOR
+              PsiElement(identifier)('text')
+            PsiWhiteSpace(' ')
+            PsiElement())(')')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           CLOSE_STMT
@@ -492,7 +504,12 @@ FILE
           PsiElement(eol)('\n')
           PsiComment(line_comment)('!    pause "p"')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    return 2')
+          PsiWhiteSpace('    ')
+          RETURN_STMT
+            PsiElement(returnkwd)('return')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integer_literal)('2')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           REWIND_STMT

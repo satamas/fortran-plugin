@@ -28,7 +28,7 @@ program p
     backspace 2
     backspace a
     backspace ( 2, iostat=code, err=9 )
-!    call oops ( text )
+    call oops ( text )
     close ( 2, status='delete', iostat=i )
     continue
     endfile ( unit=nout, iostat=kode, err=9)
@@ -40,7 +40,7 @@ program p
     open(unit=8, file='projecta/data.test', err=99)
 !    pause 1
 !    pause "p"
-!    return 2
+    return 2
     rewind 3
     rewind (unit = 3, iostat = code, err = 100)
 !    sphere ( r ) = 4.0 * pi * (r**3) / 3.0

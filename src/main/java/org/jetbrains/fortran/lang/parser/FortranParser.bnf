@@ -92,9 +92,15 @@ private external_subprogram ::= function_subprogram | subroutine_subprogram
 // R204
 specification_part ::= (eol | use_stmt)* (eol | import_stmt)* implicit_part? (eol | declaration_construct)*
 // R205
-implicit_part ::= (eol | implicit_part_stmt)* implicit_stmt eol
+implicit_part ::= (label? (eol | implicit_part_stmt))+ // in the origin must ends by implicit_stmt
 // R206
-implicit_part_stmt ::= label? (implicit_stmt | parameter_stmt | entry_stmt | format_stmt)
+implicit_part_stmt ::= !(label? end_implicit_keys) (implicit_stmt | parameter_stmt | entry_stmt | format_stmt) {
+  pin = 1
+  recoverWhile = implicit_recover
+}
+private implicit_recover ::= !(eol)
+private end_implicit_keys ::= !(implicit | parameter | entry | formatkwd)
+
 // R207
 declaration_construct ::= label? (derived_type_def | entry_stmt | format_stmt | enum_def
                         | interface_block | parameter_stmt | procedure_declaration_stmt
@@ -102,10 +108,10 @@ declaration_construct ::= label? (derived_type_def | entry_stmt | format_stmt | 
 
 // R208 is in R801
 // R209
-private execution_part_construct ::= !(label? end_block_keys) (executable_construct | entry_stmt | format_stmt) {
+private execution_part_construct ::= !(label? end_block_keys) (executable_construct | entry_stmt | format_stmt | data_stmt) {
   pin=1
   recoverWhile=block_recover
-}//   | data-stmt
+}
 private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
 private end_block_keys ::= end | endprogram | endprocedure | endsubroutine | endfunction | endif | enddo | else
                     | elseif | endblock | endcritical | endassociate | case | endselect | contains
@@ -123,21 +129,21 @@ other_specification_stmt ::=  access_stmt
                            |  asynchronous_stmt
                            |  bind_stmt
                            |  codimension_stmt
-                        /*   |  common-stmt*/
-                           |  data_stmt/*
-                           |  dimension-stmt
-                           |  equivalence-stmt*/
-                           | external_stmt
-                         /*  |  intent-stmt*/
-                           |  intrinsic_stmt/*
-                           |  namelist-stmt
-                           |  optional-stmt
-                           |  pointer-stmt
-                           |  protected-stmt
-                           |  save-stmt
-                           |  target-stmt
-                           |  volatile-stmt
-                           |  value-stmt*/
+                           |  common_stmt
+                           |  data_stmt
+                           |  dimension_stmt
+                           |  equivalence_stmt
+                           |  external_stmt
+                           |  intent_stmt
+                           |  intrinsic_stmt
+                           |  namelist_stmt
+                           |  optional_stmt
+                           |  pointer_stmt
+                           |  protected_stmt
+                           |  save_stmt
+                           |  target_stmt
+                           |  volatile_stmt
+                           |  value_stmt
 // R213
 private executable_construct ::= action_stmt   | associate_construct | block_construct  | case_construct
                        | critical_construct    | do_construct        | forall_construct | if_construct
@@ -359,8 +365,8 @@ explicit_coshape_spec ::= ((expr ':')? expr ',')* (expr ':')? '*'
 // R512 - 513 are trivial
 // R514 is probably unused
 // R515
-private array_spec ::= explicit_shape_spec_list | assumed_shape_spec_list
-                | deferred_shape_spec_list | assumed_size_spec | implied_shape_spec_list
+private array_spec ::= assumed_size_spec | implied_shape_spec_list | explicit_shape_spec_list
+                     | assumed_shape_spec_list | deferred_shape_spec_list
 // R516
 private explicit_shape_spec_list ::= explicit_shape_spec (',' explicit_shape_spec)*
 explicit_shape_spec ::= (expr ':')? expr
@@ -400,7 +406,7 @@ codimension_stmt ::= codimension ('::')? codimension_decl_list
 // R532
 private codimension_decl_list ::= codimension_decl (',' codimension_decl)*
 codimension_decl ::= identifier '[' coarray_spec ']'
-// R533
+// R533 probably unused
 contiguous_stmt ::= contiguous ('::')? name_list
 // R534
 data_stmt ::= data data_stmt_set ((',')? data_stmt_set)*
@@ -416,20 +422,72 @@ private data_i_do_object_list ::= data_i_do_object (',' data_i_do_object)*
 data_i_do_object ::= data_ref | data_implied_do
 // R539 is trivial
 // R540
-
+private data_stmt_value_list ::= data_stmt_value (',' data_stmt_value)*
+data_stmt_value ::= (data_stmt_repeat '*')? data_stmt_constant
+// R541
+data_stmt_repeat ::= designator | constant
+// R542
+data_stmt_constant ::= designator | constant | signed_int_literal | signed_real_literal
+                     | function_reference | structure_constructor
+// R543 - 544 are trivial
+// R545
+dimension_stmt ::= dimension ('::')? identifier '(' array_spec ')' (',' identifier '(' array_spec ')')*
+// R546
+intent_stmt ::= intent '(' intent_spec ')' ('::')? name_list
+// R547
+optional_stmt ::= optional ('::')? name_list
 // R548
 parameter_stmt ::= parameter '(' named_constant_def_list ')' {pin=1}
 // R549
 private named_constant_def_list ::= named_constant_def (',' named_constant_def)*
 named_constant_def ::= identifier '=' expr
+// R550
+pointer_stmt ::= pointer ('::')? pointer_decl_list
+// R551
+private pointer_decl_list ::= pointer_decl (',' pointer_decl)*
+pointer_decl ::= identifier ('(' deferred_shape_spec_list ')')?
+// R552
+protected_stmt ::= protected ('::')? name_list
+// R553
+save_stmt ::= save (('::')? saved_entity_list)?
+// R554
+private saved_entity_list ::= saved_entity (',' saved_entity)*
+saved_entity ::= identifier | ('/' identifier '/')
+// R555 is trivial
+// R556
+target_stmt ::= target ('::')? target_decl_list
+// R557
+private target_decl_list ::= target_decl (',' target_decl)*
+target_decl ::= identifier ('(' array_spec ')')? ('[' coarray_spec ']')?
+// R558
+value_stmt ::= value ('::')? name_list
+// R559
+volatile_stmt ::= volatile ('::')? name_list
 // R560
-implicit_stmt ::= label? implicit (implisit_spec_list | none) { pin = 2}
+implicit_stmt ::= implicit (implisit_spec_list | none) { pin = 2 }
 // R561
 private implisit_spec_list ::= implicit_spec (',' implicit_spec)*
-implicit_spec ::= declaration_type_spec '(' letter_spec_list ')'
+implicit_spec ::= declaration_type_spec '(' letter_spec_list ')' { pin = 2 }
 // R562
 private letter_spec_list ::= letter_spec (',' letter_spec)*
-letter_spec ::= identifier ('-' identifier)
+letter_spec ::= identifier ('-' identifier)? { pin = 1 }
+// R563
+namelist_stmt ::= namelist '/' identifier '/' name_list ((',')? '/' identifier '/' name_list)*
+// R564 is trivial
+// R565
+equivalence_stmt ::= equivalence equivalence_set_list
+// R566
+private equivalence_set_list ::= equivalence_set (',' equivalence_set)*
+equivalence_set ::= '(' equivalence_object ',' equivalence_object_list ')'
+// R567
+private equivalence_object_list ::= equivalence_object (',' equivalence_object)*
+equivalence_object ::= data_ref | identifier | substring
+// R568
+common_stmt ::= common (('/' identifier? '/') | '//')? common_block_object_list ((',')? (('/' identifier? '/') | '//') common_block_object_list)*
+// R569
+private common_block_object_list ::= common_block_object (',' common_block_object)*
+common_block_object ::= identifier ('(' array_spec ')')?
+
 // Clause 6
 // R601 is implemented in clause 7
 // R602

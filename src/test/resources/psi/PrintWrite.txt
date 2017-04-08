@@ -60,7 +60,21 @@ FILE
         DESIGNATOR
           PsiElement(identifier)('item3')
       PsiElement(eol)('\n')
-      PsiComment(line_comment)('!  130 format (A,E8.1)')
+      PsiWhiteSpace('  ')
+      LABEL
+        PsiElement(integer_literal)('130')
+      PsiWhiteSpace(' ')
+      FORMAT_STMT
+        PsiElement(formatkwd)('format')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        DATA_EDIT_DESC
+          PsiElement(identifier)('A')
+        PsiElement(,)(',')
+        DATA_EDIT_DESC
+          PsiElement(identifier)('E8')
+          PsiElement(floating_point_literal)('.1')
+        PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT

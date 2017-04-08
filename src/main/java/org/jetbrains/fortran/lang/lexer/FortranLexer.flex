@@ -135,8 +135,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "character" { return CHARACTER; }
 "class" { return CLASSKWD; }
 "close" { return CLOSE; }
-"codimension" { return CODIMENSION; } /*
-"common" { return FortranTokens.COMMON_KEYWORD; }*/
+"codimension" { return CODIMENSION; }
+"common" { return COMMON; }
 "complex" { return COMPLEX; }
 "concurrent" { return CONCURRENT; }
 "contains" { return CONTAINS; }
@@ -159,8 +159,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "entry" { return ENTRY; }
 "enum" { return ENUM; }
 "enumerator" { return ENUMERATORKWD; }
-"error" { return ERROR; }/*
-"equivalence" { return FortranTokens.EQUIVALENCE_KEYWORD; }*/
+"error" { return ERROR; }
+"equivalence" { return EQUIVALENCE; }
 "exit" { return EXIT; }
 "extends" { return EXTENDS; }
 "external" { return EXTERNAL; }
@@ -192,8 +192,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "logical" { return LOGICAL; }
 "module" { return MODULEKWD; }
 "memory" { return MEMORY; }
-"name" { return NAMEKWD; }/*
-"namelist" { return FortranTokens.NAMELIST_KEYWORD; }*/
+"name" { return NAMEKWD; }
+"namelist" { return NAMELIST; }
 "none" { return NONE; }
 "non_intrinsic" { return NON_INTRINSIC; }
 "non_overridable" { return NON_OVERRIDABLE; }
