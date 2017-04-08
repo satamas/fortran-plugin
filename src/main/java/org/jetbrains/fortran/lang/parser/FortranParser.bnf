@@ -467,11 +467,14 @@ volatile_stmt ::= volatile ('::')? name_list
 implicit_stmt ::= implicit (implisit_spec_list | none) { pin = 2 }
 // R561
 private implisit_spec_list ::= implicit_spec (',' implicit_spec)*
-implicit_spec ::= declaration_type_spec '(' letter_spec_list ')' { pin = 2 }
+implicit_spec ::= (declaration_type_spec '(' letter_spec_list ')')
+                 | ((integer | real | complex | logical | character) '(' letter_spec_list ')')
+// that's a crutch to parse intrinsic_type_spec without kindparam
 // R562
 private letter_spec_list ::= letter_spec (',' letter_spec)*
 letter_spec ::= identifier ('-' identifier)? { pin = 1 }
 // R563
+namelist_stmt ::= namelist '/' identifier '/' name_list ((',')? '/' identifier '/' name_list)*
 namelist_stmt ::= namelist '/' identifier '/' name_list ((',')? '/' identifier '/' name_list)*
 // R564 is trivial
 // R565
