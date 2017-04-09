@@ -14,14 +14,14 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         CONSTANT
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         CONNECT_SPEC
           PsiElement(identifier)('file')
           PsiElement(=)('=')
           CONSTANT
-            PsiElement(string_literal)('"data.dat"')
+            PsiElement(stringliteral)('"data.dat"')
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -35,21 +35,21 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           CONSTANT
-            PsiElement(integer_literal)('2')
+            PsiElement(integerliteral)('2')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         CONNECT_SPEC
           PsiElement(identifier)('file')
           PsiElement(=)('=')
           CONSTANT
-            PsiElement(string_literal)('"res.dat"')
+            PsiElement(stringliteral)('"res.dat"')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         CONNECT_SPEC
           PsiElement(identifier)('err')
           PsiElement(=)('=')
           CONSTANT
-            PsiElement(integer_literal)('12345')
+            PsiElement(integerliteral)('12345')
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -58,14 +58,14 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         CONSTANT
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         WAIT_SPEC
           PsiElement(end)('end')
           PsiElement(=)('=')
           CONSTANT
-            PsiElement(integer_literal)('1')
+            PsiElement(integerliteral)('1')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         WAIT_SPEC
@@ -74,7 +74,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           CONSTANT
-            PsiElement(integer_literal)('2')
+            PsiElement(integerliteral)('2')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         WAIT_SPEC
@@ -82,7 +82,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(=)('=')
           CONSTANT
-            PsiElement(integer_literal)('3')
+            PsiElement(integerliteral)('3')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         WAIT_SPEC
@@ -92,10 +92,10 @@ FILE
           PsiWhiteSpace(' ')
           ADD_EXPR
             CONSTANT
-              PsiElement(integer_literal)('2')
+              PsiElement(integerliteral)('2')
             PsiElement(+)('+')
             CONSTANT
-              PsiElement(integer_literal)('2')
+              PsiElement(integerliteral)('2')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         WAIT_SPEC
@@ -121,7 +121,7 @@ FILE
         PsiElement(backspace)('backspace')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       BACKSPACE_STMT
@@ -129,7 +129,7 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         CONSTANT
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         POSITION_AND_FLUSH_SPEC
@@ -138,7 +138,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           CONSTANT
-            PsiElement(integer_literal)('1')
+            PsiElement(integerliteral)('1')
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -146,7 +146,7 @@ FILE
         PsiElement(endfile)('endfile')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       ENDFILE_STMT
@@ -154,7 +154,7 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         CONSTANT
-          PsiElement(integer_literal)('2')
+          PsiElement(integerliteral)('2')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         POSITION_AND_FLUSH_SPEC
@@ -171,14 +171,14 @@ FILE
         PsiElement(rewind)('rewind')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FLUSH_STMT
         PsiElement(flush)('flush')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(integer_literal)('2')
+          PsiElement(integerliteral)('2')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FLUSH_STMT
@@ -189,7 +189,7 @@ FILE
           PsiElement(identifier)('unit')
           PsiElement(=)('=')
           CONSTANT
-            PsiElement(integer_literal)('2')
+            PsiElement(integerliteral)('2')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         POSITION_AND_FLUSH_SPEC
@@ -198,7 +198,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           CONSTANT
-            PsiElement(integer_literal)('3')
+            PsiElement(integerliteral)('3')
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -211,15 +211,15 @@ FILE
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         ADD_EXPR
           CONSTANT
-            PsiElement(integer_literal)('1')
+            PsiElement(integerliteral)('1')
           PsiElement(+)('+')
           CONSTANT
-            PsiElement(integer_literal)('2')
+            PsiElement(integerliteral)('2')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       INQUIRE_STMT
@@ -227,14 +227,14 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         CONSTANT
-          PsiElement(integer_literal)('12')
+          PsiElement(integerliteral)('12')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         INQUIRE_SPEC
           PsiElement(identifier)('file')
           PsiElement(=)('=')
           CONSTANT
-            PsiElement(string_literal)('"file.dat"')
+            PsiElement(stringliteral)('"file.dat"')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         INQUIRE_SPEC
@@ -266,7 +266,7 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         CONSTANT
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         CLOSE_SPEC
@@ -284,7 +284,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           CONSTANT
-            PsiElement(integer_literal)('12345')
+            PsiElement(integerliteral)('12345')
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -298,7 +298,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           CONSTANT
-            PsiElement(integer_literal)('2')
+            PsiElement(integerliteral)('2')
         PsiElement())(')')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT

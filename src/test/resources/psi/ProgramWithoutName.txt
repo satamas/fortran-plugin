@@ -10,7 +10,7 @@ FILE
               PsiElement(kind)('kind')
               PsiElement(=)('=')
               CONSTANT
-                PsiElement(integer_literal)('4')
+                PsiElement(integerliteral)('4')
               PsiElement())(')')
           PsiWhiteSpace(' ')
           ENTITY_DECL

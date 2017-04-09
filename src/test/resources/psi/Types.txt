@@ -28,7 +28,7 @@ FILE
                       PsiElement(len)('len')
                       PsiElement(=)('=')
                       CONSTANT
-                        PsiElement(integer_literal)('20')
+                        PsiElement(integerliteral)('20')
                       PsiElement())(')')
                 PsiWhiteSpace(' ')
                 PsiElement(::)('::')
@@ -154,7 +154,7 @@ FILE
                       PsiElement(=)('=')
                       PsiWhiteSpace(' ')
                       CONSTANT
-                        PsiElement(integer_literal)('20')
+                        PsiElement(integerliteral)('20')
                       PsiElement())(')')
                 PsiWhiteSpace(' ')
                 PsiElement(::)('::')

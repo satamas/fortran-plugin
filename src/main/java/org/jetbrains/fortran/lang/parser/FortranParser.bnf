@@ -100,12 +100,10 @@ implicit_part_stmt ::= !(label? end_implicit_keys) (implicit_stmt | parameter_st
 }
 private implicit_recover ::= !(eol)
 private end_implicit_keys ::= !(implicit | parameter | entry | formatkwd)
-
 // R207
 declaration_construct ::= label? (derived_type_def | entry_stmt | format_stmt | enum_def
                         | interface_block | parameter_stmt | procedure_declaration_stmt
                         | other_specification_stmt | type_declaration_stmt | stmt_function_stmt)
-
 // R208 is in R801
 // R209
 private execution_part_construct ::= !(label? end_block_keys) (executable_construct | entry_stmt | format_stmt | data_stmt) {
@@ -131,6 +129,7 @@ other_specification_stmt ::=  access_stmt       |  allocatable_stmt |  asynchron
                            |  namelist_stmt     |  optional_stmt    |  pointer_stmt
                            |  protected_stmt    |  save_stmt        |  target_stmt
                            |  volatile_stmt     |  value_stmt
+                           |  contiguous_stmt
 // R213
 private executable_construct ::= action_stmt   | associate_construct | block_construct  | case_construct
                        | critical_construct    | do_construct        | forall_construct | if_construct
@@ -158,7 +157,7 @@ private action_stmt ::= allocate_stmt   | assignment_stmt           | backspace_
 // R306, R307, R308 are trivial
 // R309, R310, R311 are excess
 // R312
-label ::= integer_literal
+label ::= integerliteral
 
 // Clause 4
 // R401
@@ -173,10 +172,10 @@ intrinsic_type_spec ::= ((integer | real | complex | logical) (kind_selector)?) 
 // R405
 kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
 // R406
-signed_int_literal ::= ('+' | '-')? integer_literal
+signed_int_literal ::= ('+' | '-')? integerliteral
 // R407 - 411 are trivial or implemented in lexer
 // R412
-signed_real_literal ::= ('+' | '-')? (floating_point_literal | double_precision_literal)
+signed_real_literal ::= ('+' | '-')? (floatingpointliteral | doubleprecisionliteral)
 // R412 - 416 are implemented in lexer
 // R417
 complex_literal ::= '(' ri_part ',' ri_part ')' { pin = 3 }
@@ -189,7 +188,7 @@ char_selector ::= length_selector | ('(' len '=' type_param_value ',' kind '=' e
 // R421
 length_selector ::= ('(' (len '=')? type_param_value ')') | ('*' char_length (',')?)
 // R422
-char_length ::= ('(' type_param_value ')') | integer_literal
+char_length ::= ('(' type_param_value ')') | integerliteral
 // R423 - 424 are implemented in lexer
 // R425
 derived_type_def ::= derived_type_stmt type_param_def_stmt* private_or_sequence* component_part
@@ -259,7 +258,7 @@ type_bound_proc_decl ::= identifier ('=>' identifier)?
 type_bound_generic_stmt ::= generic (',' access_spec)? '::' generic_spec '=>' name_list { pin = 1}
 // R451
 private binding_attr_list ::= binding_attr (',' binding_attr)*
-binding_attr ::= (pass ('(' identifier ')')?) | nopass | non_overridable | deferred | access_spec
+binding_attr ::= (pass ('(' identifier ')')?) | nopass | nonoverridable | deferred | access_spec
 // R452
 final_procedure_stmt ::= final '::' name_list { pin = 1 }
 // R453
@@ -290,7 +289,7 @@ enumerator ::= identifier ('=' expr)?
 // R462
 end_enum_stmt ::= label? ((end enum) | endenum) { pin = 2 }
 // R463
-boz_literal ::= binary_literal | octal_literal | hex_literal
+boz_literal ::= binaryliteral | octalliteral | hexliteral
 // R464 - R467 are implemented in lexer
 // R468 is in clause 7
 // R469
@@ -298,7 +297,7 @@ ac_spec ::= ((type_spec '::')? ac_value_list ) | (type_spec '::')
 // R470 - 471 are trivial
 // R472
 private ac_value_list ::= ac_value (',' ac_value)*
-ac_value ::= expr | ac_implied_do
+ac_value ::= (expr | ac_implied_do) !'=' { pin = 2 }
 // R473
 ac_implied_do ::= '('ac_value_list ',' id_loop_stmt ')'
 // R474 - 475 are trivial
@@ -373,7 +372,7 @@ codimension_stmt ::= codimension ('::')? codimension_decl_list
 // R532
 private codimension_decl_list ::= codimension_decl (',' codimension_decl)*
 codimension_decl ::= identifier '[' coarray_spec ']'
-// R533 probably unused
+// R533 unused in standard but works
 contiguous_stmt ::= contiguous ('::')? name_list
 // R534
 data_stmt ::= data data_stmt_set ((',')? data_stmt_set)*
@@ -386,7 +385,7 @@ data_stmt_object ::= variable | data_implied_do
 data_implied_do ::= '(' data_i_do_object_list ',' identifier '=' expr ',' expr (',' expr)?  ')'
 // R538
 private data_i_do_object_list ::= data_i_do_object (',' data_i_do_object)*
-data_i_do_object ::= data_ref | data_implied_do
+data_i_do_object ::= (data_ref | data_implied_do) !'=' { pin= 2 }
 // R539 is trivial
 // R540
 private data_stmt_value_list ::= data_stmt_value (',' data_stmt_value)*
@@ -450,7 +449,7 @@ private equivalence_set_list ::= equivalence_set (',' equivalence_set)*
 equivalence_set ::= '(' equivalence_object ',' equivalence_object_list ')'
 // R567
 private equivalence_object_list ::= equivalence_object (',' equivalence_object)*
-equivalence_object ::= data_ref | identifier | substring
+equivalence_object ::= substring | data_ref | identifier
 // R568
 common_stmt ::= common (('/' identifier? '/') | '//')? common_block_object_list ((',')? (('/' identifier? '/') | '//') common_block_object_list)*
 // R569
@@ -465,7 +464,7 @@ private variable ::= designator //| expr
 // R608
 substring ::= parent_string '(' substring_range ')'
 // R609
-parent_string ::= data_ref | identifier | string_literal
+parent_string ::= data_ref | identifier | stringliteral
 // R610
 substring_range ::= (expr)? ':' (expr)?
 // R611
@@ -571,8 +570,8 @@ array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 // R601
 designator ::= data_ref | complex_part_designator | array_section | substring | identifier
 // R304, R305 modified
-constant ::= integer_literal | floating_point_literal | double_precision_literal
-           | complex_literal | logical_literal | string_literal | boz_literal
+constant ::= integerliteral | floatingpointliteral | doubleprecisionliteral
+           | complex_literal | logical_literal | stringliteral | boz_literal
 logical_literal ::= true | false
 
 // R724 - 731 are trivial
@@ -840,7 +839,7 @@ io_implied_do ::= '(' io_implied_do_object_list ',' id_loop_stmt ')' { pin = 4 }
 private io_implied_do_object_list ::= io_implied_do_object (',' io_implied_do_object)*
 io_implied_do_object ::= (input_item | output_item) !'=' { pin = 2 }
 // R921 (unused maybe)
-dtv_type_spec ::= (type | classkwd) '(' derived_type_spec ')' { pin =1 }
+//dtv_type_spec ::= (type | classkwd) '(' derived_type_spec ')' { pin =1 }
 // R922
 wait_stmt ::= wait '(' wait_spec_list ')' { pin =1 }
 // R923
@@ -890,22 +889,22 @@ private format_specification ::= '(' (((format_items ',')? unlimited_format_item
 // R1003
 private format_items ::= format_item (',' format_item)*
 // R1004
-format_item ::= ((integer_literal)? data_edit_desc) | control_edit_desc | string_literal
-               | ((integer_literal)? '(' format_items ')')
+format_item ::= ((integerliteral)? data_edit_desc) | control_edit_desc | stringliteral
+               | ((integerliteral)? '(' format_items ')')
 // R1005
 unlimited_format_item ::= '*''(' format_items ')'
 // R1006 is trivial
 // R1007
-data_edit_desc ::= identifier (integer_literal | floating_point_literal | (string_literal? ('(' v_list ')')?))?
+data_edit_desc ::= identifier (integerliteral | floatingpointliteral | (stringliteral? ('(' v_list ')')?))?
 // R1008-1011 are trivial
 // R1012
 private v_list ::= signed_int_literal (',' signed_int_literal)* // unary_add_expr (',' unary_add_expr)*
 // R1013
-control_edit_desc ::= position_edit_desc | (integer_literal? '/') | ':'
+control_edit_desc ::= position_edit_desc | (integerliteral? '/') | ':'
                   | identifier | (signed_int_literal identifier)
 // R1014 is trivial
 // R1015
-position_edit_desc ::= (identifier integer_literal) | (integer_literal identifier)
+position_edit_desc ::= (identifier integerliteral) | (integerliteral identifier)
 // R1016 - R1021 are trivial or should be studied after parsing
 // R1022 is unused probably
 
@@ -933,11 +932,15 @@ module_subprogram ::= !(label? (end | endmodule | endsubmodule)) (function_subpr
 }
 private module_subprogram_recover ::= !(eol | end | endfunction | endsubprogram | endprocedure)
 // R1109
-use_stmt ::= label? use (use_stmt_rename | use_stmt_only) {pin = 2}
+use_stmt ::= label? use (use_stmt_rename | use_stmt_only) {
+pin = 2
+recoverWhile = eolrecover
+}
+private eolrecover ::= !eol
 private use_stmt_rename ::= ((',' module_nature)? '::')? identifier (',' rename_list)
 private use_stmt_only ::= ((',' module_nature)? '::')? identifier ',' only ':' (only_list) { pin = 4 }
 // R1110
-private module_nature ::= intrinsic | non_intrinsic
+private module_nature ::= intrinsic | nonintrinsic
 // R1111
 private rename_list ::= rename_stmt (',' rename_stmt)*
 rename_stmt ::= (identifier '=>' identifier)
@@ -984,7 +987,10 @@ generic_spec ::= identifier | (operator '(' defoperator ')')
 defined_io_generic_spec ::= read '(' (formatted | unformatted) ')'
                            | write '(' (formatted | unformatted) ')'
 // R1209
-import_stmt ::= label? import ('::'? name_list) { pin =2}
+import_stmt ::= label? import ('::'? name_list) {
+pin =2
+recoverWhile = eolrecover
+}
 // R1210
 external_stmt ::= external ('::')? name_list { pin = 1 }
 // R1211
@@ -1058,5 +1064,3 @@ pause_stmt ::= pause (expr)? { pin = 1 }
 assign_stmt ::= assign label to variable { pin = 1 }
 assigned_goto_stmt ::= (goto | (go to)) variable (','? '(' label_list ')' )? { pin = 2 }
 
-// That's a cap. Must be removed in the final version
-cap ::= line_comment

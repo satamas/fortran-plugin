@@ -17,6 +17,8 @@ public class FortranTokenType extends IElementType {
         super(debug, FortranLanguage.INSTANCE);
     }
 
+    public static IElementType LINE_COMMENT = new FortranTokenType("comment");
+
     public static TokenSet KEYWORDS = TokenSet.create(
             ABSTRACT,
             ALL,
@@ -108,8 +110,8 @@ public class FortranTokenType extends IElementType {
             NAMEKWD,
             NAMELIST,
             NONE,
-            NON_INTRINSIC,
-            NON_OVERRIDABLE,
+            NONINTRINSIC,
+            NONOVERRIDABLE,
             NOPASS,
             NULLIFY,
             ONLY,
@@ -166,7 +168,7 @@ public class FortranTokenType extends IElementType {
 
     public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT);
 
-    public static TokenSet STRINGS = TokenSet.create(STRING_LITERAL);
+    public static TokenSet STRINGS = TokenSet.create(STRINGLITERAL);
 
 // These keywords are used for specification parameters names
 // We'll use them one day

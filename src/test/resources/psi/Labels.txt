@@ -2,7 +2,7 @@ FILE
   MAIN_PROGRAM
     PROGRAM_STMT
       LABEL
-        PsiElement(integer_literal)('1')
+        PsiElement(integerliteral)('1')
       PsiWhiteSpace(' ')
       PsiElement(programkwd)('program')
       PsiWhiteSpace(' ')

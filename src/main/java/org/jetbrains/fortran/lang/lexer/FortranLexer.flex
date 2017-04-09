@@ -7,6 +7,7 @@ import java.util.Stack;
 
 import static com.intellij.psi.TokenType.*;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
 %%
 
 %class _FortranLexer
@@ -65,13 +66,13 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
 {LINE_COMMENT} { return LINE_COMMENT; }
 
-{STRING_LITERAL} { return STRING_LITERAL; }
-{INTEGER_LITERAL} { return INTEGER_LITERAL; }
-{BINARY_LITERAL} { return BINARY_LITERAL; }
-{OCTAL_LITERAL} { return OCTAL_LITERAL; }
-{HEX_LITERAL} { return HEX_LITERAL; }
-{FLOATING_POINT_LITERAL} { return FLOATING_POINT_LITERAL; }
-{DOUBLE_PRECISION_LITERAL} { return DOUBLE_PRECISION_LITERAL; }
+{STRING_LITERAL} { return STRINGLITERAL; }
+{INTEGER_LITERAL} { return INTEGERLITERAL; }
+{BINARY_LITERAL} { return BINARYLITERAL; }
+{OCTAL_LITERAL} { return OCTALLITERAL; }
+{HEX_LITERAL} { return HEXLITERAL; }
+{FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
+{DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
 
 ".true."(_{KIND_PARAM})? { return TRUE; }
 ".false."(_{KIND_PARAM})? { return FALSE; }
@@ -195,8 +196,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "name" { return NAMEKWD; }
 "namelist" { return NAMELIST; }
 "none" { return NONE; }
-"non_intrinsic" { return NON_INTRINSIC; }
-"non_overridable" { return NON_OVERRIDABLE; }
+"non_intrinsic" { return NONINTRINSIC; }
+"non_overridable" { return NONOVERRIDABLE; }
 "nopass" { return NOPASS; }
 "nullify" { return NULLIFY; }
 "only" { return ONLY; }

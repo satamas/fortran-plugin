@@ -27,7 +27,7 @@ FILE
             PsiElement(*)('*')
             PsiWhiteSpace(' ')
             CHAR_LENGTH
-              PsiElement(integer_literal)('8')
+              PsiElement(integerliteral)('8')
           PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       DECLARATION_CONSTRUCT
@@ -85,10 +85,10 @@ FILE
             EXPLICIT_SHAPE_SPEC
               ADD_EXPR
                 CONSTANT
-                  PsiElement(integer_literal)('3')
+                  PsiElement(integerliteral)('3')
                 PsiElement(+)('+')
                 CONSTANT
-                  PsiElement(integer_literal)('2')
+                  PsiElement(integerliteral)('2')
             PsiElement())(')')
           PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -104,10 +104,10 @@ FILE
             ASSUMED_SIZE_SPEC
               ADD_EXPR
                 CONSTANT
-                  PsiElement(integer_literal)('3')
+                  PsiElement(integerliteral)('3')
                 PsiElement(+)('+')
                 CONSTANT
-                  PsiElement(integer_literal)('2')
+                  PsiElement(integerliteral)('2')
               PsiElement(:)(':')
               PsiElement(*)('*')
             PsiElement())(')')
@@ -125,14 +125,14 @@ FILE
             ASSUMED_SIZE_SPEC
               EXPLICIT_SHAPE_SPEC
                 CONSTANT
-                  PsiElement(integer_literal)('4')
+                  PsiElement(integerliteral)('4')
               PsiElement(,)(',')
               ADD_EXPR
                 CONSTANT
-                  PsiElement(integer_literal)('3')
+                  PsiElement(integerliteral)('3')
                 PsiElement(+)('+')
                 CONSTANT
-                  PsiElement(integer_literal)('2')
+                  PsiElement(integerliteral)('2')
               PsiElement(:)(':')
               PsiElement(*)('*')
             PsiElement())(')')
@@ -162,7 +162,7 @@ FILE
             PsiElement(identifier)('str')
             PsiElement(=)('=')
             CONSTANT
-              PsiElement(string_literal)(''msg'')
+              PsiElement(stringliteral)(''msg'')
           PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -175,14 +175,14 @@ FILE
             PsiElement(identifier)('epsilon')
             PsiElement(=)('=')
             CONSTANT
-              PsiElement(floating_point_literal)('1.0e-6')
+              PsiElement(floatingpointliteral)('1.0e-6')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           NAMED_CONSTANT_DEF
             PsiElement(identifier)('pi')
             PsiElement(=)('=')
             CONSTANT
-              PsiElement(floating_point_literal)('3.141593')
+              PsiElement(floatingpointliteral)('3.141593')
           PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -209,7 +209,7 @@ FILE
               PsiElement(()('(')
               EXPLICIT_SHAPE_SPEC
                 CONSTANT
-                  PsiElement(integer_literal)('1')
+                  PsiElement(integerliteral)('1')
               PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -259,7 +259,7 @@ FILE
               PsiElement(()('(')
               EXPLICIT_SHAPE_SPEC
                 CONSTANT
-                  PsiElement(integer_literal)('1')
+                  PsiElement(integerliteral)('1')
               PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -284,7 +284,7 @@ FILE
               PsiElement(()('(')
               EXPLICIT_SHAPE_SPEC
                 CONSTANT
-                  PsiElement(integer_literal)('1')
+                  PsiElement(integerliteral)('1')
               PsiElement())(')')
       PsiElement(eol)('\n')
     BLOCK

@@ -14,7 +14,7 @@ FILE
             KIND_SELECTOR
               PsiElement(()('(')
               CONSTANT
-                PsiElement(integer_literal)('8')
+                PsiElement(integerliteral)('8')
               PsiElement())(')')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
@@ -46,7 +46,7 @@ FILE
             KIND_SELECTOR
               PsiElement(()('(')
               CONSTANT
-                PsiElement(integer_literal)('8')
+                PsiElement(integerliteral)('8')
               PsiElement())(')')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
@@ -78,10 +78,10 @@ FILE
             PsiElement(()('(')
             EXPLICIT_SHAPE_SPEC
               CONSTANT
-                PsiElement(integer_literal)('1')
+                PsiElement(integerliteral)('1')
               PsiElement(:)(':')
               CONSTANT
-                PsiElement(integer_literal)('1000')
+                PsiElement(integerliteral)('1000')
             PsiElement())(')')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
@@ -109,25 +109,25 @@ FILE
             PsiElement(()('(')
             EXPLICIT_SHAPE_SPEC
               CONSTANT
-                PsiElement(integer_literal)('9')
+                PsiElement(integerliteral)('9')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
             EXPLICIT_SHAPE_SPEC
               CONSTANT
-                PsiElement(integer_literal)('0')
+                PsiElement(integerliteral)('0')
               PsiElement(:)(':')
               CONSTANT
-                PsiElement(integer_literal)('99')
+                PsiElement(integerliteral)('99')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
             EXPLICIT_SHAPE_SPEC
               UNARY_ADD_EXPR
                 PsiElement(-)('-')
                 CONSTANT
-                  PsiElement(integer_literal)('99')
+                  PsiElement(integerliteral)('99')
               PsiElement(:)(':')
               CONSTANT
-                PsiElement(integer_literal)('99')
+                PsiElement(integerliteral)('99')
             PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(::)('::')

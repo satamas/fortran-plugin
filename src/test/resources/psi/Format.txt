@@ -3,7 +3,7 @@ FILE
     SPECIFICATION_PART
       IMPLICIT_PART
         LABEL
-          PsiElement(integer_literal)('1')
+          PsiElement(integerliteral)('1')
         PsiWhiteSpace(' ')
         IMPLICIT_PART_STMT
           FORMAT_STMT
@@ -11,10 +11,10 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             FORMAT_ITEM
-              PsiElement(integer_literal)('1')
+              PsiElement(integerliteral)('1')
               DATA_EDIT_DESC
                 PsiElement(identifier)('PE12')
-                PsiElement(floating_point_literal)('.4')
+                PsiElement(floatingpointliteral)('.4')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
             DATA_EDIT_DESC
@@ -22,7 +22,7 @@ FILE
             PsiElement())(')')
         PsiElement(eol)('\n')
         LABEL
-          PsiElement(integer_literal)('2')
+          PsiElement(integerliteral)('2')
         PsiWhiteSpace(' ')
         IMPLICIT_PART_STMT
           FORMAT_STMT
@@ -38,15 +38,15 @@ FILE
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
             FORMAT_ITEM
-              PsiElement(string_literal)('' Dates: '')
+              PsiElement(stringliteral)('' Dates: '')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
             FORMAT_ITEM
-              PsiElement(integer_literal)('2')
+              PsiElement(integerliteral)('2')
               PsiWhiteSpace(' ')
               PsiElement(()('(')
               FORMAT_ITEM
-                PsiElement(integer_literal)('2')
+                PsiElement(integerliteral)('2')
                 DATA_EDIT_DESC
                   PsiElement(identifier)('I3')
               PsiElement(,)(',')

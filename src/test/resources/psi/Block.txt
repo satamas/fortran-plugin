@@ -6,7 +6,7 @@ FILE
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    PsiComment(line_comment)('! just a comment')
+    PsiComment(comment)('! just a comment')
     SPECIFICATION_PART
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
@@ -37,7 +37,7 @@ FILE
               PsiWhiteSpace(' ')
               PsiElement(critical)('critical')
               PsiWhiteSpace(' ')
-              PsiComment(line_comment)('!comment')
+              PsiComment(comment)('!comment')
               PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             BLOCK
@@ -48,7 +48,7 @@ FILE
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')
                 CONSTANT
-                  PsiElement(integer_literal)('4')
+                  PsiElement(integerliteral)('4')
               PsiElement(eol)('\n')
             PsiWhiteSpace('     ')
             END_CRITICAL_STMT
@@ -84,10 +84,10 @@ FILE
                 PsiElement(=>)('=>')
                 ADD_EXPR
                   CONSTANT
-                    PsiElement(integer_literal)('1')
+                    PsiElement(integerliteral)('1')
                   PsiElement(+)('+')
                   CONSTANT
-                    PsiElement(integer_literal)('4')
+                    PsiElement(integerliteral)('4')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ASSOCIATION
@@ -95,10 +95,10 @@ FILE
                 PsiElement(=>)('=>')
                 MULT_EXPR
                   CONSTANT
-                    PsiElement(integer_literal)('2')
+                    PsiElement(integerliteral)('2')
                   PsiElement(*)('*')
                   CONSTANT
-                    PsiElement(integer_literal)('3')
+                    PsiElement(integerliteral)('3')
               PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             BLOCK
@@ -109,7 +109,7 @@ FILE
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')
                 CONSTANT
-                  PsiElement(integer_literal)('3')
+                  PsiElement(integerliteral)('3')
               PsiElement(eol)('\n')
             PsiWhiteSpace('     ')
             END_ASSOCIATE_STMT

@@ -2,7 +2,7 @@ FILE
   MODULE
     MODULE_STMT
       LABEL
-        PsiElement(integer_literal)('1')
+        PsiElement(integerliteral)('1')
       PsiWhiteSpace(' ')
       PsiElement(modulekwd)('module')
       PsiWhiteSpace(' ')
@@ -11,7 +11,7 @@ FILE
     SPECIFICATION_PART
       DECLARATION_CONSTRUCT
         LABEL
-          PsiElement(integer_literal)('2')
+          PsiElement(integerliteral)('2')
         PsiWhiteSpace('   ')
         TYPE_DECLARATION_STMT
           INTRINSIC_TYPE_SPEC
@@ -25,14 +25,14 @@ FILE
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
         LABEL
-          PsiElement(integer_literal)('3')
+          PsiElement(integerliteral)('3')
         PsiWhiteSpace(' ')
         PsiElement(contains)('contains')
         PsiElement(eol)('\n')
       SEPARATE_MODULE_SUBPROGRAM
         MP_SUBPROGRAM_STMT
           LABEL
-            PsiElement(integer_literal)('4')
+            PsiElement(integerliteral)('4')
           PsiWhiteSpace('   ')
           PsiElement(modulekwd)('module')
           PsiWhiteSpace(' ')
@@ -44,7 +44,7 @@ FILE
           <empty list>
         BLOCK
           LABEL
-            PsiElement(integer_literal)('5')
+            PsiElement(integerliteral)('5')
           PsiWhiteSpace('     ')
           ASSIGNMENT_STMT
             DESIGNATOR
@@ -60,7 +60,7 @@ FILE
         INTERNAL_SUBPROGRAM_PART
           CONTAINS_STMT
             LABEL
-              PsiElement(integer_literal)('6')
+              PsiElement(integerliteral)('6')
             PsiWhiteSpace('     ')
             PsiElement(contains)('contains')
             PsiElement(eol)('\n')
@@ -68,7 +68,7 @@ FILE
             FUNCTION_SUBPROGRAM
               FUNCTION_STMT
                 LABEL
-                  PsiElement(integer_literal)('7')
+                  PsiElement(integerliteral)('7')
                 PsiWhiteSpace('     ')
                 PREFIX_SPEC
                   INTRINSIC_TYPE_SPEC
@@ -85,7 +85,7 @@ FILE
                 <empty list>
               BLOCK
                 LABEL
-                  PsiElement(integer_literal)('8')
+                  PsiElement(integerliteral)('8')
                 PsiWhiteSpace('       ')
                 RETURN_STMT
                   PsiElement(returnkwd)('return')
@@ -95,30 +95,30 @@ FILE
                       PsiElement(identifier)('z')
                     PsiElement(*)('*')
                     CONSTANT
-                      PsiElement(integer_literal)('2')
+                      PsiElement(integerliteral)('2')
                 PsiElement(eol)('\n')
               END_FUNCTION_STMT
                 LABEL
-                  PsiElement(integer_literal)('9')
+                  PsiElement(integerliteral)('9')
                 PsiWhiteSpace('     ')
                 PsiElement(endfunction)('endfunction')
           PsiElement(eol)('\n')
         END_MP_SUBPROGRAM_STMT
           LABEL
-            PsiElement(integer_literal)('10')
+            PsiElement(integerliteral)('10')
           PsiWhiteSpace('   ')
           PsiElement(endprocedure)('endprocedure')
       PsiElement(eol)('\n')
     END_MODULE_STMT
       LABEL
-        PsiElement(integer_literal)('11')
+        PsiElement(integerliteral)('11')
       PsiWhiteSpace('   ')
       PsiElement(endmodule)('endmodule')
   PsiElement(eol)('\n')
   SUBMODULE
     SUBMODULE_STMT
       LABEL
-        PsiElement(integer_literal)('12')
+        PsiElement(integerliteral)('12')
       PsiWhiteSpace(' ')
       PsiElement(submodulekwd)('submodule')
       PsiWhiteSpace(' ')
@@ -134,14 +134,14 @@ FILE
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
         LABEL
-          PsiElement(integer_literal)('13')
+          PsiElement(integerliteral)('13')
         PsiWhiteSpace(' ')
         PsiElement(contains)('contains')
         PsiElement(eol)('\n')
       SUBROUTINE_SUBPROGRAM
         SUBROUTINE_STMT
           LABEL
-            PsiElement(integer_literal)('14')
+            PsiElement(integerliteral)('14')
           PsiWhiteSpace(' ')
           PsiElement(subroutine)('subroutine')
           PsiWhiteSpace(' ')
@@ -155,12 +155,12 @@ FILE
           <empty list>
         END_SUBROUTINE_STMT
           LABEL
-            PsiElement(integer_literal)('15')
+            PsiElement(integerliteral)('15')
           PsiWhiteSpace(' ')
           PsiElement(endsubroutine)('endsubroutine')
       PsiElement(eol)('\n')
     END_SUBMODULE_STMT
       LABEL
-        PsiElement(integer_literal)('16')
+        PsiElement(integerliteral)('16')
       PsiWhiteSpace(' ')
       PsiElement(endsubmodule)('endsubmodule')

@@ -31,10 +31,10 @@ FILE
           CASE_SELECTOR
             PsiElement(()('(')
             CONSTANT
-              PsiElement(integer_literal)('1')
+              PsiElement(integerliteral)('1')
             PsiElement(,)(',')
             CONSTANT
-              PsiElement(integer_literal)('2')
+              PsiElement(integerliteral)('2')
             PsiElement())(')')
           PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
@@ -44,7 +44,7 @@ FILE
               PsiElement(identifier)('c')
             PsiElement(=)('=')
             CONSTANT
-              PsiElement(integer_literal)('1')
+              PsiElement(integerliteral)('1')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         CASE_STMT
@@ -55,7 +55,7 @@ FILE
             CASE_VALUE_RANGE
               PsiElement(:)(':')
               CONSTANT
-                PsiElement(integer_literal)('0')
+                PsiElement(integerliteral)('0')
             PsiElement())(')')
           PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
@@ -65,7 +65,7 @@ FILE
               PsiElement(identifier)('c')
             PsiElement(=)('=')
             CONSTANT
-              PsiElement(integer_literal)('0')
+              PsiElement(integerliteral)('0')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         CASE_STMT
@@ -75,10 +75,10 @@ FILE
             PsiElement(()('(')
             CASE_VALUE_RANGE
               CONSTANT
-                PsiElement(integer_literal)('3')
+                PsiElement(integerliteral)('3')
               PsiElement(:)(':')
               CONSTANT
-                PsiElement(integer_literal)('5')
+                PsiElement(integerliteral)('5')
             PsiElement())(')')
           PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
@@ -88,7 +88,7 @@ FILE
               PsiElement(identifier)('c')
             PsiElement(=)('=')
             CONSTANT
-              PsiElement(integer_literal)('2')
+              PsiElement(integerliteral)('2')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         CASE_STMT
@@ -98,7 +98,7 @@ FILE
             PsiElement(()('(')
             CASE_VALUE_RANGE
               CONSTANT
-                PsiElement(integer_literal)('7')
+                PsiElement(integerliteral)('7')
               PsiElement(:)(':')
             PsiElement())(')')
           PsiElement(eol)('\n')
@@ -118,7 +118,7 @@ FILE
               PsiElement(identifier)('c')
             PsiElement(=)('=')
             CONSTANT
-              PsiElement(integer_literal)('4')
+              PsiElement(integerliteral)('4')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_SELECT_STMT

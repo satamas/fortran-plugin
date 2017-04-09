@@ -1,7 +1,7 @@
 FILE
-  PsiComment(line_comment)('! Comment line1')
+  PsiComment(comment)('! Comment line1')
   PsiElement(eol)('\n')
-  PsiComment(line_comment)('! Comment line2')
+  PsiComment(comment)('! Comment line2')
   PsiElement(eol)('\n')
   MAIN_PROGRAM
     PROGRAM_STMT
@@ -30,7 +30,7 @@ FILE
           PsiElement(GT)('>')
           PsiWhiteSpace(' ')
           CONSTANT
-            PsiElement(integer_literal)('0')
+            PsiElement(integerliteral)('0')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         ASSIGNMENT_STMT
@@ -40,7 +40,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           CONSTANT
-            PsiElement(integer_literal)('1')
+            PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       IF_CONSTRUCT
@@ -65,7 +65,7 @@ FILE
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
             CONSTANT
-              PsiElement(floating_point_literal)('3.1')
+              PsiElement(floatingpointliteral)('3.1')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         ELSE_IF_STMT
@@ -93,7 +93,7 @@ FILE
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
             CONSTANT
-              PsiElement(integer_literal)('14')
+              PsiElement(integerliteral)('14')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_IF_STMT
@@ -150,7 +150,7 @@ FILE
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
             CONSTANT
-              PsiElement(integer_literal)('1')
+              PsiElement(integerliteral)('1')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         ELSE_STMT
@@ -165,7 +165,7 @@ FILE
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
             CONSTANT
-              PsiElement(integer_literal)('1')
+              PsiElement(integerliteral)('1')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_IF_STMT

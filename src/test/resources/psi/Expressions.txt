@@ -10,7 +10,7 @@ FILE
       <empty list>
     BLOCK
       LABEL
-        PsiElement(integer_literal)('1')
+        PsiElement(integerliteral)('1')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
         DESIGNATOR
@@ -37,7 +37,7 @@ FILE
             PsiElement(EQEQ)('==')
             PsiWhiteSpace(' ')
             CONSTANT
-              PsiElement(integer_literal)('0')
+              PsiElement(integerliteral)('0')
       PsiElement(eol)('\n')
       PsiWhiteSpace('     ')
       ASSIGNMENT_STMT
@@ -68,7 +68,7 @@ FILE
                 PsiElement(EQEQ)('==')
                 PsiWhiteSpace(' ')
                 CONSTANT
-                  PsiElement(integer_literal)('0')
+                  PsiElement(integerliteral)('0')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')

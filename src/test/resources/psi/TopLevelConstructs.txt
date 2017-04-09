@@ -24,7 +24,7 @@ FILE
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
             CONSTANT
-              PsiElement(floating_point_literal)('3.1415927')
+              PsiElement(floatingpointliteral)('3.1415927')
           PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
       DECLARATION_CONSTRUCT
@@ -147,7 +147,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           CONSTANT
-            PsiElement(floating_point_literal)('3.0')
+            PsiElement(floatingpointliteral)('3.0')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       ENTRY_STMT
@@ -193,7 +193,7 @@ FILE
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(integer_literal)('0')
+          PsiElement(integerliteral)('0')
       PsiElement(eol)('\n')
     END_FUNCTION_STMT
       PsiElement(endfunction)('endfunction')
