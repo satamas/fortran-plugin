@@ -120,8 +120,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 
 "abstract" { return ABSTRACT; }
 "all" { return ALL; }
-"allocatable" { return ALLOCATABLE; }/*
-"allocate" { return FortranTokens.ALLOCATE_KEYWORD; }
+"allocatable" { return ALLOCATABLE; }
+"allocate" { return ALLOCATE; }/*
 "assign" { return FortranTokens.ASSIGN_KEYWORD; }*/
 "assignment" { return ASSIGNMENT; }
 "associate" { return ASSOCIATE; }
@@ -144,8 +144,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "continue" { return CONTINUE; }
 "critical" { return CRITICAL; }
 "cycle" { return CYCLE; }
-"data" { return DATA; }/*
-"deallocate" { return FortranTokens.DEALLOCATE_KEYWORD; }*/
+"data" { return DATA; }
+"deallocate" { return DEALLOCATE; }
 "default" { return DEFAULT; }
 "deferred" { return DEFERRED; }
 "dimension" { return DIMENSION; }
@@ -197,8 +197,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "none" { return NONE; }
 "non_intrinsic" { return NON_INTRINSIC; }
 "non_overridable" { return NON_OVERRIDABLE; }
-"nopass" { return NOPASS; } /*
-"nullify" { return FortranTokens.NULLIFY_KEYWORD; }*/
+"nopass" { return NOPASS; }
+"nullify" { return NULLIFY; }
 "only" { return ONLY; }
 "open" { return OPEN; }
 "operator" { return OPERATOR; }

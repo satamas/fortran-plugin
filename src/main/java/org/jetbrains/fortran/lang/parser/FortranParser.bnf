@@ -124,64 +124,29 @@ internal_subprogram ::= !(label? (end_unit_keys | endprocedure)) (function_subpr
 }
 private internal_subprogram_recover ::= !(eol | end | endfunction | endsubprogram | endprocedure)
 // R212
-other_specification_stmt ::=  access_stmt
-                           |  allocatable_stmt
-                           |  asynchronous_stmt
-                           |  bind_stmt
-                           |  codimension_stmt
-                           |  common_stmt
-                           |  data_stmt
-                           |  dimension_stmt
-                           |  equivalence_stmt
-                           |  external_stmt
-                           |  intent_stmt
-                           |  intrinsic_stmt
-                           |  namelist_stmt
-                           |  optional_stmt
-                           |  pointer_stmt
-                           |  protected_stmt
-                           |  save_stmt
-                           |  target_stmt
-                           |  volatile_stmt
-                           |  value_stmt
+other_specification_stmt ::=  access_stmt       |  allocatable_stmt |  asynchronous_stmt
+                           |  bind_stmt         |  codimension_stmt |  common_stmt
+                           |  data_stmt         |  dimension_stmt   |  equivalence_stmt
+                           |  external_stmt     |  intent_stmt      |  intrinsic_stmt
+                           |  namelist_stmt     |  optional_stmt    |  pointer_stmt
+                           |  protected_stmt    |  save_stmt        |  target_stmt
+                           |  volatile_stmt     |  value_stmt
 // R213
 private executable_construct ::= action_stmt   | associate_construct | block_construct  | case_construct
                        | critical_construct    | do_construct        | forall_construct | if_construct
                        | select_type_construct | where_construct
 // R214
-private action_stmt ::= /*allocate-stmt
-                |*/ assignment_stmt
-                | backspace_stmt
-                | call_stmt
-                | close_stmt
-                | continue_stmt
-                | cycle_stmt/*
-                | deallocate-stmt*/
-                | endfile_stmt
-                | error_stop_stmt
-                | exit_stmt
-                | flush_stmt
-                | forall_stmt
-                | goto_stmt
-                | if_stmt
-                | inquire_stmt
-                | lock_stmt/*
-                | nullify-stmt*/
-                | open_stmt
-                | pointer_assignment_stmt
-                | print_stmt
-                | read_stmt
-                | return_stmt
-                | rewind_stmt
-                | stop_stmt
-                | sync_all_stmt
-                | sync_images_stmt
-                | sync_memory_stmt
-                | unlock_stmt
-                | wait_stmt
-                | where_stmt
-                | write_stmt
-                | arithmetic_if_stmt
+private action_stmt ::= allocate_stmt   | assignment_stmt           | backspace_stmt
+                | call_stmt             | close_stmt                | continue_stmt
+                | cycle_stmt            | deallocate_stmt           | endfile_stmt
+                | error_stop_stmt       | exit_stmt                 | flush_stmt
+                | forall_stmt           | goto_stmt                 | if_stmt
+                | inquire_stmt          | lock_stmt                 | nullify_stmt
+                | open_stmt             | pointer_assignment_stmt   | print_stmt
+                | read_stmt             | return_stmt               | rewind_stmt
+                | stop_stmt             | sync_all_stmt             | sync_images_stmt
+                | sync_memory_stmt      | unlock_stmt               | wait_stmt
+                | where_stmt            | write_stmt                | arithmetic_if_stmt
                 | computed_goto_stmt
 // R215 is trivial
 
@@ -475,7 +440,6 @@ private letter_spec_list ::= letter_spec (',' letter_spec)*
 letter_spec ::= identifier ('-' identifier)? { pin = 1 }
 // R563
 namelist_stmt ::= namelist '/' identifier '/' name_list ((',')? '/' identifier '/' name_list)*
-namelist_stmt ::= namelist '/' identifier '/' name_list ((',')? '/' identifier '/' name_list)*
 // R564 is trivial
 // R565
 equivalence_stmt ::= equivalence equivalence_set_list
@@ -494,7 +458,74 @@ common_block_object ::= identifier ('(' array_spec ')')?
 // Clause 6
 // R601 is implemented in clause 7
 // R602
-private variable ::= designator | expr
+private variable ::= designator //| expr
+// R603 - 607 are trivial
+// R608
+substring ::= parent_string '(' substring_range ')'
+// R609
+parent_string ::= data_ref | identifier | string_literal
+// R610
+substring_range ::= (expr)? ':' (expr)?
+// R611
+private data_ref ::= part_ref ('%' part_ref)*
+// R612
+private part_ref ::= identifier ('(' section_subscript_list ')')? (image_selector)?
+// R613 - 614 are trivial
+// R615
+complex_part_designator ::= /*designator*/ (data_ref | substring | identifier) '%' identifier  // identifier is RE or IM
+// R616
+type_param_inquiry ::= designator '%' identifier
+// R617 is trivial
+// R618
+array_section ::= (data_ref ('(' substring_range ')')) | complex_part_designator
+// R619 is trivial
+// R620
+private section_subscript_list ::= section_subscript (',' section_subscript)?
+section_subscript ::= subscript_triplet | expr
+// R621
+subscript_triplet ::= (expr)? ':' (expr)? (':' expr)?
+// R622 - 623 are trivial
+// R624
+image_selector ::= '[' cosubscript_list ']'
+// R625
+private cosubscript_list ::= expr (',' expr)*
+// R626
+allocate_stmt ::= allocate '(' (type_spec '::')? allocation_list (',' alloc_opt_list)? ')'
+// R627
+private alloc_opt_list ::= alloc_opt (',' alloc_opt)*
+alloc_opt ::= standard_command_parameters_spec
+/* the real rule is
+alloc_opt ::= (errmsg '=' variable) | (mold '=' expr) | (source '=' expr) | (stat '=' variable)
+*/
+// R628 - 630 are trivial
+// R631
+private allocation_list ::= allocation (',' allocation)*
+allocation ::= allocate_object ('(' allocate_shape_spec_list ')')? ('[' allocate_coarray_spec ']')?
+// R632
+private allocate_object_list ::= allocate_object (',' allocate_object)*
+private allocate_object ::= data_ref | identifier
+// R633
+private allocate_shape_spec_list ::= allocate_shape_spec (',' allocate_shape_spec)*
+allocate_shape_spec ::= (expr ':')? expr
+// R634 - 635 are trivial
+// R636
+allocate_coarray_spec ::= ( allocate_coshape_spec_list ',' )? (expr ':')? '*'
+// R637
+private allocate_coshape_spec_list ::= allocate_coshape_spec (',' allocate_coshape_spec)*
+allocate_coshape_spec ::= (expr ':')? expr
+// R638
+nullify_stmt ::= nullify '(' pointer_object_list ')'
+// R639
+private pointer_object_list ::= pointer_object (',' pointer_object)*
+pointer_object ::= data_ref | identifier
+// R640
+deallocate_stmt ::= deallocate '(' allocate_object_list (',' dealloc_opt_list)? ')'
+// R641
+private dealloc_opt_list ::= dealloc_opt (',' dealloc_opt)*
+dealloc_opt ::= standard_command_parameters_spec
+/* the real rule is
+dealloc_opt ::= (stat '=' variable) | (errmsg '=' variable)
+*/
 
 // Clause 7
 // expressions in bnf grammar must be defined in a special order
@@ -529,14 +560,14 @@ mult_expr   ::= expr ('*' | '/') expr
 power_expr  ::= expr '**' expr { rightAssociative=true } { extends=expr }
 def_unary_operator_expr ::= defined_unary_op expr
 private defined_unary_op ::= defoperator
-private primary ::= constant | designator | structure_constructor | array_constructor | paren
+private primary ::= /*type_param_inquiry | */constant | designator | structure_constructor | function_reference | array_constructor | paren
 paren ::= '(' expr ')'
 // R455
 structure_constructor ::= derived_type_spec '(' component_spec_list ')'
 // R468
 array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 // R601
-designator ::= identifier
+designator ::= data_ref | complex_part_designator | array_section | substring | identifier
 // R304, R305 modified
 constant ::= integer_literal | floating_point_literal | double_precision_literal
            | complex_literal | logical_literal | string_literal | boz_literal
@@ -797,12 +828,12 @@ private format ::= '*' /*| label*/ | expr
 // we can match label when it's really an expression, but expression matches a label too
 // R916
 private input_item_list ::= input_item (',' input_item)*
-input_item ::= variable | io_implied_do
+input_item ::= /*variable |*/ io_implied_do | expr
 // R917
 private output_item_list ::= output_item (',' output_item)*
-output_item ::= expr | io_implied_do
+output_item ::= io_implied_do | expr
 // R918 + R920
-io_implied_do ::= '(' io_implied_do_object_list ',' id_loop_stmt ')' { pin = 1}
+io_implied_do ::= '(' io_implied_do_object_list ',' id_loop_stmt ')' { pin = 4 }
 // R919
 private io_implied_do_object_list ::= io_implied_do_object (',' io_implied_do_object)*
 io_implied_do_object ::= input_item | output_item
@@ -831,11 +862,11 @@ position_and_flush_spec ::= standard_command_parameters_spec
 flush_stmt ::= flush (('(' position_and_flush_spec_list ')') | expr) { pin = 1}
 // R930
 inquire_stmt ::= inquire (inquire_with_iolength | ('(' inquire_spec_list ')'))  { pin = 1}
-private inquire_with_iolength ::= '(' iolength '=' variable ')' output_item_list { pin = 2}
+private inquire_with_iolength ::= '(' iolength '=' expr /*variable */')' output_item_list { pin = 2}
 // R931
 private inquire_spec_list ::= inquire_spec (',' inquire_spec)*
 inquire_spec ::= standard_command_parameters_spec
-// Thats not a real rul. But we'll check parameters names later
+// Thats not a real rule. But we'll check parameters names later
 /* inquire_sec ::= ((unit '=')? expr)          | (file '=' expr)             | (access '=' variable)
                   | (action '=' variable)     | (asynchronous '=' variable) | (blank '=' variable)
                   | (decimal '=' variable)    | (delim '=' variable)        | (direct '=' variable)

@@ -22,7 +22,7 @@ program p
     end if
     do 200 k = 5, 1
     if(1-2) 10, 20, 30
-!    if ( value .le. atad ) call punt
+    if ( values .le. atad ) call punt
 !    deprecated
 !    assign 10 to a
     backspace 2
@@ -43,7 +43,7 @@ program p
     return 2
     rewind 3
     rewind (unit = 3, iostat = code, err = 100)
-!    sphere ( r ) = 4.0 * pi * (r**3) / 3.0
+    sphere ( r ) = 4.0 * pi * (r**3) / 3.0
     stop 9
     stop 'error'
     enddo

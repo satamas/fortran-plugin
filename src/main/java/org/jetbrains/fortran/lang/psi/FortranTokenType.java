@@ -20,6 +20,7 @@ public class FortranTokenType extends IElementType {
     public static TokenSet KEYWORDS = TokenSet.create(
             ABSTRACT,
             ALL,
+            ALLOCATE,
             ALLOCATABLE,
             ASSIGNMENT,
             ASSOCIATE,
@@ -43,6 +44,7 @@ public class FortranTokenType extends IElementType {
             CRITICAL,
             CYCLE,
             DATA,
+            DEALLOCATE,
             DEFAULT,
             DEFERRED,
             DIMENSION,
@@ -108,6 +110,7 @@ public class FortranTokenType extends IElementType {
             NON_INTRINSIC,
             NON_OVERRIDABLE,
             NOPASS,
+            NULLIFY,
             ONLY,
             OPEN,
             OPERATOR,

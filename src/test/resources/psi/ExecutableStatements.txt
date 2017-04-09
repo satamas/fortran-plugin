@@ -282,7 +282,28 @@ FILE
             LABEL
               PsiElement(integer_literal)('30')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    if ( value .le. atad ) call punt')
+          PsiWhiteSpace('    ')
+          IF_STMT
+            PsiElement(if)('if')
+            PsiWhiteSpace(' ')
+            PsiElement(()('(')
+            PsiWhiteSpace(' ')
+            REL_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('values')
+              PsiWhiteSpace(' ')
+              PsiElement(LE)('.le.')
+              PsiWhiteSpace(' ')
+              DESIGNATOR
+                PsiElement(identifier)('atad')
+            PsiWhiteSpace(' ')
+            PsiElement())(')')
+            PsiWhiteSpace(' ')
+            CALL_STMT
+              PsiElement(call)('call')
+              PsiWhiteSpace(' ')
+              PROCEDURE_DESIGNATOR
+                PsiElement(identifier)('punt')
           PsiElement(eol)('\n')
           PsiComment(line_comment)('!    deprecated')
           PsiElement(eol)('\n')
@@ -550,7 +571,48 @@ FILE
                 PsiElement(integer_literal)('100')
             PsiElement())(')')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    sphere ( r ) = 4.0 * pi * (r**3) / 3.0')
+          PsiWhiteSpace('    ')
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('sphere')
+              PsiWhiteSpace(' ')
+              PsiElement(()('(')
+              PsiWhiteSpace(' ')
+              SECTION_SUBSCRIPT
+                DESIGNATOR
+                  PsiElement(identifier)('r')
+              PsiWhiteSpace(' ')
+              PsiElement())(')')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            MULT_EXPR
+              MULT_EXPR
+                MULT_EXPR
+                  CONSTANT
+                    PsiElement(floating_point_literal)('4.0')
+                  PsiWhiteSpace(' ')
+                  PsiElement(*)('*')
+                  PsiWhiteSpace(' ')
+                  DESIGNATOR
+                    PsiElement(identifier)('pi')
+                PsiWhiteSpace(' ')
+                PsiElement(*)('*')
+                PsiWhiteSpace(' ')
+                PAREN
+                  PsiElement(()('(')
+                  POWER_EXPR
+                    DESIGNATOR
+                      PsiElement(identifier)('r')
+                    PsiElement(**)('**')
+                    CONSTANT
+                      PsiElement(integer_literal)('3')
+                  PsiElement())(')')
+              PsiWhiteSpace(' ')
+              PsiElement(/)('/')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(floating_point_literal)('3.0')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           STOP_STMT
