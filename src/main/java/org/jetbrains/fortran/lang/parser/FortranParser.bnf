@@ -148,6 +148,8 @@ private action_stmt ::= allocate_stmt   | assignment_stmt           | backspace_
                 | sync_memory_stmt      | unlock_stmt               | wait_stmt
                 | where_stmt            | write_stmt                | arithmetic_if_stmt
                 | computed_goto_stmt
+                // deleted
+                | pause_stmt            | assign_stmt               | assigned_goto_stmt
 // R215 is trivial
 
 // Clause 3 (probably ready)
@@ -1050,6 +1052,11 @@ return_stmt ::= returnkwd (expr)? { pin = 1}
 contains_stmt ::= label? contains eol { pin = 2 }
 // R1243
 stmt_function_stmt ::= identifier '(' name_list ')' '=' expr { pin = 5 }
+
+// deleted statements
+pause_stmt ::= pause (expr)? { pin = 1 }
+assign_stmt ::= assign label to variable { pin = 1 }
+assigned_goto_stmt ::= (goto | (go to)) variable (','? '(' label_list ')' )? { pin = 2 }
 
 // That's a cap. Must be removed in the final version
 cap ::= line_comment

@@ -307,7 +307,17 @@ FILE
           PsiElement(eol)('\n')
           PsiComment(line_comment)('!    deprecated')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    assign 10 to a')
+          PsiWhiteSpace('    ')
+          ASSIGN_STMT
+            PsiElement(assign)('assign')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integer_literal)('10')
+            PsiWhiteSpace(' ')
+            PsiElement(to)('to')
+            PsiWhiteSpace(' ')
+            DESIGNATOR
+              PsiElement(identifier)('a')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           BACKSPACE_STMT
@@ -425,9 +435,46 @@ FILE
             LABEL
               PsiElement(integer_literal)('10')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    goto n, (10)')
+          PsiWhiteSpace('    ')
+          ASSIGNED_GOTO_STMT
+            PsiElement(goto)('goto')
+            PsiWhiteSpace(' ')
+            DESIGNATOR
+              PsiElement(identifier)('n')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(()('(')
+            LABEL
+              PsiElement(integer_literal)('10')
+            PsiElement())(')')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    go to n ( 10, 20, 30, 40 )')
+          PsiWhiteSpace('    ')
+          ASSIGNED_GOTO_STMT
+            PsiElement(go)('go')
+            PsiWhiteSpace(' ')
+            PsiElement(to)('to')
+            PsiWhiteSpace(' ')
+            DESIGNATOR
+              PsiElement(identifier)('n')
+            PsiWhiteSpace(' ')
+            PsiElement(()('(')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integer_literal)('10')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integer_literal)('20')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integer_literal)('30')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integer_literal)('40')
+            PsiWhiteSpace(' ')
+            PsiElement())(')')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPUTED_GOTO_STMT
@@ -521,9 +568,19 @@ FILE
                 PsiElement(integer_literal)('99')
             PsiElement())(')')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    pause 1')
+          PsiWhiteSpace('    ')
+          PAUSE_STMT
+            PsiElement(pause)('pause')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integer_literal)('1')
           PsiElement(eol)('\n')
-          PsiComment(line_comment)('!    pause "p"')
+          PsiWhiteSpace('    ')
+          PAUSE_STMT
+            PsiElement(pause)('pause')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(string_literal)('"p"')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           RETURN_STMT

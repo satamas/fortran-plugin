@@ -121,8 +121,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "abstract" { return ABSTRACT; }
 "all" { return ALL; }
 "allocatable" { return ALLOCATABLE; }
-"allocate" { return ALLOCATE; }/*
-"assign" { return FortranTokens.ASSIGN_KEYWORD; }*/
+"allocate" { return ALLOCATE; }
+"assign" { return ASSIGN; }
 "assignment" { return ASSIGNMENT; }
 "associate" { return ASSOCIATE; }
 "asynchronous" { return ASYNCHRONOUS; }
@@ -205,8 +205,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "optional" { return OPTIONAL; }
 "out" { return OUT; }
 "parameter" { return PARAMETER; }
-"pass" { return PASS; }/*
-"pause" { return FortranTokens.PAUSE_KEYWORD; }*/
+"pass" { return PASS; }
+"pause" { return PAUSE; }
 "pointer" { return POINTER; }
 "print" { return PRINT; }
 "private" { return PRIVATE; }
