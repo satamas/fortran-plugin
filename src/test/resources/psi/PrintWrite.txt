@@ -125,7 +125,44 @@ FILE
         DESIGNATOR
           PsiElement(identifier)('vector')
       PsiElement(eol)('\n')
-      PsiComment(line_comment)('!  print *, i, j, (vector(i), i = 1, 5)')
+      PsiWhiteSpace('  ')
+      PRINT_STMT
+        PsiElement(print)('print')
+        PsiWhiteSpace(' ')
+        PsiElement(*)('*')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          PsiElement(identifier)('i')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          PsiElement(identifier)('j')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        IO_IMPLIED_DO
+          PsiElement(()('(')
+          DESIGNATOR
+            PsiElement(identifier)('vector')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              DESIGNATOR
+                PsiElement(identifier)('i')
+            PsiElement())(')')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('i')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('1')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integer_literal)('5')
+          PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       READ_STMT

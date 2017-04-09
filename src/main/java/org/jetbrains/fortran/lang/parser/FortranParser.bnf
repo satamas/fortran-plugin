@@ -830,7 +830,7 @@ private format ::= '*' /*| label*/ | expr
 // we can match label when it's really an expression, but expression matches a label too
 // R916
 private input_item_list ::= input_item (',' input_item)*
-input_item ::= /*variable |*/ io_implied_do | expr
+input_item ::= variable | io_implied_do
 // R917
 private output_item_list ::= output_item (',' output_item)*
 output_item ::= io_implied_do | expr
@@ -838,7 +838,7 @@ output_item ::= io_implied_do | expr
 io_implied_do ::= '(' io_implied_do_object_list ',' id_loop_stmt ')' { pin = 4 }
 // R919
 private io_implied_do_object_list ::= io_implied_do_object (',' io_implied_do_object)*
-io_implied_do_object ::= input_item | output_item
+io_implied_do_object ::= (input_item | output_item) !'=' { pin = 2 }
 // R921 (unused maybe)
 dtv_type_spec ::= (type | classkwd) '(' derived_type_spec ')' { pin =1 }
 // R922
