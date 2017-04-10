@@ -194,20 +194,21 @@ FILE
             PsiElement(returnkwd)('return')
             PsiWhiteSpace(' ')
             DESIGNATOR
-              PsiElement(identifier)('o')
-              PsiElement(%)('%')
-              PsiElement(identifier)('ar')
-              PsiElement(%)('%')
-              PsiElement(identifier)('dat')
-              PsiElement(()('(')
-              SECTION_SUBSCRIPT
-                CONSTANT
-                  PsiElement(integerliteral)('5')
-              PsiElement())(')')
-              PsiElement(%)('%')
-              PsiElement(identifier)('b')
-              PsiElement(%)('%')
-              PsiElement(identifier)('x')
+              DATA_REF
+                PsiElement(identifier)('o')
+                PsiElement(%)('%')
+                PsiElement(identifier)('ar')
+                PsiElement(%)('%')
+                PsiElement(identifier)('dat')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('5')
+                PsiElement())(')')
+                PsiElement(%)('%')
+                PsiElement(identifier)('b')
+                PsiElement(%)('%')
+                PsiElement(identifier)('x')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_FUNCTION_STMT

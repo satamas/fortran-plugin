@@ -455,7 +455,8 @@ FILE
             PsiElement(to)('to')
             PsiWhiteSpace(' ')
             DESIGNATOR
-              PsiElement(identifier)('n')
+              DATA_REF
+                PsiElement(identifier)('n')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             PsiWhiteSpace(' ')
@@ -631,15 +632,16 @@ FILE
           PsiWhiteSpace('    ')
           ASSIGNMENT_STMT
             DESIGNATOR
-              PsiElement(identifier)('sphere')
-              PsiWhiteSpace(' ')
-              PsiElement(()('(')
-              PsiWhiteSpace(' ')
-              SECTION_SUBSCRIPT
-                DESIGNATOR
-                  PsiElement(identifier)('r')
-              PsiWhiteSpace(' ')
-              PsiElement())(')')
+              DATA_REF
+                PsiElement(identifier)('sphere')
+                PsiWhiteSpace(' ')
+                PsiElement(()('(')
+                PsiWhiteSpace(' ')
+                SECTION_SUBSCRIPT
+                  DESIGNATOR
+                    PsiElement(identifier)('r')
+                PsiWhiteSpace(' ')
+                PsiElement())(')')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
             PsiWhiteSpace(' ')

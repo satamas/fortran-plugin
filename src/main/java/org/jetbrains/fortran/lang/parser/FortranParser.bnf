@@ -450,7 +450,7 @@ private equivalence_set_list ::= equivalence_set (',' equivalence_set)*
 equivalence_set ::= '(' equivalence_object ',' equivalence_object_list ')'
 // R567
 private equivalence_object_list ::= equivalence_object (',' equivalence_object)*
-equivalence_object ::= substring | data_ref | identifier
+equivalence_object ::= (identifier !('%' | '(' | '[')) | substring | data_ref
 // R568
 common_stmt ::= common (('/' identifier? '/') | '//')? common_block_object_list ((',')? (('/' identifier? '/') | '//') common_block_object_list)* { pin = 1 }
 // R569
@@ -465,21 +465,21 @@ private variable ::= designator //| expr
 // R608
 substring ::= parent_string '(' substring_range ')'
 // R609
-parent_string ::= data_ref | identifier | stringliteral
+parent_string ::= (identifier !('%' | '(' | '[')) | data_ref | stringliteral
 // R610
 substring_range ::= (expr)? ':' (expr)?
 // R611
-private data_ref ::= part_ref ('%' part_ref)*
+data_ref ::= part_ref ('%' part_ref)*
 // R612
 private part_ref ::= identifier ('(' section_subscript_list ')')? (image_selector)?
 // R613 - 614 are trivial
 // R615
-complex_part_designator ::= /*designator*/ (data_ref | substring | identifier) '%' identifier  // identifier is RE or IM
+complex_part_designator ::= /*designator*/ ((identifier !('%' | '(' | '[')) | substring | (data_ref ('(' substring_range ')')?)) '%' identifier  // identifier is RE or IM
 // R616
 type_param_inquiry ::= designator '%' identifier
 // R617 is trivial
 // R618
-array_section ::= (data_ref ('(' substring_range ')')) | complex_part_designator
+array_section ::= (data_ref ('(' substring_range ')')?) | complex_part_designator
 // R619 is trivial
 // R620
 private section_subscript_list ::= section_subscript (',' section_subscript)?
@@ -505,7 +505,7 @@ private allocation_list ::= allocation (',' allocation)*
 allocation ::= allocate_object ('(' allocate_shape_spec_list ')')? ('[' allocate_coarray_spec ']')?
 // R632
 private allocate_object_list ::= allocate_object (',' allocate_object)*
-private allocate_object ::= data_ref | identifier
+private allocate_object ::= (identifier !('%' | '(' | '[')) | data_ref
 // R633
 private allocate_shape_spec_list ::= allocate_shape_spec (',' allocate_shape_spec)*
 allocate_shape_spec ::= (expr ':')? expr
@@ -519,7 +519,7 @@ allocate_coshape_spec ::= (expr ':')? expr
 nullify_stmt ::= nullify '(' pointer_object_list ')' { pin = 1 }
 // R639
 private pointer_object_list ::= pointer_object (',' pointer_object)*
-pointer_object ::= data_ref | identifier
+pointer_object ::= (identifier !('%' | '(' | '[')) | data_ref
 // R640
 deallocate_stmt ::= deallocate '(' allocate_object_list (',' dealloc_opt_list)? ')' { pin = 1 }
 // R641
@@ -562,14 +562,14 @@ mult_expr   ::= expr ('*' | '/') expr
 power_expr  ::= expr '**' expr { rightAssociative=true } { extends=expr }
 def_unary_operator_expr ::= defined_unary_op expr
 private defined_unary_op ::= defoperator
-private primary ::= /*type_param_inquiry | */constant | designator | structure_constructor | function_reference | array_constructor | paren
+private primary ::= /*type_param_inquiry |*/ constant | designator | structure_constructor | function_reference | array_constructor | paren
 paren ::= '(' expr ')'
 // R455
 structure_constructor ::= derived_type_spec '(' component_spec_list ')'
 // R468
 array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 // R601
-designator ::= data_ref | complex_part_designator | array_section | substring | identifier
+designator ::= (identifier !('%' | '(' | '[')) | data_ref | array_section  | complex_part_designator  | substring
 // R304, R305 modified
 constant ::= integerliteral | floatingpointliteral | doubleprecisionliteral
            | complex_literal | logical_literal | stringliteral | boz_literal
@@ -1020,7 +1020,7 @@ function_reference ::= procedure_designator '(' actual_arg_spec_list ')' { pin =
 // R1220
 call_stmt ::= call procedure_designator ('(' actual_arg_spec_list? ')')?
 // R1221
-procedure_designator ::= (data_ref '%' identifier) | (variable '%' identifier) | identifier
+procedure_designator ::= (identifier !('%')) | (variable '%' identifier) | (data_ref '%' identifier)
 // R1222
 private actual_arg_spec_list ::= actual_arg_spec (',' actual_arg_spec)*
 actual_arg_spec ::= (identifier '=')? actual_arg
