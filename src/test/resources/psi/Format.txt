@@ -1,61 +1,20 @@
 FILE
   MAIN_PROGRAM
     SPECIFICATION_PART
-      IMPLICIT_PART
+      DECLARATION_CONSTRUCT
         LABEL
           PsiElement(integerliteral)('1')
         PsiWhiteSpace(' ')
-        IMPLICIT_PART_STMT
-          FORMAT_STMT
-            PsiElement(formatkwd)('FORMAT')
-            PsiWhiteSpace(' ')
-            PsiElement(()('(')
-            FORMAT_ITEM
-              PsiElement(integerliteral)('1')
-              DATA_EDIT_DESC
-                PsiElement(identifier)('PE12')
-                PsiElement(floatingpointliteral)('.4')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            DATA_EDIT_DESC
-              PsiElement(identifier)('I10')
-            PsiElement())(')')
-        PsiElement(eol)('\n')
+        FORMAT_STMT
+          PsiElement(formatstmt)('FORMAT (1PE12.4, I10)')
+      PsiElement(eol)('\n')
+      DECLARATION_CONSTRUCT
         LABEL
           PsiElement(integerliteral)('2')
         PsiWhiteSpace(' ')
-        IMPLICIT_PART_STMT
-          FORMAT_STMT
-            PsiElement(formatkwd)('FORMAT')
-            PsiWhiteSpace(' ')
-            PsiElement(()('(')
-            DATA_EDIT_DESC
-              PsiElement(identifier)('I12')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            CONTROL_EDIT_DESC
-              PsiElement(/)('/')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            FORMAT_ITEM
-              PsiElement(stringliteral)('' Dates: '')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            FORMAT_ITEM
-              PsiElement(integerliteral)('2')
-              PsiWhiteSpace(' ')
-              PsiElement(()('(')
-              FORMAT_ITEM
-                PsiElement(integerliteral)('2')
-                DATA_EDIT_DESC
-                  PsiElement(identifier)('I3')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              DATA_EDIT_DESC
-                PsiElement(identifier)('I5')
-              PsiElement())(')')
-            PsiElement())(')')
-        PsiElement(eol)('\n\n')
+        FORMAT_STMT
+          PsiElement(formatstmt)('FORMAT (I12, /, ' Dates: ', 2 (2I3, I5))')
+      PsiElement(eol)('\n\n')
     BLOCK
       <empty list>
     END_PROGRAM_STMT

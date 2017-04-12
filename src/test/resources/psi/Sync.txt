@@ -10,13 +10,14 @@ FILE
           PsiElement(identifier)('a')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        SYNC_STAT
-          PsiElement(identifier)('stat')
-          PsiWhiteSpace(' ')
-          PsiElement(=)('=')
-          PsiWhiteSpace(' ')
-          DESIGNATOR
-            PsiElement(identifier)('st')
+        LOCK_STAT
+          PARAMETERS_SPEC
+            PsiElement(identifier)('stat')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            DESIGNATOR
+              PsiElement(identifier)('st')
         PsiElement())(')')
       PsiElement(eol)('\n')
       SYNC_ALL_STMT
@@ -39,7 +40,7 @@ FILE
         PsiElement(syncmemory)('syncmemory')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
-        SYNC_STAT
+        PARAMETERS_SPEC
           PsiElement(identifier)('errmsg')
           PsiWhiteSpace(' ')
           PsiElement(=)('=')

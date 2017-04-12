@@ -32,6 +32,7 @@ IDENTIFIER_PART=[:digit:]|[:letter:]|_
 IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
 
 LINE_COMMENT="!"[^\r\n]*
+FORMAT="format"\040*"("[^\r\n]*")"
 WHITE_SPACE_CHAR=[\ \t\f]
 EOL=(\n|\r|\r\n)
 
@@ -74,9 +75,12 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
 {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
 
+{FORMAT} { return FORMATSTMT; }
+
 ".true."(_{KIND_PARAM})? { return TRUE; }
 ".false."(_{KIND_PARAM})? { return FALSE; }
-("bind"{WHITE_SPACE_CHAR}*"(c)") { return BINDCKWD; }
+
+
 
 "=" { return EQ; }
 "==" { return EQEQ; }
@@ -169,7 +173,6 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "flush" { return FLUSH; }
 "function" { return FUNCTION; }
 "forall" { return FORALL; }
-"format" { return FORMATKWD; }
 "formatted" { return FORMATTED; }
 "generic" { return GENERIC; }
 "go" { return GO; }

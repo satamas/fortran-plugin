@@ -13,7 +13,10 @@ FILE
             PsiElement(enum)('ENUM')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            PsiElement(bindckwd)('BIND(C)')
+            PsiElement(bind)('BIND')
+            PsiElement(()('(')
+            PsiElement(identifier)('C')
+            PsiElement())(')')
             PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           ENUMERATOR_DEF_STMT
