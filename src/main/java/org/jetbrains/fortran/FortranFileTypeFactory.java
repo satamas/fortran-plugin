@@ -7,6 +7,9 @@ import org.jetbrains.annotations.NotNull;
 public class FortranFileTypeFactory extends FileTypeFactory {
     @Override
     public void createFileTypes(@NotNull FileTypeConsumer fileTypeConsumer) {
-        fileTypeConsumer.consume(FortranFileType.INSTANCE);
+        for (int i = 0; i < FortranFileType.DEFAULT_EXTENSIONS.length; i++)
+        {
+            fileTypeConsumer.consume(FortranFileType.INSTANCE, FortranFileType.DEFAULT_EXTENSIONS[i]);
+        }
     }
 }

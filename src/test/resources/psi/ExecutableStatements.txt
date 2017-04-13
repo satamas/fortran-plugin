@@ -238,12 +238,9 @@ FILE
           PsiElement(if)('if')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      BLOCK_DO_CONSTRUCT
-        LABEL_DO_STMT
+      NONLABEL_DO_CONSTRUCT
+        NONLABEL_DO_STMT
           PsiElement(do)('do')
-          PsiWhiteSpace(' ')
-          LABEL
-            PsiElement(integerliteral)('200')
           PsiWhiteSpace(' ')
           LOOP_CONTROL
             DESIGNATOR

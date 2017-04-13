@@ -2,6 +2,7 @@
   parserClass='org.jetbrains.fortran.lang.parser.FortranParser'
   implements='org.jetbrains.fortran.lang.psi.FortranCompositeElement'
   extends='org.jetbrains.fortran.lang.psi.impl.FortranCompositeElementImpl'
+  parserUtilClass='org.jetbrains.fortran.lang.parser.FortranParserUtil'
 
   elementTypeHolderClass='org.jetbrains.fortran.lang.FortranTypes'
   elementTypeClass='org.jetbrains.fortran.lang.psi.FortranCompositeElementType'
@@ -12,7 +13,6 @@
   psiPackage='org.jetbrains.fortran.lang.psi'
   psiImplPackage='org.jetbrains.fortran.lang.psi.impl'
 
-//  parserUtilClass='org.rust.lang.core.parser.RustParserUtil'
 //  psiImplUtilClass = ''
 //  psiTreeUtilClass = ''
   generateTokenAccessors=true
@@ -56,6 +56,9 @@
     FALSE = '.false.'
 
     POINTER_ASSMNT = '=>'
+
+    // for the external rule
+    LABELED_DO_CONSTRUCT = 'LABELED_DO_CONSTRUCT'
   ]
 
   extends(".*expr")=expr
@@ -610,12 +613,12 @@ critical_construct ::= critical_stmt block end_critical_stmt
 critical_stmt ::= (identifier ':')? critical eol { pin = 2 }
 // R812
 end_critical_stmt ::= label? ((end critical) | endcritical) (identifier)? { pin = 2 }
-// R813
-private do_construct ::= block_do_construct  | nonblock_do_constract
+// R813 simplified compared to standard
+external labeled_do_construct ::= parseLabeledDoConstruct label_do_stmt
+private do_construct ::= nonlabel_do_construct | labeled_do_construct
 // R814
-block_do_construct ::= do_stmt block end_do { pin = 1}
-// R815
-private do_stmt ::= label_do_stmt | nonlabel_do_stmt
+nonlabel_do_construct ::= nonlabel_do_stmt block end_do { pin = 1}
+// R815 unused
 // R816
 label_do_stmt ::= (identifier ':')? do label loop_control? eol { pin = 3 }
 // R817
@@ -636,7 +639,7 @@ private nonblock_do_constract ::= action_term_do_construct | outer_shared_do_con
 action_term_do_construct ::= label_do_stmt block do_term_action_stmt { pin = 1 }
 // R825 is trivial
 // R826 deprecated
-do_term_action_stmt ::= action_stmt // must contain label, don't know how to parse it, maybe tree analyze help later
+do_term_action_stmt ::= action_stmt | end_do_stmt // must contain label, don't know how to parse it, maybe tree analyze help later
 // R827 deprecated
 outer_shared_do_construct ::= label_do_stmt block shared_term_do_construct { pin = 3 }
 // R828 deprecated
@@ -644,7 +647,7 @@ private shared_term_do_construct ::= outer_shared_do_construct | inner_shared_do
 // R829 deprecated
 inner_shared_do_construct ::= label_do_stmt block do_term_shared_stmt  { pin = 3 }
 // R830 deprecated
-do_term_shared_stmt ::= action_stmt // must contain label, don't know how to parse it, maybe tree analyze help later
+do_term_shared_stmt ::= action_stmt | end_do_stmt // must contain label, don't know how to parse it, maybe tree analyze help later
 // R831
 cycle_stmt ::= cycle (identifier)? { pin = 1 }
 // R832

@@ -106,7 +106,7 @@ public class FortranTokenType extends IElementType {
             LOCK,
             LOGICAL,
             MEMORY,
-            MODULE,
+            MODULEKWD,
             NAMEKWD,
             NAMELIST,
             NONE,

@@ -20,7 +20,7 @@ program p
       x = 1.0
       y = 1.0
     end if
-    do 200 k = 5, 1
+    do k = 5, 1
     if(1-2) 10, 20, 30
     if ( values .le. atad ) call punt
 !    deprecated

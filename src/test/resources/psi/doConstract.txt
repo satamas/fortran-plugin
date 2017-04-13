@@ -14,7 +14,7 @@ FILE
       LABEL
         PsiElement(integerliteral)('2')
       PsiWhiteSpace('  ')
-      BLOCK_DO_CONSTRUCT
+      NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
           PsiElement(do)('do')
           PsiWhiteSpace(' ')
@@ -52,7 +52,7 @@ FILE
           PsiElement(enddo)('enddo')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
-      BLOCK_DO_CONSTRUCT
+      NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
           PsiElement(do)('do')
           PsiWhiteSpace(' ')
@@ -89,7 +89,7 @@ FILE
           PsiElement(enddo)('enddo')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
-      BLOCK_DO_CONSTRUCT
+      NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
           PsiElement(identifier)('loop')
           PsiElement(:)(':')
@@ -140,7 +140,7 @@ FILE
         PsiElement(continue)('continue')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
-      BLOCK_DO_CONSTRUCT
+      NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
           PsiElement(do)('do')
           PsiWhiteSpace(' ')
