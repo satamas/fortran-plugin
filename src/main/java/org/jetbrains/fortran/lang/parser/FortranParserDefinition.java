@@ -57,7 +57,8 @@ public class FortranParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiElement createElement(ASTNode astNode) {
-        return FortranTypes.Factory.createElement(astNode);
+        PsiElement element = FortranManualPsiElementFactory.createElement(astNode);
+        return element == null ? FortranTypes.Factory.createElement(astNode) : element;
     }
 
     @Override

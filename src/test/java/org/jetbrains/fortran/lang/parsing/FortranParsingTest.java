@@ -95,4 +95,8 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
     public void testInterface() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Interface.f"));
     }
+
+    public void testLabeledDo() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("LabeledDo.f"));
+    }
 }

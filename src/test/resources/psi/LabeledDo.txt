@@ -1,0 +1,132 @@
+FILE
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(programkwd)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('labeltests')
+      PsiElement(eol)('\n\n')
+    SPECIFICATION_PART
+      <empty list>
+    BLOCK
+      LABELED_DO_CONSTRUCT
+        LABEL_DO_STMT
+          PsiElement(do)('do')
+          PsiWhiteSpace(' ')
+          LABEL
+            PsiElement(integerliteral)('10')
+          PsiWhiteSpace(' ')
+          LOOP_CONTROL
+            DESIGNATOR
+              PsiElement(identifier)('i')
+            PsiElement(=)('=')
+            CONSTANT
+              PsiElement(integerliteral)('1')
+            PsiElement(,)(',')
+            CONSTANT
+              PsiElement(integerliteral)('3')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          LABEL
+            PsiElement(integerliteral)('1')
+          PsiWhiteSpace(' ')
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('a')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integerliteral)('3')
+          PsiElement(eol)('\n')
+          LABEL
+            PsiElement(integerliteral)('3')
+          PsiWhiteSpace(' ')
+          LABELED_DO_CONSTRUCT
+            LABEL_DO_STMT
+              PsiElement(do)('do')
+              PsiWhiteSpace(' ')
+              LABEL
+                PsiElement(integerliteral)('100')
+              PsiWhiteSpace(' ')
+              LOOP_CONTROL
+                DESIGNATOR
+                  PsiElement(identifier)('i')
+                PsiElement(=)('=')
+                CONSTANT
+                  PsiElement(integerliteral)('4')
+                PsiElement(,)(',')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('        ')
+            BLOCK
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('aa')
+                PsiWhiteSpace(' ')
+                PsiElement(=)('=')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+              PsiElement(eol)('\n')
+              PsiWhiteSpace('        ')
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('bb')
+                PsiWhiteSpace(' ')
+                PsiElement(=)('=')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('    ')
+            LABEL
+              PsiElement(integerliteral)('100')
+            PsiWhiteSpace(' ')
+            ASSIGNMENT_STMT
+              DESIGNATOR
+                PsiElement(identifier)('cc')
+              PsiWhiteSpace(' ')
+              PsiElement(=)('=')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integerliteral)('3')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          LABEL
+            PsiElement(integerliteral)('2')
+          PsiWhiteSpace(' ')
+          ASSIGNMENT_STMT
+            DESIGNATOR
+              PsiElement(identifier)('b')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integerliteral)('4')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace(' ')
+        END_DO_STMT
+          LABEL
+            PsiElement(integerliteral)('10')
+          PsiWhiteSpace(' ')
+          PsiElement(enddo)('enddo')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace(' ')
+      LABEL
+        PsiElement(integerliteral)('11')
+      PsiWhiteSpace(' ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('d')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integerliteral)('8')
+      PsiElement(eol)('\n')
+    END_PROGRAM_STMT
+      PsiElement(end)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(programkwd)('program')
