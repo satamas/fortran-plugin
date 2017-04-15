@@ -438,8 +438,7 @@ FILE
           ASSIGNED_GOTO_STMT
             PsiElement(goto)('goto')
             PsiWhiteSpace(' ')
-            DESIGNATOR
-              PsiElement(identifier)('n')
+            PsiElement(identifier)('n')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
@@ -453,32 +452,26 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement(to)('to')
             PsiWhiteSpace(' ')
-            DESIGNATOR
-              DATA_REF
-                PsiElement(identifier)('n')
-                PsiWhiteSpace(' ')
-                PsiElement(()('(')
-                PsiWhiteSpace(' ')
-                SECTION_SUBSCRIPT
-                  CONSTANT
-                    PsiElement(integerliteral)('10')
-                PsiElement(,)(',')
-                PsiWhiteSpace(' ')
-                SECTION_SUBSCRIPT
-                  CONSTANT
-                    PsiElement(integerliteral)('20')
-                PsiElement(,)(',')
-                PsiWhiteSpace(' ')
-                SECTION_SUBSCRIPT
-                  CONSTANT
-                    PsiElement(integerliteral)('30')
-                PsiElement(,)(',')
-                PsiWhiteSpace(' ')
-                SECTION_SUBSCRIPT
-                  CONSTANT
-                    PsiElement(integerliteral)('40')
-                PsiWhiteSpace(' ')
-                PsiElement())(')')
+            PsiElement(identifier)('n')
+            PsiWhiteSpace(' ')
+            PsiElement(()('(')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integerliteral)('10')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integerliteral)('20')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integerliteral)('30')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integerliteral)('40')
+            PsiWhiteSpace(' ')
+            PsiElement())(')')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPUTED_GOTO_STMT

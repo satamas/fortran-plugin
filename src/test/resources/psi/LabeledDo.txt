@@ -4,7 +4,8 @@ FILE
       PsiElement(programkwd)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('labeltests')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('      ')
     SPECIFICATION_PART
       <empty list>
     BLOCK
@@ -25,11 +26,11 @@ FILE
             CONSTANT
               PsiElement(integerliteral)('3')
           PsiElement(eol)('\n')
-        PsiWhiteSpace('    ')
+        PsiWhiteSpace(' ')
         BLOCK
           LABEL
             PsiElement(integerliteral)('1')
-          PsiWhiteSpace(' ')
+          PsiWhiteSpace('      ')
           ASSIGNMENT_STMT
             DESIGNATOR
               PsiElement(identifier)('a')
@@ -39,9 +40,10 @@ FILE
             CONSTANT
               PsiElement(integerliteral)('3')
           PsiElement(eol)('\n')
+          PsiWhiteSpace(' ')
           LABEL
             PsiElement(integerliteral)('3')
-          PsiWhiteSpace(' ')
+          PsiWhiteSpace('      ')
           LABELED_DO_CONSTRUCT
             LABEL_DO_STMT
               PsiElement(do)('do')
@@ -59,7 +61,7 @@ FILE
                 CONSTANT
                   PsiElement(integerliteral)('5')
               PsiElement(eol)('\n')
-            PsiWhiteSpace('        ')
+            PsiWhiteSpace('          ')
             BLOCK
               ASSIGNMENT_STMT
                 DESIGNATOR
@@ -70,7 +72,7 @@ FILE
                 CONSTANT
                   PsiElement(integerliteral)('1')
               PsiElement(eol)('\n')
-              PsiWhiteSpace('        ')
+              PsiWhiteSpace('          ')
               ASSIGNMENT_STMT
                 DESIGNATOR
                   PsiElement(identifier)('bb')
@@ -80,23 +82,24 @@ FILE
                 CONSTANT
                   PsiElement(integerliteral)('2')
               PsiElement(eol)('\n')
-            PsiWhiteSpace('    ')
-            LABEL
-              PsiElement(integerliteral)('100')
             PsiWhiteSpace(' ')
-            ASSIGNMENT_STMT
-              DESIGNATOR
-                PsiElement(identifier)('cc')
-              PsiWhiteSpace(' ')
-              PsiElement(=)('=')
-              PsiWhiteSpace(' ')
-              CONSTANT
-                PsiElement(integerliteral)('3')
+            DO_TERM_ACTION_STMT
+              LABEL
+                PsiElement(integerliteral)('100')
+              PsiWhiteSpace('    ')
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('cc')
+                PsiWhiteSpace(' ')
+                PsiElement(=)('=')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integerliteral)('3')
           PsiElement(eol)('\n')
-          PsiWhiteSpace('    ')
+          PsiWhiteSpace(' ')
           LABEL
             PsiElement(integerliteral)('2')
-          PsiWhiteSpace(' ')
+          PsiWhiteSpace('      ')
           ASSIGNMENT_STMT
             DESIGNATOR
               PsiElement(identifier)('b')
@@ -106,17 +109,75 @@ FILE
             CONSTANT
               PsiElement(integerliteral)('4')
           PsiElement(eol)('\n')
-        PsiWhiteSpace(' ')
-        END_DO_STMT
-          LABEL
-            PsiElement(integerliteral)('10')
-          PsiWhiteSpace(' ')
-          PsiElement(enddo)('enddo')
+        PsiWhiteSpace('        ')
+        LABELED_DO_CONSTRUCT
+          LABEL_DO_STMT
+            PsiElement(do)('do')
+            PsiWhiteSpace(' ')
+            LABEL
+              PsiElement(integerliteral)('10')
+            PsiWhiteSpace(' ')
+            LOOP_CONTROL
+              DESIGNATOR
+                PsiElement(identifier)('j')
+              PsiElement(=)('=')
+              CONSTANT
+                PsiElement(integerliteral)('1')
+              PsiElement(,)(',')
+              CONSTANT
+                PsiElement(integerliteral)('4')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('          ')
+          BLOCK
+            ASSIGNMENT_STMT
+              DESIGNATOR
+                PsiElement(identifier)('a')
+              PsiWhiteSpace(' ')
+              PsiElement(=)('=')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integerliteral)('1')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('          ')
+          LABELED_DO_CONSTRUCT
+            LABEL_DO_STMT
+              PsiElement(do)('do')
+              PsiWhiteSpace(' ')
+              LABEL
+                PsiElement(integerliteral)('10')
+              PsiWhiteSpace(' ')
+              LOOP_CONTROL
+                DESIGNATOR
+                  PsiElement(identifier)('k')
+                PsiElement(=)('=')
+                CONSTANT
+                  PsiElement(integerliteral)('3')
+                PsiElement(,)(',')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('            ')
+            BLOCK
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('b')
+                PsiWhiteSpace(' ')
+                PsiElement(=)('=')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace(' ')
+            END_DO_STMT
+              LABEL
+                PsiElement(integerliteral)('10')
+              PsiWhiteSpace('       ')
+              PsiElement(enddo)('enddo')
       PsiElement(eol)('\n')
       PsiWhiteSpace(' ')
       LABEL
         PsiElement(integerliteral)('11')
-      PsiWhiteSpace(' ')
+      PsiWhiteSpace('   ')
       ASSIGNMENT_STMT
         DESIGNATOR
           PsiElement(identifier)('d')

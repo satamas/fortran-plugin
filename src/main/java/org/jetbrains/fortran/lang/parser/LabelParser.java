@@ -43,7 +43,6 @@ public class LabelParser implements GeneratedParserUtilBase.Parser {
         String text = builder_.getTokenText();
         int labelValue = -1;
         if (text != null) labelValue = parseInt(text);
-        System.out.println(labelValue + " " + value);
         result_ = (labelValue != value) && consumeToken(builder_, INTEGERLITERAL);
         exit_section_(builder_, marker_, LABEL, result_);
         return result_;
