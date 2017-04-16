@@ -1,21 +1,17 @@
 FILE
   MAIN_PROGRAM
-    SPECIFICATION_PART
-      DECLARATION_CONSTRUCT
-        LABEL
-          PsiElement(integerliteral)('1')
-        PsiWhiteSpace(' ')
-        FORMAT_STMT
-          PsiElement(formatstmt)('FORMAT (1PE12.4, I10)')
-      PsiElement(eol)('\n')
-      DECLARATION_CONSTRUCT
-        LABEL
-          PsiElement(integerliteral)('2')
-        PsiWhiteSpace(' ')
-        FORMAT_STMT
-          PsiElement(formatstmt)('FORMAT (I12, /, ' Dates: ', 2 (2I3, I5))')
-      PsiElement(eol)('\n\n')
     BLOCK
-      <empty list>
+      LABEL
+        PsiElement(integerliteral)('1')
+      PsiWhiteSpace(' ')
+      FORMAT_STMT
+        PsiElement(formatstmt)('FORMAT (1PE12.4, I10)')
+      PsiElement(eol)('\n')
+      LABEL
+        PsiElement(integerliteral)('2')
+      PsiWhiteSpace(' ')
+      FORMAT_STMT
+        PsiElement(formatstmt)('FORMAT (I12, /, ' Dates: ', 2 (2I3, I5))')
+      PsiElement(eol)('\n\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')

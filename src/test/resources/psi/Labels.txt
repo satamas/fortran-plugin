@@ -8,8 +8,6 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       <empty list>
     END_PROGRAM_STMT

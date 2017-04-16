@@ -6,8 +6,6 @@ FILE
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       PRINT_STMT
         PsiElement(print)('Print')

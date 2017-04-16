@@ -6,56 +6,54 @@ FILE
       PsiElement(identifier)('literals')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    SPECIFICATION_PART
-      DECLARATION_CONSTRUCT
-        ENUM_DEF
-          ENUM_DEF_STMT
-            PsiElement(enum)('ENUM')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            PsiElement(bind)('BIND')
-            PsiElement(()('(')
-            PsiElement(identifier)('C')
-            PsiElement())(')')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('    ')
-          ENUMERATOR_DEF_STMT
-            PsiElement(enumeratorkwd)('ENUMERATOR')
-            PsiWhiteSpace(' ')
-            PsiElement(::)('::')
-            PsiWhiteSpace(' ')
-            ENUMERATOR
-              PsiElement(identifier)('RED')
-              PsiWhiteSpace(' ')
-              PsiElement(=)('=')
-              PsiWhiteSpace(' ')
-              CONSTANT
-                PsiElement(integerliteral)('4')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            ENUMERATOR
-              PsiElement(identifier)('BLUE')
-              PsiWhiteSpace(' ')
-              PsiElement(=)('=')
-              PsiWhiteSpace(' ')
-              CONSTANT
-                PsiElement(integerliteral)('9')
-          PsiElement(eol)('\n')
-          PsiWhiteSpace('    ')
-          ENUMERATOR_DEF_STMT
-            PsiElement(enumeratorkwd)('ENUMERATOR')
-            PsiWhiteSpace(' ')
-            ENUMERATOR
-              PsiElement(identifier)('YELLOW')
-          PsiElement(eol)('\n')
-          PsiWhiteSpace('  ')
-          END_ENUM_STMT
-            PsiElement(end)('END')
-            PsiWhiteSpace(' ')
-            PsiElement(enum)('ENUM')
-      PsiElement(eol)('\n\n')
-    PsiWhiteSpace('  ')
     BLOCK
+      ENUM_DEF
+        ENUM_DEF_STMT
+          PsiElement(enum)('ENUM')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          PsiElement(bind)('BIND')
+          PsiElement(()('(')
+          PsiElement(identifier)('C')
+          PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        ENUMERATOR_DEF_STMT
+          PsiElement(enumeratorkwd)('ENUMERATOR')
+          PsiWhiteSpace(' ')
+          PsiElement(::)('::')
+          PsiWhiteSpace(' ')
+          ENUMERATOR
+            PsiElement(identifier)('RED')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integerliteral)('4')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          ENUMERATOR
+            PsiElement(identifier)('BLUE')
+            PsiWhiteSpace(' ')
+            PsiElement(=)('=')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integerliteral)('9')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        ENUMERATOR_DEF_STMT
+          PsiElement(enumeratorkwd)('ENUMERATOR')
+          PsiWhiteSpace(' ')
+          ENUMERATOR
+            PsiElement(identifier)('YELLOW')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_ENUM_STMT
+          PsiElement(end)('END')
+          PsiWhiteSpace(' ')
+          PsiElement(enum)('ENUM')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
         DESIGNATOR
           PsiElement(identifier)('a')

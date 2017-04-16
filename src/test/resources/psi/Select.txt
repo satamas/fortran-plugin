@@ -6,8 +6,6 @@ FILE
       PsiElement(identifier)('select_test')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       CASE_CONSTRUCT
         SELECT_CASE_STMT

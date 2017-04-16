@@ -6,8 +6,6 @@ FILE
       PsiElement(identifier)('p')
       PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       IF_CONSTRUCT
         IF_THEN_STMT

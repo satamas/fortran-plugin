@@ -6,122 +6,118 @@ FILE
       PsiElement(identifier)('gaussinter')
       PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
-    SPECIFICATION_PART
-      DECLARATION_CONSTRUCT
-        INTERFACE_BLOCK
-          INTERFACE_STMT
-            PsiElement(interface)('interface')
+    BLOCK
+      INTERFACE_BLOCK
+        INTERFACE_STMT
+          PsiElement(interface)('interface')
+          PsiWhiteSpace(' ')
+          GENERIC_SPEC
+            PsiElement(identifier)('solve')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('        ')
+        INTERFACE_BODY
+          FUNCTION_STMT
+            PsiElement(function)('function')
             PsiWhiteSpace(' ')
-            GENERIC_SPEC
-              PsiElement(identifier)('solve')
+            PsiElement(identifier)('solve')
+            PsiElement(()('(')
+            PsiElement(identifier)('n')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('pmatrix')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('key')
+            PsiElement())(')')
+            PsiElement(eol)(';\n')
+          PsiWhiteSpace('             ')
+          PsiComment(comment)('! NOTE: real *8 is not an official standard but works usually')
+          BLOCK
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('              ')
+            TYPE_DECLARATION_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(real)('real')
+                KIND_SELECTOR
+                  PsiElement(()('(')
+                  CONSTANT
+                    PsiElement(integerliteral)('8')
+                  PsiElement())(')')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              ATTR_SPEC
+                PsiElement(dimension)('dimension')
+                PsiWhiteSpace(' ')
+                PsiElement(()('(')
+                ASSUMED_SHAPE_SPEC
+                  PsiElement(:)(':')
+                PsiElement())(')')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              ATTR_SPEC
+                PsiElement(pointer)('pointer')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace('  ')
+              ENTITY_DECL
+                PsiElement(identifier)('solve')
+            PsiElement(eol)(';\n')
+            PsiWhiteSpace('              ')
+            TYPE_DECLARATION_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(real)('real')
+                KIND_SELECTOR
+                  PsiElement(()('(')
+                  CONSTANT
+                    PsiElement(integerliteral)('8')
+                  PsiElement())(')')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              ATTR_SPEC
+                PsiElement(dimension)('dimension')
+                PsiWhiteSpace(' ')
+                PsiElement(()('(')
+                ASSUMED_SHAPE_SPEC
+                  PsiElement(:)(':')
+                PsiElement(,)(',')
+                ASSUMED_SHAPE_SPEC
+                  PsiElement(:)(':')
+                PsiElement())(')')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              ATTR_SPEC
+                PsiElement(pointer)('pointer')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              ENTITY_DECL
+                PsiElement(identifier)('pmatrix')
+            PsiElement(eol)(';\n')
+            PsiWhiteSpace('              ')
+            TYPE_DECLARATION_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(integer)('integer')
+              PsiWhiteSpace(' ')
+              ENTITY_DECL
+                PsiElement(identifier)('n')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              ENTITY_DECL
+                PsiElement(identifier)('key')
             PsiElement(eol)('\n')
           PsiWhiteSpace('        ')
-          INTERFACE_BODY
-            FUNCTION_STMT
-              PsiElement(function)('function')
-              PsiWhiteSpace(' ')
-              PsiElement(identifier)('solve')
-              PsiElement(()('(')
-              PsiElement(identifier)('n')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              PsiElement(identifier)('pmatrix')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              PsiElement(identifier)('key')
-              PsiElement())(')')
-              PsiElement(eol)(';\n')
-            PsiWhiteSpace('             ')
-            PsiComment(comment)('! NOTE: real *8 is not an official standard but works usually')
-            SPECIFICATION_PART
-              PsiElement(eol)('\n')
-              PsiWhiteSpace('              ')
-              DECLARATION_CONSTRUCT
-                TYPE_DECLARATION_STMT
-                  INTRINSIC_TYPE_SPEC
-                    PsiElement(real)('real')
-                    KIND_SELECTOR
-                      PsiElement(()('(')
-                      CONSTANT
-                        PsiElement(integerliteral)('8')
-                      PsiElement())(')')
-                  PsiElement(,)(',')
-                  PsiWhiteSpace(' ')
-                  ATTR_SPEC
-                    PsiElement(dimension)('dimension')
-                    PsiWhiteSpace(' ')
-                    PsiElement(()('(')
-                    ASSUMED_SHAPE_SPEC
-                      PsiElement(:)(':')
-                    PsiElement())(')')
-                  PsiElement(,)(',')
-                  PsiWhiteSpace(' ')
-                  ATTR_SPEC
-                    PsiElement(pointer)('pointer')
-                  PsiWhiteSpace(' ')
-                  PsiElement(::)('::')
-                  PsiWhiteSpace('  ')
-                  ENTITY_DECL
-                    PsiElement(identifier)('solve')
-                  PsiElement(eol)(';\n')
-              PsiWhiteSpace('              ')
-              DECLARATION_CONSTRUCT
-                TYPE_DECLARATION_STMT
-                  INTRINSIC_TYPE_SPEC
-                    PsiElement(real)('real')
-                    KIND_SELECTOR
-                      PsiElement(()('(')
-                      CONSTANT
-                        PsiElement(integerliteral)('8')
-                      PsiElement())(')')
-                  PsiElement(,)(',')
-                  PsiWhiteSpace(' ')
-                  ATTR_SPEC
-                    PsiElement(dimension)('dimension')
-                    PsiWhiteSpace(' ')
-                    PsiElement(()('(')
-                    ASSUMED_SHAPE_SPEC
-                      PsiElement(:)(':')
-                    PsiElement(,)(',')
-                    ASSUMED_SHAPE_SPEC
-                      PsiElement(:)(':')
-                    PsiElement())(')')
-                  PsiElement(,)(',')
-                  PsiWhiteSpace(' ')
-                  ATTR_SPEC
-                    PsiElement(pointer)('pointer')
-                  PsiWhiteSpace(' ')
-                  PsiElement(::)('::')
-                  PsiWhiteSpace(' ')
-                  ENTITY_DECL
-                    PsiElement(identifier)('pmatrix')
-                  PsiElement(eol)(';\n')
-              PsiWhiteSpace('              ')
-              DECLARATION_CONSTRUCT
-                TYPE_DECLARATION_STMT
-                  INTRINSIC_TYPE_SPEC
-                    PsiElement(integer)('integer')
-                  PsiWhiteSpace(' ')
-                  ENTITY_DECL
-                    PsiElement(identifier)('n')
-                  PsiElement(,)(',')
-                  PsiWhiteSpace(' ')
-                  ENTITY_DECL
-                    PsiElement(identifier)('key')
-                  PsiElement(eol)('\n')
-            PsiWhiteSpace('        ')
-            END_FUNCTION_STMT
-              PsiElement(end)('end')
-              PsiWhiteSpace(' ')
-              PsiElement(function)('function')
-              PsiWhiteSpace(' ')
-              PsiElement(identifier)('solve')
-          PsiElement(eol)('\n')
-          PsiWhiteSpace('      ')
-          END_INTERFACE_STMT
+          END_FUNCTION_STMT
             PsiElement(end)('end')
             PsiWhiteSpace(' ')
-            PsiElement(interface)('interface')
+            PsiElement(function)('function')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('solve')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace('      ')
+        END_INTERFACE_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(interface)('interface')
       PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     END_MODULE_STMT

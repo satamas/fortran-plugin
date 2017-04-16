@@ -12,654 +12,628 @@ FILE
       PsiElement())(')')
       PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    SPECIFICATION_PART
-      IMPLICIT_PART
-        IMPLICIT_PART_STMT
-          IMPLICIT_STMT
-            PsiElement(implicit)('implicit')
-            PsiWhiteSpace(' ')
-            PsiElement(none)('none')
-        PsiElement(eol)('\n')
-        PsiWhiteSpace('    ')
-        IMPLICIT_PART_STMT
-          IMPLICIT_STMT
-            PsiElement(implicit)('implicit')
-            PsiWhiteSpace(' ')
-            IMPLICIT_SPEC
-              PsiElement(character)('character')
-              PsiWhiteSpace(' ')
-              PsiElement(()('(')
-              LETTER_SPEC
-                PsiElement(identifier)('a')
-                PsiElement(-)('-')
-                PsiElement(identifier)('z')
-              PsiElement())(')')
-        PsiElement(eol)('\n')
-        PsiWhiteSpace('    ')
-        IMPLICIT_PART_STMT
-          IMPLICIT_STMT
-            PsiElement(implicit)('implicit')
-            PsiWhiteSpace(' ')
-            IMPLICIT_SPEC
-              INTRINSIC_TYPE_SPEC
-                PsiElement(character)('character')
-                PsiWhiteSpace(' ')
-                CHAR_SELECTOR
-                  LENGTH_SELECTOR
-                    PsiElement(*)('*')
-                    PsiWhiteSpace(' ')
-                    CHAR_LENGTH
-                      PsiElement(()('(')
-                      PsiElement(*)('*')
-                      PsiElement())(')')
-              PsiWhiteSpace(' ')
-              PsiElement(()('(')
-              LETTER_SPEC
-                PsiElement(identifier)('c')
-              PsiElement(,)(',')
-              LETTER_SPEC
-                PsiElement(identifier)('s')
-              PsiElement())(')')
-        PsiElement(eol)('\n')
-        PsiWhiteSpace('    ')
-        IMPLICIT_PART_STMT
-          IMPLICIT_STMT
-            PsiElement(implicit)('implicit')
-            PsiWhiteSpace(' ')
-            IMPLICIT_SPEC
-              INTRINSIC_TYPE_SPEC
-                PsiElement(character)('character')
-                PsiWhiteSpace(' ')
-                CHAR_SELECTOR
-                  LENGTH_SELECTOR
-                    PsiElement(*)('*')
-                    PsiWhiteSpace(' ')
-                    CHAR_LENGTH
-                      PsiElement(()('(')
-                      ADD_EXPR
-                        CONSTANT
-                          PsiElement(integerliteral)('1')
-                        PsiElement(+)('+')
-                        CONSTANT
-                          PsiElement(integerliteral)('2')
-                      PsiElement())(')')
-              PsiWhiteSpace(' ')
-              PsiElement(()('(')
-              LETTER_SPEC
-                PsiElement(identifier)('c')
-              PsiElement(,)(',')
-              LETTER_SPEC
-                PsiElement(identifier)('s')
-              PsiElement())(')')
-        PsiElement(eol)('\n')
+    BLOCK
+      IMPLICIT_STMT
+        PsiElement(implicit)('implicit')
         PsiWhiteSpace(' ')
-        LABEL
-          PsiElement(integerliteral)('20')
-        PsiWhiteSpace(' ')
-        IMPLICIT_PART_STMT
-          IMPLICIT_STMT
-            PsiElement(implicit)('implicit')
-            PsiWhiteSpace(' ')
-            IMPLICIT_SPEC
-              PsiElement(complex)('complex')
-              PsiWhiteSpace(' ')
-              PsiElement(()('(')
-              LETTER_SPEC
-                PsiElement(identifier)('u')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              LETTER_SPEC
-                PsiElement(identifier)('a')
-                PsiElement(-)('-')
-                PsiElement(identifier)('b')
-              PsiElement(,)(',')
-              LETTER_SPEC
-                PsiElement(identifier)('w')
-              PsiElement())(')')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            IMPLICIT_SPEC
-              INTRINSIC_TYPE_SPEC
-                PsiElement(character)('character')
-                CHAR_SELECTOR
-                  LENGTH_SELECTOR
-                    PsiElement(*)('*')
-                    CHAR_LENGTH
-                      PsiElement(integerliteral)('4')
-              PsiWhiteSpace(' ')
-              PsiElement(()('(')
-              LETTER_SPEC
-                PsiElement(identifier)('c')
-              PsiElement(,)(',')
-              LETTER_SPEC
-                PsiElement(identifier)('s')
-              PsiElement())(')')
-        PsiElement(eol)('\n')
+        PsiElement(none)('none')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        TYPE_DECLARATION_STMT
-          INTRINSIC_TYPE_SPEC
-            PsiElement(integer)('integer')
+      IMPLICIT_STMT
+        PsiElement(implicit)('implicit')
+        PsiWhiteSpace(' ')
+        IMPLICIT_SPEC
+          PsiElement(character)('character')
           PsiWhiteSpace(' ')
-          ENTITY_DECL
+          PsiElement(()('(')
+          LETTER_SPEC
+            PsiElement(identifier)('a')
+            PsiElement(-)('-')
+            PsiElement(identifier)('z')
+          PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      IMPLICIT_STMT
+        PsiElement(implicit)('implicit')
+        PsiWhiteSpace(' ')
+        IMPLICIT_SPEC
+          INTRINSIC_TYPE_SPEC
+            PsiElement(character)('character')
+            PsiWhiteSpace(' ')
+            CHAR_SELECTOR
+              LENGTH_SELECTOR
+                PsiElement(*)('*')
+                PsiWhiteSpace(' ')
+                CHAR_LENGTH
+                  PsiElement(()('(')
+                  PsiElement(*)('*')
+                  PsiElement())(')')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          LETTER_SPEC
             PsiElement(identifier)('c')
           PsiElement(,)(',')
+          LETTER_SPEC
+            PsiElement(identifier)('s')
+          PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      IMPLICIT_STMT
+        PsiElement(implicit)('implicit')
+        PsiWhiteSpace(' ')
+        IMPLICIT_SPEC
+          INTRINSIC_TYPE_SPEC
+            PsiElement(character)('character')
+            PsiWhiteSpace(' ')
+            CHAR_SELECTOR
+              LENGTH_SELECTOR
+                PsiElement(*)('*')
+                PsiWhiteSpace(' ')
+                CHAR_LENGTH
+                  PsiElement(()('(')
+                  ADD_EXPR
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                    PsiElement(+)('+')
+                    CONSTANT
+                      PsiElement(integerliteral)('2')
+                  PsiElement())(')')
           PsiWhiteSpace(' ')
-          ENTITY_DECL
+          PsiElement(()('(')
+          LETTER_SPEC
+            PsiElement(identifier)('c')
+          PsiElement(,)(',')
+          LETTER_SPEC
+            PsiElement(identifier)('s')
+          PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace(' ')
+      LABEL
+        PsiElement(integerliteral)('20')
+      PsiWhiteSpace(' ')
+      IMPLICIT_STMT
+        PsiElement(implicit)('implicit')
+        PsiWhiteSpace(' ')
+        IMPLICIT_SPEC
+          PsiElement(complex)('complex')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          LETTER_SPEC
+            PsiElement(identifier)('u')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          LETTER_SPEC
+            PsiElement(identifier)('a')
+            PsiElement(-)('-')
+            PsiElement(identifier)('b')
+          PsiElement(,)(',')
+          LETTER_SPEC
+            PsiElement(identifier)('w')
+          PsiElement())(')')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        IMPLICIT_SPEC
+          INTRINSIC_TYPE_SPEC
+            PsiElement(character)('character')
+            CHAR_SELECTOR
+              LENGTH_SELECTOR
+                PsiElement(*)('*')
+                CHAR_LENGTH
+                  PsiElement(integerliteral)('4')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          LETTER_SPEC
+            PsiElement(identifier)('c')
+          PsiElement(,)(',')
+          LETTER_SPEC
+            PsiElement(identifier)('s')
+          PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(integer)('integer')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('c')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('z')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        INTRINSIC_STMT
+          PsiElement(intrinsic)('intrinsic')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('sin')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('cos')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        EXTERNAL_STMT
+          PsiElement(external)('external')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('sin')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('cos')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        COMMON_STMT
+          PsiElement(common)('common')
+          PsiWhiteSpace(' ')
+          PsiElement(/)('/')
+          PsiElement(identifier)('x')
+          PsiElement(/)('/')
+          PsiWhiteSpace(' ')
+          COMMON_BLOCK_OBJECT
+            PsiElement(identifier)('c')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        DATA_STMT
+          PsiElement(data)('data')
+          PsiWhiteSpace(' ')
+          DATA_STMT_SET
+            DATA_STMT_OBJECT
+              DESIGNATOR
+                PsiElement(identifier)('ttl')
+            PsiWhiteSpace(' ')
+            PsiElement(/)('/')
+            DATA_STMT_VALUE
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(stringliteral)(''Arbitrary Titles'')
+            PsiElement(/)('/')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        DATA_STMT
+          PsiElement(data)('data')
+          PsiWhiteSpace(' ')
+          DATA_STMT_SET
+            DATA_STMT_OBJECT
+              DESIGNATOR
+                PsiElement(identifier)('m')
+            PsiWhiteSpace(' ')
+            PsiElement(/)('/')
+            DATA_STMT_VALUE
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(integerliteral)('9')
+            PsiElement(/)('/')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DATA_STMT_SET
+            DATA_STMT_OBJECT
+              DESIGNATOR
+                PsiElement(identifier)('N')
+            PsiWhiteSpace(' ')
+            PsiElement(/)('/')
+            DATA_STMT_VALUE
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(integerliteral)('0')
+            PsiElement(/)('/')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        DATA_STMT
+          PsiElement(data)('data')
+          PsiWhiteSpace(' ')
+          DATA_STMT_SET
+            DATA_STMT_OBJECT
+              DESIGNATOR
+                DATA_REF
+                  PsiElement(identifier)('pair')
+                  PsiElement(()('(')
+                  SECTION_SUBSCRIPT
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                  PsiElement())(')')
+            PsiWhiteSpace(' ')
+            PsiElement(/)('/')
+            DATA_STMT_VALUE
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(floatingpointliteral)('9.0')
+            PsiElement(/)('/')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DATA_STMT_SET
+            DATA_STMT_OBJECT
+              DESIGNATOR
+                PsiElement(identifier)('VEC')
+            PsiWhiteSpace(' ')
+            PsiElement(/)('/')
+            DATA_STMT_VALUE
+              DATA_STMT_REPEAT
+                CONSTANT
+                  PsiElement(integerliteral)('3')
+              PsiElement(*)('*')
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(floatingpointliteral)('9.0')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            DATA_STMT_VALUE
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(floatingpointliteral)('0.1')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            DATA_STMT_VALUE
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(floatingpointliteral)('0.9')
+            PsiElement(/)('/')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        DATA_STMT
+          PsiElement(data)('data')
+          PsiWhiteSpace(' ')
+          DATA_STMT_SET
+            DATA_STMT_OBJECT
+              DATA_IMPLIED_DO
+                PsiElement(()('(')
+                PsiWhiteSpace(' ')
+                DATA_I_DO_OBJECT
+                  DATA_REF
+                    PsiElement(identifier)('s')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      DESIGNATOR
+                        PsiElement(identifier)('i')
+                    PsiElement(,)(',')
+                    SECTION_SUBSCRIPT
+                      DESIGNATOR
+                        PsiElement(identifier)('i')
+                    PsiElement())(')')
+                PsiElement(,)(',')
+                PsiWhiteSpace(' ')
+                PsiElement(identifier)('i')
+                PsiElement(=)('=')
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(,)(',')
+                CONSTANT
+                  PsiElement(integerliteral)('4')
+                PsiElement())(')')
+            PsiElement(/)('/')
+            DATA_STMT_VALUE
+              DATA_STMT_REPEAT
+                CONSTANT
+                  PsiElement(integerliteral)('4')
+              PsiElement(*)('*')
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(floatingpointliteral)('1.0')
+            PsiElement(/)('/')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        DATA_STMT
+          PsiElement(data)('data')
+          PsiWhiteSpace(' ')
+          DATA_STMT_SET
+            DATA_STMT_OBJECT
+              DATA_IMPLIED_DO
+                PsiElement(()('(')
+                DATA_I_DO_OBJECT
+                  DATA_IMPLIED_DO
+                    PsiElement(()('(')
+                    PsiWhiteSpace(' ')
+                    DATA_I_DO_OBJECT
+                      DATA_REF
+                        PsiElement(identifier)('r')
+                        PsiElement(()('(')
+                        SECTION_SUBSCRIPT
+                          DESIGNATOR
+                            PsiElement(identifier)('i')
+                        PsiElement(,)(',')
+                        SECTION_SUBSCRIPT
+                          DESIGNATOR
+                            PsiElement(identifier)('j')
+                        PsiElement())(')')
+                    PsiElement(,)(',')
+                    PsiWhiteSpace(' ')
+                    PsiElement(identifier)('j')
+                    PsiElement(=)('=')
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                    PsiElement(,)(',')
+                    CONSTANT
+                      PsiElement(integerliteral)('3')
+                    PsiElement())(')')
+                PsiElement(,)(',')
+                PsiWhiteSpace(' ')
+                PsiElement(identifier)('i')
+                PsiElement(=)('=')
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(,)(',')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+                PsiElement())(')')
+            PsiElement(/)('/')
+            DATA_STMT_VALUE
+              DATA_STMT_REPEAT
+                CONSTANT
+                  PsiElement(integerliteral)('6')
+              PsiElement(*)('*')
+              DATA_STMT_CONSTANT
+                CONSTANT
+                  PsiElement(floatingpointliteral)('1.0')
+            PsiElement(/)('/')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        SAVE_STMT
+          PsiElement(save)('save')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        SAVE_STMT
+          PsiElement(save)('save')
+          PsiWhiteSpace(' ')
+          SAVED_ENTITY
             PsiElement(identifier)('z')
-          PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          INTRINSIC_STMT
-            PsiElement(intrinsic)('intrinsic')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('sin')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('cos')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          EXTERNAL_STMT
-            PsiElement(external)('external')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('sin')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('cos')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          COMMON_STMT
-            PsiElement(common)('common')
-            PsiWhiteSpace(' ')
+      OTHER_SPECIFICATION_STMT
+        SAVE_STMT
+          PsiElement(save)('save')
+          PsiWhiteSpace(' ')
+          SAVED_ENTITY
+            PsiElement(identifier)('z')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          SAVED_ENTITY
             PsiElement(/)('/')
             PsiElement(identifier)('x')
             PsiElement(/)('/')
-            PsiWhiteSpace(' ')
-            COMMON_BLOCK_OBJECT
-              PsiElement(identifier)('c')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          DATA_STMT
-            PsiElement(data)('data')
-            PsiWhiteSpace(' ')
-            DATA_STMT_SET
-              DATA_STMT_OBJECT
-                DESIGNATOR
-                  PsiElement(identifier)('ttl')
-              PsiWhiteSpace(' ')
-              PsiElement(/)('/')
-              DATA_STMT_VALUE
-                DATA_STMT_CONSTANT
-                  CONSTANT
-                    PsiElement(stringliteral)(''Arbitrary Titles'')
-              PsiElement(/)('/')
+      ENTRY_STMT
+        PsiElement(entry)('entry')
+        PsiWhiteSpace(' ')
+        PsiElement(identifier)('average2')
+        PsiElement(()('(')
+        DUMMY_ARG
+          PsiElement(identifier)('x')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        DUMMY_ARG
+          PsiElement(identifier)('y')
+        PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          DATA_STMT
-            PsiElement(data)('data')
+      OTHER_SPECIFICATION_STMT
+        DIMENSION_STMT
+          PsiElement(dimension)('DIMENSION')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('M')
+          PsiElement(()('(')
+          PsiWhiteSpace(' ')
+          EXPLICIT_SHAPE_SPEC
+            DESIGNATOR
+              PsiElement(identifier)('N')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          EXPLICIT_SHAPE_SPEC
+            DESIGNATOR
+              PsiElement(identifier)('N')
+          PsiWhiteSpace(' ')
+          PsiElement())(')')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('A')
+          PsiElement(()('(')
+          EXPLICIT_SHAPE_SPEC
+            DESIGNATOR
+              PsiElement(identifier)('B')
             PsiWhiteSpace(' ')
-            DATA_STMT_SET
-              DATA_STMT_OBJECT
-                DESIGNATOR
-                  PsiElement(identifier)('m')
-              PsiWhiteSpace(' ')
-              PsiElement(/)('/')
-              DATA_STMT_VALUE
-                DATA_STMT_CONSTANT
+            PsiElement(:)(':')
+            PsiWhiteSpace(' ')
+            DESIGNATOR
+              PsiElement(identifier)('C')
+          PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        EQUIVALENCE_STMT
+          PsiElement(equivalence)('EQUIVALENCE')
+          PsiWhiteSpace(' ')
+          EQUIVALENCE_SET
+            PsiElement(()('(')
+            EQUIVALENCE_OBJECT
+              PsiElement(identifier)('A')
+            PsiElement(,)(',')
+            EQUIVALENCE_OBJECT
+              PsiElement(identifier)('B')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        EQUIVALENCE_STMT
+          PsiElement(equivalence)('EQUIVALENCE')
+          PsiWhiteSpace(' ')
+          EQUIVALENCE_SET
+            PsiElement(()('(')
+            EQUIVALENCE_OBJECT
+              DATA_REF
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
                   CONSTANT
-                    PsiElement(integerliteral)('9')
-              PsiElement(/)('/')
+                    PsiElement(integerliteral)('1')
+                PsiElement())(')')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DATA_STMT_SET
-              DATA_STMT_OBJECT
-                DESIGNATOR
-                  PsiElement(identifier)('N')
-              PsiWhiteSpace(' ')
-              PsiElement(/)('/')
-              DATA_STMT_VALUE
-                DATA_STMT_CONSTANT
-                  CONSTANT
-                    PsiElement(integerliteral)('0')
-              PsiElement(/)('/')
+            EQUIVALENCE_OBJECT
+              PsiElement(identifier)('B')
+            PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          DATA_STMT
-            PsiElement(data)('data')
+      OTHER_SPECIFICATION_STMT
+        EQUIVALENCE_STMT
+          PsiElement(equivalence)('EQUIVALENCE')
+          PsiWhiteSpace(' ')
+          EQUIVALENCE_SET
+            PsiElement(()('(')
+            EQUIVALENCE_OBJECT
+              DATA_REF
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('1')
+                PsiElement())(')')
+            PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DATA_STMT_SET
-              DATA_STMT_OBJECT
-                DESIGNATOR
+            EQUIVALENCE_OBJECT
+              SUBSTRING
+                PARENT_STRING
                   DATA_REF
-                    PsiElement(identifier)('pair')
+                    PsiElement(identifier)('B')
                     PsiElement(()('(')
                     SECTION_SUBSCRIPT
                       CONSTANT
                         PsiElement(integerliteral)('1')
                     PsiElement())(')')
-              PsiWhiteSpace(' ')
-              PsiElement(/)('/')
-              DATA_STMT_VALUE
-                DATA_STMT_CONSTANT
-                  CONSTANT
-                    PsiElement(floatingpointliteral)('9.0')
-              PsiElement(/)('/')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            DATA_STMT_SET
-              DATA_STMT_OBJECT
-                DESIGNATOR
-                  PsiElement(identifier)('VEC')
-              PsiWhiteSpace(' ')
-              PsiElement(/)('/')
-              DATA_STMT_VALUE
-                DATA_STMT_REPEAT
-                  CONSTANT
-                    PsiElement(integerliteral)('3')
-                PsiElement(*)('*')
-                DATA_STMT_CONSTANT
-                  CONSTANT
-                    PsiElement(floatingpointliteral)('9.0')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              DATA_STMT_VALUE
-                DATA_STMT_CONSTANT
-                  CONSTANT
-                    PsiElement(floatingpointliteral)('0.1')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              DATA_STMT_VALUE
-                DATA_STMT_CONSTANT
-                  CONSTANT
-                    PsiElement(floatingpointliteral)('0.9')
-              PsiElement(/)('/')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          DATA_STMT
-            PsiElement(data)('data')
-            PsiWhiteSpace(' ')
-            DATA_STMT_SET
-              DATA_STMT_OBJECT
-                DATA_IMPLIED_DO
-                  PsiElement(()('(')
-                  PsiWhiteSpace(' ')
-                  DATA_I_DO_OBJECT
-                    DATA_REF
-                      PsiElement(identifier)('s')
-                      PsiElement(()('(')
-                      SECTION_SUBSCRIPT
-                        DESIGNATOR
-                          PsiElement(identifier)('i')
-                      PsiElement(,)(',')
-                      SECTION_SUBSCRIPT
-                        DESIGNATOR
-                          PsiElement(identifier)('i')
-                      PsiElement())(')')
-                  PsiElement(,)(',')
-                  PsiWhiteSpace(' ')
-                  PsiElement(identifier)('i')
-                  PsiElement(=)('=')
-                  CONSTANT
-                    PsiElement(integerliteral)('1')
-                  PsiElement(,)(',')
-                  CONSTANT
-                    PsiElement(integerliteral)('4')
-                  PsiElement())(')')
-              PsiElement(/)('/')
-              DATA_STMT_VALUE
-                DATA_STMT_REPEAT
-                  CONSTANT
-                    PsiElement(integerliteral)('4')
-                PsiElement(*)('*')
-                DATA_STMT_CONSTANT
-                  CONSTANT
-                    PsiElement(floatingpointliteral)('1.0')
-              PsiElement(/)('/')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          DATA_STMT
-            PsiElement(data)('data')
-            PsiWhiteSpace(' ')
-            DATA_STMT_SET
-              DATA_STMT_OBJECT
-                DATA_IMPLIED_DO
-                  PsiElement(()('(')
-                  DATA_I_DO_OBJECT
-                    DATA_IMPLIED_DO
-                      PsiElement(()('(')
-                      PsiWhiteSpace(' ')
-                      DATA_I_DO_OBJECT
-                        DATA_REF
-                          PsiElement(identifier)('r')
-                          PsiElement(()('(')
-                          SECTION_SUBSCRIPT
-                            DESIGNATOR
-                              PsiElement(identifier)('i')
-                          PsiElement(,)(',')
-                          SECTION_SUBSCRIPT
-                            DESIGNATOR
-                              PsiElement(identifier)('j')
-                          PsiElement())(')')
-                      PsiElement(,)(',')
-                      PsiWhiteSpace(' ')
-                      PsiElement(identifier)('j')
-                      PsiElement(=)('=')
-                      CONSTANT
-                        PsiElement(integerliteral)('1')
-                      PsiElement(,)(',')
-                      CONSTANT
-                        PsiElement(integerliteral)('3')
-                      PsiElement())(')')
-                  PsiElement(,)(',')
-                  PsiWhiteSpace(' ')
-                  PsiElement(identifier)('i')
-                  PsiElement(=)('=')
-                  CONSTANT
-                    PsiElement(integerliteral)('1')
-                  PsiElement(,)(',')
-                  CONSTANT
-                    PsiElement(integerliteral)('2')
-                  PsiElement())(')')
-              PsiElement(/)('/')
-              DATA_STMT_VALUE
-                DATA_STMT_REPEAT
-                  CONSTANT
-                    PsiElement(integerliteral)('6')
-                PsiElement(*)('*')
-                DATA_STMT_CONSTANT
-                  CONSTANT
-                    PsiElement(floatingpointliteral)('1.0')
-              PsiElement(/)('/')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          SAVE_STMT
-            PsiElement(save)('save')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          SAVE_STMT
-            PsiElement(save)('save')
-            PsiWhiteSpace(' ')
-            SAVED_ENTITY
-              PsiElement(identifier)('z')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          SAVE_STMT
-            PsiElement(save)('save')
-            PsiWhiteSpace(' ')
-            SAVED_ENTITY
-              PsiElement(identifier)('z')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            SAVED_ENTITY
-              PsiElement(/)('/')
-              PsiElement(identifier)('x')
-              PsiElement(/)('/')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        ENTRY_STMT
-          PsiElement(entry)('entry')
-          PsiWhiteSpace(' ')
-          PsiElement(identifier)('average2')
-          PsiElement(()('(')
-          DUMMY_ARG
-            PsiElement(identifier)('x')
-          PsiElement(,)(',')
-          PsiWhiteSpace(' ')
-          DUMMY_ARG
-            PsiElement(identifier)('y')
-          PsiElement())(')')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          DIMENSION_STMT
-            PsiElement(dimension)('DIMENSION')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('M')
-            PsiElement(()('(')
-            PsiWhiteSpace(' ')
-            EXPLICIT_SHAPE_SPEC
-              DESIGNATOR
-                PsiElement(identifier)('N')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            EXPLICIT_SHAPE_SPEC
-              DESIGNATOR
-                PsiElement(identifier)('N')
-            PsiWhiteSpace(' ')
-            PsiElement())(')')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('A')
-            PsiElement(()('(')
-            EXPLICIT_SHAPE_SPEC
-              DESIGNATOR
-                PsiElement(identifier)('B')
-              PsiWhiteSpace(' ')
-              PsiElement(:)(':')
-              PsiWhiteSpace(' ')
-              DESIGNATOR
-                PsiElement(identifier)('C')
-            PsiElement())(')')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          EQUIVALENCE_STMT
-            PsiElement(equivalence)('EQUIVALENCE')
-            PsiWhiteSpace(' ')
-            EQUIVALENCE_SET
-              PsiElement(()('(')
-              EQUIVALENCE_OBJECT
-                PsiElement(identifier)('A')
-              PsiElement(,)(',')
-              EQUIVALENCE_OBJECT
-                PsiElement(identifier)('B')
-              PsiElement())(')')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          EQUIVALENCE_STMT
-            PsiElement(equivalence)('EQUIVALENCE')
-            PsiWhiteSpace(' ')
-            EQUIVALENCE_SET
-              PsiElement(()('(')
-              EQUIVALENCE_OBJECT
-                DATA_REF
-                  PsiElement(identifier)('A')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('1')
-                  PsiElement())(')')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              EQUIVALENCE_OBJECT
-                PsiElement(identifier)('B')
-              PsiElement())(')')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          EQUIVALENCE_STMT
-            PsiElement(equivalence)('EQUIVALENCE')
-            PsiWhiteSpace(' ')
-            EQUIVALENCE_SET
-              PsiElement(()('(')
-              EQUIVALENCE_OBJECT
-                DATA_REF
-                  PsiElement(identifier)('A')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('1')
-                  PsiElement())(')')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              EQUIVALENCE_OBJECT
-                SUBSTRING
-                  PARENT_STRING
-                    DATA_REF
-                      PsiElement(identifier)('B')
-                      PsiElement(()('(')
-                      SECTION_SUBSCRIPT
-                        CONSTANT
-                          PsiElement(integerliteral)('1')
-                      PsiElement())(')')
-                  PsiElement(()('(')
-                  SUBSTRING_RANGE
-                    ADD_EXPR
-                      CONSTANT
-                        PsiElement(integerliteral)('2')
-                      PsiElement(+)('+')
-                      CONSTANT
-                        PsiElement(integerliteral)('1')
-                    PsiElement(:)(':')
-                  PsiElement())(')')
-              PsiElement())(')')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          EQUIVALENCE_STMT
-            PsiElement(equivalence)('EQUIVALENCE')
-            PsiWhiteSpace(' ')
-            EQUIVALENCE_SET
-              PsiElement(()('(')
-              EQUIVALENCE_OBJECT
-                DATA_REF
-                  PsiElement(identifier)('A')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('1')
-                  PsiElement())(')')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              EQUIVALENCE_OBJECT
-                SUBSTRING
-                  PARENT_STRING
-                    DATA_REF
-                      PsiElement(identifier)('B')
-                      PsiElement(()('(')
-                      SECTION_SUBSCRIPT
-                        CONSTANT
-                          PsiElement(integerliteral)('1')
-                      PsiElement())(')')
-                  PsiElement(()('(')
-                  SUBSTRING_RANGE
-                    ADD_EXPR
-                      CONSTANT
-                        PsiElement(integerliteral)('2')
-                      PsiElement(+)('+')
-                      CONSTANT
-                        PsiElement(integerliteral)('1')
-                    PsiElement(:)(':')
-                    ADD_EXPR
-                      CONSTANT
-                        PsiElement(integerliteral)('3')
-                      PsiElement(+)('+')
-                      CONSTANT
-                        PsiElement(integerliteral)('2')
-                  PsiElement())(')')
-              PsiElement())(')')
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('    ')
-      DECLARATION_CONSTRUCT
-        OTHER_SPECIFICATION_STMT
-          EQUIVALENCE_STMT
-            PsiElement(equivalence)('EQUIVALENCE')
-            PsiWhiteSpace(' ')
-            EQUIVALENCE_SET
-              PsiElement(()('(')
-              EQUIVALENCE_OBJECT
-                DATA_REF
-                  PsiElement(identifier)('A')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    ADD_EXPR
-                      CONSTANT
-                        PsiElement(integerliteral)('1')
-                      PsiElement(+)('+')
-                      CONSTANT
-                        PsiElement(integerliteral)('2')
-                  PsiElement(,)(',')
-                  PsiWhiteSpace(' ')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('3')
-                  PsiElement())(')')
-              PsiElement(,)(',')
-              EQUIVALENCE_OBJECT
-                PsiElement(identifier)('B')
-              PsiElement())(')')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            EQUIVALENCE_SET
-              PsiElement(()('(')
-              EQUIVALENCE_OBJECT
-                DATA_REF
-                  PsiElement(identifier)('A')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
+                PsiElement(()('(')
+                SUBSTRING_RANGE
+                  ADD_EXPR
                     CONSTANT
                       PsiElement(integerliteral)('2')
-                  PsiElement())(')')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              EQUIVALENCE_OBJECT
-                SUBSTRING
-                  PARENT_STRING
-                    DATA_REF
-                      PsiElement(identifier)('B')
-                      PsiElement(()('(')
-                      SECTION_SUBSCRIPT
-                        CONSTANT
-                          PsiElement(integerliteral)('1')
-                      PsiElement())(')')
-                  PsiElement(()('(')
-                  SUBSTRING_RANGE
-                    ADD_EXPR
-                      CONSTANT
-                        PsiElement(integerliteral)('2')
-                      PsiElement(+)('+')
+                    PsiElement(+)('+')
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                  PsiElement(:)(':')
+                PsiElement())(')')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        EQUIVALENCE_STMT
+          PsiElement(equivalence)('EQUIVALENCE')
+          PsiWhiteSpace(' ')
+          EQUIVALENCE_SET
+            PsiElement(()('(')
+            EQUIVALENCE_OBJECT
+              DATA_REF
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('1')
+                PsiElement())(')')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            EQUIVALENCE_OBJECT
+              SUBSTRING
+                PARENT_STRING
+                  DATA_REF
+                    PsiElement(identifier)('B')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
                       CONSTANT
                         PsiElement(integerliteral)('1')
-                    PsiElement(:)(':')
-                    ADD_EXPR
-                      CONSTANT
-                        PsiElement(integerliteral)('3')
-                      PsiElement(+)('+')
-                      CONSTANT
-                        PsiElement(integerliteral)('2')
-                  PsiElement())(')')
-              PsiElement())(')')
+                    PsiElement())(')')
+                PsiElement(()('(')
+                SUBSTRING_RANGE
+                  ADD_EXPR
+                    CONSTANT
+                      PsiElement(integerliteral)('2')
+                    PsiElement(+)('+')
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                  PsiElement(:)(':')
+                  ADD_EXPR
+                    CONSTANT
+                      PsiElement(integerliteral)('3')
+                    PsiElement(+)('+')
+                    CONSTANT
+                      PsiElement(integerliteral)('2')
+                PsiElement())(')')
+            PsiElement())(')')
       PsiElement(eol)('\n')
-    PsiWhiteSpace('    ')
-    BLOCK
+      PsiWhiteSpace('    ')
+      OTHER_SPECIFICATION_STMT
+        EQUIVALENCE_STMT
+          PsiElement(equivalence)('EQUIVALENCE')
+          PsiWhiteSpace(' ')
+          EQUIVALENCE_SET
+            PsiElement(()('(')
+            EQUIVALENCE_OBJECT
+              DATA_REF
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  ADD_EXPR
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                    PsiElement(+)('+')
+                    CONSTANT
+                      PsiElement(integerliteral)('2')
+                PsiElement(,)(',')
+                PsiWhiteSpace(' ')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('3')
+                PsiElement())(')')
+            PsiElement(,)(',')
+            EQUIVALENCE_OBJECT
+              PsiElement(identifier)('B')
+            PsiElement())(')')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          EQUIVALENCE_SET
+            PsiElement(()('(')
+            EQUIVALENCE_OBJECT
+              DATA_REF
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('2')
+                PsiElement())(')')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            EQUIVALENCE_OBJECT
+              SUBSTRING
+                PARENT_STRING
+                  DATA_REF
+                    PsiElement(identifier)('B')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      CONSTANT
+                        PsiElement(integerliteral)('1')
+                    PsiElement())(')')
+                PsiElement(()('(')
+                SUBSTRING_RANGE
+                  ADD_EXPR
+                    CONSTANT
+                      PsiElement(integerliteral)('2')
+                    PsiElement(+)('+')
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                  PsiElement(:)(':')
+                  ADD_EXPR
+                    CONSTANT
+                      PsiElement(integerliteral)('3')
+                    PsiElement(+)('+')
+                    CONSTANT
+                      PsiElement(integerliteral)('2')
+                PsiElement())(')')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
       RETURN_STMT
         PsiElement(returnkwd)('return')
       PsiElement(eol)('\n')

@@ -85,7 +85,7 @@ public class FortranTokenType extends IElementType {
             FINAL,
             FLUSH,
             FORALL,
-            FORMATKWD,
+            FORMATSTMT,
             FORMATTED,
             GO,
             GOTO,

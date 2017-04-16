@@ -6,8 +6,6 @@ FILE
       PsiElement(identifier)('filework')
       PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       OPEN_STMT
         PsiElement(open)('open')

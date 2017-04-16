@@ -1,7 +1,5 @@
 FILE
   MAIN_PROGRAM
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       LOCK_STMT
         PsiElement(lock)('lock')

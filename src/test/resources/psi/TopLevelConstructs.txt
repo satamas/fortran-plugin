@@ -6,37 +6,35 @@ FILE
       PsiElement(identifier)('circle')
       PsiElement(eol)('\n')
     PsiWhiteSpace('   ')
-    SPECIFICATION_PART
-      DECLARATION_CONSTRUCT
-        TYPE_DECLARATION_STMT
-          INTRINSIC_TYPE_SPEC
-            PsiElement(real)('real')
-          PsiElement(,)(',')
+    BLOCK
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(real)('real')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        ATTR_SPEC
+          PsiElement(parameter)('parameter')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('pi')
           PsiWhiteSpace(' ')
-          ATTR_SPEC
-            PsiElement(parameter)('parameter')
+          PsiElement(=)('=')
           PsiWhiteSpace(' ')
-          PsiElement(::)('::')
-          PsiWhiteSpace(' ')
-          ENTITY_DECL
-            PsiElement(identifier)('pi')
-            PsiWhiteSpace(' ')
-            PsiElement(=)('=')
-            PsiWhiteSpace(' ')
-            CONSTANT
-              PsiElement(floatingpointliteral)('3.1415927')
-          PsiElement(eol)('\n')
+          CONSTANT
+            PsiElement(floatingpointliteral)('3.1415927')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
-      DECLARATION_CONSTRUCT
-        TYPE_DECLARATION_STMT
-          INTRINSIC_TYPE_SPEC
-            PsiElement(real)('real')
-          PsiWhiteSpace(' ')
-          PsiElement(::)('::')
-          PsiWhiteSpace(' ')
-          ENTITY_DECL
-            PsiElement(identifier)('radius')
-          PsiElement(eol)('\n')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(real)('real')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('radius')
+      PsiElement(eol)('\n')
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
         PsiElement(contains)('contains')
@@ -61,8 +59,6 @@ FILE
           PsiElement())(')')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    \t')
-        SPECIFICATION_PART
-          <empty list>
         BLOCK
           ASSIGNMENT_STMT
             DESIGNATOR
@@ -110,8 +106,6 @@ FILE
       PsiElement())(')')
       PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       ASSIGNMENT_STMT
         DESIGNATOR
@@ -183,8 +177,6 @@ FILE
       PsiElement())(')')
       PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       ASSIGNMENT_STMT
         DESIGNATOR
@@ -217,8 +209,6 @@ FILE
       PsiElement())(')')
       PsiElement(eol)('\n')
     PsiWhiteSpace(' \t')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       ASSIGNMENT_STMT
         DESIGNATOR
@@ -246,7 +236,7 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(identifier)('setup')
       PsiElement(eol)('\n')
-    SPECIFICATION_PART
+    BLOCK
       <empty list>
     END_BLOCK_DATA_STMT
       PsiElement(end)('end')

@@ -10,8 +10,6 @@ FILE
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       IF_STMT
         PsiElement(if)('if')

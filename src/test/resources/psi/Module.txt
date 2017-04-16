@@ -8,20 +8,19 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
-    SPECIFICATION_PART
-      DECLARATION_CONSTRUCT
-        LABEL
-          PsiElement(integerliteral)('2')
-        PsiWhiteSpace('   ')
-        TYPE_DECLARATION_STMT
-          INTRINSIC_TYPE_SPEC
-            PsiElement(real)('real')
-          PsiWhiteSpace(' ')
-          PsiElement(::)('::')
-          PsiWhiteSpace(' ')
-          ENTITY_DECL
-            PsiElement(identifier)('q')
-          PsiElement(eol)('\n')
+    BLOCK
+      LABEL
+        PsiElement(integerliteral)('2')
+      PsiWhiteSpace('   ')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(real)('real')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('q')
+      PsiElement(eol)('\n')
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
         LABEL
@@ -40,8 +39,6 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('aa')
           PsiElement(eol)('\n')
-        SPECIFICATION_PART
-          <empty list>
         BLOCK
           LABEL
             PsiElement(integerliteral)('5')
@@ -81,8 +78,6 @@ FILE
                 PsiElement(identifier)('z')
                 PsiElement())(')')
                 PsiElement(eol)('\n')
-              SPECIFICATION_PART
-                <empty list>
               BLOCK
                 LABEL
                   PsiElement(integerliteral)('8')
@@ -129,7 +124,7 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(identifier)('suba')
       PsiElement(eol)('\n')
-    SPECIFICATION_PART
+    BLOCK
       <empty list>
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
@@ -149,8 +144,6 @@ FILE
           PsiElement(()('(')
           PsiElement())(')')
           PsiElement(eol)('\n')
-        SPECIFICATION_PART
-          <empty list>
         BLOCK
           <empty list>
         END_SUBROUTINE_STMT

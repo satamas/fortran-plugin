@@ -7,10 +7,9 @@ FILE
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     PsiComment(comment)('! just a comment')
-    SPECIFICATION_PART
-      PsiElement(eol)('\n')
-    PsiWhiteSpace('  ')
     BLOCK
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
       BLOCK_CONSTRUCT
         BLOCK_STMT
           PsiElement(identifier)('b1')
@@ -19,17 +18,15 @@ FILE
           PsiElement(blockkwd)('block')
           PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
-        SPECIFICATION_PART
-          DECLARATION_CONSTRUCT
-            TYPE_DECLARATION_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(integer)('integer')
-              PsiWhiteSpace(' ')
-              ENTITY_DECL
-                PsiElement(identifier)('a')
-              PsiElement(eol)('\n\n')
-        PsiWhiteSpace('     ')
         BLOCK
+          TYPE_DECLARATION_STMT
+            INTRINSIC_TYPE_SPEC
+              PsiElement(integer)('integer')
+            PsiWhiteSpace(' ')
+            ENTITY_DECL
+              PsiElement(identifier)('a')
+          PsiElement(eol)('\n\n')
+          PsiWhiteSpace('     ')
           CRITICAL_CONSTRUCT
             CRITICAL_STMT
               PsiElement(identifier)('cr')
@@ -69,8 +66,6 @@ FILE
           PsiElement(blockkwd)('block')
           PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
-        SPECIFICATION_PART
-          <empty list>
         BLOCK
           ASSOCIATE_CONSTRUCT
             ASSOCIATE_STMT

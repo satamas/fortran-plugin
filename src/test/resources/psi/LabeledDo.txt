@@ -6,8 +6,6 @@ FILE
       PsiElement(identifier)('labeltests')
       PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
-    SPECIFICATION_PART
-      <empty list>
     BLOCK
       LABELED_DO_CONSTRUCT
         LABEL_DO_STMT

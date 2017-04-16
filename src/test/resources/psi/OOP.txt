@@ -6,166 +6,162 @@ FILE
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    SPECIFICATION_PART
-      DECLARATION_CONSTRUCT
-        DERIVED_TYPE_DEF
-          DERIVED_TYPE_STMT
-            PsiElement(type)('type')
-            PsiWhiteSpace(' ')
-            PsiElement(::)('::')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('dot')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('    ')
-          COMPONENT_PART
-            COMPONENT_DEF_STMT
-              DATA_COMPONENT_DEF_STMT
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(integer)('integer')
-                PsiWhiteSpace(' ')
-                PsiElement(::)('::')
-                PsiWhiteSpace(' ')
-                COMPONENT_DECL
-                  PsiElement(identifier)('x')
-                PsiElement(,)(',')
-                PsiWhiteSpace(' ')
-                COMPONENT_DECL
-                  PsiElement(identifier)('y')
-                PsiElement(,)(',')
-                PsiWhiteSpace(' ')
-                COMPONENT_DECL
-                  PsiElement(identifier)('z')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('  ')
-          END_TYPE_STMT
-            PsiElement(end)('end')
-            PsiWhiteSpace(' ')
-            PsiElement(type)('type')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('dot')
+    BLOCK
+      DERIVED_TYPE_DEF
+        DERIVED_TYPE_STMT
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(::)('::')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('dot')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        COMPONENT_PART
+          COMPONENT_DEF_STMT
+            DATA_COMPONENT_DEF_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(integer)('integer')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              COMPONENT_DECL
+                PsiElement(identifier)('x')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              COMPONENT_DECL
+                PsiElement(identifier)('y')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              COMPONENT_DECL
+                PsiElement(identifier)('z')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_TYPE_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('dot')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
-      DECLARATION_CONSTRUCT
-        DERIVED_TYPE_DEF
-          DERIVED_TYPE_STMT
-            PsiElement(type)('type')
-            PsiWhiteSpace(' ')
-            PsiElement(::)('::')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('cut')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('    ')
-          COMPONENT_PART
-            COMPONENT_DEF_STMT
-              DATA_COMPONENT_DEF_STMT
-                PsiElement(type)('type')
-                PsiElement(()('(')
-                DERIVED_TYPE_SPEC
-                  PsiElement(identifier)('dot')
-                PsiElement())(')')
-                PsiWhiteSpace(' ')
-                PsiElement(::)('::')
-                PsiWhiteSpace(' ')
-                COMPONENT_DECL
-                  PsiElement(identifier)('a')
-                PsiElement(,)(',')
-                PsiWhiteSpace(' ')
-                COMPONENT_DECL
-                  PsiElement(identifier)('b')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('  ')
-          END_TYPE_STMT
-            PsiElement(end)('end')
-            PsiWhiteSpace(' ')
-            PsiElement(type)('type')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('cut')
+      DERIVED_TYPE_DEF
+        DERIVED_TYPE_STMT
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(::)('::')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('cut')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        COMPONENT_PART
+          COMPONENT_DEF_STMT
+            DATA_COMPONENT_DEF_STMT
+              PsiElement(type)('type')
+              PsiElement(()('(')
+              DERIVED_TYPE_SPEC
+                PsiElement(identifier)('dot')
+              PsiElement())(')')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              COMPONENT_DECL
+                PsiElement(identifier)('a')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              COMPONENT_DECL
+                PsiElement(identifier)('b')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_TYPE_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('cut')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
-      DECLARATION_CONSTRUCT
-        DERIVED_TYPE_DEF
-          DERIVED_TYPE_STMT
-            PsiElement(type)('type')
-            PsiWhiteSpace(' ')
-            PsiElement(::)('::')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('cutarray')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('    ')
-          COMPONENT_PART
-            COMPONENT_DEF_STMT
-              DATA_COMPONENT_DEF_STMT
-                PsiElement(type)('type')
+      DERIVED_TYPE_DEF
+        DERIVED_TYPE_STMT
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(::)('::')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('cutarray')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        COMPONENT_PART
+          COMPONENT_DEF_STMT
+            DATA_COMPONENT_DEF_STMT
+              PsiElement(type)('type')
+              PsiElement(()('(')
+              DERIVED_TYPE_SPEC
+                PsiElement(identifier)('cut')
+              PsiElement())(')')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              COMPONENT_ATTR_SPEC
+                PsiElement(dimension)('dimension')
                 PsiElement(()('(')
-                DERIVED_TYPE_SPEC
-                  PsiElement(identifier)('cut')
+                EXPLICIT_SHAPE_SPEC
+                  CONSTANT
+                    PsiElement(integerliteral)('10')
                 PsiElement())(')')
-                PsiElement(,)(',')
-                PsiWhiteSpace(' ')
-                COMPONENT_ATTR_SPEC
-                  PsiElement(dimension)('dimension')
-                  PsiElement(()('(')
-                  EXPLICIT_SHAPE_SPEC
-                    CONSTANT
-                      PsiElement(integerliteral)('10')
-                  PsiElement())(')')
-                PsiWhiteSpace(' ')
-                PsiElement(::)('::')
-                PsiWhiteSpace(' ')
-                COMPONENT_DECL
-                  PsiElement(identifier)('dat')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('  ')
-          END_TYPE_STMT
-            PsiElement(end)('end')
-            PsiWhiteSpace(' ')
-            PsiElement(type)('type')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('cutarray')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              COMPONENT_DECL
+                PsiElement(identifier)('dat')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_TYPE_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('cutarray')
       PsiElement(eol)('\n\n')
       PsiWhiteSpace('  ')
-      DECLARATION_CONSTRUCT
-        DERIVED_TYPE_DEF
-          DERIVED_TYPE_STMT
-            PsiElement(type)('type')
-            PsiWhiteSpace(' ')
-            PsiElement(::)('::')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('object')
-            PsiElement(eol)('\n')
+      DERIVED_TYPE_DEF
+        DERIVED_TYPE_STMT
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(::)('::')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('object')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        COMPONENT_PART
+          COMPONENT_DEF_STMT
+            DATA_COMPONENT_DEF_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(integer)('integer')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              COMPONENT_DECL
+                PsiElement(identifier)('id')
+          PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
-          COMPONENT_PART
-            COMPONENT_DEF_STMT
-              DATA_COMPONENT_DEF_STMT
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(integer)('integer')
-                PsiWhiteSpace(' ')
-                PsiElement(::)('::')
-                PsiWhiteSpace(' ')
-                COMPONENT_DECL
-                  PsiElement(identifier)('id')
-            PsiElement(eol)('\n')
-            PsiWhiteSpace('    ')
-            COMPONENT_DEF_STMT
-              DATA_COMPONENT_DEF_STMT
-                PsiElement(type)('type')
-                PsiElement(()('(')
-                DERIVED_TYPE_SPEC
-                  PsiElement(identifier)('cutarray')
-                PsiElement())(')')
-                PsiWhiteSpace(' ')
-                PsiElement(::)('::')
-                PsiWhiteSpace(' ')
-                COMPONENT_DECL
-                  PsiElement(identifier)('ar')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('  ')
-          END_TYPE_STMT
-            PsiElement(end)('end')
-            PsiWhiteSpace(' ')
-            PsiElement(type)('type')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('object')
+          COMPONENT_DEF_STMT
+            DATA_COMPONENT_DEF_STMT
+              PsiElement(type)('type')
+              PsiElement(()('(')
+              DERIVED_TYPE_SPEC
+                PsiElement(identifier)('cutarray')
+              PsiElement())(')')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              COMPONENT_DECL
+                PsiElement(identifier)('ar')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_TYPE_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('object')
       PsiElement(eol)('\n\n')
     PsiWhiteSpace('  ')
     MODULE_SUBPROGRAM_PART
@@ -187,8 +183,6 @@ FILE
           PsiElement())(')')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
-        SPECIFICATION_PART
-          <empty list>
         BLOCK
           RETURN_STMT
             PsiElement(returnkwd)('return')
