@@ -77,8 +77,8 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 
 {FORMAT} { return FORMATSTMT; }
 
-".true."(_{KIND_PARAM})? { return TRUE; }
-".false."(_{KIND_PARAM})? { return FALSE; }
+".true."(_{KIND_PARAM})? { return TRUEKWD; }
+".false."(_{KIND_PARAM})? { return FALSEKWD; }
 
 
 

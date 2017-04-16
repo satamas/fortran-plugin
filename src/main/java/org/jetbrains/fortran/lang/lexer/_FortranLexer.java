@@ -2644,7 +2644,7 @@ class _FortranLexer implements FlexLexer {
             }
           case 298: break;
           case 105: 
-            { return TRUE;
+            { return TRUEKWD;
             }
           case 299: break;
           case 106: 
@@ -2700,7 +2700,7 @@ class _FortranLexer implements FlexLexer {
             }
           case 312: break;
           case 119: 
-            { return FALSE;
+            { return FALSEKWD;
             }
           case 313: break;
           case 120: 

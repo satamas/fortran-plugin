@@ -517,7 +517,7 @@ designator ::= (identifier !('%' | '(' | '[')) | data_ref | substring /*| array_
 // R304, R305 modified
 constant ::= integerliteral | floatingpointliteral | doubleprecisionliteral
            | complex_literal | logical_literal | stringliteral | boz_literal
-logical_literal ::= true | false
+logical_literal ::= truekwd | falsekwd
 
 // R724 - 731 are trivial
 
@@ -779,8 +779,8 @@ module_subprogram ::= !(label? (end | endmodule | endsubmodule)) (function_subpr
 private module_subprogram_recover ::= !(eol | end | endfunction | endsubprogram | endprocedure)
 // R1109
 use_stmt ::= use (use_stmt_rename | use_stmt_only) { pin = 1 }
-private use_stmt_rename ::= ((',' module_nature)? '::')? identifier (',' <<list rename>>)
-private use_stmt_only ::= ((',' module_nature)? '::')? identifier ',' only ':' (<<list only_stmt>>) { pin = 4 }
+private use_stmt_rename ::= ((',' module_nature)? '::')? identifier (',' <<list rename_stmt>>)?
+private use_stmt_only ::= ((',' module_nature)? '::')? identifier ',' only ':' (<<list only_stmt>>)? { pin = 4 }
 // R1110
 private module_nature ::= intrinsic | nonintrinsic
 // R1111
@@ -832,7 +832,7 @@ generic_spec ::= identifier | (operator '(' defoperator ')')
 defined_io_generic_spec ::= read '(' (formatted | unformatted) ')'
                            | write '(' (formatted | unformatted) ')'
 // R1209
-import_stmt ::= import ('::'? <<list identifier>>) { pin =1 }
+import_stmt ::= import ('::'? <<list identifier>>)? { pin =1 }
 // R1210
 external_stmt ::= external ('::')? <<list identifier>> { pin = 1 }
 // R1211

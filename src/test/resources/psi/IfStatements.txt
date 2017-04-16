@@ -104,7 +104,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           LOGICAL_LITERAL
-            PsiElement(true)('.true.')
+            PsiElement(truekwd)('.true.')
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')
@@ -118,7 +118,7 @@ FILE
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
             LOGICAL_LITERAL
-              PsiElement(false)('.false.')
+              PsiElement(falsekwd)('.false.')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         ELSE_IF_STMT
@@ -134,7 +134,7 @@ FILE
             PsiElement(.or.)('.or.')
             PsiWhiteSpace(' ')
             LOGICAL_LITERAL
-              PsiElement(true)('.true.')
+              PsiElement(truekwd)('.true.')
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(then)('then')

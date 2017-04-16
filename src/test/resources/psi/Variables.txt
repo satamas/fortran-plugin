@@ -140,7 +140,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           LOGICAL_LITERAL
-            PsiElement(true)('.true.')
+            PsiElement(truekwd)('.true.')
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')

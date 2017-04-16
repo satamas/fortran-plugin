@@ -3,6 +3,7 @@ package org.jetbrains.fortran.lang.psi;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.fortran.FortranLanguage;
+import org.jetbrains.fortran.lang.FortranTypes;
 
 import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
@@ -170,6 +171,7 @@ public class FortranTokenType extends IElementType {
 
     public static TokenSet STRINGS = TokenSet.create(STRINGLITERAL);
 
+    public static TokenSet BOOL_LITERAL = TokenSet.create(TRUEKWD, FALSEKWD);
 // These keywords are used for specification parameters names
 // We'll use them one day
 /*   public static TokenSet PARAM_KEYWORDS = TokenSet.create(

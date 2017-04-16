@@ -158,7 +158,7 @@ FILE
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         LOGICAL_LITERAL
-          PsiElement(true)('.TRUE._1')
+          PsiElement(truekwd)('.TRUE._1')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
