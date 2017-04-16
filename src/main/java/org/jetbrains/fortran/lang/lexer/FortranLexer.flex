@@ -36,10 +36,10 @@ FORMAT="format"\040*"("[^\r\n]*")"
 WHITE_SPACE_CHAR=[\ \t\f]
 EOL=(\n|\r|\r\n)
 
-OPERATOR='.'[:letter:]+'.'
+DEFOPERATOR=\.[:letter:]+\.
 
 DIGIT=[0-9](\040*[0-9])*
-SIGNIFICAND={DIGIT}\040*\.(\040*[0-9])*|\.\040*{DIGIT}
+SIGNIFICAND={DIGIT}\040*\.(\040*[0-9])+|\.\040*{DIGIT}
 FLOATING_POINT_EXPONENT_PART=[e]\040*(\+|\-)?\040*{DIGIT}
 DOUBLE_PRECISION_EXPONENT_PART=[d]\040*(\+|\-)?\040*{DIGIT}
 KIND_PARAM={DIGIT}|{IDENTIFIER}
@@ -74,7 +74,6 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 {HEX_LITERAL} { return HEXLITERAL; }
 {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
 {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
-
 {FORMAT} { return FORMATSTMT; }
 
 ".true."(_{KIND_PARAM})? { return TRUEKWD; }
@@ -270,8 +269,9 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "endblockdata"    { return ENDBLOCKDATA; }
 "endinterface"    { return ENDINTERFACE; }
 
+{DEFOPERATOR} { return DEFOPERATOR; }
 {IDENTIFIER} { return IDENTIFIER; }
-{OPERATOR} { return DEFOPERATOR; }
+
 
 . { return BAD_CHARACTER; }
 

@@ -32,7 +32,7 @@ class FortranHighLighter : SyntaxHighlighterBase() {
             PLUS, MINUS, MUL, POWER, DIV, DIVDIV -> FortranHighlightingColors.ARITHMETIC_OPERATOR
             EQEQ, NEQ, LT, LE, GT, GE -> FortranHighlightingColors.RELATION_OPERATOR
             LOGICAL_EQ, LOGICAL_NEQ, AND, OR, NOT -> FortranHighlightingColors.LOGICAL_OPERATOR
-            OPERATOR -> FortranHighlightingColors.DEFINED_OPERATOR
+            DEFOPERATOR -> FortranHighlightingColors.DEFINED_OPERATOR
 
             LPAR, RPAR -> FortranHighlightingColors.PARENTHESIS
             LBRACKET, RBRACKET -> FortranHighlightingColors.BRACKETS

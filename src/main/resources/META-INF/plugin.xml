@@ -28,7 +28,9 @@
         <lang.parserDefinition language="Fortran" implementationClass="org.jetbrains.fortran.lang.parser.FortranParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran"
                                        implementationClass="org.jetbrains.fortran.highlighter.FortranSyntaxHighlighterFactory"/>
-        <!--<colorSettingsPage implementation="com.form.plugin.highlighter.FormColorSettingsPage"/>-->
+
+        <!-- Color Settings -->
+        <colorSettingsPage implementation="org.jetbrains.fortran.highlighter.FortranColorSettingsPage"/>
     </extensions>
 
     <actions>
