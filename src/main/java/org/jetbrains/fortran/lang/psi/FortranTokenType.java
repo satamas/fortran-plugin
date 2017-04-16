@@ -171,7 +171,6 @@ public class FortranTokenType extends IElementType {
 
     public static TokenSet STRINGS = TokenSet.create(STRINGLITERAL);
 
-    public static TokenSet BOOL_LITERAL = TokenSet.create(TRUEKWD, FALSEKWD);
 // These keywords are used for specification parameters names
 // We'll use them one day
 /*   public static TokenSet PARAM_KEYWORDS = TokenSet.create(
