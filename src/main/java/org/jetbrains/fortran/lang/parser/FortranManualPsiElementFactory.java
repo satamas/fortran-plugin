@@ -4,10 +4,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.fortran.lang.FortranTypes;
-import org.jetbrains.fortran.lang.psi.impl.FortranDoTermActionStmtImpl;
-import org.jetbrains.fortran.lang.psi.impl.FortranLabelDoStmtImpl;
-import org.jetbrains.fortran.lang.psi.impl.FortranLabelImpl;
-import org.jetbrains.fortran.lang.psi.impl.FortranLabeledDoConstructImpl;
+import org.jetbrains.fortran.lang.psi.impl.*;
 
 public class FortranManualPsiElementFactory {
     public static PsiElement createElement(ASTNode node) {

@@ -10,6 +10,10 @@ import com.intellij.lang.parser.GeneratedParserUtilBase;
  */
 public class FortranParserUtil extends GeneratedParserUtilBase {
 
+    public static boolean parseIdentifier(PsiBuilder builder_, int level_) {
+        return new IdentifierParser().parse(builder_, level_);
+    }
+
     public static boolean parseLabel(PsiBuilder builder_, int level_) {
         return new LabelParser().parse(builder_, level_);
     }
