@@ -49,4 +49,5 @@ program p
     enddo
 
     j = MAXLOC (ABS(pQ), dim =1)
+    amr_thebranches(amr_branchcount)%link => a
 end program

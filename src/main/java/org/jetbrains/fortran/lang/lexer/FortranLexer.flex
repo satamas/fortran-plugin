@@ -39,7 +39,7 @@ EOL=(\n|\r|\r\n)
 DEFOPERATOR=\.[:letter:]+\.
 
 DIGIT=[0-9](\040*[0-9])*
-SIGNIFICAND={DIGIT}\040*\.(\040*[0-9])+|\.\040*{DIGIT}
+SIGNIFICAND={DIGIT}\.(\040*[0-9])+|\.\040*{DIGIT}
 FLOATING_POINT_EXPONENT_PART=[eE]\040*(\+|\-)?\040*{DIGIT}
 DOUBLE_PRECISION_EXPONENT_PART=[dD]\040*(\+|\-)?\040*{DIGIT}
 KIND_PARAM={DIGIT}|{IDENTIFIER}
@@ -47,12 +47,13 @@ KIND_PARAM={DIGIT}|{IDENTIFIER}
 //xIcon
 INTEGER_LITERAL={DIGIT}(_{KIND_PARAM})?
 //xRcon
-FLOATING_POINT_LITERAL={DIGIT}{FLOATING_POINT_EXPONENT_PART}(_{KIND_PARAM})?
+FLOATING_POINT_LITERAL={DIGIT}(\.)?{FLOATING_POINT_EXPONENT_PART}(_{KIND_PARAM})?
                       |{SIGNIFICAND}({FLOATING_POINT_EXPONENT_PART})?(_{KIND_PARAM})?
-                      |{DIGIT}\.{FLOATING_POINT_EXPONENT_PART}?_{KIND_PARAM}
+                      |{DIGIT}\._{KIND_PARAM}
 //xDcon
-DOUBLE_PRECISION_LITERAL={DIGIT}{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PARAM})?
+DOUBLE_PRECISION_LITERAL={DIGIT}(\.)?{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PARAM})?
                       |{SIGNIFICAND}{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PARAM})?
+
 
 EOL_ESC=\\[\ \t]*\n
 ESCAPE_SEQUENCE=\\[^\n]|{EOL_ESC}
@@ -157,6 +158,7 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "dimension" { return DIMENSION; }
 "do" { return DO; }
 "double" { return DOUBLE; }
+"doubleprecision" { return DOUBLEPRECISION; }
 "precision" { return PRECISION; }
 "elemental" { return ELEMENTAL; }
 "else" { return ELSE; }
@@ -184,6 +186,7 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "import" { return IMPORT; }
 "impure" { return IMPURE; }
 "in" { return IN; }
+"include" { return INCLUDE; }
 "inout" { return INOUT; }
 "integer" { return INTEGER; }
 "intent" { return INTENT; }

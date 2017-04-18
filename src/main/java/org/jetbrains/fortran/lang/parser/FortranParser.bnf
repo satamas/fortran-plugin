@@ -84,7 +84,8 @@ private parameter_spec_recover ::= !(')' | ',')
 private meta list ::= <<param>> ( ',' <<param>> )*
 // R102 and R103 are trivial
 external fidentifier ::= parseIdentifier
-
+private  floating_point_literal ::= floatingpointliteral | doubleprecisionliteral | (integerliteral '.')
+private  identifier_like ::= '=' | '=>' | '%' | '(' | '['
 // Clause 2
 // R201
 private program ::= (eol | program_unit)*
@@ -105,7 +106,7 @@ private declaration_construct ::= derived_type_def | entry_stmt | format_stmt | 
                         | other_specification_stmt | type_declaration_stmt //| stmt_function_stmt
 // R208 is in R801
 // R209
-private execution_part_construct ::= !(label? end_block_keys) ( use_stmt | import_stmt | implicit_stmt
+private execution_part_construct ::= !(label? end_block_keys) ( use_stmt | include_stmt | import_stmt | implicit_stmt
                                     | declaration_construct | executable_construct | stmt_function_stmt) {
   pin=1
   recoverWhile=block_recover
@@ -169,16 +170,17 @@ private type_spec ::= intrinsic_type_spec | derived_type_spec
 private declaration_type_spec ::= intrinsic_type_spec | (type '(' (intrinsic_type_spec | derived_type_spec)')')
                                 | (classkwd '(' (derived_type_spec | '*') ')')
 // R404
-intrinsic_type_spec ::= ((integer | real | complex | logical) (kind_selector | nonstandard_kind_selector)?) | (double precision)
-                      | (character (char_selector)?) | byte // nonstandard type
+intrinsic_type_spec ::= (((integer | real | complex | logical | (double precision) | doubleprecision )
+                        (kind_selector | nonstandard_kind_selector)?) | (character (char_selector)?) | byte/* nonstandard type*/)
+                        !('=' | '=>' | '[' | '%') { pin = 2 }
 // R405
-kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
+kind_selector ::= '(' (kind '=')? expr ')' {pin = 3}
 nonstandard_kind_selector ::= '*' expr { pin = 1 }
 // R406
 signed_int_literal ::= ('+' | '-')? integerliteral
 // R407 - 411 are trivial or implemented in lexer
 // R412
-signed_real_literal ::= ('+' | '-')? (floatingpointliteral | doubleprecisionliteral)
+signed_real_literal ::= ('+' | '-')? (floating_point_literal)
 // R412 - 416 are implemented in lexer
 // R417
 complex_literal ::= '(' ri_part ',' ri_part ')' { pin = 3 }
@@ -189,7 +191,7 @@ char_selector ::= length_selector | ('(' len '=' type_param_value ',' kind '=' e
                  | ('(' type_param_value ',' (kind '=')? expr ')')
                  | ('(' kind '=' expr (',' len '=' type_param_value)? ')')
 // R421
-length_selector ::= ('(' (len '=')? type_param_value ')') | ('*' char_length (',')?)
+length_selector ::= ('(' (len '=')? type_param_value ')') | ('*' char_length (',' !attr_spec)?)
 // R422
 char_length ::= ('(' type_param_value ')') | integerliteral
 // R423 - 424 are implemented in lexer
@@ -342,21 +344,21 @@ access_stmt ::= access_spec (('::')? <<list access_id>>)?
 // R525
 access_id ::= fidentifier | generic_spec // generic_spec includes identifier
 // R526
-allocatable_stmt ::= allocatable ('::')? <<list allocatable_decl>>
+allocatable_stmt ::= allocatable !(identifier_like) ('::')? <<list allocatable_decl>> { pin = 2 }
 // R527
 allocatable_decl ::= fidentifier ('(' array_spec ')')? ('[' coarray_spec ']')?
 // R528
-asynchronous_stmt ::= asynchronous ('::')? <<list fidentifier>> { pin = 1 }
+asynchronous_stmt ::= asynchronous !(identifier_like) ('::')? <<list fidentifier>> { pin = 2 }
 // R529
 bind_stmt ::= language_binding_spec ('::')? <<list bind_entity>>
 // R530
 bind_entity ::= fidentifier | ('/' fidentifier '/')
 // R531
-codimension_stmt ::= codimension ('::')? <<list codimension_decl>> { pin = 1 }
+codimension_stmt ::= codimension !(identifier_like) ('::')? <<list codimension_decl>> { pin = 2 }
 // R532
 codimension_decl ::= fidentifier '[' coarray_spec ']'
 // R533 unused in standard but works
-contiguous_stmt ::= contiguous ('::')? <<list fidentifier>> { pin = 1 }
+contiguous_stmt ::= contiguous !(identifier_like) ('::')? <<list fidentifier>> { pin = 2 }
 // R534
 data_stmt ::= data data_stmt_set ((',')? data_stmt_set)*
 // R535
@@ -377,53 +379,53 @@ data_stmt_constant ::= designator | constant | signed_int_literal | signed_real_
                      | function_reference | structure_constructor
 // R543 - 544 are trivial
 // R545
-dimension_stmt ::= dimension ('::')? fidentifier '(' array_spec ')' (',' fidentifier '(' array_spec ')')* { pin = 1 }
+dimension_stmt ::= dimension !(identifier_like) ('::')? fidentifier '(' array_spec ')' (',' fidentifier '(' array_spec ')')* { pin = 2 }
 // R546
-intent_stmt ::= intent '(' intent_spec ')' ('::')? <<list fidentifier>> { pin = 1 }
+intent_stmt ::= intent '(' intent_spec ')' ('::')? <<list fidentifier>> { pin = 3 }
 // R547
-optional_stmt ::= optional ('::')? <<list fidentifier>> { pin = 1 }
+optional_stmt ::= optional !(identifier_like) ('::')? <<list fidentifier>> { pin = 2 }
 // R548
-parameter_stmt ::= parameter '(' <<list named_constant_def>> ')' {pin=1}
+parameter_stmt ::= parameter '(' <<list named_constant_def>> ')' {pin = 3}
 // R549
 named_constant_def ::= fidentifier '=' expr
 // R550
-pointer_stmt ::= pointer ('::')? <<list pointer_decl>> { pin = 1 }
+pointer_stmt ::= pointer !(identifier_like) ('::')? <<list pointer_decl>> { pin = 2 }
 // R551
 pointer_decl ::= fidentifier ('(' <<list deferred_shape_spec>> ')')?
 // R552
-protected_stmt ::= protected ('::')? <<list fidentifier>> { pin = 1 }
+protected_stmt ::= protected !(identifier_like) ('::')? <<list fidentifier>> { pin = 2 }
 // R553
-save_stmt ::= save (('::')? <<list saved_entity>>)?
+save_stmt ::= save !(identifier_like) (('::')? <<list saved_entity>>)? { pin = 2 }
 // R554
 saved_entity ::= fidentifier | ('/' fidentifier '/')
 // R555 is trivial
 // R556
-target_stmt ::= target ('::')? <<list target_decl>> { pin = 1 }
+target_stmt ::= target !(identifier_like) ('::')? <<list target_decl>> { pin = 2 }
 // R557
 target_decl ::= fidentifier ('(' array_spec ')')? ('[' coarray_spec ']')?
 // R558
-value_stmt ::= value ('::')? <<list fidentifier>> { pin = 1 }
+value_stmt ::= value !(identifier_like) ('::')? <<list fidentifier>> { pin = 2 }
 // R559
-volatile_stmt ::= volatile ('::')? <<list fidentifier>> { pin = 1 }
+volatile_stmt ::= volatile !(identifier_like) ('::')? <<list fidentifier>> { pin = 2 }
 // R560
 implicit_stmt ::= implicit (<<list implicit_spec>> | none) { pin = 2 }
 // R561
-implicit_spec ::= (declaration_type_spec '(' <<list letter_spec>> ')')
-                 | ((integer | real | complex | logical | character) '(' <<list letter_spec>> ')')
+implicit_spec ::= ((integer | real | complex | logical | character | (double precision) | doubleprecision | byte) '(' <<list letter_spec>> ')')
+                 | (declaration_type_spec '(' <<list letter_spec>> ')')
 // that's a crutch to parse intrinsic_type_spec without kindparam
 // R562
 letter_spec ::= fidentifier ('-' fidentifier)? { pin = 1 }
 // R563
-namelist_stmt ::= namelist '/' fidentifier '/' <<list fidentifier>> ((',')? '/' fidentifier '/' <<list fidentifier>>)* { pin = 1 }
+namelist_stmt ::= namelist !(identifier_like) '/' fidentifier '/' <<list fidentifier>> ((',')? '/' fidentifier '/' <<list fidentifier>>)* { pin = 2 }
 // R564 is trivial
 // R565
-equivalence_stmt ::= equivalence <<list equivalence_set>> { pin = 1 }
+equivalence_stmt ::= equivalence <<list equivalence_set>> { pin = 2 }
 // R566
 equivalence_set ::= '(' equivalence_object ',' <<list equivalence_object>> ')'
 // R567
 equivalence_object ::= (fidentifier !('%' | '(' | '[')) | substring | data_ref
 // R568
-common_stmt ::= common (('/' fidentifier? '/') | '//')? <<list common_block_object>> ((',')? (('/' fidentifier? '/') | '//') <<list common_block_object>>)* { pin = 1 }
+common_stmt ::= common !(identifier_like) (('/' fidentifier? '/') | '//')? <<list common_block_object>> ((',')? (('/' fidentifier? '/') | '//') <<list common_block_object>>)* { pin = 2 }
 // R569
 common_block_object ::= fidentifier ('(' array_spec ')')?
 
@@ -441,7 +443,7 @@ substring_range ::= (expr)? ':' (expr)?
 // R611
 data_ref ::= part_ref ('%' part_ref)*
 // R612
-private part_ref ::= fidentifier ('(' <<list section_subscript>> ')')? (image_selector)?
+private part_ref ::= fidentifier ('(' <<list section_subscript>>? ')')? (image_selector)?
 // R613 - 614 are trivial
 // R615 - 618 are excrescent
 // R619 is trivial
@@ -469,7 +471,7 @@ allocate_coarray_spec ::= ( <<list allocate_coshape_spec>> ',' )? (expr ':')? '*
 // R637
 allocate_coshape_spec ::= (expr ':')? expr
 // R638
-nullify_stmt ::= nullify '(' <<list pointer_object>> ')' { pin = 1 }
+nullify_stmt ::= nullify '(' <<list pointer_object>> ')' { pin = 3 }
 // R639
 pointer_object ::= (fidentifier !('%' | '(' | '[')) | data_ref
 // R640
@@ -518,8 +520,8 @@ array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 // R601
 designator ::= (fidentifier !('%' | '(' | '[')) | data_ref | substring /*| function_reference /*| array_section  | complex_part_designator */
 // R304, R305 modified
-constant ::= integerliteral | floatingpointliteral | doubleprecisionliteral
-           | complex_literal | logical_literal | stringliteral | boz_literal
+constant ::= floating_point_literal | integerliteral | complex_literal
+            | logical_literal | stringliteral | boz_literal
 logical_literal ::= truekwd | falsekwd
 
 // R724 - 731 are trivial
@@ -532,14 +534,14 @@ private pointer_a_with_data_pointer ::= data_pointer_object (('(' <<list bounds_
                                 | ('(' <<list bounds_spec>>')')?) '=>' variable { pin = 3 }
 private pointer_a_with_proc_pointer ::= proc_pointer_object '=>' proc_target { pin = 2 }
 // R734
-data_pointer_object ::= (fidentifier !"%") | (variable '%' fidentifier)
+data_pointer_object ::= (fidentifier !("%" | "(")) | (variable /*'%' fidentifier*/)
 // R735
 bounds_spec ::= expr ':'
 // R736
 bounds_remapping ::= expr ':' expr
 // R737 is trivial
 // R738 + R739
-proc_pointer_object ::= (fidentifier !"%") | (variable '%' fidentifier)
+proc_pointer_object ::= (fidentifier !("%" | "(")) | (variable/* '%' fidentifier*/)
 // R740
 proc_target ::= expr | (variable '%' fidentifier) | fidentifier // last two options may be parsed as expr. Need to check later
 // R741
@@ -854,7 +856,7 @@ proc_pointer_init ::= function_reference | fidentifier
 // R1218
 intrinsic_stmt ::= intrinsic ('::')? <<list fidentifier>> { pin = 1 }
 // R1219
-function_reference ::= procedure_designator '(' <<list actual_arg_spec>> ')' { pin = 2 }
+function_reference ::= procedure_designator '(' <<list actual_arg_spec>>? ')' { pin = 2 }
 // R1220
 call_stmt ::= call procedure_designator ('(' <<list actual_arg_spec>>? ')')?
 // R1221
@@ -905,4 +907,5 @@ stmt_function_stmt ::= fidentifier '(' <<list fidentifier>>? ')' '=' expr { pin 
 pause_stmt ::= pause (expr)? { pin = 1 }
 assign_stmt ::= assign label to variable { pin = 1 }
 assigned_goto_stmt ::= (goto | (go to)) fidentifier (','? '(' <<list label>> ')' )?  { pin = 2 }
+include_stmt ::= include !(identifier_like) stringliteral { pin = 2 }
 

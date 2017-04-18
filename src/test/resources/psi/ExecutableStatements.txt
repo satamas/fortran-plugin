@@ -717,6 +717,24 @@ FILE
                 PsiElement(integerliteral)('1')
             PsiElement())(')')
       PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      POINTER_ASSIGNMENT_STMT
+        DESIGNATOR
+          DATA_REF
+            PsiElement(identifier)('amr_thebranches')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              DESIGNATOR
+                PsiElement(identifier)('amr_branchcount')
+            PsiElement())(')')
+            PsiElement(%)('%')
+            PsiElement(identifier)('link')
+        PsiWhiteSpace(' ')
+        PsiElement(=>)('=>')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          PsiElement(identifier)('a')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')

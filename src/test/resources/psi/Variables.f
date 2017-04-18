@@ -1,4 +1,6 @@
 program a
+  IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+  character*80, allocatable :: lines_speciesname(:)
   integer a
   character c * 8
   character c * (*)

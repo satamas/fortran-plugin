@@ -96,6 +96,22 @@ FILE
             CONSTANT
               PsiElement(integerliteral)('0')
       PsiElement(eol)('\n')
+      PsiWhiteSpace('     ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          DATA_REF
+            PsiElement(identifier)('a')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(:)(':')
+            PsiElement())(')')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(integerliteral)('0')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')

@@ -7,6 +7,50 @@ FILE
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
+      IMPLICIT_STMT
+        PsiElement(implicit)('IMPLICIT')
+        PsiWhiteSpace(' ')
+        IMPLICIT_SPEC
+          PsiElement(double)('DOUBLE')
+          PsiWhiteSpace(' ')
+          PsiElement(precision)('PRECISION')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          LETTER_SPEC
+            PsiElement(identifier)('A')
+            PsiElement(-)('-')
+            PsiElement(identifier)('H')
+          PsiElement(,)(',')
+          LETTER_SPEC
+            PsiElement(identifier)('O')
+            PsiElement(-)('-')
+            PsiElement(identifier)('Z')
+          PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(character)('character')
+          CHAR_SELECTOR
+            LENGTH_SELECTOR
+              PsiElement(*)('*')
+              CHAR_LENGTH
+                PsiElement(integerliteral)('80')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        ATTR_SPEC
+          PsiElement(allocatable)('allocatable')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('lines_speciesname')
+          PsiElement(()('(')
+          ASSUMED_SHAPE_SPEC
+            PsiElement(:)(':')
+          PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
           PsiElement(integer)('integer')
