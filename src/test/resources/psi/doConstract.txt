@@ -165,6 +165,7 @@ FILE
                 PsiElement(:)(':')
                 CONSTANT
                   PsiElement(integerliteral)('2')
+              PsiElement(,)(',')
               PsiWhiteSpace(' ')
               REL_EXPR
                 DESIGNATOR

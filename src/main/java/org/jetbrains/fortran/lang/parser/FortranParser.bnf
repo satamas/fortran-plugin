@@ -169,7 +169,8 @@ private type_spec ::= intrinsic_type_spec | derived_type_spec
 private declaration_type_spec ::= intrinsic_type_spec | (type '(' (intrinsic_type_spec | derived_type_spec)')')
                                 | (classkwd '(' (derived_type_spec | '*') ')')
 // R404
-intrinsic_type_spec ::= ((integer | real | complex | logical) (kind_selector | nonstandard_kind_selector)?) | (double precision) | (character (char_selector)?)
+intrinsic_type_spec ::= ((integer | real | complex | logical) (kind_selector | nonstandard_kind_selector)?) | (double precision)
+                      | (character (char_selector)?) | byte // nonstandard type
 // R405
 kind_selector ::= '(' (kind '=')? expr ')' {pin = 2}
 nonstandard_kind_selector ::= '*' expr { pin = 1 }
@@ -196,7 +197,7 @@ char_length ::= ('(' type_param_value ')') | integerliteral
 derived_type_def ::= derived_type_stmt type_param_def_stmt* private_or_sequence* component_part
                      type_bound_procedure_part? end_type_stmt { pin = 1 }
 // R426
-derived_type_stmt ::= label? type ((',' <<list type_attr_spec>>)? '::')? fidentifier ('(' <<list fidentifier>> ')')? eol { pin = 2 }
+derived_type_stmt ::= label? type ((',' <<list type_attr_spec>>)? '::')? fidentifier ('(' <<list fidentifier>> ')')? eol { pin = 4 }
 // R427
 type_attr_spec ::= abstract | access_spec | bindckwd | (extends '(' fidentifier ')')
 // R428
@@ -258,7 +259,7 @@ binding_attr ::= (pass ('(' fidentifier ')')?) | nopass | nonoverridable | defer
 // R452
 final_procedure_stmt ::= final '::' <<list fidentifier>> { pin = 1 }
 // R453
-derived_type_spec ::= fidentifier ('(' <<list type_param_spec>> ')')?
+derived_type_spec ::= fidentifier ('(' <<list type_param_spec>> ')')? { pin = 1 }
 // R454
 type_param_spec ::= (fidentifier '=')? type_param_value
 // R455 is in clause 7
@@ -445,7 +446,7 @@ private part_ref ::= fidentifier ('(' <<list section_subscript>> ')')? (image_se
 // R615 - 618 are excrescent
 // R619 is trivial
 // R620
-section_subscript ::= subscript_triplet | expr
+section_subscript ::= (fidentifier '=' expr) | subscript_triplet | expr
 // R621
 subscript_triplet ::= (expr)? ':' (expr)? (':' expr)?
 // R622 - 623 are trivial
@@ -459,7 +460,7 @@ allocate_stmt ::= allocate '(' (type_spec '::')? <<list allocation>> (',' <<list
 // R631
 allocation ::= allocate_object ('(' <<list allocate_shape_spec>> ')')? ('[' allocate_coarray_spec ']')?
 // R632
-private allocate_object ::= (fidentifier !('%' | '(' | '[')) | data_ref
+private allocate_object ::= ((fidentifier !('%' | '(' | '[')) | data_ref) !'='
 // R633
 allocate_shape_spec ::= (expr ':')? expr
 // R634 - 635 are trivial
@@ -515,7 +516,7 @@ structure_constructor ::= derived_type_spec '(' <<list component_spec>> ')'
 // R468
 array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 // R601
-designator ::= (fidentifier !('%' | '(' | '[')) | data_ref | substring /*| array_section  | complex_part_designator */
+designator ::= (fidentifier !('%' | '(' | '[')) | data_ref | substring /*| function_reference /*| array_section  | complex_part_designator */
 // R304, R305 modified
 constant ::= integerliteral | floatingpointliteral | doubleprecisionliteral
            | complex_literal | logical_literal | stringliteral | boz_literal
@@ -567,7 +568,7 @@ forall_construct ::= forall_construct_stmt (label? (eol | forall_body_construct)
 // R751
 forall_construct_stmt ::= (fidentifier ':')? forall forall_header eol { pin = 4 }
 // R752
-forall_header ::= '(' (type_spec '::')? forall_triplet_spec+ (expr)? ')' {pin=1}
+forall_header ::= '(' (type_spec '::')? <<list forall_triplet_spec>> (',' expr)? ')' {pin=1}
 // R753 + 754 + 755
 forall_triplet_spec ::= fidentifier '=' expr ':' expr (':' expr)? {pin=2}
 // R756
@@ -809,9 +810,9 @@ end_block_data_stmt ::= label? ((endblockdata fidentifier?)| (end (((blockkwd da
 
 // Clause 12
 // R1201
-interface_block ::= interface_stmt interface_specification* end_interface_stmt { pin = 1 }
+interface_block ::= interface_stmt interface_specification end_interface_stmt { pin = 1 }
 // R1202
-private interface_specification ::= !endinterface_keys (eol | interface_body | procedure_stmt) {
+private interface_specification ::= !endinterface_keys (eol | interface_body | procedure_stmt)* {
 pin = 1
 recoverWhile = interface_recover
 }

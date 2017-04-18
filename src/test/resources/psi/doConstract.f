@@ -13,7 +13,7 @@
 
   continue
 
-  do concurrent (integer :: a = 1:10:2 a > 5)
+  do concurrent (integer :: a = 1:10:2, a > 5)
     j = j-1
     j = j + 1
   enddo

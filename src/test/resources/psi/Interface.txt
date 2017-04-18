@@ -38,11 +38,10 @@ FILE
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
                 PsiElement(real)('real')
-                KIND_SELECTOR
-                  PsiElement(()('(')
+                NONSTANDARD_KIND_SELECTOR
+                  PsiElement(*)('*')
                   CONSTANT
                     PsiElement(integerliteral)('8')
-                  PsiElement())(')')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ATTR_SPEC
@@ -112,6 +111,86 @@ FILE
             PsiElement(function)('function')
             PsiWhiteSpace(' ')
             PsiElement(identifier)('solve')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace('        ')
+        INTERFACE_BODY
+          SUBROUTINE_STMT
+            PsiElement(subroutine)('subroutine')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('LPV')
+            PsiElement(()('(')
+            DUMMY_ARG
+              PsiElement(identifier)('n')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            DUMMY_ARG
+              PsiElement(identifier)('x')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            DUMMY_ARG
+              PsiElement(identifier)('P')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            DUMMY_ARG
+              PsiElement(identifier)('dP')
+            PsiElement())(')')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('          ')
+          BLOCK
+            TYPE_DECLARATION_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(real)('real')
+                KIND_SELECTOR
+                  PsiElement(()('(')
+                  CONSTANT
+                    PsiElement(integerliteral)('8')
+                  PsiElement())(')')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              ENTITY_DECL
+                PsiElement(identifier)('x')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('          ')
+            TYPE_DECLARATION_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(real)('real')
+                KIND_SELECTOR
+                  PsiElement(()('(')
+                  CONSTANT
+                    PsiElement(integerliteral)('8')
+                  PsiElement())(')')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              ATTR_SPEC
+                PsiElement(pointer)('pointer')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              ENTITY_DECL
+                PsiElement(identifier)('P')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              ENTITY_DECL
+                PsiElement(identifier)('dP')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('          ')
+            TYPE_DECLARATION_STMT
+              INTRINSIC_TYPE_SPEC
+                PsiElement(integer)('integer')
+              PsiWhiteSpace(' ')
+              PsiElement(::)('::')
+              PsiWhiteSpace(' ')
+              ENTITY_DECL
+                PsiElement(identifier)('n')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('        ')
+          END_SUBROUTINE_STMT
+            PsiElement(end)('end')
+            PsiWhiteSpace(' ')
+            PsiElement(subroutine)('subroutine')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('LPV')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         END_INTERFACE_STMT

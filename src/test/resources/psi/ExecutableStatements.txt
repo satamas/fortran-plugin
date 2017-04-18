@@ -685,6 +685,37 @@ FILE
         PsiWhiteSpace('    ')
         END_DO_STMT
           PsiElement(enddo)('enddo')
+      PsiElement(eol)('\n\n')
+      PsiWhiteSpace('    ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('j')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          DATA_REF
+            PsiElement(identifier)('MAXLOC')
+            PsiWhiteSpace(' ')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              DESIGNATOR
+                DATA_REF
+                  PsiElement(identifier)('ABS')
+                  PsiElement(()('(')
+                  SECTION_SUBSCRIPT
+                    DESIGNATOR
+                      PsiElement(identifier)('pQ')
+                  PsiElement())(')')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            SECTION_SUBSCRIPT
+              PsiElement(identifier)('dim')
+              PsiWhiteSpace(' ')
+              PsiElement(=)('=')
+              CONSTANT
+                PsiElement(integerliteral)('1')
+            PsiElement())(')')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')

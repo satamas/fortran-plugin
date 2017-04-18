@@ -37,6 +37,29 @@ FILE
               PsiElement(:)(':')
               CONSTANT
                 PsiElement(integerliteral)('4')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            FORALL_TRIPLET_SPEC
+              PsiElement(identifier)('i')
+              PsiElement(=)('=')
+              CONSTANT
+                PsiElement(integerliteral)('1')
+              PsiElement(:)(':')
+              CONSTANT
+                PsiElement(integerliteral)('10')
+              PsiElement(:)(':')
+              CONSTANT
+                PsiElement(integerliteral)('2')
+            PsiElement(,)(',')
+            PsiWhiteSpace(' ')
+            REL_EXPR
+              DESIGNATOR
+                PsiElement(identifier)('j')
+              PsiWhiteSpace(' ')
+              PsiElement(NEQ)('/=')
+              PsiWhiteSpace(' ')
+              DESIGNATOR
+                PsiElement(identifier)('i')
             PsiElement())(')')
           PsiWhiteSpace(' ')
           ASSIGNMENT_STMT

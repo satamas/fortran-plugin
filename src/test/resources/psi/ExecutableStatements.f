@@ -47,4 +47,6 @@ program p
     stop 9
     stop 'error'
     enddo
+
+    j = MAXLOC (ABS(pQ), dim =1)
 end program

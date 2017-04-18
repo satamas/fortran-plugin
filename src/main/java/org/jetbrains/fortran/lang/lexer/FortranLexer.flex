@@ -40,8 +40,8 @@ DEFOPERATOR=\.[:letter:]+\.
 
 DIGIT=[0-9](\040*[0-9])*
 SIGNIFICAND={DIGIT}\040*\.(\040*[0-9])+|\.\040*{DIGIT}
-FLOATING_POINT_EXPONENT_PART=[e]\040*(\+|\-)?\040*{DIGIT}
-DOUBLE_PRECISION_EXPONENT_PART=[d]\040*(\+|\-)?\040*{DIGIT}
+FLOATING_POINT_EXPONENT_PART=[eE]\040*(\+|\-)?\040*{DIGIT}
+DOUBLE_PRECISION_EXPONENT_PART=[dD]\040*(\+|\-)?\040*{DIGIT}
 KIND_PARAM={DIGIT}|{IDENTIFIER}
 
 //xIcon
@@ -49,6 +49,7 @@ INTEGER_LITERAL={DIGIT}(_{KIND_PARAM})?
 //xRcon
 FLOATING_POINT_LITERAL={DIGIT}{FLOATING_POINT_EXPONENT_PART}(_{KIND_PARAM})?
                       |{SIGNIFICAND}({FLOATING_POINT_EXPONENT_PART})?(_{KIND_PARAM})?
+                      |{DIGIT}\.{FLOATING_POINT_EXPONENT_PART}?_{KIND_PARAM}
 //xDcon
 DOUBLE_PRECISION_LITERAL={DIGIT}{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PARAM})?
                       |{SIGNIFICAND}{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PARAM})?
@@ -134,6 +135,7 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "bind" { return BIND; }
 "block" { return BLOCKKWD; }
 "blockdata" { return BLOCKDATA; }
+"byte" { return BYTE; } // nonstandard data type
 "call" { return CALL; }
 "case" { return CASE; }
 "character" { return CHARACTER; }

@@ -68,6 +68,34 @@ FILE
                 CONSTANT
                   PsiElement(integerliteral)('0')
       PsiElement(eol)('\n')
+      PsiWhiteSpace('     ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('variable')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        AND_EXPR
+          REL_EXPR
+            CONSTANT
+              PsiElement(floatingpointliteral)('10._8')
+            PsiWhiteSpace(' ')
+            PsiElement(GT)('>')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integerliteral)('1')
+          PsiWhiteSpace(' ')
+          PsiElement(.and.)('.and.')
+          PsiWhiteSpace(' ')
+          REL_EXPR
+            CONSTANT
+              PsiElement(floatingpointliteral)('1.E+1_8')
+            PsiWhiteSpace(' ')
+            PsiElement(GT)('>')
+            PsiWhiteSpace(' ')
+            CONSTANT
+              PsiElement(integerliteral)('0')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')

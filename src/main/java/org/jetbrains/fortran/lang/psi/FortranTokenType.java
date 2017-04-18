@@ -99,6 +99,7 @@ public class FortranTokenType extends IElementType {
             INOUT,
             INTEGER,
             INTENT,
+            INTERFACE,
             INTRINSIC,
             INQUIRE,
             IOLENGTH,
