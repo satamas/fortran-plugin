@@ -9,6 +9,8 @@ import static org.jetbrains.fortran.lang.FortranTypes.COLON;
 import static org.jetbrains.fortran.lang.parser.FortranParser.end_do;
 import static org.jetbrains.fortran.lang.parser.FortranParser.execution_part_construct;
 import static org.jetbrains.fortran.lang.parser.FortranParser.loop_control;
+import static org.jetbrains.fortran.lang.parser.FortranParserUtil.parseIdentifier;
+import static org.jetbrains.fortran.lang.parser.FortranParserUtil.parseKeyword;
 import static org.jetbrains.fortran.lang.parser.FortranParserUtil.parseLabel;
 
 public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser {
@@ -36,7 +38,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
         boolean result, pinned;
         PsiBuilder.Marker marker_ = enter_section_(builder, level, _NONE_, LABEL_DO_STMT, "<label do stmt>");
         consumeTokens(builder, 0, IDENTIFIER, COLON);
-        result = consumeToken(builder, DO);
+        result = parseKeyword(builder, level + 1, DO);
         int labelValue = new LabelParser().parseAndGetLabel(builder, level + 1);
         result = result && (labelValue == testLabel);
         pinned = result; // pin = 3
@@ -53,8 +55,8 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
         if (!nextTokenIs(builder, "<label do stmt>", DO, IDENTIFIER)) return -1;
         boolean result, pinned;
         PsiBuilder.Marker marker_ = enter_section_(builder, level, _NONE_, LABEL_DO_STMT, "<label do stmt>");
-        consumeTokens(builder, 0, IDENTIFIER, COLON);
-        result = consumeToken(builder, DO);
+        parseLoopName(builder, level+1);
+        result = parseKeyword(builder, level + 1, DO);
         int labelValue = new LabelParser().parseAndGetLabel(builder, level + 1);
         result = result && (labelValue != -1);
         pinned = result; // pin = 3
@@ -65,6 +67,14 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
         return labelValue;
     }
 
+    private static void parseLoopName(PsiBuilder builder, int level) {
+        if (!recursion_guard_(builder, level, "parseLoopName")) return;
+        boolean result;
+        PsiBuilder.Marker marker = enter_section_(builder);
+        result = parseIdentifier(builder, level + 1);
+        result = result && consumeToken(builder, COLON);
+        exit_section_(builder, marker, null, result);
+    }
 //
 //  block
 //

@@ -119,7 +119,7 @@ FILE
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           TYPE_ATTR_SPEC
-            PsiElement(private)('PRIVATE')
+            PsiElement(privatekwd)('PRIVATE')
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')

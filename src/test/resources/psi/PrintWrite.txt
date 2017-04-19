@@ -177,7 +177,7 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         PARAMETERS_SPEC
-          PsiElement(end)('end')
+          PsiElement(identifier)('end')
           PsiElement(=)('=')
           CONSTANT
             PsiElement(integerliteral)('9')

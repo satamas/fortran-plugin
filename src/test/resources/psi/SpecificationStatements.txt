@@ -154,7 +154,7 @@ FILE
       PsiWhiteSpace('    ')
       OTHER_SPECIFICATION_STMT
         EXTERNAL_STMT
-          PsiElement(external)('external')
+          PsiElement(externalkwd)('external')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('sin')
           PsiElement(,)(',')

@@ -2739,7 +2739,7 @@ class _FortranLexer implements FlexLexer {
             }
           case 314: break;
           case 118: 
-            { return PUBLIC;
+            { return PUBLICKWD;
             }
           case 315: break;
           case 119: 
@@ -2807,7 +2807,7 @@ class _FortranLexer implements FlexLexer {
             }
           case 331: break;
           case 135: 
-            { return PRIVATE;
+            { return PRIVATEKWD;
             }
           case 332: break;
           case 136: 
@@ -2855,7 +2855,7 @@ class _FortranLexer implements FlexLexer {
             }
           case 343: break;
           case 147: 
-            { return EXTERNAL;
+            { return EXTERNALKWD;
             }
           case 344: break;
           case 148: 

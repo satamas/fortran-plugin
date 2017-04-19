@@ -532,7 +532,7 @@ FILE
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
             PARAMETERS_SPEC
-              PsiElement(namekwd)('name')
+              PsiElement(identifier)('name')
               PsiElement(=)('=')
               DESIGNATOR
                 PsiElement(identifier)('fn')

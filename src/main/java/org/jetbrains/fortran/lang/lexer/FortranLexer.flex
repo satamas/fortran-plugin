@@ -171,7 +171,7 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "equivalence" { return EQUIVALENCE; }
 "exit" { return EXIT; }
 "extends" { return EXTENDS; }
-"external" { return EXTERNAL; }
+"external" { return EXTERNALKWD; }
 "final" { return FINAL; }
 "flush" { return FLUSH; }
 "function" { return FUNCTION; }
@@ -217,11 +217,11 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 "pause" { return PAUSE; }
 "pointer" { return POINTER; }
 "print" { return PRINT; }
-"private" { return PRIVATE; }
+"private" { return PRIVATEKWD; }
 "procedure" { return PROCEDURE; }
 "program" { return PROGRAMKWD; }
 "protected" { return PROTECTED; }
-"public" { return PUBLIC; }
+"public" { return PUBLICKWD; }
 "pure" { return PURE; }
 "read" { return READ; }
 "real" { return REAL; }

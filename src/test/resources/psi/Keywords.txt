@@ -1,0 +1,90 @@
+FILE
+  MAIN_PROGRAM
+    BLOCK
+      IMPLICIT_STMT
+        PsiElement(implicit)('implicit')
+        PsiWhiteSpace(' ')
+        PsiElement(none)('none')
+      PsiElement(eol)('\n')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(integer)('integer')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integerliteral)('1')
+      PsiElement(eol)('\n')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(logical)('logical')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('if')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          LOGICAL_LITERAL
+            PsiElement(truekwd)('.true.')
+      PsiElement(eol)('\n')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(integer)('integer')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('integer')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integerliteral)('1')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('write')
+          PsiWhiteSpace(' ')
+          PsiElement(=)('=')
+          PsiWhiteSpace(' ')
+          CONSTANT
+            PsiElement(integerliteral)('2')
+      PsiElement(eol)('\n')
+      IF_STMT
+        PsiElement(if)('if')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        DESIGNATOR
+          PsiElement(identifier)('if')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        WRITE_STMT
+          PsiElement(write)('write')
+          PsiElement(()('(')
+          PARAMETERS_SPEC
+            PsiElement(*)('*')
+          PsiElement(,)(',')
+          PARAMETERS_SPEC
+            PsiElement(*)('*')
+          PsiElement())(')')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('end')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('integer')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            PsiElement(identifier)('write')
+      PsiElement(eol)('\n')
+    END_PROGRAM_STMT
+      PsiElement(end)('end')
