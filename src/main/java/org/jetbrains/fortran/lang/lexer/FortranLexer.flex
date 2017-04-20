@@ -64,7 +64,7 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 
 %%
 
-(("&"){WHITE_SPACE_CHAR}*{EOL}) { return WHITE_SPACE; }
+(("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}*"&")?) { return WHITE_SPACE; }
 ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
 (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
 {LINE_COMMENT} { return LINE_COMMENT; }
@@ -75,6 +75,7 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 {OCTAL_LITERAL} { return OCTALLITERAL; }
 {HEX_LITERAL} { return HEXLITERAL; }
 {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
+{DIGIT}\./(\040|{EOL}|")"|"+"|"-"|"*"|"/"|"**"|"&") { return FLOATINGPOINTLITERAL; }
 {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
 {FORMAT} { return FORMATSTMT; }
 

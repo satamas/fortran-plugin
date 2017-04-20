@@ -90,6 +90,12 @@ FILE
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
           PsiElement(integer)('integer')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        ATTR_SPEC
+          PsiElement(externalkwd)('external')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('b')

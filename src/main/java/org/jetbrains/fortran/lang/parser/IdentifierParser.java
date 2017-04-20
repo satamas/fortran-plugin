@@ -16,7 +16,7 @@ public class IdentifierParser implements GeneratedParserUtilBase.Parser {
         result = consumeToken(builder, IDENTIFIER);
         if (!result) {
             if (KEYWORDS.contains(builder.getTokenType())
-                && (builder.getTokenType() != FORMATSTMT || !builder.getTokenText().contains(" "))){
+                && (builder.getTokenType() != FORMATSTMT || !builder.getTokenText().contains("("))){
                 builder.remapCurrentToken(IDENTIFIER);
                 result = consumeToken(builder, IDENTIFIER);
             }

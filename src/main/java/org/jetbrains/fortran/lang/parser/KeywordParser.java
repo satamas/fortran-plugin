@@ -10,7 +10,7 @@ import static org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORDS;
 
 public class KeywordParser implements GeneratedParserUtilBase.Parser {
 
-    final IElementType keyword;
+    private final IElementType keyword;
     public KeywordParser(IElementType keywordType) {
         keyword = keywordType;
     }
