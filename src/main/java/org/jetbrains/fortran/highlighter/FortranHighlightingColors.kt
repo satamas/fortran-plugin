@@ -12,25 +12,25 @@ enum class FortranHighlightingColors (humanName: String, val default: TextAttrib
     KEYWORD("Keyword", DefColors.KEYWORD),
 
     // literals
-    INTEGER_LITERAL("Integer literal", DefColors.NUMBER),
-    FLOATING_POINT_LITERAL("Floating point literal", DefColors.NUMBER),
-    BINARY_LITERAL("Binary literal", DefColors.STRING),
-    OCTAL_LITERAL("Octal literal", DefColors.STRING),
-    HEX_LITERAL("Hex literal", DefColors.STRING),
-    STRING_LITERAL("String literal", DefColors.STRING),
-    LOGICAL_LITERAL("Logical literal", DefColors.KEYWORD),
+    INTEGER_LITERAL("Literals//Integer literal", DefColors.NUMBER),
+    FLOATING_POINT_LITERAL("Literals//Floating point literal", DefColors.NUMBER),
+    BINARY_LITERAL("Literals//Binary literal", DefColors.STRING),
+    OCTAL_LITERAL("Literals//Octal literal", DefColors.STRING),
+    HEX_LITERAL("Literals//Hex literal", DefColors.STRING),
+    STRING_LITERAL("Literals//String literal", DefColors.STRING),
+    LOGICAL_LITERAL("Literals//Logical literal", DefColors.KEYWORD),
 
     // operators
-    ASSIGN_OPERATOR("Assignment operator", DefColors.OPERATION_SIGN),
-    ARITHMETIC_OPERATOR("Arithmetic operator", DefColors.OPERATION_SIGN),
-    RELATION_OPERATOR("Relation operator", DefColors.KEYWORD),
-    LOGICAL_OPERATOR("Logical operator", DefColors.KEYWORD),
-    DEFINED_OPERATOR("Defined operator", DefColors.KEYWORD),
+    ASSIGN_OPERATOR("Operators//Assignment operator", DefColors.OPERATION_SIGN),
+    ARITHMETIC_OPERATOR("Operators//Arithmetic operator", DefColors.OPERATION_SIGN),
+    RELATION_OPERATOR("Operators//Relation operator", DefColors.KEYWORD),
+    LOGICAL_OPERATOR("Operators//Logical operator", DefColors.KEYWORD),
+    DEFINED_OPERATOR("Operators//Defined operator", DefColors.KEYWORD),
 
     // parenthesis etc
-    PARENTHESIS("Parenthesis", DefColors.PARENTHESES),
-    BRACKETS("Brackets", DefColors.BRACKETS),
-    ARRAY_CONSTRUCTOR("Array constructor", DefColors.BRACES),
+    PARENTHESIS("Braces//Parenthesis", DefColors.PARENTHESES),
+    BRACKETS("Braces//Brackets", DefColors.BRACKETS),
+    ARRAY_CONSTRUCTOR("Braces//Array constructor", DefColors.BRACES),
 
     // punctuation
     PERCENTAGE("Percentage", DefColors.DOT),

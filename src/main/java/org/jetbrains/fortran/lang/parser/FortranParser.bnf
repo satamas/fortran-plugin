@@ -72,166 +72,151 @@
 file ::= program
 
 // keywords parsing list for keywords parsing as identifiers
-external abstract_ ::= parseKeyword 'ABSTRACT'
-external all_ ::= parseKeyword 'ALL'
-external allocate_ ::= parseKeyword 'ALLOCATE'
-external allocatable_ ::= parseKeyword 'ALLOCATABLE'
-external assign_ ::= parseKeyword 'ASSIGN'
-external assignment_ ::= parseKeyword 'ASSIGNMENT'
-external associate_ ::= parseKeyword 'ASSOCIATE'
-external asynchronous_ ::= parseKeyword 'ASYNCHRONOUS'
-external backspace_ ::= parseKeyword 'BACKSPACE'
-external bind_ ::= parseKeyword 'BIND'
-external blockkwd_ ::= parseKeyword 'BLOCKKWD'
-external blockdata_ ::= parseKeyword 'BLOCKDATA'
-external byte_ ::= parseKeyword 'BYTE'
-external call_ ::= parseKeyword 'CALL'
-external case_ ::= parseKeyword 'CASE'
-external character_ ::= parseKeyword 'CHARACTER'
-external classkwd_ ::= parseKeyword 'CLASSKWD'
-external close_ ::= parseKeyword 'CLOSE'
-external codimension_ ::= parseKeyword 'CODIMENSION'
-external complex_ ::= parseKeyword 'COMPLEX'
-external common_ ::= parseKeyword 'COMMON'
-external concurrent_ ::= parseKeyword 'CONCURRENT'
-external contains_ ::= parseKeyword 'CONTAINS'
-external contiguous_ ::= parseKeyword 'CONTIGUOUS'
-external continue_ ::= parseKeyword 'CONTINUE'
-external critical_ ::= parseKeyword 'CRITICAL'
-external cycle_ ::= parseKeyword 'CYCLE'
-external data_ ::= parseKeyword 'DATA'
-external deallocate_ ::= parseKeyword 'DEALLOCATE'
-external default_ ::= parseKeyword 'DEFAULT'
-external deferred_ ::= parseKeyword 'DEFERRED'
-external dimension_ ::= parseKeyword 'DIMENSION'
-external do_ ::= parseKeyword 'DO'
-external double_ ::= parseKeyword 'DOUBLE'
-external doubleprecision_ ::= parseKeyword 'DOUBLEPRECISION'
-external else_ ::= parseKeyword 'ELSE'
-external elseif_ ::= parseKeyword 'ELSEIF'
-external elsewhere_ ::= parseKeyword 'ELSEWHERE'
-external entry_ ::= parseKeyword 'ENTRY'
-external end_ ::= parseKeyword 'END'
-external endassociate_ ::= parseKeyword 'ENDASSOCIATE'
-external endblock_ ::= parseKeyword 'ENDBLOCK'
-external endcritical_ ::= parseKeyword 'ENDCRITICAL'
-external enddo_ ::= parseKeyword 'ENDDO'
-external endenum_ ::= parseKeyword 'ENDENUM'
-external endfile_ ::= parseKeyword 'ENDFILE'
-external endforall_ ::= parseKeyword 'ENDFORALL'
-external endfunction_ ::= parseKeyword 'ENDFUNCTION'
-external endif_ ::= parseKeyword 'ENDIF'
-external endmodule_ ::= parseKeyword 'ENDMODULE'
-external endprocedure_ ::= parseKeyword 'ENDPROCEDURE'
-external endprogram_ ::= parseKeyword 'ENDPROGRAM'
-external endselect_ ::= parseKeyword 'ENDSELECT'
-external endsubmodule_ ::= parseKeyword 'ENDSUBMODULE'
-external endsubroutine_ ::= parseKeyword 'ENDSUBROUTINE'
-external endtype_ ::= parseKeyword 'ENDTYPE'
-external endwhere_ ::= parseKeyword 'ENDWHERE'
-external enum_ ::= parseKeyword 'ENUM'
-external enumeratorkwd_ ::= parseKeyword 'ENUMERATORKWD'
-external error_ ::= parseKeyword 'ERROR'
-external equivalence_ ::= parseKeyword 'EQUIVALENCE'
-external exit_ ::= parseKeyword 'EXIT'
-external extends_ ::= parseKeyword 'EXTENDS'
-external external_ ::= parseKeyword 'EXTERNALKWD'
-external final_ ::= parseKeyword 'FINAL'
-external flush_ ::= parseKeyword 'FLUSH'
-external forall_ ::= parseKeyword 'FORALL'
-external formatstmt_ ::= parseKeyword 'FORMATSTMT'
-external formatted_ ::= parseKeyword 'FORMATTED'
-external go_ ::= parseKeyword 'GO'
-external goto_ ::= parseKeyword 'GOTO'
-external if_ ::= parseKeyword 'IF'
-external images_ ::= parseKeyword 'IMAGES'
-external implicit_ ::= parseKeyword 'IMPLICIT'
-external import_ ::= parseKeyword 'IMPORT'
-external impure_ ::= parseKeyword 'IMPURE'
-external in_ ::= parseKeyword 'IN'
-external include_ ::= parseKeyword 'INCLUDE'
-external inout_ ::= parseKeyword 'INOUT'
-external integer_ ::= parseKeyword 'INTEGER'
-external intent_ ::= parseKeyword 'INTENT'
-external interface_ ::= parseKeyword 'INTERFACE'
-external intrinsic_ ::= parseKeyword 'INTRINSIC'
-external inquire_ ::= parseKeyword 'INQUIRE'
-external iolength_ ::= parseKeyword 'IOLENGTH'
-external kind_ ::= parseKeyword 'KIND'
-external len_ ::= parseKeyword 'LEN'
-external lock_ ::= parseKeyword 'LOCK'
-external logical_ ::= parseKeyword 'LOGICAL'
-external memory_ ::= parseKeyword 'MEMORY'
-external modulekwd_ ::= parseKeyword 'MODULEKWD'
-external namekwd_ ::= parseKeyword 'NAMEKWD'
-external namelist_ ::= parseKeyword 'NAMELIST'
-external none_ ::= parseKeyword 'NONE'
-external nonintrinsic_ ::= parseKeyword 'NONINTRINSIC'
-external nonoverridable_ ::= parseKeyword 'NONOVERRIDABLE'
-external nopass_ ::= parseKeyword 'NOPASS'
-external nullify_ ::= parseKeyword 'NULLIFY'
-external only_ ::= parseKeyword 'ONLY'
-external open_ ::= parseKeyword 'OPEN'
-external operator_ ::= parseKeyword 'OPERATOR'
-external optional_ ::= parseKeyword 'OPTIONAL'
-external out_ ::= parseKeyword 'OUT'
-external parameter_ ::= parseKeyword 'PARAMETER'
-external pass_ ::= parseKeyword 'PASS'
-external pause_ ::= parseKeyword 'PAUSE'
-external pointer_ ::= parseKeyword 'POINTER'
-external precision_ ::= parseKeyword 'PRECISION'
-external print_ ::= parseKeyword 'PRINT'
-external private_ ::= parseKeyword 'PRIVATEKWD'
-external procedure_ ::= parseKeyword 'PROCEDURE'
-external programkwd_ ::= parseKeyword 'PROGRAMKWD'
-external protected_ ::= parseKeyword 'PROTECTED'
-external public_ ::= parseKeyword 'PUBLICKWD'
-external pure_ ::= parseKeyword 'PURE'
-external read_ ::= parseKeyword 'READ'
-external real_ ::= parseKeyword 'REAL'
-external recursive_ ::= parseKeyword 'RECURSIVE'
-external result_ ::= parseKeyword 'RESULT'
-external returnkwd_ ::= parseKeyword 'RETURNKWD'
-external rewind_ ::= parseKeyword 'REWIND'
-external save_ ::= parseKeyword 'SAVE'
-external select_ ::= parseKeyword 'SELECT'
-external sequence_ ::= parseKeyword 'SEQUENCE'
-external stop_ ::= parseKeyword 'STOP'
-external sync_ ::= parseKeyword 'SYNC'
-external syncall_ ::= parseKeyword 'SYNCALL'
-external syncimages_ ::= parseKeyword 'SYNCIMAGES'
-external syncmemory_ ::= parseKeyword 'SYNCMEMORY'
-external subroutine_ ::= parseKeyword 'SUBROUTINE'
-external submodulekwd_ ::= parseKeyword 'SUBMODULEKWD'
-external target_ ::= parseKeyword 'TARGET'
-external then_ ::= parseKeyword 'THEN'
-external to_ ::= parseKeyword 'TO'
-external type_ ::= parseKeyword 'TYPE'
-external unformatted_ ::= parseKeyword 'UNFORMATTED'
-external unlock_ ::= parseKeyword 'UNLOCK'
-external use_ ::= parseKeyword 'USE'
-external value_ ::= parseKeyword 'VALUE'
-external volatile_ ::= parseKeyword 'VOLATILE'
-external wait_ ::= parseKeyword 'WAIT'
-external where_ ::= parseKeyword 'WHERE'
-external while_ ::= parseKeyword 'WHILE'
-external write_ ::= parseKeyword 'WRITE'
+private abstract_      ::= abstract     | <<parseKeyword 'ABSTRACT'>>
+private all_           ::= all          | <<parseKeyword 'ALL'>>
+private allocate_      ::= allocate     | <<parseKeyword 'ALLOCATE'>>
+private allocatable_   ::= allocatable  | <<parseKeyword 'ALLOCATABLE'>>
+private assign_        ::= assign       | <<parseKeyword 'ASSIGN'>>
+private assignment_    ::= assignment   | <<parseKeyword 'ASSIGNMENT'>>
+private associate_     ::= associate    | <<parseKeyword 'ASSOCIATE'>>
+private asynchronous_  ::= asynchronous | <<parseKeyword 'ASYNCHRONOUS'>>
+private backspace_     ::= backspace    | <<parseKeyword 'BACKSPACE'>>
+private bind_          ::= bind         | <<parseKeyword 'BIND'>>
+private block_         ::= blockkwd     | <<parseKeyword 'BLOCKKWD'>>
+private blockdata_     ::= blockdata    | <<parseKeyword 'BLOCKDATA'>>
+private byte_          ::= byte         | <<parseKeyword 'BYTE'>>
+private call_          ::= call         | <<parseKeyword 'CALL'>>
+private case_          ::= case         | <<parseKeyword 'CASE'>>
+private character_     ::= character    | <<parseKeyword 'CHARACTER'>>
+private class_         ::= classkwd     | <<parseKeyword 'CLASSKWD'>>
+private close_         ::= close        | <<parseKeyword 'CLOSE'>>
+private codimension_   ::= codimension  | <<parseKeyword 'CODIMENSION'>>
+private complex_       ::= complex      | <<parseKeyword 'COMPLEX'>>
+private common_        ::= common       | <<parseKeyword 'COMMON'>>
+private concurrent_    ::= concurrent   | <<parseKeyword 'CONCURRENT'>>
+private contains_      ::= contains     | <<parseKeyword 'CONTAINS'>>
+private contiguous_    ::= contiguous   | <<parseKeyword 'CONTIGUOUS'>>
+private continue_      ::= continue     | <<parseKeyword 'CONTINUE'>>
+private critical_      ::= critical     | <<parseKeyword 'CRITICAL'>>
+private cycle_         ::= cycle        | <<parseKeyword 'CYCLE'>>
+private data_          ::= data         | <<parseKeyword 'DATA'>>
+private deallocate_    ::= deallocate   | <<parseKeyword 'DEALLOCATE'>>
+private default_       ::= default      | <<parseKeyword 'DEFAULT'>>
+private deferred_      ::= deferred     | <<parseKeyword 'DEFERRED'>>
+private dimension_     ::= dimension    | <<parseKeyword 'DIMENSION'>>
+private do_            ::= do           | <<parseKeyword 'DO'>>
+private double_        ::= double       | <<parseKeyword 'DOUBLE'>>
+private doubleprecision_ ::= doubleprecision | <<parseKeyword 'DOUBLEPRECISION'>>
+private else_          ::= else         | <<parseKeyword 'ELSE'>>
+private elseif_        ::= elseif       | <<parseKeyword 'ELSEIF'>>
+private elsewhere_     ::= elsewhere    | <<parseKeyword 'ELSEWHERE'>>
+private entry_         ::= entry        | <<parseKeyword 'ENTRY'>>
+private end_           ::= end          | <<parseKeyword 'END'>>
+private endassociate_  ::= endassociate | <<parseKeyword 'ENDASSOCIATE'>>
+private endblock_      ::= endblock     | <<parseKeyword 'ENDBLOCK'>>
+private endcritical_   ::= endcritical  | <<parseKeyword 'ENDCRITICAL'>>
+private enddo_         ::= enddo        | <<parseKeyword 'ENDDO'>>
+private endenum_       ::= endenum      | <<parseKeyword 'ENDENUM'>>
+private endfile_       ::= endfile      | <<parseKeyword 'ENDFILE'>>
+private endforall_     ::= endforall    | <<parseKeyword 'ENDFORALL'>>
+private endfunction_   ::= endfunction  | <<parseKeyword 'ENDFUNCTION'>>
+private endif_         ::= endif        | <<parseKeyword 'ENDIF'>>
+private endmodule_     ::= endmodule    | <<parseKeyword 'ENDMODULE'>>
+private endprocedure_  ::= endprocedure | <<parseKeyword 'ENDPROCEDURE'>>
+private endprogram_    ::= endprogram   | <<parseKeyword 'ENDPROGRAM'>>
+private endselect_     ::= endselect    | <<parseKeyword 'ENDSELECT'>>
+private endsubmodule_  ::= endsubmodule | <<parseKeyword 'ENDSUBMODULE'>>
+private endsubroutine_ ::= endsubroutine | <<parseKeyword 'ENDSUBROUTINE'>>
+private endtype_       ::= endtype      | <<parseKeyword 'ENDTYPE'>>
+private endwhere_      ::= endwhere     | <<parseKeyword 'ENDWHERE'>>
+private enum_          ::= enum         | <<parseKeyword 'ENUM'>>
+private enumerator_    ::= enumeratorkwd | <<parseKeyword 'ENUMERATORKWD'>>
+private error_         ::= error        | <<parseKeyword 'ERROR'>>
+private equivalence_   ::= equivalence  | <<parseKeyword 'EQUIVALENCE'>>
+private exit_          ::= exit         | <<parseKeyword 'EXIT'>>
+private extends_       ::= extends      | <<parseKeyword 'EXTENDS'>>
+private external_      ::= externalkwd  | <<parseKeyword 'EXTERNALKWD'>>
+private final_         ::= final        | <<parseKeyword 'FINAL'>>
+private flush_         ::= flush        | <<parseKeyword 'FLUSH'>>
+private forall_        ::= forall       | <<parseKeyword 'FORALL'>>
+private formatstmt_    ::= formatstmt   | <<parseKeyword 'FORMATSTMT'>>
+private formatted_     ::= formatted    | <<parseKeyword 'FORMATTED'>>
+private go_            ::= go           | <<parseKeyword 'GO'>>
+private goto_          ::= goto         | <<parseKeyword 'GOTO'>>
+private if_            ::= if           | <<parseKeyword 'IF'>>
+private images_        ::= images       | <<parseKeyword 'IMAGES'>>
+private implicit_      ::= implicit     | <<parseKeyword 'IMPLICIT'>>
+private import_        ::= import       | <<parseKeyword 'IMPORT'>>
+private impure_        ::= impure       | <<parseKeyword 'IMPURE'>>
+private in_            ::= in           | <<parseKeyword 'IN'>>
+private include_       ::= include      | <<parseKeyword 'INCLUDE'>>
+private inout_         ::= inout        | <<parseKeyword 'INOUT'>>
+private integer_       ::= integer      | <<parseKeyword 'INTEGER'>>
+private intent_        ::= intent       | <<parseKeyword 'INTENT'>>
+private interface_     ::= interface    | <<parseKeyword 'INTERFACE'>>
+private intrinsic_     ::= intrinsic    | <<parseKeyword 'INTRINSIC'>>
+private inquire_       ::= inquire      | <<parseKeyword 'INQUIRE'>>
+private iolength_      ::= iolength     | <<parseKeyword 'IOLENGTH'>>
+private kind_          ::= kind         | <<parseKeyword 'KIND'>>
+private len_           ::= len          | <<parseKeyword 'LEN'>>
+private lock_          ::= lock         | <<parseKeyword 'LOCK'>>
+private logical_       ::= logical      | <<parseKeyword 'LOGICAL'>>
+private memory_        ::= memory       | <<parseKeyword 'MEMORY'>>
+private module_        ::= modulekwd    | <<parseKeyword 'MODULEKWD'>>
+private name_          ::= namekwd      | <<parseKeyword 'NAMEKWD'>>
+private namelist_      ::= namelist     | <<parseKeyword 'NAMELIST'>>
+private none_          ::= none         | <<parseKeyword 'NONE'>>
+private nonintrinsic_  ::= nonintrinsic | <<parseKeyword 'NONINTRINSIC'>>
+private nonoverridable_ ::= nonoverridable | <<parseKeyword 'NONOVERRIDABLE'>>
+private nopass_        ::= nopass       | <<parseKeyword 'NOPASS'>>
+private nullify_       ::= nullify      | <<parseKeyword 'NULLIFY'>>
+private only_          ::= only         | <<parseKeyword 'ONLY'>>
+private open_          ::= open         | <<parseKeyword 'OPEN'>>
+private operator_      ::= operator     | <<parseKeyword 'OPERATOR'>>
+private optional_      ::= optional     | <<parseKeyword 'OPTIONAL'>>
+private out_           ::= out          | <<parseKeyword 'OUT'>>
+private parameter_     ::= parameter    | <<parseKeyword 'PARAMETER'>>
+private pass_          ::= pass         | <<parseKeyword 'PASS'>>
+private pause_         ::= pause        | <<parseKeyword 'PAUSE'>>
+private pointer_       ::= pointer      | <<parseKeyword 'POINTER'>>
+private precision_     ::= precision    | <<parseKeyword 'PRECISION'>>
+private print_         ::= print        | <<parseKeyword 'PRINT'>>
+private private_       ::= privatekwd   | <<parseKeyword 'PRIVATEKWD'>>
+private procedure_     ::= procedure    | <<parseKeyword 'PROCEDURE'>>
+private program_       ::= programkwd   | <<parseKeyword 'PROGRAMKWD'>>
+private protected_     ::= protected    | <<parseKeyword 'PROTECTED'>>
+private public_        ::= publickwd    | <<parseKeyword 'PUBLICKWD'>>
+private pure_          ::= pure         | <<parseKeyword 'PURE'>>
+private read_          ::= read         | <<parseKeyword 'READ'>>
+private real_          ::= real         | <<parseKeyword 'REAL'>>
+private recursive_     ::= recursive    | <<parseKeyword 'RECURSIVE'>>
+private result_        ::= result       | <<parseKeyword 'RESULT'>>
+private return_        ::= returnkwd    | <<parseKeyword 'RETURNKWD'>>
+private rewind_        ::= rewind       | <<parseKeyword 'REWIND'>>
+private save_          ::= save         | <<parseKeyword 'SAVE'>>
+private select_        ::= select       | <<parseKeyword 'SELECT'>>
+private sequence_      ::= sequence     | <<parseKeyword 'SEQUENCE'>>
+private stop_          ::= stop         | <<parseKeyword 'STOP'>>
+private sync_          ::= sync         | <<parseKeyword 'SYNC'>>
+private syncall_       ::= syncall      | <<parseKeyword 'SYNCALL'>>
+private syncimages_    ::= syncimages   | <<parseKeyword 'SYNCIMAGES'>>
+private syncmemory_    ::= syncmemory   | <<parseKeyword 'SYNCMEMORY'>>
+private subroutine_    ::= subroutine   | <<parseKeyword 'SUBROUTINE'>>
+private submodule_     ::= submodulekwd | <<parseKeyword 'SUBMODULEKWD'>>
+private target_        ::= target       | <<parseKeyword 'TARGET'>>
+private then_          ::= then         | <<parseKeyword 'THEN'>>
+private to_            ::= to           | <<parseKeyword 'TO'>>
+private type_          ::= type         | <<parseKeyword 'TYPE'>>
+private unformatted_   ::= unformatted  | <<parseKeyword 'UNFORMATTED'>>
+private unlock_        ::= unlock       | <<parseKeyword 'UNLOCK'>>
+private use_           ::= use          | <<parseKeyword 'USE'>>
+private value_         ::= value        | <<parseKeyword 'VALUE'>>
+private volatile_      ::= volatile     | <<parseKeyword 'VOLATILE'>>
+private wait_          ::= wait         | <<parseKeyword 'WAIT'>>
+private where_         ::= where        | <<parseKeyword 'WHERE'>>
+private while_         ::= while        | <<parseKeyword 'WHILE'>>
+private write_         ::= write        | <<parseKeyword 'WRITE'>>
 
-// list of keywords for token types generation
-private keyword ::= abstract | all | allocate | allocatable | assign | assignment | associate | asynchronous | backspace | bind
-          | blockkwd | blockdata | byte | call | case | character | classkwd | close | codimension | complex  | common
-          | concurrent | contains  | contiguous | continue | critical | cycle | data | deallocate | default | deferred
-          | dimension | do | double | doubleprecision | else | elseif | elsewhere | entry | end | endassociate | endblock
-          | endcritical | enddo | endenum | endfile | endforall | endfunction | endif | endmodule | endprocedure | endprogram
-          | endselect | endsubmodule | endsubroutine | endtype | endwhere | enum | enumeratorkwd | error | equivalence
-          | exit | extends | externalkwd | final | flush | forall | formatstmt | formatted | go | goto | if | images
-          | implicit | import | impure | in | include | inout | integer | intent | interface | intrinsic | inquire
-          | iolength | kind | len | lock | logical | memory | modulekwd | namekwd | namelist | none | nonintrinsic
-          | nonoverridable | nopass | nullify | only | open | operator | optional | out | parameter | pass | pause
-          | pointer | precision | print | privatekwd | procedure | programkwd | protected | publickwd | pure | read
-          | real | recursive | result | returnkwd | rewind | save | select | sequence | stop | sync | syncall | syncimages
-          | syncmemory | subroutine | submodulekwd | target | then | to | type | unformatted | unlock | use | value
-          | volatile | wait | where | while | write
 
 // Clause 0
 // System parts needed for this implementation
@@ -331,7 +316,7 @@ private type_param_value ::= '*' | ':' | expr
 private type_spec ::= intrinsic_type_spec | derived_type_spec
 // R403
 private declaration_type_spec ::= intrinsic_type_spec | (type_ '(' (intrinsic_type_spec | derived_type_spec)')')
-                                | (classkwd_ '(' (derived_type_spec | '*') ')')
+                                | (class_ '(' (derived_type_spec | '*') ')')
 // R404
 intrinsic_type_spec ::= (((integer_ | real_ | complex_ | logical_ | (double_ precision_) | doubleprecision_ )
                         (kind_selector | nonstandard_kind_selector)?) | (character_ (char_selector)?) | byte_/* nonstandard type*/)
@@ -437,7 +422,7 @@ enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)+ end_enum_stmt { pin = 1 
 // R459
 enum_def_stmt ::= label? enum_ ',' bind_ '(' fidentifier ')' eol { pin = 4 }
 // R460
-enumerator_def_stmt ::= !(label? end_enum_keys) label? enumeratorkwd_ ('::')? <<list enumerator>> {
+enumerator_def_stmt ::= !(label? end_enum_keys) label? enumerator_ ('::')? <<list enumerator>> {
   pin = 1
   recoverWhile = enum_recover
 }
@@ -478,7 +463,7 @@ private initialization ::= ('=' expr) | ('=>' designator) | ('=>' function_refer
 // R507
 private access_spec ::= (public_ | private_)
 // R508
-language_binding_spec ::= bind_ '(' fidentifier (',' namekwd_ '=' expr)? ')'
+language_binding_spec ::= bind_ '(' fidentifier (',' name_ '=' expr)? ')'
 // R509
 private coarray_spec ::= <<list ':'>> | explicit_coshape_spec
 // R510 is trivial
@@ -658,30 +643,30 @@ expr ::= def_binary_operator_expr
        | primary
 
 private add_expr_group ::= add_expr | unary_add_expr
-def_binary_operator_expr ::= expr defined_binary_op expr
+def_binary_operator_expr ::= expr defined_binary_op expr { pin = 2 }
 defined_binary_op ::= defoperator
-equiv_expr  ::= expr ('.eqv.' | '.neqv.') expr
-or_expr     ::= expr '.or.' expr
-and_expr    ::= expr '.and.' expr
-not_expr    ::= '.not.' expr
-rel_expr    ::= expr rel_op expr
+equiv_expr  ::= expr ('.eqv.' | '.neqv.') expr { pin = 2 }
+or_expr     ::= expr '.or.' expr { pin = 2 }
+and_expr    ::= expr '.and.' expr { pin = 2 }
+not_expr    ::= '.not.' expr { pin = 1 }
+rel_expr    ::= expr rel_op expr { pin = 2 }
 private rel_op ::= '.eq.' | '.ne.' | '.lt.' | '.le.' | '.gt.' | '.ge.'
                  | '=='   | '/='   | '<'    | '<='   | '>'    | '>='
-concat_expr ::= expr '//' expr
-add_expr    ::= expr ('+' | '-') expr
-unary_add_expr ::= ('+' | '-') expr
-mult_expr   ::= expr ('*' | '/') expr
-power_expr  ::= expr '**' expr { rightAssociative=true } { extends=expr }
-def_unary_operator_expr ::= defined_unary_op expr
+concat_expr ::= expr '//' expr { pin = 2 }
+add_expr    ::= expr ('+' | '-') expr { pin = 2 }
+unary_add_expr ::= ('+' | '-') expr { pin= 2 }
+mult_expr   ::= expr ('*' | '/') expr { pin = 2 }
+power_expr  ::= expr '**' expr { rightAssociative=true pin = 2 } { extends=expr }
+def_unary_operator_expr ::= defined_unary_op expr { pin = 1 }
 private defined_unary_op ::= defoperator
 private primary ::= constant | designator | structure_constructor | function_reference | array_constructor | paren /*| type_param_inquiry */
-paren ::= '(' expr ')'
+paren ::= '(' expr ')' { pin = 1 }
 // R455
-structure_constructor ::= derived_type_spec '(' <<list component_spec>> ')'
+structure_constructor ::= derived_type_spec '(' <<list component_spec>> ')' { pin = 2 }
 // R468
 array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 // R601
-designator ::= (fidentifier !('%' | '(' | '[')) | data_ref | substring /*| function_reference /*| array_section  | complex_part_designator */
+designator ::= (fidentifier !('%' | '(' | '[')) | (data_ref !"(") | substring /*| function_reference /*| array_section  | complex_part_designator */
 // R304, R305 modified
 constant ::= floatingpointliteral | doubleprecisionliteral | integerliteral | complex_literal
             | logical_literal | stringliteral | boz_literal
@@ -768,9 +753,9 @@ end_associate_stmt ::= label? ((end_ associate_) | endassociate_) (fidentifier)?
 // R807
 block_construct ::= block_stmt block end_block_stmt { pin = 1 }
 // R808
-block_stmt ::= (fidentifier ':')? blockkwd_ eol { pin = 3 }
+block_stmt ::= (fidentifier ':')? block_ eol { pin = 3 }
 // R809
-end_block_stmt ::= label? ((end_ blockkwd_) | endblock_) (fidentifier)? {pin = 2 }
+end_block_stmt ::= label? ((end_ block_) | endblock_) (fidentifier)? {pin = 2 }
 // R810
 critical_construct ::= critical_stmt block end_critical_stmt { pin = 1 }
 // R811
@@ -833,8 +818,8 @@ select_type_stmt ::= (fidentifier ':')? select_ type_ '(' (fidentifier '=>')? se
 // R848
 type_guard_stmt ::= (typeis_guard | classis_guard | classdefault_guard) fidentifier? { pin = 1 }
 private typeis_guard ::= type_ is '(' type_spec ')' { pin = 1 }
-private classis_guard ::= classkwd_ is '(' derived_type_spec ')' { pin = 2 }
-private classdefault_guard ::= classkwd_ default_ { pin = 2 }
+private classis_guard ::= class_ is '(' derived_type_spec ')' { pin = 2 }
+private classdefault_guard ::= class_ default_ { pin = 2 }
 // R849 is a copy of R841
 // R850
 exit_stmt ::= exit_ (fidentifier)? { pin = 1 }
@@ -928,15 +913,15 @@ format_stmt ::= formatstmt_ { pin = 1 }
 // R1101
 main_program ::= program_stmt? block internal_subprogram_part? end_program_stmt {pin=1}
 // R1102 +
-program_stmt ::= label? programkwd_ fidentifier eol { pin = 2 }
+program_stmt ::= label? program_ fidentifier eol { pin = 2 }
 // R1103 +
-end_program_stmt ::=  label? (endprogram_ fidentifier? | end_ (programkwd_ fidentifier?)?) { pin = 2 }
+end_program_stmt ::=  label? (endprogram_ fidentifier? | end_ (program_ fidentifier?)?) { pin = 2 }
 // R1104
 module ::= module_stmt block module_subprogram_part? end_module_stmt { pin = 1 }
 // R1105
-module_stmt ::= label? modulekwd_ fidentifier eol { pin = 2 }
+module_stmt ::= label? module_ fidentifier eol { pin = 2 }
 // R1106
-end_module_stmt ::= label? (endmodule_ fidentifier? | end_ (modulekwd_ fidentifier?)?) { pin = 2 }
+end_module_stmt ::= label? (endmodule_ fidentifier? | end_ (module_ fidentifier?)?) { pin = 2 }
 // R1107
 module_subprogram_part ::= contains_stmt (eol | module_subprogram)* { pin = 1 }
 // R1108
@@ -955,22 +940,22 @@ private module_nature ::= intrinsic_ | nonintrinsic_
 rename_stmt ::= (fidentifier '=>' fidentifier)
                |(operator_ '(' defoperator ')' '=>' operator_ '(' defoperator ')')
 // R1112
-only_stmt ::= generic_spec | fidentifier | rename_stmt
+only_stmt ::= rename_stmt | generic_spec | fidentifier
 // R1113, R1114, R1115 are trivial
 // R1116
 submodule ::= submodule_stmt block module_subprogram_part? end_submodule_stmt { pin = 1 }
 // R1117
-submodule_stmt ::= label? submodulekwd_ '(' parent_identifier ')' fidentifier eol { pin = 2 }
+submodule_stmt ::= label? submodule_ '(' parent_identifier ')' fidentifier eol { pin = 2 }
 // R1118
 parent_identifier ::= fidentifier (':' fidentifier)?
 // R1119
-end_submodule_stmt ::= label? (endsubmodule_ fidentifier? | end_ (submodulekwd_ fidentifier?)?)  { pin = 2 }
+end_submodule_stmt ::= label? (endsubmodule_ fidentifier? | end_ (submodule_ fidentifier?)?)  { pin = 2 }
 // R1120
 block_data ::= block_data_stmt block end_block_data_stmt { pin = 1 }
 // R1121
-block_data_stmt ::= label? (blockdata_ | (blockkwd_ data_)) fidentifier? eol { pin = 2 }
+block_data_stmt ::= label? (blockdata_ | (block_ data_)) fidentifier? eol { pin = 2 }
 // R1122
-end_block_data_stmt ::= label? ((endblockdata fidentifier?)| (end_ (((blockkwd_ data_) | blockdata_) fidentifier?)?)
+end_block_data_stmt ::= label? ((endblockdata fidentifier?)| (end_ (((block_ data_) | blockdata_) fidentifier?)?)
                       | (endblock_ data_ fidentifier?))  { pin = 2 }
 
 // Clause 12
@@ -992,7 +977,7 @@ interface_body ::= interface_function_body | interface_subroutine_body
 private interface_function_body ::= function_stmt block? end_function_stmt { pin = 1 }
 private interface_subroutine_body ::= subroutine_stmt block? end_subroutine_stmt { pin = 1 }
 // R1206
-procedure_stmt ::= (modulekwd_)? procedure_ ('::')? <<list fidentifier>> { pin = 2 }
+procedure_stmt ::= (module_)? procedure_ ('::')? <<list fidentifier>> { pin = 2 }
 // R1207
 generic_spec ::= fidentifier | (operator_ '(' defoperator ')')
               | assignment_ '(' '=' ')' | defined_io_generic_spec
@@ -1033,7 +1018,7 @@ alt_return_spec ::= '*' label
 // R1225
 prefix ::= prefix_spec+ { pin = 1 }
 // R1226
-prefix_spec ::= declaration_type_spec | elemental | impure_ | modulekwd_ | pure_ | recursive_
+prefix_spec ::= declaration_type_spec | elemental | impure_ | module_ | pure_ | recursive_
 // R1227
 function_subprogram ::= function_stmt block internal_subprogram_part? end_function_stmt { pin = 1 }
 // R1228
@@ -1054,13 +1039,13 @@ end_subroutine_stmt ::= label? ((end_ (subroutine_ fidentifier?)?) | (endsubrout
 // R1237
 separate_module_subprogram ::= mp_subprogram_stmt block internal_subprogram_part? end_mp_subprogram_stmt { pin = 1 }
 // R1238
-mp_subprogram_stmt ::= label? modulekwd_ procedure_ fidentifier eol { pin = 3 }
+mp_subprogram_stmt ::= label? module_ procedure_ fidentifier eol { pin = 3 }
 // R1239
 end_mp_subprogram_stmt ::= label? ((end_ (procedure_ fidentifier?)?) | (endprocedure_ fidentifier?)) { pin = 2}
 // R1240
 entry_stmt ::= entry_ fidentifier ('(' <<list dummy_arg>>? ')' suffix? )? { pin = 1 }
 // R1241
-return_stmt ::= returnkwd_ (expr)? { pin = 1}
+return_stmt ::= return_ (expr)? { pin = 1}
 // R1242
 contains_stmt ::= label? contains_ eol { pin = 2 }
 // R1243

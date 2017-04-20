@@ -112,6 +112,36 @@ FILE
         CONSTANT
           PsiElement(integerliteral)('0')
       PsiElement(eol)('\n')
+      PsiWhiteSpace('     ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('name_check')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          SUBSTRING
+            PARENT_STRING
+              DATA_REF
+                PsiElement(identifier)('line')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  DESIGNATOR
+                    PsiElement(identifier)('i')
+                PsiElement())(')')
+            PsiElement(()('(')
+            SUBSTRING_RANGE
+              CONSTANT
+                PsiElement(integerliteral)('1')
+              PsiElement(:)(':')
+              ADD_EXPR
+                DESIGNATOR
+                  PsiElement(identifier)('pos')
+                PsiElement(-)('-')
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')

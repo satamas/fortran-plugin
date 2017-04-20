@@ -13,6 +13,38 @@ FILE
       PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
+      USE_STMT
+        PsiElement(use)('use')
+        PsiWhiteSpace(' ')
+        PsiElement(identifier)('core_lib')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(only)('only')
+        PsiWhiteSpace(' ')
+        PsiElement(:)(':')
+        PsiWhiteSpace(' ')
+        RENAME_STMT
+          PsiElement(identifier)('mp_set_compression')
+          PsiWhiteSpace(' ')
+          PsiElement(=>)('=>')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('hdf5_set_compression')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      USE_STMT
+        PsiElement(use)('use')
+        PsiWhiteSpace(' ')
+        PsiElement(identifier)('lib')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        RENAME_STMT
+          PsiElement(identifier)('old_name')
+          PsiWhiteSpace(' ')
+          PsiElement(=>)('=>')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('new_name')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
       IMPLICIT_STMT
         PsiElement(implicit)('implicit')
         PsiWhiteSpace(' ')

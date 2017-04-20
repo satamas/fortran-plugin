@@ -18,10 +18,10 @@ public class KeywordParser implements GeneratedParserUtilBase.Parser {
     @Override
     public boolean parse(final PsiBuilder builder, final int level) {
         if (!recursion_guard_(builder, level, "Identifier")) return false;
-        boolean result;
+        boolean result = false;
         PsiBuilder.Marker marker = enter_section_(builder);
-        result = consumeToken(builder, keyword);
-        if (!result && builder.getTokenType() == IDENTIFIER) {
+       // result = consumeToken(builder, keyword);
+        if (builder.getTokenType() == IDENTIFIER) {
             if (builder.getTokenText().equalsIgnoreCase(keyword.toString())
                     || (builder.getTokenText()+"kwd").equalsIgnoreCase(keyword.toString())) {
                 builder.remapCurrentToken(keyword);

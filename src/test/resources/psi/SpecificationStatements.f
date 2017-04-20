@@ -1,4 +1,6 @@
 real function average()
+    use core_lib, only : mp_set_compression => hdf5_set_compression
+    use lib, old_name => new_name
     implicit none
     implicit character (a-z)
     implicit character * (*) (c,s)
