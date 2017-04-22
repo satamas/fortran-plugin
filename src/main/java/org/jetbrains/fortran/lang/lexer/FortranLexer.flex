@@ -16,6 +16,13 @@ import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
 %caseless
 %function advance
 %type IElementType
+%ctorarg boolean fFixedForm
+%{
+boolean fFixedForm_;
+%}
+%init{
+fFixedForm_ = fFixedForm;
+%init}
 %eof{  return;
 %eof}
 

@@ -2025,13 +2025,17 @@ class _FortranLexer implements FlexLexer {
   /** denotes if the user-EOF-code has already been executed */
   private boolean zzEOFDone;
 
+  /* user code: */
+boolean fFixedForm_;
+
 
   /**
    * Creates a new scanner
    *
    * @param   in  the java.io.Reader to read input from.
    */
-  _FortranLexer(java.io.Reader in) {
+  _FortranLexer(java.io.Reader in, boolean fFixedForm) {
+  fFixedForm_ = fFixedForm;
     this.zzReader = in;
   }
 

@@ -33,6 +33,6 @@ public abstract class FortranBaseParsingTestCase extends ParsingTestCase {
     private void doBaseTest(@NotNull String filePath, @NotNull IElementType fileType) throws Exception {
         myFileExt = FileUtilRt.getExtension(PathUtil.getFileName(filePath));
         myFile = createPsiFile(FileUtil.getNameWithoutExtension(PathUtil.getFileName(filePath)), loadFile(filePath));
-        doCheckResult(myFullDataPath, filePath.replaceAll("\\.f", ".txt"), toParseTreeText(myFile, false, false).trim());
+        doCheckResult(myFullDataPath, filePath.replaceAll("\\.(for|f90|f95|f03|f08|f)", ".txt"), toParseTreeText(myFile, false, false).trim());
     }
 }
