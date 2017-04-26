@@ -1,16 +1,22 @@
 package org.jetbrains.fortran.highlighter
 
+import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.TokenType
 import org.jetbrains.fortran.lang.FortranTypes.*
+import org.jetbrains.fortran.lang.lexer.FortranFixedFormLexer
 import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 
-class FortranHighLighter : SyntaxHighlighterBase() {
+class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
+    val fFixedForm_ = fFixedForm
 
-    override fun getHighlightingLexer() = FortranLexer()
+    override fun getHighlightingLexer() : Lexer {
+        if (fFixedForm_) return FortranFixedFormLexer()
+        return FortranLexer()
+    }
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> =
             pack(map(tokenType)?.textAttributesKey)

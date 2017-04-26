@@ -28,7 +28,11 @@
         <lang.parserDefinition language="Fortran" implementationClass="org.jetbrains.fortran.lang.parser.FortranParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran"
                                        implementationClass="org.jetbrains.fortran.highlighter.FortranSyntaxHighlighterFactory"/>
-
+        <!-- fixed form source-->
+        <fileTypeFactory implementation="org.jetbrains.fortran.FortranFixedFormFileTypeFactory"/>
+        <lang.parserDefinition language="Fortran fixed form" implementationClass="org.jetbrains.fortran.lang.parser.FortranFixedFormParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Fortran fixed form"
+                                       implementationClass="org.jetbrains.fortran.highlighter.FortranFixedFormSyntaxHighlighterFactory"/>
         <!-- Color Settings -->
         <colorSettingsPage implementation="org.jetbrains.fortran.highlighter.FortranColorSettingsPage"/>
     </extensions>

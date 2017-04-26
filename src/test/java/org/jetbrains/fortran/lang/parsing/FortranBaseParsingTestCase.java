@@ -7,7 +7,9 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.testFramework.ParsingTestCase;
 import com.intellij.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.fortran.FortranFixedFormLanguage;
 import org.jetbrains.fortran.FortranLanguage;
+import org.jetbrains.fortran.lang.parser.FortranFixedFormParserDefinition;
 import org.jetbrains.fortran.lang.parser.FortranParserDefinition;
 import org.jetbrains.fortran.test.FortranTestDataFixture;
 

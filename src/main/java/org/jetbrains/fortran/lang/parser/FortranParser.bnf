@@ -868,7 +868,7 @@ close_stmt ::= close_ '(' <<list parameters_spec>> ')' {pin = 2}
 // R910
 read_stmt ::= read_ (io_control_read | format_read) {pin = 1}
 private io_control_read ::= '(' <<list parameters_spec>> ')' <<list input_item>>? { pin = 1}
-private format_read ::= format (',' <<list input_item>>)?
+private format_read ::= format (',' <<list input_item>>?)?
 // R911
 write_stmt ::= write_ '(' <<list parameters_spec>> ')' <<list output_item>>? { pin= 2 }
 // R912

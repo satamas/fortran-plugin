@@ -103,4 +103,8 @@ public class FortranParsingTest extends FortranBaseParsingTestCase {
     public void testKeywords() throws Exception {
         doParsingTest(FortranTestDataFixture.navigationMetadata("Keywords.f95"));
     }
+
+    public void testFixedForm() throws Exception {
+        doParsingTest(FortranTestDataFixture.navigationMetadata("FixedForm.f"));
+    }
 }

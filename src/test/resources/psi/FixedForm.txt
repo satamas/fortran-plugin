@@ -1,0 +1,17 @@
+FILE
+  MAIN_PROGRAM
+    PROGRAM_STMT
+      PsiElement(programkwd)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')
+      PsiElement(eol)('\n')
+    PsiComment(comment)('c Line comment')
+    BLOCK
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('       ')
+    END_PROGRAM_STMT
+      PsiElement(end)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(programkwd)('program')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('a')

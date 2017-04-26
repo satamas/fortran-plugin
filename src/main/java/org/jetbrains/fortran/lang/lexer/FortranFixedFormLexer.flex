@@ -10,7 +10,7 @@ import static org.jetbrains.fortran.lang.FortranTypes.*;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
 %%
 
-%class _FortranLexer
+%class _FortranFixedFormLexer
 %implements FlexLexer
 %unicode
 %caseless
@@ -39,6 +39,7 @@ IDENTIFIER_PART=[:digit:]|[:letter:]|_
 IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
 
 LINE_COMMENT="!"[^\r\n]*
+FIXED_COMMENT=("c"|"C")[^\r\n]*
 FORMAT="format"\040*"("[^\r\n]*")"
 WHITE_SPACE_CHAR=[\ \t\f]
 EOL=(\n|\r|\r\n)
@@ -68,16 +69,14 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 
 //REGULAR_STRING_PART=[^\\\'\n]+
 //REGULAR_DQ_STRING_PART=[^\\\"\n]+
-
+%s FIXED_COMMENT
 %%
 
 (("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}*"&")?) { return WHITE_SPACE; }
 ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
 (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
 {LINE_COMMENT} { return LINE_COMMENT; }
-//%{if (fFixedForm_) }
-//^[cC][^\r\n]* {  return LINE_COMMENT; }
-
+^[cC][^\r\n]* { return LINE_COMMENT; }
 {STRING_LITERAL} { return STRINGLITERAL; }
 {INTEGER_LITERAL} { return INTEGERLITERAL; }
 {BINARY_LITERAL} { return BINARYLITERAL; }

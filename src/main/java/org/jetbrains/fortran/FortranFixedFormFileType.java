@@ -7,25 +7,25 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class FortranFileType extends LanguageFileType {
-    public static FortranFileType INSTANCE = new FortranFileType();
+public class FortranFixedFormFileType extends LanguageFileType {
+    public static FortranFixedFormFileType INSTANCE = new FortranFixedFormFileType();
     @NonNls
-    public static final String[] DEFAULT_EXTENSIONS = {"f90", "f95", "f03", "f08"}; // f15 is not ready
+    public static final String[] DEFAULT_EXTENSIONS = {"f", "for"};
 
-    protected FortranFileType() {
-        super(FortranLanguage.INSTANCE);
+    protected FortranFixedFormFileType() {
+        super(FortranFixedFormLanguage.INSTANCE);
     }
 
     @NotNull
     @Override
     public String getName() {
-        return "Fortran";
+        return "Fortran fixed form";
     }
 
     @NotNull
     @Override
     public String getDescription() {
-        return "Fortran language file";
+        return "Fortran language file with fixed source form";
     }
 
     @NonNls
