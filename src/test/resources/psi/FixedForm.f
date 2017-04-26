@@ -1,3 +1,8 @@
-       program a
+      program a
 c Line comment
-       end program a
+      x = 1
+     t+1
+123   y = 2
+  ! comment
+     **2
+      end program a

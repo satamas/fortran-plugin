@@ -81,11 +81,15 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 }
 
 <FREEFORM> {
-    (("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}*"&")?) { return WHITE_SPACE; }
+    (("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}?{LINE_COMMENT}{EOL})*({WHITE_SPACE_CHAR}*"&")?) { return WHITE_SPACE; }
 }
 
 <FIXEDFORM> {
-    ^[cC][^\r\n]* {  return LINE_COMMENT; }
+    ^[cC*][^\r\n]* {  return LINE_COMMENT; }
+    {WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}{EOL})|([cC*][^\r\n]*{EOL}))*(\040{5}[^0\040])  { return WHITE_SPACE; }
+    ^{WHITE_SPACE_CHAR}*{LINE_COMMENT} { return LINE_COMMENT; }
+    ^[^0-9cC*!\040][^0-9!\040]{4}. { return BAD_CHARACTER; }
+    ^[0-9\040][0-9\040]{4}[^\040\n\r] { return BAD_CHARACTER; }
 }
 
 <FREEFORM, FIXEDFORM> {

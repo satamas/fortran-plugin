@@ -8,7 +8,39 @@ FILE
     PsiComment(comment)('c Line comment')
     BLOCK
       PsiElement(eol)('\n')
-    PsiWhiteSpace('       ')
+      PsiWhiteSpace('      ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('x')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        ADD_EXPR
+          CONSTANT
+            PsiElement(integerliteral)('1')
+          PsiWhiteSpace('\n     t')
+          PsiElement(+)('+')
+          CONSTANT
+            PsiElement(integerliteral)('1')
+      PsiElement(eol)('\n')
+      LABEL
+        PsiElement(integerliteral)('123')
+      PsiWhiteSpace('   ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('y')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        MULT_EXPR
+          CONSTANT
+            PsiElement(integerliteral)('2')
+          PsiWhiteSpace('\n  ! comment\n     *')
+          PsiElement(*)('*')
+          CONSTANT
+            PsiElement(integerliteral)('2')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('      ')
     END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')

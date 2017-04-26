@@ -61,6 +61,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
         int labelValue = new LabelParser().parseAndGetLabel(builder, level + 1);
         result = result && (labelValue != -1);
         pinned = result; // pin = 3
+        consumeToken(builder, COMMA);
         result = result && report_error_(builder, loop_control(builder, level + 1));
         result = pinned && consumeToken(builder, EOL) && result;
         exit_section_(builder, level, marker_, result, pinned, null);
