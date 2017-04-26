@@ -68,268 +68,237 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 
 //REGULAR_STRING_PART=[^\\\'\n]+
 //REGULAR_DQ_STRING_PART=[^\\\"\n]+
-
+%state FIXEDFORM FREEFORM
 %%
 
-(("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}*"&")?) { return WHITE_SPACE; }
-({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
-(({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
-{LINE_COMMENT} { return LINE_COMMENT; }
-//%{if (fFixedForm_) }
-//^[cC][^\r\n]* {  return LINE_COMMENT; }
+<YYINITIAL> {
+. { yypushback(1);
+    if (fFixedForm_)
+        yybegin(FIXEDFORM);
+    else
+        yybegin(FREEFORM);
+  }
+}
 
-{STRING_LITERAL} { return STRINGLITERAL; }
-{INTEGER_LITERAL} { return INTEGERLITERAL; }
-{BINARY_LITERAL} { return BINARYLITERAL; }
-{OCTAL_LITERAL} { return OCTALLITERAL; }
-{HEX_LITERAL} { return HEXLITERAL; }
-{FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
-{DIGIT}\./[^A-Za-z0-9_] { return FLOATINGPOINTLITERAL; }
-{DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
-{FORMAT} { return FORMATSTMT; }
+<FREEFORM> {
+    (("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}*"&")?) { return WHITE_SPACE; }
+}
 
-".true."(_{KIND_PARAM})? { return TRUEKWD; }
-".false."(_{KIND_PARAM})? { return FALSEKWD; }
+<FIXEDFORM> {
+    ^[cC][^\r\n]* {  return LINE_COMMENT; }
+}
 
+<FREEFORM, FIXEDFORM> {
+    ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+    (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
+    {LINE_COMMENT} { return LINE_COMMENT; }
 
+    {STRING_LITERAL} { return STRINGLITERAL; }
+    {INTEGER_LITERAL} { return INTEGERLITERAL; }
+    {BINARY_LITERAL} { return BINARYLITERAL; }
+    {OCTAL_LITERAL} { return OCTALLITERAL; }
+    {HEX_LITERAL} { return HEXLITERAL; }
+    {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
+    {DIGIT}\./[^A-Za-z0-9_] { return FLOATINGPOINTLITERAL; }
+    {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
+    {FORMAT} { return FORMATSTMT; }
 
-"=" { return EQ; }
-"==" { return EQEQ; }
-"/=" { return NEQ; }
-":" { return COLON; }
-"::" { return COLONCOLON; }
-"+" { return PLUS; }
-"-" { return MINUS; }
-"*" { return MUL; }
-"**" { return POWER; }
-"/" { return DIV; }
-"//" { return DIVDIV; }
-"(" { return LPAR; }
-")" { return RPAR; }
-"[" { return LBRACKET; }
-"]" { return RBRACKET; }
-"(/" { return ARRAYLBR; }
-"/)" { return ARRAYRBR; }
-"," { return COMMA; }
-"." { return DOT; }
-"$" { return DOLLAR; }
-"%" { return PERC; }
-"&" { return AMP; }
-"<" { return LT; }
-"<=" { return LE; }
-">" { return GT; }
-">=" { return GE; }
-"=>" { return POINTER_ASSMNT; }
-"?" { return QUEST; }
+    ".true."(_{KIND_PARAM})? { return TRUEKWD; }
+    ".false."(_{KIND_PARAM})? { return FALSEKWD; }
 
-".eqv." { return LOGICAL_EQ; }
-".neqv." { return LOGICAL_NEQ; }
-".and." { return AND; }
-".or." { return OR; }
-".not." { return NOT; }
-".eq." { return EQEQ; }
-".ne." { return NEQ; }
-".lt." { return LT; }
-".le." { return LE; }
-".gt." { return GT; }
-".ge." { return GE; }
+    "=" { return EQ; }
+    "==" { return EQEQ; }
+    "/=" { return NEQ; }
+    ":" { return COLON; }
+    "::" { return COLONCOLON; }
+    "+" { return PLUS; }
+    "-" { return MINUS; }
+    "*" { return MUL; }
+    "**" { return POWER; }
+    "/" { return DIV; }
+    "//" { return DIVDIV; }
+    "(" { return LPAR; }
+    ")" { return RPAR; }
+    "[" { return LBRACKET; }
+    "]" { return RBRACKET; }
+    "(/" { return ARRAYLBR; }
+    "/)" { return ARRAYRBR; }
+    "," { return COMMA; }
+    "." { return DOT; }
+    "$" { return DOLLAR; }
+    "%" { return PERC; }
+    "&" { return AMP; }
+    "<" { return LT; }
+    "<=" { return LE; }
+    ">" { return GT; }
+    ">=" { return GE; }
+    "=>" { return POINTER_ASSMNT; }
+    "?" { return QUEST; }
 
-"abstract" { return ABSTRACT; }
-"all" { return ALL; }
-"allocatable" { return ALLOCATABLE; }
-"allocate" { return ALLOCATE; }
-"assign" { return ASSIGN; }
-"assignment" { return ASSIGNMENT; }
-"associate" { return ASSOCIATE; }
-"asynchronous" { return ASYNCHRONOUS; }
-"backspace" { return BACKSPACE; }
-"bind" { return BIND; }
-"block" { return BLOCKKWD; }
-"blockdata" { return BLOCKDATA; }
-"byte" { return BYTE; } // nonstandard data type
-"call" { return CALL; }
-"case" { return CASE; }
-"character" { return CHARACTER; }
-"class" { return CLASSKWD; }
-"close" { return CLOSE; }
-"codimension" { return CODIMENSION; }
-"common" { return COMMON; }
-"complex" { return COMPLEX; }
-"concurrent" { return CONCURRENT; }
-"contains" { return CONTAINS; }
-"contiguous" { return CONTIGUOUS; }
-"continue" { return CONTINUE; }
-"critical" { return CRITICAL; }
-"cycle" { return CYCLE; }
-"data" { return DATA; }
-"deallocate" { return DEALLOCATE; }
-"default" { return DEFAULT; }
-"deferred" { return DEFERRED; }
-"dimension" { return DIMENSION; }
-"do" { return DO; }
-"double" { return DOUBLE; }
-"doubleprecision" { return DOUBLEPRECISION; }
-"precision" { return PRECISION; }
-"elemental" { return ELEMENTAL; }
-"else" { return ELSE; }
-"elseif" { return ELSEIF; }
-"elsewhere" { return ELSEWHERE; }
-"entry" { return ENTRY; }
-"enum" { return ENUM; }
-"enumerator" { return ENUMERATORKWD; }
-"error" { return ERROR; }
-"equivalence" { return EQUIVALENCE; }
-"exit" { return EXIT; }
-"extends" { return EXTENDS; }
-"external" { return EXTERNALKWD; }
-"final" { return FINAL; }
-"flush" { return FLUSH; }
-"function" { return FUNCTION; }
-"forall" { return FORALL; }
-"formatted" { return FORMATTED; }
-"generic" { return GENERIC; }
-"go" { return GO; }
-"goto" { return GOTO; }
-"if" { return IF; }
-"images" { return IMAGES; }
-"implicit" { return IMPLICIT; }
-"import" { return IMPORT; }
-"impure" { return IMPURE; }
-"in" { return IN; }
-"include" { return INCLUDE; }
-"inout" { return INOUT; }
-"integer" { return INTEGER; }
-"intent" { return INTENT; }
-"interface" { return INTERFACE; }
-"intrinsic" { return INTRINSIC; }
-"inquire" { return INQUIRE; }
-"iolength" { return IOLENGTH; }
-"kind" { return KIND; }
-"len" { return LEN; }
-"lock" { return LOCK; }
-"logical" { return LOGICAL; }
-"module" { return MODULEKWD; }
-"memory" { return MEMORY; }
-"name" { return NAMEKWD; }
-"namelist" { return NAMELIST; }
-"none" { return NONE; }
-"non_intrinsic" { return NONINTRINSIC; }
-"non_overridable" { return NONOVERRIDABLE; }
-"nopass" { return NOPASS; }
-"nullify" { return NULLIFY; }
-"only" { return ONLY; }
-"open" { return OPEN; }
-"operator" { return OPERATOR; }
-"optional" { return OPTIONAL; }
-"out" { return OUT; }
-"parameter" { return PARAMETER; }
-"pass" { return PASS; }
-"pause" { return PAUSE; }
-"pointer" { return POINTER; }
-"print" { return PRINT; }
-"private" { return PRIVATEKWD; }
-"procedure" { return PROCEDURE; }
-"program" { return PROGRAMKWD; }
-"protected" { return PROTECTED; }
-"public" { return PUBLICKWD; }
-"pure" { return PURE; }
-"read" { return READ; }
-"real" { return REAL; }
-"recursive" { return RECURSIVE; }
-"result" { return RESULT; }
-"return" { return RETURNKWD; }
-"save" { return SAVE; }
-"select" { return SELECT; }
-"sequence" { return SEQUENCE; }
-"stop" { return STOP; }
-"sync" { return SYNC; }
-"syncall" { return SYNCALL; }
-"syncimages" { return SYNCIMAGES; }
-"syncmemory" { return SYNCMEMORY; }
-"subroutine" { return SUBROUTINE; }
-"submodule" { return SUBMODULEKWD; }
-"target" { return TARGET; }
-"then" { return THEN; }
-"to" { return TO; }
-"type" { return TYPE; }
-"use" { return USE; }
-"unformatted" {return UNFORMATTED; }
-"unlock" { return UNLOCK; }
-"value" { return VALUE; }
-"volatile" { return VOLATILE; }
-"wait" { return WAIT; }
-"where" { return WHERE; }
-"while" { return WHILE; }
-"rewind" { return REWIND; }
-"write" { return WRITE; }
+    ".eqv." { return LOGICAL_EQ; }
+    ".neqv." { return LOGICAL_NEQ; }
+    ".and." { return AND; }
+    ".or." { return OR; }
+    ".not." { return NOT; }
+    ".eq." { return EQEQ; }
+    ".ne." { return NEQ; }
+    ".lt." { return LT; }
+    ".le." { return LE; }
+    ".gt." { return GT; }
+    ".ge." { return GE; }
 
-"end" { return END; }
-"endassociate" { return ENDASSOCIATE; }
-"endblock" { return ENDBLOCK; }
-"endcritical" { return ENDCRITICAL; }
-"endenum" { return ENDENUM; }
-"endfile" { return ENDFILE; }
-"endif" { return ENDIF; }
-"endprocedure" { return ENDPROCEDURE; }
-"endprogram" { return ENDPROGRAM; }
-"endfunction" { return ENDFUNCTION; }
-"endforall" { return ENDFORALL; }
-"endsubroutine" { return ENDSUBROUTINE; }
-"endsubmodule" { return ENDSUBMODULE; }
-"endtype" { return ENDTYPE; }
-"endwhere" { return ENDWHERE; }
-"endselect" { return ENDSELECT; }
-"enddo" { return ENDDO; }
-"endmodule" { return ENDMODULE; }
-"endblockdata"    { return ENDBLOCKDATA; }
-"endinterface"    { return ENDINTERFACE; }
+    "abstract" { return ABSTRACT; }
+    "all" { return ALL; }
+    "allocatable" { return ALLOCATABLE; }
+    "allocate" { return ALLOCATE; }
+    "assign" { return ASSIGN; }
+    "assignment" { return ASSIGNMENT; }
+    "associate" { return ASSOCIATE; }
+    "asynchronous" { return ASYNCHRONOUS; }
+    "backspace" { return BACKSPACE; }
+    "bind" { return BIND; }
+    "block" { return BLOCKKWD; }
+    "blockdata" { return BLOCKDATA; }
+    "byte" { return BYTE; } // nonstandard data type
+    "call" { return CALL; }
+    "case" { return CASE; }
+    "character" { return CHARACTER; }
+    "class" { return CLASSKWD; }
+    "close" { return CLOSE; }
+    "codimension" { return CODIMENSION; }
+    "common" { return COMMON; }
+    "complex" { return COMPLEX; }
+    "concurrent" { return CONCURRENT; }
+    "contains" { return CONTAINS; }
+    "contiguous" { return CONTIGUOUS; }
+    "continue" { return CONTINUE; }
+    "critical" { return CRITICAL; }
+    "cycle" { return CYCLE; }
+    "data" { return DATA; }
+    "deallocate" { return DEALLOCATE; }
+    "default" { return DEFAULT; }
+    "deferred" { return DEFERRED; }
+    "dimension" { return DIMENSION; }
+    "do" { return DO; }
+    "double" { return DOUBLE; }
+    "doubleprecision" { return DOUBLEPRECISION; }
+    "precision" { return PRECISION; }
+    "elemental" { return ELEMENTAL; }
+    "else" { return ELSE; }
+    "elseif" { return ELSEIF; }
+    "elsewhere" { return ELSEWHERE; }
+    "entry" { return ENTRY; }
+    "enum" { return ENUM; }
+    "enumerator" { return ENUMERATORKWD; }
+    "error" { return ERROR; }
+    "equivalence" { return EQUIVALENCE; }
+    "exit" { return EXIT; }
+    "extends" { return EXTENDS; }
+    "external" { return EXTERNALKWD; }
+    "final" { return FINAL; }
+    "flush" { return FLUSH; }
+    "function" { return FUNCTION; }
+    "forall" { return FORALL; }
+    "formatted" { return FORMATTED; }
+    "generic" { return GENERIC; }
+    "go" { return GO; }
+    "goto" { return GOTO; }
+    "if" { return IF; }
+    "images" { return IMAGES; }
+    "implicit" { return IMPLICIT; }
+    "import" { return IMPORT; }
+    "impure" { return IMPURE; }
+    "in" { return IN; }
+    "include" { return INCLUDE; }
+    "inout" { return INOUT; }
+    "integer" { return INTEGER; }
+    "intent" { return INTENT; }
+    "interface" { return INTERFACE; }
+    "intrinsic" { return INTRINSIC; }
+    "inquire" { return INQUIRE; }
+    "iolength" { return IOLENGTH; }
+    "kind" { return KIND; }
+    "len" { return LEN; }
+    "lock" { return LOCK; }
+    "logical" { return LOGICAL; }
+    "module" { return MODULEKWD; }
+    "memory" { return MEMORY; }
+    "name" { return NAMEKWD; }
+    "namelist" { return NAMELIST; }
+    "none" { return NONE; }
+    "non_intrinsic" { return NONINTRINSIC; }
+    "non_overridable" { return NONOVERRIDABLE; }
+    "nopass" { return NOPASS; }
+    "nullify" { return NULLIFY; }
+    "only" { return ONLY; }
+    "open" { return OPEN; }
+    "operator" { return OPERATOR; }
+    "optional" { return OPTIONAL; }
+    "out" { return OUT; }
+    "parameter" { return PARAMETER; }
+    "pass" { return PASS; }
+    "pause" { return PAUSE; }
+    "pointer" { return POINTER; }
+    "print" { return PRINT; }
+    "private" { return PRIVATEKWD; }
+    "procedure" { return PROCEDURE; }
+    "program" { return PROGRAMKWD; }
+    "protected" { return PROTECTED; }
+    "public" { return PUBLICKWD; }
+    "pure" { return PURE; }
+    "read" { return READ; }
+    "real" { return REAL; }
+    "recursive" { return RECURSIVE; }
+    "result" { return RESULT; }
+    "return" { return RETURNKWD; }
+    "save" { return SAVE; }
+    "select" { return SELECT; }
+    "sequence" { return SEQUENCE; }
+    "stop" { return STOP; }
+    "sync" { return SYNC; }
+    "syncall" { return SYNCALL; }
+    "syncimages" { return SYNCIMAGES; }
+    "syncmemory" { return SYNCMEMORY; }
+    "subroutine" { return SUBROUTINE; }
+    "submodule" { return SUBMODULEKWD; }
+    "target" { return TARGET; }
+    "then" { return THEN; }
+    "to" { return TO; }
+    "type" { return TYPE; }
+    "use" { return USE; }
+    "unformatted" {return UNFORMATTED; }
+    "unlock" { return UNLOCK; }
+    "value" { return VALUE; }
+    "volatile" { return VOLATILE; }
+    "wait" { return WAIT; }
+    "where" { return WHERE; }
+    "while" { return WHILE; }
+    "rewind" { return REWIND; }
+    "write" { return WRITE; }
 
-{DEFOPERATOR} { return DEFOPERATOR; }
-{IDENTIFIER} { return IDENTIFIER; }
+    "end" { return END; }
+    "endassociate" { return ENDASSOCIATE; }
+    "endblock" { return ENDBLOCK; }
+    "endcritical" { return ENDCRITICAL; }
+    "endenum" { return ENDENUM; }
+    "endfile" { return ENDFILE; }
+    "endif" { return ENDIF; }
+    "endprocedure" { return ENDPROCEDURE; }
+    "endprogram" { return ENDPROGRAM; }
+    "endfunction" { return ENDFUNCTION; }
+    "endforall" { return ENDFORALL; }
+    "endsubroutine" { return ENDSUBROUTINE; }
+    "endsubmodule" { return ENDSUBMODULE; }
+    "endtype" { return ENDTYPE; }
+    "endwhere" { return ENDWHERE; }
+    "endselect" { return ENDSELECT; }
+    "enddo" { return ENDDO; }
+    "endmodule" { return ENDMODULE; }
+    "endblockdata"    { return ENDBLOCKDATA; }
+    "endinterface"    { return ENDINTERFACE; }
 
+    {DEFOPERATOR} { return DEFOPERATOR; }
+    {IDENTIFIER} { return IDENTIFIER; }
 
-. { return BAD_CHARACTER; }
-
-// These keywords are used for specification parameters names
-// We probably don't need them in lexer
-/*
-"access" { return ACCESS; }
-"action" { return ACTION; }
-"advance" { return ADVANCE; }
-"acquired" { return ACQIRED; }
-"blank" { return BLANK; }
-"decimal" { return DECIMAL; }
-"delim" { return DELIM; }
-"direct" { return DIRECT; }
-"encoding" { return ENCODING; }
-"eor" { return EOR; }
-"err" { return ERR; }
-"errmsg" { return ERRMSG; }
-"exist" { return EXIST; }
-"file" { return FILE; }
-"fmt" { return FMT; }
-"form" { return FORM; }
-"id" { return ID; }
-"iomsg" { return IOMSG; }
-"iostat" { return IOSTAT; }
-"named" { return NAMED; }
-"nextrec" { return NEXTREC; }
-"newunit" { return NEWUNIT; }
-"nml" { return NML; }
-"number" { return NUMBER; }
-"opened" { return OPENED; }
-"pad" { return PAD; }
-"pending" { return PENDING; }
-"pos" { return POS; }
-"position" { return POSITION; }
-"readwrite" { return READWRITE; }
-"rec" { return REC; }
-"recl" { return RECL; }
-"round" { return ROUND; }
-"sequential" { return SEQUENTIAL; }
-"sign" { return SIGN; }
-"size" { return SIZE; }
-"stat" { return STAT; }
-"status" { return STATUS; }
-"stream" { return STREAM; }
-"unit" { return UNIT; }*/
+    . { return BAD_CHARACTER; }
+}

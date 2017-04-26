@@ -7,7 +7,7 @@ import java.io.Reader;
 public class FortranLexer extends FlexAdapter{
     public final static int INITIAL = _FortranLexer.YYINITIAL;
 
-    public FortranLexer() {
-        super(new _FortranLexer((Reader) null, false));
+    public FortranLexer(boolean fFixedForm) {
+        super(new _FortranLexer((Reader) null, fFixedForm));
     }
 }

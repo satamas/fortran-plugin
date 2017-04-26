@@ -13,7 +13,7 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.fortran.FortranFixedFormLanguage;
 import org.jetbrains.fortran.lang.FortranTypes;
-import org.jetbrains.fortran.lang.lexer.FortranFixedFormLexer;
+import org.jetbrains.fortran.lang.lexer.FortranLexer;
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile;
 
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.*;
@@ -24,7 +24,7 @@ public class FortranFixedFormParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
-        return new FortranFixedFormLexer();
+        return new FortranLexer(true);
     }
 
     @Override

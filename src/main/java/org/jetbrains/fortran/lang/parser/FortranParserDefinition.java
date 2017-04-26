@@ -23,7 +23,7 @@ public class FortranParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
-        return new FortranLexer();
+        return new FortranLexer(false);
     }
 
     @Override

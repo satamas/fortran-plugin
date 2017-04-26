@@ -67,7 +67,6 @@ test {
 }
 
 lexerTask(project, 'FortranLexer', 'org/jetbrains/fortran/lang/lexer')
-lexerTask(project, 'FortranFixedFormLexer', 'org/jetbrains/fortran/lang/lexer')
 parserTask(project, 'FortranParser', 'org/jetbrains/fortran/lang/parser')
 
 static def codegenTask(project, task) {
