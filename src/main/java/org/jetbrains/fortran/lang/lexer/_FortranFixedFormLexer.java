@@ -1899,7 +1899,6 @@ boolean fFixedForm_;
    */
   _FortranFixedFormLexer(java.io.Reader in, boolean fFixedForm) {
   fFixedForm_ = fFixedForm;
-System.out.println("Fixed format");
     this.zzReader = in;
   }
 
