@@ -5,4 +5,6 @@ c Line comment
 123   y = 2
   ! comment
      **2
+      str = "AAA
+     aAAA"
       end program a

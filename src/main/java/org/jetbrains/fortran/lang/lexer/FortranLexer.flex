@@ -39,7 +39,6 @@ IDENTIFIER_PART=[:digit:]|[:letter:]|_
 IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
 
 LINE_COMMENT="!"[^\r\n]*
-FORMAT="format"\040*"("[^\r\n]*")"
 WHITE_SPACE_CHAR=[\ \t\f]
 EOL=(\n|\r|\r\n)
 
@@ -64,10 +63,16 @@ DOUBLE_PRECISION_LITERAL={DIGIT}(\.)?{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PAR
 
 EOL_ESC=\\[\ \t]*\n
 ESCAPE_SEQUENCE=\\[^\n]|{EOL_ESC}
-STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIND_PARAM}_)?('([^\\'\n]|{ESCAPE_SEQUENCE})*('|\\)?)
 
-//REGULAR_STRING_PART=[^\\\'\n]+
-//REGULAR_DQ_STRING_PART=[^\\\"\n]+
+FREE_LINE_CONTINUE=(("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}?{LINE_COMMENT}{EOL})*({WHITE_SPACE_CHAR}*"&")?)
+FIXED_LINE_CONTINUE={WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}{EOL})|([cC*][^\r\n]*{EOL}))*(\040{5}[^0\040])
+
+FREE_STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE}|{FREE_LINE_CONTINUE})*(\"|\\)?)| ({KIND_PARAM}_)?('([^\\'\n]|{ESCAPE_SEQUENCE}|{FREE_LINE_CONTINUE})*('|\\)?)
+FIXED_STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE}|{FIXED_LINE_CONTINUE})*(\"|\\)?)| ({KIND_PARAM}_)?('([^\\'\n]|{ESCAPE_SEQUENCE}|{FIXED_LINE_CONTINUE})*('|\\)?)
+
+FREE_FORMAT="format"\040*{FREE_LINE_CONTINUE}?"("([^\r\n]|{FREE_LINE_CONTINUE})*")"
+FIXED_FORMAT="format"\040*{FIXED_LINE_CONTINUE}"("([^\r\n]|{FIXED_LINE_CONTINUE})*")"
+
 %state FIXEDFORM FREEFORM
 %%
 
@@ -81,12 +86,16 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
 }
 
 <FREEFORM> {
-    (("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}?{LINE_COMMENT}{EOL})*({WHITE_SPACE_CHAR}*"&")?) { return WHITE_SPACE; }
+     {FREE_LINE_CONTINUE} { return WHITE_SPACE; }
+     {FREE_STRING_LITERAL} { return STRINGLITERAL; }
+     {FREE_FORMAT} { return FORMATSTMT; }
 }
 
 <FIXEDFORM> {
     ^[cC*][^\r\n]* {  return LINE_COMMENT; }
-    {WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}{EOL})|([cC*][^\r\n]*{EOL}))*(\040{5}[^0\040])  { return WHITE_SPACE; }
+    {FIXED_LINE_CONTINUE} { return WHITE_SPACE; }
+    {FIXED_STRING_LITERAL} { return STRINGLITERAL; }
+    {FIXED_FORMAT} { return FORMATSTMT; }
     ^{WHITE_SPACE_CHAR}*{LINE_COMMENT} { return LINE_COMMENT; }
     ^[^0-9cC*!\040][^0-9!\040]{4}. { return BAD_CHARACTER; }
     ^[0-9\040][0-9\040]{4}[^\040\n\r] { return BAD_CHARACTER; }
@@ -97,7 +106,6 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
     (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
     {LINE_COMMENT} { return LINE_COMMENT; }
 
-    {STRING_LITERAL} { return STRINGLITERAL; }
     {INTEGER_LITERAL} { return INTEGERLITERAL; }
     {BINARY_LITERAL} { return BINARYLITERAL; }
     {OCTAL_LITERAL} { return OCTALLITERAL; }
@@ -105,7 +113,6 @@ STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE})*(\"|\\)?)| ({KIN
     {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
     {DIGIT}\./[^A-Za-z0-9_] { return FLOATINGPOINTLITERAL; }
     {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
-    {FORMAT} { return FORMATSTMT; }
 
     ".true."(_{KIND_PARAM})? { return TRUEKWD; }
     ".false."(_{KIND_PARAM})? { return FALSEKWD; }

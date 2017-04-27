@@ -31,7 +31,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
         return result || pinned;
     }
 
-    public static boolean parseDoStmtWithTheSameLabel(PsiBuilder builder, int level, int testLabel) {
+    private static boolean parseDoStmtWithTheSameLabel(PsiBuilder builder, int level, int testLabel) {
         if (!recursion_guard_(builder, level, "label_do_stmt")) return false;
         if (!nextTokenIs(builder, "<label do stmt>", DO, IDENTIFIER)) return false;
         boolean result, pinned;
@@ -50,7 +50,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
 //
 //  do_stmt
 //
-    public static int parseLabelDoStmt(PsiBuilder builder, int level) {
+    private static int parseLabelDoStmt(PsiBuilder builder, int level) {
         if (!recursion_guard_(builder, level, "label_do_stmt")) return -1;
         if (!nextTokenIs(builder, "<label do stmt>", DO, IDENTIFIER)) return -1;
         boolean result, pinned;
@@ -81,7 +81,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
 //  block
 //
 
-    public static boolean parseLabeledDoBlock (PsiBuilder builder, int level, int stopLabel) {
+    private static boolean parseLabeledDoBlock (PsiBuilder builder, int level, int stopLabel) {
         if (!recursion_guard_(builder, level, "block")) return false;
         PsiBuilder.Marker marker_ = enter_section_(builder, level, _COLLAPSE_, BLOCK, "<block>");
         int pos_ = current_position_(builder);
@@ -109,7 +109,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
     }
 
 
-    public static boolean doTermActionStmt(PsiBuilder builder, int level) {
+    private static boolean doTermActionStmt(PsiBuilder builder, int level) {
         if (!recursion_guard_(builder, level, "do_term_action_stmt")) return false;
         boolean result, pinned;
         PsiBuilder.Marker marker = enter_section_(builder, level, _NONE_, DO_TERM_ACTION_STMT, "<do term action stmt>");

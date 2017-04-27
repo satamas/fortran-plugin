@@ -40,6 +40,16 @@ FILE
           CONSTANT
             PsiElement(integerliteral)('2')
       PsiElement(eol)('\n')
+      PsiWhiteSpace('      ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('str')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          PsiElement(stringliteral)('"AAA\n     aAAA"')
+      PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     END_PROGRAM_STMT
       PsiElement(end)('end')
