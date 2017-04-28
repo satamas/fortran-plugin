@@ -115,7 +115,25 @@ FILE
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(stringliteral)('1_"Deidranna rules!"')
+          MULTILINE_STRING_LITERAL
+            PsiElement(stringstart)('1_"Deidranna ')
+            PsiWhiteSpace('&\n  &')
+            PsiElement(stringend)('rules!"')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('  ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('str')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        CONSTANT
+          MULTILINE_STRING_LITERAL
+            PsiElement(stringstart)(''Very ''&\\ bad & ')
+            PsiWhiteSpace('&\n  &')
+            PsiElement(stringmiddle)(' ')
+            PsiWhiteSpace('&\n  &')
+            PsiElement(stringend)(' string\'')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT

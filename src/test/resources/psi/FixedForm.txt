@@ -48,7 +48,61 @@ FILE
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(stringliteral)('"AAA\n     aAAA"')
+          MULTILINE_STRING_LITERAL
+            PsiElement(stringstart)('"AAA\&')
+            PsiWhiteSpace('\n     a')
+            PsiElement(stringend)('AAA"')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('      ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          DATA_REF
+            PsiElement(identifier)('END')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              CONSTANT
+                PsiElement(integerliteral)('1')
+            PsiElement())(')')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        ADD_EXPR
+          DESIGNATOR
+            DATA_REF
+              PsiElement(identifier)('STARTA')
+              PsiElement(()('(')
+              SECTION_SUBSCRIPT
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+              PsiElement())(')')
+          PsiWhiteSpace(' ')
+          PsiElement(+)('+')
+          PsiWhiteSpace(' ')
+          MULT_EXPR
+            PAREN
+              PsiElement(()('(')
+              ADD_EXPR
+                DESIGNATOR
+                  DATA_REF
+                    PsiElement(identifier)('NPIXA')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      CONSTANT
+                        PsiElement(integerliteral)('1')
+                    PsiElement())(')')
+                PsiElement(-)('-')
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+              PsiElement())(')')
+            PsiElement(*)('*')
+            DESIGNATOR
+              DATA_REF
+                PsiElement(identifier)('STEPA')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('1')
+                PsiElement())(')')
       PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     END_PROGRAM_STMT

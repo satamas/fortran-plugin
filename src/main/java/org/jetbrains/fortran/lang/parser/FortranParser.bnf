@@ -38,8 +38,9 @@
     DOT       = '.'
     DOLLAR    = '$'
     PERC      = '%'
-    AMP       = '&'
+  //  AMP       = '&'
   //  SEMICOLON = ';'
+
     LT        = 'regexp:<|.lt.'
     LE        = 'regexp:<=|.le.'
     GT        = 'regexp:>|.gt.'
@@ -121,6 +122,7 @@ private endfile_       ::= endfile      | <<parseKeyword 'ENDFILE'>>
 private endforall_     ::= endforall    | <<parseKeyword 'ENDFORALL'>>
 private endfunction_   ::= endfunction  | <<parseKeyword 'ENDFUNCTION'>>
 private endif_         ::= endif        | <<parseKeyword 'ENDIF'>>
+private endinterface_  ::= endinterface | <<parseKeyword 'ENDINTERFACE'>>
 private endmodule_     ::= endmodule    | <<parseKeyword 'ENDMODULE'>>
 private endprocedure_  ::= endprocedure | <<parseKeyword 'ENDPROCEDURE'>>
 private endprogram_    ::= endprogram   | <<parseKeyword 'ENDPROGRAM'>>
@@ -217,7 +219,6 @@ private where_         ::= where        | <<parseKeyword 'WHERE'>>
 private while_         ::= while        | <<parseKeyword 'WHILE'>>
 private write_         ::= write        | <<parseKeyword 'WRITE'>>
 
-
 // Clause 0
 // System parts needed for this implementation
 // format is *, label or expression, matches all possibilities
@@ -232,6 +233,8 @@ private meta list ::= <<param>> ( ',' <<param>> )*
 // R102 and R103 are trivial
 external fidentifier ::= parseIdentifier
 
+private string_literal ::= stringliteral | multiline_string_literal
+multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
 // Clause 2
 // R201
 private program ::= (eol | program_unit)*
@@ -241,8 +244,8 @@ private program_unit ::= !<<eof>> (external_subprogram | module | submodule | bl
   recoverWhile = program_unit_recover
 }
 private program_unit_recover ::= !(eol | end_unit_keys)
-private end_unit_keys ::= end_ | endprogram_ | endmodule_
-                        | endfunction_ | endsubroutine_ | endsubmodule_
+private end_unit_keys ::= !assignment_stmt (end_ | endprogram_ | endmodule_
+                        | endfunction_ | endsubroutine_ | endsubmodule_)
 // R203
 private external_subprogram ::= function_subprogram | subroutine_subprogram
 // R204 - 206 are included into execution_part_construct to be in block
@@ -260,8 +263,8 @@ private execution_part_construct ::= !(label? end_block_keys) ( executable_const
   recoverWhile=block_recover
 }
 private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
-private end_block_keys ::= end_ | endblock_ | endcritical_ | enddo_ | endfunction_ | endif_ | endmodule_ | endprocedure_
-                         | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_
+private end_block_keys ::= !assignment_stmt (end_ | endblock_ | endcritical_ | enddo_ | endfunction_ | endif_ | endmodule_ | endprocedure_
+                         | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_)
 // R210
 internal_subprogram_part ::= contains_stmt (eol | internal_subprogram)* { pin = 1 }
 // R211
@@ -395,7 +398,7 @@ private type_bound_proc_binding ::= !(label? type_end_keys) (type_bound_procedur
  recoverWhile = type_proc_recover
 }
 private type_proc_recover ::= !(eol | type_end_keys)
-private type_end_keys ::= (end_ | endtype_)
+private type_end_keys ::= !assignment_stmt (end_ | endtype_)
 // R448
 type_bound_procedure_stmt ::= procedure_ (type_bound_procedure_stmt_part1 | type_bound_procedure_stmt_part2 ) { pin = 1 }
 private type_bound_procedure_stmt_part1 ::= '(' fidentifier ')' ',' <<list binding_attr>> '::' <<list fidentifier>> { pin = 1 }
@@ -426,7 +429,7 @@ enumerator_def_stmt ::= !(label? end_enum_keys) label? enumerator_ ('::')? <<lis
   pin = 1
   recoverWhile = enum_recover
 }
-private end_enum_keys ::= (end_ enum_) | endenum_
+private end_enum_keys ::= !assignment_stmt ((end_ enum_) | endenum_)
 private enum_recover ::= !(eol | end_enum_keys)
 // R461
 enumerator ::= fidentifier ('=' expr)?
@@ -585,7 +588,7 @@ private variable ::= designator //| expr
 // R608
 substring ::= parent_string '(' substring_range ')'
 // R609
-parent_string ::= (fidentifier !('%' | '(' | '[')) | data_ref | stringliteral
+parent_string ::= (fidentifier !('%' | '(' | '[')) | data_ref | string_literal
 // R610
 substring_range ::= (expr)? ':' (expr)?
 // R611
@@ -669,7 +672,7 @@ array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 designator ::= (fidentifier !('%' | '(' | '[')) | (data_ref !"(") | substring /*| function_reference /*| array_section  | complex_part_designator */
 // R304, R305 modified
 constant ::= floatingpointliteral | doubleprecisionliteral | integerliteral | complex_literal
-            | logical_literal | stringliteral | boz_literal
+            | logical_literal | string_literal | boz_literal
 logical_literal ::= truekwd | falsekwd
 
 // R724 - 731 are trivial
@@ -705,7 +708,7 @@ private where_body_construct ::= !(label? end_where_keys) (assignment_stmt | whe
   recoverWhile = where_recover
 }
 private where_recover ::= !(eol | end_where_keys)
-private end_where_keys ::= end_ | else_ | elsewhere_ | endwhere_
+private end_where_keys ::= !assignment_stmt (end_ | else_ | elsewhere_ | endwhere_)
 // R745, R746 are trivial
 // R747
 masked_elsewhere_stmt ::= label? ((else_ where_) | elsewhere_) '(' expr ')' fidentifier? eol { pin = 3 }
@@ -728,7 +731,7 @@ private forall_body_construct ::= !(label? end_forall_keys) (forall_assignment_s
   recoverWhile = forall_recover
 }
 private forall_recover ::= !(eol | end_forall_keys)
-private end_forall_keys ::= end_ | endforall_
+private end_forall_keys ::= !assignment_stmt (end_ | endforall_)
 // R757
 private forall_assignment_stmt ::= assignment_stmt | pointer_assignment_stmt
 // R758
@@ -966,12 +969,12 @@ private interface_specification ::= !endinterface_keys (eol | interface_body | p
 pin = 1
 recoverWhile = interface_recover
 }
-private endinterface_keys ::= end_ | endinterface
+private endinterface_keys ::= !assignment_stmt (end_ | endinterface_)
 private interface_recover ::= !(eol | endinterface_keys)
 // R1203
 interface_stmt ::= ((abstract_ interface_) | (interface_ (generic_spec)?)) eol { pin = 1 }
 // R1204
-end_interface_stmt ::= label? ((end_ interface_) | endinterface) (generic_spec)? { pin = 2 }
+end_interface_stmt ::= label? ((end_ interface_) | endinterface_) (generic_spec)? { pin = 2 }
 // R1205
 interface_body ::= interface_function_body | interface_subroutine_body
 private interface_function_body ::= function_stmt block? end_function_stmt { pin = 1 }
@@ -1055,5 +1058,5 @@ stmt_function_stmt ::= fidentifier '(' <<list fidentifier>>? ')' '=' expr { pin 
 pause_stmt ::= pause_ (expr)? { pin = 1 }
 assign_stmt ::= assign_ label to_ variable { pin = 1 }
 assigned_goto_stmt ::= (goto_ | (go_ to_)) fidentifier (','? '(' <<list label>> ')' )?  { pin = 2 }
-include_stmt ::= include_ stringliteral { pin = 1 }
+include_stmt ::= include_ string_literal { pin = 1 }
 

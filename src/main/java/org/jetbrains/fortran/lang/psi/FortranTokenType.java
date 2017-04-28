@@ -20,6 +20,8 @@ public class FortranTokenType extends IElementType {
 
     public static IElementType LINE_COMMENT = new FortranTokenType("comment");
 
+    public static IElementType LINE_CONTINUE = new FortranTokenType("line_continue");
+
     public static TokenSet KEYWORDS = TokenSet.create(
             ABSTRACT,
             ALL,
@@ -169,7 +171,7 @@ public class FortranTokenType extends IElementType {
 
 //    public static TokenSet SOFT_KEYWORDS = TokenSet.create(NONE_KEYWORD, END_KEYWORD, FILE_KEYWORD);
 
-    public static TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE);
+    public static TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE, LINE_CONTINUE);
 
     public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT);
 

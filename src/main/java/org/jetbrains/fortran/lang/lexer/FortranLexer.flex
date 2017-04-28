@@ -8,6 +8,7 @@ import java.util.Stack;
 import static com.intellij.psi.TokenType.*;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_CONTINUE;
 %%
 
 %class _FortranLexer
@@ -18,13 +19,45 @@ import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
 %type IElementType
 %ctorarg boolean fFixedForm
 %{
-boolean fFixedForm_;
+    boolean fFixedForm_;
+
+    private static final class State {
+        final int state;
+
+        public State(int state	) {
+            this.state = state;
+        }
+
+        @Override
+        public String toString() {
+            return "yystate = " + state;
+        }
+    }
+
+    private final Stack<State> states = new Stack<State>();
+
+
+    private void pushState(int state) {
+        states.push(new State(yystate()));
+        yybegin(state);
+    }
+
+    private void popState() {
+        State state = states.pop();
+        yybegin(state.state);
+    }
 %}
 %init{
 fFixedForm_ = fFixedForm;
+if (fFixedForm_)
+    pushState(FIXEDFORM);
+else
+    pushState(FREEFORM);
 %init}
 %eof{  return;
 %eof}
+
+%xstate FREEFORM FIXEDFORM QUOTE_FIXED_STRING QUOTE_FREE_STRING APOSTR_FIXED_STRING APOSTR_FREE_STRING
 
 BDIGIT=[0-1](\040*[0-1])*
 BINARY_LITERAL="B"\'{BDIGIT}\'|"B"\"{BDIGIT}\"
@@ -62,50 +95,88 @@ DOUBLE_PRECISION_LITERAL={DIGIT}(\.)?{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PAR
 
 
 EOL_ESC=\\[\ \t]*\n
-ESCAPE_SEQUENCE=\\[^\n]|{EOL_ESC}
 
-FREE_LINE_CONTINUE=(("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}?{LINE_COMMENT}{EOL})*({WHITE_SPACE_CHAR}*"&")?)
-FIXED_LINE_CONTINUE={WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}{EOL})|([cC*][^\r\n]*{EOL}))*(\040{5}[^0\040])
+FREE_LINE_CONTINUE=((("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}?{LINE_COMMENT}{EOL})*({WHITE_SPACE_CHAR}*"&")?))+
+FIXED_LINE_CONTINUE=({WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}{EOL})|([cC*][^\r\n]*{EOL}))*(\040{5}[^0\040\r\n]))+
 
-FREE_STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE}|{FREE_LINE_CONTINUE})*(\"|\\)?)| ({KIND_PARAM}_)?('([^\\'\n]|{ESCAPE_SEQUENCE}|{FREE_LINE_CONTINUE})*('|\\)?)
-FIXED_STRING_LITERAL=({KIND_PARAM}_)?(\"([^\\\"\n]|{ESCAPE_SEQUENCE}|{FIXED_LINE_CONTINUE})*(\"|\\)?)| ({KIND_PARAM}_)?('([^\\'\n]|{ESCAPE_SEQUENCE}|{FIXED_LINE_CONTINUE})*('|\\)?)
+STRING_LITERAL=({KIND_PARAM}_)?(\"([^\"\n]|(\"\"))*\")| ({KIND_PARAM}_)?('([^\'\n]|(\'\'))*\')
 
-FREE_FORMAT="format"\040*{FREE_LINE_CONTINUE}?"("([^\r\n]|{FREE_LINE_CONTINUE})*")"
-FIXED_FORMAT="format"\040*{FIXED_LINE_CONTINUE}"("([^\r\n]|{FIXED_LINE_CONTINUE})*")"
+STR_AMP=(\&{WHITE_SPACE_CHAR}*)+[^\ \t\f\n\r\&]
+QUOTE_FIXED_STRING_PART=[^\"\n]|(\"\")
+AP_FIXED_STRING_PART=[^\'\n]|(\'\')
+QUOTE_FREE_STRING_PART=[^\"\n\&]|(\"\")|{STR_AMP}
+AP_FREE_STRING_PART=[^\'\n\&]|(\'\')|{STR_AMP}
 
-%state FIXEDFORM FREEFORM
+FREE_FORMAT="format"{WHITE_SPACE_CHAR}*{FREE_LINE_CONTINUE}?{WHITE_SPACE_CHAR}*"("([^\r\n]|{FREE_LINE_CONTINUE})*")"
+FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}*"("([^\r\n]|{FIXED_LINE_CONTINUE})*")"
+
 %%
 
 <YYINITIAL> {
 . { yypushback(1);
     if (fFixedForm_)
-        yybegin(FIXEDFORM);
+        pushState(FIXEDFORM);
     else
-        yybegin(FREEFORM);
+        pushState(FREEFORM);
   }
 }
 
+
+<QUOTE_FREE_STRING> {
+    {QUOTE_FREE_STRING_PART}+ { return(STRINGMIDDLE); }
+    {QUOTE_FREE_STRING_PART}+({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); return(STRINGMIDDLE); }
+    {QUOTE_FREE_STRING_PART}*\" { popState(); return(STRINGEND); }
+    {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
+}
+
+<QUOTE_FIXED_STRING> {
+    {QUOTE_FIXED_STRING_PART}+ { return(STRINGMIDDLE); }
+    {QUOTE_FIXED_STRING_PART}*\" { popState(); return(STRINGEND); }
+    {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
+}
+
+<APOSTR_FREE_STRING> {
+    {AP_FREE_STRING_PART}+ { return(STRINGMIDDLE); }
+    {AP_FREE_STRING_PART}+({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); return(STRINGMIDDLE); }
+    {AP_FREE_STRING_PART}*\' { popState(); return(STRINGEND); }
+    {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
+}
+
+<APOSTR_FIXED_STRING> {
+    {AP_FIXED_STRING_PART}+ { return(STRINGMIDDLE); }
+    {AP_FIXED_STRING_PART}*\' { popState(); return(STRINGEND); }
+    {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
+}
+
+<QUOTE_FREE_STRING, QUOTE_FIXED_STRING, APOSTR_FREE_STRING, APOSTR_FIXED_STRING> {
+    {EOL} { popState(); return(EOL); }
+}
+
 <FREEFORM> {
-     {FREE_LINE_CONTINUE} { return WHITE_SPACE; }
-     {FREE_STRING_LITERAL} { return STRINGLITERAL; }
+     {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
+     ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}* { pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
+     ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}* { pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
+     ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
+     ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
      {FREE_FORMAT} { return FORMATSTMT; }
 }
 
 <FIXEDFORM> {
     ^[cC*][^\r\n]* {  return LINE_COMMENT; }
-    {FIXED_LINE_CONTINUE} { return WHITE_SPACE; }
-    {FIXED_STRING_LITERAL} { return STRINGLITERAL; }
+    {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
+    ({KIND_PARAM}_)?\"{QUOTE_FIXED_STRING_PART}* { pushState(QUOTE_FIXED_STRING); return(STRINGSTART); }
+    ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
     {FIXED_FORMAT} { return FORMATSTMT; }
     ^{WHITE_SPACE_CHAR}*{LINE_COMMENT} { return LINE_COMMENT; }
     ^[^0-9cC*!\040][^0-9!\040]{4}. { return BAD_CHARACTER; }
     ^[0-9\040][0-9\040]{4}[^\040\n\r] { return BAD_CHARACTER; }
 }
 
-<FREEFORM, FIXEDFORM> {
+<FREEFORM,FIXEDFORM> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
     (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
     {LINE_COMMENT} { return LINE_COMMENT; }
-
+    {STRING_LITERAL} { return STRINGLITERAL; }
     {INTEGER_LITERAL} { return INTEGERLITERAL; }
     {BINARY_LITERAL} { return BINARYLITERAL; }
     {OCTAL_LITERAL} { return OCTALLITERAL; }
@@ -138,7 +209,6 @@ FIXED_FORMAT="format"\040*{FIXED_LINE_CONTINUE}"("([^\r\n]|{FIXED_LINE_CONTINUE}
     "." { return DOT; }
     "$" { return DOLLAR; }
     "%" { return PERC; }
-    "&" { return AMP; }
     "<" { return LT; }
     "<=" { return LE; }
     ">" { return GT; }
@@ -305,11 +375,12 @@ FIXED_FORMAT="format"\040*{FIXED_LINE_CONTINUE}"("([^\r\n]|{FIXED_LINE_CONTINUE}
     "endselect" { return ENDSELECT; }
     "enddo" { return ENDDO; }
     "endmodule" { return ENDMODULE; }
-    "endblockdata"    { return ENDBLOCKDATA; }
-    "endinterface"    { return ENDINTERFACE; }
+    "endblockdata" { return ENDBLOCKDATA; }
+    "endinterface" { return ENDINTERFACE; }
 
     {DEFOPERATOR} { return DEFOPERATOR; }
     {IDENTIFIER} { return IDENTIFIER; }
-
-    . { return BAD_CHARACTER; }
 }
+
+. { return BAD_CHARACTER; }
+

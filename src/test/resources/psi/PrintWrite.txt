@@ -93,7 +93,7 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         CONSTANT
-          PsiElement(stringliteral)('"Hello World!')
+          PsiElement(stringliteral)('"Hello World!"')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT

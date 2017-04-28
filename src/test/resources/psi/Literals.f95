@@ -9,7 +9,11 @@ program literals
   c = 1.1
   d = 1.1_4
   e = 1e4_4+2e+4_8
-  f = 1_"Deidranna rules!"
+  f = 1_"Deidranna &
+  &rules!"
+  str = 'Very ''&\\ bad & &
+  & &
+  & string\'
   g = B"101"
   h = O"1765"
   i = Z'9A7f'

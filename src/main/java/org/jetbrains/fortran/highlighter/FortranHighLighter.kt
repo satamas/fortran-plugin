@@ -27,7 +27,7 @@ class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
             BINARYLITERAL -> FortranHighlightingColors.BINARY_LITERAL
             OCTALLITERAL  -> FortranHighlightingColors.OCTAL_LITERAL
             HEXLITERAL    -> FortranHighlightingColors.HEX_LITERAL
-            STRINGLITERAL -> FortranHighlightingColors.STRING_LITERAL
+            STRINGLITERAL, STRINGSTART, STRINGMIDDLE, STRINGEND -> FortranHighlightingColors.STRING_LITERAL
             TRUEKWD, FALSEKWD -> FortranHighlightingColors.LOGICAL_LITERAL
 
             EQ, POINTER_ASSMNT -> FortranHighlightingColors.ASSIGN_OPERATOR
