@@ -74,6 +74,7 @@ file ::= program
 
 // keywords parsing list for keywords parsing as identifiers
 private abstract_      ::= abstract     | <<parseKeyword 'ABSTRACT'>>
+private accept_        ::= accept       | <<parseKeyword 'ACCEPT'>>
 private all_           ::= all          | <<parseKeyword 'ALL'>>
 private allocate_      ::= allocate     | <<parseKeyword 'ALLOCATE'>>
 private allocatable_   ::= allocatable  | <<parseKeyword 'ALLOCATABLE'>>
@@ -102,6 +103,7 @@ private critical_      ::= critical     | <<parseKeyword 'CRITICAL'>>
 private cycle_         ::= cycle        | <<parseKeyword 'CYCLE'>>
 private data_          ::= data         | <<parseKeyword 'DATA'>>
 private deallocate_    ::= deallocate   | <<parseKeyword 'DEALLOCATE'>>
+private decode_        ::= decode       | <<parseKeyword 'DECODE'>>
 private default_       ::= default      | <<parseKeyword 'DEFAULT'>>
 private deferred_      ::= deferred     | <<parseKeyword 'DEFERRED'>>
 private dimension_     ::= dimension    | <<parseKeyword 'DIMENSION'>>
@@ -111,7 +113,7 @@ private doubleprecision_ ::= doubleprecision | <<parseKeyword 'DOUBLEPRECISION'>
 private else_          ::= else         | <<parseKeyword 'ELSE'>>
 private elseif_        ::= elseif       | <<parseKeyword 'ELSEIF'>>
 private elsewhere_     ::= elsewhere    | <<parseKeyword 'ELSEWHERE'>>
-private entry_         ::= entry        | <<parseKeyword 'ENTRY'>>
+private encode_        ::= encode       | <<parseKeyword 'ENCODE'>>
 private end_           ::= end          | <<parseKeyword 'END'>>
 private endassociate_  ::= endassociate | <<parseKeyword 'ENDASSOCIATE'>>
 private endblock_      ::= endblock     | <<parseKeyword 'ENDBLOCK'>>
@@ -131,6 +133,7 @@ private endsubmodule_  ::= endsubmodule | <<parseKeyword 'ENDSUBMODULE'>>
 private endsubroutine_ ::= endsubroutine | <<parseKeyword 'ENDSUBROUTINE'>>
 private endtype_       ::= endtype      | <<parseKeyword 'ENDTYPE'>>
 private endwhere_      ::= endwhere     | <<parseKeyword 'ENDWHERE'>>
+private entry_         ::= entry        | <<parseKeyword 'ENTRY'>>
 private enum_          ::= enum         | <<parseKeyword 'ENUM'>>
 private enumerator_    ::= enumeratorkwd | <<parseKeyword 'ENUMERATORKWD'>>
 private error_         ::= error        | <<parseKeyword 'ERROR'>>
@@ -301,6 +304,8 @@ private action_stmt ::= assignment_stmt | pointer_assignment_stmt   | allocate_s
                 | computed_goto_stmt
                 // deleted
                 | pause_stmt            | assign_stmt               | assigned_goto_stmt
+                // nonstandard
+                | accept_stmt           | encode_stmt               | decode_stmt
 
 // R215 is trivial
 
@@ -536,7 +541,10 @@ intent_stmt ::= intent_ '(' intent_spec ')' ('::')? <<list fidentifier>> { pin =
 // R547
 optional_stmt ::= optional_ ('::')? <<list fidentifier>> { pin = 1 }
 // R548
-parameter_stmt ::= parameter_ '(' <<list named_constant_def>> ')' {pin = 3}
+parameter_stmt ::= standard_parameter_stmt | nonstandard_parameter_stmt
+private standard_parameter_stmt ::= parameter_ '(' <<list named_constant_def>> ')' {pin = 3}
+private nonstandard_parameter_stmt ::= parameter_  <<list named_constant_def>>  {pin = 2}
+
 // R549
 named_constant_def ::= fidentifier '=' expr
 // R550
@@ -1060,3 +1068,7 @@ assign_stmt ::= assign_ label to_ variable { pin = 1 }
 assigned_goto_stmt ::= (goto_ | (go_ to_)) fidentifier (','? '(' <<list label>> ')' )?  { pin = 2 }
 include_stmt ::= include_ string_literal { pin = 1 }
 
+// nonstandard
+accept_stmt ::= accept_  format (',' <<list input_item>>)?  {pin = 1}
+encode_stmt ::= encode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list output_item>> { pin = 1}
+decode_stmt ::= decode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list input_item>> { pin = 1 }

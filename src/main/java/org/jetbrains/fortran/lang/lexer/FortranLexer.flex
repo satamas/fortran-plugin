@@ -60,13 +60,13 @@ else
 %xstate FREEFORM FIXEDFORM QUOTE_FIXED_STRING QUOTE_FREE_STRING APOSTR_FIXED_STRING APOSTR_FREE_STRING
 
 BDIGIT=[0-1](\040*[0-1])*
-BINARY_LITERAL="B"\'{BDIGIT}\'|"B"\"{BDIGIT}\"
+BINARY_LITERAL=[Bb]\'{BDIGIT}\'|[Bb]\"{BDIGIT}\"|\'{BDIGIT}\'[Bb]|\"{BDIGIT}\"[Bb]
 
 ODIGIT=[0-7](\040*[0-7])*
-OCTAL_LITERAL="O"\'{ODIGIT}\'|"O"\"{ODIGIT}\"
+OCTAL_LITERAL=[Oo]\'{ODIGIT}\'|[Oo]\"{ODIGIT}\"|\'{ODIGIT}\'[Oo]|\"{ODIGIT}\"[Oo]
 
 HDIGIT=[0-9A-Fa-f](\040*[0-9A-Fa-f])*
-HEX_LITERAL="Z"\'{HDIGIT}\'|"Z"\"{HDIGIT}\"
+HEX_LITERAL=[XZxz]\'{HDIGIT}\'|[XZxz]\"{HDIGIT}\"|\'{HDIGIT}\'"Z"|\"{HDIGIT}\""Z"
 
 IDENTIFIER_PART=[:digit:]|[:letter:]|_
 IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
@@ -97,7 +97,7 @@ DOUBLE_PRECISION_LITERAL={DIGIT}(\.)?{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PAR
 EOL_ESC=\\[\ \t]*\n
 
 FREE_LINE_CONTINUE=((("&"){WHITE_SPACE_CHAR}*{EOL}({WHITE_SPACE_CHAR}?{LINE_COMMENT}{EOL})*({WHITE_SPACE_CHAR}*"&")?))+
-FIXED_LINE_CONTINUE=({WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}{EOL})|([cC*][^\r\n]*{EOL}))*(\040{5}[^0\040\r\n]))+
+FIXED_LINE_CONTINUE=({WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}{EOL})|([cC*][^\r\n]*{EOL}))*((\040{5}[^0\040\r\n]|\040{0,4}\t[1-9])))+
 
 STRING_LITERAL=({KIND_PARAM}_)?(\"([^\"\n]|(\"\"))*\")| ({KIND_PARAM}_)?('([^\'\n]|(\'\'))*\')
 
@@ -168,8 +168,11 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
     {FIXED_FORMAT} { return FORMATSTMT; }
     ^{WHITE_SPACE_CHAR}*{LINE_COMMENT} { return LINE_COMMENT; }
-    ^[^0-9cC*!\040][^0-9!\040]{4}. { return BAD_CHARACTER; }
-    ^[0-9\040][0-9\040]{4}[^\040\n\r] { return BAD_CHARACTER; }
+    ^[^0-9cC*!\040\t\n\r].{5} { return BAD_CHARACTER; }
+    ^[0-9\040][^0-9!\040\t\n\r].{4} { return BAD_CHARACTER; }
+    ^[0-9\040]{2}[^0-9!\040\t\n\r].{3} { return BAD_CHARACTER; }
+    ^[0-9\040]{3}[^0-9!\040\t\n\r].{2} { return BAD_CHARACTER; }
+    ^[0-9\040]{4}[^0-9!\040\t\n\r].{1} { return BAD_CHARACTER; }
 }
 
 <FREEFORM,FIXEDFORM> {
@@ -182,7 +185,7 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
     {OCTAL_LITERAL} { return OCTALLITERAL; }
     {HEX_LITERAL} { return HEXLITERAL; }
     {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
-    {DIGIT}\./[^A-Za-z0-9_] { return FLOATINGPOINTLITERAL; }
+    {DIGIT}\040*\./[^A-Za-z0-9_] { return FLOATINGPOINTLITERAL; }
     {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
 
     ".true."(_{KIND_PARAM})? { return TRUEKWD; }
@@ -229,6 +232,7 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
     ".ge." { return GE; }
 
     "abstract" { return ABSTRACT; }
+    "accept" { return ACCEPT; }
     "all" { return ALL; }
     "allocatable" { return ALLOCATABLE; }
     "allocate" { return ALLOCATE; }
@@ -257,6 +261,7 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
     "cycle" { return CYCLE; }
     "data" { return DATA; }
     "deallocate" { return DEALLOCATE; }
+    "decode" { return DECODE; }
     "default" { return DEFAULT; }
     "deferred" { return DEFERRED; }
     "dimension" { return DIMENSION; }
@@ -268,6 +273,7 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
     "else" { return ELSE; }
     "elseif" { return ELSEIF; }
     "elsewhere" { return ELSEWHERE; }
+    "encode" { return ENCODE; }
     "entry" { return ENTRY; }
     "enum" { return ENUM; }
     "enumerator" { return ENUMERATORKWD; }
