@@ -242,7 +242,7 @@ multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
 // R201
 private program ::= (eol | program_unit)*
 // R202
-private program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | main_program) {
+private program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | include_stmt | main_program ) {
   pin = 1
   recoverWhile = program_unit_recover
 }
