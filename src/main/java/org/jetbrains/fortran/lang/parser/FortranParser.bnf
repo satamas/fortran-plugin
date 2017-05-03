@@ -13,8 +13,6 @@
   psiPackage='org.jetbrains.fortran.lang.psi'
   psiImplPackage='org.jetbrains.fortran.lang.psi.impl'
 
-//  psiImplUtilClass = ''
-//  psiTreeUtilClass = ''
   generateTokenAccessors=true
   tokens=[
     EQ        = '='
@@ -38,8 +36,6 @@
     DOT       = '.'
     DOLLAR    = '$'
     PERC      = '%'
-  //  AMP       = '&'
-  //  SEMICOLON = ';'
 
     LT        = 'regexp:<|.lt.'
     LE        = 'regexp:<=|.le.'
@@ -110,6 +106,7 @@ private dimension_     ::= dimension    | <<parseKeyword 'DIMENSION'>>
 private do_            ::= do           | <<parseKeyword 'DO'>>
 private double_        ::= double       | <<parseKeyword 'DOUBLE'>>
 private doubleprecision_ ::= doubleprecision | <<parseKeyword 'DOUBLEPRECISION'>>
+private elemental_     ::= elemental    | <<parseKeyword 'ELEMENTAL'>>
 private else_          ::= else         | <<parseKeyword 'ELSE'>>
 private elseif_        ::= elseif       | <<parseKeyword 'ELSEIF'>>
 private elsewhere_     ::= elsewhere    | <<parseKeyword 'ELSEWHERE'>>
@@ -148,6 +145,7 @@ private forall_        ::= forall       | <<parseKeyword 'FORALL'>>
 private formatkwd_     ::= formatkwd    | <<parseKeyword 'FORMATKWD'>>
 private formatted_     ::= formatted    | <<parseKeyword 'FORMATTED'>>
 private function_      ::= function     | <<parseKeyword 'FUNCTION'>>
+private generic_       ::= generic      | <<parseKeyword 'GENERIC'>>
 private go_            ::= go           | <<parseKeyword 'GO'>>
 private goto_          ::= goto         | <<parseKeyword 'GOTO'>>
 private if_            ::= if           | <<parseKeyword 'IF'>>
@@ -164,6 +162,7 @@ private interface_     ::= interface    | <<parseKeyword 'INTERFACE'>>
 private intrinsic_     ::= intrinsic    | <<parseKeyword 'INTRINSIC'>>
 private inquire_       ::= inquire      | <<parseKeyword 'INQUIRE'>>
 private iolength_      ::= iolength     | <<parseKeyword 'IOLENGTH'>>
+private is_            ::= is           | <<parseKeyword 'IS'>>
 private kind_          ::= kind         | <<parseKeyword 'KIND'>>
 private len_           ::= len          | <<parseKeyword 'LEN'>>
 private lock_          ::= lock         | <<parseKeyword 'LOCK'>>
@@ -235,6 +234,7 @@ private parameter_spec_recover ::= !(')' | ',')
 // Clause 1 (ready)
 // R101
 private meta list ::= <<param>> ( ',' <<param>> )*
+private meta noncomalist ::= <<param>> ( ','? <<param>> )*
 // R102 and R103 are trivial
 external fidentifier ::= parseIdentifier
 
@@ -261,8 +261,8 @@ private declaration_construct ::= derived_type_def | entry_stmt | format_stmt | 
                         | other_specification_stmt | type_declaration_stmt | stmt_function_stmt
 // R208 is in R801
 // R209
-private execution_part_construct ::= !(label? end_block_keys) ( executable_construct |use_stmt
-                                     | include_stmt | import_stmt | implicit_stmt | declaration_construct ) {
+private execution_part_construct ::= !(label? end_block_keys) ( executable_construct | use_stmt
+                                     | include_stmt | import_stmt | implicit_stmt | declaration_construct | type_stmt) {
   pin=1
   recoverWhile=block_recover
 }
@@ -412,7 +412,7 @@ private type_bound_procedure_stmt_part2 ::= ((',' <<list binding_attr>>)? '::')?
 // R449
 type_bound_proc_decl ::= fidentifier ('=>' fidentifier)?
 // R450
-type_bound_generic_stmt ::= generic (',' access_spec)? '::' generic_spec '=>' <<list fidentifier>> { pin = 1}
+type_bound_generic_stmt ::= generic_ (',' access_spec)? '::' generic_spec '=>' <<list fidentifier>> { pin = 1}
 // R451
 binding_attr ::= (pass_ ('(' fidentifier ')')?) | nopass_ | nonoverridable_ | deferred_ | access_spec
 // R452
@@ -830,8 +830,8 @@ select_type_construct ::= select_type_stmt (type_guard_stmt block)* end_select_s
 select_type_stmt ::= (fidentifier ':')? select_ type_ '(' (fidentifier '=>')? selector ')' { pin = 3 }
 // R848
 type_guard_stmt ::= (typeis_guard | classis_guard | classdefault_guard) fidentifier? { pin = 1 }
-private typeis_guard ::= type_ is '(' type_spec ')' { pin = 1 }
-private classis_guard ::= class_ is '(' derived_type_spec ')' { pin = 2 }
+private typeis_guard ::= type_ is_ '(' type_spec ')' { pin = 1 }
+private classis_guard ::= class_ is_ '(' derived_type_spec ')' { pin = 2 }
 private classdefault_guard ::= class_ default_ { pin = 2 }
 // R849 is a copy of R841
 // R850
@@ -853,7 +853,7 @@ error_stop_stmt ::= error_ stop_ (expr)? { pin = 2 }
 sync_all_stmt ::= ((sync_ all_) | syncall_) ('(' ( <<list parameters_spec>> )? ')')? { pin = 1 }
 // R859 is not for parser
 // R860
-sync_images_stmt ::= ((sync_ images_) | syncimages_) '(' image_set (',' <<list sync_stat>>)?')' { pin = 1 }
+sync_images_stmt ::= ((sync_ images_) | syncimages_) '(' image_set (',' <<list parameters_spec>>)?')' { pin = 1 }
 // R861
 image_set ::= '*' | expr
 // R862
@@ -864,7 +864,7 @@ lock_stmt ::= lock_ '(' variable (',' <<list lock_stat>>)? ')' { pin = 2 }
 lock_stat ::=  (fidentifier fidentifier '=' variable) | parameters_spec
 // lock_stat ::= (acquired lock '=' variable) | sync_stat
 // R865
-unlock_stmt ::= unlock_ '(' variable (',' <<list sync_stat>>)? ')' { pin = 1 }
+unlock_stmt ::= unlock_ '(' variable (',' <<list parameters_spec>>)? ')' { pin = 1 }
 // R866 is trivial
 
 // Clause 9 (ready)
@@ -880,12 +880,12 @@ close_stmt ::= close_ '(' <<list parameters_spec>> ')' {pin = 2}
 // R909 is not for parser
 // R910
 read_stmt ::= read_ (io_control_read | format_read) {pin = 1}
-private io_control_read ::= '(' <<list parameters_spec>> ')' <<list input_item>>? { pin = 1}
+private io_control_read ::= '(' <<list parameters_spec>> ')' ','? <<list input_item>>? { pin = 1}
 private format_read ::= format (',' <<list input_item>>?)?
 // R911
-write_stmt ::= write_ '(' <<list parameters_spec>> ')' <<list output_item>>? { pin= 2 }
+write_stmt ::= write_ '(' <<list parameters_spec>> ')' ','? <<list output_item>>? { pin= 2 }
 // R912
-print_stmt ::= print_ format (',' <<list output_item>>)? { pin = 2 }
+print_stmt ::= print_ format ','? <<list output_item>>? { pin = 2 }
 // R913 is not for parser
 // R914 is trivial
 // R915
@@ -920,9 +920,9 @@ private inquire_with_iolength ::= '(' iolength_ '=' expr /*variable */')' <<list
 
 // Clause 10
 // R1001
-format_stmt ::= formatkwd_ (('(' <<list format_item>>? ')')
-              | ('('(<<list format_item>> ',')? '*' '(' <<list format_item>> ')'')' )) { pin = 1 }
-private format_item ::= dataedit | control_edit | string_literal | (integerliteral '(' <<list format_item>> ')')
+format_stmt ::= formatkwd_ (('(' <<noncomalist format_item>>? ')')
+              | ('('(<<noncomalist format_item>> ',')? '*' '(' <<noncomalist format_item>> ')'')' )) { pin = 1 }
+private format_item ::= dataedit | control_edit | string_literal | (integerliteral? '(' <<list format_item>> ')')
 control_edit ::= ":" | (integerliteral? '/') | (signed_int_literal dataedit)
 // Clause 11
 // R1101
@@ -1033,7 +1033,7 @@ alt_return_spec ::= '*' label
 // R1225
 prefix ::= prefix_spec+ { pin = 1 }
 // R1226
-prefix_spec ::= declaration_type_spec | elemental | impure_ | module_ | pure_ | recursive_
+prefix_spec ::= declaration_type_spec | elemental_ | impure_ | module_ | pure_ | recursive_
 // R1227
 function_subprogram ::= function_stmt block internal_subprogram_part? end_function_stmt { pin = 1 }
 // R1228
@@ -1076,3 +1076,4 @@ include_stmt ::= include_ string_literal { pin = 1 }
 accept_stmt ::= accept_  format (',' <<list input_item>>)?  {pin = 1}
 encode_stmt ::= encode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list output_item>> { pin = 1}
 decode_stmt ::= decode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list input_item>> { pin = 1 }
+type_stmt ::= type_ format (','? <<list output_item>>?) { pin = 3 }

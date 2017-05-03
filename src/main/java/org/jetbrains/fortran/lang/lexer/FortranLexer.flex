@@ -150,35 +150,24 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 }
 
 <FREE_FORMAT_STR> {
-    ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
-    {LINE_COMMENT} { return LINE_COMMENT; }
     {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
     ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}* { pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}* { pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
-    {STRING_LITERAL} { return STRINGLITERAL; }
-    {INTEGER_LITERAL} { return INTEGERLITERAL; }
-    ":" { return COLON; }
-    "(" { return LPAR; }
-    ")" { return RPAR; }
-    "+" { return PLUS; }
-    "-" { return MINUS; }
-    "*" { return MUL; }
-    "/" { return DIV; }
-    "," { return COMMA; }
-    [:letter:]+([:digit:]+(\.[:digit:]+([:letter:][:digit:]+)?)?)? { return DATAEDIT; }
-    (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { popState(); return EOL; }
-    . { return BAD_CHARACTER; }
 }
 
 <FIXED_FORMAT_STR> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
-    {LINE_COMMENT} { return LINE_COMMENT; }
     ^[cC*][^\r\n]* {  return LINE_COMMENT; }
     {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
     ({KIND_PARAM}_)?\"{QUOTE_FIXED_STRING_PART}* { pushState(QUOTE_FIXED_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
+}
+
+<FREE_FORMAT_STR, FIXED_FORMAT_STR> {
+    ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+    {LINE_COMMENT} { return LINE_COMMENT; }
     {STRING_LITERAL} { return STRINGLITERAL; }
     {INTEGER_LITERAL} { return INTEGERLITERAL; }
     ":" { return COLON; }
@@ -191,10 +180,10 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "," { return COMMA; }
     [:letter:]+([:digit:]+(\.[:digit:]+([:letter:][:digit:]+)?)?)? { return DATAEDIT; }
     (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { popState(); return EOL; }
-    . { return BAD_CHARACTER; }
+    . { popState(); return(BAD_CHARACTER); }
 }
 
-<QUOTE_FREE_STRING, QUOTE_FIXED_STRING, APOSTR_FREE_STRING, APOSTR_FIXED_STRING, FREE_FORMAT_STR, FIXED_FORMAT_STR> {
+<QUOTE_FREE_STRING, QUOTE_FIXED_STRING, APOSTR_FREE_STRING, APOSTR_FIXED_STRING> {
     {EOL} { popState(); return(EOL); }
 }
 
@@ -204,24 +193,25 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}* { pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
      ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
-     "format" { pushState(FREE_FORMAT_STR); return FORMATKWD; }
+     "format" { return FORMATKWD; }
+     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FREE_FORMAT_STR); return FORMATKWD; }
 }
 
 <FIXEDFORM> {
     ^[cC*][^\r\n]* {  return LINE_COMMENT; }
+    ^{WHITE_SPACE_CHAR}*{LINE_COMMENT} { return LINE_COMMENT; }
     {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
     ({KIND_PARAM}_)?\"{QUOTE_FIXED_STRING_PART}* { pushState(QUOTE_FIXED_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
-    "format" { pushState(FIXED_FORMAT_STR); return FORMATKWD; }
-    ^{WHITE_SPACE_CHAR}*{LINE_COMMENT} { return LINE_COMMENT; }
+    "format" { return FORMATKWD; }
+    "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return FORMATKWD; }
     ^"#"+ { return LINE_COMMENT; }
-    ^[dD][\0400-9]{4} {yypushback(yylength()-1); return LINE_COMMENT; }
+    ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
     ^[^0-9cCdD#*!\040\t\n\r].{5} { return BAD_CHARACTER; }
     ^[0-9\040dD][^0-9!\040\t\n\r].{4} { return BAD_CHARACTER; }
     ^[0-9\040dD]{2}[^0-9!\040\t\n\r].{3} { return BAD_CHARACTER; }
     ^[0-9\040dD]{3}[^0-9!\040\t\n\r].{2} { return BAD_CHARACTER; }
     ^[0-9\040dD]{4}[^0-9!\040\t\n\r].{1} { return BAD_CHARACTER; }
-
 }
 
 <FREEFORM,FIXEDFORM> {
@@ -318,12 +308,31 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "do" { return DO; }
     "double" { return DOUBLE; }
     "doubleprecision" { return DOUBLEPRECISION; }
-    "precision" { return PRECISION; }
     "elemental" { return ELEMENTAL; }
     "else" { return ELSE; }
     "elseif" { return ELSEIF; }
     "elsewhere" { return ELSEWHERE; }
     "encode" { return ENCODE; }
+    "end" { return END; }
+    "endassociate" { return ENDASSOCIATE; }
+    "endblock" { return ENDBLOCK; }
+    "endblockdata" { return ENDBLOCKDATA; }
+    "endcritical" { return ENDCRITICAL; }
+    "enddo" { return ENDDO; }
+    "endenum" { return ENDENUM; }
+    "endfile" { return ENDFILE; }
+    "endforall" { return ENDFORALL; }
+    "endfunction" { return ENDFUNCTION; }
+    "endif" { return ENDIF; }
+    "endinterface" { return ENDINTERFACE; }
+    "endmodule" { return ENDMODULE; }
+    "endprocedure" { return ENDPROCEDURE; }
+    "endprogram" { return ENDPROGRAM; }
+    "endselect" { return ENDSELECT; }
+    "endsubmodule" { return ENDSUBMODULE; }
+    "endsubroutine" { return ENDSUBROUTINE; }
+    "endtype" { return ENDTYPE; }
+    "endwhere" { return ENDWHERE; }
     "entry" { return ENTRY; }
     "enum" { return ENUM; }
     "enumerator" { return ENUMERATORKWD; }
@@ -334,9 +343,9 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "external" { return EXTERNALKWD; }
     "final" { return FINAL; }
     "flush" { return FLUSH; }
-    "function" { return FUNCTION; }
     "forall" { return FORALL; }
     "formatted" { return FORMATTED; }
+    "function" { return FUNCTION; }
     "generic" { return GENERIC; }
     "go" { return GO; }
     "goto" { return GOTO; }
@@ -354,6 +363,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "intrinsic" { return INTRINSIC; }
     "inquire" { return INQUIRE; }
     "iolength" { return IOLENGTH; }
+    "is" { return IS; }
     "kind" { return KIND; }
     "len" { return LEN; }
     "lock" { return LOCK; }
@@ -375,6 +385,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "parameter" { return PARAMETER; }
     "pass" { return PASS; }
     "pause" { return PAUSE; }
+    "precision" { return PRECISION; }
     "pointer" { return POINTER; }
     "print" { return PRINT; }
     "private" { return PRIVATEKWD; }
@@ -388,6 +399,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "recursive" { return RECURSIVE; }
     "result" { return RESULT; }
     "return" { return RETURNKWD; }
+    "rewind" { return REWIND; }
     "save" { return SAVE; }
     "select" { return SELECT; }
     "sequence" { return SEQUENCE; }
@@ -410,29 +422,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "wait" { return WAIT; }
     "where" { return WHERE; }
     "while" { return WHILE; }
-    "rewind" { return REWIND; }
     "write" { return WRITE; }
-
-    "end" { return END; }
-    "endassociate" { return ENDASSOCIATE; }
-    "endblock" { return ENDBLOCK; }
-    "endcritical" { return ENDCRITICAL; }
-    "endenum" { return ENDENUM; }
-    "endfile" { return ENDFILE; }
-    "endif" { return ENDIF; }
-    "endprocedure" { return ENDPROCEDURE; }
-    "endprogram" { return ENDPROGRAM; }
-    "endfunction" { return ENDFUNCTION; }
-    "endforall" { return ENDFORALL; }
-    "endsubroutine" { return ENDSUBROUTINE; }
-    "endsubmodule" { return ENDSUBMODULE; }
-    "endtype" { return ENDTYPE; }
-    "endwhere" { return ENDWHERE; }
-    "endselect" { return ENDSELECT; }
-    "enddo" { return ENDDO; }
-    "endmodule" { return ENDMODULE; }
-    "endblockdata" { return ENDBLOCKDATA; }
-    "endinterface" { return ENDINTERFACE; }
 
     {DEFOPERATOR} { return DEFOPERATOR; }
     {IDENTIFIER} { return IDENTIFIER; }
