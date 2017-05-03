@@ -4,4 +4,6 @@ program p
      variable = 10._8 > 1 .and. 1.E+1_8 > 0
      a(:) = 0
      name_check = line(i)(1:pos-1)
+     pressure = 949. + real(reshape( (/ (counter, counter = 1, numLats * numLons * numFrTimes) /),  &
+                                         (/ numLons, numLats, numFrTimes /) ) )
 end program a

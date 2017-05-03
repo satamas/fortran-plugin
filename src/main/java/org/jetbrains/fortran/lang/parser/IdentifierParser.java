@@ -15,8 +15,7 @@ public class IdentifierParser implements GeneratedParserUtilBase.Parser {
         PsiBuilder.Marker marker = enter_section_(builder);
         result = consumeToken(builder, IDENTIFIER);
         if (!result) {
-            if (KEYWORDS.contains(builder.getTokenType())
-                && (builder.getTokenType() != FORMATSTMT || !builder.getTokenText().contains("("))){
+            if (KEYWORDS.contains(builder.getTokenType())) {
                 builder.remapCurrentToken(IDENTIFIER);
                 result = consumeToken(builder, IDENTIFIER);
             }

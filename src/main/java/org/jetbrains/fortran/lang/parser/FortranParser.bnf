@@ -117,6 +117,7 @@ private encode_        ::= encode       | <<parseKeyword 'ENCODE'>>
 private end_           ::= end          | <<parseKeyword 'END'>>
 private endassociate_  ::= endassociate | <<parseKeyword 'ENDASSOCIATE'>>
 private endblock_      ::= endblock     | <<parseKeyword 'ENDBLOCK'>>
+private endblockdata_  ::= endblockdata | <<parseKeyword 'ENDBLOCKDATA'>>
 private endcritical_   ::= endcritical  | <<parseKeyword 'ENDCRITICAL'>>
 private enddo_         ::= enddo        | <<parseKeyword 'ENDDO'>>
 private endenum_       ::= endenum      | <<parseKeyword 'ENDENUM'>>
@@ -144,8 +145,9 @@ private external_      ::= externalkwd  | <<parseKeyword 'EXTERNALKWD'>>
 private final_         ::= final        | <<parseKeyword 'FINAL'>>
 private flush_         ::= flush        | <<parseKeyword 'FLUSH'>>
 private forall_        ::= forall       | <<parseKeyword 'FORALL'>>
-private formatstmt_    ::= formatstmt   | <<parseKeyword 'FORMATSTMT'>>
+private formatkwd_     ::= formatkwd    | <<parseKeyword 'FORMATKWD'>>
 private formatted_     ::= formatted    | <<parseKeyword 'FORMATTED'>>
+private function_      ::= function     | <<parseKeyword 'FUNCTION'>>
 private go_            ::= go           | <<parseKeyword 'GO'>>
 private goto_          ::= goto         | <<parseKeyword 'GOTO'>>
 private if_            ::= if           | <<parseKeyword 'IF'>>
@@ -256,12 +258,11 @@ private external_subprogram ::= function_subprogram | subroutine_subprogram
 // R207
 private declaration_construct ::= derived_type_def | entry_stmt | format_stmt | enum_def
                         | interface_block | parameter_stmt | procedure_declaration_stmt
-                        | other_specification_stmt | type_declaration_stmt //| stmt_function_stmt
+                        | other_specification_stmt | type_declaration_stmt | stmt_function_stmt
 // R208 is in R801
 // R209
 private execution_part_construct ::= !(label? end_block_keys) ( executable_construct |use_stmt
-                                     | include_stmt | import_stmt | implicit_stmt | declaration_construct
-                                     | stmt_function_stmt) {
+                                     | include_stmt | import_stmt | implicit_stmt | declaration_construct ) {
   pin=1
   recoverWhile=block_recover
 }
@@ -275,7 +276,7 @@ internal_subprogram ::= !(label? (end_unit_keys | endprocedure_)) (function_subp
   pin = 1
   recoverWhile=internal_subprogram_recover
 }
-private internal_subprogram_recover ::= !(eol | end_ | endfunction_ | endsubprogram | endprocedure_)
+private internal_subprogram_recover ::= !(eol | end_ | endfunction_ | endsubroutine_ | endprocedure_)
 // R212
 other_specification_stmt ::=  access_stmt       |  allocatable_stmt |  asynchronous_stmt
                            |  bind_stmt         |  codimension_stmt |  common_stmt
@@ -422,7 +423,7 @@ derived_type_spec ::= fidentifier ('(' <<list type_param_spec>> ')')? { pin = 1 
 type_param_spec ::= (fidentifier '=')? type_param_value
 // R455 is in clause 7
 // R456
-component_spec ::= (fidentifier '=') component_data_source
+component_spec ::= (fidentifier '=')? component_data_source
 // R457
 component_data_source ::= expr /*| variable*/ | proc_target
 // R458
@@ -448,14 +449,14 @@ boz_literal ::= binaryliteral | octalliteral | hexliteral
 ac_spec ::= ((type_spec '::')? <<list ac_value>>) | (type_spec '::')
 // R470 - 471 are trivial
 // R472
-ac_value ::= (expr | ac_implied_do) !'=' { pin = 2 }
+ac_value ::= ( ac_implied_do | expr) !'=' { pin = 2 }
 // R473
 ac_implied_do ::= '('<<list ac_value>> ',' id_loop_stmt ')'
 // R474 - 475 are trivial
 
 // Clause 5
 // R501
-type_declaration_stmt ::= declaration_type_spec ((',' attr_spec)* '::')? <<list entity_decl>> {pin=1}
+type_declaration_stmt ::= declaration_type_spec ((',' attr_spec)* '::')? <<list (entity_decl)>> {pin=1}
 // R502
 attr_spec ::= access_spec | allocatable_ | asynchronous_ | (codimension_ '[' coarray_spec ']')
              | contiguous_ | (dimension_ '(' array_spec ')') | external_
@@ -466,7 +467,7 @@ entity_decl ::= fidentifier ('(' array_spec ')')? ('[' coarray_spec ']')?
                 ('*' char_length)? initialization?
 // R504 is trivial
 // R505
-private initialization ::= ('=' expr) | ('=>' designator) | ('=>' function_reference)
+private initialization ::= ('=' expr) | ('=>' designator) | ('=>' function_reference) | ('/' <<list data_stmt_value>> '/')
 // R506 is trivial
 // R507
 private access_spec ::= (public_ | private_)
@@ -516,7 +517,7 @@ codimension_decl ::= fidentifier '[' coarray_spec ']'
 // R533 unused in standard but works
 contiguous_stmt ::= contiguous_ ('::')? <<list fidentifier>> { pin = 1 }
 // R534
-data_stmt ::= data_ data_stmt_set ((',')? data_stmt_set)*
+data_stmt ::= data_ <<list data_stmt_set>>
 // R535
 data_stmt_set ::= <<list data_stmt_object>> '/' <<list data_stmt_value>> '/'
 // R536
@@ -670,10 +671,11 @@ mult_expr   ::= expr ('*' | '/') expr { pin = 2 }
 power_expr  ::= expr '**' expr { rightAssociative=true pin = 2 } { extends=expr }
 def_unary_operator_expr ::= defined_unary_op expr { pin = 1 }
 private defined_unary_op ::= defoperator
-private primary ::= constant | designator | structure_constructor | function_reference | array_constructor | paren /*| type_param_inquiry */
+private primary ::= constant | designator | (function_reference !'(') | (array_constructor !'(') /*| structure_constructor*/ | paren /*| type_param_inquiry */
 paren ::= '(' expr ')' { pin = 1 }
 // R455
-structure_constructor ::= derived_type_spec '(' <<list component_spec>> ')' { pin = 2 }
+structure_constructor ::= (fidentifier '(' <<list component_spec>> ')' !'(')
+                         | (derived_type_spec ('(' <<list type_param_spec>> ')')?)
 // R468
 array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
 // R601
@@ -918,8 +920,10 @@ private inquire_with_iolength ::= '(' iolength_ '=' expr /*variable */')' <<list
 
 // Clause 10
 // R1001
-format_stmt ::= formatstmt_ { pin = 1 }
-
+format_stmt ::= formatkwd_ (('(' <<list format_item>>? ')')
+              | ('('(<<list format_item>> ',')? '*' '(' <<list format_item>> ')'')' )) { pin = 1 }
+private format_item ::= dataedit | control_edit | string_literal | (integerliteral '(' <<list format_item>> ')')
+control_edit ::= ":" | (integerliteral? '/') | (signed_int_literal dataedit)
 // Clause 11
 // R1101
 main_program ::= program_stmt? block internal_subprogram_part? end_program_stmt {pin=1}
@@ -936,11 +940,11 @@ end_module_stmt ::= label? (endmodule_ fidentifier? | end_ (module_ fidentifier?
 // R1107
 module_subprogram_part ::= contains_stmt (eol | module_subprogram)* { pin = 1 }
 // R1108
-module_subprogram ::= !(label? (end_ | endmodule_ | endsubmodule_)) (function_subprogram | subroutine_subprogram | separate_module_subprogram) {
+module_subprogram ::= !(label? (end_ | endmodule_ | endsubmodule_)) (function_subprogram | subroutine_subprogram | separate_module_subprogram | include_stmt) {
   pin = 1
   recoverWhile = module_subprogram_recover
 }
-private module_subprogram_recover ::= !(eol | end_ | endfunction_ | endsubprogram | endprocedure_)
+private module_subprogram_recover ::= !(eol | end_ | endfunction_ | endsubroutine_ | endprocedure_)
 // R1109
 use_stmt ::= use_ (use_stmt_only | use_stmt_rename) { pin = 1 }
 private use_stmt_rename ::= ((',' module_nature)? '::')? fidentifier (',' <<list rename_stmt>>)?
@@ -966,7 +970,7 @@ block_data ::= block_data_stmt block end_block_data_stmt { pin = 1 }
 // R1121
 block_data_stmt ::= label? (blockdata_ | (block_ data_)) fidentifier? eol { pin = 2 }
 // R1122
-end_block_data_stmt ::= label? ((endblockdata fidentifier?)| (end_ (((block_ data_) | blockdata_) fidentifier?)?)
+end_block_data_stmt ::= label? ((endblockdata_ fidentifier?)| (end_ (((block_ data_) | blockdata_) fidentifier?)?)
                       | (endblock_ data_ fidentifier?))  { pin = 2 }
 
 // Clause 12
@@ -1015,7 +1019,7 @@ proc_pointer_init ::= function_reference | fidentifier
 // R1218
 intrinsic_stmt ::= intrinsic_ ('::')? <<list fidentifier>> { pin = 1 }
 // R1219
-function_reference ::= procedure_designator '(' <<list actual_arg_spec>>? ')' { pin = 2 }
+function_reference ::= procedure_designator '(' <<list actual_arg_spec>>? ')' { pin = 4 }
 // R1220
 call_stmt ::= call_ procedure_designator ('(' <<list actual_arg_spec>>? ')')?
 // R1221
@@ -1033,12 +1037,12 @@ prefix_spec ::= declaration_type_spec | elemental | impure_ | module_ | pure_ | 
 // R1227
 function_subprogram ::= function_stmt block internal_subprogram_part? end_function_stmt { pin = 1 }
 // R1228
-function_stmt ::= label? prefix? function fidentifier '(' <<list fidentifier>>? ')' suffix? eol { pin = 3 }
+function_stmt ::= label? prefix? function_ fidentifier '(' <<list fidentifier>>? ')' suffix? eol { pin = 3 }
 // R1229 and R1230 are trivial
 // R1231
 suffix ::= (language_binding_spec (result_ '(' fidentifier ')')?) | (result_ '(' fidentifier ')' (language_binding_spec)?)
 // R1232
-end_function_stmt ::= label? ((end_ (function fidentifier?)?) | (endfunction_ fidentifier?)) { pin = 2 }
+end_function_stmt ::= label? ((end_ (function_ fidentifier?)?) | (endfunction_ fidentifier?)) { pin = 2 }
 // R1233
 subroutine_subprogram ::= subroutine_stmt block internal_subprogram_part? end_subroutine_stmt { pin = 1 }
 // R1234

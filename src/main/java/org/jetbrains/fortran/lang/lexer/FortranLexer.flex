@@ -9,6 +9,7 @@ import static com.intellij.psi.TokenType.*;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_CONTINUE;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.CPP;
 %%
 
 %class _FortranLexer
@@ -58,6 +59,7 @@ else
 %eof}
 
 %xstate FREEFORM FIXEDFORM QUOTE_FIXED_STRING QUOTE_FREE_STRING APOSTR_FIXED_STRING APOSTR_FREE_STRING
+%xstate FIXED_FORMAT_STR FREE_FORMAT_STR
 
 BDIGIT=[0-1](\040*[0-1])*
 BINARY_LITERAL=[Bb]\'{BDIGIT}\'|[Bb]\"{BDIGIT}\"|\'{BDIGIT}\'[Bb]|\"{BDIGIT}\"[Bb]
@@ -96,8 +98,8 @@ DOUBLE_PRECISION_LITERAL={DIGIT}(\.)?{DOUBLE_PRECISION_EXPONENT_PART}(_{KIND_PAR
 
 EOL_ESC=\\[\ \t]*\n
 
-FREE_LINE_CONTINUE=((("&"){WHITE_SPACE_CHAR}*{LINE_COMMENT}?{EOL}({WHITE_SPACE_CHAR}?{LINE_COMMENT}{EOL})*({WHITE_SPACE_CHAR}*"&")?))+
-FIXED_LINE_CONTINUE=({WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}{EOL})|([cC*][^\r\n]*{EOL}))*((\040{5}[^0\040\r\n\t]|\040{0,4}\t[1-9])))+
+FREE_LINE_CONTINUE=((("&"){WHITE_SPACE_CHAR}*{LINE_COMMENT}?{EOL}({WHITE_SPACE_CHAR}?{LINE_COMMENT}?{EOL})*({WHITE_SPACE_CHAR}*"&")?))+
+FIXED_LINE_CONTINUE=({WHITE_SPACE_CHAR}*{EOL}(({WHITE_SPACE_CHAR}*{LINE_COMMENT}?{EOL})|(([cC*][^\r\n]*)?{EOL}))*(([\040dD]\040{4}[^0\040\r\n\t]|\040{0,4}\t[1-9])))+
 
 STRING_LITERAL=({KIND_PARAM}_)?(\"([^\"\n]|(\"\"))*\")| ({KIND_PARAM}_)?('([^\'\n]|(\'\'))*\')
 
@@ -107,9 +109,8 @@ AP_FIXED_STRING_PART=[^\'\n]|(\'\')
 QUOTE_FREE_STRING_PART=[^\"\n\&]|(\"\")|{STR_AMP}
 AP_FREE_STRING_PART=[^\'\n\&]|(\'\')|{STR_AMP}
 
-FREE_FORMAT="format"{WHITE_SPACE_CHAR}*{FREE_LINE_CONTINUE}?{WHITE_SPACE_CHAR}*"("([^\r\n]|{FREE_LINE_CONTINUE})*")"
-FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}*"("([^\r\n]|{FIXED_LINE_CONTINUE})*")"
-
+CPP="#"[^\r\n]*{EOL}
+CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 %%
 
 <YYINITIAL> {
@@ -148,7 +149,52 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
     {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
 }
 
-<QUOTE_FREE_STRING, QUOTE_FIXED_STRING, APOSTR_FREE_STRING, APOSTR_FIXED_STRING> {
+<FREE_FORMAT_STR> {
+    ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+    {LINE_COMMENT} { return LINE_COMMENT; }
+    {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
+    ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}* { pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
+    ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}* { pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
+    ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
+    ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
+    {STRING_LITERAL} { return STRINGLITERAL; }
+    {INTEGER_LITERAL} { return INTEGERLITERAL; }
+    ":" { return COLON; }
+    "(" { return LPAR; }
+    ")" { return RPAR; }
+    "+" { return PLUS; }
+    "-" { return MINUS; }
+    "*" { return MUL; }
+    "/" { return DIV; }
+    "," { return COMMA; }
+    [:letter:]+([:digit:]+(\.[:digit:]+([:letter:][:digit:]+)?)?)? { return DATAEDIT; }
+    (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { popState(); return EOL; }
+    . { return BAD_CHARACTER; }
+}
+
+<FIXED_FORMAT_STR> {
+    ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+    {LINE_COMMENT} { return LINE_COMMENT; }
+    ^[cC*][^\r\n]* {  return LINE_COMMENT; }
+    {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
+    ({KIND_PARAM}_)?\"{QUOTE_FIXED_STRING_PART}* { pushState(QUOTE_FIXED_STRING); return(STRINGSTART); }
+    ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
+    {STRING_LITERAL} { return STRINGLITERAL; }
+    {INTEGER_LITERAL} { return INTEGERLITERAL; }
+    ":" { return COLON; }
+    "(" { return LPAR; }
+    ")" { return RPAR; }
+    "+" { return PLUS; }
+    "-" { return MINUS; }
+    "*" { return MUL; }
+    "/" { return DIV; }
+    "," { return COMMA; }
+    [:letter:]+([:digit:]+(\.[:digit:]+([:letter:][:digit:]+)?)?)? { return DATAEDIT; }
+    (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { popState(); return EOL; }
+    . { return BAD_CHARACTER; }
+}
+
+<QUOTE_FREE_STRING, QUOTE_FIXED_STRING, APOSTR_FREE_STRING, APOSTR_FIXED_STRING, FREE_FORMAT_STR, FIXED_FORMAT_STR> {
     {EOL} { popState(); return(EOL); }
 }
 
@@ -158,7 +204,7 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}* { pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
      ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
-     {FREE_FORMAT} { return FORMATSTMT; }
+     "format" { pushState(FREE_FORMAT_STR); return FORMATKWD; }
 }
 
 <FIXEDFORM> {
@@ -166,15 +212,16 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
     {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
     ({KIND_PARAM}_)?\"{QUOTE_FIXED_STRING_PART}* { pushState(QUOTE_FIXED_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
-    {FIXED_FORMAT} { return FORMATSTMT; }
+    "format" { pushState(FIXED_FORMAT_STR); return FORMATKWD; }
     ^{WHITE_SPACE_CHAR}*{LINE_COMMENT} { return LINE_COMMENT; }
-    ^[^0-9cCdD#*!\040\t\n\r].{5} { return BAD_CHARACTER; }
-    ^[0-9\040][^0-9!\040\t\n\r].{4} { return BAD_CHARACTER; }
-    ^[0-9\040]{2}[^0-9!\040\t\n\r].{3} { return BAD_CHARACTER; }
-    ^[0-9\040]{3}[^0-9!\040\t\n\r].{2} { return BAD_CHARACTER; }
-    ^[0-9\040]{4}[^0-9!\040\t\n\r].{1} { return BAD_CHARACTER; }
-    ^[dD] { return LINE_COMMENT; }
     ^"#"+ { return LINE_COMMENT; }
+    ^[dD][\0400-9]{4} {yypushback(yylength()-1); return LINE_COMMENT; }
+    ^[^0-9cCdD#*!\040\t\n\r].{5} { return BAD_CHARACTER; }
+    ^[0-9\040dD][^0-9!\040\t\n\r].{4} { return BAD_CHARACTER; }
+    ^[0-9\040dD]{2}[^0-9!\040\t\n\r].{3} { return BAD_CHARACTER; }
+    ^[0-9\040dD]{3}[^0-9!\040\t\n\r].{2} { return BAD_CHARACTER; }
+    ^[0-9\040dD]{4}[^0-9!\040\t\n\r].{1} { return BAD_CHARACTER; }
+
 }
 
 <FREEFORM,FIXEDFORM> {
@@ -189,7 +236,8 @@ FIXED_FORMAT="format"{WHITE_SPACE_CHAR}*{FIXED_LINE_CONTINUE}?{WHITE_SPACE_CHAR}
     {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
     {DIGIT}\040*\./[^A-Za-z0-9_] { return FLOATINGPOINTLITERAL; }
     {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
-
+    {CPP} { return CPP; }
+    {CPPCOMMENT} { return LINE_COMMENT; }
     ".true."(_{KIND_PARAM})? { return TRUEKWD; }
     ".false."(_{KIND_PARAM})? { return FALSEKWD; }
 

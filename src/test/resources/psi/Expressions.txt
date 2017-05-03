@@ -142,6 +142,97 @@ FILE
                   PsiElement(integerliteral)('1')
             PsiElement())(')')
       PsiElement(eol)('\n')
+      PsiWhiteSpace('     ')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          PsiElement(identifier)('pressure')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        ADD_EXPR
+          CONSTANT
+            PsiElement(floatingpointliteral)('949.')
+          PsiWhiteSpace(' ')
+          PsiElement(+)('+')
+          PsiWhiteSpace(' ')
+          DESIGNATOR
+            DATA_REF
+              PsiElement(identifier)('real')
+              PsiElement(()('(')
+              SECTION_SUBSCRIPT
+                DESIGNATOR
+                  DATA_REF
+                    PsiElement(identifier)('reshape')
+                    PsiElement(()('(')
+                    PsiWhiteSpace(' ')
+                    SECTION_SUBSCRIPT
+                      ARRAY_CONSTRUCTOR
+                        PsiElement((/)('(/')
+                        PsiWhiteSpace(' ')
+                        AC_SPEC
+                          AC_VALUE
+                            AC_IMPLIED_DO
+                              PsiElement(()('(')
+                              AC_VALUE
+                                DESIGNATOR
+                                  PsiElement(identifier)('counter')
+                              PsiElement(,)(',')
+                              PsiWhiteSpace(' ')
+                              DESIGNATOR
+                                PsiElement(identifier)('counter')
+                              PsiWhiteSpace(' ')
+                              PsiElement(=)('=')
+                              PsiWhiteSpace(' ')
+                              CONSTANT
+                                PsiElement(integerliteral)('1')
+                              PsiElement(,)(',')
+                              PsiWhiteSpace(' ')
+                              MULT_EXPR
+                                MULT_EXPR
+                                  DESIGNATOR
+                                    PsiElement(identifier)('numLats')
+                                  PsiWhiteSpace(' ')
+                                  PsiElement(*)('*')
+                                  PsiWhiteSpace(' ')
+                                  DESIGNATOR
+                                    PsiElement(identifier)('numLons')
+                                PsiWhiteSpace(' ')
+                                PsiElement(*)('*')
+                                PsiWhiteSpace(' ')
+                                DESIGNATOR
+                                  PsiElement(identifier)('numFrTimes')
+                              PsiElement())(')')
+                        PsiWhiteSpace(' ')
+                        PsiElement(/))('/)')
+                    PsiElement(,)(',')
+                    PsiWhiteSpace('  ')
+                    PsiWhiteSpace('&\n')
+                    PsiWhiteSpace('                                         ')
+                    SECTION_SUBSCRIPT
+                      ARRAY_CONSTRUCTOR
+                        PsiElement((/)('(/')
+                        PsiWhiteSpace(' ')
+                        AC_SPEC
+                          AC_VALUE
+                            DESIGNATOR
+                              PsiElement(identifier)('numLons')
+                          PsiElement(,)(',')
+                          PsiWhiteSpace(' ')
+                          AC_VALUE
+                            DESIGNATOR
+                              PsiElement(identifier)('numLats')
+                          PsiElement(,)(',')
+                          PsiWhiteSpace(' ')
+                          AC_VALUE
+                            DESIGNATOR
+                              PsiElement(identifier)('numFrTimes')
+                        PsiWhiteSpace(' ')
+                        PsiElement(/))('/)')
+                    PsiWhiteSpace(' ')
+                    PsiElement())(')')
+              PsiWhiteSpace(' ')
+              PsiElement())(')')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')
       PsiWhiteSpace(' ')

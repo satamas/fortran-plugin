@@ -63,7 +63,13 @@ FILE
         PsiElement(integerliteral)('130')
       PsiWhiteSpace(' ')
       FORMAT_STMT
-        PsiElement(formatstmt)('format (A,E8.1)')
+        PsiElement(formatkwd)('format')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        PsiElement(dataedit)('A')
+        PsiElement(,)(',')
+        PsiElement(dataedit)('E8.1')
+        PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT

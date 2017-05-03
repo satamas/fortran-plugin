@@ -19,8 +19,10 @@ class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
     companion object {
         fun map(tokenType: IElementType?) : FortranHighlightingColors? = when(tokenType) {
             IDENTIFIER -> FortranHighlightingColors.IDENTIFIER
-            FortranTokenType.LINE_COMMENT -> FortranHighlightingColors.LINE_COMMENT
+            FortranTokenType.LINE_COMMENT, FortranTokenType.LINE_CONTINUE -> FortranHighlightingColors.LINE_COMMENT
+            FortranTokenType.CPP -> FortranHighlightingColors.CPP
 
+            DATAEDIT -> FortranHighlightingColors.INTEGER_LITERAL
             INTEGERLITERAL -> FortranHighlightingColors.INTEGER_LITERAL
             FLOATINGPOINTLITERAL -> FortranHighlightingColors.FLOATING_POINT_LITERAL
             DOUBLEPRECISIONLITERAL -> FortranHighlightingColors.FLOATING_POINT_LITERAL

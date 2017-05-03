@@ -14,7 +14,8 @@ class FortranColorSettingsPage : ColorSettingsPage {
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
     override fun getHighlighter() = FortranHighLighter(false)
     override fun getAdditionalHighlightingTagToDescriptorMap() = ANNOTATOR_TAGS
-    override fun getDemoText() : String = """!comment
+    override fun getDemoText() : String = """#include 'include.f95'
+!comment
 data binary / B'101'/
 data octal  / O'765'/
 data hex    / Z'4'  /

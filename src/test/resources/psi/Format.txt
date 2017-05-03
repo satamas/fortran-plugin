@@ -5,13 +5,47 @@ FILE
         PsiElement(integerliteral)('1')
       PsiWhiteSpace(' ')
       FORMAT_STMT
-        PsiElement(formatstmt)('FORMAT (1PE12.4, I10)')
+        PsiElement(formatkwd)('FORMAT')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONTROL_EDIT
+          SIGNED_INT_LITERAL
+            PsiElement(integerliteral)('1')
+          PsiElement(dataedit)('PE12.4')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(dataedit)('I10')
+        PsiElement())(')')
       PsiElement(eol)('\n')
       LABEL
         PsiElement(integerliteral)('2')
       PsiWhiteSpace(' ')
       FORMAT_STMT
-        PsiElement(formatstmt)('FORMAT (I12, /, ' Dates: ', 2 (2I3, I5))')
+        PsiElement(formatkwd)('FORMAT')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        PsiElement(dataedit)('I12')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        CONTROL_EDIT
+          PsiElement(/)('/')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(stringliteral)('' Dates: '')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(integerliteral)('2')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        CONTROL_EDIT
+          SIGNED_INT_LITERAL
+            PsiElement(integerliteral)('2')
+          PsiElement(dataedit)('I3')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(dataedit)('I5')
+        PsiElement())(')')
+        PsiElement())(')')
       PsiElement(eol)('\n\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')

@@ -37,6 +37,9 @@ enum class FortranHighlightingColors (humanName: String, val default: TextAttrib
     COMMA("Comma", DefColors.COMMA),
     COLON("Colon", DefColors.COMMA),
 
+    // C preprocessor
+    CPP("C preprocessor", DefColors.TEMPLATE_LANGUAGE_COLOR),
+
     BAD_CHARACTER("Bad character", HighlighterColors.BAD_CHARACTER);
 
     val textAttributesKey = TextAttributesKey.createTextAttributesKey("org.jetbrains.fortran.$name", default)

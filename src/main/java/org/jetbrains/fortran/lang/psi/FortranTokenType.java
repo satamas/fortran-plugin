@@ -22,6 +22,8 @@ public class FortranTokenType extends IElementType {
 
     public static IElementType LINE_CONTINUE = new FortranTokenType("line_continue");
 
+    public static IElementType CPP = new FortranTokenType("c_pre_processor");
+
     public static TokenSet KEYWORDS = TokenSet.create(
             ABSTRACT,
             ALL,
@@ -90,8 +92,9 @@ public class FortranTokenType extends IElementType {
             FINAL,
             FLUSH,
             FORALL,
-            FORMATSTMT,
+            FORMATKWD,
             FORMATTED,
+            FUNCTION,
             GO,
             GOTO,
             IF,
@@ -173,7 +176,7 @@ public class FortranTokenType extends IElementType {
 
     public static TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE, LINE_CONTINUE);
 
-    public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT);
+    public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT, CPP);
 
     public static TokenSet STRINGS = TokenSet.create(STRINGLITERAL);
 
