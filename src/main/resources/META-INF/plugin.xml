@@ -1,4 +1,4 @@
-<idea-plugin version="2">
+<idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
     <version>1.0</version>

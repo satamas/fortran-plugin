@@ -22,6 +22,7 @@ data hex    / Z'4'  /
 real W(100,100)[0:2,*]
 integer, dimension(2) :: array = (/ 1, 2 /)
 logical b = .true.
+format (1PE12.4, I10)
 if (a .le. 10 .and. b > 12 .or. c)
    c = (12**2 + 12.3d0 < v%res) .eqv. .not. (a .definedoperator. b)
 else

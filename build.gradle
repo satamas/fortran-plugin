@@ -70,6 +70,7 @@ lexerTask(project, 'FortranLexer', 'org/jetbrains/fortran/lang/lexer')
 parserTask(project, 'FortranParser', 'org/jetbrains/fortran/lang/parser')
 
 static def codegenTask(project, task) {
+    project.compileKotlin.dependsOn task
     project.compileJava.dependsOn task
     project.compileTestJava.dependsOn task
     return task
