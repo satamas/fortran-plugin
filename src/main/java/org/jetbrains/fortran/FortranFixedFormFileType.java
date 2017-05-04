@@ -10,7 +10,7 @@ import javax.swing.*;
 public class FortranFixedFormFileType extends LanguageFileType {
     public static FortranFixedFormFileType INSTANCE = new FortranFixedFormFileType();
     @NonNls
-    public static final String[] DEFAULT_EXTENSIONS = {"f", "for", "F"};
+    public static final String[] DEFAULT_EXTENSIONS = {"f", "for", "F", "FOR"};
 
     protected FortranFixedFormFileType() {
         super(FortranFixedFormLanguage.INSTANCE);

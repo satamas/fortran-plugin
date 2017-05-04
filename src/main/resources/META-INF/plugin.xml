@@ -1,16 +1,17 @@
 <idea-plugin version="2">
-    <id>com.your.company.unique.plugin.id</id>
-    <name>Plugin display name here</name>
+    <id>org.jetbrains.fortran</id>
+    <name>Fortran</name>
     <version>1.0</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
-      Fortran language support
+      Fortran language support<br>
+      The plugin supports FORTRAN 77, FORTRAN 90, FORTRAN 95, FORTRAN 2003 and FORTRAN 2008 source code.
+      Several nonstandard extensions are also supported. Lexer, parser and syntax highlighter are provided.
     ]]></description>
 
     <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      05.2017 First version of the plugin with lexer, parser and simple highlighter.<br>
     ]]>
     </change-notes>
 
