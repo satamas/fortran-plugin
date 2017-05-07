@@ -35,7 +35,10 @@
         <!-- Annotator -->
         <annotator language="Fortran" implementationClass="org.jetbrains.fortran.annotator.FortranHighlightingAnnotator"/>
 
-    <!--    <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.formatter.FortranFormattingModelBuilder"/> -->
+        <!-- Formatter -->
+        <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.formatter.FortranFormattingModelBuilder"/>
+        <codeStyleSettingsProvider implementation="org.jetbrains.fortran.formatter.settings.FortranCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider implementation="org.jetbrains.fortran.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
     </extensions>
 
     <actions>
@@ -45,7 +48,6 @@
                 description="Create new Fortran file">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
         </action>
-        <!-- Add your actions here -->
     </actions>
 
 </idea-plugin>
