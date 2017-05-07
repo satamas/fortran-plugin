@@ -7,7 +7,6 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.formatter.FormatterUtil
 import org.jetbrains.fortran.lang.psi.FortranExpr
-import java.util.ArrayList
 
 class FortranFmtBlock (
         private val node : ASTNode,
@@ -65,8 +64,7 @@ class FortranFmtBlock (
     }
 
     fun computeSpacing(child1: Block?, child2: Block): Spacing? {
-        // NADA something
-        return null
+        return spacingBuilder.getSpacing(this, child1, child2)
     }
 
 }

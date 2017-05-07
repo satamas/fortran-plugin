@@ -36,7 +36,7 @@ end"""
         indentOptions.INDENT_SIZE = 4
         indentOptions.CONTINUATION_INDENT_SIZE = 8
         indentOptions.TAB_SIZE = 4
-        indentOptions.USE_TAB_CHARACTER = true
+        indentOptions.USE_TAB_CHARACTER = false
 
         defaultSettings.BLOCK_COMMENT_AT_FIRST_COLUMN = false
         defaultSettings.LINE_COMMENT_AT_FIRST_COLUMN = true

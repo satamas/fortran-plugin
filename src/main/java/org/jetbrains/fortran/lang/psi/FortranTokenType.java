@@ -184,9 +184,9 @@ public class FortranTokenType extends IElementType {
 
 //    public static TokenSet SOFT_KEYWORDS = TokenSet.create(NONE_KEYWORD, END_KEYWORD, FILE_KEYWORD);
 
-    public static TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE, LINE_CONTINUE);
+    public static TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE);
 
-    public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT, CPP);
+    public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT, CPP, LINE_CONTINUE);
 
     public static TokenSet STRINGS = TokenSet.create(STRINGLITERAL);
 
