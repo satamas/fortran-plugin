@@ -27,7 +27,7 @@ FILE
         ADD_EXPR
           CONSTANT
             PsiElement(integerliteral)('1')
-          PsiWhiteSpace('\n     t')
+          PsiComment(line_continue)('\n     t')
           PsiElement(+)('+')
           CONSTANT
             PsiElement(integerliteral)('1')
@@ -67,7 +67,7 @@ FILE
         MULT_EXPR
           CONSTANT
             PsiElement(integerliteral)('2')
-          PsiWhiteSpace('\n  ! comment\n     *')
+          PsiComment(line_continue)('\n  ! comment\n     *')
           PsiElement(*)('*')
           CONSTANT
             PsiElement(integerliteral)('2')
@@ -82,7 +82,7 @@ FILE
         CONSTANT
           MULTILINE_STRING_LITERAL
             PsiElement(stringstart)('"AAA\&')
-            PsiWhiteSpace('\n     a')
+            PsiComment(line_continue)('\n     a')
             PsiElement(stringend)('AAA"')
       PsiElement(eol)('\n')
       PsiWhiteSpace('      ')

@@ -28,7 +28,7 @@ else
 endif
 end"""
 
-     override fun getIndentOptionsEditor(): IndentOptionsEditor? = SmartIndentOptionsEditor()
+     override fun getIndentOptionsEditor(): IndentOptionsEditor = SmartIndentOptionsEditor()
 
      override fun getDefaultCommonSettings(): CommonCodeStyleSettings? {
         val defaultSettings = CommonCodeStyleSettings(FortranLanguage.INSTANCE)

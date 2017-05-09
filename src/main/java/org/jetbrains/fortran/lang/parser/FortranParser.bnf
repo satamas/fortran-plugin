@@ -68,7 +68,7 @@
   consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 }
 
-file ::= program
+file ::= eol* program
 
 // keywords parsing list for keywords parsing as identifiers
 private abstract_      ::= abstract     | <<parseKeyword 'ABSTRACT'>>
@@ -245,7 +245,7 @@ private string_literal ::= stringliteral | multiline_string_literal
 multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
 // Clause 2
 // R201
-private program ::= (eol | program_unit)*
+private program ::=  (program_unit eol*)*
 // R202
 private program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | include_stmt | main_program ) {
   pin = 1

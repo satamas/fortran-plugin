@@ -181,12 +181,12 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "/" { return DIV; }
     "," { return COMMA; }
     [:letter:]+([:digit:]+(\.[:digit:]+([:letter:][:digit:]+)?)?)? { return DATAEDIT; }
-    (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { popState(); return EOL; }
+    {EOL}|(";") { popState(); return EOL; }
     . { popState(); return(BAD_CHARACTER); }
 }
 
 <QUOTE_FREE_STRING, QUOTE_FIXED_STRING, APOSTR_FREE_STRING, APOSTR_FIXED_STRING> {
-    {EOL} { popState(); return(EOL); }
+    {EOL}|(";") { popState(); return(EOL); }
 }
 
 <FREEFORM> {
@@ -218,7 +218,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 
 <FREEFORM,FIXEDFORM> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
-    (({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
+    {EOL}|(";") { return EOL; }
     {LINE_COMMENT} { return LINE_COMMENT; }
     {STRING_LITERAL} { return STRINGLITERAL; }
     {INTEGER_LITERAL} { return INTEGERLITERAL; }

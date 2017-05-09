@@ -117,7 +117,7 @@ FILE
         CONSTANT
           MULTILINE_STRING_LITERAL
             PsiElement(stringstart)('1_"Deidranna ')
-            PsiWhiteSpace('&\n  &')
+            PsiComment(line_continue)('&\n  &')
             PsiElement(stringend)('rules!"')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -130,9 +130,9 @@ FILE
         CONSTANT
           MULTILINE_STRING_LITERAL
             PsiElement(stringstart)(''Very ''&\\ bad & ')
-            PsiWhiteSpace('&\n  &')
+            PsiComment(line_continue)('&\n  &')
             PsiElement(stringmiddle)(' ')
-            PsiWhiteSpace('&\n  &')
+            PsiComment(line_continue)('&\n  &')
             PsiElement(stringend)(' string\'')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
