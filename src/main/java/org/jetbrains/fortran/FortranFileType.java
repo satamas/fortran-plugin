@@ -38,6 +38,6 @@ public class FortranFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return null;
+        return FortranIcons.INSTANCE.getFileTypeIcon();
     }
 }
