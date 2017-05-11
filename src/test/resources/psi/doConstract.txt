@@ -48,7 +48,8 @@ FILE
             PsiElement(integerliteral)('4')
           PsiWhiteSpace('  ')
           PsiElement(enddo)('enddo')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
@@ -85,7 +86,8 @@ FILE
         PsiWhiteSpace('  ')
         END_DO_STMT
           PsiElement(enddo)('enddo')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
@@ -132,11 +134,13 @@ FILE
           PsiElement(do)('do')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('loop')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       CONTINUE_STMT
         PsiElement(continue)('continue')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
@@ -211,7 +215,8 @@ FILE
         PsiWhiteSpace('  ')
         END_DO_STMT
           PsiElement(enddo)('enddo')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       LABEL
         PsiElement(integerliteral)('5')

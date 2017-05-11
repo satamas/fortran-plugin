@@ -59,7 +59,8 @@ FILE
           PsiElement(type)('type')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('dot')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -95,7 +96,8 @@ FILE
           PsiElement(type)('type')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('cut')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -136,7 +138,8 @@ FILE
           PsiElement(type)('type')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('cutarray')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -179,12 +182,14 @@ FILE
           PsiElement(type)('type')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('object')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
         PsiElement(contains)('contains')
-        PsiElement(eol)('\n\n')
+        PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FUNCTION_SUBPROGRAM
         FUNCTION_STMT

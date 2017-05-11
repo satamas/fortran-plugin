@@ -29,10 +29,11 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement(identifier)('key')
             PsiElement())(')')
-            PsiElement(eol)(';\n')
-          PsiWhiteSpace('             ')
-          PsiComment(comment)('! NOTE: real *8 is not an official standard but works usually')
+            PsiElement(eol)(';')
           BLOCK
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('             ')
+            PsiComment(comment)('! NOTE: real *8 is not an official standard but works usually')
             PsiElement(eol)('\n')
             PsiWhiteSpace('              ')
             TYPE_DECLARATION_STMT
@@ -60,7 +61,8 @@ FILE
               PsiWhiteSpace('  ')
               ENTITY_DECL
                 PsiElement(identifier)('solve')
-            PsiElement(eol)(';\n')
+            PsiElement(eol)(';')
+            PsiElement(eol)('\n')
             PsiWhiteSpace('              ')
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
@@ -91,7 +93,8 @@ FILE
               PsiWhiteSpace(' ')
               ENTITY_DECL
                 PsiElement(identifier)('pmatrix')
-            PsiElement(eol)(';\n')
+            PsiElement(eol)(';')
+            PsiElement(eol)('\n')
             PsiWhiteSpace('              ')
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC

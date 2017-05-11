@@ -2,6 +2,7 @@ package org.jetbrains.fortran.highlighter;
 
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as DefColors
 import com.intellij.openapi.editor.HighlighterColors;
+import com.intellij.openapi.editor.colors.EditorColors
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.options.colors.AttributesDescriptor
 
@@ -39,6 +40,8 @@ enum class FortranHighlightingColors (humanName: String, val default: TextAttrib
 
     // C preprocessor
     CPP("C preprocessor", DefColors.TEMPLATE_LANGUAGE_COLOR),
+
+    FIRST_WHITE_SPACE("WHITE SPACE", EditorColors.FOLDED_TEXT_ATTRIBUTES),
 
     BAD_CHARACTER("Bad character", HighlighterColors.BAD_CHARACTER);
 

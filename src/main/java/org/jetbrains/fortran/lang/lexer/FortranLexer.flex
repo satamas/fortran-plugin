@@ -11,6 +11,7 @@ import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_CONTINUE;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.CPP;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.WORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.FIRST_WHITE_SPACE;
 %%
 
 %class _FortranLexer
@@ -209,6 +210,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return WORD; }
     ^"#"+ { return LINE_COMMENT; }
     ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
+    ^({WHITE_SPACE_CHAR})+ { if (yylength() > 6) yypushback(yylength()-6); return FIRST_WHITE_SPACE; }
     ^[^0-9cCdD#*!\040\t\n\r].{5} { return BAD_CHARACTER; }
     ^[0-9\040dD][^0-9!\040\t\n\r].{4} { return BAD_CHARACTER; }
     ^[0-9\040dD]{2}[^0-9!\040\t\n\r].{3} { return BAD_CHARACTER; }
@@ -218,6 +220,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 
 <FREEFORM,FIXEDFORM> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+    ^{EOL} { return WHITE_SPACE; }
     {EOL}|(";") { return EOL; }
     {LINE_COMMENT} { return LINE_COMMENT; }
     {STRING_LITERAL} { return STRINGLITERAL; }

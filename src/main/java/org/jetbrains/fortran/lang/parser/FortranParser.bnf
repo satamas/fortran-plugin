@@ -245,7 +245,7 @@ private string_literal ::= stringliteral | multiline_string_literal
 multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
 // Clause 2
 // R201
-private program ::=  (program_unit eol*)*
+private program ::=  eol* (program_unit eol*)*
 // R202
 private program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | include_stmt | main_program ) {
   pin = 1

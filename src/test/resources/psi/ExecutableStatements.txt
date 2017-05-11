@@ -688,7 +688,8 @@ FILE
         PsiWhiteSpace('    ')
         END_DO_STMT
           PsiElement(enddo)('enddo')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       ASSIGNMENT_STMT
         DESIGNATOR

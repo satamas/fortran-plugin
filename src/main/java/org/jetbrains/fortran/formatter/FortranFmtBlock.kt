@@ -46,7 +46,7 @@ class FortranFmtBlock(
                 continue
             }
 
-            if (childType === TokenType.WHITE_SPACE || childType === EOL) {
+            if (childType === TokenType.WHITE_SPACE || (childType === EOL && !child.text.contains(";"))) {
                 child = child.treeNext
                 continue
             }
@@ -74,7 +74,7 @@ class FortranFmtBlock(
         val childType = child.elementType
         val childPsi = child.psi
         return when {
-            parentType == BLOCK -> Indent.getNormalIndent()
+            parentType == BLOCK && childType !== LABEL -> Indent.getNormalIndent()
 
             else -> Indent.getNoneIndent()
         }

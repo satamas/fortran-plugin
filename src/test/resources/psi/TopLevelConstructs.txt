@@ -87,7 +87,8 @@ FILE
       PsiElement(modulekwd)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('circle')
-  PsiElement(eol)('\n\n')
+  PsiElement(eol)('\n')
+  PsiElement(eol)('\n')
   FUNCTION_SUBPROGRAM
     FUNCTION_STMT
       PREFIX_SPEC
@@ -163,7 +164,8 @@ FILE
       PsiElement(eol)('\n')
     END_FUNCTION_STMT
       PsiElement(end)('end')
-  PsiElement(eol)('\n\n')
+  PsiElement(eol)('\n')
+  PsiElement(eol)('\n')
   FUNCTION_SUBPROGRAM
     FUNCTION_STMT
       PREFIX_SPEC
@@ -189,7 +191,8 @@ FILE
       PsiElement(eol)('\n')
     END_FUNCTION_STMT
       PsiElement(endfunction)('endfunction')
-  PsiElement(eol)('\n\n')
+  PsiElement(eol)('\n')
+  PsiElement(eol)('\n')
   SUBROUTINE_SUBPROGRAM
     SUBROUTINE_STMT
       PsiElement(subroutine)('subroutine')
@@ -227,7 +230,8 @@ FILE
       PsiElement(eol)('\n')
     END_SUBROUTINE_STMT
       PsiElement(end)('end')
-  PsiElement(eol)('\n\n')
+  PsiElement(eol)('\n')
+  PsiElement(eol)('\n')
   BLOCK_DATA
     BLOCK_DATA_STMT
       PsiElement(blockkwd)('block')

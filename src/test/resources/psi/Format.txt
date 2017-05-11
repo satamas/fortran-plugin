@@ -46,6 +46,7 @@ FILE
         PsiElement(dataedit)('I5')
         PsiElement())(')')
         PsiElement())(')')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(end)('end')
