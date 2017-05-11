@@ -114,6 +114,8 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 %%
 
 <YYINITIAL> {
+({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+(({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
 . { yypushback(1);
     if (fFixedForm_)
         pushState(FIXEDFORM);
@@ -158,7 +160,6 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 }
 
 <FIXED_FORMAT_STR> {
-    ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
     ^[cC*][^\r\n]* {  return LINE_COMMENT; }
     {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
     ({KIND_PARAM}_)?\"{QUOTE_FIXED_STRING_PART}* { pushState(QUOTE_FIXED_STRING); return(STRINGSTART); }
