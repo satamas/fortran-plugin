@@ -32,7 +32,7 @@ public class FortranFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getDefaultExtension() {
-        return DEFAULT_EXTENSIONS[0];
+        return DEFAULT_EXTENSIONS[1];
     }
 
     @Nullable

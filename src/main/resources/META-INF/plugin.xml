@@ -36,6 +36,12 @@
     </extensions>
 
     <actions>
+        <action id="Fortran.NewFortranFile"
+                class="org.jetbrains.fortran.actions.FortranCreateFileAction"
+                text="Fortran File"
+                description="Create new Fortran file">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
+        </action>
         <!-- Add your actions here -->
     </actions>
 
