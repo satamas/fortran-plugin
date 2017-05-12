@@ -187,7 +187,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 }
 
 <QUOTE_FREE_STRING, QUOTE_FIXED_STRING, APOSTR_FREE_STRING, APOSTR_FIXED_STRING> {
-    {EOL}|(";") { popState(); return(EOL); }
+    {EOL} { popState(); return(EOL); }
 }
 
 <FREEFORM> {

@@ -40,6 +40,11 @@
         <codeStyleSettingsProvider implementation="org.jetbrains.fortran.formatter.settings.FortranCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider implementation="org.jetbrains.fortran.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
         </extensions>
+        <!-- Annotator -->
+        <annotator language="Fortran" implementationClass="org.jetbrains.fortran.annotator.FortranHighlightingAnnotator"/>
+
+    <!--    <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.formatter.FortranFormattingModelBuilder"/> -->
+    </extensions>
 
     <actions>
         <action id="Fortran.NewFortranFile"
