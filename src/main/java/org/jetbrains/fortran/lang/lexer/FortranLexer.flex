@@ -10,6 +10,7 @@ import static org.jetbrains.fortran.lang.FortranTypes.*;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_CONTINUE;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.CPP;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.WORD;
 %%
 
 %class _FortranLexer
@@ -194,8 +195,8 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}* { pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
      ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
-     "format" { return FORMATKWD; }
-     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FREE_FORMAT_STR); return FORMATKWD; }
+     "format" { return WORD; }
+     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FREE_FORMAT_STR); return WORD; }
 }
 
 <FIXEDFORM> {
@@ -204,8 +205,8 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
     ({KIND_PARAM}_)?\"{QUOTE_FIXED_STRING_PART}* { pushState(QUOTE_FIXED_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
-    "format" { return FORMATKWD; }
-    "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return FORMATKWD; }
+    "format" { return WORD; }
+    "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return WORD; }
     ^"#"+ { return LINE_COMMENT; }
     ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
     ^[^0-9cCdD#*!\040\t\n\r].{5} { return BAD_CHARACTER; }
@@ -272,161 +273,8 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ".gt." { return GT; }
     ".ge." { return GE; }
 
-    "abstract" { return ABSTRACT; }
-    "accept" { return ACCEPT; }
-    "all" { return ALL; }
-    "allocatable" { return ALLOCATABLE; }
-    "allocate" { return ALLOCATE; }
-    "assign" { return ASSIGN; }
-    "assignment" { return ASSIGNMENT; }
-    "associate" { return ASSOCIATE; }
-    "asynchronous" { return ASYNCHRONOUS; }
-    "backspace" { return BACKSPACE; }
-    "bind" { return BIND; }
-    "block" { return BLOCKKWD; }
-    "blockdata" { return BLOCKDATA; }
-    "byte" { return BYTE; } // nonstandard data type
-    "call" { return CALL; }
-    "case" { return CASE; }
-    "character" { return CHARACTER; }
-    "class" { return CLASSKWD; }
-    "close" { return CLOSE; }
-    "codimension" { return CODIMENSION; }
-    "common" { return COMMON; }
-    "complex" { return COMPLEX; }
-    "concurrent" { return CONCURRENT; }
-    "contains" { return CONTAINS; }
-    "contiguous" { return CONTIGUOUS; }
-    "continue" { return CONTINUE; }
-    "critical" { return CRITICAL; }
-    "cycle" { return CYCLE; }
-    "data" { return DATA; }
-    "deallocate" { return DEALLOCATE; }
-    "decode" { return DECODE; }
-    "default" { return DEFAULT; }
-    "deferred" { return DEFERRED; }
-    "dimension" { return DIMENSION; }
-    "do" { return DO; }
-    "double" { return DOUBLE; }
-    "doubleprecision" { return DOUBLEPRECISION; }
-    "elemental" { return ELEMENTAL; }
-    "else" { return ELSE; }
-    "elseif" { return ELSEIF; }
-    "elsewhere" { return ELSEWHERE; }
-    "encode" { return ENCODE; }
-    "end" { return END; }
-    "endassociate" { return ENDASSOCIATE; }
-    "endblock" { return ENDBLOCK; }
-    "endblockdata" { return ENDBLOCKDATA; }
-    "endcritical" { return ENDCRITICAL; }
-    "enddo" { return ENDDO; }
-    "endenum" { return ENDENUM; }
-    "endfile" { return ENDFILE; }
-    "endforall" { return ENDFORALL; }
-    "endfunction" { return ENDFUNCTION; }
-    "endif" { return ENDIF; }
-    "endinterface" { return ENDINTERFACE; }
-    "endmodule" { return ENDMODULE; }
-    "endprocedure" { return ENDPROCEDURE; }
-    "endprogram" { return ENDPROGRAM; }
-    "endselect" { return ENDSELECT; }
-    "endsubmodule" { return ENDSUBMODULE; }
-    "endsubroutine" { return ENDSUBROUTINE; }
-    "endtype" { return ENDTYPE; }
-    "endwhere" { return ENDWHERE; }
-    "entry" { return ENTRY; }
-    "enum" { return ENUM; }
-    "enumerator" { return ENUMERATORKWD; }
-    "error" { return ERROR; }
-    "equivalence" { return EQUIVALENCE; }
-    "exit" { return EXIT; }
-    "extends" { return EXTENDS; }
-    "external" { return EXTERNALKWD; }
-    "final" { return FINAL; }
-    "flush" { return FLUSH; }
-    "forall" { return FORALL; }
-    "formatted" { return FORMATTED; }
-    "function" { return FUNCTION; }
-    "generic" { return GENERIC; }
-    "go" { return GO; }
-    "goto" { return GOTO; }
-    "if" { return IF; }
-    "images" { return IMAGES; }
-    "implicit" { return IMPLICIT; }
-    "import" { return IMPORT; }
-    "impure" { return IMPURE; }
-    "in" { return IN; }
-    "include" { return INCLUDE; }
-    "inout" { return INOUT; }
-    "integer" { return INTEGER; }
-    "intent" { return INTENT; }
-    "interface" { return INTERFACE; }
-    "intrinsic" { return INTRINSIC; }
-    "inquire" { return INQUIRE; }
-    "iolength" { return IOLENGTH; }
-    "is" { return IS; }
-    "kind" { return KIND; }
-    "len" { return LEN; }
-    "lock" { return LOCK; }
-    "logical" { return LOGICAL; }
-    "module" { return MODULEKWD; }
-    "memory" { return MEMORY; }
-    "name" { return NAMEKWD; }
-    "namelist" { return NAMELIST; }
-    "none" { return NONE; }
-    "non_intrinsic" { return NONINTRINSIC; }
-    "non_overridable" { return NONOVERRIDABLE; }
-    "nopass" { return NOPASS; }
-    "nullify" { return NULLIFY; }
-    "only" { return ONLY; }
-    "open" { return OPEN; }
-    "operator" { return OPERATOR; }
-    "optional" { return OPTIONAL; }
-    "out" { return OUT; }
-    "parameter" { return PARAMETER; }
-    "pass" { return PASS; }
-    "pause" { return PAUSE; }
-    "precision" { return PRECISION; }
-    "pointer" { return POINTER; }
-    "print" { return PRINT; }
-    "private" { return PRIVATEKWD; }
-    "procedure" { return PROCEDURE; }
-    "program" { return PROGRAMKWD; }
-    "protected" { return PROTECTED; }
-    "public" { return PUBLICKWD; }
-    "pure" { return PURE; }
-    "read" { return READ; }
-    "real" { return REAL; }
-    "recursive" { return RECURSIVE; }
-    "result" { return RESULT; }
-    "return" { return RETURNKWD; }
-    "rewind" { return REWIND; }
-    "save" { return SAVE; }
-    "select" { return SELECT; }
-    "sequence" { return SEQUENCE; }
-    "stop" { return STOP; }
-    "sync" { return SYNC; }
-    "syncall" { return SYNCALL; }
-    "syncimages" { return SYNCIMAGES; }
-    "syncmemory" { return SYNCMEMORY; }
-    "subroutine" { return SUBROUTINE; }
-    "submodule" { return SUBMODULEKWD; }
-    "target" { return TARGET; }
-    "then" { return THEN; }
-    "to" { return TO; }
-    "type" { return TYPE; }
-    "use" { return USE; }
-    "unformatted" {return UNFORMATTED; }
-    "unlock" { return UNLOCK; }
-    "value" { return VALUE; }
-    "volatile" { return VOLATILE; }
-    "wait" { return WAIT; }
-    "where" { return WHERE; }
-    "while" { return WHILE; }
-    "write" { return WRITE; }
-
     {DEFOPERATOR} { return DEFOPERATOR; }
-    {IDENTIFIER} { return IDENTIFIER; }
+    {IDENTIFIER} { return WORD/*IDENTIFIER*/; }
 }
 
 . { return BAD_CHARACTER; }

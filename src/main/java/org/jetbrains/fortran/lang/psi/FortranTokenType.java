@@ -22,6 +22,8 @@ public class FortranTokenType extends IElementType {
 
     public static IElementType LINE_CONTINUE = new FortranTokenType("line_continue");
 
+    public static IElementType WORD = new FortranTokenType("identifier_or_keyword");
+
     public static IElementType CPP = new FortranTokenType("c_pre_processor");
 
     public static TokenSet KEYWORDS = TokenSet.create(

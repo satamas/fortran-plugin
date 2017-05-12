@@ -42,6 +42,7 @@ enum class FortranHighlightingColors (humanName: String, val default: TextAttrib
 
     BAD_CHARACTER("Bad character", HighlighterColors.BAD_CHARACTER);
 
+
     val textAttributesKey = TextAttributesKey.createTextAttributesKey("org.jetbrains.fortran.$name", default)
     val attributesDescriptor = AttributesDescriptor(humanName, textAttributesKey)
 }

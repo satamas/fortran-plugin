@@ -11,13 +11,14 @@ import static org.jetbrains.fortran.lang.parser.FortranParser.execution_part_con
 import static org.jetbrains.fortran.lang.parser.FortranParser.loop_control;
 import static org.jetbrains.fortran.lang.parser.FortranParserUtil.parseIdentifier;
 import static org.jetbrains.fortran.lang.parser.FortranParserUtil.parseKeyword;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.WORD;
 
 public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser {
 
     @Override
     public boolean parse(PsiBuilder builder, int level) {
         if (!recursion_guard_(builder, level, "labeled_do_construct")) return false;
-        if (!nextTokenIs(builder, "<labeled do construct>", DO, IDENTIFIER)) return false;
+        if (!nextTokenIs(builder, "<labeled do construct>", WORD, DO, IDENTIFIER)) return false;
         boolean result, pinned;
         PsiBuilder.Marker marker = enter_section_(builder, level, _COLLAPSE_, LABELED_DO_CONSTRUCT, "<labeled do construct>");
         int labelValue = parseLabelDoStmt(builder, level + 1);
@@ -33,7 +34,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
 
     private static boolean parseDoStmtWithTheSameLabel(PsiBuilder builder, int level, int testLabel) {
         if (!recursion_guard_(builder, level, "label_do_stmt")) return false;
-        if (!nextTokenIs(builder, "<label do stmt>", DO, IDENTIFIER)) return false;
+        if (!nextTokenIs(builder, "<label do stmt>", WORD, DO, IDENTIFIER)) return false;
         boolean result, pinned;
         PsiBuilder.Marker marker_ = enter_section_(builder, level, _NONE_, LABEL_DO_STMT, "<label do stmt>");
         consumeTokens(builder, 0, IDENTIFIER, COLON);
@@ -52,7 +53,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
 //
     private static int parseLabelDoStmt(PsiBuilder builder, int level) {
         if (!recursion_guard_(builder, level, "label_do_stmt")) return -1;
-        if (!nextTokenIs(builder, "<label do stmt>", DO, IDENTIFIER)) return -1;
+        if (!nextTokenIs(builder, "<label do stmt>", WORD, DO, IDENTIFIER)) return -1;
         boolean result, pinned;
         PsiBuilder.Marker marker_ = enter_section_(builder, level, _NONE_, LABEL_DO_STMT, "<label do stmt>");
         parseLoopName(builder, level+1);

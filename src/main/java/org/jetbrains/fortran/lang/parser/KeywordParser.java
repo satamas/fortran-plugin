@@ -6,7 +6,7 @@ import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORDS;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.WORD;
 
 public class KeywordParser implements GeneratedParserUtilBase.Parser {
 
@@ -21,7 +21,7 @@ public class KeywordParser implements GeneratedParserUtilBase.Parser {
         boolean result = false;
         PsiBuilder.Marker marker = enter_section_(builder);
        // result = consumeToken(builder, keyword);
-        if (builder.getTokenType() == IDENTIFIER) {
+        if (builder.getTokenType() == IDENTIFIER || builder.getTokenType() == WORD) {
             if (builder.getTokenText().equalsIgnoreCase(keyword.toString())
                     || (builder.getTokenText()+"kwd").equalsIgnoreCase(keyword.toString())) {
                 builder.remapCurrentToken(keyword);

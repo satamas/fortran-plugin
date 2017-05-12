@@ -32,6 +32,9 @@
                                        implementationClass="org.jetbrains.fortran.highlighter.FortranFixedFormSyntaxHighlighterFactory"/>
         <!-- Color Settings -->
         <colorSettingsPage implementation="org.jetbrains.fortran.highlighter.FortranColorSettingsPage"/>
+        <!-- Annotator -->
+        <annotator language="Fortran" implementationClass="org.jetbrains.fortran.annotator.FortranHighlightingAnnotator"/>
+
     <!--    <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.formatter.FortranFormattingModelBuilder"/> -->
     </extensions>
 
