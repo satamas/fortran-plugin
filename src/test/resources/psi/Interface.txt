@@ -1,7 +1,7 @@
 FILE
   MODULE
     MODULE_STMT
-      PsiElement(modulekwd)('module')
+      PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('gaussinter')
       PsiElement(eol)('\n')
@@ -9,7 +9,7 @@ FILE
     BLOCK
       INTERFACE_BLOCK
         INTERFACE_STMT
-          PsiElement(interface)('interface')
+          PsiElement(keyword)('interface')
           PsiWhiteSpace(' ')
           GENERIC_SPEC
             PsiElement(identifier)('solve')
@@ -17,7 +17,7 @@ FILE
         PsiWhiteSpace('        ')
         INTERFACE_BODY
           FUNCTION_STMT
-            PsiElement(function)('function')
+            PsiElement(keyword)('function')
             PsiWhiteSpace(' ')
             PsiElement(identifier)('solve')
             PsiElement(()('(')
@@ -38,7 +38,7 @@ FILE
             PsiWhiteSpace('              ')
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
-                PsiElement(real)('real')
+                PsiElement(keyword)('real')
                 NONSTANDARD_KIND_SELECTOR
                   PsiElement(*)('*')
                   CONSTANT
@@ -46,7 +46,7 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ATTR_SPEC
-                PsiElement(dimension)('dimension')
+                PsiElement(keyword)('dimension')
                 PsiWhiteSpace(' ')
                 PsiElement(()('(')
                 ASSUMED_SHAPE_SPEC
@@ -55,7 +55,7 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ATTR_SPEC
-                PsiElement(pointer)('pointer')
+                PsiElement(keyword)('pointer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace('  ')
@@ -66,7 +66,7 @@ FILE
             PsiWhiteSpace('              ')
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
-                PsiElement(real)('real')
+                PsiElement(keyword)('real')
                 KIND_SELECTOR
                   PsiElement(()('(')
                   CONSTANT
@@ -75,7 +75,7 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ATTR_SPEC
-                PsiElement(dimension)('dimension')
+                PsiElement(keyword)('dimension')
                 PsiWhiteSpace(' ')
                 PsiElement(()('(')
                 ASSUMED_SHAPE_SPEC
@@ -87,7 +87,7 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ATTR_SPEC
-                PsiElement(pointer)('pointer')
+                PsiElement(keyword)('pointer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -98,7 +98,7 @@ FILE
             PsiWhiteSpace('              ')
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
-                PsiElement(integer)('integer')
+                PsiElement(keyword)('integer')
               PsiWhiteSpace(' ')
               ENTITY_DECL
                 PsiElement(identifier)('n')
@@ -109,16 +109,16 @@ FILE
             PsiElement(eol)('\n')
           PsiWhiteSpace('        ')
           END_FUNCTION_STMT
-            PsiElement(end)('end')
+            PsiElement(keyword)('end')
             PsiWhiteSpace(' ')
-            PsiElement(function)('function')
+            PsiElement(keyword)('function')
             PsiWhiteSpace(' ')
             PsiElement(identifier)('solve')
         PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
         INTERFACE_BODY
           SUBROUTINE_STMT
-            PsiElement(subroutine)('subroutine')
+            PsiElement(keyword)('subroutine')
             PsiWhiteSpace(' ')
             PsiElement(identifier)('LPV')
             PsiElement(()('(')
@@ -142,7 +142,7 @@ FILE
           BLOCK
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
-                PsiElement(real)('real')
+                PsiElement(keyword)('real')
                 KIND_SELECTOR
                   PsiElement(()('(')
                   CONSTANT
@@ -157,7 +157,7 @@ FILE
             PsiWhiteSpace('          ')
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
-                PsiElement(real)('real')
+                PsiElement(keyword)('real')
                 KIND_SELECTOR
                   PsiElement(()('(')
                   CONSTANT
@@ -166,7 +166,7 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ATTR_SPEC
-                PsiElement(pointer)('pointer')
+                PsiElement(keyword)('pointer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -180,7 +180,7 @@ FILE
             PsiWhiteSpace('          ')
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
-                PsiElement(integer)('integer')
+                PsiElement(keyword)('integer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -189,20 +189,20 @@ FILE
             PsiElement(eol)('\n')
           PsiWhiteSpace('        ')
           END_SUBROUTINE_STMT
-            PsiElement(end)('end')
+            PsiElement(keyword)('end')
             PsiWhiteSpace(' ')
-            PsiElement(subroutine)('subroutine')
+            PsiElement(keyword)('subroutine')
             PsiWhiteSpace(' ')
             PsiElement(identifier)('LPV')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         END_INTERFACE_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(interface)('interface')
+          PsiElement(keyword)('interface')
       PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     END_MODULE_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(modulekwd)('module')
+      PsiElement(keyword)('module')

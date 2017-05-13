@@ -1,7 +1,7 @@
 FILE
   MODULE
     MODULE_STMT
-      PsiElement(modulekwd)('module')
+      PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
@@ -9,7 +9,7 @@ FILE
     BLOCK
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
-          PsiElement(type)('type')
+          PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
@@ -20,7 +20,7 @@ FILE
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
               INTRINSIC_TYPE_SPEC
-                PsiElement(integer)('integer')
+                PsiElement(keyword)('integer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -54,9 +54,9 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(type)('type')
+          PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('dot')
       PsiElement(eol)('\n')
@@ -64,7 +64,7 @@ FILE
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
-          PsiElement(type)('type')
+          PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
@@ -74,7 +74,7 @@ FILE
         COMPONENT_PART
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              PsiElement(type)('type')
+              PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
                 PsiElement(identifier)('dot')
@@ -91,9 +91,9 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(type)('type')
+          PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('cut')
       PsiElement(eol)('\n')
@@ -101,7 +101,7 @@ FILE
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
-          PsiElement(type)('type')
+          PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
@@ -111,7 +111,7 @@ FILE
         COMPONENT_PART
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              PsiElement(type)('type')
+              PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
                 PsiElement(identifier)('cut')
@@ -119,7 +119,7 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_ATTR_SPEC
-                PsiElement(dimension)('dimension')
+                PsiElement(keyword)('dimension')
                 PsiElement(()('(')
                 EXPLICIT_SHAPE_SPEC
                   CONSTANT
@@ -133,9 +133,9 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(type)('type')
+          PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('cutarray')
       PsiElement(eol)('\n')
@@ -143,7 +143,7 @@ FILE
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
-          PsiElement(type)('type')
+          PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
@@ -154,7 +154,7 @@ FILE
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
               INTRINSIC_TYPE_SPEC
-                PsiElement(integer)('integer')
+                PsiElement(keyword)('integer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -164,7 +164,7 @@ FILE
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              PsiElement(type)('type')
+              PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
                 PsiElement(identifier)('cutarray')
@@ -177,9 +177,9 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(type)('type')
+          PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('object')
       PsiElement(eol)('\n')
@@ -187,7 +187,7 @@ FILE
     PsiWhiteSpace('  ')
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
-        PsiElement(contains)('contains')
+        PsiElement(keyword)('contains')
         PsiElement(eol)('\n')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -195,9 +195,9 @@ FILE
         FUNCTION_STMT
           PREFIX_SPEC
             INTRINSIC_TYPE_SPEC
-              PsiElement(real)('real')
+              PsiElement(keyword)('real')
           PsiWhiteSpace(' ')
-          PsiElement(function)('function')
+          PsiElement(keyword)('function')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('l')
           PsiElement(()('(')
@@ -219,7 +219,7 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           RETURN_STMT
-            PsiElement(returnkwd)('return')
+            PsiElement(keyword)('return')
             PsiWhiteSpace(' ')
             DESIGNATOR
               DATA_REF
@@ -240,13 +240,13 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_FUNCTION_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(function)('function')
+          PsiElement(keyword)('function')
       PsiElement(eol)('\n')
     END_MODULE_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(modulekwd)('module')
+      PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')

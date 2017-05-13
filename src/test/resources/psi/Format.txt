@@ -5,7 +5,7 @@ FILE
         PsiElement(integerliteral)('1')
       PsiWhiteSpace(' ')
       FORMAT_STMT
-        PsiElement(formatkwd)('FORMAT')
+        PsiElement(keyword)('FORMAT')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         CONTROL_EDIT
@@ -21,7 +21,7 @@ FILE
         PsiElement(integerliteral)('2')
       PsiWhiteSpace(' ')
       FORMAT_STMT
-        PsiElement(formatkwd)('FORMAT')
+        PsiElement(keyword)('FORMAT')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PsiElement(dataedit)('I12')
@@ -49,4 +49,4 @@ FILE
       PsiElement(eol)('\n')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')

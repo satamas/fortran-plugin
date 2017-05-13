@@ -1,19 +1,19 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
       IMPLICIT_STMT
-        PsiElement(implicit)('IMPLICIT')
+        PsiElement(keyword)('IMPLICIT')
         PsiWhiteSpace(' ')
         IMPLICIT_SPEC
-          PsiElement(double)('DOUBLE')
+          PsiElement(keyword)('DOUBLE')
           PsiWhiteSpace(' ')
-          PsiElement(precision)('PRECISION')
+          PsiElement(keyword)('PRECISION')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           LETTER_SPEC
@@ -30,7 +30,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(character)('character')
+          PsiElement(keyword)('character')
           CHAR_SELECTOR
             LENGTH_SELECTOR
               PsiElement(*)('*')
@@ -39,7 +39,7 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         ATTR_SPEC
-          PsiElement(allocatable)('allocatable')
+          PsiElement(keyword)('allocatable')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -53,7 +53,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('a')
@@ -61,7 +61,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(character)('character')
+          PsiElement(keyword)('character')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('c')
@@ -74,7 +74,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(character)('character')
+          PsiElement(keyword)('character')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('c')
@@ -89,11 +89,11 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         ATTR_SPEC
-          PsiElement(externalkwd)('external')
+          PsiElement(keyword)('external')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -107,7 +107,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('d')
@@ -120,7 +120,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('d')
@@ -138,7 +138,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('d')
@@ -158,7 +158,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('d')
@@ -181,7 +181,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PARAMETER_STMT
-        PsiElement(parameter)('parameter')
+        PsiElement(keyword)('parameter')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         NAMED_CONSTANT_DEF
@@ -195,7 +195,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PARAMETER_STMT
-        PsiElement(parameter)('parameter')
+        PsiElement(keyword)('parameter')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         NAMED_CONSTANT_DEF
@@ -207,7 +207,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PARAMETER_STMT
-        PsiElement(parameter)('parameter')
+        PsiElement(keyword)('parameter')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         NAMED_CONSTANT_DEF
@@ -227,7 +227,7 @@ FILE
       PsiWhiteSpace('  ')
       OTHER_SPECIFICATION_STMT
         COMMON_STMT
-          PsiElement(common)('common')
+          PsiElement(keyword)('common')
           PsiWhiteSpace(' ')
           COMMON_BLOCK_OBJECT
             PsiElement(identifier)('c')
@@ -235,7 +235,7 @@ FILE
       PsiWhiteSpace('  ')
       OTHER_SPECIFICATION_STMT
         COMMON_STMT
-          PsiElement(common)('common')
+          PsiElement(keyword)('common')
           PsiWhiteSpace(' ')
           COMMON_BLOCK_OBJECT
             PsiElement(identifier)('c')
@@ -252,7 +252,7 @@ FILE
       PsiWhiteSpace('  ')
       OTHER_SPECIFICATION_STMT
         COMMON_STMT
-          PsiElement(common)('common')
+          PsiElement(keyword)('common')
           PsiWhiteSpace(' ')
           PsiElement(//)('//')
           PsiWhiteSpace(' ')
@@ -262,7 +262,7 @@ FILE
       PsiWhiteSpace('  ')
       OTHER_SPECIFICATION_STMT
         COMMON_STMT
-          PsiElement(common)('common')
+          PsiElement(keyword)('common')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           PsiElement(identifier)('x')
@@ -274,7 +274,7 @@ FILE
       PsiWhiteSpace('  ')
       OTHER_SPECIFICATION_STMT
         COMMON_STMT
-          PsiElement(common)('common')
+          PsiElement(keyword)('common')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           PsiElement(identifier)('x')
@@ -299,7 +299,7 @@ FILE
       PsiWhiteSpace('  ')
       OTHER_SPECIFICATION_STMT
         COMMON_STMT
-          PsiElement(common)('common')
+          PsiElement(keyword)('common')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           PsiElement(identifier)('x')
@@ -343,8 +343,8 @@ FILE
           PsiElement(identifier)('var2')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')

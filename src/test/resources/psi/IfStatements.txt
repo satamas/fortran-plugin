@@ -5,14 +5,14 @@ FILE
   PsiElement(eol)('\n')
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
       IF_STMT
-        PsiElement(if)('if')
+        PsiElement(keyword)('if')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         REL_EXPR
@@ -43,7 +43,7 @@ FILE
       PsiWhiteSpace('  ')
       IF_CONSTRUCT
         IF_THEN_STMT
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           NOT_EXPR
@@ -52,7 +52,7 @@ FILE
               PsiElement(identifier)('c')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          PsiElement(then)('then')
+          PsiElement(keyword)('then')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
@@ -67,7 +67,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         ELSE_IF_STMT
-          PsiElement(elseif)('elseif')
+          PsiElement(keyword)('elseif')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           AND_EXPR
@@ -80,7 +80,7 @@ FILE
               PsiElement(identifier)('d')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          PsiElement(then)('then')
+          PsiElement(keyword)('then')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
@@ -95,19 +95,19 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_IF_STMT
-          PsiElement(endif)('endif')
+          PsiElement(keyword)('endif')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       IF_CONSTRUCT
         IF_THEN_STMT
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           LOGICAL_LITERAL
             PsiElement(truekwd)('.true.')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          PsiElement(then)('then')
+          PsiElement(keyword)('then')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
@@ -122,9 +122,9 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         ELSE_IF_STMT
-          PsiElement(else)('else')
+          PsiElement(keyword)('else')
           PsiWhiteSpace(' ')
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           OR_EXPR
@@ -137,7 +137,7 @@ FILE
               PsiElement(truekwd)('.true.')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          PsiElement(then)('then')
+          PsiElement(keyword)('then')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
@@ -152,7 +152,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         ELSE_STMT
-          PsiElement(else)('else')
+          PsiElement(keyword)('else')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
@@ -167,7 +167,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_IF_STMT
-          PsiElement(endif)('endif')
+          PsiElement(keyword)('endif')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(endprogram)('endprogram')
+      PsiElement(keyword)('endprogram')

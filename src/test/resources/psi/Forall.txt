@@ -3,7 +3,7 @@ FILE
     BLOCK
       FORALL_CONSTRUCT
         FORALL_CONSTRUCT_STMT
-          PsiElement(forall)('forall')
+          PsiElement(keyword)('forall')
           PsiWhiteSpace(' ')
           FORALL_HEADER
             PsiElement(()('(')
@@ -22,7 +22,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('   ')
         FORALL_STMT
-          PsiElement(forall)('forall')
+          PsiElement(keyword)('forall')
           PsiWhiteSpace(' ')
           FORALL_HEADER
             PsiElement(()('(')
@@ -77,7 +77,7 @@ FILE
         PsiWhiteSpace(' ')
         FORALL_CONSTRUCT
           FORALL_CONSTRUCT_STMT
-            PsiElement(forall)('forall')
+            PsiElement(keyword)('forall')
             PsiWhiteSpace(' ')
             FORALL_HEADER
               PsiElement(()('(')
@@ -110,11 +110,11 @@ FILE
             LABEL
               PsiElement(integerliteral)('3')
             PsiWhiteSpace(' ')
-            PsiElement(endforall)('endforall')
+            PsiElement(keyword)('endforall')
         PsiElement(eol)('\n')
         PsiWhiteSpace('   ')
         WHERE_STMT
-          PsiElement(where)('where')
+          PsiElement(keyword)('where')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           REL_EXPR
@@ -139,7 +139,7 @@ FILE
         PsiWhiteSpace('   ')
         WHERE_CONSTRUCT
           WHERE_CONSTRUCT_STMT
-            PsiElement(where)('where')
+            PsiElement(keyword)('where')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             REL_EXPR
@@ -162,7 +162,7 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('   ')
           MASKED_ELSEWHERE_STMT
-            PsiElement(elsewhere)('elsewhere')
+            PsiElement(keyword)('elsewhere')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             REL_EXPR
@@ -183,7 +183,7 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('   ')
           ELSEWHERE_STMT
-            PsiElement(elsewhere)('elsewhere')
+            PsiElement(keyword)('elsewhere')
             PsiElement(eol)('\n')
           PsiWhiteSpace('      ')
           ASSIGNMENT_STMT
@@ -195,10 +195,10 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('   ')
           END_WHERE_STMT
-            PsiElement(endwhere)('endwhere')
+            PsiElement(keyword)('endwhere')
         PsiElement(eol)('\n')
         END_FORALL_STMT
-          PsiElement(endforall)('endforall')
+          PsiElement(keyword)('endforall')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(endprogram)('endprogram')
+      PsiElement(keyword)('endprogram')

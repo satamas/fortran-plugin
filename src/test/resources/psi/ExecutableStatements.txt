@@ -1,7 +1,7 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('p')
       PsiElement(eol)('\n')
@@ -9,7 +9,7 @@ FILE
     BLOCK
       IF_CONSTRUCT
         IF_THEN_STMT
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           PsiWhiteSpace(' ')
@@ -18,7 +18,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          PsiElement(then)('then')
+          PsiElement(keyword)('then')
           PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
@@ -35,14 +35,14 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         END_IF_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       IF_CONSTRUCT
         IF_THEN_STMT
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           PsiWhiteSpace(' ')
@@ -51,7 +51,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          PsiElement(then)('then')
+          PsiElement(keyword)('then')
           PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
@@ -68,7 +68,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         ELSE_STMT
-          PsiElement(else)('else')
+          PsiElement(keyword)('else')
           PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
@@ -85,14 +85,14 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         END_IF_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       IF_CONSTRUCT
         IF_THEN_STMT
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           PsiWhiteSpace(' ')
@@ -107,13 +107,13 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          PsiElement(then)('then')
+          PsiElement(keyword)('then')
           PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
           IF_CONSTRUCT
             IF_THEN_STMT
-              PsiElement(if)('if')
+              PsiElement(keyword)('if')
               PsiWhiteSpace(' ')
               PsiElement(()('(')
               PsiWhiteSpace(' ')
@@ -128,7 +128,7 @@ FILE
               PsiWhiteSpace(' ')
               PsiElement())(')')
               PsiWhiteSpace(' ')
-              PsiElement(then)('then')
+              PsiElement(keyword)('then')
               PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             BLOCK
@@ -153,7 +153,7 @@ FILE
               PsiElement(eol)('\n')
             PsiWhiteSpace('      ')
             ELSE_STMT
-              PsiElement(else)('else')
+              PsiElement(keyword)('else')
               PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             BLOCK
@@ -168,15 +168,15 @@ FILE
               PsiElement(eol)('\n')
             PsiWhiteSpace('      ')
             END_IF_STMT
-              PsiElement(end)('end')
+              PsiElement(keyword)('end')
               PsiWhiteSpace(' ')
-              PsiElement(if)('if')
+              PsiElement(keyword)('if')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         ELSE_IF_STMT
-          PsiElement(else)('else')
+          PsiElement(keyword)('else')
           PsiWhiteSpace(' ')
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           PsiWhiteSpace(' ')
@@ -191,7 +191,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          PsiElement(then)('then')
+          PsiElement(keyword)('then')
           PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
@@ -206,7 +206,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         ELSE_STMT
-          PsiElement(else)('else')
+          PsiElement(keyword)('else')
           PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
@@ -231,14 +231,14 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         END_IF_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(if)('if')
+          PsiElement(keyword)('if')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
-          PsiElement(do)('do')
+          PsiElement(keyword)('do')
           PsiWhiteSpace(' ')
           LOOP_CONTROL
             DESIGNATOR
@@ -256,7 +256,7 @@ FILE
         PsiWhiteSpace('    ')
         BLOCK
           ARITHMETIC_IF_STMT
-            PsiElement(if)('if')
+            PsiElement(keyword)('if')
             PsiElement(()('(')
             ADD_EXPR
               CONSTANT
@@ -279,7 +279,7 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           IF_STMT
-            PsiElement(if)('if')
+            PsiElement(keyword)('if')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             PsiWhiteSpace(' ')
@@ -295,7 +295,7 @@ FILE
             PsiElement())(')')
             PsiWhiteSpace(' ')
             CALL_STMT
-              PsiElement(call)('call')
+              PsiElement(keyword)('call')
               PsiWhiteSpace(' ')
               PROCEDURE_DESIGNATOR
                 DATA_REF
@@ -305,33 +305,33 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           ASSIGN_STMT
-            PsiElement(assign)('assign')
+            PsiElement(keyword)('assign')
             PsiWhiteSpace(' ')
             LABEL
               PsiElement(integerliteral)('10')
             PsiWhiteSpace(' ')
-            PsiElement(to)('to')
+            PsiElement(keyword)('to')
             PsiWhiteSpace(' ')
             DESIGNATOR
               PsiElement(identifier)('a')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           BACKSPACE_STMT
-            PsiElement(backspace)('backspace')
+            PsiElement(keyword)('backspace')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('2')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           BACKSPACE_STMT
-            PsiElement(backspace)('backspace')
+            PsiElement(keyword)('backspace')
             PsiWhiteSpace(' ')
             DESIGNATOR
               PsiElement(identifier)('a')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           BACKSPACE_STMT
-            PsiElement(backspace)('backspace')
+            PsiElement(keyword)('backspace')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             PsiWhiteSpace(' ')
@@ -357,7 +357,7 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           CALL_STMT
-            PsiElement(call)('call')
+            PsiElement(keyword)('call')
             PsiWhiteSpace(' ')
             PROCEDURE_DESIGNATOR
               DATA_REF
@@ -373,7 +373,7 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           CLOSE_STMT
-            PsiElement(close)('close')
+            PsiElement(keyword)('close')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             PsiWhiteSpace(' ')
@@ -399,11 +399,11 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           CONTINUE_STMT
-            PsiElement(continue)('continue')
+            PsiElement(keyword)('continue')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           ENDFILE_STMT
-            PsiElement(endfile)('endfile')
+            PsiElement(keyword)('endfile')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             PsiWhiteSpace(' ')
@@ -430,14 +430,14 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           GOTO_STMT
-            PsiElement(goto)('goto')
+            PsiElement(keyword)('goto')
             PsiWhiteSpace(' ')
             LABEL
               PsiElement(integerliteral)('10')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           ASSIGNED_GOTO_STMT
-            PsiElement(goto)('goto')
+            PsiElement(keyword)('goto')
             PsiWhiteSpace(' ')
             PsiElement(identifier)('n')
             PsiElement(,)(',')
@@ -449,9 +449,9 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           ASSIGNED_GOTO_STMT
-            PsiElement(go)('go')
+            PsiElement(keyword)('go')
             PsiWhiteSpace(' ')
-            PsiElement(to)('to')
+            PsiElement(keyword)('to')
             PsiWhiteSpace(' ')
             PsiElement(identifier)('n')
             PsiWhiteSpace(' ')
@@ -476,9 +476,9 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPUTED_GOTO_STMT
-            PsiElement(go)('go')
+            PsiElement(keyword)('go')
             PsiWhiteSpace(' ')
-            PsiElement(to)('to')
+            PsiElement(keyword)('to')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             PsiWhiteSpace(' ')
@@ -511,7 +511,7 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           INQUIRE_STMT
-            PsiElement(inquire)('inquire')
+            PsiElement(keyword)('inquire')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             PsiWhiteSpace(' ')
@@ -544,7 +544,7 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           OPEN_STMT
-            PsiElement(open)('open')
+            PsiElement(keyword)('open')
             PsiElement(()('(')
             PARAMETERS_SPEC
               PsiElement(identifier)('unit')
@@ -569,35 +569,35 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           PAUSE_STMT
-            PsiElement(pause)('pause')
+            PsiElement(keyword)('pause')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('1')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           PAUSE_STMT
-            PsiElement(pause)('pause')
+            PsiElement(keyword)('pause')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(stringliteral)('"p"')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           RETURN_STMT
-            PsiElement(returnkwd)('return')
+            PsiElement(keyword)('return')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('2')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           REWIND_STMT
-            PsiElement(rewind)('rewind')
+            PsiElement(keyword)('rewind')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('3')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           REWIND_STMT
-            PsiElement(rewind)('rewind')
+            PsiElement(keyword)('rewind')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             PARAMETERS_SPEC
@@ -673,21 +673,21 @@ FILE
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           STOP_STMT
-            PsiElement(stop)('stop')
+            PsiElement(keyword)('stop')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('9')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           STOP_STMT
-            PsiElement(stop)('stop')
+            PsiElement(keyword)('stop')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(stringliteral)(''error'')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         END_DO_STMT
-          PsiElement(enddo)('enddo')
+          PsiElement(keyword)('enddo')
       PsiElement(eol)('\n')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -740,6 +740,6 @@ FILE
           PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')

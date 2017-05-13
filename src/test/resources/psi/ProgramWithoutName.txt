@@ -3,10 +3,10 @@ FILE
     BLOCK
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
           KIND_SELECTOR
             PsiElement(()('(')
-            PsiElement(kind)('kind')
+            PsiElement(keyword)('kind')
             PsiElement(=)('=')
             CONSTANT
               PsiElement(integerliteral)('4')
@@ -17,7 +17,7 @@ FILE
       PsiElement(eol)('\n')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
         ENTITY_DECL
           PsiElement(identifier)('b')
@@ -27,6 +27,6 @@ FILE
           PsiElement(identifier)('c')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')

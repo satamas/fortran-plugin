@@ -1,14 +1,14 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('filework')
       PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
       OPEN_STMT
-        PsiElement(open)('open')
+        PsiElement(keyword)('open')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -25,7 +25,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       OPEN_STMT
-        PsiElement(open)('open')
+        PsiElement(keyword)('open')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -53,7 +53,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       WAIT_STMT
-        PsiElement(wait)('wait')
+        PsiElement(keyword)('wait')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -118,14 +118,14 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       BACKSPACE_STMT
-        PsiElement(backspace)('backspace')
+        PsiElement(keyword)('backspace')
         PsiWhiteSpace(' ')
         CONSTANT
           PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       BACKSPACE_STMT
-        PsiElement(backspace)('backspace')
+        PsiElement(keyword)('backspace')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -144,14 +144,14 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       ENDFILE_STMT
-        PsiElement(endfile)('endfile')
+        PsiElement(keyword)('endfile')
         PsiWhiteSpace(' ')
         CONSTANT
           PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       ENDFILE_STMT
-        PsiElement(endfile)('endfile')
+        PsiElement(keyword)('endfile')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -170,21 +170,21 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       REWIND_STMT
-        PsiElement(rewind)('rewind')
+        PsiElement(keyword)('rewind')
         PsiWhiteSpace(' ')
         CONSTANT
           PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FLUSH_STMT
-        PsiElement(flush)('flush')
+        PsiElement(keyword)('flush')
         PsiWhiteSpace(' ')
         CONSTANT
           PsiElement(integerliteral)('2')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FLUSH_STMT
-        PsiElement(flush)('flush')
+        PsiElement(keyword)('flush')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -205,10 +205,10 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       INQUIRE_STMT
-        PsiElement(inquire)('inquire')
+        PsiElement(keyword)('inquire')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
-        PsiElement(iolength)('iolength')
+        PsiElement(keyword)('iolength')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -225,7 +225,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       INQUIRE_STMT
-        PsiElement(inquire)('inquire')
+        PsiElement(keyword)('inquire')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -265,7 +265,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       CLOSE_STMT
-        PsiElement(close)('close')
+        PsiElement(keyword)('close')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -293,7 +293,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       CLOSE_STMT
-        PsiElement(close)('close')
+        PsiElement(keyword)('close')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -306,4 +306,4 @@ FILE
         PsiElement())(')')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')

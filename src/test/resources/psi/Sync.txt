@@ -2,7 +2,7 @@ FILE
   MAIN_PROGRAM
     BLOCK
       LOCK_STMT
-        PsiElement(lock)('lock')
+        PsiElement(keyword)('lock')
         PsiElement(()('(')
         DESIGNATOR
           PsiElement(identifier)('a')
@@ -19,15 +19,15 @@ FILE
         PsiElement())(')')
       PsiElement(eol)('\n')
       SYNC_ALL_STMT
-        PsiElement(sync)('sync')
+        PsiElement(keyword)('sync')
         PsiWhiteSpace(' ')
-        PsiElement(all)('all')
+        PsiElement(keyword)('all')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PsiElement())(')')
       PsiElement(eol)('\n')
       SYNC_IMAGES_STMT
-        PsiElement(syncimages)('syncimages')
+        PsiElement(keyword)('syncimages')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         IMAGE_SET
@@ -35,7 +35,7 @@ FILE
         PsiElement())(')')
       PsiElement(eol)('\n')
       SYNC_MEMORY_STMT
-        PsiElement(syncmemory)('syncmemory')
+        PsiElement(keyword)('syncmemory')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PARAMETERS_SPEC
@@ -48,16 +48,16 @@ FILE
         PsiElement())(')')
       PsiElement(eol)('\n')
       EXIT_STMT
-        PsiElement(exit)('exit')
+        PsiElement(keyword)('exit')
       PsiElement(eol)('\n')
       GOTO_STMT
-        PsiElement(goto)('goto')
+        PsiElement(keyword)('goto')
         PsiWhiteSpace(' ')
         LABEL
           PsiElement(integerliteral)('123')
       PsiElement(eol)('\n')
       COMPUTED_GOTO_STMT
-        PsiElement(goto)('goto')
+        PsiElement(keyword)('goto')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         LABEL
@@ -78,7 +78,7 @@ FILE
             PsiElement(integerliteral)('5')
       PsiElement(eol)('\n')
       ARITHMETIC_IF_STMT
-        PsiElement(if)('if')
+        PsiElement(keyword)('if')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         ADD_EXPR
@@ -99,7 +99,7 @@ FILE
           PsiElement(integerliteral)('3')
       PsiElement(eol)('\n')
       STOP_STMT
-        PsiElement(stop)('stop')
+        PsiElement(keyword)('stop')
         PsiWhiteSpace(' ')
         ADD_EXPR
           DESIGNATOR
@@ -109,16 +109,16 @@ FILE
             PsiElement(identifier)('b')
       PsiElement(eol)('\n')
       ERROR_STOP_STMT
-        PsiElement(error)('error')
+        PsiElement(keyword)('error')
         PsiWhiteSpace(' ')
-        PsiElement(stop)('stop')
+        PsiElement(keyword)('stop')
       PsiElement(eol)('\n')
       UNLOCK_STMT
-        PsiElement(unlock)('unlock')
+        PsiElement(keyword)('unlock')
         PsiElement(()('(')
         DESIGNATOR
           PsiElement(identifier)('a')
         PsiElement())(')')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(endprogram)('endprogram')
+      PsiElement(keyword)('endprogram')

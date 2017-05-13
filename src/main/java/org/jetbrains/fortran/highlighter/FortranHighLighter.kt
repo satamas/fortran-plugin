@@ -8,6 +8,7 @@ import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 import org.jetbrains.fortran.lang.psi.FortranTokenType.FIRST_WHITE_SPACE
+import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
 
 class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
     val fFixedForm_ = fFixedForm
@@ -46,7 +47,7 @@ class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
             COMMA -> FortranHighlightingColors.COMMA
             COLON, COLONCOLON -> FortranHighlightingColors.COLON
 
-            in FortranTokenType.KEYWORDS -> FortranHighlightingColors.KEYWORD
+            KEYWORD -> FortranHighlightingColors.KEYWORD
             FIRST_WHITE_SPACE -> FortranHighlightingColors.FIRST_WHITE_SPACE
             TokenType.BAD_CHARACTER -> FortranHighlightingColors.BAD_CHARACTER
             else -> null

@@ -4,14 +4,14 @@ FILE
   PsiWhiteSpace('      ')
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     BLOCK
       ACCEPT_STMT
-        PsiElement(accept)('accept')
+        PsiElement(keyword)('accept')
         PsiWhiteSpace(' ')
         PsiElement(*)('*')
       PsiElement(eol)('\n')
@@ -34,7 +34,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('      ')
       ENCODE_STMT
-        PsiElement(encode)('encode')
+        PsiElement(keyword)('encode')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         CONSTANT
@@ -138,8 +138,8 @@ FILE
       PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')

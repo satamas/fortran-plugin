@@ -1,7 +1,7 @@
 FILE
   MODULE
     MODULE_STMT
-      PsiElement(modulekwd)('module')
+      PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('circle')
       PsiElement(eol)('\n')
@@ -9,11 +9,11 @@ FILE
     BLOCK
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(real)('real')
+          PsiElement(keyword)('real')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         ATTR_SPEC
-          PsiElement(parameter)('parameter')
+          PsiElement(keyword)('parameter')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -28,7 +28,7 @@ FILE
       PsiWhiteSpace('   ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(real)('real')
+          PsiElement(keyword)('real')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -37,12 +37,12 @@ FILE
       PsiElement(eol)('\n')
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
-        PsiElement(contains)('contains')
+        PsiElement(keyword)('contains')
         PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
       SUBROUTINE_SUBPROGRAM
         SUBROUTINE_STMT
-          PsiElement(subroutine)('subroutine')
+          PsiElement(keyword)('subroutine')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('input')
           PsiElement(()('(')
@@ -77,14 +77,14 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('   ')
         END_SUBROUTINE_STMT
-          PsiElement(endsubroutine)('endsubroutine')
+          PsiElement(keyword)('endsubroutine')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('input')
       PsiElement(eol)('\n')
     END_MODULE_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(modulekwd)('module')
+      PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('circle')
   PsiElement(eol)('\n')
@@ -93,9 +93,9 @@ FILE
     FUNCTION_STMT
       PREFIX_SPEC
         INTRINSIC_TYPE_SPEC
-          PsiElement(real)('real')
+          PsiElement(keyword)('real')
       PsiWhiteSpace(' ')
-      PsiElement(function)('function')
+      PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('average')
       PsiElement(()('(')
@@ -146,7 +146,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       ENTRY_STMT
-        PsiElement(entry)('entry')
+        PsiElement(keyword)('entry')
         PsiWhiteSpace(' ')
         PsiElement(identifier)('average2')
         PsiElement(()('(')
@@ -160,19 +160,19 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       RETURN_STMT
-        PsiElement(returnkwd)('return')
+        PsiElement(keyword)('return')
       PsiElement(eol)('\n')
     END_FUNCTION_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
   PsiElement(eol)('\n')
   PsiElement(eol)('\n')
   FUNCTION_SUBPROGRAM
     FUNCTION_STMT
       PREFIX_SPEC
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
       PsiWhiteSpace(' ')
-      PsiElement(function)('function')
+      PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('zero')
       PsiElement(()('(')
@@ -190,12 +190,12 @@ FILE
           PsiElement(integerliteral)('0')
       PsiElement(eol)('\n')
     END_FUNCTION_STMT
-      PsiElement(endfunction)('endfunction')
+      PsiElement(keyword)('endfunction')
   PsiElement(eol)('\n')
   PsiElement(eol)('\n')
   SUBROUTINE_SUBPROGRAM
     SUBROUTINE_STMT
-      PsiElement(subroutine)('subroutine')
+      PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('input')
       PsiElement(()('(')
@@ -229,18 +229,18 @@ FILE
             PsiElement(identifier)('z')
       PsiElement(eol)('\n')
     END_SUBROUTINE_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
   PsiElement(eol)('\n')
   PsiElement(eol)('\n')
   BLOCK_DATA
     BLOCK_DATA_STMT
-      PsiElement(blockkwd)('block')
+      PsiElement(keyword)('block')
       PsiWhiteSpace(' ')
-      PsiElement(data)('data')
+      PsiElement(keyword)('data')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('setup')
       PsiElement(eol)('\n')
     BLOCK
       <empty list>
     END_BLOCK_DATA_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')

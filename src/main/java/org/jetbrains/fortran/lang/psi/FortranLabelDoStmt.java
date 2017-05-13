@@ -12,16 +12,6 @@ public interface FortranLabelDoStmt extends FortranExpr {
     @Nullable
     PsiElement getColon();
 
-    @NotNull
-    PsiElement getDo();
-
     @Nullable
     PsiElement getEol();
-
-    @Nullable
-    PsiElement getIdentifier();
-
-    @Nullable
-    PsiElement getLabel();
-
 }

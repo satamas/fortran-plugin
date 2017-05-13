@@ -1,7 +1,7 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
@@ -15,13 +15,13 @@ FILE
           PsiElement(identifier)('b1')
           PsiElement(:)(':')
           PsiWhiteSpace(' ')
-          PsiElement(blockkwd)('block')
+          PsiElement(keyword)('block')
           PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
         BLOCK
           TYPE_DECLARATION_STMT
             INTRINSIC_TYPE_SPEC
-              PsiElement(integer)('integer')
+              PsiElement(keyword)('integer')
             PsiWhiteSpace(' ')
             ENTITY_DECL
               PsiElement(identifier)('a')
@@ -33,7 +33,7 @@ FILE
               PsiElement(identifier)('cr')
               PsiElement(:)(':')
               PsiWhiteSpace(' ')
-              PsiElement(critical)('critical')
+              PsiElement(keyword)('critical')
               PsiWhiteSpace(' ')
               PsiComment(comment)('!comment')
               PsiElement(eol)('\n')
@@ -50,13 +50,13 @@ FILE
               PsiElement(eol)('\n')
             PsiWhiteSpace('     ')
             END_CRITICAL_STMT
-              PsiElement(endcritical)('endcritical')
+              PsiElement(keyword)('endcritical')
               PsiWhiteSpace(' ')
               PsiElement(identifier)('cr')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_BLOCK_STMT
-          PsiElement(endblock)('endblock')
+          PsiElement(keyword)('endblock')
       PsiElement(eol)('\n')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -65,7 +65,7 @@ FILE
           PsiElement(identifier)('b2')
           PsiElement(:)(':')
           PsiWhiteSpace(' ')
-          PsiElement(blockkwd)('block')
+          PsiElement(keyword)('block')
           PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
         BLOCK
@@ -74,7 +74,7 @@ FILE
               PsiElement(identifier)('as')
               PsiElement(:)(':')
               PsiWhiteSpace(' ')
-              PsiElement(associate)('associate')
+              PsiElement(keyword)('associate')
               PsiWhiteSpace(' ')
               ASSOCIATION
                 PsiElement(identifier)('e')
@@ -110,15 +110,15 @@ FILE
               PsiElement(eol)('\n')
             PsiWhiteSpace('     ')
             END_ASSOCIATE_STMT
-              PsiElement(end)('end')
+              PsiElement(keyword)('end')
               PsiWhiteSpace(' ')
-              PsiElement(associate)('associate')
+              PsiElement(keyword)('associate')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_BLOCK_STMT
-          PsiElement(end)('end')
+          PsiElement(keyword)('end')
           PsiWhiteSpace(' ')
-          PsiElement(blockkwd)('block')
+          PsiElement(keyword)('block')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(endprogram)('endprogram')
+      PsiElement(keyword)('endprogram')

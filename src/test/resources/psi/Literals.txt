@@ -1,7 +1,7 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('literals')
       PsiElement(eol)('\n')
@@ -9,17 +9,17 @@ FILE
     BLOCK
       ENUM_DEF
         ENUM_DEF_STMT
-          PsiElement(enum)('ENUM')
+          PsiElement(keyword)('ENUM')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
-          PsiElement(bind)('BIND')
+          PsiElement(keyword)('BIND')
           PsiElement(()('(')
           PsiElement(identifier)('C')
           PsiElement())(')')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         ENUMERATOR_DEF_STMT
-          PsiElement(enumeratorkwd)('ENUMERATOR')
+          PsiElement(keyword)('ENUMERATOR')
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
@@ -42,16 +42,16 @@ FILE
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         ENUMERATOR_DEF_STMT
-          PsiElement(enumeratorkwd)('ENUMERATOR')
+          PsiElement(keyword)('ENUMERATOR')
           PsiWhiteSpace(' ')
           ENUMERATOR
             PsiElement(identifier)('YELLOW')
         PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_ENUM_STMT
-          PsiElement(end)('END')
+          PsiElement(keyword)('END')
           PsiWhiteSpace(' ')
-          PsiElement(enum)('ENUM')
+          PsiElement(keyword)('ENUM')
       PsiElement(eol)('\n')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
@@ -259,4 +259,4 @@ FILE
           PsiElement(])(']')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(endprogram)('endprogram')
+      PsiElement(keyword)('endprogram')

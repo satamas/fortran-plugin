@@ -1,7 +1,7 @@
 FILE
   SUBROUTINE_SUBPROGRAM
     SUBROUTINE_STMT
-      PsiElement(subroutine)('subroutine')
+      PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('message_number_dp')
       PsiElement(()('(')
@@ -24,19 +24,19 @@ FILE
     PsiWhiteSpace('    ')
     BLOCK
       IMPLICIT_STMT
-        PsiElement(implicit)('implicit')
+        PsiElement(keyword)('implicit')
         PsiWhiteSpace(' ')
-        PsiElement(none)('none')
+        PsiElement(keyword)('none')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(integer)('integer')
+          PsiElement(keyword)('integer')
         PsiElement(,)(',')
         ATTR_SPEC
-          PsiElement(intent)('intent')
+          PsiElement(keyword)('intent')
           PsiElement(()('(')
-          PsiElement(in)('in')
+          PsiElement(keyword)('in')
           PsiElement())(')')
         PsiWhiteSpace('          ')
         PsiElement(::)('::')
@@ -47,19 +47,19 @@ FILE
       PsiWhiteSpace('    ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(character)('character')
+          PsiElement(keyword)('character')
           CHAR_SELECTOR
             LENGTH_SELECTOR
               PsiElement(()('(')
-              PsiElement(len)('len')
+              PsiElement(keyword)('len')
               PsiElement(=)('=')
               PsiElement(*)('*')
               PsiElement())(')')
         PsiElement(,)(',')
         ATTR_SPEC
-          PsiElement(intent)('intent')
+          PsiElement(keyword)('intent')
           PsiElement(()('(')
-          PsiElement(in)('in')
+          PsiElement(keyword)('in')
           PsiElement())(')')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
@@ -70,7 +70,7 @@ FILE
       PsiWhiteSpace('    ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(real)('real')
+          PsiElement(keyword)('real')
           KIND_SELECTOR
             PsiElement(()('(')
             DESIGNATOR
@@ -78,9 +78,9 @@ FILE
             PsiElement())(')')
         PsiElement(,)(',')
         ATTR_SPEC
-          PsiElement(intent)('intent')
+          PsiElement(keyword)('intent')
           PsiElement(()('(')
-          PsiElement(in)('in')
+          PsiElement(keyword)('in')
           PsiElement())(')')
         PsiWhiteSpace('         ')
         PsiElement(::)('::')
@@ -91,19 +91,19 @@ FILE
       PsiWhiteSpace('    ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(character)('character')
+          PsiElement(keyword)('character')
           CHAR_SELECTOR
             LENGTH_SELECTOR
               PsiElement(()('(')
-              PsiElement(len)('len')
+              PsiElement(keyword)('len')
               PsiElement(=)('=')
               PsiElement(*)('*')
               PsiElement())(')')
         PsiElement(,)(',')
         ATTR_SPEC
-          PsiElement(intent)('intent')
+          PsiElement(keyword)('intent')
           PsiElement(()('(')
-          PsiElement(in)('in')
+          PsiElement(keyword)('in')
           PsiElement())(')')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
@@ -117,11 +117,11 @@ FILE
       PsiWhiteSpace('    ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(character)('character')
+          PsiElement(keyword)('character')
           CHAR_SELECTOR
             LENGTH_SELECTOR
               PsiElement(()('(')
-              PsiElement(len)('len')
+              PsiElement(keyword)('len')
               PsiElement(=)('=')
               CONSTANT
                 PsiElement(integerliteral)('20')
@@ -134,7 +134,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       WRITE_STMT
-        PsiElement(write)('write')
+        PsiElement(keyword)('write')
         PsiElement(()('(')
         PARAMETERS_SPEC
           DESIGNATOR
@@ -150,7 +150,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       IF_STMT
-        PsiElement(if)('if')
+        PsiElement(keyword)('if')
         PsiElement(()('(')
         REL_EXPR
           DESIGNATOR
@@ -163,7 +163,7 @@ FILE
         PsiElement())(')')
         PsiWhiteSpace(' ')
         WRITE_STMT
-          PsiElement(write)('write')
+          PsiElement(keyword)('write')
           PsiElement(()('(')
           PARAMETERS_SPEC
             PsiElement(*)('*')
@@ -217,8 +217,8 @@ FILE
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     END_SUBROUTINE_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(subroutine)('subroutine')
+      PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('message_number_dp')

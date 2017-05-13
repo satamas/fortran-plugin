@@ -116,8 +116,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 %%
 
 <YYINITIAL> {
-({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
-(({WHITE_SPACE_CHAR})*({EOL}|(";")))+ { return EOL; }
+{EOL}|";" { return EOL; }
 . { yypushback(1);
     if (fFixedForm_)
         pushState(FIXEDFORM);

@@ -7,13 +7,13 @@ import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import org.jetbrains.fortran.FortranLanguage
 import org.jetbrains.fortran.lang.FortranTypes.*
+import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
 
 class FortranFormattingModelBuilder : FormattingModelBuilder {
 
     fun createSpacingBuilder(settings : CodeStyleSettings) : SpacingBuilder
             = SpacingBuilder(settings, FortranLanguage.INSTANCE)
-            .after(IF).spaces(1)
-            .after(DO).spaces(1)
+            .after(KEYWORD).spaces(1)
             .before(COMMA).spaceIf(false)
             .after(COMMA).spaceIf(true)
             .around(LT).spaces(1)

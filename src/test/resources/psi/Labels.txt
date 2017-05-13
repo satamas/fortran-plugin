@@ -4,13 +4,13 @@ FILE
       LABEL
         PsiElement(integerliteral)('1')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     BLOCK
       <empty list>
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')

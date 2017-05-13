@@ -1,14 +1,14 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
       PRINT_STMT
-        PsiElement(print)('Print')
+        PsiElement(keyword)('Print')
         PsiWhiteSpace(' ')
         PsiElement(*)('*')
         PsiElement(,)(',')
@@ -18,7 +18,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT
-        PsiElement(print)('Print')
+        PsiElement(keyword)('Print')
         PsiWhiteSpace(' ')
         PsiElement(*)('*')
         PsiElement(,)(',')
@@ -28,7 +28,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT
-        PsiElement(print)('Print')
+        PsiElement(keyword)('Print')
         PsiWhiteSpace(' ')
         PsiElement(*)('*')
         PsiElement(,)(',')
@@ -42,7 +42,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT
-        PsiElement(print)('Print')
+        PsiElement(keyword)('Print')
         PsiWhiteSpace(' ')
         PsiElement(*)('*')
         PsiElement(,)(',')
@@ -63,7 +63,7 @@ FILE
         PsiElement(integerliteral)('130')
       PsiWhiteSpace(' ')
       FORMAT_STMT
-        PsiElement(formatkwd)('format')
+        PsiElement(keyword)('format')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         PsiElement(dataedit)('A')
@@ -73,7 +73,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT
-        PsiElement(print)('Print')
+        PsiElement(keyword)('Print')
         PsiWhiteSpace(' ')
         PsiElement(*)('*')
         PsiElement(,)(',')
@@ -103,7 +103,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT
-        PsiElement(print)('print')
+        PsiElement(keyword)('print')
         PsiWhiteSpace(' ')
         CONSTANT
           PsiElement(stringliteral)(''(12 i2)'')
@@ -122,7 +122,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       PRINT_STMT
-        PsiElement(print)('print')
+        PsiElement(keyword)('print')
         PsiWhiteSpace(' ')
         PsiElement(*)('*')
         PsiElement(,)(',')
@@ -162,7 +162,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       READ_STMT
-        PsiElement(read)('read')
+        PsiElement(keyword)('read')
         PsiElement(()('(')
         PsiWhiteSpace(' ')
         PARAMETERS_SPEC
@@ -206,7 +206,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       READ_STMT
-        PsiElement(read)('read')
+        PsiElement(keyword)('read')
         PsiElement(()('(')
         PARAMETERS_SPEC
           PsiElement(*)('*')
@@ -224,7 +224,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       READ_STMT
-        PsiElement(read)('read')
+        PsiElement(keyword)('read')
         PsiElement(*)('*')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
@@ -237,7 +237,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       READ_STMT
-        PsiElement(read)('read')
+        PsiElement(keyword)('read')
         PsiElement(()('(')
         PsiWhiteSpace(' ')
         PARAMETERS_SPEC
@@ -255,7 +255,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       READ_STMT
-        PsiElement(read)('read')
+        PsiElement(keyword)('read')
         PsiElement(()('(')
         PARAMETERS_SPEC
           PsiElement(identifier)('unit')
@@ -273,7 +273,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       WRITE_STMT
-        PsiElement(write)('write')
+        PsiElement(keyword)('write')
         PsiElement(()('(')
         PsiWhiteSpace(' ')
         PARAMETERS_SPEC
@@ -310,7 +310,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       WRITE_STMT
-        PsiElement(write)('write')
+        PsiElement(keyword)('write')
         PsiElement(()('(')
         PsiWhiteSpace(' ')
         PARAMETERS_SPEC
@@ -331,7 +331,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       WRITE_STMT
-        PsiElement(write)('write')
+        PsiElement(keyword)('write')
         PsiElement(()('(')
         PsiWhiteSpace(' ')
         PARAMETERS_SPEC
@@ -350,8 +350,8 @@ FILE
         PsiElement())(')')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')

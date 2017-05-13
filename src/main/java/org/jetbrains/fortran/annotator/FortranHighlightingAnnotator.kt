@@ -5,7 +5,7 @@ import com.intellij.lang.annotation.Annotator
 import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.highlighter.FortranHighlightingColors
 import org.jetbrains.fortran.lang.FortranTypes.*
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORDS
+import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
 
 class FortranHighlightingAnnotator : Annotator {
 
@@ -13,7 +13,7 @@ class FortranHighlightingAnnotator : Annotator {
         if (element.node.elementType === IDENTIFIER) {
             holder.createInfoAnnotation(element, null).textAttributes = FortranHighlightingColors.IDENTIFIER.textAttributesKey
         }
-        if (element.node.elementType in KEYWORDS) {
+        if (element.node.elementType === KEYWORD) {
             holder.createInfoAnnotation(element, null).textAttributes = FortranHighlightingColors.KEYWORD.textAttributesKey
         }
     }

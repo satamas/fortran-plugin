@@ -1,7 +1,7 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('select_test')
       PsiElement(eol)('\n')
@@ -9,9 +9,9 @@ FILE
     BLOCK
       CASE_CONSTRUCT
         SELECT_CASE_STMT
-          PsiElement(select)('select')
+          PsiElement(keyword)('select')
           PsiWhiteSpace(' ')
-          PsiElement(case)('case')
+          PsiElement(keyword)('case')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           ADD_EXPR
@@ -24,7 +24,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         CASE_STMT
-          PsiElement(case)('case')
+          PsiElement(keyword)('case')
           PsiWhiteSpace(' ')
           CASE_SELECTOR
             PsiElement(()('(')
@@ -46,7 +46,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         CASE_STMT
-          PsiElement(case)('case')
+          PsiElement(keyword)('case')
           PsiWhiteSpace(' ')
           CASE_SELECTOR
             PsiElement(()('(')
@@ -67,7 +67,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         CASE_STMT
-          PsiElement(case)('case')
+          PsiElement(keyword)('case')
           PsiWhiteSpace(' ')
           CASE_SELECTOR
             PsiElement(()('(')
@@ -90,7 +90,7 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         CASE_STMT
-          PsiElement(case)('case')
+          PsiElement(keyword)('case')
           PsiWhiteSpace(' ')
           CASE_SELECTOR
             PsiElement(()('(')
@@ -104,10 +104,10 @@ FILE
         BLOCK
           <empty list>
         CASE_STMT
-          PsiElement(case)('case')
+          PsiElement(keyword)('case')
           PsiWhiteSpace(' ')
           CASE_SELECTOR
-            PsiElement(default)('default')
+            PsiElement(keyword)('default')
           PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
         BLOCK
@@ -120,11 +120,11 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_SELECT_STMT
-          PsiElement(endselect)('endselect')
+          PsiElement(keyword)('endselect')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('select_test')

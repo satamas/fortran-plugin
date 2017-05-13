@@ -1,7 +1,7 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('labeltests')
       PsiElement(eol)('\n')
@@ -9,7 +9,7 @@ FILE
     BLOCK
       LABELED_DO_CONSTRUCT
         LABEL_DO_STMT
-          PsiElement(do)('do')
+          PsiElement(keyword)('do')
           PsiWhiteSpace(' ')
           LABEL
             PsiElement(integerliteral)('10')
@@ -44,7 +44,7 @@ FILE
           PsiWhiteSpace('      ')
           LABELED_DO_CONSTRUCT
             LABEL_DO_STMT
-              PsiElement(do)('do')
+              PsiElement(keyword)('do')
               PsiWhiteSpace(' ')
               LABEL
                 PsiElement(integerliteral)('100')
@@ -110,7 +110,7 @@ FILE
         PsiWhiteSpace('        ')
         LABELED_DO_CONSTRUCT
           LABEL_DO_STMT
-            PsiElement(do)('do')
+            PsiElement(keyword)('do')
             PsiWhiteSpace(' ')
             LABEL
               PsiElement(integerliteral)('10')
@@ -139,7 +139,7 @@ FILE
           PsiWhiteSpace('          ')
           LABELED_DO_CONSTRUCT
             LABEL_DO_STMT
-              PsiElement(do)('do')
+              PsiElement(keyword)('do')
               PsiWhiteSpace(' ')
               LABEL
                 PsiElement(integerliteral)('10')
@@ -170,7 +170,7 @@ FILE
               LABEL
                 PsiElement(integerliteral)('10')
               PsiWhiteSpace('       ')
-              PsiElement(enddo)('enddo')
+              PsiElement(keyword)('enddo')
       PsiElement(eol)('\n')
       PsiWhiteSpace(' ')
       LABEL
@@ -186,6 +186,6 @@ FILE
           PsiElement(integerliteral)('8')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
-      PsiElement(end)('end')
+      PsiElement(keyword)('end')
       PsiWhiteSpace(' ')
-      PsiElement(programkwd)('program')
+      PsiElement(keyword)('program')

@@ -32,26 +32,11 @@ public class FortranLabelDoStmtImpl extends FortranExprImpl implements FortranLa
         return findChildByType(COLON);
     }
 
-    @Override
-    @NotNull
-    public PsiElement getDo() {
-        return findNotNullChildByType(DO);
-    }
 
     @Override
     @Nullable
     public PsiElement getEol() {
         return findChildByType(EOL);
     }
-
-    @Override
-    @Nullable
-    public PsiElement getIdentifier() {
-        return findChildByType(IDENTIFIER);
-    }
-
-    @Override
-    @Nullable
-    public PsiElement getLabel() { return findChildByType(LABEL); }
 
 }

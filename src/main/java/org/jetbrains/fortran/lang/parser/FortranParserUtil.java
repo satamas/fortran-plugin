@@ -15,7 +15,7 @@ public class FortranParserUtil extends GeneratedParserUtilBase {
         return new IdentifierParser().parse(builder_, level_);
     }
 
-    public static boolean parseKeyword(PsiBuilder builder_, int level_, IElementType keyword) {
+    public static boolean parseKeyword(PsiBuilder builder_, int level_, String keyword) {
         return new KeywordParser(keyword).parse(builder_, level_);
     }
 
