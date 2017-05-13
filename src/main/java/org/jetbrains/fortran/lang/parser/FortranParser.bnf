@@ -106,6 +106,7 @@ private dimension_     ::= dimension    | <<parseKeyword 'DIMENSION'>>
 private do_            ::= do           | <<parseKeyword 'DO'>>
 private double_        ::= double       | <<parseKeyword 'DOUBLE'>>
 private doubleprecision_ ::= doubleprecision | <<parseKeyword 'DOUBLEPRECISION'>>
+private doublecomplex_ ::= doublecomplex | <<parseKeyword 'DOUBLECOMPLEX'>>
 private elemental_     ::= elemental    | <<parseKeyword 'ELEMENTAL'>>
 private else_          ::= else         | <<parseKeyword 'ELSE'>>
 private elseif_        ::= elseif       | <<parseKeyword 'ELSEIF'>>
@@ -327,7 +328,8 @@ private type_spec ::= intrinsic_type_spec | derived_type_spec
 private declaration_type_spec ::= intrinsic_type_spec | (type_ '(' (intrinsic_type_spec | derived_type_spec)')')
                                 | (class_ '(' (derived_type_spec | '*') ')')
 // R404
-intrinsic_type_spec ::= (((integer_ | real_ | complex_ | logical_ | (double_ precision_) | doubleprecision_ )
+intrinsic_type_spec ::= (((integer_ | real_ | complex_ | logical_ | (double_ precision_) | doubleprecision_
+                        | (double_ complex_) | doublecomplex_ )
                         (kind_selector | nonstandard_kind_selector)?) | (character_ (char_selector)?) | byte_/* nonstandard type*/)
                         !('=' | '=>' | '[' | '%') { pin = 2 }
 // R405

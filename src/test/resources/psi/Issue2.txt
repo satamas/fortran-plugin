@@ -10,7 +10,27 @@ FILE
         PsiElement(implicit)('implicit')
         PsiWhiteSpace(' ')
         PsiElement(none)('none')
-      PsiElement(eol)('\n\n')
+      PsiElement(eol)('\n')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(double)('double')
+          PsiWhiteSpace(' ')
+          PsiElement(complex)('complex')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('var1')
+      PsiElement(eol)('\n')
+      TYPE_DECLARATION_STMT
+        INTRINSIC_TYPE_SPEC
+          PsiElement(doublecomplex)('doublecomplex')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        ENTITY_DECL
+          PsiElement(identifier)('var2')
+      PsiElement(eol)('\n')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
           PsiElement(type)('type')

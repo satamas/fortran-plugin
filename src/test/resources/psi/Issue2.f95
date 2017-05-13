@@ -1,7 +1,8 @@
 module test_mod
 
 implicit none
-
+double complex :: var1
+doublecomplex :: var2
 type ty1 !define a class including a procedure
     contains
         procedure:: sub => sub1
