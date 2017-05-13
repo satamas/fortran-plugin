@@ -1023,7 +1023,7 @@ function_reference ::= procedure_designator '(' <<list actual_arg_spec>>? ')' { 
 // R1220
 call_stmt ::= call_ procedure_designator ('(' <<list actual_arg_spec>>? ')')?
 // R1221
-procedure_designator ::= (fidentifier !('%')) | (variable '%' fidentifier) | (data_ref '%' fidentifier)
+procedure_designator ::= data_ref
 // R1222
 actual_arg_spec ::= (fidentifier '=')? actual_arg
 // 1223

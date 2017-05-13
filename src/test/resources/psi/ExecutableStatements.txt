@@ -298,7 +298,8 @@ FILE
               PsiElement(call)('call')
               PsiWhiteSpace(' ')
               PROCEDURE_DESIGNATOR
-                PsiElement(identifier)('punt')
+                DATA_REF
+                  PsiElement(identifier)('punt')
           PsiElement(eol)('\n')
           PsiComment(comment)('!    deprecated')
           PsiElement(eol)('\n')
@@ -359,14 +360,16 @@ FILE
             PsiElement(call)('call')
             PsiWhiteSpace(' ')
             PROCEDURE_DESIGNATOR
-              PsiElement(identifier)('oops')
-            PsiWhiteSpace(' ')
-            PsiElement(()('(')
-            PsiWhiteSpace(' ')
-            DESIGNATOR
-              PsiElement(identifier)('text')
-            PsiWhiteSpace(' ')
-            PsiElement())(')')
+              DATA_REF
+                PsiElement(identifier)('oops')
+                PsiWhiteSpace(' ')
+                PsiElement(()('(')
+                PsiWhiteSpace(' ')
+                SECTION_SUBSCRIPT
+                  DESIGNATOR
+                    PsiElement(identifier)('text')
+                PsiWhiteSpace(' ')
+                PsiElement())(')')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           CLOSE_STMT

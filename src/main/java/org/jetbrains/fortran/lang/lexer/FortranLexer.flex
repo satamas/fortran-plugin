@@ -274,7 +274,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ".ge." { return GE; }
 
     {DEFOPERATOR} { return DEFOPERATOR; }
-    {IDENTIFIER} { return WORD/*IDENTIFIER*/; }
+    {IDENTIFIER} { return WORD; }
 }
 
 . { return BAD_CHARACTER; }

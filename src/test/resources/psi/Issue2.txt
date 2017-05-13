@@ -1,0 +1,128 @@
+FILE
+  MODULE
+    MODULE_STMT
+      PsiElement(modulekwd)('module')
+      PsiWhiteSpace(' ')
+      PsiElement(identifier)('test_mod')
+      PsiElement(eol)('\n\n')
+    BLOCK
+      IMPLICIT_STMT
+        PsiElement(implicit)('implicit')
+        PsiWhiteSpace(' ')
+        PsiElement(none)('none')
+      PsiElement(eol)('\n\n')
+      DERIVED_TYPE_DEF
+        DERIVED_TYPE_STMT
+          PsiElement(type)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('ty1')
+          PsiWhiteSpace(' ')
+          PsiComment(comment)('!define a class including a procedure')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        COMPONENT_PART
+          <empty list>
+        TYPE_BOUND_PROCEDURE_PART
+          CONTAINS_STMT
+            PsiElement(contains)('contains')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('        ')
+          TYPE_BOUND_PROCEDURE_STMT
+            PsiElement(procedure)('procedure')
+            PsiElement(::)('::')
+            PsiWhiteSpace(' ')
+            TYPE_BOUND_PROC_DECL
+              PsiElement(identifier)('sub')
+              PsiWhiteSpace(' ')
+              PsiElement(=>)('=>')
+              PsiWhiteSpace(' ')
+              PsiElement(identifier)('sub1')
+          PsiElement(eol)('\n')
+        END_TYPE_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(type)('type')
+      PsiElement(eol)('\n\n')
+    MODULE_SUBPROGRAM_PART
+      CONTAINS_STMT
+        PsiElement(contains)('contains')
+        PsiElement(eol)('\n\n')
+      SUBROUTINE_SUBPROGRAM
+        SUBROUTINE_STMT
+          PsiElement(subroutine)('subroutine')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('sub1')
+          PsiElement(()('(')
+          DUMMY_ARG
+            PsiElement(identifier)('this')
+          PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          TYPE_DECLARATION_STMT
+            PsiElement(classkwd)('class')
+            PsiElement(()('(')
+            DERIVED_TYPE_SPEC
+              PsiElement(identifier)('ty1')
+            PsiElement())(')')
+            PsiWhiteSpace(' ')
+            PsiElement(::)('::')
+            PsiWhiteSpace(' ')
+            ENTITY_DECL
+              PsiElement(identifier)('this')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
+          PRINT_STMT
+            PsiElement(print)('print')
+            PsiElement(*)('*')
+            PsiElement(,)(',')
+            CONSTANT
+              PsiElement(stringliteral)('"sub1"')
+          PsiElement(eol)('\n')
+        END_SUBROUTINE_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(subroutine)('subroutine')
+      PsiElement(eol)('\n\n')
+      SUBROUTINE_SUBPROGRAM
+        SUBROUTINE_STMT
+          PsiElement(subroutine)('subroutine')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('test1')
+          PsiElement(()('(')
+          PsiElement())(')')
+          PsiElement(eol)('\n')
+        BLOCK
+          TYPE_DECLARATION_STMT
+            PsiElement(type)('type')
+            PsiElement(()('(')
+            DERIVED_TYPE_SPEC
+              PsiElement(identifier)('ty1')
+            PsiElement())(')')
+            PsiElement(::)('::')
+            PsiWhiteSpace(' ')
+            ENTITY_DECL
+              PsiElement(identifier)('t1')
+          PsiElement(eol)('\n')
+          CALL_STMT
+            PsiElement(call)('call')
+            PsiWhiteSpace(' ')
+            PROCEDURE_DESIGNATOR
+              DATA_REF
+                PsiElement(identifier)('t1')
+                PsiElement(%)('%')
+                PsiElement(identifier)('sub')
+                PsiElement(()('(')
+                PsiElement())(')')
+          PsiWhiteSpace(' ')
+          PsiComment(comment)('!call class procedure; parser error: '%' or '[' expected, got ''')
+          PsiElement(eol)('\n')
+        END_SUBROUTINE_STMT
+          PsiElement(end)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(subroutine)('subroutine')
+      PsiElement(eol)('\n\n')
+    END_MODULE_STMT
+      PsiElement(end)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(modulekwd)('module')
