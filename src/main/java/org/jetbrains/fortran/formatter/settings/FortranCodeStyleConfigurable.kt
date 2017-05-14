@@ -7,7 +7,7 @@ import com.intellij.psi.codeStyle.CodeStyleSettings
 import org.jetbrains.fortran.FortranLanguage
 
 class FortranCodeStyleConfigurable(settings: CodeStyleSettings, cloneSettings: CodeStyleSettings)
-    : CodeStyleAbstractConfigurable(settings, cloneSettings, "Fortran") {
+    : CodeStyleAbstractConfigurable(settings, cloneSettings, FortranLanguage.NAME) {
     override fun createPanel(settings: CodeStyleSettings): CodeStyleAbstractPanel {
         return FortranCodeStyleMainPanel(currentSettings, settings)
     }
@@ -17,7 +17,7 @@ class FortranCodeStyleConfigurable(settings: CodeStyleSettings, cloneSettings: C
     private class FortranCodeStyleMainPanel(currentSettings: CodeStyleSettings, settings: CodeStyleSettings)
         : TabbedLanguageCodeStylePanel(FortranLanguage.INSTANCE, currentSettings, settings) {
 
-        override fun addSpacesTab(settings: CodeStyleSettings) {}
+       // override fun addSpacesTab(settings: CodeStyleSettings) {}
 
         override fun addBlankLinesTab(settings: CodeStyleSettings) {}
 

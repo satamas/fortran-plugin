@@ -3,6 +3,7 @@ package org.jetbrains.fortran.formatter.settings
 import com.intellij.application.options.IndentOptionsEditor
 import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.lang.Language
+import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider
 import org.jetbrains.fortran.FortranLanguage
@@ -22,11 +23,33 @@ integer, dimension(2) :: array = (/ 1, 2 /)
 logical b = .true.
 format (1PE12.4, I10)
 if (a .le. 10 .and. b > 12 .or. c)
-   c = (12**2 + 12.3d0 < v%res) .eqv. .not. (a .definedoperator. b)
+    c = (12**2 + 12.3d0 < v%res) .eqv. .not. (a .definedoperator. b)
 else
-   write(*,*) "Test output"
+    write(*,*) "Test output"
 endif
 end"""
+
+    override fun customizeSettings(consumer: CodeStyleSettingsCustomizable, settingsType: SettingsType) {
+        when (settingsType) {
+            SettingsType.SPACING_SETTINGS -> {
+                consumer.showStandardOptions(
+                        "SPACE_AROUND_ASSIGNMENT_OPERATORS",
+                        "SPACE_AROUND_LOGICAL_OPERATORS",
+                        "SPACE_AROUND_EQUALITY_OPERATORS",
+                        "SPACE_AROUND_RELATIONAL_OPERATORS",
+                        "SPACE_AROUND_ADDITIVE_OPERATORS",
+                        "SPACE_AROUND_MULTIPLICATIVE_OPERATORS",
+                        "SPACE_AROUND_UNARY_OPERATOR",
+                        "SPACE_AFTER_COMMA",
+                        "SPACE_BEFORE_COMMA"
+                )
+                consumer.renameStandardOption("SPACE_AROUND_ASSIGNMENT_OPERATORS", "Space around assigment operators (=, =>)")
+                consumer.renameStandardOption("SPACE_AROUND_UNARY_OPERATOR", "Unary operators (+, -)")
+                consumer.renameStandardOption("SPACE_AROUND_MULTIPLICATIVE_OPERATORS", "Multiplicative operators (*, /)")
+            }
+
+        }
+    }
 
      override fun getIndentOptionsEditor(): IndentOptionsEditor = SmartIndentOptionsEditor()
 
