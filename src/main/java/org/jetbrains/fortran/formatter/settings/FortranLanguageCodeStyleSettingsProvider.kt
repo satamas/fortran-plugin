@@ -13,21 +13,14 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
     override fun getLanguage(): Language = FortranLanguage.INSTANCE
 
 override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.SettingsType): String
-            = """#include 'include.f95'
-!comment
-data binary / B'101'/
-data octal  / O'765'/
-data hex    / Z'4'  /
-real W(100,100)[0:2,*]
-integer, dimension(2) :: array = (/ 1, 2 /)
-logical b = .true.
-format (1PE12.4, I10)
-if (a .le. 10 .and. b > 12 .or. c)
-    c = (12**2 + 12.3d0 < v%res) .eqv. .not. (a .definedoperator. b)
-else
-    write(*,*) "Test output"
-endif
-end"""
+            = "program sample\n" +
+              "    a = +1\n" +
+              "    b = (1 + 2) * a + 2**2\n" +
+              "    f = .not. (2 .definedoperator. 1)\n" +
+              "    if (b .eq. 10 .eqv. (c > 10) .and. f) then\n" +
+              "        write (*,*) 'string1' // 'string2', b\n" +
+              "    endif\n" +
+              "end program sample\n"
 
     override fun customizeSettings(consumer: CodeStyleSettingsCustomizable, settingsType: SettingsType) {
         when (settingsType) {
@@ -44,8 +37,22 @@ end"""
                         "SPACE_BEFORE_COMMA"
                 )
                 consumer.renameStandardOption("SPACE_AROUND_ASSIGNMENT_OPERATORS", "Space around assigment operators (=, =>)")
-                consumer.renameStandardOption("SPACE_AROUND_UNARY_OPERATOR", "Unary operators (+, -)")
+                consumer.renameStandardOption("SPACE_AROUND_LOGICAL_OPERATORS", "Logical operators (.or., .and.)")
+                consumer.renameStandardOption("SPACE_AROUND_EQUALITY_OPERATORS", "Equality operators (==, .eq., ...)")
+                consumer.renameStandardOption("SPACE_AROUND_RELATIONAL_OPERATORS", "Relational operators (<, .lt., ...)")
                 consumer.renameStandardOption("SPACE_AROUND_MULTIPLICATIVE_OPERATORS", "Multiplicative operators (*, /)")
+                consumer.renameStandardOption("SPACE_AROUND_UNARY_OPERATOR", "Unary operators (+, -)")
+
+                consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_NOT_OPERATOR", "Not operator (.not.)",
+                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_POWER_OPERATOR", "Power operator (**)",
+                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_EQUIVALENCE_OPERATOR", "Equivalence operators (.eqv., .neqv.)",
+                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_CONCAT_OPERATOR", "Concatenation operator (//)",
+                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_DEFINED_OPERATOR", "Defined operators",
+                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
             }
 
         }

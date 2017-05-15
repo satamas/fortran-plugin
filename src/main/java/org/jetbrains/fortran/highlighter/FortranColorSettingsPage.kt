@@ -16,19 +16,19 @@ class FortranColorSettingsPage : ColorSettingsPage {
     override fun getAdditionalHighlightingTagToDescriptorMap() = ANNOTATOR_TAGS
     override fun getDemoText() : String = """#include 'include.f95'
 !comment
-data binary / B'101'/
-data octal  / O'765'/
-data hex    / Z'4'  /
-real W(100,100)[0:2,*]
-integer, dimension(2) :: array = (/ 1, 2 /)
-logical b = .true.
-format (1PE12.4, I10)
-if (a .le. 10 .and. b > 12 .or. c)
-   c = (12**2 + 12.3d0 < v%res) .eqv. .not. (a .definedoperator. b)
-else
-   write(*,*) "Test output"
-endif
-end"""
+<KEYWORD>data</KEYWORD> <IDENTIFIER>binary</IDENTIFIER> / B'101'/
+<KEYWORD>data</KEYWORD> <IDENTIFIER>octal</IDENTIFIER>  / O'765'/
+<KEYWORD>data</KEYWORD> <IDENTIFIER>hex</IDENTIFIER>    / Z'4'  /
+<KEYWORD>real</KEYWORD> <IDENTIFIER>W</IDENTIFIER>(100,100)[0:2,*]
+<KEYWORD>integer</KEYWORD>, <KEYWORD>dimension</KEYWORD>(2) :: <IDENTIFIER>array</IDENTIFIER> = (/ 1, 2 /)
+<KEYWORD>logical</KEYWORD> <IDENTIFIER>b</IDENTIFIER> = .true.
+<KEYWORD>format</KEYWORD> (1PE12.4, I10)
+<KEYWORD>if</KEYWORD> (<IDENTIFIER>a</IDENTIFIER> .le. 10 .and. <IDENTIFIER>b</IDENTIFIER> > 12 .or. <IDENTIFIER>c</IDENTIFIER>)
+   <IDENTIFIER>c</IDENTIFIER> = (12**2 + 12.3d0 < <IDENTIFIER>v</IDENTIFIER>%<IDENTIFIER>res</IDENTIFIER>) .eqv. .not. (<IDENTIFIER>a</IDENTIFIER> .definedoperator. <IDENTIFIER>b</IDENTIFIER>)
+<KEYWORD>else</KEYWORD>
+   <KEYWORD>write</KEYWORD>(*,*) "Test output"
+<KEYWORD>endif</KEYWORD>
+<KEYWORD>end</KEYWORD>"""
 
 }
 
