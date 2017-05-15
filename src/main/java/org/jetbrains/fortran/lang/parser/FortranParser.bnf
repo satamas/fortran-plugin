@@ -42,6 +42,8 @@
     GT        = 'regexp:>|.gt.'
     GE        = 'regexp:>=|.ge.'
     QUEST     = '?'
+    UNDERSCORE = '_'
+    AMPERSAND = '&'
 
     LOGICAL_EQ  = '.eqv.'
     LOGICAL_NEQ = '.neqv.'
@@ -1023,7 +1025,7 @@ intrinsic_stmt ::= intrinsic_ ('::')? <<list fidentifier>> { pin = 1 }
 // R1219
 function_reference ::= procedure_designator '(' <<list actual_arg_spec>>? ')' { pin = 4 }
 // R1220
-call_stmt ::= call_ procedure_designator ('(' <<list actual_arg_spec>>? ')')?
+call_stmt ::= call_ procedure_designator ('(' <<list actual_arg_spec>>? ')')? { pin = 1 }
 // R1221
 procedure_designator ::= data_ref
 // R1222

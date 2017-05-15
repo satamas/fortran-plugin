@@ -71,8 +71,8 @@ OCTAL_LITERAL=[Oo]\'{ODIGIT}\'|[Oo]\"{ODIGIT}\"|\'{ODIGIT}\'[Oo]|\"{ODIGIT}\"[Oo
 HDIGIT=[0-9A-Fa-f](\040*[0-9A-Fa-f])*
 HEX_LITERAL=[XZxz]\'{HDIGIT}\'|[XZxz]\"{HDIGIT}\"|\'{HDIGIT}\'[XZxz]|\"{HDIGIT}\"[XZxz]
 
-IDENTIFIER_PART=[:digit:]|[:letter:]|_
-IDENTIFIER=[:letter:]{IDENTIFIER_PART}*
+IDENTIFIER_PART=[:digit:]|[:letter:]|_|"$"
+IDENTIFIER=([:letter:]|_){IDENTIFIER_PART}*
 
 LINE_COMMENT="!"[^\r\n]*
 WHITE_SPACE_CHAR=[\ \t\f]
@@ -260,6 +260,8 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ">=" { return GE; }
     "=>" { return POINTER_ASSMNT; }
     "?" { return QUEST; }
+    "_" { return UNDERSCORE; }
+    "&" { return AMPERSAND; }
 
     ".eqv." { return LOGICAL_EQ; }
     ".neqv." { return LOGICAL_NEQ; }
