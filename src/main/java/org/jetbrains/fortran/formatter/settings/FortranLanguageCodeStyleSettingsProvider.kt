@@ -14,12 +14,14 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
 
 override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.SettingsType): String
             = "program sample\n" +
-              "    a = +1\n" +
+              "    integer :: a = +1\n" +
+              "    integer, dimension (1:1000) :: array\n" +
               "    b = (1 + 2) * a + 2**2\n" +
-              "    f = .not. (2 .definedoperator. 1)\n" +
+              "    f = .not. (2 .operator. 1)\n" +
               "    if (b .eq. 10 .eqv. (c > 10) .and. f) then\n" +
               "        write (*,*) 'string1' // 'string2', b\n" +
               "    endif\n" +
+              "    f = .true.; b = 1\n" +
               "end program sample\n"
 
     override fun customizeSettings(consumer: CodeStyleSettingsCustomizable, settingsType: SettingsType) {
@@ -34,7 +36,9 @@ override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.Setti
                         "SPACE_AROUND_MULTIPLICATIVE_OPERATORS",
                         "SPACE_AROUND_UNARY_OPERATOR",
                         "SPACE_AFTER_COMMA",
-                        "SPACE_BEFORE_COMMA"
+                        "SPACE_BEFORE_COMMA",
+                        "SPACE_BEFORE_COLON",
+                        "SPACE_AFTER_COLON"
                 )
                 consumer.renameStandardOption("SPACE_AROUND_ASSIGNMENT_OPERATORS", "Space around assigment operators (=, =>)")
                 consumer.renameStandardOption("SPACE_AROUND_LOGICAL_OPERATORS", "Logical operators (.or., .and.)")
@@ -53,6 +57,14 @@ override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.Setti
                         CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_DEFINED_OPERATOR", "Defined operators",
                         CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+
+                consumer.moveStandardOption("SPACE_BEFORE_COLON", CodeStyleSettingsCustomizable.SPACES_OTHER)
+                consumer.moveStandardOption("SPACE_AFTER_COLON", CodeStyleSettingsCustomizable.SPACES_OTHER)
+
+                consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_BEFORE_DOUBLE_COLON", "Space before double-colon",
+                        CodeStyleSettingsCustomizable.SPACES_OTHER)
+                consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AFTER_DOUBLE_COLON", "Space after double-colon",
+                        CodeStyleSettingsCustomizable.SPACES_OTHER)
             }
 
         }

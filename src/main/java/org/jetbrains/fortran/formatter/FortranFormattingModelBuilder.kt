@@ -35,8 +35,6 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .after(PLUS).spaceIf(fortranCommonSettings.SPACE_AROUND_UNARY_OPERATOR)
                 .before(MINUS).spaces(1)
                 .after(MINUS).spaceIf(fortranCommonSettings.SPACE_AROUND_UNARY_OPERATOR)
-                .before(COMMA).spaceIf(fortranCommonSettings.SPACE_BEFORE_COMMA)
-                .after(COMMA).spaceIf(fortranCommonSettings.SPACE_AFTER_COMMA)
                 .around(NOT).spaceIf(fortranSettings.SPACE_AROUND_NOT_OPERATOR)
                 .around(POWER).spaceIf(fortranSettings.SPACE_AROUND_POWER_OPERATOR)
                 .around(LOGICAL_EQ).spaceIf(fortranSettings.SPACE_AROUND_EQUIVALENCE_OPERATOR)
@@ -44,7 +42,16 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .aroundInside(DIVDIV, CONCAT_EXPR).spaceIf(fortranSettings.SPACE_AROUND_CONCAT_OPERATOR)
                 .aroundInside(DEFOPERATOR, DEF_BINARY_OPERATOR_EXPR).spaceIf(fortranSettings.SPACE_AROUND_DEFINED_OPERATOR)
                 .aroundInside(DEFOPERATOR, DEF_UNARY_OPERATOR_EXPR).spaceIf(fortranSettings.SPACE_AROUND_DEFINED_OPERATOR)
-                .after(KEYWORD).spaces(1)
+                .between(KEYWORD, KEYWORD).spaces(1)
+                .between(KEYWORD, IDENTIFIER).spaces(1)
+                .between(IDENTIFIER, KEYWORD).spaces(1)
+                .before(COMMA).spaceIf(fortranCommonSettings.SPACE_BEFORE_COMMA)
+                .after(COMMA).spaceIf(fortranCommonSettings.SPACE_AFTER_COMMA)
+                .before(COLON).spaceIf(fortranCommonSettings.SPACE_BEFORE_COLON)
+                .after(COLON).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
+                .before(COLONCOLON).spaceIf(fortranSettings.SPACE_BEFORE_DOUBLE_COLON)
+                .after(COLONCOLON).spaceIf(fortranSettings.SPACE_AFTER_DOUBLE_COLON)
+
 
     }
 

@@ -10,4 +10,7 @@ public class FortranCodeStyleSettings(container : CodeStyleSettings)
     @JvmField var SPACE_AROUND_EQUIVALENCE_OPERATOR = true
     @JvmField var SPACE_AROUND_CONCAT_OPERATOR = true
     @JvmField var SPACE_AROUND_DEFINED_OPERATOR = true
+
+    @JvmField var SPACE_BEFORE_DOUBLE_COLON = true
+    @JvmField var SPACE_AFTER_DOUBLE_COLON = true
 }

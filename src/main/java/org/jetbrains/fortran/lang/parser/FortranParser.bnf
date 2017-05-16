@@ -659,7 +659,7 @@ expr ::= def_binary_operator_expr
 
 private add_expr_group ::= add_expr | unary_add_expr
 def_binary_operator_expr ::= expr defined_binary_op expr { pin = 2 }
-defined_binary_op ::= defoperator
+private defined_binary_op ::= defoperator
 equiv_expr  ::= expr ('.eqv.' | '.neqv.') expr { pin = 2 }
 or_expr     ::= expr '.or.' expr { pin = 2 }
 and_expr    ::= expr '.and.' expr { pin = 2 }
