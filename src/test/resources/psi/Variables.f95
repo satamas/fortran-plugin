@@ -18,4 +18,6 @@ program a
   common /x/ c
   common /x/ c, /y/ d(1)
   common /x/ c /y/ d(1)
+  double complex :: var1
+  doublecomplex :: var2
 end program a

@@ -35,6 +35,23 @@ FILE
               COMPONENT_DECL
                 PsiElement(identifier)('z')
           PsiElement(eol)('\n')
+        PsiWhiteSpace('      ')
+        TYPE_BOUND_PROCEDURE_PART
+          CONTAINS_STMT
+            PsiElement(contains)('contains')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('        ')
+          TYPE_BOUND_PROCEDURE_STMT
+            PsiElement(procedure)('procedure')
+            PsiElement(::)('::')
+            PsiWhiteSpace(' ')
+            TYPE_BOUND_PROC_DECL
+              PsiElement(identifier)('sub')
+              PsiWhiteSpace(' ')
+              PsiElement(=>)('=>')
+              PsiWhiteSpace(' ')
+              PsiElement(identifier)('sub1')
+          PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
           PsiElement(end)('end')
@@ -184,6 +201,18 @@ FILE
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
+          CALL_STMT
+            PsiElement(call)('call')
+            PsiWhiteSpace(' ')
+            PROCEDURE_DESIGNATOR
+              DATA_REF
+                PsiElement(identifier)('t1')
+                PsiElement(%)('%')
+                PsiElement(identifier)('sub')
+                PsiElement(()('(')
+                PsiElement())(')')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('    ')
           RETURN_STMT
             PsiElement(returnkwd)('return')
             PsiWhiteSpace(' ')
