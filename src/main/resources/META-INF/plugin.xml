@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
