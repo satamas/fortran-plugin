@@ -689,7 +689,7 @@ FILE
         END_DO_STMT
           PsiElement(keyword)('enddo')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('    ')
       ASSIGNMENT_STMT
         DESIGNATOR

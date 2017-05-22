@@ -10,7 +10,7 @@ import org.jetbrains.fortran.FortranLanguage
 
 class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvider() {
 
-    override fun getLanguage(): Language = FortranLanguage.INSTANCE
+    override fun getLanguage(): Language = FortranLanguage
 
 override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.SettingsType): String
             = "program sample\n" +
@@ -73,7 +73,7 @@ override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.Setti
      override fun getIndentOptionsEditor(): IndentOptionsEditor = SmartIndentOptionsEditor()
 
      override fun getDefaultCommonSettings(): CommonCodeStyleSettings? {
-        val defaultSettings = CommonCodeStyleSettings(FortranLanguage.INSTANCE)
+        val defaultSettings = CommonCodeStyleSettings(FortranLanguage)
         val indentOptions = defaultSettings.initIndentOptions()
         indentOptions.INDENT_SIZE = 4
         indentOptions.CONTINUATION_INDENT_SIZE = 8

@@ -54,7 +54,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('person')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -113,7 +113,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('kids')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -169,7 +169,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('AUXILIARY')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -222,7 +222,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('NUMERIC_SEQ')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT

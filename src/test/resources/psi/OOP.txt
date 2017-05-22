@@ -38,11 +38,11 @@ FILE
         PsiWhiteSpace('      ')
         TYPE_BOUND_PROCEDURE_PART
           CONTAINS_STMT
-            PsiElement(contains)('contains')
+            PsiElement(keyword)('contains')
             PsiElement(eol)('\n')
           PsiWhiteSpace('        ')
           TYPE_BOUND_PROCEDURE_STMT
-            PsiElement(procedure)('procedure')
+            PsiElement(keyword)('procedure')
             PsiElement(::)('::')
             PsiWhiteSpace(' ')
             TYPE_BOUND_PROC_DECL
@@ -60,7 +60,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('dot')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -97,7 +97,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('cut')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -139,7 +139,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('cutarray')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
@@ -183,13 +183,13 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(identifier)('object')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+    PsiWhiteSpace('\n')
     PsiWhiteSpace('  ')
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
         PsiElement(keyword)('contains')
         PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       FUNCTION_SUBPROGRAM
         FUNCTION_STMT
@@ -207,7 +207,7 @@ FILE
         PsiWhiteSpace('    ')
         BLOCK
           CALL_STMT
-            PsiElement(call)('call')
+            PsiElement(keyword)('call')
             PsiWhiteSpace(' ')
             PROCEDURE_DESIGNATOR
               DATA_REF

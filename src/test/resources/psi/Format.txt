@@ -47,6 +47,6 @@ FILE
         PsiElement())(')')
         PsiElement())(')')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+    PsiWhiteSpace('\n')
     END_PROGRAM_STMT
       PsiElement(keyword)('end')

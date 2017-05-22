@@ -41,7 +41,7 @@ enum class FortranHighlightingColors (humanName: String, val default: TextAttrib
     // C preprocessor
     CPP("C preprocessor", DefColors.TEMPLATE_LANGUAGE_COLOR),
 
-    FIRST_WHITE_SPACE("WHITE SPACE", EditorColors.FOLDED_TEXT_ATTRIBUTES),
+    FIRST_WHITE_SPACE("Fixed Form leading whitespace", EditorColors.FOLDED_TEXT_ATTRIBUTES),
 
     BAD_CHARACTER("Bad character", HighlighterColors.BAD_CHARACTER);
 

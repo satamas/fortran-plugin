@@ -20,9 +20,9 @@ abstract class FortranBaseParsingTestCase : ParsingTestCase(".", "f", FortranPar
     @Throws(Exception::class)
     fun doParsingTest(filePath: String) {
         if (filePath.endsWith(".f") || filePath.endsWith(".for")) {
-            doBaseTest(filePath, IFileElementType(FortranFixedFormLanguage.INSTANCE))
+            doBaseTest(filePath, IFileElementType(FortranFixedFormLanguage))
         } else {
-            doBaseTest(filePath, IFileElementType(FortranLanguage.INSTANCE))
+            doBaseTest(filePath, IFileElementType(FortranLanguage))
         }
     }
 

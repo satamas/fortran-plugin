@@ -13,10 +13,10 @@ import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
 class FortranFormattingModelBuilder : FormattingModelBuilder {
 
     fun createSpacingBuilder(settings : CodeStyleSettings) : SpacingBuilder {
-        val fortranCommonSettings = settings.getCommonSettings(FortranLanguage.INSTANCE)
+        val fortranCommonSettings = settings.getCommonSettings(FortranLanguage)
         val fortranSettings = settings.getCustomSettings(FortranCodeStyleSettings::class.java)
 
-        return SpacingBuilder(settings, FortranLanguage.INSTANCE)
+        return SpacingBuilder(settings, FortranLanguage)
                 .around(EQ).spaceIf(fortranCommonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
                 .around(POINTER_ASSMNT).spaceIf(fortranCommonSettings.SPACE_AROUND_ASSIGNMENT_OPERATORS)
                 .around(AND).spaceIf(fortranCommonSettings.SPACE_AROUND_LOGICAL_OPERATORS)

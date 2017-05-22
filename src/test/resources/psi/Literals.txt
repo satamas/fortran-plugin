@@ -53,7 +53,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('ENUM')
       PsiElement(eol)('\n')
-      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
         DESIGNATOR

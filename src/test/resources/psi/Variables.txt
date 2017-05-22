@@ -323,9 +323,9 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(double)('double')
+          PsiElement(keyword)('double')
           PsiWhiteSpace(' ')
-          PsiElement(complex)('complex')
+          PsiElement(keyword)('complex')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -335,7 +335,7 @@ FILE
       PsiWhiteSpace('  ')
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
-          PsiElement(doublecomplex)('doublecomplex')
+          PsiElement(keyword)('doublecomplex')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')

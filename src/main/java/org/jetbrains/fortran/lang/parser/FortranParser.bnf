@@ -108,6 +108,7 @@ private dimension_     ::= <<parseKeyword "DIMENSION">>
 private do_            ::= <<parseKeyword "DO">>
 private double_        ::= <<parseKeyword "DOUBLE">>
 private doubleprecision_ ::= <<parseKeyword "DOUBLEPRECISION">>
+private doublecomplex_ ::= <<parseKeyword "DOUBLECOMPLEX">>
 private elemental_     ::= <<parseKeyword "ELEMENTAL">>
 private else_          ::= <<parseKeyword "ELSE">>
 private elseif_        ::= <<parseKeyword "ELSEIF">>
