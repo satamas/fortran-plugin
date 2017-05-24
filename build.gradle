@@ -79,7 +79,7 @@ static def codegenTask(project, task) {
 def lexerTask(project, lexerName, pkg) {
     return codegenTask(project, tasks.create("generate${lexerName}", JavaExec) {
         def src = "$project.projectDir/src/main/java/org/jetbrains/fortran/lang/lexer/${lexerName}.flex"
-        def dst = "$project.projectDir/src/main/java/$pkg"
+        def dst = "$project.projectDir/src/gen/$pkg"
 
         main = 'jflex.Main'
         classpath = files('lib/jflex/JFlex.jar')
@@ -100,8 +100,9 @@ def parserTask(project, parserName, pkg) {
         def src = "$project.projectDir/src/main/java/org/jetbrains/fortran/lang/parser/${parserName}.bnf"
         def dst = "$dstRoot/$pkg"
         doFirst {
-            delete file(dst)
-            delete file("$dstRoot/org/jetbrains/fortran/lang/")
+            delete file("$dstRoot/org/jetbrains/fortran/lang/parser")
+            delete file("$dstRoot/org/jetbrains/fortran/lang/psi")
+            delete file("$dstRoot/org/jetbrains/fortran/lang/FortranTypes.java")
         }
 
         main = 'org.intellij.grammar.Main'

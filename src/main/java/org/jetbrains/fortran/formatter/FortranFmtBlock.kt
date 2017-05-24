@@ -76,7 +76,7 @@ class FortranFmtBlock(
         val childPsi = child.psi
         return when {
             parentType == BLOCK && childType !== LABEL -> Indent.getNormalIndent()
-
+            parentPsi is FortranExpr -> Indent.getContinuationIndent()
             else -> Indent.getNoneIndent()
         }
     }

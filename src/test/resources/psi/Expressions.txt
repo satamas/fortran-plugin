@@ -206,8 +206,8 @@ FILE
                         PsiElement(/))('/)')
                     PsiElement(,)(',')
                     PsiWhiteSpace('  ')
-                    PsiComment(line_continue)('&\n')
-                    PsiWhiteSpace('                                         ')
+                    PsiComment(line_continue)('&')
+                    PsiWhiteSpace('\n                                         ')
                     SECTION_SUBSCRIPT
                       ARRAY_CONSTRUCTOR
                         PsiElement((/)('(/')
