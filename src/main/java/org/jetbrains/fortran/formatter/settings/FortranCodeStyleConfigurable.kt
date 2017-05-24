@@ -17,10 +17,6 @@ class FortranCodeStyleConfigurable(settings: CodeStyleSettings, cloneSettings: C
     private class FortranCodeStyleMainPanel(currentSettings: CodeStyleSettings, settings: CodeStyleSettings)
         : TabbedLanguageCodeStylePanel(FortranLanguage, currentSettings, settings) {
 
-       // override fun addSpacesTab(settings: CodeStyleSettings) {}
-
-        override fun addBlankLinesTab(settings: CodeStyleSettings) {}
-
         override fun addWrappingAndBracesTab(settings: CodeStyleSettings) {}
     }
 }

@@ -75,16 +75,19 @@ FILE
             PsiElement(*)('*')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          DESIGNATOR
-            PsiElement(identifier)('end')
+          OUTPUT_ITEM
+            DESIGNATOR
+              PsiElement(identifier)('end')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
-          DESIGNATOR
-            PsiElement(identifier)('integer')
+          OUTPUT_ITEM
+            DESIGNATOR
+              PsiElement(identifier)('integer')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
-          DESIGNATOR
-            PsiElement(identifier)('write')
+          OUTPUT_ITEM
+            DESIGNATOR
+              PsiElement(identifier)('write')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(keyword)('end')

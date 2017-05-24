@@ -8,6 +8,7 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.formatter.FormatterUtil
 import org.jetbrains.fortran.lang.FortranTypes.*
+import org.jetbrains.fortran.lang.psi.FortranExpr
 import java.util.*
 
 class FortranFmtBlock(
@@ -81,6 +82,15 @@ class FortranFmtBlock(
     }
 
     fun computeSpacing(child1: Block?, child2: Block): Spacing? {
+        if (child1 is ASTBlock && child2 is ASTBlock) {
+           /* val node1 = child1.node
+            val node2 = child2.node
+            val psi1 = node1.psi
+            val psi2 = node2.psi
+            if (psi1 is FortranExpr && (psi2 is FortranExpr || psi2 is FortranStmt) {
+                return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, 0/*settings.KEEP_BLANK_LINES_IN_CODE*/)
+            }*/
+        }
         return spacingBuilder.getSpacing(this, child1, child2)
     }
 

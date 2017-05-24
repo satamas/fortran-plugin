@@ -52,7 +52,6 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .before(COLONCOLON).spaceIf(fortranSettings.SPACE_BEFORE_DOUBLE_COLON)
                 .after(COLONCOLON).spaceIf(fortranSettings.SPACE_AFTER_DOUBLE_COLON)
 
-
     }
 
     

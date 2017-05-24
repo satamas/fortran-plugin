@@ -28,11 +28,13 @@ FILE
           PsiWhiteSpace(' ')
           CASE_SELECTOR
             PsiElement(()('(')
-            CONSTANT
-              PsiElement(integerliteral)('1')
+            CASE_VALUE_RANGE
+              CONSTANT
+                PsiElement(integerliteral)('1')
             PsiElement(,)(',')
-            CONSTANT
-              PsiElement(integerliteral)('2')
+            CASE_VALUE_RANGE
+              CONSTANT
+                PsiElement(integerliteral)('2')
             PsiElement())(')')
           PsiElement(eol)('\n')
         PsiWhiteSpace('       ')

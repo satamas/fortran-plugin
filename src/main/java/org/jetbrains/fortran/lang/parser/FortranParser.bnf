@@ -64,7 +64,7 @@
     IDENTIFIER = 'identifier'
   ]
 
-  extends(".*expr")=expr
+  extends(".*(expr|literal)")=expr
   consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 }
 
@@ -672,27 +672,27 @@ concat_expr ::= expr '//' expr { pin = 2 }
 add_expr    ::= expr ('+' | '-') expr { pin = 2 }
 unary_add_expr ::= ('+' | '-') expr { pin= 2 }
 mult_expr   ::= expr ('*' | '/') expr { pin = 2 }
-power_expr  ::= expr '**' expr { rightAssociative=true pin = 2 } { extends=expr }
+power_expr  ::= expr '**' expr { rightAssociative=true pin = 2 }
 def_unary_operator_expr ::= defined_unary_op expr { pin = 1 }
 private defined_unary_op ::= defoperator
-private primary ::= constant | designator | (function_reference !'(') | (array_constructor !'(') /*| structure_constructor*/ | paren /*| type_param_inquiry */
-paren ::= '(' expr ')' { pin = 1 }
+private primary ::= constant | designator | (function_reference !'(') | (array_constructor !'(') /*| structure_constructor*/ | parenthesised_expr /*| type_param_inquiry */ { extends=expr }
+parenthesised_expr ::= '(' expr ')' { pin = 1 }
 // R455
 structure_constructor ::= (fidentifier '(' <<list component_spec>> ')' !'(')
-                         | (derived_type_spec ('(' <<list type_param_spec>> ')')?)
+                         | (derived_type_spec ('(' <<list type_param_spec>> ')')?) { extends=expr }
 // R468
-array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']')
+array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']') { extends=expr }
 // R601
-designator ::= (fidentifier !('%' | '(' | '[')) | (data_ref !"(") | substring /*| function_reference /*| array_section  | complex_part_designator */
+designator ::= (fidentifier !('%' | '(' | '[')) | (data_ref !"(") | substring /*| function_reference /*| array_section  | complex_part_designator */ { extends=expr }
 // R304, R305 modified
 constant ::= floatingpointliteral | doubleprecisionliteral | integerliteral | complex_literal
-            | logical_literal | string_literal | boz_literal
+            | logical_literal | string_literal | boz_literal { extends=expr }
 logical_literal ::= truekwd | falsekwd
 
 // R724 - 731 are trivial
 
 // R732
-assignment_stmt ::=  designator '=' expr {pin = 2} // it was a variable here in the standard but we don't want to match an expression
+assignment_stmt ::=  designator '=' expr {pin = 2 } // it was a variable here in the standard but we don't want to match an expression
 // R733
 pointer_assignment_stmt ::= pointer_a_with_data_pointer | pointer_a_with_proc_pointer
 private pointer_a_with_data_pointer ::= data_pointer_object (('(' <<list bounds_remapping>> ')')
@@ -1023,7 +1023,7 @@ proc_pointer_init ::= function_reference | fidentifier
 // R1218
 intrinsic_stmt ::= intrinsic_ ('::')? <<list fidentifier>> { pin = 1 }
 // R1219
-function_reference ::= procedure_designator '(' <<list actual_arg_spec>>? ')' { pin = 4 }
+function_reference ::= procedure_designator '(' <<list actual_arg_spec>>? ')' { pin = 4; extends=expr }
 // R1220
 call_stmt ::= call_ procedure_designator ('(' <<list actual_arg_spec>>? ')')? { pin = 1 }
 // R1221
@@ -1081,3 +1081,5 @@ accept_stmt ::= accept_  format (',' <<list input_item>>)?  {pin = 1}
 encode_stmt ::= encode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list output_item>> { pin = 1}
 decode_stmt ::= decode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list input_item>> { pin = 1 }
 type_stmt ::= type_ format (','? <<list output_item>>?) { pin = 3 }
+
+

@@ -40,46 +40,47 @@ FILE
         PsiElement(keyword)('contains')
         PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
-      SUBROUTINE_SUBPROGRAM
-        SUBROUTINE_STMT
-          PsiElement(keyword)('subroutine')
-          PsiWhiteSpace(' ')
-          PsiElement(identifier)('input')
-          PsiElement(()('(')
-          DUMMY_ARG
-            PsiElement(identifier)('x')
-          PsiElement(,)(',')
-          PsiWhiteSpace(' ')
-          DUMMY_ARG
-            PsiElement(identifier)('y')
-          PsiElement(,)(',')
-          PsiWhiteSpace(' ')
-          DUMMY_ARG
-            PsiElement(identifier)('z')
-          PsiElement())(')')
-          PsiElement(eol)('\n')
-        PsiWhiteSpace('    \t')
-        BLOCK
-          ASSIGNMENT_STMT
-            DESIGNATOR
+      MODULE_SUBPROGRAM
+        SUBROUTINE_SUBPROGRAM
+          SUBROUTINE_STMT
+            PsiElement(keyword)('subroutine')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('input')
+            PsiElement(()('(')
+            DUMMY_ARG
               PsiElement(identifier)('x')
+            PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            PsiElement(=)('=')
+            DUMMY_ARG
+              PsiElement(identifier)('y')
+            PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            ADD_EXPR
+            DUMMY_ARG
+              PsiElement(identifier)('z')
+            PsiElement())(')')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('    \t')
+          BLOCK
+            ASSIGNMENT_STMT
               DESIGNATOR
-                PsiElement(identifier)('y')
+                PsiElement(identifier)('x')
               PsiWhiteSpace(' ')
-              PsiElement(+)('+')
+              PsiElement(=)('=')
               PsiWhiteSpace(' ')
-              DESIGNATOR
-                PsiElement(identifier)('z')
-          PsiElement(eol)('\n')
-        PsiWhiteSpace('   ')
-        END_SUBROUTINE_STMT
-          PsiElement(keyword)('endsubroutine')
-          PsiWhiteSpace(' ')
-          PsiElement(identifier)('input')
+              ADD_EXPR
+                DESIGNATOR
+                  PsiElement(identifier)('y')
+                PsiWhiteSpace(' ')
+                PsiElement(+)('+')
+                PsiWhiteSpace(' ')
+                DESIGNATOR
+                  PsiElement(identifier)('z')
+            PsiElement(eol)('\n')
+          PsiWhiteSpace('   ')
+          END_SUBROUTINE_STMT
+            PsiElement(keyword)('endsubroutine')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('input')
       PsiElement(eol)('\n')
     END_MODULE_STMT
       PsiElement(keyword)('end')
@@ -91,9 +92,10 @@ FILE
   PsiWhiteSpace('\n')
   FUNCTION_SUBPROGRAM
     FUNCTION_STMT
-      PREFIX_SPEC
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('real')
+      PREFIX
+        PREFIX_SPEC
+          INTRINSIC_TYPE_SPEC
+            PsiElement(keyword)('real')
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
@@ -168,9 +170,10 @@ FILE
   PsiWhiteSpace('\n')
   FUNCTION_SUBPROGRAM
     FUNCTION_STMT
-      PREFIX_SPEC
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+      PREFIX
+        PREFIX_SPEC
+          INTRINSIC_TYPE_SPEC
+            PsiElement(keyword)('integer')
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')

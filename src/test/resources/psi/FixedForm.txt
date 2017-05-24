@@ -48,12 +48,14 @@ FILE
           PsiElement(identifier)('a')
         PsiElement())(')')
         PsiWhiteSpace(' ')
-        DESIGNATOR
-          PsiElement(identifier)('c')
+        OUTPUT_ITEM
+          DESIGNATOR
+            PsiElement(identifier)('c')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        DESIGNATOR
-          PsiElement(identifier)('b')
+        OUTPUT_ITEM
+          DESIGNATOR
+            PsiElement(identifier)('b')
       PsiElement(eol)('\n')
       LABEL
         PsiElement(integerliteral)('123')
@@ -79,11 +81,10 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        CONSTANT
-          MULTILINE_STRING_LITERAL
-            PsiElement(stringstart)('"AAA\&')
-            PsiComment(line_continue)('\n     a')
-            PsiElement(stringend)('AAA"')
+        MULTILINE_STRING_LITERAL
+          PsiElement(stringstart)('"AAA\&')
+          PsiComment(line_continue)('\n     a')
+          PsiElement(stringend)('AAA"')
       PsiElement(eol)('\n')
       PsiWhiteSpace('      ')
       ASSIGNMENT_STMT
@@ -111,7 +112,7 @@ FILE
           PsiElement(+)('+')
           PsiWhiteSpace(' ')
           MULT_EXPR
-            PAREN
+            PARENTHESISED_EXPR
               PsiElement(()('(')
               ADD_EXPR
                 DESIGNATOR

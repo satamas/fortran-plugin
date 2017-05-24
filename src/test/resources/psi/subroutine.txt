@@ -145,8 +145,9 @@ FILE
             PsiElement(identifier)('format')
         PsiElement())(')')
         PsiWhiteSpace(' ')
-        DESIGNATOR
-          PsiElement(identifier)('number')
+        OUTPUT_ITEM
+          DESIGNATOR
+            PsiElement(identifier)('number')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       IF_STMT
@@ -172,48 +173,49 @@ FILE
             PsiElement(*)('*')
           PsiElement())(')')
           PsiWhiteSpace(' ')
-          CONCAT_EXPR
+          OUTPUT_ITEM
             CONCAT_EXPR
               CONCAT_EXPR
                 CONCAT_EXPR
+                  CONCAT_EXPR
+                    DESIGNATOR
+                      DATA_REF
+                        PsiElement(identifier)('trim')
+                        PsiElement(()('(')
+                        SECTION_SUBSCRIPT
+                          DESIGNATOR
+                            PsiElement(identifier)('text')
+                        PsiElement())(')')
+                    PsiElement(//)('//')
+                    CONSTANT
+                      PsiElement(stringliteral)('' '')
+                  PsiElement(//)('//')
                   DESIGNATOR
                     DATA_REF
                       PsiElement(identifier)('trim')
                       PsiElement(()('(')
                       SECTION_SUBSCRIPT
                         DESIGNATOR
-                          PsiElement(identifier)('text')
+                          DATA_REF
+                            PsiElement(identifier)('adjustl')
+                            PsiElement(()('(')
+                            SECTION_SUBSCRIPT
+                              DESIGNATOR
+                                PsiElement(identifier)('char_number')
+                            PsiElement())(')')
                       PsiElement())(')')
-                  PsiElement(//)('//')
-                  CONSTANT
-                    PsiElement(stringliteral)('' '')
                 PsiElement(//)('//')
-                DESIGNATOR
-                  DATA_REF
-                    PsiElement(identifier)('trim')
-                    PsiElement(()('(')
-                    SECTION_SUBSCRIPT
-                      DESIGNATOR
-                        DATA_REF
-                          PsiElement(identifier)('adjustl')
-                          PsiElement(()('(')
-                          SECTION_SUBSCRIPT
-                            DESIGNATOR
-                              PsiElement(identifier)('char_number')
-                          PsiElement())(')')
-                    PsiElement())(')')
+                CONSTANT
+                  PsiElement(stringliteral)('' '')
               PsiElement(//)('//')
-              CONSTANT
-                PsiElement(stringliteral)('' '')
-            PsiElement(//)('//')
-            DESIGNATOR
-              DATA_REF
-                PsiElement(identifier)('trim')
-                PsiElement(()('(')
-                SECTION_SUBSCRIPT
-                  DESIGNATOR
-                    PsiElement(identifier)('units')
-                PsiElement())(')')
+              DESIGNATOR
+                DATA_REF
+                  PsiElement(identifier)('trim')
+                  PsiElement(()('(')
+                  SECTION_SUBSCRIPT
+                    DESIGNATOR
+                      PsiElement(identifier)('units')
+                  PsiElement())(')')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     END_SUBROUTINE_STMT

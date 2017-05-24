@@ -66,7 +66,9 @@ override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.Setti
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AFTER_DOUBLE_COLON", "Space after double-colon",
                         CodeStyleSettingsCustomizable.SPACES_OTHER)
             }
-
+            SettingsType.BLANK_LINES_SETTINGS -> {
+                consumer.showStandardOptions("KEEP_BLANK_LINES_IN_CODE")
+            }
         }
     }
 

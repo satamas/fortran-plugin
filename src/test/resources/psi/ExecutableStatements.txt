@@ -656,7 +656,7 @@ FILE
                 PsiWhiteSpace(' ')
                 PsiElement(*)('*')
                 PsiWhiteSpace(' ')
-                PAREN
+                PARENTHESISED_EXPR
                   PsiElement(()('(')
                   POWER_EXPR
                     DESIGNATOR
@@ -723,16 +723,17 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       POINTER_ASSIGNMENT_STMT
-        DESIGNATOR
-          DATA_REF
-            PsiElement(identifier)('amr_thebranches')
-            PsiElement(()('(')
-            SECTION_SUBSCRIPT
-              DESIGNATOR
-                PsiElement(identifier)('amr_branchcount')
-            PsiElement())(')')
-            PsiElement(%)('%')
-            PsiElement(identifier)('link')
+        DATA_POINTER_OBJECT
+          DESIGNATOR
+            DATA_REF
+              PsiElement(identifier)('amr_thebranches')
+              PsiElement(()('(')
+              SECTION_SUBSCRIPT
+                DESIGNATOR
+                  PsiElement(identifier)('amr_branchcount')
+              PsiElement())(')')
+              PsiElement(%)('%')
+              PsiElement(identifier)('link')
         PsiWhiteSpace(' ')
         PsiElement(=>)('=>')
         PsiWhiteSpace(' ')

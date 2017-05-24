@@ -1,9 +1,10 @@
 FILE
   FUNCTION_SUBPROGRAM
     FUNCTION_STMT
-      PREFIX_SPEC
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('real')
+      PREFIX
+        PREFIX_SPEC
+          INTRINSIC_TYPE_SPEC
+            PsiElement(keyword)('real')
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
@@ -23,12 +24,13 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(:)(':')
         PsiWhiteSpace(' ')
-        RENAME_STMT
-          PsiElement(identifier)('mp_set_compression')
-          PsiWhiteSpace(' ')
-          PsiElement(=>)('=>')
-          PsiWhiteSpace(' ')
-          PsiElement(identifier)('hdf5_set_compression')
+        ONLY_STMT
+          RENAME_STMT
+            PsiElement(identifier)('mp_set_compression')
+            PsiWhiteSpace(' ')
+            PsiElement(=>)('=>')
+            PsiWhiteSpace(' ')
+            PsiElement(identifier)('hdf5_set_compression')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       USE_STMT

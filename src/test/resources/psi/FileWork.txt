@@ -216,12 +216,13 @@ FILE
           PsiElement(integerliteral)('1')
         PsiElement())(')')
         PsiWhiteSpace(' ')
-        ADD_EXPR
-          CONSTANT
-            PsiElement(integerliteral)('1')
-          PsiElement(+)('+')
-          CONSTANT
-            PsiElement(integerliteral)('2')
+        OUTPUT_ITEM
+          ADD_EXPR
+            CONSTANT
+              PsiElement(integerliteral)('1')
+            PsiElement(+)('+')
+            CONSTANT
+              PsiElement(integerliteral)('2')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       INQUIRE_STMT

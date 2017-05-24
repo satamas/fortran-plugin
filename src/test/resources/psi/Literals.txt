@@ -115,11 +115,10 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        CONSTANT
-          MULTILINE_STRING_LITERAL
-            PsiElement(stringstart)('1_"Deidranna ')
-            PsiComment(line_continue)('&\n  &')
-            PsiElement(stringend)('rules!"')
+        MULTILINE_STRING_LITERAL
+          PsiElement(stringstart)('1_"Deidranna ')
+          PsiComment(line_continue)('&\n  &')
+          PsiElement(stringend)('rules!"')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
@@ -128,13 +127,12 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        CONSTANT
-          MULTILINE_STRING_LITERAL
-            PsiElement(stringstart)(''Very ''&\\ bad & ')
-            PsiComment(line_continue)('&\n  &')
-            PsiElement(stringmiddle)(' ')
-            PsiComment(line_continue)('&\n  &')
-            PsiElement(stringend)(' string\'')
+        MULTILINE_STRING_LITERAL
+          PsiElement(stringstart)(''Very ''&\\ bad & ')
+          PsiComment(line_continue)('&\n  &')
+          PsiElement(stringmiddle)(' ')
+          PsiComment(line_continue)('&\n  &')
+          PsiElement(stringend)(' string\'')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
@@ -143,9 +141,8 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        CONSTANT
-          BOZ_LITERAL
-            PsiElement(binaryliteral)('B"101"')
+        BOZ_LITERAL
+          PsiElement(binaryliteral)('B"101"')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
@@ -154,9 +151,8 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        CONSTANT
-          BOZ_LITERAL
-            PsiElement(octalliteral)('O"1765"')
+        BOZ_LITERAL
+          PsiElement(octalliteral)('O"1765"')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
@@ -165,9 +161,8 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        CONSTANT
-          BOZ_LITERAL
-            PsiElement(hexliteral)('Z'9A7f'')
+        BOZ_LITERAL
+          PsiElement(hexliteral)('Z'9A7f'')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
@@ -186,18 +181,17 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
-        CONSTANT
-          COMPLEX_LITERAL
-            PsiElement(()('(')
-            PsiWhiteSpace(' ')
-            SIGNED_REAL_LITERAL
-              PsiElement(floatingpointliteral)('10.0')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            SIGNED_INT_LITERAL
-              PsiElement(+)('+')
-              PsiElement(integerliteral)('4_8')
-            PsiElement())(')')
+        COMPLEX_LITERAL
+          PsiElement(()('(')
+          PsiWhiteSpace(' ')
+          SIGNED_REAL_LITERAL
+            PsiElement(floatingpointliteral)('10.0')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          SIGNED_INT_LITERAL
+            PsiElement(+)('+')
+            PsiElement(integerliteral)('4_8')
+          PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
