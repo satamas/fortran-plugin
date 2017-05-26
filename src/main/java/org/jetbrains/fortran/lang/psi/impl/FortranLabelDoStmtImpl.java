@@ -9,7 +9,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
 import org.jetbrains.fortran.lang.psi.*;
 
-public class FortranLabelDoStmtImpl extends FortranExprImpl implements FortranLabelDoStmt {
+public class FortranLabelDoStmtImpl extends FortranStmtImpl implements FortranLabelDoStmt {
 
     public FortranLabelDoStmtImpl(ASTNode node) {
         super(node);

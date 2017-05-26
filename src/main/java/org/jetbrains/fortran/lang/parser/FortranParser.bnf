@@ -65,6 +65,8 @@
   ]
 
   extends(".*(expr|literal)")=expr
+  implements(".*stmt")='org.jetbrains.fortran.lang.psi.FortranStmt'
+  extends(".*stmt")='org.jetbrains.fortran.lang.psi.impl.FortranStmtImpl'
   consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 }
 
@@ -259,13 +261,15 @@ private external_subprogram ::= function_subprogram | subroutine_subprogram
 // R204 - 206 are included into execution_part_construct to be in block
 // We prefer to parse more and then check
 // R207
-private declaration_construct ::= derived_type_def | entry_stmt | format_stmt | enum_def
-                        | interface_block | parameter_stmt | procedure_declaration_stmt
+declaration_construct ::= derived_type_def | enum_def | interface_block
+
+private declaration_stmt ::= entry_stmt | format_stmt | parameter_stmt | procedure_declaration_stmt
                         | other_specification_stmt | type_declaration_stmt | stmt_function_stmt
 // R208 is in R801
 // R209
-private execution_part_construct ::= !(label? end_block_keys) ( executable_construct | use_stmt
-                                     | include_stmt | import_stmt | implicit_stmt | declaration_construct | type_stmt) {
+private execution_part_construct ::= !(label? end_block_keys) ( action_stmt | labeled_do_construct | executable_construct
+                                     | use_stmt | include_stmt | import_stmt | implicit_stmt | declaration_construct
+                                     | declaration_stmt | type_stmt) {
   pin=1
   recoverWhile=block_recover
 }
@@ -281,7 +285,7 @@ internal_subprogram ::= !(label? (end_unit_keys | endprocedure_)) (function_subp
 }
 private internal_subprogram_recover ::= !(eol | end_ | endfunction_ | endsubroutine_ | endprocedure_)
 // R212
-other_specification_stmt ::=  access_stmt       |  allocatable_stmt |  asynchronous_stmt
+private other_specification_stmt ::=  access_stmt |  allocatable_stmt |  asynchronous_stmt
                            |  bind_stmt         |  codimension_stmt |  common_stmt
                            |  data_stmt         |  dimension_stmt   |  equivalence_stmt
                            |  external_stmt     |  intent_stmt      |  intrinsic_stmt
@@ -290,9 +294,9 @@ other_specification_stmt ::=  access_stmt       |  allocatable_stmt |  asynchron
                            |  volatile_stmt     |  value_stmt
                            |  contiguous_stmt
 // R213
-private executable_construct ::=  action_stmt  | associate_construct | block_construct  | case_construct
-                       | critical_construct    | do_construct        | forall_construct | if_construct
-                       | select_type_construct | where_construct
+executable_construct ::= associate_construct | block_construct       | case_construct
+                       | critical_construct  | do_construct          | forall_construct
+                       | if_construct        | select_type_construct | where_construct
 // R214
 private action_stmt ::= assignment_stmt | pointer_assignment_stmt   | allocate_stmt   | backspace_stmt
                 | call_stmt             | close_stmt                | continue_stmt
@@ -358,7 +362,7 @@ char_length ::= ('(' type_param_value ')') | integerliteral
 // R423 - 424 are implemented in lexer
 // R425
 derived_type_def ::= derived_type_stmt type_param_def_stmt* private_or_sequence* component_part
-                     type_bound_procedure_part? end_type_stmt { pin = 1 }
+                     type_bound_procedure_part? end_type_stmt { pin = 1; extends = declaration_construct }
 // R426
 derived_type_stmt ::= label? type_ ((',' <<list type_attr_spec>>)? '::')? fidentifier ('(' <<list fidentifier>> ')')? eol { pin = 4 }
 // R427
@@ -431,7 +435,7 @@ component_spec ::= (fidentifier '=')? component_data_source
 // R457
 component_data_source ::= expr /*| variable*/ | proc_target
 // R458
-enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)+ end_enum_stmt { pin = 1 }
+enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)+ end_enum_stmt { pin = 1; extends = declaration_construct }
 // R459
 enum_def_stmt ::= label? enum_ ',' bind_ '(' fidentifier ')' eol { pin = 4 }
 // R460
@@ -713,7 +717,7 @@ proc_target ::= expr | (variable '%' fidentifier) | fidentifier // last two opti
 where_stmt ::= where_ '(' expr ')' assignment_stmt { pin = 5}
 // R742
 where_construct ::= where_construct_stmt (label? (eol | where_body_construct))* (masked_elsewhere_stmt (label? (eol | where_body_construct))*)*
-                    (elsewhere_stmt (label? (eol | where_body_construct))*)? end_where_stmt { pin = 1 }
+                    (elsewhere_stmt (label? (eol | where_body_construct))*)? end_where_stmt { pin = 1; extends=executable_construct }
 // R743
 where_construct_stmt ::= (fidentifier ':')? where_ '(' expr ')' eol { pin = 6 }
 // R744
@@ -731,7 +735,7 @@ elsewhere_stmt ::= label? ((else_ where_) | elsewhere_) fidentifier? eol { pin =
 // R749
 end_where_stmt ::= label? ((end_ where_) | endwhere_) fidentifier? { pin = 2 }
 // R750
-forall_construct ::= forall_construct_stmt (label? (eol | forall_body_construct))* end_forall_stmt { pin = 1 }
+forall_construct ::= forall_construct_stmt (label? (eol | forall_body_construct))* end_forall_stmt { pin = 1; extends=executable_construct }
 // R751
 forall_construct_stmt ::= (fidentifier ':')? forall_ forall_header eol { pin = 4 }
 // R752
@@ -758,7 +762,7 @@ forall_stmt ::= forall_ forall_header forall_assignment_stmt { pin = 3 }
 // R801 + R208 we parse statements in any order while the standard has some restrictions. We'll check them in code revisions
 block ::= (label? (eol | execution_part_construct))*
 // R802
-associate_construct ::= associate_stmt block end_associate_stmt { pin = 1 }
+associate_construct ::= associate_stmt block end_associate_stmt { pin = 1; extends=executable_construct }
 // R803
 associate_stmt ::= (fidentifier ':')? associate_ <<list association>> eol { pin = 2 }
 // R804
@@ -768,22 +772,22 @@ private selector ::= expr | variable
 // R806
 end_associate_stmt ::= label? ((end_ associate_) | endassociate_) (fidentifier)? { pin = 2 }
 // R807
-block_construct ::= block_stmt block end_block_stmt { pin = 1 }
+block_construct ::= block_stmt block end_block_stmt { pin = 1; extends=executable_construct }
 // R808
 block_stmt ::= (fidentifier ':')? block_ eol { pin = 3 }
 // R809
 end_block_stmt ::= label? ((end_ block_) | endblock_) (fidentifier)? {pin = 2 }
 // R810
-critical_construct ::= critical_stmt block end_critical_stmt { pin = 1 }
+critical_construct ::= critical_stmt block end_critical_stmt { pin = 1; extends=executable_construct }
 // R811
 critical_stmt ::= (fidentifier ':')? critical_ eol { pin = 2 }
 // R812
 end_critical_stmt ::= label? ((end_ critical_) | endcritical_) (fidentifier)? { pin = 2 }
 // R813 simplified compared to standard
 external labeled_do_construct ::= parseLabeledDoConstruct
-private do_construct ::= labeled_do_construct | nonlabel_do_construct
+private do_construct ::=/* labeled_do_construct |*/ nonlabel_do_construct
 // R814
-nonlabel_do_construct ::= nonlabel_do_stmt block end_do { pin = 1}
+nonlabel_do_construct ::= nonlabel_do_stmt block end_do { pin = 1; extends=executable_construct}
 // R815 unused
 // R816
 //label_do_stmt ::= (identifier ':')? do label loop_control? eol { pin = 3 }
@@ -803,7 +807,7 @@ end_do_stmt ::= label? (end_ do_ | enddo_) fidentifier? { pin = 2}
 // R831
 cycle_stmt ::= cycle_ (fidentifier)? { pin = 1 }
 // R832
-if_construct ::= if_then_stmt block (else_if_stmt block)* (else_stmt block)? end_if_stmt { pin = 1 }
+if_construct ::= if_then_stmt block (else_if_stmt block)* (else_stmt block)? end_if_stmt { pin = 1; extends=executable_construct }
 // R833
 if_then_stmt ::= (fidentifier ':')? if_ '(' expr ')' then_ eol { pin = 2 }
 // R834
@@ -815,7 +819,7 @@ end_if_stmt ::= label? ((end_ if_)|endif_) fidentifier? { pin = 2 }
 // R837
 if_stmt ::= if_ '(' expr ')' action_stmt {pin=5}
 // R838
-case_construct ::= select_case_stmt (case_stmt block)* end_select_stmt { pin = 1 }
+case_construct ::= select_case_stmt (case_stmt block)* end_select_stmt { pin = 1; extends=executable_construct }
 // R839
 select_case_stmt ::= (fidentifier ':')? select_ case_ '(' expr ')' eol { pin = 3 }
 // R840
@@ -829,7 +833,7 @@ case_selector ::= ('(' <<list case_value_range>> ')') | default_
 case_value_range ::= (expr ':' expr) | (expr ':') | expr | (':' expr)
 // R845 is trivial
 // R846
-select_type_construct ::= select_type_stmt (type_guard_stmt block)* end_select_stmt { pin = 1 }
+select_type_construct ::= select_type_stmt (type_guard_stmt block)* end_select_stmt { pin = 1; extends=executable_construct }
 // R847
 select_type_stmt ::= (fidentifier ':')? select_ type_ '(' (fidentifier '=>')? selector ')' { pin = 3 }
 // R848
@@ -979,7 +983,7 @@ end_block_data_stmt ::= label? ((endblockdata_ fidentifier?)| (end_ (((block_ da
 
 // Clause 12
 // R1201
-interface_block ::= interface_stmt interface_specification end_interface_stmt { pin = 1 }
+interface_block ::= interface_stmt interface_specification end_interface_stmt { pin = 1; extends = declaration_construct }
 // R1202
 private interface_specification ::= !endinterface_keys (eol | interface_body | procedure_stmt)* {
 pin = 1

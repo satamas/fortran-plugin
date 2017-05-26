@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.fortran.lang.psi.*;
 
-public class FortranDoTermActionStmtImpl extends FortranExprImpl implements FortranDoTermActionStmt {
+public class FortranDoTermActionStmtImpl extends FortranStmtImpl implements FortranDoTermActionStmt {
 
     public FortranDoTermActionStmtImpl(ASTNode node) {
         super(node);

@@ -226,7 +226,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 
 <FREEFORM,FIXEDFORM> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
-    ^{EOL} { return WHITE_SPACE; }
+    ^({WHITE_SPACE_CHAR})*{EOL} { return WHITE_SPACE; }
     {EOL}|(";") { return EOL; }
     {LINE_COMMENT} { return LINE_COMMENT; }
     {STRING_LITERAL} { return STRINGLITERAL; }

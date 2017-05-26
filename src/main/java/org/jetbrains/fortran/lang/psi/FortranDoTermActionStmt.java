@@ -4,7 +4,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FortranDoTermActionStmt extends FortranExpr {
+public interface FortranDoTermActionStmt extends FortranStmt {
     @Nullable
     PsiElement getExpr();
 }
