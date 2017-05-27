@@ -5,7 +5,6 @@ import org.junit.Test
 
 @SuppressWarnings("all")
 class FortranParsingTest : FortranBaseParsingTestCase() {
-    @Test
     @Throws(Exception::class)
     fun testSimpleProgram() = doParsingTest(FortranTestDataFixture().navigationMetadata("SimpleProgram.f95"))
 

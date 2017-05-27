@@ -191,60 +191,59 @@ FILE
         PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
-      MODULE_SUBPROGRAM
-        FUNCTION_SUBPROGRAM
-          FUNCTION_STMT
-            PREFIX
-              PREFIX_SPEC
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(keyword)('real')
+      FUNCTION_SUBPROGRAM
+        FUNCTION_STMT
+          PREFIX
+            PREFIX_SPEC
+              INTRINSIC_TYPE_SPEC
+                PsiElement(keyword)('real')
+          PsiWhiteSpace(' ')
+          PsiElement(keyword)('function')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('l')
+          PsiElement(()('(')
+          PsiElement(identifier)('o')
+          PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        BLOCK
+          CALL_STMT
+            PsiElement(keyword)('call')
             PsiWhiteSpace(' ')
-            PsiElement(keyword)('function')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('l')
-            PsiElement(()('(')
-            PsiElement(identifier)('o')
-            PsiElement())(')')
-            PsiElement(eol)('\n')
+            PROCEDURE_DESIGNATOR
+              DATA_REF
+                PsiElement(identifier)('t1')
+                PsiElement(%)('%')
+                PsiElement(identifier)('sub')
+                PsiElement(()('(')
+                PsiElement())(')')
+          PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
-          BLOCK
-            CALL_STMT
-              PsiElement(keyword)('call')
-              PsiWhiteSpace(' ')
-              PROCEDURE_DESIGNATOR
-                DATA_REF
-                  PsiElement(identifier)('t1')
-                  PsiElement(%)('%')
-                  PsiElement(identifier)('sub')
-                  PsiElement(()('(')
-                  PsiElement())(')')
-            PsiElement(eol)('\n')
-            PsiWhiteSpace('    ')
-            RETURN_STMT
-              PsiElement(keyword)('return')
-              PsiWhiteSpace(' ')
-              DESIGNATOR
-                DATA_REF
-                  PsiElement(identifier)('o')
-                  PsiElement(%)('%')
-                  PsiElement(identifier)('ar')
-                  PsiElement(%)('%')
-                  PsiElement(identifier)('dat')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('5')
-                  PsiElement())(')')
-                  PsiElement(%)('%')
-                  PsiElement(identifier)('b')
-                  PsiElement(%)('%')
-                  PsiElement(identifier)('x')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('  ')
-          END_FUNCTION_STMT
-            PsiElement(keyword)('end')
+          RETURN_STMT
+            PsiElement(keyword)('return')
             PsiWhiteSpace(' ')
-            PsiElement(keyword)('function')
+            DESIGNATOR
+              DATA_REF
+                PsiElement(identifier)('o')
+                PsiElement(%)('%')
+                PsiElement(identifier)('ar')
+                PsiElement(%)('%')
+                PsiElement(identifier)('dat')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('5')
+                PsiElement())(')')
+                PsiElement(%)('%')
+                PsiElement(identifier)('b')
+                PsiElement(%)('%')
+                PsiElement(identifier)('x')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('  ')
+        END_FUNCTION_STMT
+          PsiElement(keyword)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(keyword)('function')
       PsiElement(eol)('\n')
     END_MODULE_STMT
       PsiElement(keyword)('end')

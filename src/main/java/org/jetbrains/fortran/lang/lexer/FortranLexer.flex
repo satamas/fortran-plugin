@@ -130,7 +130,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     {QUOTE_FREE_STRING_PART}+ { return(STRINGMIDDLE); }
     {QUOTE_FREE_STRING_PART}+({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); return(STRINGMIDDLE); }
     {QUOTE_FREE_STRING_PART}*\" { popState(); return(STRINGEND); }
-    {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
+    {FREE_LINE_CONTINUE} { pushState(FREEFORM_LINE_CONTINUE); yypushback(yylength()); }
 }
 
 <QUOTE_FIXED_STRING> {
@@ -143,7 +143,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     {AP_FREE_STRING_PART}+ { return(STRINGMIDDLE); }
     {AP_FREE_STRING_PART}+({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); return(STRINGMIDDLE); }
     {AP_FREE_STRING_PART}*\' { popState(); return(STRINGEND); }
-    {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
+    {FREE_LINE_CONTINUE} { pushState(FREEFORM_LINE_CONTINUE); yypushback(yylength()); }
 }
 
 <APOSTR_FIXED_STRING> {
@@ -153,7 +153,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 }
 
 <FREE_FORMAT_STR> {
-    {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
+    {FREE_LINE_CONTINUE} { pushState(FREEFORM_LINE_CONTINUE); yypushback(yylength()); }
     ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}* { pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}* { pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(QUOTE_FREE_STRING); return(STRINGSTART); }

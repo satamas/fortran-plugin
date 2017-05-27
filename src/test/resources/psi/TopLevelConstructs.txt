@@ -40,47 +40,46 @@ FILE
         PsiElement(keyword)('contains')
         PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
-      MODULE_SUBPROGRAM
-        SUBROUTINE_SUBPROGRAM
-          SUBROUTINE_STMT
-            PsiElement(keyword)('subroutine')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('input')
-            PsiElement(()('(')
-            DUMMY_ARG
+      SUBROUTINE_SUBPROGRAM
+        SUBROUTINE_STMT
+          PsiElement(keyword)('subroutine')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('input')
+          PsiElement(()('(')
+          DUMMY_ARG
+            PsiElement(identifier)('x')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DUMMY_ARG
+            PsiElement(identifier)('y')
+          PsiElement(,)(',')
+          PsiWhiteSpace(' ')
+          DUMMY_ARG
+            PsiElement(identifier)('z')
+          PsiElement())(')')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    \t')
+        BLOCK
+          ASSIGNMENT_STMT
+            DESIGNATOR
               PsiElement(identifier)('x')
-            PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DUMMY_ARG
-              PsiElement(identifier)('y')
-            PsiElement(,)(',')
+            PsiElement(=)('=')
             PsiWhiteSpace(' ')
-            DUMMY_ARG
-              PsiElement(identifier)('z')
-            PsiElement())(')')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('    \t')
-          BLOCK
-            ASSIGNMENT_STMT
+            ADD_EXPR
               DESIGNATOR
-                PsiElement(identifier)('x')
+                PsiElement(identifier)('y')
               PsiWhiteSpace(' ')
-              PsiElement(=)('=')
+              PsiElement(+)('+')
               PsiWhiteSpace(' ')
-              ADD_EXPR
-                DESIGNATOR
-                  PsiElement(identifier)('y')
-                PsiWhiteSpace(' ')
-                PsiElement(+)('+')
-                PsiWhiteSpace(' ')
-                DESIGNATOR
-                  PsiElement(identifier)('z')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('   ')
-          END_SUBROUTINE_STMT
-            PsiElement(keyword)('endsubroutine')
-            PsiWhiteSpace(' ')
-            PsiElement(identifier)('input')
+              DESIGNATOR
+                PsiElement(identifier)('z')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('   ')
+        END_SUBROUTINE_STMT
+          PsiElement(keyword)('endsubroutine')
+          PsiWhiteSpace(' ')
+          PsiElement(identifier)('input')
       PsiElement(eol)('\n')
     END_MODULE_STMT
       PsiElement(keyword)('end')

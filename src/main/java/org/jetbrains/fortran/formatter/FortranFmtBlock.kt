@@ -74,9 +74,20 @@ class FortranFmtBlock(
         else -> Indent.getNoneIndent()
     }
 
+    fun oneLineElement(): Boolean {
+        val parentPsi = node.psi
+        if (parentPsi is FortranFile
+                || parentPsi is FortranProgramUnit
+                || parentPsi is FortranBlock
+                || parentPsi is FortranInternalSubprogramPart
+                || parentPsi is FortranDeclarationConstruct
+                || parentPsi is FortranExecutableConstruct) {
+            return false
+        }
+        return true
+    }
     fun computeIndent(child: ASTNode): Indent {
         val parentType = node.elementType
-        val parentPsi = node.psi
         val childType = child.elementType
         return when {
             childType === LABEL -> Indent.getLabelIndent()
@@ -84,10 +95,7 @@ class FortranFmtBlock(
             parentType === BLOCK -> Indent.getNormalIndent()
             parentType !== BLOCK && childType === FortranTokenType.LINE_COMMENT -> Indent.getNormalIndent()
         // Line continuation
-            parentPsi is FortranExpr && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
-            parentPsi is FortranAcSpec && node.treeParent.psi is FortranArrayConstructor -> Indent.getContinuationIndent()
-            parentPsi is FortranStmt && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
-
+            oneLineElement() && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
             else -> Indent.getNoneIndent()
         }
     }

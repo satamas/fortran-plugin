@@ -249,7 +249,7 @@ multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
 // R201
 private program ::=  eol* (program_unit eol*)*
 // R202
-private program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | include_stmt | main_program ) {
+program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | include_stmt | main_program ) {
   pin = 1
   recoverWhile = program_unit_recover
 }
@@ -934,13 +934,13 @@ private format_item ::= dataedit | control_edit | string_literal | (integerliter
 control_edit ::= ":" | (integerliteral? '/') | (signed_int_literal dataedit)
 // Clause 11
 // R1101
-main_program ::= program_stmt? block internal_subprogram_part? end_program_stmt {pin=1}
+main_program ::= program_stmt? block internal_subprogram_part? end_program_stmt { pin = 1; extends = program_unit}
 // R1102 +
 program_stmt ::= label? program_ fidentifier eol { pin = 2 }
 // R1103 +
 end_program_stmt ::=  label? (endprogram_ fidentifier? | end_ (program_ fidentifier?)?) { pin = 2 }
 // R1104
-module ::= module_stmt block module_subprogram_part? end_module_stmt { pin = 1 }
+module ::= module_stmt block module_subprogram_part? end_module_stmt { pin = 1; extends = program_unit }
 // R1105
 module_stmt ::= label? module_ fidentifier eol { pin = 2 }
 // R1106
@@ -948,7 +948,7 @@ end_module_stmt ::= label? (endmodule_ fidentifier? | end_ (module_ fidentifier?
 // R1107
 module_subprogram_part ::= contains_stmt (eol | module_subprogram)* { pin = 1 }
 // R1108
-module_subprogram ::= !(label? (end_ | endmodule_ | endsubmodule_)) (function_subprogram | subroutine_subprogram | separate_module_subprogram | include_stmt) {
+private module_subprogram ::= !(label? (end_ | endmodule_ | endsubmodule_)) (function_subprogram | subroutine_subprogram | separate_module_subprogram | include_stmt) {
   pin = 1
   recoverWhile = module_subprogram_recover
 }
@@ -966,7 +966,7 @@ rename_stmt ::= (fidentifier '=>' fidentifier)
 only_stmt ::= rename_stmt | generic_spec | fidentifier
 // R1113, R1114, R1115 are trivial
 // R1116
-submodule ::= submodule_stmt block module_subprogram_part? end_submodule_stmt { pin = 1 }
+submodule ::= submodule_stmt block module_subprogram_part? end_submodule_stmt { pin = 1; extends = program_unit }
 // R1117
 submodule_stmt ::= label? submodule_ '(' parent_identifier ')' fidentifier eol { pin = 2 }
 // R1118
@@ -974,7 +974,7 @@ parent_identifier ::= fidentifier (':' fidentifier)?
 // R1119
 end_submodule_stmt ::= label? (endsubmodule_ fidentifier? | end_ (submodule_ fidentifier?)?)  { pin = 2 }
 // R1120
-block_data ::= block_data_stmt block end_block_data_stmt { pin = 1 }
+block_data ::= block_data_stmt block end_block_data_stmt { pin = 1; extends = program_unit }
 // R1121
 block_data_stmt ::= label? (blockdata_ | (block_ data_)) fidentifier? eol { pin = 2 }
 // R1122
@@ -1043,7 +1043,7 @@ prefix ::= prefix_spec+ { pin = 1 }
 // R1226
 prefix_spec ::= declaration_type_spec | elemental_ | impure_ | module_ | pure_ | recursive_
 // R1227
-function_subprogram ::= function_stmt block internal_subprogram_part? end_function_stmt { pin = 1 }
+function_subprogram ::= function_stmt block internal_subprogram_part? end_function_stmt { pin = 1; extends = program_unit }
 // R1228
 function_stmt ::= label? prefix? function_ fidentifier '(' <<list fidentifier>>? ')' suffix? eol { pin = 3 }
 // R1229 and R1230 are trivial
@@ -1052,7 +1052,7 @@ suffix ::= (language_binding_spec (result_ '(' fidentifier ')')?) | (result_ '('
 // R1232
 end_function_stmt ::= label? ((end_ (function_ fidentifier?)?) | (endfunction_ fidentifier?)) { pin = 2 }
 // R1233
-subroutine_subprogram ::= subroutine_stmt block internal_subprogram_part? end_subroutine_stmt { pin = 1 }
+subroutine_subprogram ::= subroutine_stmt block internal_subprogram_part? end_subroutine_stmt { pin = 1; extends = program_unit }
 // R1234
 subroutine_stmt ::= label? prefix? subroutine_ fidentifier ('(' <<list dummy_arg>>? ')' language_binding_spec? )? eol { pin = 3 }
 // R1235
@@ -1060,7 +1060,7 @@ dummy_arg ::= '*' | fidentifier
 // R1236
 end_subroutine_stmt ::= label? ((end_ (subroutine_ fidentifier?)?) | (endsubroutine_ fidentifier?)) { pin = 2 }
 // R1237
-separate_module_subprogram ::= mp_subprogram_stmt block internal_subprogram_part? end_mp_subprogram_stmt { pin = 1 }
+separate_module_subprogram ::= mp_subprogram_stmt block internal_subprogram_part? end_mp_subprogram_stmt { pin = 1; extends = program_unit }
 // R1238
 mp_subprogram_stmt ::= label? module_ procedure_ fidentifier eol { pin = 3 }
 // R1239
