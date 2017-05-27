@@ -3,6 +3,7 @@ package org.jetbrains.fortran.formatter.settings
 import com.intellij.application.options.IndentOptionsEditor
 import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.lang.Language
+import com.intellij.openapi.util.io.StreamUtil
 import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider
@@ -12,17 +13,22 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
 
     override fun getLanguage(): Language = FortranLanguage
 
-override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.SettingsType): String
-            = "program sample\n" +
-              "    integer :: a = +1\n" +
-              "    integer, dimension (1:1000) :: array\n" +
-              "    b = (1 + 2) * a + 2**2\n" +
-              "    f = .not. (2 .operator. 1)\n" +
-              "    if (b .eq. 10 .eqv. (c > 10) .and. f) then\n" +
-              "        write (*,*) 'string1' // 'string2', b\n" +
-              "    endif\n" +
-              "    f = .true.; b = 1\n" +
-              "end program sample\n"
+    override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.SettingsType): String
+            = when (settingsType) {
+        SettingsType.INDENT_SETTINGS -> INDENT_SAMPLE
+
+        SettingsType.SPACING_SETTINGS -> "program sample\n" +
+                "    integer :: a = +1\n" +
+                "    integer, dimension (1:1000) :: array\n" +
+                "    b = (1 + 2) * a + 2**2\n" +
+                "    f = .not. (2 .operator. 1)\n" +
+                "    if (b .eq. 10 .eqv. (c > 10) .and. f) then\n" +
+                "        write (*,*) 'string1' // 'string2', b\n" +
+                "    endif\n" +
+                "    f = .true.; b = 1\n" +
+                "end program sample\n"
+        else /*SettingsType.BLANK_LINES_SETTINGS*/ -> BLANK_LINES_SAMPLE
+    }
 
     override fun customizeSettings(consumer: CodeStyleSettingsCustomizable, settingsType: SettingsType) {
         when (settingsType) {
@@ -72,9 +78,9 @@ override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.Setti
         }
     }
 
-     override fun getIndentOptionsEditor(): IndentOptionsEditor = SmartIndentOptionsEditor()
+    override fun getIndentOptionsEditor(): IndentOptionsEditor = SmartIndentOptionsEditor()
 
-     override fun getDefaultCommonSettings(): CommonCodeStyleSettings? {
+    override fun getDefaultCommonSettings(): CommonCodeStyleSettings? {
         val defaultSettings = CommonCodeStyleSettings(FortranLanguage)
         val indentOptions = defaultSettings.initIndentOptions()
         indentOptions.INDENT_SIZE = 4
@@ -82,8 +88,23 @@ override fun getCodeSample(settingsType: LanguageCodeStyleSettingsProvider.Setti
         indentOptions.TAB_SIZE = 4
         indentOptions.USE_TAB_CHARACTER = false
 
+        defaultSettings.KEEP_BLANK_LINES_IN_CODE = 1
+
         defaultSettings.BLOCK_COMMENT_AT_FIRST_COLUMN = false
         defaultSettings.LINE_COMMENT_AT_FIRST_COLUMN = true
         return defaultSettings
+    }
+
+    private val INDENT_SAMPLE: String by lazy {
+        loadCodeSampleResource("codesamples/indents.f95")
+    }
+
+    private val BLANK_LINES_SAMPLE: String by lazy {
+        loadCodeSampleResource("codesamples/blanklines.f95")
+    }
+
+    fun loadCodeSampleResource(resource: String): String {
+        val stream = javaClass.classLoader.getResourceAsStream(resource)
+        return StreamUtil.convertSeparators(StreamUtil.readText(stream, "UTF-8"))
     }
 }

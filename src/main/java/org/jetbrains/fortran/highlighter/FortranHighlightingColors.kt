@@ -10,6 +10,7 @@ import com.intellij.openapi.options.colors.AttributesDescriptor
 enum class FortranHighlightingColors (humanName: String, val default: TextAttributesKey ) {
     IDENTIFIER("Identifier", DefColors.IDENTIFIER),
     LINE_COMMENT("Comment", DefColors.LINE_COMMENT),
+    LINE_CONTINUE("Line continue sign", DefColors.LINE_COMMENT),
     KEYWORD("Keyword", DefColors.KEYWORD),
 
     // literals
