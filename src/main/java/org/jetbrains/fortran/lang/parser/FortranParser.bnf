@@ -279,7 +279,7 @@ private end_block_keys ::= !assignment_stmt (end_ | endblock_ | endcritical_ | e
 // R210
 internal_subprogram_part ::= contains_stmt (eol | internal_subprogram)* { pin = 1 }
 // R211
-internal_subprogram ::= !(label? (end_unit_keys | endprocedure_)) (function_subprogram | subroutine_subprogram) {
+private internal_subprogram ::= !(label? (end_unit_keys | endprocedure_)) (function_subprogram | subroutine_subprogram) {
   pin = 1
   recoverWhile=internal_subprogram_recover
 }

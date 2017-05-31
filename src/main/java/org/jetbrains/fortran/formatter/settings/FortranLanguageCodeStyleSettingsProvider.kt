@@ -17,16 +17,8 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
             = when (settingsType) {
         SettingsType.INDENT_SETTINGS -> INDENT_SAMPLE
 
-        SettingsType.SPACING_SETTINGS -> "program sample\n" +
-                "    integer :: a = +1\n" +
-                "    integer, dimension (1:1000) :: array\n" +
-                "    b = (1 + 2) * a + 2**2\n" +
-                "    f = .not. (2 .operator. 1)\n" +
-                "    if (b .eq. 10 .eqv. (c > 10) .and. f) then\n" +
-                "        write (*,*) 'string1' // 'string2', b\n" +
-                "    endif\n" +
-                "    f = .true.; b = 1\n" +
-                "end program sample\n"
+        SettingsType.SPACING_SETTINGS -> SPACING_SAMPLE
+
         else /*SettingsType.BLANK_LINES_SETTINGS*/ -> BLANK_LINES_SAMPLE
     }
 
@@ -73,7 +65,11 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
                         CodeStyleSettingsCustomizable.SPACES_OTHER)
             }
             SettingsType.BLANK_LINES_SETTINGS -> {
-                consumer.showStandardOptions("KEEP_BLANK_LINES_IN_CODE")
+                consumer.showStandardOptions(
+                        "KEEP_BLANK_LINES_IN_CODE",
+                        "KEEP_BLANK_LINES_IN_DECLARATIONS"
+                )
+                consumer.renameStandardOption("KEEP_BLANK_LINES_IN_DECLARATIONS", "Between subprograms")
             }
         }
     }
@@ -89,6 +85,7 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
         indentOptions.USE_TAB_CHARACTER = false
 
         defaultSettings.KEEP_BLANK_LINES_IN_CODE = 1
+        defaultSettings.KEEP_BLANK_LINES_IN_DECLARATIONS = 2
 
         defaultSettings.BLOCK_COMMENT_AT_FIRST_COLUMN = false
         defaultSettings.LINE_COMMENT_AT_FIRST_COLUMN = true
@@ -102,6 +99,11 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
     private val BLANK_LINES_SAMPLE: String by lazy {
         loadCodeSampleResource("codesamples/blanklines.f95")
     }
+
+    private val SPACING_SAMPLE: String by lazy {
+        loadCodeSampleResource("codesamples/spacing.f95")
+    }
+
 
     fun loadCodeSampleResource(resource: String): String {
         val stream = javaClass.classLoader.getResourceAsStream(resource)

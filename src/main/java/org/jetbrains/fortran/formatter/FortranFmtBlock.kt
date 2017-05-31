@@ -70,7 +70,7 @@ class FortranFmtBlock(
         node.psi is FortranDeclarationConstruct -> Indent.getNormalIndent()
         node.elementType === BLOCK -> Indent.getNormalIndent()
     // line continuation
-        oneLineElement()/*node.psi is FortranExpr || node.psi is FortranStmt*/ -> Indent.getContinuationIndent()
+        oneLineElement() -> Indent.getContinuationIndent()
 
         else -> Indent.getNoneIndent()
     }
@@ -118,19 +118,35 @@ class FortranFmtBlock(
                     || node1.elementType === FortranTokenType.LINE_COMMENT
                     || psi1 is FortranStmt
                     || psi1 is FortranExecutableConstruct
-                    || psi1 is FortranModuleSubprogramPart
-                    || psi1 is FortranInternalSubprogramPart
                     || psi1 is FortranDeclarationConstruct
-                    || psi1 is FortranProgramUnit
                     || psi1 is FortranBlock)
                 && (node2.elementType === FortranTokenType.LINE_COMMENT
                     || psi2 is FortranStmt
                     || psi2 is FortranExecutableConstruct
                     || psi2 is FortranDeclarationConstruct
-                    || psi2 is FortranProgramUnit
                     || psi2 is FortranBlock)) {
-                        return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_CODE)
+                return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_CODE)
             }
+
+            // before subprogram part
+            if ((psi1 is FortranBlock || psi1 is FortranStmt)
+                    && (psi2 is FortranModuleSubprogramPart || psi2 is FortranInternalSubprogramPart))
+                return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
+            // before first subprogram
+            if ((psi1 is FortranStmt
+                    || node1.elementType === FortranTokenType.LINE_COMMENT)
+                    && (psi2 is FortranProgramUnit))
+                return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
+            // between subprograms
+            if (psi1 is FortranProgramUnit && psi2 is FortranProgramUnit)
+                return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
+            // between subprogram and comment
+            if (psi1 is FortranProgramUnit && node2.elementType === FortranTokenType.LINE_COMMENT)
+                return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
+            // after subprogram
+            if ((psi1 is FortranModuleSubprogramPart || psi1 is FortranInternalSubprogramPart)
+                && (psi2 is FortranStmt || node2.elementType === FortranTokenType.LINE_COMMENT))
+                return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
         }
         return spacingBuilder.getSpacing(this, child1, child2)
     }

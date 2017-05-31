@@ -8,7 +8,7 @@ contains
 
     module procedure aa
 
-        x=y+z
+        x = y + z
 
 
     contains
@@ -16,16 +16,14 @@ contains
 
         real function b(z)
 
-            return z*2
-
+            return z * 2
 
         endfunction
 
 
         real function c(z)
 
-            return z*3
-
+            return z * 3
 
         endfunction
 
