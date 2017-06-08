@@ -11,7 +11,7 @@ FILE
       PsiElement(identifier)('average')
       PsiElement(()('(')
       PsiElement())(')')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
       USE_STMT

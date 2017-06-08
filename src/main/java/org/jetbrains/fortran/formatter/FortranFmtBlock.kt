@@ -64,15 +64,22 @@ class FortranFmtBlock(
         return blocks
     }
 
-    fun newChildIndent(): Indent? = when {
-    // inside blocks
-        node.psi is FortranExecutableConstruct -> Indent.getNormalIndent()
-        node.psi is FortranDeclarationConstruct -> Indent.getNormalIndent()
-        node.elementType === BLOCK -> Indent.getNormalIndent()
-    // line continuation
-        oneLineElement() -> Indent.getContinuationIndent()
+    fun newChildIndent(): Indent? {
+        System.out.println(node.psi.toString())
+        return when {
 
-        else -> Indent.getNoneIndent()
+        // inside blocks
+           node.psi is FortranProgramUnit -> Indent.getNormalIndent()
+           node.psi is FortranExecutableConstruct -> Indent.getNormalIndent()
+           node.psi is FortranDeclarationConstruct -> Indent.getNormalIndent()
+           node.psi is FortranInternalSubprogramPart -> Indent.getNormalIndent()
+           node.psi is FortranModuleSubprogramPart -> Indent.getNormalIndent()
+       //    node.psi is FortranBlock -> Indent.getNormalIndent()
+       // line continuation
+           oneLineElement() -> Indent.getContinuationIndent()
+
+            else -> Indent.getNoneIndent()
+        }
     }
 
     fun oneLineElement(): Boolean {
@@ -89,15 +96,16 @@ class FortranFmtBlock(
         return true
     }
     fun computeIndent(child: ASTNode): Indent {
-        val parentType = node.elementType
-        val childType = child.elementType
         return when {
         //    childType === LABEL -> Indent.getLabelIndent()
         // inside blocks
-            parentType === BLOCK -> Indent.getNormalIndent()
-            parentType !== BLOCK && childType === FortranTokenType.LINE_COMMENT -> Indent.getNormalIndent()
-            node.psi is FortranInternalSubprogramPart && (node.firstChildNode !== child) -> Indent.getNormalIndent()
-            node.psi is FortranModuleSubprogramPart && (node.firstChildNode !== child) -> Indent.getNormalIndent()
+            node.psi is FortranProgramUnit && child.psi !is FortranStmt
+                    && child.psi !is FortranInternalSubprogramPart
+                    && child.psi !is FortranModuleSubprogramPart -> Indent.getNormalIndent()
+            node.psi is FortranExecutableConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranDeclarationConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranInternalSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranModuleSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
         // Line continuation
             oneLineElement() && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
             else -> Indent.getNoneIndent()
@@ -120,22 +128,23 @@ class FortranFmtBlock(
                     || psi1 is FortranExecutableConstruct
                     || psi1 is FortranDeclarationConstruct
                     || psi1 is FortranBlock)
-                && (node2.elementType === FortranTokenType.LINE_COMMENT
-                    || psi2 is FortranStmt
+                && (/*node2.elementType === FortranTokenType.LINE_COMMENT
+                    ||*/ psi2 is FortranStmt
                     || psi2 is FortranExecutableConstruct
                     || psi2 is FortranDeclarationConstruct
                     || psi2 is FortranBlock)) {
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_CODE)
             }
-
+            if ((node1.elementType === EOL)
+                    && node2.elementType === FortranTokenType.LINE_COMMENT) {
+                return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_CODE)
+            }
             // before subprogram part
-            if ((psi1 is FortranBlock || psi1 is FortranStmt)
+            if ((psi1 is FortranBlock || node1.elementType === EOL || psi1 is FortranStmt)
                     && (psi2 is FortranModuleSubprogramPart || psi2 is FortranInternalSubprogramPart))
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
-            // before first subprogram
-            if ((psi1 is FortranStmt
-                    || node1.elementType === FortranTokenType.LINE_COMMENT)
-                    && (psi2 is FortranProgramUnit))
+            // before subprogram
+            if ((node1.elementType === EOL || psi1 is FortranStmt) && psi2 is FortranProgramUnit)
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
             // between subprograms
             if (psi1 is FortranProgramUnit && psi2 is FortranProgramUnit)

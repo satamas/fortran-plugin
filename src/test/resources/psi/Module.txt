@@ -7,7 +7,7 @@ FILE
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     BLOCK
       LABEL
         PsiElement(integerliteral)('2')
@@ -27,7 +27,7 @@ FILE
           PsiElement(integerliteral)('3')
         PsiWhiteSpace(' ')
         PsiElement(keyword)('contains')
-        PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       SEPARATE_MODULE_SUBPROGRAM
         MP_SUBPROGRAM_STMT
           LABEL
@@ -38,7 +38,7 @@ FILE
           PsiElement(keyword)('procedure')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('aa')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         BLOCK
           LABEL
             PsiElement(integerliteral)('5')
@@ -60,7 +60,7 @@ FILE
               PsiElement(integerliteral)('6')
             PsiWhiteSpace('     ')
             PsiElement(keyword)('contains')
-            PsiElement(eol)('\n')
+          PsiElement(eol)('\n')
           FUNCTION_SUBPROGRAM
             FUNCTION_STMT
               LABEL
@@ -77,7 +77,7 @@ FILE
               PsiElement(()('(')
               PsiElement(identifier)('z')
               PsiElement())(')')
-              PsiElement(eol)('\n')
+            PsiElement(eol)('\n')
             BLOCK
               LABEL
                 PsiElement(integerliteral)('8')
@@ -123,7 +123,7 @@ FILE
       PsiElement())(')')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('suba')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     BLOCK
       <empty list>
     MODULE_SUBPROGRAM_PART
@@ -132,7 +132,7 @@ FILE
           PsiElement(integerliteral)('13')
         PsiWhiteSpace(' ')
         PsiElement(keyword)('contains')
-        PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       SUBROUTINE_SUBPROGRAM
         SUBROUTINE_STMT
           LABEL
@@ -143,7 +143,7 @@ FILE
           PsiElement(identifier)('s')
           PsiElement(()('(')
           PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         BLOCK
           <empty list>
         END_SUBROUTINE_STMT

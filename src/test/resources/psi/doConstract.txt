@@ -7,7 +7,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     BLOCK
       LABEL
         PsiElement(integerliteral)('2')
@@ -25,7 +25,7 @@ FILE
             PsiElement(,)(',')
             CONSTANT
               PsiElement(integerliteral)('5')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         BLOCK
           LABEL
             PsiElement(integerliteral)('3')
@@ -67,7 +67,7 @@ FILE
             PsiElement(,)(',')
             CONSTANT
               PsiElement(integerliteral)('7')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
           ASSIGNMENT_STMT
@@ -109,7 +109,7 @@ FILE
               CONSTANT
                 PsiElement(integerliteral)('100')
             PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
           ASSIGNMENT_STMT
@@ -180,7 +180,7 @@ FILE
                 CONSTANT
                   PsiElement(integerliteral)('5')
               PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
           ASSIGNMENT_STMT

@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('circle')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('   ')
     BLOCK
       TYPE_DECLARATION_STMT
@@ -38,7 +38,7 @@ FILE
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
         PsiElement(keyword)('contains')
-        PsiElement(eol)('\n')
+      PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
       SUBROUTINE_SUBPROGRAM
         SUBROUTINE_STMT
@@ -57,7 +57,7 @@ FILE
           DUMMY_ARG
             PsiElement(identifier)('z')
           PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    \t')
         BLOCK
           ASSIGNMENT_STMT
@@ -106,7 +106,7 @@ FILE
       PsiElement(,)(',')
       PsiElement(identifier)('z')
       PsiElement())(')')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
       ASSIGNMENT_STMT
@@ -179,7 +179,7 @@ FILE
       PsiElement(identifier)('zero')
       PsiElement(()('(')
       PsiElement())(')')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
       ASSIGNMENT_STMT
@@ -212,7 +212,7 @@ FILE
       DUMMY_ARG
         PsiElement(identifier)('z')
       PsiElement())(')')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace(' \t')
     BLOCK
       ASSIGNMENT_STMT
@@ -241,7 +241,7 @@ FILE
       PsiElement(keyword)('data')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('setup')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     BLOCK
       <empty list>
     END_BLOCK_DATA_STMT

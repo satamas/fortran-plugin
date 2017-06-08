@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('filework')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
       OPEN_STMT

@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('gaussinter')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     BLOCK
       INTERFACE_BLOCK
@@ -13,7 +13,7 @@ FILE
           PsiWhiteSpace(' ')
           GENERIC_SPEC
             PsiElement(identifier)('solve')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
         INTERFACE_BODY
           FUNCTION_STMT
@@ -29,13 +29,13 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement(identifier)('key')
             PsiElement())(')')
-            PsiElement(eol)(';')
+          PsiElement(eol)(';')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('             ')
+          PsiComment(comment)('! NOTE: real *8 is not an official standard but works usually')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('              ')
           BLOCK
-            PsiElement(eol)('\n')
-            PsiWhiteSpace('             ')
-            PsiComment(comment)('! NOTE: real *8 is not an official standard but works usually')
-            PsiElement(eol)('\n')
-            PsiWhiteSpace('              ')
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
                 PsiElement(keyword)('real')
@@ -137,7 +137,7 @@ FILE
             DUMMY_ARG
               PsiElement(identifier)('dP')
             PsiElement())(')')
-            PsiElement(eol)('\n')
+          PsiElement(eol)('\n')
           PsiWhiteSpace('          ')
           BLOCK
             TYPE_DECLARATION_STMT

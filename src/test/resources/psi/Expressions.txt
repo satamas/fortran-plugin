@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('p')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
       LABEL

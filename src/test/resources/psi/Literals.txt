@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('literals')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
       ENUM_DEF
@@ -16,7 +16,7 @@ FILE
           PsiElement(()('(')
           PsiElement(identifier)('C')
           PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         ENUMERATOR_DEF_STMT
           PsiElement(keyword)('ENUMERATOR')

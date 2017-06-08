@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('labeltests')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     BLOCK
       LABELED_DO_CONSTRUCT

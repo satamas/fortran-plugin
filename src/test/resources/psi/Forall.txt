@@ -19,7 +19,7 @@ FILE
               CONSTANT
                 PsiElement(integerliteral)('2')
             PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('   ')
         FORALL_STMT
           PsiElement(keyword)('forall')
@@ -93,7 +93,7 @@ FILE
                 CONSTANT
                   PsiElement(integerliteral)('2')
               PsiElement())(')')
-            PsiElement(eol)('\n')
+          PsiElement(eol)('\n')
           PsiWhiteSpace(' ')
           LABEL
             PsiElement(integerliteral)('2')
@@ -149,7 +149,7 @@ FILE
               CONSTANT
                 PsiElement(integerliteral)('0')
             PsiElement())(')')
-            PsiElement(eol)('\n')
+          PsiElement(eol)('\n')
           PsiWhiteSpace('      ')
           ASSIGNMENT_STMT
             DESIGNATOR
@@ -172,7 +172,7 @@ FILE
               CONSTANT
                 PsiElement(integerliteral)('3')
             PsiElement())(')')
-            PsiElement(eol)('\n')
+          PsiElement(eol)('\n')
           PsiWhiteSpace('      ')
           ASSIGNMENT_STMT
             DESIGNATOR
@@ -184,7 +184,7 @@ FILE
           PsiWhiteSpace('   ')
           ELSEWHERE_STMT
             PsiElement(keyword)('elsewhere')
-            PsiElement(eol)('\n')
+          PsiElement(eol)('\n')
           PsiWhiteSpace('      ')
           ASSIGNMENT_STMT
             DESIGNATOR

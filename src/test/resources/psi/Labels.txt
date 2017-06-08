@@ -7,7 +7,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     BLOCK
       <empty list>
     END_PROGRAM_STMT

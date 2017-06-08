@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('p')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
       IF_CONSTRUCT
@@ -19,7 +19,7 @@ FILE
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('then')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
           ASSIGNMENT_STMT
@@ -52,7 +52,7 @@ FILE
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('then')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
           ASSIGNMENT_STMT
@@ -69,7 +69,7 @@ FILE
         PsiWhiteSpace('    ')
         ELSE_STMT
           PsiElement(keyword)('else')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
           ASSIGNMENT_STMT
@@ -108,7 +108,7 @@ FILE
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('then')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
           IF_CONSTRUCT
@@ -129,7 +129,7 @@ FILE
               PsiElement())(')')
               PsiWhiteSpace(' ')
               PsiElement(keyword)('then')
-              PsiElement(eol)('\n')
+            PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             BLOCK
               ASSIGNMENT_STMT
@@ -154,7 +154,7 @@ FILE
             PsiWhiteSpace('      ')
             ELSE_STMT
               PsiElement(keyword)('else')
-              PsiElement(eol)('\n')
+            PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             BLOCK
               ASSIGNMENT_STMT
@@ -192,7 +192,7 @@ FILE
           PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('then')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
           ASSIGNMENT_STMT
@@ -207,7 +207,7 @@ FILE
         PsiWhiteSpace('    ')
         ELSE_STMT
           PsiElement(keyword)('else')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         BLOCK
           ASSIGNMENT_STMT
@@ -252,7 +252,7 @@ FILE
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('1')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
           ARITHMETIC_IF_STMT

@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('arraystest')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     BLOCK
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC

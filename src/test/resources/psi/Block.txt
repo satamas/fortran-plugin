@@ -4,19 +4,19 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('a')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     PsiComment(comment)('! just a comment')
+    PsiElement(eol)('\n')
+    PsiWhiteSpace('  ')
     BLOCK
-      PsiElement(eol)('\n')
-      PsiWhiteSpace('  ')
       BLOCK_CONSTRUCT
         BLOCK_STMT
           PsiElement(identifier)('b1')
           PsiElement(:)(':')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('block')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
         BLOCK
           TYPE_DECLARATION_STMT
@@ -34,9 +34,9 @@ FILE
               PsiElement(:)(':')
               PsiWhiteSpace(' ')
               PsiElement(keyword)('critical')
-              PsiWhiteSpace(' ')
-              PsiComment(comment)('!comment')
-              PsiElement(eol)('\n')
+            PsiWhiteSpace(' ')
+            PsiComment(comment)('!comment')
+            PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             BLOCK
               ASSIGNMENT_STMT
@@ -66,7 +66,7 @@ FILE
           PsiElement(:)(':')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('block')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
         BLOCK
           ASSOCIATE_CONSTRUCT
@@ -96,7 +96,7 @@ FILE
                   PsiElement(*)('*')
                   CONSTANT
                     PsiElement(integerliteral)('3')
-              PsiElement(eol)('\n')
+            PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             BLOCK
               ASSIGNMENT_STMT

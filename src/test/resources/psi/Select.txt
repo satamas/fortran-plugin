@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('select_test')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
       CASE_CONSTRUCT
@@ -21,7 +21,7 @@ FILE
             DESIGNATOR
               PsiElement(identifier)('b')
           PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         CASE_STMT
           PsiElement(keyword)('case')
@@ -36,7 +36,7 @@ FILE
               CONSTANT
                 PsiElement(integerliteral)('2')
             PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
         BLOCK
           ASSIGNMENT_STMT
@@ -57,7 +57,7 @@ FILE
               CONSTANT
                 PsiElement(integerliteral)('0')
             PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
         BLOCK
           ASSIGNMENT_STMT
@@ -80,7 +80,7 @@ FILE
               CONSTANT
                 PsiElement(integerliteral)('5')
             PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
         BLOCK
           ASSIGNMENT_STMT
@@ -101,7 +101,7 @@ FILE
                 PsiElement(integerliteral)('7')
               PsiElement(:)(':')
             PsiElement())(')')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         BLOCK
           <empty list>
@@ -110,7 +110,7 @@ FILE
           PsiWhiteSpace(' ')
           CASE_SELECTOR
             PsiElement(keyword)('default')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
         BLOCK
           ASSIGNMENT_STMT

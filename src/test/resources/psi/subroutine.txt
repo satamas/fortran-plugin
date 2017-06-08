@@ -20,7 +20,7 @@ FILE
       DUMMY_ARG
         PsiElement(identifier)('units')
       PsiElement())(')')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
       IMPLICIT_STMT

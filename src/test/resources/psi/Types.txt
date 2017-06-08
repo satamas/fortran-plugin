@@ -4,7 +4,7 @@ FILE
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       PsiElement(identifier)('types')
-      PsiElement(eol)('\n')
+    PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
       DERIVED_TYPE_DEF
@@ -14,7 +14,7 @@ FILE
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('person')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
           COMPONENT_DEF_STMT
@@ -63,7 +63,7 @@ FILE
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('kids')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
           COMPONENT_DEF_STMT
@@ -126,7 +126,7 @@ FILE
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('AUXILIARY')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
           COMPONENT_DEF_STMT
@@ -176,7 +176,7 @@ FILE
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('NUMERIC_SEQ')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         PsiElement(keyword)('SEQUENCE')
         PsiElement(eol)('\n')
@@ -229,7 +229,7 @@ FILE
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
           PsiElement(identifier)('POINT')
-          PsiElement(eol)('\n')
+        PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         COMPONENT_PART
           COMPONENT_DEF_STMT
@@ -250,7 +250,7 @@ FILE
         TYPE_BOUND_PROCEDURE_PART
           CONTAINS_STMT
             PsiElement(keyword)('CONTAINS')
-            PsiElement(eol)('\n')
+          PsiElement(eol)('\n')
           PsiWhiteSpace('      ')
           TYPE_BOUND_PROCEDURE_STMT
             PsiElement(keyword)('PROCEDURE')
