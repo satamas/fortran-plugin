@@ -247,7 +247,7 @@ private string_literal ::= stringliteral | multiline_string_literal
 multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
 // Clause 2
 // R201
-private program ::=  program_unit? (eol+ program_unit)* eol? { pin = 1 }
+private program ::=  (eol | program_unit)*
 // R202
 program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | include_stmt | main_program ) {
   pin = 1
@@ -277,7 +277,7 @@ private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it
 private end_block_keys ::= !assignment_stmt (end_ | endblock_ | endcritical_ | enddo_ | endfunction_ | endif_ | endmodule_ | endprocedure_
                          | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_)
 // R210
-internal_subprogram_part ::= contains_stmt eol+ (internal_subprogram eol+)* { pin = 1 }
+internal_subprogram_part ::= contains_stmt eol+ (eol | internal_subprogram)* { pin = 1 }
 // R211
 private internal_subprogram ::= !(label? (end_unit_keys | endprocedure_)) (function_subprogram | subroutine_subprogram) {
   pin = 1
@@ -716,8 +716,8 @@ proc_target ::= expr | (variable '%' fidentifier) | fidentifier // last two opti
 // R741
 where_stmt ::= where_ '(' expr ')' assignment_stmt { pin = 5}
 // R742
-where_construct ::= where_construct_stmt eol+ (label? where_body_construct eol+)* (masked_elsewhere_stmt eol+ (label? where_body_construct eol+)*)*
-                    (elsewhere_stmt eol+ (label? where_body_construct eol+)*)? end_where_stmt { pin = 1; extends=executable_construct }
+where_construct ::= where_construct_stmt eol+ (label? (eol | where_body_construct))* (masked_elsewhere_stmt eol+ (label? (eol | where_body_construct))*)*
+                    (elsewhere_stmt eol+ (label? (eol | where_body_construct))*)? end_where_stmt { pin = 1; extends=executable_construct }
 // R743
 where_construct_stmt ::= (fidentifier ':')? where_ '(' expr ')'
 // R744
@@ -735,7 +735,7 @@ elsewhere_stmt ::= label? ((else_ where_) | elsewhere_) fidentifier? { pin = 3 }
 // R749
 end_where_stmt ::= label? ((end_ where_) | endwhere_) fidentifier? { pin = 2 }
 // R750
-forall_construct ::= forall_construct_stmt eol+ (label? forall_body_construct eol+)* end_forall_stmt { pin = 1; extends=executable_construct }
+forall_construct ::= forall_construct_stmt eol+ (label? (eol | forall_body_construct))* end_forall_stmt { pin = 1; extends=executable_construct }
 // R751
 forall_construct_stmt ::= (fidentifier ':')? forall_ forall_header
 // R752
@@ -947,7 +947,7 @@ module_stmt ::= label? module_ fidentifier { pin = 2 }
 // R1106
 end_module_stmt ::= label? (endmodule_ fidentifier? | end_ (module_ fidentifier?)?) { pin = 2 }
 // R1107
-module_subprogram_part ::= contains_stmt eol+ (module_subprogram eol+)* { pin = 1 }
+module_subprogram_part ::= contains_stmt eol+ (eol | module_subprogram)* { pin = 1 }
 // R1108
 private module_subprogram ::= !(label? (end_ | endmodule_ | endsubmodule_)) (function_subprogram | subroutine_subprogram | separate_module_subprogram | include_stmt) {
   pin = 1
