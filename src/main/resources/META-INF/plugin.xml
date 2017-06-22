@@ -39,6 +39,7 @@
         <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.formatter.FortranFormattingModelBuilder"/>
         <codeStyleSettingsProvider implementation="org.jetbrains.fortran.formatter.settings.FortranCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider implementation="org.jetbrains.fortran.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
+        <lang.commenter language="Fortran" implementationClass="org.jetbrains.fortran.FortranCommenter"/>
     </extensions>
 
     <actions>
