@@ -1,4 +1,4 @@
-package org.jetbrains.fortran
+package org.jetbrains.fortran.ide.commenter
 
 import com.intellij.lang.Commenter
 
