@@ -11,6 +11,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      06.2017 Commenter and Formatter added.
       05.2017 First version of the plugin with lexer, parser and simple highlighter.<br>
     ]]>
     </change-notes>
