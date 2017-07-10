@@ -8,9 +8,8 @@ class FortranFoldingBuilderTest : LightPlatformCodeInsightFixtureTestCase() {
 
     override fun getBasePath() = "folding/"
 
-    fun testProgramUnits() {
-        doTest()
-    }
+    fun testProgramUnits() = doTest()
+    fun testExecutableConstructs() = doTest()
 
     private fun doTest() {
         myFixture.testFolding(testDataPath + File.separator + basePath + File.separator + getTestName(false) + ".f95")
