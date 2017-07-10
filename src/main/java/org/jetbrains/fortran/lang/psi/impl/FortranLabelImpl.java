@@ -13,11 +13,6 @@ public class FortranLabelImpl extends FortranCompositeElementImpl implements For
         super(node);
     }
 
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof FortranVisitor) accept((FortranVisitor)visitor);
-        else super.accept(visitor);
-    }
-
     @Override
     @NotNull
     public PsiElement getIntegerliteral() {
