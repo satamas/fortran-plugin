@@ -275,7 +275,8 @@ private execution_part_construct ::= !(label? end_block_keys) ( action_stmt | la
 }
 private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
 private end_block_keys ::= !assignment_stmt (end_ | endblock_ | endcritical_ | enddo_ | endfunction_ | endif_ | endmodule_ | endprocedure_
-                         | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_)
+                         | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_ | endwhere_
+                         | endforall_ | elsewhere_)
 // R210
 internal_subprogram_part ::= contains_stmt eol+ (eol | internal_subprogram)* { pin = 1 }
 // R211
@@ -716,17 +717,11 @@ proc_target ::= expr | (variable '%' fidentifier) | fidentifier // last two opti
 // R741
 where_stmt ::= where_ '(' expr ')' assignment_stmt { pin = 5}
 // R742
-where_construct ::= where_construct_stmt eol+ (label? (eol | where_body_construct))* (masked_elsewhere_stmt eol+ (label? (eol | where_body_construct))*)*
-                    (elsewhere_stmt eol+ (label? (eol | where_body_construct))*)? end_where_stmt { pin = 1; extends=executable_construct }
+where_construct ::= where_construct_stmt eol+ block (masked_elsewhere_stmt eol+ block)*
+                    (elsewhere_stmt eol+ block)? end_where_stmt { pin = 1; extends=executable_construct }
 // R743
 where_construct_stmt ::= (fidentifier ':')? where_ '(' expr ')'
 // R744
-private where_body_construct ::= !(label? end_where_keys) (assignment_stmt | where_stmt | where_construct) {
-  pin = 1
-  recoverWhile = where_recover
-}
-private where_recover ::= !(eol | end_where_keys)
-private end_where_keys ::= !assignment_stmt (end_ | else_ | elsewhere_ | endwhere_)
 // R745, R746 are trivial
 // R747
 masked_elsewhere_stmt ::= label? ((else_ where_) | elsewhere_) '(' expr ')' fidentifier? { pin = 3 }
@@ -735,7 +730,7 @@ elsewhere_stmt ::= label? ((else_ where_) | elsewhere_) fidentifier? { pin = 3 }
 // R749
 end_where_stmt ::= label? ((end_ where_) | endwhere_) fidentifier? { pin = 2 }
 // R750
-forall_construct ::= forall_construct_stmt eol+ (label? (eol | forall_body_construct))* end_forall_stmt { pin = 1; extends=executable_construct }
+forall_construct ::= forall_construct_stmt eol+ block end_forall_stmt { pin = 1; extends=executable_construct }
 // R751
 forall_construct_stmt ::= (fidentifier ':')? forall_ forall_header
 // R752
@@ -743,13 +738,6 @@ forall_header ::= '(' (type_spec '::')? <<list forall_triplet_spec>> (',' expr)?
 // R753 + 754 + 755
 forall_triplet_spec ::= fidentifier '=' expr ':' expr (':' expr)? {pin=2}
 // R756
-private forall_body_construct ::= !(label? end_forall_keys) (forall_assignment_stmt | where_stmt | where_construct
-                        | forall_stmt | forall_construct) {
-  pin = 1
-  recoverWhile = forall_recover
-}
-private forall_recover ::= !(eol | end_forall_keys)
-private end_forall_keys ::= !assignment_stmt (end_ | endforall_)
 // R757
 private forall_assignment_stmt ::= assignment_stmt | pointer_assignment_stmt
 // R758

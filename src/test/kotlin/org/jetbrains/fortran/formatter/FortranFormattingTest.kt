@@ -6,4 +6,5 @@ class FortranFormattingTest : FortranBaseFormattingTestCase() {
     fun testSimpleBlock() = doTest()
     fun testLineContinue() = doTest()
     fun testLines() = doTest()
+    fun testForall() = doTest()
 }

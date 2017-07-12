@@ -21,66 +21,25 @@ FILE
             PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('   ')
-        FORALL_STMT
-          PsiElement(keyword)('forall')
-          PsiWhiteSpace(' ')
-          FORALL_HEADER
-            PsiElement(()('(')
-            FORALL_TRIPLET_SPEC
-              PsiElement(identifier)('j')
-              PsiElement(=)('=')
-              CONSTANT
-                PsiElement(integerliteral)('2')
-              PsiElement(:)(':')
-              CONSTANT
-                PsiElement(integerliteral)('20')
-              PsiElement(:)(':')
-              CONSTANT
-                PsiElement(integerliteral)('4')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            FORALL_TRIPLET_SPEC
-              PsiElement(identifier)('i')
-              PsiElement(=)('=')
-              CONSTANT
-                PsiElement(integerliteral)('1')
-              PsiElement(:)(':')
-              CONSTANT
-                PsiElement(integerliteral)('10')
-              PsiElement(:)(':')
-              CONSTANT
-                PsiElement(integerliteral)('2')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            REL_EXPR
-              DESIGNATOR
-                PsiElement(identifier)('j')
-              PsiWhiteSpace(' ')
-              PsiElement(NEQ)('/=')
-              PsiWhiteSpace(' ')
-              DESIGNATOR
-                PsiElement(identifier)('i')
-            PsiElement())(')')
-          PsiWhiteSpace(' ')
-          ASSIGNMENT_STMT
-            DESIGNATOR
-              PsiElement(identifier)('a')
-            PsiWhiteSpace(' ')
-            PsiElement(=)('=')
-            PsiWhiteSpace(' ')
-            CONSTANT
-              PsiElement(integerliteral)('2')
-        PsiElement(eol)('\n')
-        PsiWhiteSpace(' ')
-        LABEL
-          PsiElement(integerliteral)('1')
-        PsiWhiteSpace(' ')
-        FORALL_CONSTRUCT
-          FORALL_CONSTRUCT_STMT
+        BLOCK
+          FORALL_STMT
             PsiElement(keyword)('forall')
             PsiWhiteSpace(' ')
             FORALL_HEADER
               PsiElement(()('(')
+              FORALL_TRIPLET_SPEC
+                PsiElement(identifier)('j')
+                PsiElement(=)('=')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('20')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('4')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
               FORALL_TRIPLET_SPEC
                 PsiElement(identifier)('i')
                 PsiElement(=)('=')
@@ -92,111 +51,157 @@ FILE
                 PsiElement(:)(':')
                 CONSTANT
                   PsiElement(integerliteral)('2')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              REL_EXPR
+                DESIGNATOR
+                  PsiElement(identifier)('j')
+                PsiWhiteSpace(' ')
+                PsiElement(NEQ)('/=')
+                PsiWhiteSpace(' ')
+                DESIGNATOR
+                  PsiElement(identifier)('i')
               PsiElement())(')')
+            PsiWhiteSpace(' ')
+            ASSIGNMENT_STMT
+              DESIGNATOR
+                PsiElement(identifier)('a')
+              PsiWhiteSpace(' ')
+              PsiElement(=)('=')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integerliteral)('2')
           PsiElement(eol)('\n')
           PsiWhiteSpace(' ')
           LABEL
-            PsiElement(integerliteral)('2')
-          PsiWhiteSpace('    ')
-          ASSIGNMENT_STMT
-            DESIGNATOR
-              PsiElement(identifier)('v')
-            PsiElement(=)('=')
-            CONSTANT
-              PsiElement(integerliteral)('1')
+            PsiElement(integerliteral)('1')
+          PsiWhiteSpace(' ')
+          FORALL_CONSTRUCT
+            FORALL_CONSTRUCT_STMT
+              PsiElement(keyword)('forall')
+              PsiWhiteSpace(' ')
+              FORALL_HEADER
+                PsiElement(()('(')
+                FORALL_TRIPLET_SPEC
+                  PsiElement(identifier)('i')
+                  PsiElement(=)('=')
+                  CONSTANT
+                    PsiElement(integerliteral)('1')
+                  PsiElement(:)(':')
+                  CONSTANT
+                    PsiElement(integerliteral)('10')
+                  PsiElement(:)(':')
+                  CONSTANT
+                    PsiElement(integerliteral)('2')
+                PsiElement())(')')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace(' ')
+            BLOCK
+              LABEL
+                PsiElement(integerliteral)('2')
+              PsiWhiteSpace('    ')
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('v')
+                PsiElement(=)('=')
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace(' ')
+            END_FORALL_STMT
+              LABEL
+                PsiElement(integerliteral)('3')
+              PsiWhiteSpace(' ')
+              PsiElement(keyword)('endforall')
           PsiElement(eol)('\n')
-          PsiWhiteSpace(' ')
-          END_FORALL_STMT
-            LABEL
-              PsiElement(integerliteral)('3')
-            PsiWhiteSpace(' ')
-            PsiElement(keyword)('endforall')
-        PsiElement(eol)('\n')
-        PsiWhiteSpace('   ')
-        WHERE_STMT
-          PsiElement(keyword)('where')
-          PsiWhiteSpace(' ')
-          PsiElement(()('(')
-          REL_EXPR
-            DESIGNATOR
-              PsiElement(identifier)('l')
-            PsiWhiteSpace(' ')
-            PsiElement(LT)('<')
-            PsiWhiteSpace(' ')
-            CONSTANT
-              PsiElement(integerliteral)('0')
-          PsiElement())(')')
-          PsiWhiteSpace(' ')
-          ASSIGNMENT_STMT
-            DESIGNATOR
-              PsiElement(identifier)('b')
-            PsiWhiteSpace(' ')
-            PsiElement(=)('=')
-            PsiWhiteSpace(' ')
-            CONSTANT
-              PsiElement(integerliteral)('1')
-        PsiElement(eol)('\n')
-        PsiWhiteSpace('   ')
-        WHERE_CONSTRUCT
-          WHERE_CONSTRUCT_STMT
+          PsiWhiteSpace('   ')
+          WHERE_STMT
             PsiElement(keyword)('where')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             REL_EXPR
               DESIGNATOR
-                PsiElement(identifier)('k')
+                PsiElement(identifier)('l')
+              PsiWhiteSpace(' ')
               PsiElement(LT)('<')
+              PsiWhiteSpace(' ')
               CONSTANT
                 PsiElement(integerliteral)('0')
             PsiElement())(')')
-          PsiElement(eol)('\n')
-          PsiWhiteSpace('      ')
-          ASSIGNMENT_STMT
-            DESIGNATOR
-              PsiElement(identifier)('c')
             PsiWhiteSpace(' ')
-            PsiElement(=)('=')
-            PsiWhiteSpace(' ')
-            CONSTANT
-              PsiElement(integerliteral)('4')
-          PsiElement(eol)('\n')
-          PsiWhiteSpace('   ')
-          MASKED_ELSEWHERE_STMT
-            PsiElement(keyword)('elsewhere')
-            PsiWhiteSpace(' ')
-            PsiElement(()('(')
-            REL_EXPR
+            ASSIGNMENT_STMT
               DESIGNATOR
-                PsiElement(identifier)('k')
-              PsiElement(LT)('<')
+                PsiElement(identifier)('b')
+              PsiWhiteSpace(' ')
+              PsiElement(=)('=')
+              PsiWhiteSpace(' ')
               CONSTANT
-                PsiElement(integerliteral)('3')
-            PsiElement())(')')
-          PsiElement(eol)('\n')
-          PsiWhiteSpace('      ')
-          ASSIGNMENT_STMT
-            DESIGNATOR
-              PsiElement(identifier)('c')
-            PsiElement(=)('=')
-            CONSTANT
-              PsiElement(integerliteral)('5')
+                PsiElement(integerliteral)('1')
           PsiElement(eol)('\n')
           PsiWhiteSpace('   ')
-          ELSEWHERE_STMT
-            PsiElement(keyword)('elsewhere')
+          WHERE_CONSTRUCT
+            WHERE_CONSTRUCT_STMT
+              PsiElement(keyword)('where')
+              PsiWhiteSpace(' ')
+              PsiElement(()('(')
+              REL_EXPR
+                DESIGNATOR
+                  PsiElement(identifier)('k')
+                PsiElement(LT)('<')
+                CONSTANT
+                  PsiElement(integerliteral)('0')
+              PsiElement())(')')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('      ')
+            BLOCK
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('c')
+                PsiWhiteSpace(' ')
+                PsiElement(=)('=')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integerliteral)('4')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('   ')
+            MASKED_ELSEWHERE_STMT
+              PsiElement(keyword)('elsewhere')
+              PsiWhiteSpace(' ')
+              PsiElement(()('(')
+              REL_EXPR
+                DESIGNATOR
+                  PsiElement(identifier)('k')
+                PsiElement(LT)('<')
+                CONSTANT
+                  PsiElement(integerliteral)('3')
+              PsiElement())(')')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('      ')
+            BLOCK
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('c')
+                PsiElement(=)('=')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('   ')
+            ELSEWHERE_STMT
+              PsiElement(keyword)('elsewhere')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('      ')
+            BLOCK
+              ASSIGNMENT_STMT
+                DESIGNATOR
+                  PsiElement(identifier)('c')
+                PsiElement(=)('=')
+                CONSTANT
+                  PsiElement(integerliteral)('6')
+              PsiElement(eol)('\n')
+            PsiWhiteSpace('   ')
+            END_WHERE_STMT
+              PsiElement(keyword)('endwhere')
           PsiElement(eol)('\n')
-          PsiWhiteSpace('      ')
-          ASSIGNMENT_STMT
-            DESIGNATOR
-              PsiElement(identifier)('c')
-            PsiElement(=)('=')
-            CONSTANT
-              PsiElement(integerliteral)('6')
-          PsiElement(eol)('\n')
-          PsiWhiteSpace('   ')
-          END_WHERE_STMT
-            PsiElement(keyword)('endwhere')
-        PsiElement(eol)('\n')
         END_FORALL_STMT
           PsiElement(keyword)('endforall')
       PsiElement(eol)('\n')
