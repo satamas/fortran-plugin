@@ -35,4 +35,19 @@ program a<fold text='...'>
     case default<fold text='...'>
         c=4</fold>
     endselect
+
+    if (.not.c) then<fold text='...'>
+        d = 3.1</fold>
+    else<fold text='...'>
+        k = 1
+        a = 2</fold>
+    endif
+
+    do i=1,5,7<fold text='...'>
+      j = j-1
+    </fold>enddo
+
+    loop: do while (j < 100)<fold text='...'>
+      j = j + 10
+    </fold>end do loop
 </fold>endprogram
