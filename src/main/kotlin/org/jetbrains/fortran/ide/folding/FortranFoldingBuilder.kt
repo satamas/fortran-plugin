@@ -80,6 +80,8 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
                 FortranContainsStmt::class
         )
 
+        override fun visitDerivedTypeDef(o: FortranDerivedTypeDef) = foldBetweenStatements(o, o.derivedTypeStmt, o.endTypeStmt)
+
         override fun visitBlock(block: FortranBlock) {
             val prev = PsiTreeUtil.getPrevSiblingOfType(block, FortranCompositeElement::class.java) ?: return
             val startFoldableStatementType = foldableConstructStartStatements.find { it.isInstance(prev) } ?: return
