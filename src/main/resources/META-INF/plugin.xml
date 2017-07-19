@@ -44,6 +44,7 @@
 
         <!-- Folding -->
         <lang.foldingBuilder language="Fortran" implementationClass="org.jetbrains.fortran.ide.folding.FortranFoldingBuilder"/>
+        <lang.foldingBuilder language="Fortran fixed form" implementationClass="org.jetbrains.fortran.ide.folding.FortranFoldingBuilder"/>
     </extensions>
 
     <actions>

@@ -19,7 +19,7 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
     override fun getPlaceholderText(node: ASTNode) = "..."
 
     override fun buildFoldRegions(root: PsiElement, document: Document, quick: Boolean): Array<out FoldingDescriptor> {
-        if (root !is FortranFile) return emptyArray()
+        if (root !is FortranFile && root !is FortranFixedFormFile) return emptyArray()
 
         val descriptors: MutableList<FoldingDescriptor> = ArrayList()
         val visitor = FoldingVisitor(descriptors)
