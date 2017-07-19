@@ -75,7 +75,7 @@ class FortranFmtBlock(
        // line continuation
            oneLineElement() -> Indent.getContinuationIndent()
 
-            else -> Indent.getNoneIndent()
+           else -> Indent.getNoneIndent()
     }
 
     fun oneLineElement(): Boolean {
@@ -86,7 +86,8 @@ class FortranFmtBlock(
                 || parentPsi is FortranModuleSubprogramPart
                 || parentPsi is FortranInternalSubprogramPart
                 || parentPsi is FortranDeclarationConstruct
-                || parentPsi is FortranExecutableConstruct) {
+                || parentPsi is FortranExecutableConstruct
+                || parentPsi is FortranComponentPart) {
             return false
         }
         return true
