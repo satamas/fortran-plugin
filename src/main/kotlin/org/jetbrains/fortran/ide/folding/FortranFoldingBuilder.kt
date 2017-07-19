@@ -86,6 +86,12 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
                 foldBetweenStatements(o, o.beginConstructStatement, o.endConstructStatement)
 
         override fun visitBlock(block: FortranBlock) {
+            val parent = block.parent
+            if( parent is FortranLabeledDoConstruct){
+                foldBetweenStatements(block, parent.labelDoStmt, parent.doTermActionStmt)
+                return
+            }
+
             val prev = PsiTreeUtil.getPrevSiblingOfType(block, FortranCompositeElement::class.java) ?: return
             val startFoldableStatementType = foldableConstructStartStatements.find { it.isInstance(prev) } ?: return
 

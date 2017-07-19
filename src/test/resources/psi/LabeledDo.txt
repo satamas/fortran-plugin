@@ -23,9 +23,9 @@ FILE
             PsiElement(,)(',')
             CONSTANT
               PsiElement(integerliteral)('3')
-          PsiElement(eol)('\n')
-        PsiWhiteSpace(' ')
         BLOCK
+          PsiElement(eol)('\n')
+          PsiWhiteSpace(' ')
           LABEL
             PsiElement(integerliteral)('1')
           PsiWhiteSpace('      ')
@@ -58,9 +58,9 @@ FILE
                 PsiElement(,)(',')
                 CONSTANT
                   PsiElement(integerliteral)('5')
-              PsiElement(eol)('\n')
-            PsiWhiteSpace('          ')
             BLOCK
+              PsiElement(eol)('\n')
+              PsiWhiteSpace('          ')
               ASSIGNMENT_STMT
                 DESIGNATOR
                   PsiElement(identifier)('aa')
@@ -124,9 +124,9 @@ FILE
               PsiElement(,)(',')
               CONSTANT
                 PsiElement(integerliteral)('4')
-            PsiElement(eol)('\n')
-          PsiWhiteSpace('          ')
           BLOCK
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('          ')
             ASSIGNMENT_STMT
               DESIGNATOR
                 PsiElement(identifier)('a')
@@ -153,9 +153,9 @@ FILE
                 PsiElement(,)(',')
                 CONSTANT
                   PsiElement(integerliteral)('5')
-              PsiElement(eol)('\n')
-            PsiWhiteSpace('            ')
             BLOCK
+              PsiElement(eol)('\n')
+              PsiWhiteSpace('            ')
               ASSIGNMENT_STMT
                 DESIGNATOR
                   PsiElement(identifier)('b')

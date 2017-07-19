@@ -50,4 +50,8 @@ program a<fold text='...'>
     loop: do while (j < 100)<fold text='...'>
       j = j + 10
     </fold>end do loop
+
+    do 10 i = 1, m<fold text='...'>
+       a( i, j ) = zero
+10  </fold>continue
 </fold>endprogram
