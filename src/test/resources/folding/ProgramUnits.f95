@@ -1,11 +1,11 @@
 module circle<fold text='...'>
     real, parameter :: pi = 3.1415927
     real :: radius
-contains
+</fold>contains
     subroutine input(x, y, z)<fold text='...'>
         x = y + z
     </fold>endsubroutine input
-</fold>end module circle
+end module circle
 
 real function average(x,y,z)<fold text='...'>
     sum = x + y + z

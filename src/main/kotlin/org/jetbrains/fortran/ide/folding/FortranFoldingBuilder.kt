@@ -10,10 +10,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.*
-import org.jetbrains.fortran.lang.psi.ext.beginConstructStmt
-import org.jetbrains.fortran.lang.psi.ext.beginUnitStmt
-import org.jetbrains.fortran.lang.psi.ext.endConstructStmt
-import org.jetbrains.fortran.lang.psi.ext.endUnitStmt
 import java.util.*
 
 class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
@@ -33,12 +29,70 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
             private val descriptors: MutableList<FoldingDescriptor>
     ) : FortranVisitor() {
 
-        override fun visitProgramUnit(o: FortranProgramUnit) =
-                foldBetweenStatements(o, o.beginUnitStmt, o.endUnitStmt)
-        override fun visitExecutableConstruct(o: FortranExecutableConstruct) =
-                foldBetweenStatements(o, o.beginConstructStmt, o.endConstructStmt)
+        val foldableConstructStartStatements = listOf(
+                FortranWhereConstructStmt::class,
+                FortranMaskedElsewhereStmt::class,
+                FortranElsewhereStmt::class,
+                FortranForallConstructStmt::class,
+                FortranAssociateStmt::class,
+                FortranBlockStmt::class,
+                FortranCriticalStmt::class,
+                FortranNonlabelDoStmt::class,
+                FortranLabelDoStmt::class,
+                FortranIfThenStmt::class,
+                FortranElseIfStmt::class,
+                FortranElseStmt::class,
+                FortranCaseStmt::class,
+                FortranTypeGuardStmt::class,
+                FortranProgramStmt::class,
+                FortranModuleStmt::class,
+                FortranSubmoduleStmt::class,
+                FortranBlockDataStmt::class,
+                FortranFunctionStmt::class,
+                FortranSubroutineStmt::class,
+                FortranMpSubprogramStmt::class,
+                FortranContainsStmt::class
+        )
 
-        private fun foldBetweenStatements(element: PsiElement, left: FortranStmt?, right: FortranStmt?) {
+        val foldableConstructEndStatements = listOf(
+                FortranMaskedElsewhereStmt::class,
+                FortranElsewhereStmt::class,
+                FortranEndWhereStmt::class,
+                FortranEndForallStmt::class,
+                FortranEndAssociateStmt::class,
+                FortranEndBlockStmt::class,
+                FortranEndCriticalStmt::class,
+                FortranEndDoStmt::class,
+                FortranElseIfStmt::class,
+                FortranElseStmt::class,
+                FortranEndIfStmt::class,
+                FortranCaseStmt::class,
+                FortranEndSelectStmt::class,
+                FortranTypeGuardStmt::class,
+                FortranEndProgramStmt::class,
+                FortranEndModuleStmt::class,
+                FortranEndSubmoduleStmt::class,
+                FortranEndBlockDataStmt::class,
+                FortranEndFunctionStmt::class,
+                FortranEndSubroutineStmt::class,
+                FortranEndMpSubprogramStmt::class,
+                FortranContainsStmt::class
+        )
+
+        override fun visitBlock(block: FortranBlock) {
+            val prev = PsiTreeUtil.getPrevSiblingOfType(block, FortranCompositeElement::class.java)
+            if(foldableConstructStartStatements.none { it.isInstance(prev) } ) return
+            var next = PsiTreeUtil.getNextSiblingOfType(block, FortranCompositeElement::class.java)
+
+            if (next is FortranInternalSubprogramPart ) next = next.containsStmt
+            else if (next is FortranTypeBoundProcedurePart ) next = next.containsStmt
+            else if (next is FortranModuleSubprogramPart ) next = next.containsStmt
+
+            if(foldableConstructEndStatements.none { it.isInstance(next) } ) return
+            foldBetweenStatements(block, prev, next)
+        }
+
+        private fun foldBetweenStatements(element: PsiElement, left: PsiElement?, right: PsiElement?) {
             if (left != null && right != null) {
                 val rightLabel = PsiTreeUtil.getChildOfType(right, FortranLabel::class.java)
                 val rightOffset = if(rightLabel != null) {

@@ -19,12 +19,12 @@ program a<fold text='...'>
         2    v = 1
         3 </fold>endforall
         where (l < 0) b = 1
-        where (k < 0)
+        where (k < 0)<fold text='...'>
             c = 4
-        elsewhere (k < 3)
+        </fold>elsewhere (k < 3)<fold text='...'>
             c = 5
-        elsewhere
+        </fold>elsewhere<fold text='...'>
             c = 6
-        endwhere
+        </fold>endwhere
     </fold>endforall
 </fold>endprogram
