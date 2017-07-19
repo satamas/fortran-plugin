@@ -10,6 +10,8 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.*
+import org.jetbrains.fortran.lang.psi.ext.beginConstructStatement
+import org.jetbrains.fortran.lang.psi.ext.endConstructStatement
 import org.jetbrains.fortran.lang.psi.ext.lastChildOfType
 import java.util.*
 
@@ -80,7 +82,8 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
                 FortranContainsStmt::class
         )
 
-        override fun visitDerivedTypeDef(o: FortranDerivedTypeDef) = foldBetweenStatements(o, o.derivedTypeStmt, o.endTypeStmt)
+        override fun visitDeclarationConstruct(o: FortranDeclarationConstruct) =
+                foldBetweenStatements(o, o.beginConstructStatement, o.endConstructStatement)
 
         override fun visitBlock(block: FortranBlock) {
             val prev = PsiTreeUtil.getPrevSiblingOfType(block, FortranCompositeElement::class.java) ?: return
