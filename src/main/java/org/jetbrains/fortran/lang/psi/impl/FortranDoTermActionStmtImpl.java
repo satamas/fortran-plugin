@@ -12,11 +12,6 @@ public class FortranDoTermActionStmtImpl extends FortranStmtImpl implements Fort
         super(node);
     }
 
-    public void accept(@NotNull PsiElementVisitor visitor) {
-        if (visitor instanceof FortranVisitor) accept((FortranVisitor)visitor);
-        else super.accept(visitor);
-    }
-
     @Override
     @Nullable
     public PsiElement getExpr() {
