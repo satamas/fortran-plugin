@@ -1,7 +1,7 @@
 module circle<fold text='...'>
     real, parameter :: pi = 3.1415927
-    real :: radius
-</fold>contains
+    real :: radius</fold>
+contains
     subroutine input(x, y, z)<fold text='...'>
         x = y + z
     </fold>endsubroutine input

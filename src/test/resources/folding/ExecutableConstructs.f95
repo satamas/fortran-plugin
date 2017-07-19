@@ -20,8 +20,8 @@ program a<fold text='...'>
         3 </fold>endforall
         where (l < 0) b = 1
         where (k < 0)<fold text='...'>
-            c = 4
-        </fold>elsewhere (k < 3)<fold text='...'>
+            c = 4</fold>
+        elsewhere (k < 3)<fold text='...'>
             c = 5</fold>
         elsewhere<fold text='...'>
             c = 6</fold>

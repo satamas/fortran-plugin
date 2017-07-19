@@ -10,6 +10,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.*
+import org.jetbrains.fortran.lang.psi.ext.lastChildOfType
 import java.util.*
 
 class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
@@ -88,8 +89,11 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
             else if (next is FortranTypeBoundProcedurePart) next = next.containsStmt
             else if (next is FortranModuleSubprogramPart) next = next.containsStmt
 
-            if (startFoldableStatementType in foldableConstructEndStatements) {
-                val endStatement = PsiTreeUtil.getChildOfType(block, FortranCompositeElement::class.java) ?: return
+            val endFoldableStatementType = foldableConstructEndStatements.find { it.isInstance(next) } ?: return
+
+            if (startFoldableStatementType in foldableConstructEndStatements ||
+                    endFoldableStatementType in foldableConstructStartStatements) {
+                val endStatement = block.lastChildOfType(FortranCompositeElement::class) ?: return
                 val range = TextRange(prev.textOffset + prev.textLength, endStatement.textOffset + endStatement.textLength)
                 descriptors += FoldingDescriptor(block.node, range)
             } else {
