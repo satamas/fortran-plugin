@@ -80,24 +80,29 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
         )
 
         override fun visitBlock(block: FortranBlock) {
-            val prev = PsiTreeUtil.getPrevSiblingOfType(block, FortranCompositeElement::class.java)
-            if(foldableConstructStartStatements.none { it.isInstance(prev) } ) return
+            val prev = PsiTreeUtil.getPrevSiblingOfType(block, FortranCompositeElement::class.java) ?: return
+            val startFoldableStatementType = foldableConstructStartStatements.find { it.isInstance(prev) } ?: return
+
             var next = PsiTreeUtil.getNextSiblingOfType(block, FortranCompositeElement::class.java)
+            if (next is FortranInternalSubprogramPart) next = next.containsStmt
+            else if (next is FortranTypeBoundProcedurePart) next = next.containsStmt
+            else if (next is FortranModuleSubprogramPart) next = next.containsStmt
 
-            if (next is FortranInternalSubprogramPart ) next = next.containsStmt
-            else if (next is FortranTypeBoundProcedurePart ) next = next.containsStmt
-            else if (next is FortranModuleSubprogramPart ) next = next.containsStmt
-
-            if(foldableConstructEndStatements.none { it.isInstance(next) } ) return
-            foldBetweenStatements(block, prev, next)
+            if (startFoldableStatementType in foldableConstructEndStatements) {
+                val endStatement = PsiTreeUtil.getChildOfType(block, FortranCompositeElement::class.java) ?: return
+                val range = TextRange(prev.textOffset + prev.textLength, endStatement.textOffset + endStatement.textLength)
+                descriptors += FoldingDescriptor(block.node, range)
+            } else {
+                foldBetweenStatements(block, prev, next)
+            }
         }
 
         private fun foldBetweenStatements(element: PsiElement, left: PsiElement?, right: PsiElement?) {
             if (left != null && right != null) {
                 val rightLabel = PsiTreeUtil.getChildOfType(right, FortranLabel::class.java)
-                val rightOffset = if(rightLabel != null) {
+                val rightOffset = if (rightLabel != null) {
                     var firstNonLabelElement = rightLabel.nextSibling
-                    while (firstNonLabelElement is PsiWhiteSpace){
+                    while (firstNonLabelElement is PsiWhiteSpace) {
                         firstNonLabelElement = firstNonLabelElement.nextSibling
                     }
                     firstNonLabelElement.textOffset

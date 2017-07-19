@@ -22,9 +22,17 @@ program a<fold text='...'>
         where (k < 0)<fold text='...'>
             c = 4
         </fold>elsewhere (k < 3)<fold text='...'>
-            c = 5
-        </fold>elsewhere<fold text='...'>
-            c = 6
-        </fold>endwhere
+            c = 5</fold>
+        elsewhere<fold text='...'>
+            c = 6</fold>
+        endwhere
     </fold>endforall
+
+    select case (a+b)
+    case (1,2)<fold text='...'>
+        c=1</fold>
+    case (7:)
+    case default<fold text='...'>
+        c=4</fold>
+    endselect
 </fold>endprogram
