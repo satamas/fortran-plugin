@@ -101,6 +101,8 @@ class FortranFmtBlock(
                     && child.psi !is FortranInternalSubprogramPart
                     && child.psi !is FortranModuleSubprogramPart -> Indent.getNormalIndent()
             node.psi is FortranExecutableConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranEnumDef && child.psi is FortranEnumeratorDefStmt -> Indent.getNormalIndent()
+            node.psi is FortranEnumDef && child.psi !is FortranEnumeratorDefStmt -> Indent.getNoneIndent()
             node.psi is FortranDeclarationConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
             node.psi is FortranInternalSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
             node.psi is FortranModuleSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()

@@ -436,16 +436,17 @@ component_spec ::= (fidentifier '=')? component_data_source
 // R457
 component_data_source ::= expr /*| variable*/ | proc_target
 // R458
-enum_def ::= enum_def_stmt eol+ (enumerator_def_stmt eol+)+ end_enum_stmt { pin = 1; extends = declaration_construct }
+enum_def ::= enum_def_stmt enumerator_specification end_enum_stmt { pin = 1; extends = declaration_construct }
 // R459
 enum_def_stmt ::= label? enum_ ',' bind_ '(' fidentifier ')' { pin = 4 }
 // R460
-enumerator_def_stmt ::= !(label? end_enum_keys) label? enumerator_ ('::')? <<list enumerator>> {
+private enumerator_specification ::= !(label? end_enum_keys) (eol | enumerator_def_stmt)+ {
   pin = 1
   recoverWhile = enum_recover
 }
 private end_enum_keys ::= !assignment_stmt ((end_ enum_) | endenum_)
 private enum_recover ::= !(eol | end_enum_keys)
+enumerator_def_stmt ::=  label? enumerator_ ('::')? <<list enumerator>> {  pin = 2 }
 // R461
 enumerator ::= fidentifier ('=' expr)?
 // R462

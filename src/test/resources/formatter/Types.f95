@@ -31,4 +31,9 @@ module types
                 integer :: age
                 integer :: some
     end type person
+
+    ENUM, BIND(C)
+    ENUMERATOR :: RED = 4, BLUE = 9
+    ENUMERATOR YELLOW
+    END ENUM
 endmodule
