@@ -436,17 +436,17 @@ component_spec ::= (fidentifier '=')? component_data_source
 // R457
 component_data_source ::= expr /*| variable*/ | proc_target
 // R458
-enum_def ::= enum_def_stmt enumerator_specification end_enum_stmt { pin = 1; extends = declaration_construct }
+enum_def ::= enum_def_stmt (label? (eol | enumerator_def_stmt))* end_enum_stmt { pin = 1; extends = declaration_construct }
 // R459
 enum_def_stmt ::= label? enum_ ',' bind_ '(' fidentifier ')' { pin = 4 }
 // R460
-private enumerator_specification ::= !(label? end_enum_keys) (eol | enumerator_def_stmt)+ {
-  pin = 1
+enumerator_def_stmt ::=  enumerator_ ('::')? <<list enumerator>> {
+  pin = 1;
   recoverWhile = enum_recover
 }
 private end_enum_keys ::= !assignment_stmt ((end_ enum_) | endenum_)
 private enum_recover ::= !(eol | end_enum_keys)
-enumerator_def_stmt ::=  label? enumerator_ ('::')? <<list enumerator>> {  pin = 2 }
+
 // R461
 enumerator ::= fidentifier ('=' expr)?
 // R462
@@ -975,11 +975,11 @@ end_block_data_stmt ::= label? ((endblockdata_ fidentifier?)| (end_ (((block_ da
 // R1201
 interface_block ::= interface_stmt interface_specification end_interface_stmt { pin = 1; extends = declaration_construct }
 // R1202
-private interface_specification ::= !endinterface_keys (eol | interface_body | procedure_stmt)* {
+private interface_specification ::= !endinterface_keys ((label? eol) | interface_body | (label? procedure_stmt))* {
 pin = 1
 recoverWhile = interface_recover
 }
-private endinterface_keys ::= !assignment_stmt (end_ | endinterface_)
+private endinterface_keys ::= !assignment_stmt (label? (end_ | endinterface_))
 private interface_recover ::= !(eol | endinterface_keys)
 // R1203
 interface_stmt ::= ((abstract_ interface_) | (interface_ (generic_spec)?)) { pin = 1 }
