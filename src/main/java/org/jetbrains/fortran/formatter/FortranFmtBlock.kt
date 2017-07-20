@@ -71,6 +71,7 @@ class FortranFmtBlock(
            node.psi is FortranDeclarationConstruct -> Indent.getNormalIndent()
            node.psi is FortranInternalSubprogramPart -> Indent.getNormalIndent()
            node.psi is FortranModuleSubprogramPart -> Indent.getNormalIndent()
+           node.psi is FortranInterfaceBody -> Indent.getNormalIndent()
        //    node.psi is FortranBlock -> Indent.getNormalIndent()
        // line continuation
            oneLineElement() -> Indent.getContinuationIndent()
@@ -87,7 +88,8 @@ class FortranFmtBlock(
                 || parentPsi is FortranInternalSubprogramPart
                 || parentPsi is FortranDeclarationConstruct
                 || parentPsi is FortranExecutableConstruct
-                || parentPsi is FortranComponentPart) {
+                || parentPsi is FortranComponentPart
+                || parentPsi is FortranInterfaceBody) {
             return false
         }
         return true
@@ -102,6 +104,7 @@ class FortranFmtBlock(
             node.psi is FortranDeclarationConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
             node.psi is FortranInternalSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
             node.psi is FortranModuleSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranInterfaceBody && child.psi !is FortranStmt -> Indent.getNormalIndent()
         // Line continuation
             oneLineElement() && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
             else -> Indent.getNoneIndent()
@@ -121,11 +124,13 @@ class FortranFmtBlock(
                     || psi1 is FortranStmt
                     || psi1 is FortranExecutableConstruct
                     || psi1 is FortranDeclarationConstruct
-                    || psi1 is FortranBlock)
+                    || psi1 is FortranBlock
+                    || psi1 is FortranInterfaceBody)
                 && ( psi2 is FortranStmt
                     || psi2 is FortranExecutableConstruct
                     || psi2 is FortranDeclarationConstruct
-                    || psi2 is FortranBlock)) {
+                    || psi2 is FortranBlock
+                    || psi2 is FortranInterfaceBody)) {
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_CODE)
             }
             // before comment
