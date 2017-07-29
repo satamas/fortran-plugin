@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.formatter
+package org.jetbrains.fortran.ide.formatter
 
 @SuppressWarnings("all")
 class FortranFormattingTest : FortranBaseFormattingTestCase() {

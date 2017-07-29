@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.formatter
+package org.jetbrains.fortran.ide.formatter
 
 import com.intellij.psi.formatter.FormatterTestCase
 import org.intellij.lang.annotations.Language

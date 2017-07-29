@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.formatter
+package org.jetbrains.fortran.ide.formatter
 
 import com.intellij.formatting.*
 import com.intellij.formatting.alignment.AlignmentStrategy

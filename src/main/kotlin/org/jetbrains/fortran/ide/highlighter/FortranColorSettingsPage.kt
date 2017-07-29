@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.highlighter
+package org.jetbrains.fortran.ide.highlighter
 
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage

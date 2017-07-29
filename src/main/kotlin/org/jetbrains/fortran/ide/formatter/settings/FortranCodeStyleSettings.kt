@@ -1,8 +1,8 @@
-package org.jetbrains.fortran.formatter.settings
+package org.jetbrains.fortran.ide.formatter.settings
 
 import com.intellij.psi.codeStyle.*
 
-public class FortranCodeStyleSettings(container : CodeStyleSettings)
+class FortranCodeStyleSettings(container : CodeStyleSettings)
     : CustomCodeStyleSettings(FortranCodeStyleSettings::class.java.simpleName, container) {
 
     @JvmField var SPACE_AROUND_NOT_OPERATOR = true

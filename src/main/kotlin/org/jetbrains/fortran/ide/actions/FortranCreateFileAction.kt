@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.actions
+package org.jetbrains.fortran.ide.actions
 
 import com.intellij.ide.actions.CreateFileFromTemplateAction
 import com.intellij.ide.actions.CreateFileFromTemplateDialog

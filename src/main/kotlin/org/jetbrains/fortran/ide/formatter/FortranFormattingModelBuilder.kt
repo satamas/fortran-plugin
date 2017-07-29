@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.formatter
+package org.jetbrains.fortran.ide.formatter
 
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
@@ -6,7 +6,7 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import org.jetbrains.fortran.FortranLanguage
-import org.jetbrains.fortran.formatter.settings.FortranCodeStyleSettings
+import org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettings
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
 

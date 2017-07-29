@@ -1,9 +1,9 @@
-package org.jetbrains.fortran.annotator
+package org.jetbrains.fortran.ide.annotator
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.psi.PsiElement
-import org.jetbrains.fortran.highlighter.FortranHighlightingColors
+import org.jetbrains.fortran.ide.highlighter.FortranHighlightingColors
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
 

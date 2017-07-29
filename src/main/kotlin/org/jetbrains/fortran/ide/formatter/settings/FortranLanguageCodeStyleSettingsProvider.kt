@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.formatter.settings
+package org.jetbrains.fortran.ide.formatter.settings
 
 import com.intellij.application.options.IndentOptionsEditor
 import com.intellij.application.options.SmartIndentOptionsEditor

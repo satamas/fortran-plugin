@@ -1,9 +1,9 @@
-package org.jetbrains.fortran.highlighter;
+package org.jetbrains.fortran.ide.highlighter
 
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as DefColors
-import com.intellij.openapi.editor.HighlighterColors;
+import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.EditorColors
-import com.intellij.openapi.editor.colors.TextAttributesKey;
+import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.options.colors.AttributesDescriptor
 
 

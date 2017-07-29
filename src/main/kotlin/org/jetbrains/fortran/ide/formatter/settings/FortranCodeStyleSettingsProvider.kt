@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.formatter.settings
+package org.jetbrains.fortran.ide.formatter.settings
 
 import com.intellij.openapi.options.Configurable
 import com.intellij.psi.codeStyle.CodeStyleSettings

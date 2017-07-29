@@ -26,21 +26,21 @@
         <fileTypeFactory implementation="org.jetbrains.fortran.FortranFileTypeFactory"/>
         <lang.parserDefinition language="Fortran" implementationClass="org.jetbrains.fortran.lang.parser.FortranParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran"
-                                       implementationClass="org.jetbrains.fortran.highlighter.FortranSyntaxHighlighterFactory"/>
+                                       implementationClass="org.jetbrains.fortran.ide.highlighter.FortranSyntaxHighlighterFactory"/>
         <!-- fixed form source-->
         <fileTypeFactory implementation="org.jetbrains.fortran.FortranFixedFormFileTypeFactory"/>
         <lang.parserDefinition language="Fortran fixed form" implementationClass="org.jetbrains.fortran.lang.parser.FortranFixedFormParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran fixed form"
-                                       implementationClass="org.jetbrains.fortran.highlighter.FortranFixedFormSyntaxHighlighterFactory"/>
+                                       implementationClass="org.jetbrains.fortran.ide.highlighter.FortranFixedFormSyntaxHighlighterFactory"/>
         <!-- Color Settings -->
-        <colorSettingsPage implementation="org.jetbrains.fortran.highlighter.FortranColorSettingsPage"/>
+        <colorSettingsPage implementation="org.jetbrains.fortran.ide.highlighter.FortranColorSettingsPage"/>
         <!-- Annotator -->
-        <annotator language="Fortran" implementationClass="org.jetbrains.fortran.annotator.FortranHighlightingAnnotator"/>
+        <annotator language="Fortran" implementationClass="org.jetbrains.fortran.ide.annotator.FortranHighlightingAnnotator"/>
 
         <!-- Formatter -->
-        <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.formatter.FortranFormattingModelBuilder"/>
-        <codeStyleSettingsProvider implementation="org.jetbrains.fortran.formatter.settings.FortranCodeStyleSettingsProvider"/>
-        <langCodeStyleSettingsProvider implementation="org.jetbrains.fortran.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
+        <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.ide.formatter.FortranFormattingModelBuilder"/>
+        <codeStyleSettingsProvider implementation="org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider implementation="org.jetbrains.fortran.ide.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
         <lang.commenter language="Fortran" implementationClass="org.jetbrains.fortran.ide.commenter.FortranCommenter"/>
 
         <!-- Folding -->
@@ -50,7 +50,7 @@
 
     <actions>
         <action id="Fortran.NewFortranFile"
-                class="org.jetbrains.fortran.actions.FortranCreateFileAction"
+                class="org.jetbrains.fortran.ide.actions.FortranCreateFileAction"
                 text="Fortran File"
                 description="Create new Fortran file">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>

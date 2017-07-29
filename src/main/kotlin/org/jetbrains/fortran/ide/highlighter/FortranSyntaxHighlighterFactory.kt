@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.highlighter
+package org.jetbrains.fortran.ide.highlighter
 
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory
 import com.intellij.openapi.project.Project
