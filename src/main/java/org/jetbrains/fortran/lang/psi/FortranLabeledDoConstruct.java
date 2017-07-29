@@ -14,4 +14,10 @@ public interface FortranLabeledDoConstruct extends FortranExecutableConstruct {
 
     @Nullable
     FortranDoTermActionStmt getDoTermActionStmt();
+
+    @Nullable
+    FortranLabeledDoConstruct getLabeledDoTermConstract();
+
+    @Nullable
+    FortranEndDoStmt getEndDoStmt();
 }

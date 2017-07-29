@@ -2,8 +2,10 @@ package org.jetbrains.fortran.lang.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.fortran.lang.psi.FortranExpr;
+import org.jetbrains.fortran.lang.psi.FortranLabel;
 import org.jetbrains.fortran.lang.psi.FortranLabelDoStmt;
 
 import static org.jetbrains.fortran.lang.FortranTypes.COLON;
@@ -14,6 +16,10 @@ public class FortranLabelDoStmtImpl extends FortranStmtImpl implements FortranLa
     public FortranLabelDoStmtImpl(ASTNode node) {
         super(node);
     }
+
+    @Override
+    @NotNull
+    public FortranLabel getLabel() { return findNotNullChildByClass(FortranLabel.class); }
 
     @Override
     @Nullable

@@ -89,6 +89,8 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
             val parent = block.parent
             if( parent is FortranLabeledDoConstruct){
                 foldBetweenStatements(block, parent.labelDoStmt, parent.doTermActionStmt)
+                foldBetweenStatements(block, parent.labelDoStmt, parent.labeledDoTermConstract)
+                foldBetweenStatements(block, parent.labelDoStmt, parent.endDoStmt)
                 return
             }
 

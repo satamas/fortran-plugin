@@ -9,4 +9,5 @@ public interface FortranLabel extends FortranCompositeElement {
     @NotNull
     PsiElement getIntegerliteral();
 
+    int gelLabelValue();
 }

@@ -6,6 +6,9 @@ import com.intellij.psi.PsiElement;
 
 public interface FortranLabelDoStmt extends FortranStmt {
 
+    @NotNull
+    FortranLabel getLabel();
+
     @Nullable
     FortranExpr getExpr();
 
