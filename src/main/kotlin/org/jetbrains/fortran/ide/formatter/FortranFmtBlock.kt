@@ -97,6 +97,7 @@ class FortranFmtBlock(
 
     fun computeIndent(child: ASTNode): Indent = when {
         // inside blocks
+            node.psi is FortranMainProgram && node.psi.firstChild !is FortranStmt -> Indent.getNoneIndent()
             node.psi is FortranProgramUnit && child.psi !is FortranStmt
                     && child.psi !is FortranInternalSubprogramPart
                     && child.psi !is FortranModuleSubprogramPart -> Indent.getNormalIndent()
