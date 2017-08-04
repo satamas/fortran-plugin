@@ -49,7 +49,7 @@
 
         <!-- Navigation -->
         <lang.findUsagesProvider language="Fortran" implementationClass="org.jetbrains.fortran.lang.resolve.ref.FortranFindUsagesProvider"/>
-
+        <usageTypeProvider implementation="org.jetbrains.fortran.lang.resolve.ref.FortranUsageTypeProvider"/>
     </extensions>
 
     <actions>
