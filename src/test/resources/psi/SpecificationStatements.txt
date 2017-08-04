@@ -122,10 +122,10 @@ FILE
           PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace(' ')
-      LABEL
-        PsiElement(integerliteral)('20')
-      PsiWhiteSpace(' ')
       IMPLICIT_STMT
+        NUMERICAL_LABEL_DECL
+          PsiElement(integerliteral)('20')
+        PsiWhiteSpace(' ')
         PsiElement(keyword)('implicit')
         PsiWhiteSpace(' ')
         IMPLICIT_SPEC
@@ -211,7 +211,9 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              PsiElement(identifier)('ttl')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('ttl')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           DATA_STMT_VALUE
@@ -227,7 +229,9 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              PsiElement(identifier)('m')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('m')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           DATA_STMT_VALUE
@@ -240,7 +244,9 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              PsiElement(identifier)('N')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('N')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           DATA_STMT_VALUE
@@ -256,13 +262,14 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              DATA_REF
-                PsiElement(identifier)('pair')
-                PsiElement(()('(')
-                SECTION_SUBSCRIPT
-                  CONSTANT
-                    PsiElement(integerliteral)('1')
-                PsiElement())(')')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('pair')
+                  PsiElement(()('(')
+                  SECTION_SUBSCRIPT
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                  PsiElement())(')')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           DATA_STMT_VALUE
@@ -275,7 +282,9 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              PsiElement(identifier)('VEC')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('VEC')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           DATA_STMT_VALUE
@@ -310,17 +319,22 @@ FILE
               PsiElement(()('(')
               PsiWhiteSpace(' ')
               DATA_I_DO_OBJECT
-                DATA_REF
-                  PsiElement(identifier)('s')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    DESIGNATOR
-                      PsiElement(identifier)('i')
-                  PsiElement(,)(',')
-                  SECTION_SUBSCRIPT
-                    DESIGNATOR
-                      PsiElement(identifier)('i')
-                  PsiElement())(')')
+                DATA_PATH
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('s')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      DESIGNATOR
+                        DATA_PATH
+                          DATA_REFERENCE_ELEMENT
+                            PsiElement(identifier)('i')
+                    PsiElement(,)(',')
+                    SECTION_SUBSCRIPT
+                      DESIGNATOR
+                        DATA_PATH
+                          DATA_REFERENCE_ELEMENT
+                            PsiElement(identifier)('i')
+                    PsiElement())(')')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               PsiElement(identifier)('i')
@@ -355,17 +369,22 @@ FILE
                   PsiElement(()('(')
                   PsiWhiteSpace(' ')
                   DATA_I_DO_OBJECT
-                    DATA_REF
-                      PsiElement(identifier)('r')
-                      PsiElement(()('(')
-                      SECTION_SUBSCRIPT
-                        DESIGNATOR
-                          PsiElement(identifier)('i')
-                      PsiElement(,)(',')
-                      SECTION_SUBSCRIPT
-                        DESIGNATOR
-                          PsiElement(identifier)('j')
-                      PsiElement())(')')
+                    DATA_PATH
+                      DATA_REFERENCE_ELEMENT
+                        PsiElement(identifier)('r')
+                        PsiElement(()('(')
+                        SECTION_SUBSCRIPT
+                          DESIGNATOR
+                            DATA_PATH
+                              DATA_REFERENCE_ELEMENT
+                                PsiElement(identifier)('i')
+                        PsiElement(,)(',')
+                        SECTION_SUBSCRIPT
+                          DESIGNATOR
+                            DATA_PATH
+                              DATA_REFERENCE_ELEMENT
+                                PsiElement(identifier)('j')
+                        PsiElement())(')')
                   PsiElement(,)(',')
                   PsiWhiteSpace(' ')
                   PsiElement(identifier)('j')
@@ -444,12 +463,16 @@ FILE
         PsiWhiteSpace(' ')
         EXPLICIT_SHAPE_SPEC
           DESIGNATOR
-            PsiElement(identifier)('N')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('N')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         EXPLICIT_SHAPE_SPEC
           DESIGNATOR
-            PsiElement(identifier)('N')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('N')
         PsiWhiteSpace(' ')
         PsiElement())(')')
         PsiElement(,)(',')
@@ -458,12 +481,16 @@ FILE
         PsiElement(()('(')
         EXPLICIT_SHAPE_SPEC
           DESIGNATOR
-            PsiElement(identifier)('B')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('B')
           PsiWhiteSpace(' ')
           PsiElement(:)(':')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            PsiElement(identifier)('C')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('C')
         PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -473,10 +500,14 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            PsiElement(identifier)('A')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('A')
           PsiElement(,)(',')
           EQUIVALENCE_OBJECT
-            PsiElement(identifier)('B')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('B')
           PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -486,17 +517,20 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_REF
-              PsiElement(identifier)('A')
-              PsiElement(()('(')
-              SECTION_SUBSCRIPT
-                CONSTANT
-                  PsiElement(integerliteral)('1')
-              PsiElement())(')')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('1')
+                PsiElement())(')')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           EQUIVALENCE_OBJECT
-            PsiElement(identifier)('B')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('B')
           PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -506,25 +540,27 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_REF
-              PsiElement(identifier)('A')
-              PsiElement(()('(')
-              SECTION_SUBSCRIPT
-                CONSTANT
-                  PsiElement(integerliteral)('1')
-              PsiElement())(')')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('1')
+                PsiElement())(')')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           EQUIVALENCE_OBJECT
             SUBSTRING
               PARENT_STRING
-                DATA_REF
-                  PsiElement(identifier)('B')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('1')
-                  PsiElement())(')')
+                DATA_PATH
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('B')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      CONSTANT
+                        PsiElement(integerliteral)('1')
+                    PsiElement())(')')
               PsiElement(()('(')
               SUBSTRING_RANGE
                 ADD_EXPR
@@ -544,25 +580,27 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_REF
-              PsiElement(identifier)('A')
-              PsiElement(()('(')
-              SECTION_SUBSCRIPT
-                CONSTANT
-                  PsiElement(integerliteral)('1')
-              PsiElement())(')')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('1')
+                PsiElement())(')')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           EQUIVALENCE_OBJECT
             SUBSTRING
               PARENT_STRING
-                DATA_REF
-                  PsiElement(identifier)('B')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('1')
-                  PsiElement())(')')
+                DATA_PATH
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('B')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      CONSTANT
+                        PsiElement(integerliteral)('1')
+                    PsiElement())(')')
               PsiElement(()('(')
               SUBSTRING_RANGE
                 ADD_EXPR
@@ -588,50 +626,55 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_REF
-              PsiElement(identifier)('A')
-              PsiElement(()('(')
-              SECTION_SUBSCRIPT
-                ADD_EXPR
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  ADD_EXPR
+                    CONSTANT
+                      PsiElement(integerliteral)('1')
+                    PsiElement(+)('+')
+                    CONSTANT
+                      PsiElement(integerliteral)('2')
+                PsiElement(,)(',')
+                PsiWhiteSpace(' ')
+                SECTION_SUBSCRIPT
                   CONSTANT
-                    PsiElement(integerliteral)('1')
-                  PsiElement(+)('+')
-                  CONSTANT
-                    PsiElement(integerliteral)('2')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              SECTION_SUBSCRIPT
-                CONSTANT
-                  PsiElement(integerliteral)('3')
-              PsiElement())(')')
+                    PsiElement(integerliteral)('3')
+                PsiElement())(')')
           PsiElement(,)(',')
           EQUIVALENCE_OBJECT
-            PsiElement(identifier)('B')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('B')
           PsiElement())(')')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_REF
-              PsiElement(identifier)('A')
-              PsiElement(()('(')
-              SECTION_SUBSCRIPT
-                CONSTANT
-                  PsiElement(integerliteral)('2')
-              PsiElement())(')')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('A')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  CONSTANT
+                    PsiElement(integerliteral)('2')
+                PsiElement())(')')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           EQUIVALENCE_OBJECT
             SUBSTRING
               PARENT_STRING
-                DATA_REF
-                  PsiElement(identifier)('B')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('1')
-                  PsiElement())(')')
+                DATA_PATH
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('B')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      CONSTANT
+                        PsiElement(integerliteral)('1')
+                    PsiElement())(')')
               PsiElement(()('(')
               SUBSTRING_RANGE
                 ADD_EXPR

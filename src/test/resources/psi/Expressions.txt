@@ -7,30 +7,38 @@ FILE
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
-      LABEL
-        PsiElement(integerliteral)('1')
-      PsiWhiteSpace('  ')
       ASSIGNMENT_STMT
+        NUMERICAL_LABEL_DECL
+          PsiElement(integerliteral)('1')
+        PsiWhiteSpace('  ')
         DESIGNATOR
-          PsiElement(identifier)('variable')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('variable')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         EQUIV_EXPR
           EQUIV_EXPR
             DESIGNATOR
-              PsiElement(identifier)('a')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('a')
             PsiWhiteSpace(' ')
             PsiElement(.eqv.)('.eqv.')
             PsiWhiteSpace(' ')
             DESIGNATOR
-              PsiElement(identifier)('b')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('b')
           PsiWhiteSpace(' ')
           PsiElement(.eqv.)('.eqv.')
           PsiWhiteSpace(' ')
           REL_EXPR
             DESIGNATOR
-              PsiElement(identifier)('c')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('c')
             PsiWhiteSpace(' ')
             PsiElement(EQEQ)('==')
             PsiWhiteSpace(' ')
@@ -40,19 +48,25 @@ FILE
       PsiWhiteSpace('     ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          PsiElement(identifier)('variable')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('variable')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         EQUIV_EXPR
           DESIGNATOR
-            PsiElement(identifier)('a')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('a')
           PsiWhiteSpace(' ')
           PsiElement(.eqv.)('.eqv.')
           PsiWhiteSpace(' ')
           AND_EXPR
             DESIGNATOR
-              PsiElement(identifier)('b')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('b')
             PsiWhiteSpace(' ')
             PsiElement(.and.)('.and.')
             PsiWhiteSpace(' ')
@@ -61,7 +75,9 @@ FILE
               PsiWhiteSpace(' ')
               REL_EXPR
                 DESIGNATOR
-                  PsiElement(identifier)('c')
+                  DATA_PATH
+                    DATA_REFERENCE_ELEMENT
+                      PsiElement(identifier)('c')
                 PsiWhiteSpace(' ')
                 PsiElement(EQEQ)('==')
                 PsiWhiteSpace(' ')
@@ -71,7 +87,9 @@ FILE
       PsiWhiteSpace('     ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          PsiElement(identifier)('variable')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('variable')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -99,13 +117,14 @@ FILE
       PsiWhiteSpace('     ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          DATA_REF
-            PsiElement(identifier)('a')
-            PsiElement(()('(')
-            SECTION_SUBSCRIPT
-              SUBSCRIPT_TRIPLET
-                PsiElement(:)(':')
-            PsiElement())(')')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('a')
+              PsiElement(()('(')
+              SECTION_SUBSCRIPT
+                SUBSCRIPT_TRIPLET
+                  PsiElement(:)(':')
+              PsiElement())(')')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -115,20 +134,25 @@ FILE
       PsiWhiteSpace('     ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          PsiElement(identifier)('name_check')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('name_check')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         DESIGNATOR
           SUBSTRING
             PARENT_STRING
-              DATA_REF
-                PsiElement(identifier)('line')
-                PsiElement(()('(')
-                SECTION_SUBSCRIPT
-                  DESIGNATOR
-                    PsiElement(identifier)('i')
-                PsiElement())(')')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('line')
+                  PsiElement(()('(')
+                  SECTION_SUBSCRIPT
+                    DESIGNATOR
+                      DATA_PATH
+                        DATA_REFERENCE_ELEMENT
+                          PsiElement(identifier)('i')
+                  PsiElement())(')')
             PsiElement(()('(')
             SUBSTRING_RANGE
               CONSTANT
@@ -136,7 +160,9 @@ FILE
               PsiElement(:)(':')
               ADD_EXPR
                 DESIGNATOR
-                  PsiElement(identifier)('pos')
+                  DATA_PATH
+                    DATA_REFERENCE_ELEMENT
+                      PsiElement(identifier)('pos')
                 PsiElement(-)('-')
                 CONSTANT
                   PsiElement(integerliteral)('1')
@@ -145,7 +171,9 @@ FILE
       PsiWhiteSpace('     ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          PsiElement(identifier)('pressure')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('pressure')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -156,82 +184,100 @@ FILE
           PsiElement(+)('+')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_REF
-              PsiElement(identifier)('real')
-              PsiElement(()('(')
-              SECTION_SUBSCRIPT
-                DESIGNATOR
-                  DATA_REF
-                    PsiElement(identifier)('reshape')
-                    PsiElement(()('(')
-                    PsiWhiteSpace(' ')
-                    SECTION_SUBSCRIPT
-                      ARRAY_CONSTRUCTOR
-                        PsiElement((/)('(/')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('real')
+                PsiElement(()('(')
+                SECTION_SUBSCRIPT
+                  DESIGNATOR
+                    DATA_PATH
+                      DATA_REFERENCE_ELEMENT
+                        PsiElement(identifier)('reshape')
+                        PsiElement(()('(')
                         PsiWhiteSpace(' ')
-                        AC_SPEC
-                          AC_VALUE
-                            AC_IMPLIED_DO
-                              PsiElement(()('(')
+                        SECTION_SUBSCRIPT
+                          ARRAY_CONSTRUCTOR
+                            PsiElement((/)('(/')
+                            PsiWhiteSpace(' ')
+                            AC_SPEC
+                              AC_VALUE
+                                AC_IMPLIED_DO
+                                  PsiElement(()('(')
+                                  AC_VALUE
+                                    DESIGNATOR
+                                      DATA_PATH
+                                        DATA_REFERENCE_ELEMENT
+                                          PsiElement(identifier)('counter')
+                                  PsiElement(,)(',')
+                                  PsiWhiteSpace(' ')
+                                  DESIGNATOR
+                                    DATA_PATH
+                                      DATA_REFERENCE_ELEMENT
+                                        PsiElement(identifier)('counter')
+                                  PsiWhiteSpace(' ')
+                                  PsiElement(=)('=')
+                                  PsiWhiteSpace(' ')
+                                  CONSTANT
+                                    PsiElement(integerliteral)('1')
+                                  PsiElement(,)(',')
+                                  PsiWhiteSpace(' ')
+                                  MULT_EXPR
+                                    MULT_EXPR
+                                      DESIGNATOR
+                                        DATA_PATH
+                                          DATA_REFERENCE_ELEMENT
+                                            PsiElement(identifier)('numLats')
+                                      PsiWhiteSpace(' ')
+                                      PsiElement(*)('*')
+                                      PsiWhiteSpace(' ')
+                                      DESIGNATOR
+                                        DATA_PATH
+                                          DATA_REFERENCE_ELEMENT
+                                            PsiElement(identifier)('numLons')
+                                    PsiWhiteSpace(' ')
+                                    PsiElement(*)('*')
+                                    PsiWhiteSpace(' ')
+                                    DESIGNATOR
+                                      DATA_PATH
+                                        DATA_REFERENCE_ELEMENT
+                                          PsiElement(identifier)('numFrTimes')
+                                  PsiElement())(')')
+                            PsiWhiteSpace(' ')
+                            PsiElement(/))('/)')
+                        PsiElement(,)(',')
+                        PsiWhiteSpace('  ')
+                        PsiComment(line_continue)('&')
+                        PsiWhiteSpace('\n                                         ')
+                        SECTION_SUBSCRIPT
+                          ARRAY_CONSTRUCTOR
+                            PsiElement((/)('(/')
+                            PsiWhiteSpace(' ')
+                            AC_SPEC
                               AC_VALUE
                                 DESIGNATOR
-                                  PsiElement(identifier)('counter')
+                                  DATA_PATH
+                                    DATA_REFERENCE_ELEMENT
+                                      PsiElement(identifier)('numLons')
                               PsiElement(,)(',')
                               PsiWhiteSpace(' ')
-                              DESIGNATOR
-                                PsiElement(identifier)('counter')
-                              PsiWhiteSpace(' ')
-                              PsiElement(=)('=')
-                              PsiWhiteSpace(' ')
-                              CONSTANT
-                                PsiElement(integerliteral)('1')
-                              PsiElement(,)(',')
-                              PsiWhiteSpace(' ')
-                              MULT_EXPR
-                                MULT_EXPR
-                                  DESIGNATOR
-                                    PsiElement(identifier)('numLats')
-                                  PsiWhiteSpace(' ')
-                                  PsiElement(*)('*')
-                                  PsiWhiteSpace(' ')
-                                  DESIGNATOR
-                                    PsiElement(identifier)('numLons')
-                                PsiWhiteSpace(' ')
-                                PsiElement(*)('*')
-                                PsiWhiteSpace(' ')
+                              AC_VALUE
                                 DESIGNATOR
-                                  PsiElement(identifier)('numFrTimes')
-                              PsiElement())(')')
+                                  DATA_PATH
+                                    DATA_REFERENCE_ELEMENT
+                                      PsiElement(identifier)('numLats')
+                              PsiElement(,)(',')
+                              PsiWhiteSpace(' ')
+                              AC_VALUE
+                                DESIGNATOR
+                                  DATA_PATH
+                                    DATA_REFERENCE_ELEMENT
+                                      PsiElement(identifier)('numFrTimes')
+                            PsiWhiteSpace(' ')
+                            PsiElement(/))('/)')
                         PsiWhiteSpace(' ')
-                        PsiElement(/))('/)')
-                    PsiElement(,)(',')
-                    PsiWhiteSpace('  ')
-                    PsiComment(line_continue)('&')
-                    PsiWhiteSpace('\n                                         ')
-                    SECTION_SUBSCRIPT
-                      ARRAY_CONSTRUCTOR
-                        PsiElement((/)('(/')
-                        PsiWhiteSpace(' ')
-                        AC_SPEC
-                          AC_VALUE
-                            DESIGNATOR
-                              PsiElement(identifier)('numLons')
-                          PsiElement(,)(',')
-                          PsiWhiteSpace(' ')
-                          AC_VALUE
-                            DESIGNATOR
-                              PsiElement(identifier)('numLats')
-                          PsiElement(,)(',')
-                          PsiWhiteSpace(' ')
-                          AC_VALUE
-                            DESIGNATOR
-                              PsiElement(identifier)('numFrTimes')
-                        PsiWhiteSpace(' ')
-                        PsiElement(/))('/)')
-                    PsiWhiteSpace(' ')
-                    PsiElement())(')')
-              PsiWhiteSpace(' ')
-              PsiElement())(')')
+                        PsiElement())(')')
+                PsiWhiteSpace(' ')
+                PsiElement())(')')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(keyword)('end')

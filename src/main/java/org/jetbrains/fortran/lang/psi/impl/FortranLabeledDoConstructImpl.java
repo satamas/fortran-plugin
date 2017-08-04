@@ -34,21 +34,14 @@ public class FortranLabeledDoConstructImpl extends FortranExecutableConstructImp
 
     @Nullable
     @Override
-    public FortranDoTermActionStmt getDoTermActionStmt() {
-        return findChildByClass(FortranDoTermActionStmt.class);
+    public FortranStmt getDoTermActionStmt() {
+        return (getLastChild() instanceof FortranStmt) ? (FortranStmt)getLastChild() : null;
     }
 
     @Nullable
     @Override
     public FortranLabeledDoConstruct getLabeledDoTermConstract() {
-        int label = getLabelDoStmt().getLabel().gelLabelValue();
-
-        for (PsiElement cur = getFirstChild(); cur != null; cur = cur.getNextSibling()) {
-            if (FortranLabeledDoConstruct.class.isInstance(cur)
-                    && ((FortranLabeledDoConstruct)cur).getLabelDoStmt().getLabel().gelLabelValue() == label)
-                return (FortranLabeledDoConstruct)cur;
-        }
-        return null;
+        return (getLastChild() instanceof FortranLabeledDoConstruct) ? (FortranLabeledDoConstruct)getLastChild() : null;
     }
 
     @Nullable

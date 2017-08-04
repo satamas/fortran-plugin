@@ -62,7 +62,9 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         DESIGNATOR
-          PsiElement(identifier)('if')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('if')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         WRITE_STMT
@@ -77,17 +79,23 @@ FILE
           PsiWhiteSpace(' ')
           OUTPUT_ITEM
             DESIGNATOR
-              PsiElement(identifier)('end')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('end')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           OUTPUT_ITEM
             DESIGNATOR
-              PsiElement(identifier)('integer')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('integer')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           OUTPUT_ITEM
             DESIGNATOR
-              PsiElement(identifier)('write')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('write')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(keyword)('end')

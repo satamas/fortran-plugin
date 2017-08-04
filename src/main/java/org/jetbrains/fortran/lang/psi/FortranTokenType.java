@@ -3,6 +3,7 @@ package org.jetbrains.fortran.lang.psi;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.fortran.FortranLanguage;
+import org.jetbrains.fortran.lang.FortranTypes;
 
 import static com.intellij.psi.TokenType.WHITE_SPACE;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
@@ -34,5 +35,7 @@ public class FortranTokenType extends IElementType {
     public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT, CPP, LINE_CONTINUE);
 
     public static TokenSet STRINGS = TokenSet.create(STRINGLITERAL);
+
+    public static TokenSet WORD_OR_ILITERAL= TokenSet.create(WORD, FortranTypes.INTEGERLITERAL);
 
 }

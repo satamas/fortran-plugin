@@ -74,7 +74,9 @@ FILE
           KIND_SELECTOR
             PsiElement(()('(')
             DESIGNATOR
-              PsiElement(identifier)('dp')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('dp')
             PsiElement())(')')
         PsiElement(,)(',')
         ATTR_SPEC
@@ -138,16 +140,22 @@ FILE
         PsiElement(()('(')
         PARAMETERS_SPEC
           DESIGNATOR
-            PsiElement(identifier)('char_number')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('char_number')
         PsiElement(,)(',')
         PARAMETERS_SPEC
           DESIGNATOR
-            PsiElement(identifier)('format')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('format')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         OUTPUT_ITEM
           DESIGNATOR
-            PsiElement(identifier)('number')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('number')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       IF_STMT
@@ -155,12 +163,16 @@ FILE
         PsiElement(()('(')
         REL_EXPR
           DESIGNATOR
-            PsiElement(identifier)('level')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('level')
           PsiWhiteSpace(' ')
           PsiElement(LE)('<=')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            PsiElement(identifier)('verbose_level')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('verbose_level')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         WRITE_STMT
@@ -179,43 +191,53 @@ FILE
                 CONCAT_EXPR
                   CONCAT_EXPR
                     DESIGNATOR
-                      DATA_REF
-                        PsiElement(identifier)('trim')
-                        PsiElement(()('(')
-                        SECTION_SUBSCRIPT
-                          DESIGNATOR
-                            PsiElement(identifier)('text')
-                        PsiElement())(')')
+                      DATA_PATH
+                        DATA_REFERENCE_ELEMENT
+                          PsiElement(identifier)('trim')
+                          PsiElement(()('(')
+                          SECTION_SUBSCRIPT
+                            DESIGNATOR
+                              DATA_PATH
+                                DATA_REFERENCE_ELEMENT
+                                  PsiElement(identifier)('text')
+                          PsiElement())(')')
                     PsiElement(//)('//')
                     CONSTANT
                       PsiElement(stringliteral)('' '')
                   PsiElement(//)('//')
                   DESIGNATOR
-                    DATA_REF
-                      PsiElement(identifier)('trim')
-                      PsiElement(()('(')
-                      SECTION_SUBSCRIPT
-                        DESIGNATOR
-                          DATA_REF
-                            PsiElement(identifier)('adjustl')
-                            PsiElement(()('(')
-                            SECTION_SUBSCRIPT
-                              DESIGNATOR
-                                PsiElement(identifier)('char_number')
-                            PsiElement())(')')
-                      PsiElement())(')')
+                    DATA_PATH
+                      DATA_REFERENCE_ELEMENT
+                        PsiElement(identifier)('trim')
+                        PsiElement(()('(')
+                        SECTION_SUBSCRIPT
+                          DESIGNATOR
+                            DATA_PATH
+                              DATA_REFERENCE_ELEMENT
+                                PsiElement(identifier)('adjustl')
+                                PsiElement(()('(')
+                                SECTION_SUBSCRIPT
+                                  DESIGNATOR
+                                    DATA_PATH
+                                      DATA_REFERENCE_ELEMENT
+                                        PsiElement(identifier)('char_number')
+                                PsiElement())(')')
+                        PsiElement())(')')
                 PsiElement(//)('//')
                 CONSTANT
                   PsiElement(stringliteral)('' '')
               PsiElement(//)('//')
               DESIGNATOR
-                DATA_REF
-                  PsiElement(identifier)('trim')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    DESIGNATOR
-                      PsiElement(identifier)('units')
-                  PsiElement())(')')
+                DATA_PATH
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('trim')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      DESIGNATOR
+                        DATA_PATH
+                          DATA_REFERENCE_ELEMENT
+                            PsiElement(identifier)('units')
+                    PsiElement())(')')
       PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     END_SUBROUTINE_STMT

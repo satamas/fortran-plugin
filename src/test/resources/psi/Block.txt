@@ -12,8 +12,9 @@ FILE
     BLOCK
       BLOCK_CONSTRUCT
         BLOCK_STMT
-          PsiElement(identifier)('b1')
-          PsiElement(:)(':')
+          CONSTRUCT_LABEL_DECL
+            PsiElement(identifier)('b1')
+            PsiElement(:)(':')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('block')
         PsiElement(eol)('\n')
@@ -30,8 +31,9 @@ FILE
           PsiWhiteSpace('     ')
           CRITICAL_CONSTRUCT
             CRITICAL_STMT
-              PsiElement(identifier)('cr')
-              PsiElement(:)(':')
+              CONSTRUCT_LABEL_DECL
+                PsiElement(identifier)('cr')
+                PsiElement(:)(':')
               PsiWhiteSpace(' ')
               PsiElement(keyword)('critical')
             PsiWhiteSpace(' ')
@@ -41,7 +43,9 @@ FILE
             BLOCK
               ASSIGNMENT_STMT
                 DESIGNATOR
-                  PsiElement(identifier)('a')
+                  DATA_PATH
+                    DATA_REFERENCE_ELEMENT
+                      PsiElement(identifier)('a')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')
@@ -52,7 +56,8 @@ FILE
             END_CRITICAL_STMT
               PsiElement(keyword)('endcritical')
               PsiWhiteSpace(' ')
-              PsiElement(identifier)('cr')
+              CONSTRUCT_LABEL
+                PsiElement(identifier)('cr')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_BLOCK_STMT
@@ -62,8 +67,9 @@ FILE
       PsiWhiteSpace('  ')
       BLOCK_CONSTRUCT
         BLOCK_STMT
-          PsiElement(identifier)('b2')
-          PsiElement(:)(':')
+          CONSTRUCT_LABEL_DECL
+            PsiElement(identifier)('b2')
+            PsiElement(:)(':')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('block')
         PsiElement(eol)('\n')
@@ -71,8 +77,9 @@ FILE
         BLOCK
           ASSOCIATE_CONSTRUCT
             ASSOCIATE_STMT
-              PsiElement(identifier)('as')
-              PsiElement(:)(':')
+              CONSTRUCT_LABEL_DECL
+                PsiElement(identifier)('as')
+                PsiElement(:)(':')
               PsiWhiteSpace(' ')
               PsiElement(keyword)('associate')
               PsiWhiteSpace(' ')
@@ -101,7 +108,9 @@ FILE
             BLOCK
               ASSIGNMENT_STMT
                 DESIGNATOR
-                  PsiElement(identifier)('c')
+                  DATA_PATH
+                    DATA_REFERENCE_ELEMENT
+                      PsiElement(identifier)('c')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')

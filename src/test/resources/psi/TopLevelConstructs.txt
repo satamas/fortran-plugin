@@ -62,18 +62,24 @@ FILE
         BLOCK
           ASSIGNMENT_STMT
             DESIGNATOR
-              PsiElement(identifier)('x')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('x')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
             ADD_EXPR
               DESIGNATOR
-                PsiElement(identifier)('y')
+                DATA_PATH
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('y')
               PsiWhiteSpace(' ')
               PsiElement(+)('+')
               PsiWhiteSpace(' ')
               DESIGNATOR
-                PsiElement(identifier)('z')
+                DATA_PATH
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('z')
           PsiElement(eol)('\n')
         PsiWhiteSpace('   ')
         END_SUBROUTINE_STMT
@@ -111,35 +117,47 @@ FILE
     BLOCK
       ASSIGNMENT_STMT
         DESIGNATOR
-          PsiElement(identifier)('sum')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('sum')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         ADD_EXPR
           ADD_EXPR
             DESIGNATOR
-              PsiElement(identifier)('x')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('x')
             PsiWhiteSpace(' ')
             PsiElement(+)('+')
             PsiWhiteSpace(' ')
             DESIGNATOR
-              PsiElement(identifier)('y')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('y')
           PsiWhiteSpace(' ')
           PsiElement(+)('+')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            PsiElement(identifier)('z')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('z')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          PsiElement(identifier)('average')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('average')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         MULT_EXPR
           DESIGNATOR
-            PsiElement(identifier)('sum')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('sum')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
           CONSTANT
@@ -184,7 +202,9 @@ FILE
     BLOCK
       ASSIGNMENT_STMT
         DESIGNATOR
-          PsiElement(identifier)('zero')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('zero')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -217,18 +237,24 @@ FILE
     BLOCK
       ASSIGNMENT_STMT
         DESIGNATOR
-          PsiElement(identifier)('x')
+          DATA_PATH
+            DATA_REFERENCE_ELEMENT
+              PsiElement(identifier)('x')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         ADD_EXPR
           DESIGNATOR
-            PsiElement(identifier)('y')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('y')
           PsiWhiteSpace(' ')
           PsiElement(+)('+')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            PsiElement(identifier)('z')
+            DATA_PATH
+              DATA_REFERENCE_ELEMENT
+                PsiElement(identifier)('z')
       PsiElement(eol)('\n')
     END_SUBROUTINE_STMT
       PsiElement(keyword)('end')

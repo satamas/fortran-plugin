@@ -16,10 +16,14 @@ FILE
           PsiElement(()('(')
           ADD_EXPR
             DESIGNATOR
-              PsiElement(identifier)('a')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('a')
             PsiElement(+)('+')
             DESIGNATOR
-              PsiElement(identifier)('b')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('b')
           PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -41,7 +45,9 @@ FILE
         BLOCK
           ASSIGNMENT_STMT
             DESIGNATOR
-              PsiElement(identifier)('c')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('c')
             PsiElement(=)('=')
             CONSTANT
               PsiElement(integerliteral)('1')
@@ -62,7 +68,9 @@ FILE
         BLOCK
           ASSIGNMENT_STMT
             DESIGNATOR
-              PsiElement(identifier)('c')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('c')
             PsiElement(=)('=')
             CONSTANT
               PsiElement(integerliteral)('0')
@@ -85,7 +93,9 @@ FILE
         BLOCK
           ASSIGNMENT_STMT
             DESIGNATOR
-              PsiElement(identifier)('c')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('c')
             PsiElement(=)('=')
             CONSTANT
               PsiElement(integerliteral)('2')
@@ -115,7 +125,9 @@ FILE
         BLOCK
           ASSIGNMENT_STMT
             DESIGNATOR
-              PsiElement(identifier)('c')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('c')
             PsiElement(=)('=')
             CONSTANT
               PsiElement(integerliteral)('4')

@@ -1,10 +1,10 @@
 FILE
   MAIN_PROGRAM
     BLOCK
-      LABEL
-        PsiElement(integerliteral)('1')
-      PsiWhiteSpace(' ')
       FORMAT_STMT
+        NUMERICAL_LABEL_DECL
+          PsiElement(integerliteral)('1')
+        PsiWhiteSpace(' ')
         PsiElement(keyword)('FORMAT')
         PsiWhiteSpace(' ')
         PsiElement(()('(')
@@ -17,10 +17,10 @@ FILE
         PsiElement(dataedit)('I10')
         PsiElement())(')')
       PsiElement(eol)('\n')
-      LABEL
-        PsiElement(integerliteral)('2')
-      PsiWhiteSpace(' ')
       FORMAT_STMT
+        NUMERICAL_LABEL_DECL
+          PsiElement(integerliteral)('2')
+        PsiWhiteSpace(' ')
         PsiElement(keyword)('FORMAT')
         PsiWhiteSpace(' ')
         PsiElement(()('(')

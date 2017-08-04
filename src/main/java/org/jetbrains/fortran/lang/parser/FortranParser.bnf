@@ -57,7 +57,6 @@
     POINTER_ASSMNT = '=>'
 
     // for the external rule
-    LABEL = 'LABEL'
     LABELED_DO_CONSTRUCT = 'LABELED_DO_CONSTRUCT'
     LABEL_DO_STMT = 'LABEL_DO_STMT'
     DO_TERM_ACTION_STMT = 'DO_TERM_ACTION_STMT'
@@ -254,8 +253,8 @@ program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data
   recoverWhile = program_unit_recover
 }
 private program_unit_recover ::= !(eol | end_unit_keys)
-private end_unit_keys ::= !assignment_stmt (end_ | endprogram_ | endmodule_
-                        | endfunction_ | endsubroutine_ | endsubmodule_)
+private end_unit_keys ::= !assignment_stmt (numerical_label_decl? (end_ | endprogram_ | endmodule_
+                        | endfunction_ | endsubroutine_ | endsubmodule_))
 // R203
 private external_subprogram ::= function_subprogram | subroutine_subprogram
 // R204 - 206 are included into execution_part_construct to be in block
@@ -267,20 +266,20 @@ private declaration_stmt ::= entry_stmt | format_stmt | parameter_stmt | procedu
                         | other_specification_stmt | type_declaration_stmt | stmt_function_stmt
 // R208 is in R801
 // R209
-private execution_part_construct ::= !(label? end_block_keys) ( action_stmt | labeled_do_construct | executable_construct
+private execution_part_construct ::= !(end_block_keys) ( action_stmt | labeled_do_construct | executable_construct
                                      | use_stmt | include_stmt | import_stmt | implicit_stmt | declaration_construct
                                      | declaration_stmt | type_stmt) {
   pin=1
   recoverWhile=block_recover
 }
-private block_recover ::= !(eol | end_block_keys) // recover doesn't eat what it is not necessary to eat
-private end_block_keys ::= !assignment_stmt (end_ | endblock_ | endcritical_ | enddo_ | endfunction_ | endif_ | endmodule_ | endprocedure_
-                         | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_ | endwhere_
-                         | endforall_ | elsewhere_)
+private block_recover ::= !(eol | end_block_keys)
+private end_block_keys ::= !assignment_stmt ( numerical_label_decl? ( end_ | endblock_ | endcritical_ | enddo_ | endfunction_ | endif_ | endmodule_ | endprocedure_
+                         | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_stmt | endwhere_
+                         | endforall_ | elsewhere_))
 // R210
 internal_subprogram_part ::= contains_stmt eol+ (eol | internal_subprogram)* { pin = 1 }
 // R211
-private internal_subprogram ::= !(label? (end_unit_keys | endprocedure_)) (function_subprogram | subroutine_subprogram) {
+private internal_subprogram ::= !(numerical_label_decl? (end_unit_keys | endprocedure_)) (function_subprogram | subroutine_subprogram) {
   pin = 1
   recoverWhile=internal_subprogram_recover
 }
@@ -292,11 +291,10 @@ private other_specification_stmt ::=  access_stmt |  allocatable_stmt |  asynchr
                            |  external_stmt     |  intent_stmt      |  intrinsic_stmt
                            |  namelist_stmt     |  optional_stmt    |  pointer_stmt
                            |  protected_stmt    |  save_stmt        |  target_stmt
-                           |  volatile_stmt     |  value_stmt
-                           |  contiguous_stmt
+                           |  volatile_stmt     |  value_stmt       |  contiguous_stmt
 // R213
 executable_construct ::= associate_construct | block_construct       | case_construct
-                       | critical_construct  | do_construct          | forall_construct
+                       | critical_construct  | nonlabel_do_construct | forall_construct
                        | if_construct        | select_type_construct | where_construct
 // R214
 private action_stmt ::= assignment_stmt | pointer_assignment_stmt   | allocate_stmt   | backspace_stmt
@@ -324,8 +322,22 @@ private action_stmt ::= assignment_stmt | pointer_assignment_stmt   | allocate_s
 // R306, R307, R308 are trivial
 // R309, R310, R311 are excess
 // R312
-external label ::= parseLabel
-
+numerical_label_decl ::= integerliteral {
+    implements=['org.jetbrains.fortran.lang.psi.ext.FortranNamedElement']
+    mixin='org.jetbrains.fortran.lang.psi.impl.FortranNumericalLabelDeclImplMixin'
+}
+numerical_label ::= integerliteral {
+    implements=['org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement']
+    mixin='org.jetbrains.fortran.lang.psi.impl.FortranNumericalLabelImplMixin'
+}
+construct_label_decl ::= fidentifier  ':' {
+    implements=['org.jetbrains.fortran.lang.psi.ext.FortranNamedElement']
+    mixin='org.jetbrains.fortran.lang.psi.impl.FortranConstructLabelDeclImplMixin'
+}
+construct_label ::= fidentifier {
+    implements=['org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement']
+    mixin='org.jetbrains.fortran.lang.psi.impl.FortranConstructLabelImplMixin'
+}
 // Clause 4
 // R401
 private type_param_value ::= '*' | ':' | expr
@@ -365,16 +377,16 @@ char_length ::= ('(' type_param_value ')') | integerliteral
 derived_type_def ::= derived_type_stmt eol+ (type_param_def_stmt eol+)* (private_or_sequence eol+)* component_part
                      type_bound_procedure_part? end_type_stmt { pin = 1; extends = declaration_construct }
 // R426
-derived_type_stmt ::= label? type_ ((',' <<list type_attr_spec>>)? '::')? fidentifier ('(' <<list fidentifier>> ')')?  { pin = 4 }
+derived_type_stmt ::= numerical_label_decl? type_ ((',' <<list type_attr_spec>>)? '::')? fidentifier ('(' <<list fidentifier>> ')')?  { pin = 4 }
 // R427
 type_attr_spec ::= abstract_ | access_spec | (bind_ '(' fidentifier ')') | (extends_ '(' fidentifier ')')
 // R428
-private private_or_sequence ::= label? (private_ | sequence_)  { pin = 2 }
+private private_or_sequence ::= numerical_label_decl? (private_ | sequence_)  { pin = 2 }
 // R429
-end_type_stmt ::= label? ((end_ type_) | endtype_) fidentifier? { pin = 2 }
+end_type_stmt ::= numerical_label_decl? ((end_ type_) | endtype_) fidentifier? { pin = 2 }
 // R430 is trivial
 // R431
-type_param_def_stmt ::= integer_ (kind_selector)? ',' type_param_attr_spec '::' <<list type_param_decl>>
+type_param_def_stmt ::= numerical_label_decl? integer_ (kind_selector)? ',' type_param_attr_spec '::' <<list type_param_decl>>
 // R432
 type_param_decl ::= fidentifier ('=' expr)?
 // R433
@@ -382,13 +394,13 @@ type_param_attr_spec ::= kind_ | len_
 // R434
 component_part ::= (component_def_stmt eol+)*
 // R435
-component_def_stmt ::= !(label? (type_end_keys | contains_)) label? (data_component_def_stmt | proc_component_def_stmt) {
+component_def_stmt ::= !(numerical_label_decl? (type_end_keys | contains_)) numerical_label_decl? (data_component_def_stmt | proc_component_def_stmt) {
  pin = 1
  recoverWhile = component_def_stmt_recover
 }
 private component_def_stmt_recover ::= !(eol | type_end_keys | contains_)
 // R436
-data_component_def_stmt ::= declaration_type_spec ((',' <<list component_attr_spec>>)? '::')? <<list component_decl>>
+data_component_def_stmt ::= numerical_label_decl? declaration_type_spec ((',' <<list component_attr_spec>>)? '::')? <<list component_decl>>
 // R437
 component_attr_spec ::= access_spec | allocatable_ | (codimension_ '[' coarray_spec ']')
                        | contiguous_ | (dimension_ '(' component_array_spec ')') | pointer_
@@ -406,26 +418,26 @@ proc_component_attr_spec ::= pointer_ | (pass_ ('(' fidentifier ')')?) | nopass_
 // R445
 type_bound_procedure_part ::= contains_stmt eol+ (private_stmt eol+)? (type_bound_proc_binding eol+)* { pin = 1 }
 // R446
-private_stmt ::= label? private_ { pin = 2 }
+private_stmt ::= numerical_label_decl? private_ { pin = 2 }
 // R447
-private type_bound_proc_binding ::= !(label? type_end_keys) (type_bound_procedure_stmt | type_bound_generic_stmt | final_procedure_stmt) {
+private type_bound_proc_binding ::= !(numerical_label_decl? type_end_keys) (type_bound_procedure_stmt | type_bound_generic_stmt | final_procedure_stmt) {
  pin = 1
  recoverWhile = type_proc_recover
 }
 private type_proc_recover ::= !(eol | type_end_keys)
-private type_end_keys ::= !assignment_stmt (end_ | endtype_)
+private type_end_keys ::= !assignment_stmt numerical_label_decl? (end_ | endtype_)
 // R448
-type_bound_procedure_stmt ::= procedure_ (type_bound_procedure_stmt_part1 | type_bound_procedure_stmt_part2 ) { pin = 1 }
+type_bound_procedure_stmt ::= numerical_label_decl? procedure_ (type_bound_procedure_stmt_part1 | type_bound_procedure_stmt_part2 ) { pin = 2 }
 private type_bound_procedure_stmt_part1 ::= '(' fidentifier ')' ',' <<list binding_attr>> '::' <<list fidentifier>> { pin = 1 }
 private type_bound_procedure_stmt_part2 ::= ((',' <<list binding_attr>>)? '::')? <<list type_bound_proc_decl>>
 // R449
 type_bound_proc_decl ::= fidentifier ('=>' fidentifier)?
 // R450
-type_bound_generic_stmt ::= generic_ (',' access_spec)? '::' generic_spec '=>' <<list fidentifier>> { pin = 1}
+type_bound_generic_stmt ::= numerical_label_decl? generic_ (',' access_spec)? '::' generic_spec '=>' <<list fidentifier>> { pin = 2}
 // R451
 binding_attr ::= (pass_ ('(' fidentifier ')')?) | nopass_ | nonoverridable_ | deferred_ | access_spec
 // R452
-final_procedure_stmt ::= final_ '::' <<list fidentifier>> { pin = 1 }
+final_procedure_stmt ::= numerical_label_decl? final_ '::' <<list fidentifier>> { pin = 2 }
 // R453
 derived_type_spec ::= fidentifier ('(' <<list type_param_spec>> ')')? { pin = 1 }
 // R454
@@ -436,21 +448,21 @@ component_spec ::= (fidentifier '=')? component_data_source
 // R457
 component_data_source ::= expr /*| variable*/ | proc_target
 // R458
-enum_def ::= enum_def_stmt (label? (eol | enumerator_def_stmt))* end_enum_stmt { pin = 1; extends = declaration_construct }
+enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)* end_enum_stmt { pin = 1; extends = declaration_construct }
 // R459
-enum_def_stmt ::= label? enum_ ',' bind_ '(' fidentifier ')' { pin = 4 }
+enum_def_stmt ::= numerical_label_decl? enum_ ',' bind_ '(' fidentifier ')' { pin = 4 }
 // R460
-enumerator_def_stmt ::=  enumerator_ ('::')? <<list enumerator>> {
-  pin = 1;
+enumerator_def_stmt ::=  numerical_label_decl? enumerator_ ('::')? <<list enumerator>> {
+  pin = 2;
   recoverWhile = enum_recover
 }
-private end_enum_keys ::= !assignment_stmt ((end_ enum_) | endenum_)
+private end_enum_keys ::= !assignment_stmt end_enum_stmt
 private enum_recover ::= !(eol | end_enum_keys)
 
 // R461
 enumerator ::= fidentifier ('=' expr)?
 // R462
-end_enum_stmt ::= label? ((end_ enum_) | endenum_) { pin = 2 }
+end_enum_stmt ::= numerical_label_decl? ((end_ enum_) | endenum_) { pin = 2 }
 // R463
 boz_literal ::= binaryliteral | octalliteral | hexliteral
 // R464 - R467 are implemented in lexer
@@ -466,7 +478,7 @@ ac_implied_do ::= '('<<list ac_value>> ',' id_loop_stmt ')'
 
 // Clause 5
 // R501
-type_declaration_stmt ::= declaration_type_spec ((',' attr_spec)* '::')? <<list (entity_decl)>> {pin=1}
+type_declaration_stmt ::= numerical_label_decl? declaration_type_spec ((',' attr_spec)* '::')? <<list (entity_decl)>> {pin=2}
 // R502
 attr_spec ::= access_spec | allocatable_ | asynchronous_ | (codimension_ '[' coarray_spec ']')
              | contiguous_ | (dimension_ '(' array_spec ')') | external_
@@ -507,27 +519,27 @@ implied_shape_spec ::= (expr ':')? '*'
 // R523
 private intent_spec ::= in_ | out_ | inout_
 // R524
-access_stmt ::= access_spec (('::')? <<list access_id>>)?
+access_stmt ::= numerical_label_decl? access_spec (('::')? <<list access_id>>)? { pin = 2 }
 // R525
 access_id ::= fidentifier | generic_spec // generic_spec includes identifier
 // R526
-allocatable_stmt ::= allocatable_ ('::')? <<list allocatable_decl>> { pin = 1 }
+allocatable_stmt ::= numerical_label_decl? allocatable_ ('::')? <<list allocatable_decl>> { pin = 2 }
 // R527
 allocatable_decl ::= fidentifier ('(' array_spec ')')? ('[' coarray_spec ']')?
 // R528
-asynchronous_stmt ::= asynchronous_ ('::')? <<list fidentifier>> { pin = 1 }
+asynchronous_stmt ::= numerical_label_decl? asynchronous_ ('::')? <<list fidentifier>> { pin = 2 }
 // R529
-bind_stmt ::= language_binding_spec ('::')? <<list bind_entity>>
+bind_stmt ::= numerical_label_decl? language_binding_spec ('::')? <<list bind_entity>>
 // R530
 bind_entity ::= fidentifier | ('/' fidentifier '/')
 // R531
-codimension_stmt ::= codimension_  ('::')? <<list codimension_decl>> { pin = 1 }
+codimension_stmt ::= numerical_label_decl? codimension_  ('::')? <<list codimension_decl>> { pin = 2 }
 // R532
 codimension_decl ::= fidentifier '[' coarray_spec ']'
 // R533 unused in standard but works
-contiguous_stmt ::= contiguous_ ('::')? <<list fidentifier>> { pin = 1 }
+contiguous_stmt ::= numerical_label_decl? contiguous_ ('::')? <<list fidentifier>> { pin = 2 }
 // R534
-data_stmt ::= data_ <<list data_stmt_set>>
+data_stmt ::= numerical_label_decl? data_ <<list data_stmt_set>> { pin=2 }
 // R535
 data_stmt_set ::= <<list data_stmt_object>> '/' <<list data_stmt_value>> '/'
 // R536
@@ -535,7 +547,7 @@ data_stmt_object ::= variable | data_implied_do
 // R537
 data_implied_do ::= '(' <<list data_i_do_object>> ',' fidentifier '=' expr ',' expr (',' expr)?  ')'
 // R538
-data_i_do_object ::= (data_ref | data_implied_do) !'=' { pin= 2 }
+data_i_do_object ::= (data_path | data_implied_do) !'=' { pin= 2 }
 // R539 is trivial
 // R540
 data_stmt_value ::= (data_stmt_repeat '*')? data_stmt_constant
@@ -546,39 +558,39 @@ data_stmt_constant ::= designator | constant | signed_int_literal | signed_real_
                      | function_reference | structure_constructor
 // R543 - 544 are trivial
 // R545
-dimension_stmt ::= dimension_ ('::')? fidentifier '(' array_spec ')' (',' fidentifier '(' array_spec ')')* { pin = 1 }
+dimension_stmt ::= numerical_label_decl? dimension_ ('::')? fidentifier '(' array_spec ')' (',' fidentifier '(' array_spec ')')* { pin = 2 }
 // R546
-intent_stmt ::= intent_ '(' intent_spec ')' ('::')? <<list fidentifier>> { pin = 1 }
+intent_stmt ::= numerical_label_decl? intent_ '(' intent_spec ')' ('::')? <<list fidentifier>> { pin = 2 }
 // R547
-optional_stmt ::= optional_ ('::')? <<list fidentifier>> { pin = 1 }
+optional_stmt ::= numerical_label_decl? optional_ ('::')? <<list fidentifier>> { pin = 2 }
 // R548
 parameter_stmt ::= standard_parameter_stmt | nonstandard_parameter_stmt
-private standard_parameter_stmt ::= parameter_ '(' <<list named_constant_def>> ')' {pin = 3}
-private nonstandard_parameter_stmt ::= parameter_  <<list named_constant_def>>  {pin = 2}
+private standard_parameter_stmt ::= numerical_label_decl? parameter_ '(' <<list named_constant_def>> ')' {pin = 4}
+private nonstandard_parameter_stmt ::= numerical_label_decl? parameter_  <<list named_constant_def>>  {pin = 3}
 
 // R549
 named_constant_def ::= fidentifier '=' expr
 // R550
-pointer_stmt ::= pointer_ ('::')? <<list pointer_decl>> { pin = 1 }
+pointer_stmt ::= numerical_label_decl? pointer_ ('::')? <<list pointer_decl>> { pin = 2 }
 // R551
 pointer_decl ::= fidentifier ('(' <<list deferred_shape_spec>> ')')?
 // R552
-protected_stmt ::= protected_ ('::')? <<list fidentifier>> { pin = 1 }
+protected_stmt ::= numerical_label_decl? protected_ ('::')? <<list fidentifier>> { pin = 2 }
 // R553
-save_stmt ::= save_ (('::')? <<list saved_entity>>)? { pin = 1 }
+save_stmt ::= numerical_label_decl? save_ (('::')? <<list saved_entity>>)? { pin = 2 }
 // R554
 saved_entity ::= fidentifier | ('/' fidentifier '/')
 // R555 is trivial
 // R556
-target_stmt ::= target_ ('::')? <<list target_decl>> { pin = 1 }
+target_stmt ::= numerical_label_decl? target_ ('::')? <<list target_decl>> { pin = 2 }
 // R557
 target_decl ::= fidentifier ('(' array_spec ')')? ('[' coarray_spec ']')?
 // R558
-value_stmt ::= value_ ('::')? <<list fidentifier>> { pin = 1 }
+value_stmt ::= numerical_label_decl? value_ ('::')? <<list fidentifier>> { pin = 2 }
 // R559
-volatile_stmt ::= volatile_ ('::')? <<list fidentifier>> { pin = 1 }
+volatile_stmt ::= numerical_label_decl? volatile_ ('::')? <<list fidentifier>> { pin = 2 }
 // R560
-implicit_stmt ::= implicit_ (<<list implicit_spec>> | none_) { pin = 2 }
+implicit_stmt ::= numerical_label_decl? implicit_ (<<list implicit_spec>> | none_) { pin = 3 }
 // R561
 implicit_spec ::= ((integer_ | real_ | complex_ | logical_ | character_ | (double_ precision_) | doubleprecision_ | byte_) '(' <<list letter_spec>> ')')
                  | (declaration_type_spec '(' <<list letter_spec>> ')')
@@ -586,16 +598,16 @@ implicit_spec ::= ((integer_ | real_ | complex_ | logical_ | character_ | (doubl
 // R562
 letter_spec ::= fidentifier ('-' fidentifier)? { pin = 1 }
 // R563
-namelist_stmt ::= namelist_ '/' fidentifier '/' <<list fidentifier>> ((',')? '/' fidentifier '/' <<list fidentifier>>)* { pin = 1 }
+namelist_stmt ::= numerical_label_decl? namelist_ '/' fidentifier '/' <<list fidentifier>> ((',')? '/' fidentifier '/' <<list fidentifier>>)* { pin = 2 }
 // R564 is trivial
 // R565
-equivalence_stmt ::= equivalence_ <<list equivalence_set>> { pin = 2 }
+equivalence_stmt ::= numerical_label_decl? equivalence_ <<list equivalence_set>> { pin = 3 }
 // R566
 equivalence_set ::= '(' equivalence_object ',' <<list equivalence_object>> ')'
 // R567
-equivalence_object ::= (fidentifier !('%' | '(' | '[')) | substring | data_ref
+equivalence_object ::= substring | data_path
 // R568
-common_stmt ::= common_ (('/' fidentifier? '/') | '//')? <<list common_block_object>> ((',')? (('/' fidentifier? '/') | '//') <<list common_block_object>>)* { pin = 1 }
+common_stmt ::= numerical_label_decl? common_ (('/' fidentifier? '/') | '//')? <<list common_block_object>> ((',')? (('/' fidentifier? '/') | '//') <<list common_block_object>>)* { pin = 2 }
 // R569
 common_block_object ::= fidentifier ('(' array_spec ')')?
 
@@ -607,13 +619,13 @@ private variable ::= designator //| expr
 // R608
 substring ::= parent_string '(' substring_range ')'
 // R609
-parent_string ::= (fidentifier !('%' | '(' | '[')) | data_ref | string_literal
+parent_string ::= data_path | string_literal
 // R610
 substring_range ::= (expr)? ':' (expr)?
 // R611
-data_ref ::= part_ref ('%' part_ref)*
+data_path ::= data_reference_element ('%' data_reference_element)*
 // R612
-private part_ref ::= fidentifier ('(' <<list section_subscript>>? ')')? (image_selector)?
+data_reference_element ::= fidentifier ('(' <<list section_subscript>>? ')')? (image_selector)?
 // R613 - 614 are trivial
 // R615 - 618 are excrescent
 // R619 is trivial
@@ -626,13 +638,13 @@ subscript_triplet ::= (expr)? ':' (expr)? (':' expr)?
 image_selector ::= '[' <<list expr>> ']'  { pin = 1 }
 // R625
 // R626
-allocate_stmt ::= allocate_ '(' (type_spec '::')? <<list allocation>> (',' <<list parameters_spec>>)? ')' { pin = 4 }
+allocate_stmt ::= numerical_label_decl? allocate_ '(' (type_spec '::')? <<list allocation>> (',' <<list parameters_spec>>)? ')' { pin = 2 }
 // R627 is not for parser
 // R628 - 630 are trivial
 // R631
 allocation ::= allocate_object ('(' <<list allocate_shape_spec>> ')')? ('[' allocate_coarray_spec ']')?
 // R632
-private allocate_object ::= ((fidentifier !('%' | '(' | '[')) | data_ref) !'='
+private allocate_object ::= (data_path) !'='
 // R633
 allocate_shape_spec ::= (expr ':')? expr
 // R634 - 635 are trivial
@@ -641,11 +653,11 @@ allocate_coarray_spec ::= ( <<list allocate_coshape_spec>> ',' )? (expr ':')? '*
 // R637
 allocate_coshape_spec ::= (expr ':')? expr
 // R638
-nullify_stmt ::= nullify_ '(' <<list pointer_object>> ')' { pin = 3 }
+nullify_stmt ::= numerical_label_decl? nullify_ '(' <<list pointer_object>> ')' { pin = 2 }
 // R639
-pointer_object ::= (fidentifier !('%' | '(' | '[')) | data_ref
+pointer_object ::= data_path
 // R640
-deallocate_stmt ::= deallocate_ '(' <<list allocate_object>> (',' <<list parameters_spec>>)? ')' { pin = 3 }
+deallocate_stmt ::= numerical_label_decl? deallocate_ '(' <<list allocate_object>> (',' <<list parameters_spec>>)? ')' { pin = 2 }
 // R641 is not for parser
 
 // Clause 7
@@ -689,7 +701,7 @@ structure_constructor ::= (fidentifier '(' <<list component_spec>> ')' !'(')
 // R468
 array_constructor ::= ('(/' ac_spec '/)') | ('[' ac_spec ']') { extends=expr }
 // R601
-designator ::= (fidentifier !('%' | '(' | '[')) | (data_ref !"(") | substring /*| function_reference /*| array_section  | complex_part_designator */ { extends=expr }
+designator ::= (data_path !"(") | substring { extends=expr }
 // R304, R305 modified
 constant ::= floatingpointliteral | doubleprecisionliteral | integerliteral | complex_literal
             | logical_literal | string_literal | boz_literal { extends=expr }
@@ -698,12 +710,12 @@ logical_literal ::= truekwd | falsekwd
 // R724 - 731 are trivial
 
 // R732
-assignment_stmt ::=  designator '=' expr {pin = 2 } // it was a variable here in the standard but we don't want to match an expression
+assignment_stmt ::=  numerical_label_decl? designator '=' expr {pin = 3 } // it was a variable here in the standard but we don't want to match an expression
 // R733
 pointer_assignment_stmt ::= pointer_a_with_data_pointer | pointer_a_with_proc_pointer
-private pointer_a_with_data_pointer ::= data_pointer_object (('(' <<list bounds_remapping>> ')')
-                                | ('(' <<list bounds_spec>>')')?) '=>' variable { pin = 3 }
-private pointer_a_with_proc_pointer ::= proc_pointer_object '=>' proc_target { pin = 2 }
+private pointer_a_with_data_pointer ::= numerical_label_decl? data_pointer_object (('(' <<list bounds_remapping>> ')')
+                                | ('(' <<list bounds_spec>>')')?) '=>' variable { pin = 4 }
+private pointer_a_with_proc_pointer ::= numerical_label_decl? proc_pointer_object '=>' proc_target { pin = 3 }
 // R734
 data_pointer_object ::= (fidentifier !("%" | "(")) | (variable /*'%' fidentifier*/)
 // R735
@@ -716,24 +728,24 @@ proc_pointer_object ::= (fidentifier !("%" | "(")) | (variable/* '%' fidentifier
 // R740
 proc_target ::= expr | (variable '%' fidentifier) | fidentifier // last two options may be parsed as expr. Need to check later
 // R741
-where_stmt ::= where_ '(' expr ')' assignment_stmt { pin = 5}
+where_stmt ::= numerical_label_decl? where_ '(' expr ')' assignment_stmt { pin = 6}
 // R742
 where_construct ::= where_construct_stmt eol+ block (masked_elsewhere_stmt eol+ block)*
                     (elsewhere_stmt eol+ block)? end_where_stmt { pin = 1; extends=executable_construct }
 // R743
-where_construct_stmt ::= (fidentifier ':')? where_ '(' expr ')'
+where_construct_stmt ::= numerical_label_decl? construct_label_decl? where_ '(' expr ')'
 // R744
 // R745, R746 are trivial
 // R747
-masked_elsewhere_stmt ::= label? ((else_ where_) | elsewhere_) '(' expr ')' fidentifier? { pin = 3 }
+masked_elsewhere_stmt ::= numerical_label_decl? ((else_ where_) | elsewhere_) '(' expr ')' construct_label? { pin = 3 }
 // R748
-elsewhere_stmt ::= label? ((else_ where_) | elsewhere_) fidentifier? { pin = 3 }
+elsewhere_stmt ::= numerical_label_decl? ((else_ where_) | elsewhere_) construct_label? { pin = 3 }
 // R749
-end_where_stmt ::= label? ((end_ where_) | endwhere_) fidentifier? { pin = 2 }
+end_where_stmt ::= numerical_label_decl? ((end_ where_) | endwhere_) construct_label? { pin = 2 }
 // R750
 forall_construct ::= forall_construct_stmt eol+ block end_forall_stmt { pin = 1; extends=executable_construct }
 // R751
-forall_construct_stmt ::= (fidentifier ':')? forall_ forall_header
+forall_construct_stmt ::= numerical_label_decl? construct_label_decl? forall_ forall_header
 // R752
 forall_header ::= '(' (type_spec '::')? <<list forall_triplet_spec>> (',' expr)? ')' {pin=1}
 // R753 + 754 + 755
@@ -742,46 +754,45 @@ forall_triplet_spec ::= fidentifier '=' expr ':' expr (':' expr)? {pin=2}
 // R757
 private forall_assignment_stmt ::= assignment_stmt | pointer_assignment_stmt
 // R758
-end_forall_stmt ::= label? ((end_ forall_) | endforall_) fidentifier? { pin = 2 }
+end_forall_stmt ::= numerical_label_decl? ((end_ forall_) | endforall_) construct_label? { pin = 2 }
 // R759
-forall_stmt ::= forall_ forall_header forall_assignment_stmt { pin = 3 }
+forall_stmt ::= numerical_label_decl? forall_ forall_header forall_assignment_stmt { pin = 4 }
 
 
 // Clause 8
 // R801 + R208 we parse statements in any order while the standard has some restrictions. We'll check them in code revisions
-block ::= (label? (eol | execution_part_construct))*
+block ::= (eol | execution_part_construct)*
 // R802
 associate_construct ::= associate_stmt eol+ block end_associate_stmt { pin = 1; extends=executable_construct }
 // R803
-associate_stmt ::= (fidentifier ':')? associate_ <<list association>> { pin = 2 }
+associate_stmt ::= numerical_label_decl? construct_label_decl? associate_ <<list association>> { pin = 3 }
 // R804
 association ::= fidentifier '=>' selector { pin = 2 }
 // R805
 private selector ::= expr | variable
 // R806
-end_associate_stmt ::= label? ((end_ associate_) | endassociate_) (fidentifier)? { pin = 2 }
+end_associate_stmt ::= numerical_label_decl? ((end_ associate_) | endassociate_) construct_label? { pin = 2 }
 // R807
 block_construct ::= block_stmt eol+ block end_block_stmt { pin = 1; extends=executable_construct }
 // R808
-block_stmt ::= (fidentifier ':')? block_
+block_stmt ::= numerical_label_decl? construct_label_decl? block_
 // R809
-end_block_stmt ::= label? ((end_ block_) | endblock_) (fidentifier)? {pin = 2 }
+end_block_stmt ::= numerical_label_decl? ((end_ block_) | endblock_) construct_label? {pin = 2 }
 // R810
 critical_construct ::= critical_stmt eol+ block end_critical_stmt { pin = 1; extends=executable_construct }
 // R811
-critical_stmt ::= (fidentifier ':')? critical_ { pin = 2 }
+critical_stmt ::= numerical_label_decl? construct_label_decl? critical_ { pin = 3 }
 // R812
-end_critical_stmt ::= label? ((end_ critical_) | endcritical_) (fidentifier)? { pin = 2 }
+end_critical_stmt ::= numerical_label_decl? ((end_ critical_) | endcritical_) construct_label { pin = 2 }
 // R813 simplified compared to standard
 external labeled_do_construct ::= parseLabeledDoConstruct
-private do_construct ::=/* labeled_do_construct |*/ nonlabel_do_construct
 // R814
 nonlabel_do_construct ::= nonlabel_do_stmt eol+ block end_do { pin = 1; extends=executable_construct}
 // R815 unused
 // R816
 //label_do_stmt ::= (identifier ':')? do label loop_control? { pin = 3 }
 // R817
-nonlabel_do_stmt ::= (fidentifier ':')? do_ loop_control? { pin = 2 }
+nonlabel_do_stmt ::= numerical_label_decl? construct_label_decl? do_ loop_control? { pin = 3 }
 // R818
 loop_control ::= while_loop_stmt | concurrent_loop_stmt | id_loop_stmt
 private id_loop_stmt ::= variable '=' expr ',' expr (',' expr)? {pin=1}
@@ -791,30 +802,30 @@ private concurrent_loop_stmt ::= concurrent_ forall_header {pin = 1}
 // R821
 private end_do ::= end_do_stmt //| continue at the end of a loop is f77 specific feature
 // R822
-end_do_stmt ::= label? (end_ do_ | enddo_) fidentifier? { pin = 2}
+end_do_stmt ::= numerical_label_decl? (end_ do_ | enddo_) construct_label? { pin = 2}
 // R823 - 830 are parsed manually
 // R831
-cycle_stmt ::= cycle_ (fidentifier)? { pin = 1 }
+cycle_stmt ::= numerical_label_decl? cycle_ (fidentifier)? { pin = 2 }
 // R832
 if_construct ::= if_then_stmt eol+ block (else_if_stmt eol+ block)* (else_stmt eol+ block)? end_if_stmt { pin = 1; extends=executable_construct }
 // R833
-if_then_stmt ::= (fidentifier ':')? if_ '(' expr ')' then_ { pin = 2 }
+if_then_stmt ::= numerical_label_decl? construct_label_decl? if_ '(' expr ')' then_ { pin = 3 }
 // R834
-else_if_stmt ::= label? ((else_ if_)|elseif_) '(' expr ')' then_ fidentifier? { pin = 2 }
+else_if_stmt ::= numerical_label_decl? ((else_ if_)|elseif_) '(' expr ')' then_ construct_label? { pin = 2 }
 // R835
-else_stmt ::= label? else_ fidentifier? { pin = 2 }
+else_stmt ::= numerical_label_decl? else_ construct_label? { pin = 2 }
 // R836
-end_if_stmt ::= label? ((end_ if_)|endif_) fidentifier? { pin = 2 }
+end_if_stmt ::= numerical_label_decl? ((end_ if_)|endif_) construct_label? { pin = 2 }
 // R837
-if_stmt ::= if_ '(' expr ')' action_stmt {pin=5}
+if_stmt ::= numerical_label_decl? if_ '(' expr ')' action_stmt {pin=6}
 // R838
 case_construct ::= select_case_stmt eol+ (case_stmt eol+ block)* end_select_stmt { pin = 1; extends=executable_construct }
 // R839
-select_case_stmt ::= (fidentifier ':')? select_ case_ '(' expr ')' { pin = 3 }
+select_case_stmt ::= numerical_label_decl? construct_label_decl? select_ case_ '(' expr ')' { pin = 4 }
 // R840
-case_stmt ::= label? case_ case_selector (fidentifier)? { pin = 2 }
+case_stmt ::= numerical_label_decl? case_ case_selector construct_label? { pin = 2 }
 // R841
-end_select_stmt ::= label? ((end_ select_) | endselect_ ) (fidentifier)? { pin = 2 }
+end_select_stmt ::= numerical_label_decl? ((end_ select_) | endselect_ ) construct_label? { pin = 2 }
 // R842 is trivial
 // R843
 case_selector ::= ('(' <<list case_value_range>> ')') | default_
@@ -824,44 +835,44 @@ case_value_range ::= (expr ':' expr) | (expr ':') | expr | (':' expr)
 // R846
 select_type_construct ::= select_type_stmt eol+ (type_guard_stmt eol+ block)* end_select_stmt { pin = 1; extends=executable_construct }
 // R847
-select_type_stmt ::= (fidentifier ':')? select_ type_ '(' (fidentifier '=>')? selector ')' { pin = 3 }
+select_type_stmt ::= numerical_label_decl? construct_label_decl? select_ type_ '(' (fidentifier '=>')? selector ')' { pin = 4 }
 // R848
-type_guard_stmt ::= (typeis_guard | classis_guard | classdefault_guard) fidentifier? { pin = 1 }
+type_guard_stmt ::= (typeis_guard | classis_guard | classdefault_guard) construct_label? { pin = 1 }
 private typeis_guard ::= type_ is_ '(' type_spec ')' { pin = 1 }
 private classis_guard ::= class_ is_ '(' derived_type_spec ')' { pin = 2 }
 private classdefault_guard ::= class_ default_ { pin = 2 }
 // R849 is a copy of R841
 // R850
-exit_stmt ::= exit_ (fidentifier)? { pin = 1 }
+exit_stmt ::= numerical_label_decl? exit_ (fidentifier)? { pin = 2 }
 // R851
-goto_stmt ::= ((go_ to_) | goto_) label { pin = 2 }
+goto_stmt ::= numerical_label_decl? ((go_ to_) | goto_) numerical_label { pin = 3 }
 // R852 deprecated
-computed_goto_stmt ::= ((go_ to_) | goto_) '(' <<list label>> ')' (',')? expr { pin = 2 }
+computed_goto_stmt ::= numerical_label_decl? ((go_ to_) | goto_) '(' <<list numerical_label>> ')' (',')? expr { pin = 3 }
 // R853 deprecated
-arithmetic_if_stmt ::= if_ '(' expr ')' label ',' label ',' label { pin = 5 }
+arithmetic_if_stmt ::= numerical_label_decl? if_ '(' expr ')' numerical_label ',' numerical_label ',' numerical_label { pin = 6 }
 // R854
-continue_stmt ::= continue_ { pin = 1 }
+continue_stmt ::= numerical_label_decl? continue_ { pin = 2 }
 // R855
-stop_stmt ::= stop_ !("=" | "=>" | '[' | "%") (expr)? { pin = 2 }
+stop_stmt ::= numerical_label_decl? stop_ !("=" | "=>" | '[' | "%") (expr)? { pin = 2 }
 // R856
-error_stop_stmt ::= error_ stop_ (expr)? { pin = 2 }
+error_stop_stmt ::= numerical_label_decl? error_ stop_ (expr)? { pin = 2 }
 // R857 it trivial
 // R858
-sync_all_stmt ::= ((sync_ all_) | syncall_) ('(' ( <<list parameters_spec>> )? ')')? { pin = 1 }
+sync_all_stmt ::= numerical_label_decl? ((sync_ all_) | syncall_) ('(' ( <<list parameters_spec>> )? ')')? { pin = 2 }
 // R859 is not for parser
 // R860
-sync_images_stmt ::= ((sync_ images_) | syncimages_) '(' image_set (',' <<list parameters_spec>>)?')' { pin = 1 }
+sync_images_stmt ::= numerical_label_decl? ((sync_ images_) | syncimages_) '(' image_set (',' <<list parameters_spec>>)?')' { pin = 2 }
 // R861
 image_set ::= '*' | expr
 // R862
-sync_memory_stmt ::= ((sync_ memory_) | syncmemory_) ('(' (<<list parameters_spec>>)? ')')? { pin = 1 }
+sync_memory_stmt ::= numerical_label_decl? ((sync_ memory_) | syncmemory_) ('(' (<<list parameters_spec>>)? ')')? { pin = 2 }
 // R863
-lock_stmt ::= lock_ '(' variable (',' <<list lock_stat>>)? ')' { pin = 2 }
+lock_stmt ::= numerical_label_decl? lock_ '(' variable (',' <<list lock_stat>>)? ')' { pin = 2 }
 // R864
 lock_stat ::=  (fidentifier fidentifier '=' variable) | parameters_spec
 // lock_stat ::= (acquired lock '=' variable) | sync_stat
 // R865
-unlock_stmt ::= unlock_ '(' variable (',' <<list parameters_spec>>)? ')' { pin = 1 }
+unlock_stmt ::= numerical_label_decl? unlock_ '(' variable (',' <<list parameters_spec>>)? ')' { pin = 2 }
 // R866 is trivial
 
 // Clause 9 (ready)
@@ -869,20 +880,20 @@ unlock_stmt ::= unlock_ '(' variable (',' <<list parameters_spec>>)? ')' { pin =
 //io_unit ::= '*' | variable | expr
 // R902, R903 are trivial
 // R904
-open_stmt ::= open_ '(' <<list parameters_spec>> ')' {pin = 2}
+open_stmt ::= numerical_label_decl? open_ '(' <<list parameters_spec>> ')' {pin = 3}
 // R905 is not for parser
 // R906, R907 are trivial
 // R908
-close_stmt ::= close_ '(' <<list parameters_spec>> ')' {pin = 2}
+close_stmt ::= numerical_label_decl? close_ '(' <<list parameters_spec>> ')' {pin = 3}
 // R909 is not for parser
 // R910
-read_stmt ::= read_ (io_control_read | format_read) {pin = 1}
+read_stmt ::= numerical_label_decl? read_ (io_control_read | format_read) {pin = 2}
 private io_control_read ::= '(' <<list parameters_spec>> ')' ','? <<list input_item>>? { pin = 1}
 private format_read ::= format (',' <<list input_item>>?)?
 // R911
-write_stmt ::= write_ '(' <<list parameters_spec>> ')' ','? <<list output_item>>? { pin= 2 }
+write_stmt ::= numerical_label_decl? write_ '(' <<list parameters_spec>> ')' ','? <<list output_item>>? { pin= 3 }
 // R912
-print_stmt ::= print_ format ','? <<list output_item>>? { pin = 2 }
+print_stmt ::= numerical_label_decl? print_ format ','? <<list output_item>>? { pin = 3 }
 // R913 is not for parser
 // R914 is trivial
 // R915
@@ -899,26 +910,26 @@ io_implied_do_object ::= (input_item | output_item) !'=' { pin = 2 }
 // R921 (unused maybe)
 //dtv_type_spec ::= (type | classkwd) '(' derived_type_spec ')' { pin =1 }
 // R922
-wait_stmt ::= wait_ '(' <<list parameters_spec>> ')' { pin =1 }
+wait_stmt ::= numerical_label_decl? wait_ '(' <<list parameters_spec>> ')' { pin =2 }
 // R923 is not for parser
 // R924
-backspace_stmt ::= backspace_ (('(' <<list parameters_spec>> ')') | expr ) { pin = 1 }
+backspace_stmt ::= numerical_label_decl? backspace_ (('(' <<list parameters_spec>> ')') | expr ) { pin = 2 }
 // R925
-endfile_stmt ::= endfile_ (('(' <<list parameters_spec>> ')') | expr) { pin = 1 }
+endfile_stmt ::= numerical_label_decl? endfile_ (('(' <<list parameters_spec>> ')') | expr) { pin = 2 }
 // R926
-rewind_stmt ::= rewind_ (('(' <<list parameters_spec>> ')') | expr) { pin = 1}
+rewind_stmt ::= numerical_label_decl? rewind_ (('(' <<list parameters_spec>> ')') | expr) { pin = 2}
 // R927 + R929 are not for parser
 // R928
-flush_stmt ::= flush_ (('(' <<list parameters_spec>> ')') | expr) { pin = 1}
+flush_stmt ::= numerical_label_decl? flush_ (('(' <<list parameters_spec>> ')') | expr) { pin = 2}
 // R930
-inquire_stmt ::= inquire_ (inquire_with_iolength | ('(' <<list parameters_spec>> ')'))  { pin = 1}
+inquire_stmt ::= numerical_label_decl? inquire_ (inquire_with_iolength | ('(' <<list parameters_spec>> ')'))  { pin = 2}
 private inquire_with_iolength ::= '(' iolength_ '=' expr /*variable */')' <<list output_item>> { pin = 2}
 // R931 is not for parser
 
 // Clause 10
 // R1001
-format_stmt ::= format_ (('(' <<noncomalist format_item>>? ')')
-              | ('('(<<noncomalist format_item>> ',')? '*' '(' <<noncomalist format_item>> ')'')' )) { pin = 1 }
+format_stmt ::= numerical_label_decl? format_ (('(' <<noncomalist format_item>>? ')')
+              | ('('(<<noncomalist format_item>> ',')? '*' '(' <<noncomalist format_item>> ')'')' )) { pin = 2 }
 private format_item ::= dataedit | control_edit | string_literal | (integerliteral? '(' <<list format_item>> ')')
 control_edit ::= ":" | (integerliteral? '/') | (signed_int_literal dataedit)
 // Clause 11
@@ -926,25 +937,25 @@ control_edit ::= ":" | (integerliteral? '/') | (signed_int_literal dataedit)
 main_program ::= (program_stmt_with_eol)? block internal_subprogram_part? end_program_stmt { pin = 1; extends = program_unit}
 private program_stmt_with_eol ::= program_stmt eol+ {pin = 1}
 // R1102 +
-program_stmt ::= label? program_ fidentifier { pin = 2 }
+program_stmt ::= numerical_label_decl? program_ fidentifier { pin = 2 }
 // R1103 +
-end_program_stmt ::=  label? (endprogram_ fidentifier? | end_ (program_ fidentifier?)?) { pin = 2 }
+end_program_stmt ::=  numerical_label_decl? (endprogram_ fidentifier? | end_ (program_ fidentifier?)?) { pin = 2 }
 // R1104
 module ::= module_stmt eol+ block module_subprogram_part? end_module_stmt { pin = 1; extends = program_unit }
 // R1105
-module_stmt ::= label? module_ fidentifier { pin = 2 }
+module_stmt ::= numerical_label_decl? module_ fidentifier { pin = 2 }
 // R1106
-end_module_stmt ::= label? (endmodule_ fidentifier? | end_ (module_ fidentifier?)?) { pin = 2 }
+end_module_stmt ::= numerical_label_decl? (endmodule_ fidentifier? | end_ (module_ fidentifier?)?) { pin = 2 }
 // R1107
 module_subprogram_part ::= contains_stmt eol+ (eol | module_subprogram)* { pin = 1 }
 // R1108
-private module_subprogram ::= !(label? (end_ | endmodule_ | endsubmodule_)) (function_subprogram | subroutine_subprogram | separate_module_subprogram | include_stmt) {
+private module_subprogram ::= !(numerical_label_decl? (end_ | endmodule_ | endsubmodule_)) (function_subprogram | subroutine_subprogram | separate_module_subprogram | include_stmt) {
   pin = 1
   recoverWhile = module_subprogram_recover
 }
 private module_subprogram_recover ::= !(eol | end_ | endfunction_ | endsubroutine_ | endprocedure_)
 // R1109
-use_stmt ::= use_ (use_stmt_only | use_stmt_rename) { pin = 1 }
+use_stmt ::= numerical_label_decl? use_ (use_stmt_only | use_stmt_rename) { pin = 2 }
 private use_stmt_rename ::= ((',' module_nature)? '::')? fidentifier (',' <<list rename_stmt>>)?
 private use_stmt_only ::= ((',' module_nature)? '::')? fidentifier ',' only_ ':' (<<list only_stmt>>)? { pin = 5 }
 // R1110
@@ -958,39 +969,39 @@ only_stmt ::= rename_stmt | generic_spec | fidentifier
 // R1116
 submodule ::= submodule_stmt eol+ block module_subprogram_part? end_submodule_stmt { pin = 1; extends = program_unit }
 // R1117
-submodule_stmt ::= label? submodule_ '(' parent_identifier ')' fidentifier { pin = 2 }
+submodule_stmt ::= numerical_label_decl? submodule_ '(' parent_identifier ')' fidentifier { pin = 2 }
 // R1118
 parent_identifier ::= fidentifier (':' fidentifier)?
 // R1119
-end_submodule_stmt ::= label? (endsubmodule_ fidentifier? | end_ (submodule_ fidentifier?)?)  { pin = 2 }
+end_submodule_stmt ::= numerical_label_decl? (endsubmodule_ fidentifier? | end_ (submodule_ fidentifier?)?)  { pin = 2 }
 // R1120
 block_data ::= block_data_stmt eol+ block end_block_data_stmt { pin = 1; extends = program_unit }
 // R1121
-block_data_stmt ::= label? (blockdata_ | (block_ data_)) fidentifier? { pin = 2 }
+block_data_stmt ::= numerical_label_decl? (blockdata_ | (block_ data_)) fidentifier? { pin = 2 }
 // R1122
-end_block_data_stmt ::= label? ((endblockdata_ fidentifier?)| (end_ (((block_ data_) | blockdata_) fidentifier?)?)
+end_block_data_stmt ::= numerical_label_decl? ((endblockdata_ fidentifier?)| (end_ (((block_ data_) | blockdata_) fidentifier?)?)
                       | (endblock_ data_ fidentifier?))  { pin = 2 }
 
 // Clause 12
 // R1201
 interface_block ::= interface_stmt interface_specification end_interface_stmt { pin = 1; extends = declaration_construct }
 // R1202
-private interface_specification ::= !endinterface_keys ((label? eol) | interface_body | (label? procedure_stmt))* {
+private interface_specification ::= !endinterface_keys ((eol) | interface_body | (procedure_stmt))* {
 pin = 1
 recoverWhile = interface_recover
 }
-private endinterface_keys ::= !assignment_stmt (label? (end_ | endinterface_))
+private endinterface_keys ::= !assignment_stmt numerical_label_decl? (end_ | endinterface_)
 private interface_recover ::= !(eol | endinterface_keys)
 // R1203
-interface_stmt ::= ((abstract_ interface_) | (interface_ (generic_spec)?)) { pin = 1 }
+interface_stmt ::= numerical_label_decl? ((abstract_ interface_) | (interface_ (generic_spec)?)) { pin = 2 }
 // R1204
-end_interface_stmt ::= label? ((end_ interface_) | endinterface_) (generic_spec)? { pin = 2 }
+end_interface_stmt ::= numerical_label_decl? ((end_ interface_) | endinterface_) (generic_spec)? { pin = 2 }
 // R1205
 interface_body ::= interface_function_body | interface_subroutine_body
 private interface_function_body ::= function_stmt eol+ block? end_function_stmt { pin = 1 }
 private interface_subroutine_body ::= subroutine_stmt eol+ block? end_subroutine_stmt { pin = 1 }
 // R1206
-procedure_stmt ::= (module_)? procedure_ ('::')? <<list fidentifier>> { pin = 2 }
+procedure_stmt ::= numerical_label_decl? (module_)? procedure_ ('::')? <<list fidentifier>> { pin = 3 }
 // R1207
 generic_spec ::= fidentifier | (operator_ '(' defoperator ')')
               | assignment_ '(' '=' ')' | defined_io_generic_spec
@@ -998,11 +1009,11 @@ generic_spec ::= fidentifier | (operator_ '(' defoperator ')')
 defined_io_generic_spec ::= read_ '(' (formatted_ | unformatted_) ')'
                            | write_ '(' (formatted_ | unformatted_) ')'
 // R1209
-import_stmt ::= import_ ('::'? <<list fidentifier>>)? { pin =1 }
+import_stmt ::= numerical_label_decl? import_ ('::'? <<list fidentifier>>)? { pin =2 }
 // R1210
-external_stmt ::= external_ ('::')? <<list fidentifier>> { pin = 1 }
+external_stmt ::= numerical_label_decl? external_ ('::')? <<list fidentifier>> { pin = 2 }
 // R1211
-procedure_declaration_stmt ::= procedure_ '(' proc_interface? ')' ((',' proc_attr_spec)* '::')? <<list proc_decl>> { pin = 1 }
+procedure_declaration_stmt ::= numerical_label_decl? procedure_ '(' proc_interface? ')' ((',' proc_attr_spec)* '::')? <<list proc_decl>> { pin = 2 }
 // R1212
 proc_interface ::= fidentifier | declaration_type_spec
 // R1213
@@ -1015,19 +1026,19 @@ proc_decl ::= fidentifier ('=>' proc_pointer_init)?
 proc_pointer_init ::= function_reference | fidentifier
 // R1217 is trivial
 // R1218
-intrinsic_stmt ::= intrinsic_ ('::')? <<list fidentifier>> { pin = 1 }
+intrinsic_stmt ::= numerical_label_decl? intrinsic_ ('::')? <<list fidentifier>> { pin = 2 }
 // R1219
 function_reference ::= procedure_designator '(' <<list actual_arg_spec>>? ')' { pin = 4; extends=expr }
 // R1220
-call_stmt ::= call_ procedure_designator ('(' <<list actual_arg_spec>>? ')')? { pin = 1 }
+call_stmt ::= numerical_label_decl? call_ procedure_designator ('(' <<list actual_arg_spec>>? ')')? { pin = 2 }
 // R1221
-procedure_designator ::= data_ref
+procedure_designator ::= data_path
 // R1222
 actual_arg_spec ::= (fidentifier '=')? actual_arg
 // 1223
 actual_arg ::= expr | alt_return_spec // expr matches variable, procedure-name and proc-component-ref
 // 1224 deprecated
-alt_return_spec ::= '*' label
+alt_return_spec ::= '*' numerical_label
 // R1225
 prefix ::= prefix_spec+ { pin = 1 }
 // R1226
@@ -1035,45 +1046,43 @@ prefix_spec ::= declaration_type_spec | elemental_ | impure_ | module_ | pure_ |
 // R1227
 function_subprogram ::= function_stmt eol+ block internal_subprogram_part? end_function_stmt { pin = 1; extends = program_unit }
 // R1228
-function_stmt ::= label? prefix? function_ fidentifier '(' <<list fidentifier>>? ')' suffix? { pin = 3 }
+function_stmt ::= numerical_label_decl? prefix? function_ fidentifier '(' <<list fidentifier>>? ')' suffix? { pin = 3 }
 // R1229 and R1230 are trivial
 // R1231
 suffix ::= (language_binding_spec (result_ '(' fidentifier ')')?) | (result_ '(' fidentifier ')' (language_binding_spec)?)
 // R1232
-end_function_stmt ::= label? ((end_ (function_ fidentifier?)?) | (endfunction_ fidentifier?)) { pin = 2 }
+end_function_stmt ::= numerical_label_decl? ((end_ (function_ fidentifier?)?) | (endfunction_ fidentifier?)) { pin = 2 }
 // R1233
 subroutine_subprogram ::= subroutine_stmt eol+ block internal_subprogram_part? end_subroutine_stmt { pin = 1; extends = program_unit }
 // R1234
-subroutine_stmt ::= label? prefix? subroutine_ fidentifier ('(' <<list dummy_arg>>? ')' language_binding_spec? )?  { pin = 3 }
+subroutine_stmt ::= numerical_label_decl? prefix? subroutine_ fidentifier ('(' <<list dummy_arg>>? ')' language_binding_spec? )?  { pin = 3 }
 // R1235
 dummy_arg ::= '*' | fidentifier
 // R1236
-end_subroutine_stmt ::= label? ((end_ (subroutine_ fidentifier?)?) | (endsubroutine_ fidentifier?)) { pin = 2 }
+end_subroutine_stmt ::= numerical_label_decl? ((end_ (subroutine_ fidentifier?)?) | (endsubroutine_ fidentifier?)) { pin = 2 }
 // R1237
 separate_module_subprogram ::= mp_subprogram_stmt eol+ block internal_subprogram_part? end_mp_subprogram_stmt { pin = 1; extends = program_unit }
 // R1238
-mp_subprogram_stmt ::= label? module_ procedure_ fidentifier { pin = 3 }
+mp_subprogram_stmt ::= numerical_label_decl? module_ procedure_ fidentifier { pin = 3 }
 // R1239
-end_mp_subprogram_stmt ::= label? ((end_ (procedure_ fidentifier?)?) | (endprocedure_ fidentifier?)) { pin = 2}
+end_mp_subprogram_stmt ::= numerical_label_decl? ((end_ (procedure_ fidentifier?)?) | (endprocedure_ fidentifier?)) { pin = 2}
 // R1240
-entry_stmt ::= entry_ fidentifier ('(' <<list dummy_arg>>? ')' suffix? )? { pin = 1 }
+entry_stmt ::= numerical_label_decl? entry_ fidentifier ('(' <<list dummy_arg>>? ')' suffix? )? { pin = 2 }
 // R1241
-return_stmt ::= return_ (expr)? { pin = 1}
+return_stmt ::= numerical_label_decl? return_ (expr)? { pin = 2}
 // R1242
-contains_stmt ::= label? contains_  { pin = 2 }
+contains_stmt ::= numerical_label_decl? contains_  { pin = 2 }
 // R1243
-stmt_function_stmt ::= fidentifier '(' <<list fidentifier>>? ')' '=' expr { pin = 5 }
+stmt_function_stmt ::= numerical_label_decl? fidentifier '(' <<list fidentifier>>? ')' '=' expr { pin = 6 }
 
 // deleted statements
-pause_stmt ::= pause_ (expr)? { pin = 1 }
-assign_stmt ::= assign_ label to_ variable { pin = 1 }
-assigned_goto_stmt ::= (goto_ | (go_ to_)) fidentifier (','? '(' <<list label>> ')' )?  { pin = 2 }
-include_stmt ::= include_ string_literal { pin = 1 }
+pause_stmt ::= numerical_label_decl? pause_ (expr)? { pin = 2 }
+assign_stmt ::= numerical_label_decl? assign_ numerical_label to_ variable { pin = 2 }
+assigned_goto_stmt ::= numerical_label_decl? (goto_ | (go_ to_)) fidentifier (','? '(' <<list numerical_label_decl>> ')' )?  { pin = 3 }
+include_stmt ::= numerical_label_decl? include_ string_literal { pin = 2 }
 
 // nonstandard
-accept_stmt ::= accept_  format (',' <<list input_item>>)?  {pin = 1}
-encode_stmt ::= encode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list output_item>> { pin = 1}
-decode_stmt ::= decode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list input_item>> { pin = 1 }
-type_stmt ::= type_ format (','? <<list output_item>>?) { pin = 3 }
-
-
+accept_stmt ::= numerical_label_decl? accept_  format (',' <<list input_item>>)?  {pin = 2}
+encode_stmt ::= numerical_label_decl? encode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list output_item>> { pin = 2}
+decode_stmt ::= numerical_label_decl? decode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list input_item>> { pin = 2 }
+type_stmt ::= numerical_label_decl? type_ format (','? <<list output_item>>?) { pin = 4 }
