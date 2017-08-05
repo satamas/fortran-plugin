@@ -87,10 +87,14 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
 
         override fun visitBlock(block: FortranBlock) {
             val parent = block.parent
-            if( parent is FortranLabeledDoConstruct){
-                foldBetweenStatements(block, parent.labelDoStmt, parent.doTermActionStmt)
-                foldBetweenStatements(block, parent.labelDoStmt, parent.labeledDoTermConstract)
-                foldBetweenStatements(block, parent.labelDoStmt, parent.endDoStmt)
+            if (parent is FortranLabeledDoConstruct) {
+                if (parent.doTermActionStmt != null) {
+                    foldBetweenStatements(block, parent.labelDoStmt, parent.doTermActionStmt)
+                } else if (parent.labeledDoTermConstract != null) {
+                    foldBetweenStatements(block, parent.labelDoStmt, parent.labeledDoTermConstract)
+                } else if (parent.endDoStmt != null) {
+                    foldBetweenStatements(block, parent.labelDoStmt, parent.endDoStmt)
+                }
                 return
             }
 
