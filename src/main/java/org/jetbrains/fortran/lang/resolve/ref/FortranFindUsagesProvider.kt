@@ -30,7 +30,7 @@ class FortranFindUsagesProvider : FindUsagesProvider {
         if (element is FortranNumericalLabelDecl) {
             return "Fortran numerical label"
         } else if (element is FortranConstructLabelDecl) {
-            return "Constract name"
+            return "Construct name"
         } else {
             return ""
         }
