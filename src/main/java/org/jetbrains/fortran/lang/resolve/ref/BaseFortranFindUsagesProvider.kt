@@ -13,11 +13,14 @@ import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructLabelDeclImplMixin
 
 
-class FortranFindUsagesProvider : FindUsagesProvider {
+abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
+    protected abstract val isFixedFormFortran: Boolean
+
     override fun getWordsScanner(): WordsScanner? {
-        return DefaultWordsScanner(FortranLexer(false),
+        return DefaultWordsScanner(FortranLexer(isFixedFormFortran),
                 FortranTokenType.WORD_OR_ILITERAL, FortranTokenType.COMMENTS, TokenSet.EMPTY)
     }
+
     override fun canFindUsagesFor(psiElement: PsiElement): Boolean {
         return psiElement is FortranNamedElement
     }
@@ -41,7 +44,7 @@ class FortranFindUsagesProvider : FindUsagesProvider {
             return element.text
         } else if (element is FortranConstructLabelDeclImplMixin) {
             return element.gelLabelValue()
-        }else {
+        } else {
             return ""
         }
     }
@@ -51,7 +54,7 @@ class FortranFindUsagesProvider : FindUsagesProvider {
             return element.parent.text
         } else if (element is FortranConstructLabelDeclImplMixin) {
             return element.parent.text
-        }else {
+        } else {
             return ""
         }
     }

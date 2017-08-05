@@ -50,7 +50,10 @@
         <lang.foldingBuilder language="Fortran fixed form" implementationClass="org.jetbrains.fortran.ide.folding.FortranFoldingBuilder"/>
 
         <!-- Navigation -->
-        <lang.findUsagesProvider language="Fortran" implementationClass="org.jetbrains.fortran.lang.resolve.ref.FortranFindUsagesProvider"/>
+        <lang.findUsagesProvider language="Fortran"
+                                 implementationClass="org.jetbrains.fortran.lang.resolve.ref.FreeFormFortranFindUsagesProvider"/>
+        <lang.findUsagesProvider language="Fortran fixed form"
+                                 implementationClass="org.jetbrains.fortran.lang.resolve.ref.FixedFormFortranFindUsagesProvider"/>
         <usageTypeProvider implementation="org.jetbrains.fortran.lang.resolve.ref.FortranUsageTypeProvider"/>
     </extensions>
 
