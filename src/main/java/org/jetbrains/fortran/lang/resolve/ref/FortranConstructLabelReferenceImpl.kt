@@ -2,7 +2,7 @@ package org.jetbrains.fortran.lang.resolve.ref
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.lang.psi.FortranFile
+import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructLabelDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructLabelImplMixin
@@ -15,14 +15,9 @@ class FortranConstructLabelReferenceImpl(element: FortranConstructLabelImplMixin
     override fun getVariants(): Array<Any> = emptyArray()
 
     override fun resolveInner(): List<FortranNamedElement>  {
-        var psiElement : PsiElement = element
-        // find the root of the tree
-        while (psiElement !is FortranFile) psiElement = psiElement.parent
-
+        val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return emptyList()
         // find all labels in it
-        val tmp = PsiTreeUtil.findChildrenOfType(psiElement, FortranConstructLabelDeclImpl::class.java)
+        return PsiTreeUtil.findChildrenOfType(programUnit, FortranConstructLabelDeclImpl::class.java)
                 .filter {element.gelLabelValue() == it.gelLabelValue() }
-                .toMutableList()
-        return tmp
     }
 }
