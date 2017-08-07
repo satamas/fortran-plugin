@@ -49,7 +49,7 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .after(COMMA).spaceIf(fortranCommonSettings.SPACE_AFTER_COMMA)
                 .before(COLON).spaceIf(fortranCommonSettings.SPACE_BEFORE_COLON)
                 .after(COLON).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
-                .after(CONSTRUCT_LABEL_DECL).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
+                .after(CONSTRUCT_NAME_DECL).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
                 .before(COLONCOLON).spaceIf(fortranSettings.SPACE_BEFORE_DOUBLE_COLON)
                 .after(COLONCOLON).spaceIf(fortranSettings.SPACE_AFTER_DOUBLE_COLON)
                 .after(LPAR).spaces(0)

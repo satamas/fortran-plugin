@@ -2,8 +2,8 @@ package org.jetbrains.fortran.lang.resolve
 
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import junit.framework.Assert
-import org.jetbrains.fortran.lang.psi.impl.FortranConstructLabelDeclImpl
-import org.jetbrains.fortran.lang.psi.impl.FortranNumericalLabelDeclImpl
+import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
+import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
 
 
 class FortranResolveTest : LightCodeInsightFixtureTestCase() {
@@ -18,7 +18,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testLabelReference() {
         myFixture.configureByFiles("Label.f")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals(10, (element.references[0].resolve() as FortranNumericalLabelDeclImpl).gelLabelValue())
+        assertEquals(10, (element.references[0].resolve() as FortranLabelDeclImpl).gelLabelValue())
     }
 
     fun testConstructNameUsages() {
@@ -29,6 +29,6 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testConstructNameReference() {
         myFixture.configureByFiles("ConstructName.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("ifconstruct", (element.references[0].resolve() as FortranConstructLabelDeclImpl).gelLabelValue())
+        assertEquals("ifconstruct", (element.references[0].resolve() as FortranConstructNameDeclImpl).gelLabelValue())
     }
 }

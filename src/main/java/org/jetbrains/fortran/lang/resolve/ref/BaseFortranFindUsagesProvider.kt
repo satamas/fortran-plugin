@@ -6,11 +6,11 @@ import com.intellij.lang.findUsages.FindUsagesProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.lang.lexer.FortranLexer
-import org.jetbrains.fortran.lang.psi.FortranConstructLabelDecl
-import org.jetbrains.fortran.lang.psi.FortranNumericalLabelDecl
+import org.jetbrains.fortran.lang.psi.FortranConstructNameDecl
+import org.jetbrains.fortran.lang.psi.FortranLabelDecl
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
-import org.jetbrains.fortran.lang.psi.impl.FortranConstructLabelDeclImplMixin
+import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImplMixin
 
 
 abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
@@ -30,9 +30,9 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun getType(element: PsiElement): String {
-        if (element is FortranNumericalLabelDecl) {
+        if (element is FortranLabelDecl) {
             return "Fortran numerical label"
-        } else if (element is FortranConstructLabelDecl) {
+        } else if (element is FortranConstructNameDecl) {
             return "Construct name"
         } else {
             return ""
@@ -40,9 +40,9 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun getDescriptiveName(element: PsiElement): String {
-        if (element is FortranNumericalLabelDecl) {
+        if (element is FortranLabelDecl) {
             return element.text
-        } else if (element is FortranConstructLabelDeclImplMixin) {
+        } else if (element is FortranConstructNameDeclImplMixin) {
             return element.gelLabelValue()
         } else {
             return ""
@@ -50,9 +50,9 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun getNodeText(element: PsiElement, useFullName: Boolean): String {
-        if (element is FortranNumericalLabelDecl) {
+        if (element is FortranLabelDecl) {
             return element.parent.text
-        } else if (element is FortranConstructLabelDeclImplMixin) {
+        } else if (element is FortranConstructNameDeclImplMixin) {
             return element.parent.text
         } else {
             return ""

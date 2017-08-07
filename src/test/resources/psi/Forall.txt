@@ -81,7 +81,7 @@ FILE
           PsiWhiteSpace(' ')
           FORALL_CONSTRUCT
             FORALL_CONSTRUCT_STMT
-              NUMERICAL_LABEL_DECL
+              LABEL_DECL
                 PsiElement(integerliteral)('1')
               PsiWhiteSpace(' ')
               PsiElement(keyword)('forall')
@@ -104,7 +104,7 @@ FILE
             PsiWhiteSpace(' ')
             BLOCK
               ASSIGNMENT_STMT
-                NUMERICAL_LABEL_DECL
+                LABEL_DECL
                   PsiElement(integerliteral)('2')
                 PsiWhiteSpace('    ')
                 DESIGNATOR
@@ -117,7 +117,7 @@ FILE
               PsiElement(eol)('\n')
             PsiWhiteSpace(' ')
             END_FORALL_STMT
-              NUMERICAL_LABEL_DECL
+              LABEL_DECL
                 PsiElement(integerliteral)('3')
               PsiWhiteSpace(' ')
               PsiElement(keyword)('endforall')

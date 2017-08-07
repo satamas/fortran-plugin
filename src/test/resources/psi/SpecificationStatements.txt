@@ -123,7 +123,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace(' ')
       IMPLICIT_STMT
-        NUMERICAL_LABEL_DECL
+        LABEL_DECL
           PsiElement(integerliteral)('20')
         PsiWhiteSpace(' ')
         PsiElement(keyword)('implicit')

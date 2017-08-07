@@ -12,7 +12,7 @@ FILE
     BLOCK
       BLOCK_CONSTRUCT
         BLOCK_STMT
-          CONSTRUCT_LABEL_DECL
+          CONSTRUCT_NAME_DECL
             PsiElement(identifier)('b1')
             PsiElement(:)(':')
           PsiWhiteSpace(' ')
@@ -31,7 +31,7 @@ FILE
           PsiWhiteSpace('     ')
           CRITICAL_CONSTRUCT
             CRITICAL_STMT
-              CONSTRUCT_LABEL_DECL
+              CONSTRUCT_NAME_DECL
                 PsiElement(identifier)('cr')
                 PsiElement(:)(':')
               PsiWhiteSpace(' ')
@@ -56,7 +56,7 @@ FILE
             END_CRITICAL_STMT
               PsiElement(keyword)('endcritical')
               PsiWhiteSpace(' ')
-              CONSTRUCT_LABEL
+              CONSTRUCT_NAME
                 PsiElement(identifier)('cr')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
@@ -67,7 +67,7 @@ FILE
       PsiWhiteSpace('  ')
       BLOCK_CONSTRUCT
         BLOCK_STMT
-          CONSTRUCT_LABEL_DECL
+          CONSTRUCT_NAME_DECL
             PsiElement(identifier)('b2')
             PsiElement(:)(':')
           PsiWhiteSpace(' ')
@@ -77,7 +77,7 @@ FILE
         BLOCK
           ASSOCIATE_CONSTRUCT
             ASSOCIATE_STMT
-              CONSTRUCT_LABEL_DECL
+              CONSTRUCT_NAME_DECL
                 PsiElement(identifier)('as')
                 PsiElement(:)(':')
               PsiWhiteSpace(' ')

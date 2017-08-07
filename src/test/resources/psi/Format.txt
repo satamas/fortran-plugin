@@ -2,7 +2,7 @@ FILE
   MAIN_PROGRAM
     BLOCK
       FORMAT_STMT
-        NUMERICAL_LABEL_DECL
+        LABEL_DECL
           PsiElement(integerliteral)('1')
         PsiWhiteSpace(' ')
         PsiElement(keyword)('FORMAT')
@@ -18,7 +18,7 @@ FILE
         PsiElement())(')')
       PsiElement(eol)('\n')
       FORMAT_STMT
-        NUMERICAL_LABEL_DECL
+        LABEL_DECL
           PsiElement(integerliteral)('2')
         PsiWhiteSpace(' ')
         PsiElement(keyword)('FORMAT')

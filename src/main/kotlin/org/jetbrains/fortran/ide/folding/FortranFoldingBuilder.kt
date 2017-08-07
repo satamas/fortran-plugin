@@ -120,7 +120,7 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
 
         private fun foldBetweenStatements(element: PsiElement, left: PsiElement?, right: PsiElement?) {
             if (left != null && right != null) {
-                val rightLabel = PsiTreeUtil.getChildOfType(right, FortranNumericalLabelDecl::class.java)
+                val rightLabel = PsiTreeUtil.getChildOfType(right, FortranLabelDecl::class.java)
                 val rightOffset = if (rightLabel != null) {
                     var firstNonLabelElement = rightLabel.nextSibling
                     while (firstNonLabelElement is PsiWhiteSpace) {

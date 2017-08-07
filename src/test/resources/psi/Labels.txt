@@ -1,7 +1,7 @@
 FILE
   MAIN_PROGRAM
     PROGRAM_STMT
-      NUMERICAL_LABEL_DECL
+      LABEL_DECL
         PsiElement(integerliteral)('1')
       PsiWhiteSpace(' ')
       PsiElement(keyword)('program')

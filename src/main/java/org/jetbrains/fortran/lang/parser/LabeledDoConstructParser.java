@@ -6,7 +6,6 @@ import com.intellij.lang.parser.GeneratedParserUtilBase;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
 import static java.lang.Integer.parseInt;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
-import static org.jetbrains.fortran.lang.FortranTypes.COLON;
 import static org.jetbrains.fortran.lang.parser.FortranParser.*;
 import static org.jetbrains.fortran.lang.parser.FortranParserUtil.*;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD;
@@ -36,7 +35,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
         if (!nextTokenIs(builder, "<label do stmt>", WORD, KEYWORD, IDENTIFIER)) return false;
         boolean result, pinned=false;
         PsiBuilder.Marker marker_ = enter_section_(builder, level, _NONE_, LABEL_DO_STMT, "<label do stmt>");
-        construct_label_decl(builder, level+1);
+        construct_name_decl(builder, level+1);
         result = parseKeyword(builder, level + 1, "DO");
         // The label must be here
         if (!nextTokenIs(builder, INTEGERLITERAL)) {
@@ -44,7 +43,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
         } else {
             String text = builder.getTokenText();
             if (text != null) result = result && (testLabel ==  parseInt(text));
-            result = result && numerical_label(builder, level + 1);
+            result = result && label(builder, level + 1);
             pinned = result; // pin = 3
             result = result && report_error_(builder, loop_control(builder, level + 1));
             result = pinned && consumeToken(builder, EOL) && result;
@@ -61,8 +60,8 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
         boolean result, pinned=false;
         int labelValue = -1;
         PsiBuilder.Marker marker_ = enter_section_(builder, level, _NONE_, LABEL_DO_STMT, "<label do stmt>");
-        numerical_label_decl(builder, level+1);
-        construct_label_decl(builder, level+1);
+        label_decl(builder, level+1);
+        construct_name_decl(builder, level+1);
         result = parseKeyword(builder, level + 1, "DO");
         // The label must be here
         if (!nextTokenIs(builder, INTEGERLITERAL)) {
@@ -71,7 +70,7 @@ public class LabeledDoConstructParser implements GeneratedParserUtilBase.Parser 
             String text = builder.getTokenText();
             if (text != null) labelValue = parseInt(text);
             result = result && (labelValue != -1);
-            result = result && numerical_label(builder, level+1);
+            result = result && label(builder, level+1);
             pinned = result; // pin = 3
             consumeToken(builder, COMMA);
             result = result && report_error_(builder, loop_control(builder, level + 1));

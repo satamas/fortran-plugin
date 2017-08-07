@@ -76,7 +76,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FORMAT_STMT
-        NUMERICAL_LABEL_DECL
+        LABEL_DECL
           PsiElement(integerliteral)('130')
         PsiWhiteSpace(' ')
         PsiElement(keyword)('format')
