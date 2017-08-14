@@ -7,11 +7,11 @@
               bb = 2
 100           cc = 3
           b = 4
-          do 10 j = 1, 4
+          do 0010 j = 1, 4
               a = 1
-              do <caret>10 k = 3, 5
+              do <caret>010 k = 3, 5
                   b = k
-10            enddo
+00010            enddo
       d = 8
       do 20 k = 3, 5
           b = 1

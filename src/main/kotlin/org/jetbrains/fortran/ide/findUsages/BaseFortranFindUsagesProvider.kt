@@ -16,10 +16,7 @@ import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImplMixin
 abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
     protected abstract val isFixedFormFortran: Boolean
 
-    override fun getWordsScanner(): WordsScanner? {
-        return DefaultWordsScanner(FortranLexer(isFixedFormFortran),
-                FortranTokenType.WORD_OR_ILITERAL, FortranTokenType.COMMENTS, TokenSet.EMPTY)
-    }
+    override fun getWordsScanner(): WordsScanner? = null
 
     override fun canFindUsagesFor(psiElement: PsiElement): Boolean {
         return psiElement is FortranNamedElement

@@ -35,7 +35,4 @@ public class FortranTokenType extends IElementType {
     public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT, CPP, LINE_CONTINUE);
 
     public static TokenSet STRINGS = TokenSet.create(STRINGLITERAL);
-
-    public static TokenSet WORD_OR_ILITERAL= TokenSet.create(WORD, FortranTypes.INTEGERLITERAL);
-
 }
