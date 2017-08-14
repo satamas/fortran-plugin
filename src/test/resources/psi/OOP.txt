@@ -212,8 +212,9 @@ FILE
             PsiWhiteSpace(' ')
             PROCEDURE_DESIGNATOR
               DATA_PATH
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('t1')
+                DATA_PATH
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('t1')
                 PsiElement(%)('%')
                 DATA_REFERENCE_ELEMENT
                   PsiElement(identifier)('sub')
@@ -226,22 +227,26 @@ FILE
             PsiWhiteSpace(' ')
             DESIGNATOR
               DATA_PATH
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('o')
-                PsiElement(%)('%')
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('ar')
-                PsiElement(%)('%')
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('dat')
-                  PsiElement(()('(')
-                  SECTION_SUBSCRIPT
-                    CONSTANT
-                      PsiElement(integerliteral)('5')
-                  PsiElement())(')')
-                PsiElement(%)('%')
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('b')
+                DATA_PATH
+                  DATA_PATH
+                    DATA_PATH
+                      DATA_PATH
+                        DATA_REFERENCE_ELEMENT
+                          PsiElement(identifier)('o')
+                      PsiElement(%)('%')
+                      DATA_REFERENCE_ELEMENT
+                        PsiElement(identifier)('ar')
+                    PsiElement(%)('%')
+                    DATA_REFERENCE_ELEMENT
+                      PsiElement(identifier)('dat')
+                      PsiElement(()('(')
+                      SECTION_SUBSCRIPT
+                        CONSTANT
+                          PsiElement(integerliteral)('5')
+                      PsiElement())(')')
+                  PsiElement(%)('%')
+                  DATA_REFERENCE_ELEMENT
+                    PsiElement(identifier)('b')
                 PsiElement(%)('%')
                 DATA_REFERENCE_ELEMENT
                   PsiElement(identifier)('x')

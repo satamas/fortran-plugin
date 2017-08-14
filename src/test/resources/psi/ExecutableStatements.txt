@@ -805,15 +805,16 @@ FILE
         DATA_POINTER_OBJECT
           DESIGNATOR
             DATA_PATH
-              DATA_REFERENCE_ELEMENT
-                PsiElement(identifier)('amr_thebranches')
-                PsiElement(()('(')
-                SECTION_SUBSCRIPT
-                  DESIGNATOR
-                    DATA_PATH
-                      DATA_REFERENCE_ELEMENT
-                        PsiElement(identifier)('amr_branchcount')
-                PsiElement())(')')
+              DATA_PATH
+                DATA_REFERENCE_ELEMENT
+                  PsiElement(identifier)('amr_thebranches')
+                  PsiElement(()('(')
+                  SECTION_SUBSCRIPT
+                    DESIGNATOR
+                      DATA_PATH
+                        DATA_REFERENCE_ELEMENT
+                          PsiElement(identifier)('amr_branchcount')
+                  PsiElement())(')')
               PsiElement(%)('%')
               DATA_REFERENCE_ELEMENT
                 PsiElement(identifier)('link')

@@ -623,7 +623,9 @@ parent_string ::= data_path | string_literal
 // R610
 substring_range ::= (expr)? ':' (expr)?
 // R611
-data_path ::= data_reference_element ('%' data_reference_element)*
+data_path ::= data_path_start (data_path_part)*
+data_path_start ::= data_reference_element { elementType = data_path }
+left data_path_part ::= ('%' data_reference_element) { elementType = data_path }
 // R612
 data_reference_element ::= fidentifier ('(' <<list section_subscript>>? ')')? (image_selector)?
 // R613 - 614 are trivial
