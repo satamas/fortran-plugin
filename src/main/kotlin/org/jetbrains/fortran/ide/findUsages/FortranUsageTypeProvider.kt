@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.resolve.ref
+package org.jetbrains.fortran.ide.findUsages
 
 import com.intellij.psi.PsiElement
 import com.intellij.usages.impl.rules.UsageType

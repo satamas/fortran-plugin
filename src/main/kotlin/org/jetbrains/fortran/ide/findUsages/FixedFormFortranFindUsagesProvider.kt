@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.resolve.ref
+package org.jetbrains.fortran.ide.findUsages
 
 class FixedFormFortranFindUsagesProvider : BaseFortranFindUsagesProvider() {
     override val isFixedFormFortran = true

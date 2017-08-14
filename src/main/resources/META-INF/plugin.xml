@@ -51,10 +51,11 @@
 
         <!-- Navigation -->
         <lang.findUsagesProvider language="Fortran"
-                                 implementationClass="org.jetbrains.fortran.lang.resolve.ref.FreeFormFortranFindUsagesProvider"/>
+                                 implementationClass="org.jetbrains.fortran.ide.findUsages.FreeFormFortranFindUsagesProvider"/>
         <lang.findUsagesProvider language="Fortran fixed form"
-                                 implementationClass="org.jetbrains.fortran.lang.resolve.ref.FixedFormFortranFindUsagesProvider"/>
-        <usageTypeProvider implementation="org.jetbrains.fortran.lang.resolve.ref.FortranUsageTypeProvider"/>
+                                 implementationClass="org.jetbrains.fortran.ide.findUsages.FixedFormFortranFindUsagesProvider"/>
+        <usageTypeProvider implementation="org.jetbrains.fortran.ide.findUsages.FortranUsageTypeProvider"/>
+        <findUsagesHandlerFactory implementation="org.jetbrains.fortran.ide.findUsages.FortranFindUsagesHandlerFactory"/>
     </extensions>
 
     <actions>
