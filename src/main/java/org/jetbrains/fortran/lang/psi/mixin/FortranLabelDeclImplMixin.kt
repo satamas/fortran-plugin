@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.psi.impl
+package org.jetbrains.fortran.lang.psi.mixin
 
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
@@ -13,4 +13,5 @@ abstract class FortranLabelDeclImplMixin(node : ASTNode) : FortranNamedElementIm
     }
 
     fun gelLabelValue() = integerliteral.text.toInt()
+
 }

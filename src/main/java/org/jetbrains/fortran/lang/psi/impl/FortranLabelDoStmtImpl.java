@@ -4,10 +4,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.fortran.lang.psi.FortranExpr;
-import org.jetbrains.fortran.lang.psi.FortranLabel;
-import org.jetbrains.fortran.lang.psi.FortranLabelDecl;
-import org.jetbrains.fortran.lang.psi.FortranLabelDoStmt;
+import org.jetbrains.fortran.lang.psi.*;
 
 import static org.jetbrains.fortran.lang.FortranTypes.COLON;
 import static org.jetbrains.fortran.lang.FortranTypes.EOL;
@@ -20,12 +17,17 @@ public class FortranLabelDoStmtImpl extends FortranStmtImpl implements FortranLa
 
     @Override
     @NotNull
-    public FortranLabel getNumericalLabel() { return findNotNullChildByClass(FortranLabel.class); }
+    public FortranLabel getLabel() { return findNotNullChildByClass(FortranLabel.class); }
 
     @Override
     @Nullable
-    public FortranLabelDecl getNumericalLabelDecl() { return findNotNullChildByClass(FortranLabelDecl.class); }
+    public FortranLabelDecl getLabelDecl() { return findNotNullChildByClass(FortranLabelDecl.class); }
 
+    @Override
+    @Nullable
+    public FortranConstructName getConstructName() {
+        return findChildByClass(FortranConstructName.class);
+    }
     @Override
     @Nullable
     public FortranExpr getExpr() {

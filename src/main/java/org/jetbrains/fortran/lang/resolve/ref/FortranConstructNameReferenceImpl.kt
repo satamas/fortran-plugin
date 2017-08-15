@@ -5,7 +5,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
-import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameImplMixin
+import org.jetbrains.fortran.lang.psi.mixin.FortranConstructNameImplMixin
 
 class FortranConstructNameReferenceImpl(element: FortranConstructNameImplMixin) :
         FortranReferenceBase<FortranConstructNameImplMixin>(element), FortranReference {

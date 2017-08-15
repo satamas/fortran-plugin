@@ -1,16 +1,12 @@
 package org.jetbrains.fortran.ide.findUsages
 
-import com.intellij.lang.cacheBuilder.DefaultWordsScanner
 import com.intellij.lang.cacheBuilder.WordsScanner
 import com.intellij.lang.findUsages.FindUsagesProvider
 import com.intellij.psi.PsiElement
-import com.intellij.psi.tree.TokenSet
-import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranConstructNameDecl
 import org.jetbrains.fortran.lang.psi.FortranLabelDecl
-import org.jetbrains.fortran.lang.psi.FortranTokenType
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
-import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImplMixin
+import org.jetbrains.fortran.lang.psi.mixin.FortranConstructNameDeclImplMixin
 
 
 abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {

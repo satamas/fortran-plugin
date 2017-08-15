@@ -1,8 +1,9 @@
-package org.jetbrains.fortran.lang.psi.impl
+package org.jetbrains.fortran.lang.psi.mixin
 
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.psi.FortranLabel
+import org.jetbrains.fortran.lang.psi.impl.FortranCompositeElementImpl
 import org.jetbrains.fortran.lang.resolve.ref.FortranLabelReferenceImpl
 import org.jetbrains.fortran.lang.resolve.ref.FortranReference
 

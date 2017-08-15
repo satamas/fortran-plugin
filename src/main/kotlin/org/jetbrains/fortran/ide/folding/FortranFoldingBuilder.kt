@@ -111,7 +111,7 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
             if (startFoldableStatementType in foldableConstructEndStatements ||
                     endFoldableStatementType in foldableConstructStartStatements) {
                 val endStatement = block.lastChildOfType(FortranCompositeElement::class) ?: return
-                val range = TextRange(prev.textOffset + prev.textLength, endStatement.textOffset + endStatement.textLength)
+                val range = TextRange(prev.node.startOffset + prev.textLength, endStatement.node.startOffset + endStatement.textLength)
                 descriptors += FoldingDescriptor(block.node, range)
             } else {
                 foldBetweenStatements(block, prev, next)
@@ -126,11 +126,11 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
                     while (firstNonLabelElement is PsiWhiteSpace) {
                         firstNonLabelElement = firstNonLabelElement.nextSibling
                     }
-                    firstNonLabelElement.textOffset
+                    firstNonLabelElement.node.startOffset
                 } else {
-                    right.textOffset
+                    right.node.startOffset
                 }
-                val range = TextRange(left.textOffset + left.textLength, rightOffset)
+                val range = TextRange(left.node.startOffset + left.textLength, rightOffset)
                 descriptors += FoldingDescriptor(element.node, range)
             }
         }

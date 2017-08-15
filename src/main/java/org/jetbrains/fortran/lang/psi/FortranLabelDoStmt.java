@@ -7,10 +7,13 @@ import com.intellij.psi.PsiElement;
 public interface FortranLabelDoStmt extends FortranStmt {
 
     @NotNull
-    FortranLabel getNumericalLabel();
+    FortranLabel getLabel();
 
     @Nullable
-    FortranLabelDecl getNumericalLabelDecl();
+    FortranLabelDecl getLabelDecl();
+
+    @Nullable
+    FortranConstructName getConstructName();
 
     @Nullable
     FortranExpr getExpr();

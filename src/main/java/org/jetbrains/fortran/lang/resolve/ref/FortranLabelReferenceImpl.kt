@@ -5,7 +5,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
-import org.jetbrains.fortran.lang.psi.impl.FortranLabelImplMixin
+import org.jetbrains.fortran.lang.psi.mixin.FortranLabelImplMixin
 
 
 class FortranLabelReferenceImpl(element: FortranLabelImplMixin) :
