@@ -17,8 +17,7 @@ FILE
           LOOP_CONTROL
             DESIGNATOR
               DATA_PATH
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('i')
+                PsiElement(identifier)('i')
             PsiElement(=)('=')
             CONSTANT
               PsiElement(integerliteral)('1')
@@ -34,8 +33,7 @@ FILE
             PsiWhiteSpace('      ')
             DESIGNATOR
               DATA_PATH
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('a')
+                PsiElement(identifier)('a')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
@@ -56,8 +54,7 @@ FILE
               LOOP_CONTROL
                 DESIGNATOR
                   DATA_PATH
-                    DATA_REFERENCE_ELEMENT
-                      PsiElement(identifier)('i')
+                    PsiElement(identifier)('i')
                 PsiElement(=)('=')
                 CONSTANT
                   PsiElement(integerliteral)('4')
@@ -70,8 +67,7 @@ FILE
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
-                    DATA_REFERENCE_ELEMENT
-                      PsiElement(identifier)('aa')
+                    PsiElement(identifier)('aa')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')
@@ -82,8 +78,7 @@ FILE
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
-                    DATA_REFERENCE_ELEMENT
-                      PsiElement(identifier)('bb')
+                    PsiElement(identifier)('bb')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')
@@ -97,8 +92,7 @@ FILE
               PsiWhiteSpace('    ')
               DESIGNATOR
                 DATA_PATH
-                  DATA_REFERENCE_ELEMENT
-                    PsiElement(identifier)('cc')
+                  PsiElement(identifier)('cc')
               PsiWhiteSpace(' ')
               PsiElement(=)('=')
               PsiWhiteSpace(' ')
@@ -112,8 +106,7 @@ FILE
             PsiWhiteSpace('      ')
             DESIGNATOR
               DATA_PATH
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('b')
+                PsiElement(identifier)('b')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
@@ -131,8 +124,7 @@ FILE
             LOOP_CONTROL
               DESIGNATOR
                 DATA_PATH
-                  DATA_REFERENCE_ELEMENT
-                    PsiElement(identifier)('j')
+                  PsiElement(identifier)('j')
               PsiElement(=)('=')
               CONSTANT
                 PsiElement(integerliteral)('1')
@@ -145,8 +137,7 @@ FILE
             ASSIGNMENT_STMT
               DESIGNATOR
                 DATA_PATH
-                  DATA_REFERENCE_ELEMENT
-                    PsiElement(identifier)('a')
+                  PsiElement(identifier)('a')
               PsiWhiteSpace(' ')
               PsiElement(=)('=')
               PsiWhiteSpace(' ')
@@ -164,8 +155,7 @@ FILE
               LOOP_CONTROL
                 DESIGNATOR
                   DATA_PATH
-                    DATA_REFERENCE_ELEMENT
-                      PsiElement(identifier)('k')
+                    PsiElement(identifier)('k')
                 PsiElement(=)('=')
                 CONSTANT
                   PsiElement(integerliteral)('3')
@@ -178,8 +168,7 @@ FILE
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
-                    DATA_REFERENCE_ELEMENT
-                      PsiElement(identifier)('b')
+                    PsiElement(identifier)('b')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')
@@ -200,8 +189,7 @@ FILE
         PsiWhiteSpace('   ')
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('d')
+            PsiElement(identifier)('d')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')

@@ -44,8 +44,7 @@ FILE
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
-                    DATA_REFERENCE_ELEMENT
-                      PsiElement(identifier)('a')
+                    PsiElement(identifier)('a')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')
@@ -109,8 +108,7 @@ FILE
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
-                    DATA_REFERENCE_ELEMENT
-                      PsiElement(identifier)('c')
+                    PsiElement(identifier)('c')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')

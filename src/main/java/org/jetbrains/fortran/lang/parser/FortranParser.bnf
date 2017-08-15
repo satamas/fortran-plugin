@@ -486,7 +486,10 @@ attr_spec ::= access_spec | allocatable_ | asynchronous_ | (codimension_ '[' coa
              | optional_ | parameter_ | pointer_ | protected_ | save_ | target_ | value_ | volatile_
 // R503
 entity_decl ::= fidentifier ('(' array_spec ')')? ('[' coarray_spec ']')?
-                ('*' char_length)? initialization?
+                ('*' char_length)? initialization? {
+  implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranNamedElement" ]
+  mixin = "org.jetbrains.fortran.lang.psi.impl.FortranEntityDeclMixin"
+}
 // R504 is trivial
 // R505
 private initialization ::= ('=' expr) | ('=>' designator) | ('=>' function_reference) | ('/' <<list data_stmt_value>> '/')
@@ -623,11 +626,14 @@ parent_string ::= data_path | string_literal
 // R610
 substring_range ::= (expr)? ':' (expr)?
 // R611
-data_path ::= data_path_start (data_path_part)*
+data_path ::= data_path_start (data_path_part)* {
+  implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement" ]
+  mixin = "org.jetbrains.fortran.lang.psi.impl.FortranDataPathImplMixin"
+}
 data_path_start ::= data_reference_element { elementType = data_path }
 left data_path_part ::= ('%' data_reference_element) { elementType = data_path }
 // R612
-data_reference_element ::= fidentifier ('(' <<list section_subscript>>? ')')? (image_selector)?
+private data_reference_element ::= fidentifier ('(' <<list section_subscript>>? ')')? (image_selector)?
 // R613 - 614 are trivial
 // R615 - 618 are excrescent
 // R619 is trivial

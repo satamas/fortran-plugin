@@ -46,19 +46,16 @@ FILE
             PsiWhiteSpace('     ')
             DESIGNATOR
               DATA_PATH
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('x')
+                PsiElement(identifier)('x')
             PsiElement(=)('=')
             ADD_EXPR
               DESIGNATOR
                 DATA_PATH
-                  DATA_REFERENCE_ELEMENT
-                    PsiElement(identifier)('y')
+                  PsiElement(identifier)('y')
               PsiElement(+)('+')
               DESIGNATOR
                 DATA_PATH
-                  DATA_REFERENCE_ELEMENT
-                    PsiElement(identifier)('z')
+                  PsiElement(identifier)('z')
           PsiElement(eol)('\n')
         INTERNAL_SUBPROGRAM_PART
           CONTAINS_STMT
@@ -94,8 +91,7 @@ FILE
                 MULT_EXPR
                   DESIGNATOR
                     DATA_PATH
-                      DATA_REFERENCE_ELEMENT
-                        PsiElement(identifier)('z')
+                      PsiElement(identifier)('z')
                   PsiElement(*)('*')
                   CONSTANT
                     PsiElement(integerliteral)('2')

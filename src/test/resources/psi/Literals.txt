@@ -58,8 +58,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('a')
+            PsiElement(identifier)('a')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -70,8 +69,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('b')
+            PsiElement(identifier)('b')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -82,8 +80,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('c')
+            PsiElement(identifier)('c')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -94,8 +91,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('d')
+            PsiElement(identifier)('d')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -106,8 +102,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('e')
+            PsiElement(identifier)('e')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -122,8 +117,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('f')
+            PsiElement(identifier)('f')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -138,8 +132,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('str')
+            PsiElement(identifier)('str')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -159,8 +152,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('g')
+            PsiElement(identifier)('g')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -171,8 +163,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('h')
+            PsiElement(identifier)('h')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -183,8 +174,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('i')
+            PsiElement(identifier)('i')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -195,8 +185,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('j')
+            PsiElement(identifier)('j')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -207,8 +196,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('k')
+            PsiElement(identifier)('k')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -228,8 +216,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('l')
+            PsiElement(identifier)('l')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
@@ -262,8 +249,7 @@ FILE
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('m')
+            PsiElement(identifier)('m')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')

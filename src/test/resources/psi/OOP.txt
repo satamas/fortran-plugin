@@ -213,13 +213,11 @@ FILE
             PROCEDURE_DESIGNATOR
               DATA_PATH
                 DATA_PATH
-                  DATA_REFERENCE_ELEMENT
-                    PsiElement(identifier)('t1')
+                  PsiElement(identifier)('t1')
                 PsiElement(%)('%')
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('sub')
-                  PsiElement(()('(')
-                  PsiElement())(')')
+                PsiElement(identifier)('sub')
+                PsiElement(()('(')
+                PsiElement())(')')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           RETURN_STMT
@@ -231,25 +229,20 @@ FILE
                   DATA_PATH
                     DATA_PATH
                       DATA_PATH
-                        DATA_REFERENCE_ELEMENT
-                          PsiElement(identifier)('o')
+                        PsiElement(identifier)('o')
                       PsiElement(%)('%')
-                      DATA_REFERENCE_ELEMENT
-                        PsiElement(identifier)('ar')
+                      PsiElement(identifier)('ar')
                     PsiElement(%)('%')
-                    DATA_REFERENCE_ELEMENT
-                      PsiElement(identifier)('dat')
-                      PsiElement(()('(')
-                      SECTION_SUBSCRIPT
-                        CONSTANT
-                          PsiElement(integerliteral)('5')
-                      PsiElement())(')')
+                    PsiElement(identifier)('dat')
+                    PsiElement(()('(')
+                    SECTION_SUBSCRIPT
+                      CONSTANT
+                        PsiElement(integerliteral)('5')
+                    PsiElement())(')')
                   PsiElement(%)('%')
-                  DATA_REFERENCE_ELEMENT
-                    PsiElement(identifier)('b')
+                  PsiElement(identifier)('b')
                 PsiElement(%)('%')
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('x')
+                PsiElement(identifier)('x')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_FUNCTION_STMT

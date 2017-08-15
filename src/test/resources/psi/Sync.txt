@@ -6,8 +6,7 @@ FILE
         PsiElement(()('(')
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('a')
+            PsiElement(identifier)('a')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         LOCK_STAT
@@ -18,8 +17,7 @@ FILE
             PsiWhiteSpace(' ')
             DESIGNATOR
               DATA_PATH
-                DATA_REFERENCE_ELEMENT
-                  PsiElement(identifier)('st')
+                PsiElement(identifier)('st')
         PsiElement())(')')
       PsiElement(eol)('\n')
       SYNC_ALL_STMT
@@ -49,8 +47,7 @@ FILE
           PsiWhiteSpace(' ')
           DESIGNATOR
             DATA_PATH
-              DATA_REFERENCE_ELEMENT
-                PsiElement(identifier)('e')
+              PsiElement(identifier)('e')
         PsiElement())(')')
       PsiElement(eol)('\n')
       EXIT_STMT
@@ -90,13 +87,11 @@ FILE
         ADD_EXPR
           DESIGNATOR
             DATA_PATH
-              DATA_REFERENCE_ELEMENT
-                PsiElement(identifier)('a')
+              PsiElement(identifier)('a')
           PsiElement(+)('+')
           DESIGNATOR
             DATA_PATH
-              DATA_REFERENCE_ELEMENT
-                PsiElement(identifier)('c')
+              PsiElement(identifier)('c')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         LABEL
@@ -114,13 +109,11 @@ FILE
         ADD_EXPR
           DESIGNATOR
             DATA_PATH
-              DATA_REFERENCE_ELEMENT
-                PsiElement(identifier)('a')
+              PsiElement(identifier)('a')
           PsiElement(+)('+')
           DESIGNATOR
             DATA_PATH
-              DATA_REFERENCE_ELEMENT
-                PsiElement(identifier)('b')
+              PsiElement(identifier)('b')
       PsiElement(eol)('\n')
       ERROR_STOP_STMT
         PsiElement(keyword)('error')
@@ -132,8 +125,7 @@ FILE
         PsiElement(()('(')
         DESIGNATOR
           DATA_PATH
-            DATA_REFERENCE_ELEMENT
-              PsiElement(identifier)('a')
+            PsiElement(identifier)('a')
         PsiElement())(')')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
