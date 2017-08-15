@@ -5,12 +5,13 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.fortran.lang.FortranTypes;
+import org.jetbrains.fortran.lang.psi.FortranEntityDecl;
 import org.jetbrains.fortran.lang.psi.FortranNameStmt;
 import org.jetbrains.fortran.lang.psi.FortranStmt;
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElementImpl;
 
 public class FortranNameStmtImpl extends FortranNamedElementImpl implements FortranNameStmt {
-    FortranNameStmtImpl(ASTNode node) {
+    public FortranNameStmtImpl(ASTNode node) {
         super(node);
     }
 
@@ -21,7 +22,7 @@ public class FortranNameStmtImpl extends FortranNamedElementImpl implements Fort
 
     @Nullable
     @Override
-    public PsiElement getIdentifier() {
-        return findChildByType(FortranTypes.IDENTIFIER);
+    public FortranEntityDecl getEntityDecl() {
+        return findChildByType(FortranTypes.ENTITY_DECL);
     }
 }

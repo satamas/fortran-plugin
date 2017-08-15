@@ -10,7 +10,7 @@ import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
 
 abstract class FortranSubModuleImplMixin(node : ASTNode) : FortranProgramUnitImpl(node), FortranSubmodule {
-    override fun getNameIdentifier(): PsiElement? = submoduleStmt.identifier
+    override fun getNameIdentifier(): PsiElement? = submoduleStmt.entityDecl
 
     override val variables: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)

@@ -497,6 +497,7 @@ entity_decl ::= fidentifier ('(' array_spec ')')? ('[' coarray_spec ']')?
   implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranNamedElement" ]
   mixin = "org.jetbrains.fortran.lang.psi.impl.FortranEntityDeclMixin"
 }
+program_unit_name ::= fidentifier { elementType = entity_decl }
 // R504 is trivial
 // R505
 private initialization ::= ('=' expr) | ('=>' designator) | ('=>' function_reference) | ('/' <<list data_stmt_value>> '/')
@@ -634,13 +635,14 @@ parent_string ::= data_path | string_literal
 substring_range ::= (expr)? ':' (expr)?
 // R611
 data_path ::= data_path_start (data_path_part)* {
-  implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement" ]
+  implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement"]
   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranDataPathImplMixin"
 }
 data_path_start ::= data_reference_element { elementType = data_path }
 left data_path_part ::= ('%' data_reference_element) { elementType = data_path }
 // R612
 private data_reference_element ::= fidentifier ('(' <<list section_subscript>>? ')')? (image_selector)?
+data_name ::= fidentifier { elementType = data_path }
 // R613 - 614 are trivial
 // R615 - 618 are excrescent
 // R619 is trivial
@@ -955,7 +957,7 @@ mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranMainProgramImplMixin"
 }
 private program_stmt_with_eol ::= program_stmt eol+ {pin = 1}
 // R1102 +
-program_stmt ::= label_decl? program_ fidentifier { pin = 2 }
+program_stmt ::= label_decl? program_ program_unit_name { pin = 2 }
 // R1103 +
 end_program_stmt ::=  label_decl? (endprogram_ fidentifier? | end_ (program_ fidentifier?)?) { pin = 2 }
 // R1104
@@ -964,7 +966,7 @@ pin = 1; extends = program_unit
 mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranModuleImplMixin"
 }
 // R1105
-module_stmt ::= label_decl? module_ fidentifier { pin = 2 }
+module_stmt ::= label_decl? module_ program_unit_name { pin = 2 }
 // R1106
 end_module_stmt ::= label_decl? (endmodule_ fidentifier? | end_ (module_ fidentifier?)?) { pin = 2 }
 // R1107
@@ -993,7 +995,7 @@ pin = 1; extends = program_unit
 mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin"
 }
 // R1117
-submodule_stmt ::= label_decl? submodule_ '(' parent_identifier ')' fidentifier { pin = 2 }
+submodule_stmt ::= label_decl? submodule_ '(' parent_identifier ')' program_unit_name { pin = 2 }
 // R1118
 parent_identifier ::= fidentifier (':' fidentifier)?
 // R1119
@@ -1004,7 +1006,7 @@ pin = 1; extends = program_unit
 mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranBlockDataImplMixin"
 }
 // R1121
-block_data_stmt ::= label_decl? (blockdata_ | (block_ data_)) fidentifier? { pin = 2 }
+block_data_stmt ::= label_decl? (blockdata_ | (block_ data_)) program_unit_name? { pin = 2 }
 // R1122
 end_block_data_stmt ::= label_decl? ((endblockdata_ fidentifier?)| (end_ (((block_ data_) | blockdata_) fidentifier?)?)
                       | (endblock_ data_ fidentifier?))  { pin = 2 }
@@ -1076,32 +1078,33 @@ function_subprogram ::= function_stmt eol+ block internal_subprogram_part? end_f
   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranFunctionSubprogramImplMixin"
 }
 // R1228
-function_stmt ::= label_decl? prefix? function_ fidentifier '(' <<list fidentifier>>? ')' suffix? {
-pin = 3;}
+function_stmt ::= label_decl? prefix? function_ program_unit_name '(' <<list fidentifier>>? ')' suffix? {
+pin = 3;
+}
 // R1229 and R1230 are trivial
 // R1231
 suffix ::= (language_binding_spec (result_ '(' fidentifier ')')?) | (result_ '(' fidentifier ')' (language_binding_spec)?)
 // R1232
-end_function_stmt ::= label_decl? ((end_ (function_ fidentifier?)?) | (endfunction_ fidentifier?)) { pin = 2 }
+end_function_stmt ::= label_decl? ((end_ (function_ data_name?)?) | (endfunction_ data_name?)) { pin = 2 }
 // R1233
 subroutine_subprogram ::= subroutine_stmt eol+ block internal_subprogram_part? end_subroutine_stmt {
     pin = 1; extends = program_unit
     mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranSubroutineSubprogramImplMixin"
 }
 // R1234
-subroutine_stmt ::= label_decl? prefix? subroutine_ fidentifier ('(' <<list dummy_arg>>? ')' language_binding_spec? )?  {
+subroutine_stmt ::= label_decl? prefix? subroutine_ program_unit_name ('(' <<list dummy_arg>>? ')' language_binding_spec? )?  {
 pin = 3; }
 // R1235
 dummy_arg ::= '*' | fidentifier
 // R1236
-end_subroutine_stmt ::= label_decl? ((end_ (subroutine_ fidentifier?)?) | (endsubroutine_ fidentifier?)) { pin = 2 }
+end_subroutine_stmt ::= label_decl? ((end_ (subroutine_ data_name?)?) | (endsubroutine_ data_name?)) { pin = 2 }
 // R1237
 separate_module_subprogram ::= mp_subprogram_stmt eol+ block internal_subprogram_part? end_mp_subprogram_stmt {
     pin = 1; extends = program_unit
     mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranSeparateModuleSubprogramImplMixin"
 }
 // R1238
-mp_subprogram_stmt ::= label_decl? module_ procedure_ fidentifier {
+mp_subprogram_stmt ::= label_decl? module_ procedure_ program_unit_name {
 pin = 3;
 }
 // R1239

@@ -10,7 +10,7 @@ import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
 
 abstract class FortranSubroutineSubprogramImplMixin(node : ASTNode) : FortranProgramUnitImpl(node), FortranNamedElement, FortranSubroutineSubprogram {
-    override fun getNameIdentifier(): PsiElement? = subroutineStmt.identifier
+    override fun getNameIdentifier(): PsiElement? = subroutineStmt.entityDecl
 
 
     override val variables: Array<FortranNamedElement>

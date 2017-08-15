@@ -11,7 +11,7 @@ import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
 
 abstract class FortranModuleImplMixin(node : ASTNode) : FortranProgramUnitImpl(node), FortranModule {
-    override fun getNameIdentifier(): PsiElement? = moduleStmt.identifier
+    override fun getNameIdentifier(): PsiElement? = moduleStmt.entityDecl
 
 
     override val variables: Array<FortranNamedElement>

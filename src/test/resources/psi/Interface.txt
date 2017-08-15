@@ -113,7 +113,8 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement(keyword)('function')
             PsiWhiteSpace(' ')
-            PsiElement(identifier)('solve')
+            DATA_PATH
+              PsiElement(identifier)('solve')
         PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
         INTERFACE_BODY
