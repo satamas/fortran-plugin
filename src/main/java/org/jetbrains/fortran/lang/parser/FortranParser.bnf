@@ -255,8 +255,7 @@ program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data
   pin = 1
   recoverWhile = program_unit_recover
   implements = ["org.jetbrains.fortran.lang.psi.ext.FortranNamedElement"
-                "org.jetbrains.fortran.lang.psi.ext.FortranSubprogramsOwner"
-                "org.jetbrains.fortran.lang.psi.ext.FortranVariablesOwner"]
+                "org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner"]
   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranProgramUnitImplMixin"
 }
 private program_unit_recover ::= !(eol | end_unit_keys)
@@ -959,7 +958,7 @@ private program_stmt_with_eol ::= program_stmt eol+ {pin = 1}
 // R1102 +
 program_stmt ::= label_decl? program_ program_unit_name { pin = 2 }
 // R1103 +
-end_program_stmt ::=  label_decl? (endprogram_ fidentifier? | end_ (program_ fidentifier?)?) { pin = 2 }
+end_program_stmt ::=  label_decl? (endprogram_ data_name? | end_ (program_ data_name?)?) { pin = 2 }
 // R1104
 module ::= module_stmt eol+ block module_subprogram_part? end_module_stmt {
 pin = 1; extends = program_unit

@@ -18,6 +18,9 @@ abstract class FortranModuleImplMixin(node : ASTNode) : FortranProgramUnitImpl(n
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
                 .toTypedArray()
 
+    override val unit: FortranNamedElement
+        get() = (moduleStmt.entityDecl as FortranNamedElement)
+
     override val subprograms: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(moduleSubprogramPart, FortranProgramUnit::class.java)
                 .toTypedArray()

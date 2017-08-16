@@ -18,4 +18,9 @@ abstract class FortranProgramUnitImplMixin(node : ASTNode) : FortranNamedElement
 
     override val subprograms: Array<FortranNamedElement>
         get() = emptyArray()
+
+    override val unit : FortranNamedElement? = null
+
+    override val usedModules: Array<FortranNamedElement>
+        get() = emptyArray()
 }

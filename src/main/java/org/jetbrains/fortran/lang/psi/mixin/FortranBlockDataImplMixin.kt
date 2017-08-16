@@ -15,6 +15,9 @@ abstract class FortranBlockDataImplMixin (node : ASTNode) : FortranProgramUnitIm
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
                 .toTypedArray()
 
+    override val unit: FortranNamedElement
+        get() = (blockDataStmt.entityDecl as FortranNamedElement)
+
     override val subprograms: Array<FortranNamedElement>
         get() = emptyArray()
 }

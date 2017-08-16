@@ -16,18 +16,27 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
 
     override fun resolveInner(): List<FortranNamedElement> {
         val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return emptyList()
-
-        // inside program unit
-        val innerNames = programUnit.variables.filter { element.referenceName == it.name }
+        val outerProgramUnit : PsiElement
+        // local variables
+        val names = programUnit.variables.filter { element.referenceName == it.name }
                 .toMutableList()
-                .plus(programUnit.subprograms.filter { element.referenceName == it.name }
-                .toMutableList())
-        if (programUnit.firstChild !is FortranBlock) {
-            val decl = (programUnit.firstChild as FortranNameStmt).entityDecl
-            if (decl != null && decl.name == element.referenceName) {
-                return innerNames.plus(decl)
-            }
+        if (element.referenceName == programUnit.unit?.name ) names.add(programUnit.unit as FortranNamedElement)
+        // if we are real program unit
+        if (programUnit.parent !is FortranModuleSubprogramPart
+            && programUnit.parent !is FortranInternalSubprogramPart) {
+            names.addAll(programUnit.subprograms.filter { element.referenceName == it.name }
+                    .toMutableList())
+
+            outerProgramUnit = programUnit
+        } else {
+            outerProgramUnit = PsiTreeUtil.getParentOfType(programUnit, FortranProgramUnit::class.java) ?: return emptyList()
+            names.addAll(outerProgramUnit.variables.filter { element.referenceName == it.name }
+                    .toMutableList())
+            names.addAll(outerProgramUnit.subprograms.filter { element.referenceName == it.name }
+                            .toMutableList())
         }
-        return innerNames
+        // modules
+
+        return names
     }
 }

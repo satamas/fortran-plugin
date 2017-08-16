@@ -17,6 +17,9 @@ abstract class FortranSubroutineSubprogramImplMixin(node : ASTNode) : FortranPro
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
                 .toTypedArray()
 
+    override val unit: FortranNamedElement
+        get() = (subroutineStmt.entityDecl as FortranNamedElement)
+
     override val subprograms: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranProgramUnit::class.java)
                 .toTypedArray()

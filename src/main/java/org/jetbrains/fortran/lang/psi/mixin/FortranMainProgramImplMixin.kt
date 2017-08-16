@@ -3,9 +3,7 @@ package org.jetbrains.fortran.lang.psi.mixin
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.lang.psi.FortranEntityDecl
-import org.jetbrains.fortran.lang.psi.FortranMainProgram
-import org.jetbrains.fortran.lang.psi.FortranProgramUnit
+import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
 
@@ -13,10 +11,17 @@ abstract class FortranMainProgramImplMixin(node : ASTNode) : FortranProgramUnitI
     override fun getNameIdentifier(): PsiElement? = programStmt?.entityDecl
 
     override val variables: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
-                .toTypedArray()
-
+        get() {
+            val n = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
+            if (programStmt != null)        n.add((programStmt as FortranProgramStmt).entityDecl)
+            return n.toTypedArray<FortranNamedElement>()
+        }
     override val subprograms: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranProgramUnit::class.java)
+                .map{ it -> (it.firstChild as FortranNameStmt).entityDecl as FortranNamedElement}
+                .plus(PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranFunctionSubprogram::class.java)
+                        .map { function ->
+                            PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { it.name == function.name  }.firstOrNull()
+                        }.filterNotNull())
                 .toTypedArray()
 }
