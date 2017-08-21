@@ -5,6 +5,11 @@ import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.mixin.FortranDataPathImplMixin
+import com.intellij.psi.PsiManager
+import com.intellij.psi.search.FileTypeIndex
+import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.util.indexing.FileBasedIndex
+import org.jetbrains.fortran.FortranFileType
 
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
@@ -16,27 +21,40 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
 
     override fun resolveInner(): List<FortranNamedElement> {
         val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return emptyList()
-        val outerProgramUnit : PsiElement
+        val outerProgramUnit : FortranProgramUnit
         // local variables
         val names = programUnit.variables.filter { element.referenceName == it.name }
-                .toMutableList()
+                .toMutableSet()
         if (element.referenceName == programUnit.unit?.name ) names.add(programUnit.unit as FortranNamedElement)
+
         // if we are real program unit
         if (programUnit.parent !is FortranModuleSubprogramPart
             && programUnit.parent !is FortranInternalSubprogramPart) {
-            names.addAll(programUnit.subprograms.filter { element.referenceName == it.name }
-                    .toMutableList())
+            names.addAll(programUnit.subprograms.filter { element.referenceName == it.name })
 
             outerProgramUnit = programUnit
         } else {
-            outerProgramUnit = PsiTreeUtil.getParentOfType(programUnit, FortranProgramUnit::class.java) ?: return emptyList()
-            names.addAll(outerProgramUnit.variables.filter { element.referenceName == it.name }
-                    .toMutableList())
-            names.addAll(outerProgramUnit.subprograms.filter { element.referenceName == it.name }
-                            .toMutableList())
+            outerProgramUnit = PsiTreeUtil.getParentOfType(programUnit, FortranProgramUnit::class.java) ?: programUnit
+            names.addAll(outerProgramUnit.variables.filter { element.referenceName == it.name })
+            names.addAll(outerProgramUnit.subprograms.filter { element.referenceName == it.name })
         }
-        // modules
 
-        return names
+        // other files
+        val vFiles = FileBasedIndex.getInstance()
+                .getContainingFiles(FileTypeIndex.NAME, FortranFileType, GlobalSearchScope.projectScope(element.project))
+
+        for (file in vFiles) {
+            val psiFile = PsiManager.getInstance(element.project).findFile(file) as FortranFile
+            names.addAll(psiFile.children.filter { it is FortranProgramUnit }
+                    .map { it -> (it as FortranProgramUnit).unit }
+                    .filterNotNull()
+                    .filter { element.referenceName == it.name })
+            names.addAll(psiFile.children.filter { it is FortranFunctionSubprogram }
+                    .flatMap { f -> (f as FortranFunctionSubprogram).variables.filter { element.referenceName == it.name } }
+                    .filterNotNull())
+
+        }
+
+        return names.toList()
     }
 }

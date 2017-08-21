@@ -15,6 +15,7 @@ abstract class FortranFunctionSubprogramImplMixin(node : ASTNode) : FortranProgr
 
     override val variables: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
+                .plus(functionStmt.entityDecl as FortranNamedElement)
                 .toTypedArray<FortranNamedElement>()
 
     override val unit: FortranNamedElement?
@@ -23,5 +24,9 @@ abstract class FortranFunctionSubprogramImplMixin(node : ASTNode) : FortranProgr
     override val subprograms: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranProgramUnit::class.java)
                 .map{ it -> (it.firstChild as FortranNameStmt).entityDecl as FortranNamedElement}
+                .plus(PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranFunctionSubprogram::class.java)
+                        .flatMap { function ->
+                            PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { it.name == function.name  }
+                        }.filterNotNull())
                 .toTypedArray()
 }

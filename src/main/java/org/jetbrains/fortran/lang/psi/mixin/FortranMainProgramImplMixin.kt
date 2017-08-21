@@ -20,8 +20,8 @@ abstract class FortranMainProgramImplMixin(node : ASTNode) : FortranProgramUnitI
         get() = PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranProgramUnit::class.java)
                 .map{ it -> (it.firstChild as FortranNameStmt).entityDecl as FortranNamedElement}
                 .plus(PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranFunctionSubprogram::class.java)
-                        .map { function ->
-                            PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { it.name == function.name  }.firstOrNull()
+                        .flatMap { function ->
+                            PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { it.name == function.name  }
                         }.filterNotNull())
                 .toTypedArray()
 }
