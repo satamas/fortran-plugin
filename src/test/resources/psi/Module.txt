@@ -6,7 +6,8 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('a')
+      ENTITY_DECL
+        PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     BLOCK
       TYPE_DECLARATION_STMT
@@ -37,7 +38,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('procedure')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('aa')
+          ENTITY_DECL
+            PsiElement(identifier)('aa')
         PsiElement(eol)('\n')
         BLOCK
           ASSIGNMENT_STMT
@@ -76,7 +78,8 @@ FILE
               PsiWhiteSpace(' ')
               PsiElement(keyword)('function')
               PsiWhiteSpace(' ')
-              PsiElement(identifier)('b')
+              ENTITY_DECL
+                PsiElement(identifier)('b')
               PsiElement(()('(')
               PsiElement(identifier)('z')
               PsiElement())(')')
@@ -126,7 +129,8 @@ FILE
         PsiElement(identifier)('a')
       PsiElement())(')')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('suba')
+      ENTITY_DECL
+        PsiElement(identifier)('suba')
     PsiElement(eol)('\n')
     BLOCK
       <empty list>
@@ -144,7 +148,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('subroutine')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('s')
+          ENTITY_DECL
+            PsiElement(identifier)('s')
           PsiElement(()('(')
           PsiElement())(')')
         PsiElement(eol)('\n')

@@ -978,15 +978,16 @@ private module_subprogram ::= !(label_decl? (end_ | endmodule_ | endsubmodule_))
 private module_subprogram_recover ::= !(eol | end_ | endfunction_ | endsubroutine_ | endprocedure_)
 // R1109
 use_stmt ::= label_decl? use_ (use_stmt_only | use_stmt_rename) { pin = 2 }
-private use_stmt_rename ::= ((',' module_nature)? '::')? fidentifier (',' <<list rename_stmt>>)?
-private use_stmt_only ::= ((',' module_nature)? '::')? fidentifier ',' only_ ':' (<<list only_stmt>>)? { pin = 5 }
+private use_stmt_rename ::= ((',' module_nature)? '::')? data_path (',' <<list rename_stmt>>)?
+private use_stmt_only ::= ((',' module_nature)? '::')? data_path ',' only_ ':' (<<list only_stmt>>)? { pin = 5 }
 // R1110
 private module_nature ::= intrinsic_ | nonintrinsic_
 // R1111
-rename_stmt ::= (fidentifier '=>' fidentifier)
+rename_stmt ::= (local_name '=>' data_name)
                |(operator_ '(' defoperator ')' '=>' operator_ '(' defoperator ')')
 // R1112
-only_stmt ::= rename_stmt | generic_spec | fidentifier
+only_stmt ::= rename_stmt | (local_name !'(') | generic_spec
+local_name ::= fidentifier { elementType = entity_decl }
 // R1113, R1114, R1115 are trivial
 // R1116
 submodule ::= submodule_stmt eol+ block module_subprogram_part? end_submodule_stmt {

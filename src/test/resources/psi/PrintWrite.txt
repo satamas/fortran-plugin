@@ -3,7 +3,8 @@ FILE
     PROGRAM_STMT
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('a')
+      ENTITY_DECL
+        PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
@@ -411,4 +412,5 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('a')
+      DATA_PATH
+        PsiElement(identifier)('a')

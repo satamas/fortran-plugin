@@ -3,7 +3,8 @@ FILE
     SUBROUTINE_STMT
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('message_number_dp')
+      ENTITY_DECL
+        PsiElement(identifier)('message_number_dp')
       PsiElement(()('(')
       DUMMY_ARG
         PsiElement(identifier)('level')
@@ -232,4 +233,5 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('message_number_dp')
+      DATA_PATH
+        PsiElement(identifier)('message_number_dp')

@@ -3,7 +3,8 @@ FILE
     MODULE_STMT
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('circle')
+      ENTITY_DECL
+        PsiElement(identifier)('circle')
     PsiElement(eol)('\n')
     PsiWhiteSpace('   ')
     BLOCK
@@ -44,7 +45,8 @@ FILE
         SUBROUTINE_STMT
           PsiElement(keyword)('subroutine')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('input')
+          ENTITY_DECL
+            PsiElement(identifier)('input')
           PsiElement(()('(')
           DUMMY_ARG
             PsiElement(identifier)('x')
@@ -82,7 +84,8 @@ FILE
         END_SUBROUTINE_STMT
           PsiElement(keyword)('endsubroutine')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('input')
+          DATA_PATH
+            PsiElement(identifier)('input')
       PsiElement(eol)('\n')
     END_MODULE_STMT
       PsiElement(keyword)('end')
@@ -101,7 +104,8 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('average')
+      ENTITY_DECL
+        PsiElement(identifier)('average')
       PsiElement(()('(')
       PsiElement(identifier)('x')
       PsiElement(,)(',')
@@ -185,7 +189,8 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('zero')
+      ENTITY_DECL
+        PsiElement(identifier)('zero')
       PsiElement(()('(')
       PsiElement())(')')
     PsiElement(eol)('\n')
@@ -209,7 +214,8 @@ FILE
     SUBROUTINE_STMT
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('input')
+      ENTITY_DECL
+        PsiElement(identifier)('input')
       PsiElement(()('(')
       DUMMY_ARG
         PsiElement(identifier)('x')
@@ -253,7 +259,8 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('data')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('setup')
+      ENTITY_DECL
+        PsiElement(identifier)('setup')
     PsiElement(eol)('\n')
     BLOCK
       <empty list>

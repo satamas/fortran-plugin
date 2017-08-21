@@ -3,7 +3,8 @@ FILE
     PROGRAM_STMT
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('arraystest')
+      ENTITY_DECL
+        PsiElement(identifier)('arraystest')
     PsiElement(eol)('\n')
     BLOCK
       TYPE_DECLARATION_STMT
@@ -134,4 +135,5 @@ FILE
     END_PROGRAM_STMT
       PsiElement(keyword)('endprogram')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('arraystest')
+      DATA_PATH
+        PsiElement(identifier)('arraystest')

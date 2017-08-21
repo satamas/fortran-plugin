@@ -3,7 +3,8 @@ FILE
     MODULE_STMT
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('a')
+      ENTITY_DECL
+        PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     BLOCK
@@ -200,7 +201,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('function')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('l')
+          ENTITY_DECL
+            PsiElement(identifier)('l')
           PsiElement(()('(')
           PsiElement(identifier)('o')
           PsiElement())(')')

@@ -3,7 +3,8 @@ FILE
     PROGRAM_STMT
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('filework')
+      ENTITY_DECL
+        PsiElement(identifier)('filework')
     PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     BLOCK
