@@ -18,8 +18,4 @@ abstract class FortranSeparateModuleSubprogramImplMixin(node : ASTNode) : Fortra
 
     override val unit: FortranNamedElement
         get() = (mpSubprogramStmt.entityDecl as FortranNamedElement)
-
-    override val subprograms: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranProgramUnit::class.java)
-                .toTypedArray()
 }

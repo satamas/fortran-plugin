@@ -24,7 +24,7 @@ abstract class FortranModuleImplMixin(node : ASTNode) : FortranProgramUnitImpl(n
                 .map{ it -> (it.firstChild as FortranNameStmt).entityDecl as FortranNamedElement}
                 .plus(PsiTreeUtil.findChildrenOfType(moduleSubprogramPart, FortranFunctionSubprogram::class.java)
                         .flatMap { function ->
-                            PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { it.name == function.name  }
+                            PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { function.name.equals(it.name, true)  }
                         }.filterNotNull())
                 .toTypedArray()
 }

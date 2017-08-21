@@ -23,20 +23,20 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return emptyList()
         val outerProgramUnit : FortranProgramUnit
         // local variables
-        val names = programUnit.variables.filter { element.referenceName == it.name }
+        val names = programUnit.variables.filter { element.referenceName.equals(it.name, true) }
                 .toMutableSet()
-        if (element.referenceName == programUnit.unit?.name ) names.add(programUnit.unit as FortranNamedElement)
+        if (element.referenceName.equals(programUnit.unit?.name, true) ) names.add(programUnit.unit as FortranNamedElement)
 
         // if we are real program unit
         if (programUnit.parent !is FortranModuleSubprogramPart
             && programUnit.parent !is FortranInternalSubprogramPart) {
-            names.addAll(programUnit.subprograms.filter { element.referenceName == it.name })
+            names.addAll(programUnit.subprograms.filter { element.referenceName.equals(it.name, true) })
 
             outerProgramUnit = programUnit
         } else {
             outerProgramUnit = PsiTreeUtil.getParentOfType(programUnit, FortranProgramUnit::class.java) ?: programUnit
-            names.addAll(outerProgramUnit.variables.filter { element.referenceName == it.name })
-            names.addAll(outerProgramUnit.subprograms.filter { element.referenceName == it.name })
+            names.addAll(outerProgramUnit.variables.filter { element.referenceName.equals(it.name, true) })
+            names.addAll(outerProgramUnit.subprograms.filter { element.referenceName.equals(it.name, true) })
         }
 
         // other files
@@ -48,9 +48,9 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             names.addAll(psiFile.children.filter { it is FortranProgramUnit }
                     .map { it -> (it as FortranProgramUnit).unit }
                     .filterNotNull()
-                    .filter { element.referenceName == it.name })
+                    .filter { element.referenceName.equals(it.name, true) })
             names.addAll(psiFile.children.filter { it is FortranFunctionSubprogram }
-                    .flatMap { f -> (f as FortranFunctionSubprogram).variables.filter { element.referenceName == it.name } }
+                    .flatMap { f -> (f as FortranFunctionSubprogram).variables.filter { element.referenceName.equals(it.name, true) } }
                     .filterNotNull())
 
         }
