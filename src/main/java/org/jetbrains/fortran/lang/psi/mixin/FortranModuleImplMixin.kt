@@ -27,4 +27,8 @@ abstract class FortranModuleImplMixin(node : ASTNode) : FortranProgramUnitImpl(n
                             PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { function.name.equals(it.name, true)  }
                         }.filterNotNull())
                 .toTypedArray()
+
+    override val usedModules: Array<FortranDataPath>
+        get() = PsiTreeUtil.findChildrenOfType(block, FortranUseStmt::class.java)
+                .map{ it.dataPath }.filterNotNull().toTypedArray()
 }

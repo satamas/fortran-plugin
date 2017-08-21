@@ -1,5 +1,7 @@
 package org.jetbrains.fortran.lang.psi.ext
 
+import org.jetbrains.fortran.lang.psi.FortranDataPath
+
 interface FortranEntitiesOwner {
     val subprograms : Array<FortranNamedElement>
 
@@ -7,5 +9,5 @@ interface FortranEntitiesOwner {
 
     val unit : FortranNamedElement?
 
-    val usedModules : Array<FortranNamedElement>
+    val usedModules : Array<FortranDataPath>
 }
