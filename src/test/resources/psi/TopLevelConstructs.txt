@@ -92,7 +92,8 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('circle')
+      DATA_PATH
+        PsiElement(identifier)('circle')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
   FUNCTION_SUBPROGRAM

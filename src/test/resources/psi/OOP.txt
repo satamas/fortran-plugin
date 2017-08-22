@@ -257,4 +257,5 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      PsiElement(identifier)('a')
+      DATA_PATH
+        PsiElement(identifier)('a')
