@@ -14,7 +14,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('person')
+          TYPE_DECL
+            PsiElement(identifier)('person')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
@@ -63,7 +64,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('kids')
+          TYPE_DECL
+            PsiElement(identifier)('kids')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
@@ -72,7 +74,8 @@ FILE
               PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
-                PsiElement(identifier)('person')
+                TYPE_NAME
+                  PsiElement(identifier)('person')
               PsiElement())(')')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
@@ -86,7 +89,8 @@ FILE
               PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
-                PsiElement(identifier)('person')
+                TYPE_NAME
+                  PsiElement(identifier)('person')
               PsiElement())(')')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
@@ -126,7 +130,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('AUXILIARY')
+          TYPE_DECL
+            PsiElement(identifier)('AUXILIARY')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
@@ -176,7 +181,8 @@ FILE
         DERIVED_TYPE_STMT
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('NUMERIC_SEQ')
+          TYPE_DECL
+            PsiElement(identifier)('NUMERIC_SEQ')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         PsiElement(keyword)('SEQUENCE')
@@ -229,7 +235,8 @@ FILE
         DERIVED_TYPE_STMT
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('POINT')
+          TYPE_DECL
+            PsiElement(identifier)('POINT')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         COMPONENT_PART

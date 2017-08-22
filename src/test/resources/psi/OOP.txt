@@ -14,7 +14,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('dot')
+          TYPE_DECL
+            PsiElement(identifier)('dot')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
@@ -69,7 +70,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('cut')
+          TYPE_DECL
+            PsiElement(identifier)('cut')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
@@ -78,7 +80,8 @@ FILE
               PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
-                PsiElement(identifier)('dot')
+                TYPE_NAME
+                  PsiElement(identifier)('dot')
               PsiElement())(')')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
@@ -106,7 +109,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('cutarray')
+          TYPE_DECL
+            PsiElement(identifier)('cutarray')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
@@ -115,7 +119,8 @@ FILE
               PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
-                PsiElement(identifier)('cut')
+                TYPE_NAME
+                  PsiElement(identifier)('cut')
               PsiElement())(')')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
@@ -148,7 +153,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('object')
+          TYPE_DECL
+            PsiElement(identifier)('object')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         COMPONENT_PART
@@ -168,7 +174,8 @@ FILE
               PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
-                PsiElement(identifier)('cutarray')
+                TYPE_NAME
+                  PsiElement(identifier)('cutarray')
               PsiElement())(')')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')

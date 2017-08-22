@@ -266,7 +266,10 @@ private external_subprogram ::= function_subprogram | subroutine_subprogram
 // R204 - 206 are included into execution_part_construct to be in block
 // We prefer to parse more and then check
 // R207
-declaration_construct ::= derived_type_def | enum_def | interface_block
+declaration_construct ::= derived_type_def | enum_def | interface_block {
+    implements = ["org.jetbrains.fortran.lang.psi.ext.FortranNamedElement"
+                  "org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner"]
+}
 
 private declaration_stmt ::= entry_stmt | format_stmt | parameter_stmt | procedure_declaration_stmt
                         | other_specification_stmt | type_declaration_stmt | stmt_function_stmt
@@ -381,11 +384,17 @@ char_length ::= ('(' type_param_value ')') | integerliteral
 // R423 - 424 are implemented in lexer
 // R425
 derived_type_def ::= derived_type_stmt eol+ (type_param_def_stmt eol+)* (private_or_sequence eol+)* component_part
-                     type_bound_procedure_part? end_type_stmt { pin = 1; extends = declaration_construct }
+                     type_bound_procedure_part? end_type_stmt {
+    pin = 1; extends = declaration_construct
+    mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranDerivedTypeDefImplMixin"
+}
+type_name ::= fidentifier { extends = data_name }
+type_decl ::= fidentifier { extends = entity_decl }
 // R426
-derived_type_stmt ::= label_decl? type_ ((',' <<list type_attr_spec>>)? '::')? fidentifier ('(' <<list fidentifier>> ')')?  { pin = 4 }
+derived_type_stmt ::= label_decl? type_ ((',' <<list type_attr_spec>>)? '::')? type_decl ('(' <<list fidentifier>> ')')?  { pin = 4 }
+
 // R427
-type_attr_spec ::= abstract_ | access_spec | (bind_ '(' fidentifier ')') | (extends_ '(' fidentifier ')')
+type_attr_spec ::= abstract_ | access_spec | (bind_ '(' fidentifier ')') | (extends_ '(' type_name ')')
 // R428
 private private_or_sequence ::= label_decl? (private_ | sequence_)  { pin = 2 }
 // R429
@@ -411,7 +420,7 @@ data_component_def_stmt ::= label_decl? declaration_type_spec ((',' <<list compo
 component_attr_spec ::= access_spec | allocatable_ | (codimension_ '[' coarray_spec ']')
                        | contiguous_ | (dimension_ '(' component_array_spec ')') | pointer_
 // R438
-component_decl ::= fidentifier ('(' component_array_spec ')')? ('[' coarray_spec ']')?
+component_decl ::= local_name ('(' component_array_spec ')')? ('[' coarray_spec ']')?
                    ('*' char_length)? (initialization)?
 // R439
 private component_array_spec ::= <<list explicit_shape_spec>> | <<list deferred_shape_spec>>
@@ -445,7 +454,7 @@ binding_attr ::= (pass_ ('(' fidentifier ')')?) | nopass_ | nonoverridable_ | de
 // R452
 final_procedure_stmt ::= label_decl? final_ '::' <<list fidentifier>> { pin = 2 }
 // R453
-derived_type_spec ::= fidentifier ('(' <<list type_param_spec>> ')')? { pin = 1 }
+derived_type_spec ::= type_name ('(' <<list type_param_spec>> ')')? { pin = 1 }
 // R454
 type_param_spec ::= (fidentifier '=')? type_param_value
 // R455 is in clause 7
@@ -454,7 +463,10 @@ component_spec ::= (fidentifier '=')? component_data_source
 // R457
 component_data_source ::= expr /*| variable*/ | proc_target
 // R458
-enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)* end_enum_stmt { pin = 1; extends = declaration_construct }
+enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)* end_enum_stmt {
+ pin = 1; extends = declaration_construct
+ mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranEnumDefImplMixin"
+}
 // R459
 enum_def_stmt ::= label_decl? enum_ ',' bind_ '(' fidentifier ')' { pin = 4 }
 // R460
@@ -1013,7 +1025,10 @@ end_block_data_stmt ::= label_decl? ((endblockdata_ data_name?)| (end_ (((block_
 
 // Clause 12
 // R1201
-interface_block ::= interface_stmt interface_specification end_interface_stmt { pin = 1; extends = declaration_construct }
+interface_block ::= interface_stmt interface_specification end_interface_stmt {
+ pin = 1; extends = declaration_construct
+ mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranInterfaceBlockImplMixin"
+}
 // R1202
 private interface_specification ::= !endinterface_keys ((eol) | interface_body | (procedure_stmt))* {
 pin = 1

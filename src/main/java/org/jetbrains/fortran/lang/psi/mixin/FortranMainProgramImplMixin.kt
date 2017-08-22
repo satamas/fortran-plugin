@@ -4,6 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.*
+import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
 
@@ -13,6 +14,8 @@ abstract class FortranMainProgramImplMixin(node : ASTNode) : FortranProgramUnitI
     override val variables: Array<FortranNamedElement>
         get() {
             val n = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
+                    .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) !is FortranProgramUnit }
+                    .toMutableList()
             if (programStmt != null)        n.add((programStmt as FortranProgramStmt).entityDecl)
             return n.toTypedArray<FortranNamedElement>()
         }
@@ -28,4 +31,8 @@ abstract class FortranMainProgramImplMixin(node : ASTNode) : FortranProgramUnitI
     override val usedModules: Array<FortranDataPath>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranUseStmt::class.java)
                 .map{ it.dataPath }.filterNotNull().toTypedArray()
+
+    override val types: Array<FortranNamedElement>
+        get() = PsiTreeUtil.findChildrenOfType(block, FortranDerivedTypeDef::class.java)
+                .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
 }
