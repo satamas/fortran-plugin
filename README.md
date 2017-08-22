@@ -25,7 +25,10 @@ General Usage Information
 =========================
 
 To start work with your Fortran project use `New > Project from existing sources` action. 
-In CLion it is also possible to import project using `CMake`. It allows to compile and run project.
+In CLion it is also possible to load project using `CMake`. The `CMake` instruction for Clion is available 
+[here](https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html). For Fortran Prokects you need to add 
+a line `enable_language (Fortran)` in your `CMakeLists.txt`. Using `CMake` project in CLion allows to compile and 
+run project from the IDE.
 
 Fortran source files might be in two forms: free form and fixed form. 
 Fixed form is deprecated, so some features are available only for free form now.
