@@ -6,6 +6,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import org.jetbrains.fortran.lang.psi.FortranSeparateModuleSubprogram
+import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
 
@@ -14,6 +15,7 @@ abstract class FortranSeparateModuleSubprogramImplMixin(node : ASTNode) : Fortra
 
     override val variables: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
+                .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
                 .toTypedArray()
 
     override val unit: FortranNamedElement

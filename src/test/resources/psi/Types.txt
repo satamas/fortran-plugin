@@ -35,7 +35,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('forename')
+                ENTITY_DECL
+                  PsiElement(identifier)('forename')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
@@ -46,7 +47,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('age')
+                ENTITY_DECL
+                  PsiElement(identifier)('age')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
@@ -81,7 +83,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('oldest_child')
+                ENTITY_DECL
+                  PsiElement(identifier)('oldest_child')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
@@ -108,7 +111,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('other_kids')
+                ENTITY_DECL
+                  PsiElement(identifier)('other_kids')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
@@ -143,7 +147,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('DIAGNOSTIC')
+                ENTITY_DECL
+                  PsiElement(identifier)('DIAGNOSTIC')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
@@ -165,7 +170,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('MESSAGE')
+                ENTITY_DECL
+                  PsiElement(identifier)('MESSAGE')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
@@ -197,7 +203,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('INT_VAL')
+                ENTITY_DECL
+                  PsiElement(identifier)('INT_VAL')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
@@ -208,7 +215,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('REAL_VAL')
+                ENTITY_DECL
+                  PsiElement(identifier)('REAL_VAL')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
@@ -219,7 +227,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('LOG_VAL')
+                ENTITY_DECL
+                  PsiElement(identifier)('LOG_VAL')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
@@ -248,11 +257,13 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('X')
+                ENTITY_DECL
+                  PsiElement(identifier)('X')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('Y')
+                ENTITY_DECL
+                  PsiElement(identifier)('Y')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         TYPE_BOUND_PROCEDURE_PART

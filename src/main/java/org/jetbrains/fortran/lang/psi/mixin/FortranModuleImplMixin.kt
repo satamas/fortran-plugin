@@ -14,7 +14,7 @@ abstract class FortranModuleImplMixin(node : ASTNode) : FortranProgramUnitImpl(n
 
     override val variables: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
-                .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) !is FortranProgramUnit }
+                .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
                 .plus(moduleStmt.entityDecl as FortranNamedElement)
                 .toTypedArray()
 

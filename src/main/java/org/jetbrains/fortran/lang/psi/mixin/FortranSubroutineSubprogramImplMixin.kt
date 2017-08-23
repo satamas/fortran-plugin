@@ -14,7 +14,7 @@ abstract class FortranSubroutineSubprogramImplMixin(node : ASTNode) : FortranPro
 
     override val variables: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
-                .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) !is FortranProgramUnit }
+                .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
                 .plus(subroutineStmt.entityDecl as FortranNamedElement)
                 .toTypedArray()
 

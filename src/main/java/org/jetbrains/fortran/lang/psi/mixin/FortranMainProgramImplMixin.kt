@@ -14,7 +14,7 @@ abstract class FortranMainProgramImplMixin(node : ASTNode) : FortranProgramUnitI
     override val variables: Array<FortranNamedElement>
         get() {
             val n = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
-                    .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) !is FortranProgramUnit }
+                    .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
                     .toMutableList()
             if (programStmt != null)        n.add((programStmt as FortranProgramStmt).entityDecl)
             return n.toTypedArray<FortranNamedElement>()

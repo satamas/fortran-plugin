@@ -11,6 +11,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
+import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
 
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
@@ -33,7 +34,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                     .filterNotNull()
                     .flatMap { it.variables.filter { element.referenceName.equals(it.name, true)}
                             .plus(it.subprograms.filter { element.referenceName.equals(it.name, true) })
-                            .plus(it.types.filter { element.referenceName.equals(it.name, true) })}
+                            .plus(it.types.filter { element.referenceName.equals(it.name, true) })
+                    }
                     .toList()
         }
 
@@ -51,6 +53,10 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                 outerProgramUnit = programUnit
             }
 
+            // renamed types
+            types.addAll(programUnit.variables.filter{ PsiTreeUtil.getParentOfType(it, FortranRenameStmt::class.java) != null })
+
+            // from modules
             if (element.parent !is FortranUseStmt) { // We do not need recursion here
                 val allModules = outerProgramUnit.usedModules.toMutableSet()
                 if (programUnit != outerProgramUnit) allModules.addAll(programUnit.usedModules)
@@ -83,15 +89,22 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         {
             val innerPart = (element.firstChild.reference as FortranPathReferenceImpl).multiResolve().filterNotNull()
 
-            var innerPartTypeStmt = innerPart.map { PsiTreeUtil.getParentOfType(it, FortranTypeDeclarationStmt::class.java) }.firstOrNull()
-            var innerType = innerPartTypeStmt?.derivedTypeSpec?.typeName
 
+            val innerPartTypeStmt = innerPart.map { PsiTreeUtil.getParentOfType(it, FortranTypeDeclarationStmt::class.java)
+            ?: PsiTreeUtil.getParentOfType(it, FortranDataComponentDefStmt::class.java) }.firstOrNull()
+
+            val innerType = if (innerPartTypeStmt is FortranTypeDeclarationStmt) {
+                                innerPartTypeStmt.derivedTypeSpec?.typeName
+                            } else {
+                                (innerPartTypeStmt as FortranDataComponentDefStmt?)?.derivedTypeSpec?.typeName
+                            }
             if (innerType == null) {
                 return emptyList()
             } else {
+                // we should find type declaration. If it is in use -> rename we'll search for the origin name
                 var type = innerType.reference.multiResolve().firstOrNull()
+                if (type?.parent is FortranRenameStmt) type = (type.parent as FortranRenameStmt).dataPath?.reference?.multiResolve()?.firstOrNull()
 
-                System.out.println(element.referenceName)
                 return PsiTreeUtil.getParentOfType(type, FortranDerivedTypeDef::class.java)?.variables
                         ?.filter { element.referenceName.equals(it.name, true) }?.toMutableList() ?: emptyList()
             }

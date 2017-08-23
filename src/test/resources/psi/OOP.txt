@@ -27,15 +27,18 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('x')
+                ENTITY_DECL
+                  PsiElement(identifier)('x')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('y')
+                ENTITY_DECL
+                  PsiElement(identifier)('y')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('z')
+                ENTITY_DECL
+                  PsiElement(identifier)('z')
           PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
         TYPE_BOUND_PROCEDURE_PART
@@ -87,11 +90,13 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('a')
+                ENTITY_DECL
+                  PsiElement(identifier)('a')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('b')
+                ENTITY_DECL
+                  PsiElement(identifier)('b')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
@@ -135,7 +140,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('dat')
+                ENTITY_DECL
+                  PsiElement(identifier)('dat')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
@@ -166,7 +172,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('id')
+                ENTITY_DECL
+                  PsiElement(identifier)('id')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
@@ -181,7 +188,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                PsiElement(identifier)('ar')
+                ENTITY_DECL
+                  PsiElement(identifier)('ar')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_TYPE_STMT
