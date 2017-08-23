@@ -45,10 +45,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
     private fun resolveModuleRename(useStmt: FortranUseStmt) =
             useStmt.dataPath!!.reference.multiResolve().filterNotNull()
             .map { PsiTreeUtil.getParentOfType(it, FortranModule::class.java) }.filterNotNull()
-            .flatMap { it.variables.filter { element.referenceName.equals(it.name, true)}
-                    .plus(it.subprograms.filter { element.referenceName.equals(it.name, true) })
-                    .plus(it.types.filter { element.referenceName.equals(it.name, true) })
-            }.toList()
+            .flatMap { collectAllNamesFromModule(it) }.toList()
 
 
     private fun resolveTypes(programUnit: FortranProgramUnit) : List<FortranNamedElement> {
@@ -143,30 +140,9 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         if (element.parent !is FortranUseStmt) { // We do not need recursion here
             val allModules = collectAllModules(programUnit, outerProgramUnit)
             for (module in allModules) {
-                val onlyIsUsed = !(module.parent as FortranUseStmt).onlyStmtList.isEmpty()
-                val onlyList = (module.parent as FortranUseStmt).onlyStmtList
-                        .map{ it.entityDecl?.name?.toLowerCase() }.filterNotNull()
-                val renameList = (module.parent as FortranUseStmt).renameStmtList
-                        .plus((module.parent as FortranUseStmt).onlyStmtList.map{ it.renameStmt})
-                        .map{ it?.dataPath?.referenceName?.toLowerCase() }.filterNotNull()
-
-                val moduleNamesPsi = module.reference.multiResolve()
-                for (moduleNamePsi in moduleNamesPsi) {
-                    val modulePsi = PsiTreeUtil.getParentOfType(moduleNamePsi, FortranModule::class.java)
-
-                    if (modulePsi != null) {
-                        names.addAll(modulePsi.variables.filter {
-                            element.referenceName.equals(it.name, true)
-                                    && element.referenceName.toLowerCase() !in renameList
-                                    && (!onlyIsUsed  || element.referenceName.toLowerCase() in onlyList)
-                        })
-                        names.addAll(modulePsi.subprograms.filter {
-                            element.referenceName.equals(it.name, true)
-                                    && element.referenceName.toLowerCase() !in renameList
-                                    && (!onlyIsUsed || element.referenceName.toLowerCase() in onlyList)
-                        })
-                    }
-                }
+                names.addAll(module.reference.multiResolve().filterNotNull()
+                        .map { PsiTreeUtil.getParentOfType(it, FortranModule::class.java) }.filterNotNull()
+                        .flatMap { collectAllNamesFromModule(it) }.toList())
             }
         }
         return names.toList()
@@ -207,5 +183,31 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             })
         }
         return allTypes
+    }
+
+    fun collectAllNamesFromModule(module : FortranModule?) : MutableSet<FortranNamedElement> {
+        if (module == null) return mutableSetOf()
+        val allNames : MutableSet<FortranNamedElement> = mutableSetOf()
+        val allModules = collectAllModules(module)
+        for (m in allModules) {
+            val onlyIsUsed = !(m.parent as FortranUseStmt).onlyStmtList.isEmpty()
+            val onlyList = (m.parent as FortranUseStmt).onlyStmtList
+                    .map { it.entityDecl?.name?.toLowerCase() }.filterNotNull()
+            val renameList = (m.parent as FortranUseStmt).renameStmtList
+                    .plus((m.parent as FortranUseStmt).onlyStmtList.map { it.renameStmt })
+                    .map { it?.dataPath?.referenceName?.toLowerCase() }.filterNotNull()
+
+            allNames.addAll(m.reference.multiResolve().flatMap {
+                collectAllNamesFromModule(PsiTreeUtil.getParentOfType(it, FortranModule::class.java))
+            }.filter {
+                element.referenceName.equals(it.name, true)
+                        && element.referenceName.toLowerCase() !in renameList
+                        && (!onlyIsUsed || element.referenceName.toLowerCase() in onlyList)
+            })
+        }
+        allNames.addAll(module.variables.filter { element.referenceName.equals(it.name, true)}
+                .plus(module.subprograms.filter { element.referenceName.equals(it.name, true) })
+                .plus(module.types.filter { element.referenceName.equals(it.name, true) }))
+        return allNames
     }
 }

@@ -71,4 +71,16 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
         assertEquals("data", (element.reference?.resolve() as FortranEntityDecl).name)
     }
+
+    fun testDeepPiUsage() {
+        myFixture.configureByFiles("DeepPiUsage.f95", "CloseModule.f95", "AwayModule.f95", "FarAwayModule.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals("renamed_pi", (element.reference?.resolve() as FortranEntityDecl).name)
+    }
+
+    fun testDeepEUsage() {
+        myFixture.configureByFiles("DeepEUsage.f95", "CloseModule.f95", "AwayModule.f95", "FarAwayModule.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals("E", (element.reference?.resolve() as FortranEntityDecl).name)
+    }
 }
