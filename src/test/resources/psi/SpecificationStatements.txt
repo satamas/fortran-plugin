@@ -442,11 +442,11 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(identifier)('average2')
         PsiElement(()('(')
-        DUMMY_ARG
+        DATA_PATH
           PsiElement(identifier)('x')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        DUMMY_ARG
+        DATA_PATH
           PsiElement(identifier)('y')
         PsiElement())(')')
       PsiElement(eol)('\n')

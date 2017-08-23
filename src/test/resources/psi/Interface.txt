@@ -23,13 +23,16 @@ FILE
             ENTITY_DECL
               PsiElement(identifier)('solve')
             PsiElement(()('(')
-            PsiElement(identifier)('n')
+            DATA_PATH
+              PsiElement(identifier)('n')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            PsiElement(identifier)('pmatrix')
+            DATA_PATH
+              PsiElement(identifier)('pmatrix')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            PsiElement(identifier)('key')
+            DATA_PATH
+              PsiElement(identifier)('key')
             PsiElement())(')')
           PsiElement(eol)(';')
           PsiElement(eol)('\n')
@@ -126,19 +129,19 @@ FILE
             ENTITY_DECL
               PsiElement(identifier)('LPV')
             PsiElement(()('(')
-            DUMMY_ARG
+            DATA_PATH
               PsiElement(identifier)('n')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DUMMY_ARG
+            DATA_PATH
               PsiElement(identifier)('x')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DUMMY_ARG
+            DATA_PATH
               PsiElement(identifier)('P')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DUMMY_ARG
+            DATA_PATH
               PsiElement(identifier)('dP')
             PsiElement())(')')
           PsiElement(eol)('\n')

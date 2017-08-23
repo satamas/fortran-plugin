@@ -3,9 +3,7 @@ package org.jetbrains.fortran.lang.psi.mixin
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.lang.psi.FortranEntityDecl
-import org.jetbrains.fortran.lang.psi.FortranProgramUnit
-import org.jetbrains.fortran.lang.psi.FortranSeparateModuleSubprogram
+import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
@@ -20,4 +18,12 @@ abstract class FortranSeparateModuleSubprogramImplMixin(node : ASTNode) : Fortra
 
     override val unit: FortranNamedElement
         get() = (mpSubprogramStmt.entityDecl as FortranNamedElement)
+
+    override val usedModules: Array<FortranDataPath>
+        get() = PsiTreeUtil.findChildrenOfType(block, FortranUseStmt::class.java)
+                .map{ it.dataPath }.filterNotNull().toTypedArray()
+
+    override val types: Array<FortranNamedElement>
+        get() = PsiTreeUtil.findChildrenOfType(block, FortranDerivedTypeDef::class.java)
+                .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
 }

@@ -48,15 +48,15 @@ FILE
           ENTITY_DECL
             PsiElement(identifier)('input')
           PsiElement(()('(')
-          DUMMY_ARG
+          DATA_PATH
             PsiElement(identifier)('x')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
-          DUMMY_ARG
+          DATA_PATH
             PsiElement(identifier)('y')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
-          DUMMY_ARG
+          DATA_PATH
             PsiElement(identifier)('z')
           PsiElement())(')')
         PsiElement(eol)('\n')
@@ -108,11 +108,14 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('average')
       PsiElement(()('(')
-      PsiElement(identifier)('x')
+      DATA_PATH
+        PsiElement(identifier)('x')
       PsiElement(,)(',')
-      PsiElement(identifier)('y')
+      DATA_PATH
+        PsiElement(identifier)('y')
       PsiElement(,)(',')
-      PsiElement(identifier)('z')
+      DATA_PATH
+        PsiElement(identifier)('z')
       PsiElement())(')')
     PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
@@ -165,11 +168,11 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(identifier)('average2')
         PsiElement(()('(')
-        DUMMY_ARG
+        DATA_PATH
           PsiElement(identifier)('x')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        DUMMY_ARG
+        DATA_PATH
           PsiElement(identifier)('y')
         PsiElement())(')')
       PsiElement(eol)('\n')
@@ -218,15 +221,15 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('input')
       PsiElement(()('(')
-      DUMMY_ARG
+      DATA_PATH
         PsiElement(identifier)('x')
       PsiElement(,)(',')
       PsiWhiteSpace(' ')
-      DUMMY_ARG
+      DATA_PATH
         PsiElement(identifier)('y')
       PsiElement(,)(',')
       PsiWhiteSpace(' ')
-      DUMMY_ARG
+      DATA_PATH
         PsiElement(identifier)('z')
       PsiElement())(')')
     PsiElement(eol)('\n')

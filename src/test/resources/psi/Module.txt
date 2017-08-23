@@ -81,7 +81,8 @@ FILE
               ENTITY_DECL
                 PsiElement(identifier)('b')
               PsiElement(()('(')
-              PsiElement(identifier)('z')
+              DATA_PATH
+                PsiElement(identifier)('z')
               PsiElement())(')')
             PsiElement(eol)('\n')
             BLOCK

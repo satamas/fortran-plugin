@@ -6,19 +6,19 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('message_number_dp')
       PsiElement(()('(')
-      DUMMY_ARG
+      DATA_PATH
         PsiElement(identifier)('level')
       PsiElement(,)(',')
-      DUMMY_ARG
+      DATA_PATH
         PsiElement(identifier)('text')
       PsiElement(,)(',')
-      DUMMY_ARG
+      DATA_PATH
         PsiElement(identifier)('number')
       PsiElement(,)(',')
-      DUMMY_ARG
+      DATA_PATH
         PsiElement(identifier)('format')
       PsiElement(,)(',')
-      DUMMY_ARG
+      DATA_PATH
         PsiElement(identifier)('units')
       PsiElement())(')')
     PsiElement(eol)('\n')

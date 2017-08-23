@@ -219,7 +219,8 @@ FILE
           ENTITY_DECL
             PsiElement(identifier)('l')
           PsiElement(()('(')
-          PsiElement(identifier)('o')
+          DATA_PATH
+            PsiElement(identifier)('o')
           PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')

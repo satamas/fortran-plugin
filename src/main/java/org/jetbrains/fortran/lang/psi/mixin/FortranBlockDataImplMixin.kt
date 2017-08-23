@@ -4,6 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.FortranBlockData
+import org.jetbrains.fortran.lang.psi.FortranDerivedTypeDef
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
@@ -21,6 +22,7 @@ abstract class FortranBlockDataImplMixin (node : ASTNode) : FortranProgramUnitIm
     override val unit: FortranNamedElement
         get() = (blockDataStmt.entityDecl as FortranNamedElement)
 
-    override val subprograms: Array<FortranNamedElement>
-        get() = emptyArray()
+    override val types: Array<FortranNamedElement>
+        get() = PsiTreeUtil.findChildrenOfType(block, FortranDerivedTypeDef::class.java)
+                .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
 }
