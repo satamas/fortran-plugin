@@ -55,9 +55,20 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         assertEquals("x", (element.reference?.resolve() as FortranEntityDecl).name)
     }
 
+    fun testNoExcessiveUsages() {
+        val usageInfos = myFixture.testFindUsages("Components.f95", "Module.f95")
+        Assert.assertEquals(3, usageInfos.size)
+    }
+
     fun testRenamedType() {
         myFixture.configureByFiles("RenamedType.f95", "Module.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
         assertEquals("x", (element.reference?.resolve() as FortranEntityDecl).name)
+    }
+
+    fun testDeepUsage() {
+        myFixture.configureByFiles("DeepUsage.f95", "CloseModule.f95", "AwayModule.f95", "FarAwayModule.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals("data", (element.reference?.resolve() as FortranEntityDecl).name)
     }
 }
