@@ -56,6 +56,10 @@
                                  implementationClass="org.jetbrains.fortran.ide.findUsages.FixedFormFortranFindUsagesProvider"/>
         <usageTypeProvider implementation="org.jetbrains.fortran.ide.findUsages.FortranUsageTypeProvider"/>
         <findUsagesHandlerFactory implementation="org.jetbrains.fortran.ide.findUsages.FortranFindUsagesHandlerFactory"/>
+
+        <!-- Indices -->
+        <stubIndex implementation="org.jetbrains.fortran.lang.core.stubs.index.FortranNamedElementIndex"/>
+
     </extensions>
 
     <actions>

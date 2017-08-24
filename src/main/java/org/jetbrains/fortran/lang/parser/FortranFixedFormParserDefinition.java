@@ -11,16 +11,14 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.fortran.FortranFixedFormLanguage;
 import org.jetbrains.fortran.lang.FortranTypes;
+import org.jetbrains.fortran.lang.core.stubs.FortranFixedFormFileStub;
 import org.jetbrains.fortran.lang.lexer.FortranLexer;
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile;
 
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.*;
 
 public class FortranFixedFormParserDefinition implements ParserDefinition {
-    public static final IFileElementType FILE = new IFileElementType(FortranFixedFormLanguage.INSTANCE);
-
     @NotNull
     @Override
     public Lexer createLexer(Project project) { return new FortranLexer(true); }
@@ -32,7 +30,7 @@ public class FortranFixedFormParserDefinition implements ParserDefinition {
 
     @Override
     public IFileElementType getFileNodeType() {
-        return FILE;
+        return FortranFixedFormFileStub.Type.INSTANCE;
     }
 
     @NotNull

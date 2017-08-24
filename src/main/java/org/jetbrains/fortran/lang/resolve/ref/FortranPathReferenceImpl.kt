@@ -124,6 +124,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             var psiFile = PsiManager.getInstance(element.project).findFile(file)
             if (psiFile !is FortranFile) psiFile = psiFile as FortranFixedFormFile
             names.addAll(psiFile.children.filter { it is FortranProgramUnit }
+                    .filter{ element.referenceName.equals((it as FortranProgramUnit).name, true) }
                     .map { it -> (it as FortranProgramUnit).unit }
                     .filterNotNull()
                     .filter { element.referenceName.equals(it.name, true) })

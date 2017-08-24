@@ -18,6 +18,13 @@ abstract class FortranProgramUnitImplMixin : FortranStubbedNamedElementImpl<Fort
         return this
     }
 
+    override fun getNameIdentifier(): PsiElement? = null
+
+    override fun getName(): String? {
+        val stub = stub
+        return if (stub != null) stub.name else nameIdentifier?.text
+    }
+
     override val variables: Array<FortranNamedElement>
         get() = emptyArray()
 

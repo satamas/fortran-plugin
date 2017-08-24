@@ -255,7 +255,8 @@ program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data
   pin = 1
   recoverWhile = program_unit_recover
   implements = ["org.jetbrains.fortran.lang.psi.ext.FortranNamedElement"
-                "org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner"]
+                "org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner"
+                "com.intellij.psi.PsiNameIdentifierOwner"]
   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranProgramUnitImplMixin"
   stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
   elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'

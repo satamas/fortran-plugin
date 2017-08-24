@@ -2,6 +2,8 @@ package org.jetbrains.fortran.lang.core.stubs
 
 import com.intellij.psi.stubs.*
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
+import com.intellij.psi.stubs.IndexSink
+import org.jetbrains.fortran.lang.core.stubs.index.FortranNamedElementIndex
 
 class FortranProgramUnitStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>,
@@ -27,7 +29,9 @@ class FortranProgramUnitStub(
                 FortranProgramUnitStub(parentStub, this, psi.name)
 
         override fun indexStub(stub: FortranProgramUnitStub, sink: IndexSink) {
-            // NOP
+            stub.name?.let {
+                sink.occurrence(FortranNamedElementIndex.KEY, it)
+            }
         }
     }
 }
