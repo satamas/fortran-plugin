@@ -2,15 +2,20 @@ package org.jetbrains.fortran.lang.psi.mixin
 
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
+import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.util.PsiTreeUtil
+import org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
 
-abstract class FortranModuleImplMixin(node : ASTNode) : FortranProgramUnitImpl(node), FortranModule {
-    override fun getNameIdentifier(): PsiElement? = moduleStmt.entityDecl
+abstract class FortranModuleImplMixin : FortranProgramUnitImpl, FortranModule {
+    constructor(node: ASTNode) : super(node)
 
+    constructor(stub: FortranProgramUnitStub, nodeType: IStubElementType<*, *>) : super(stub, nodeType)
+
+    override fun getNameIdentifier(): PsiElement? = moduleStmt.entityDecl
 
     override val variables: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)

@@ -2,7 +2,7 @@ FILE
   PsiComment(comment)('C comment')
   PsiElement(eol)('\n')
   PsiWhiteSpace('      ')
-  MAIN_PROGRAM
+  FortranMainProgramImpl(MAIN PROGRAM)
     PROGRAM_STMT
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')

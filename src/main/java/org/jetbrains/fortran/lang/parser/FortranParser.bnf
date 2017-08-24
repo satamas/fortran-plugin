@@ -257,6 +257,8 @@ program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data
   implements = ["org.jetbrains.fortran.lang.psi.ext.FortranNamedElement"
                 "org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner"]
   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranProgramUnitImplMixin"
+  stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+  elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 private program_unit_recover ::= !(eol | end_unit_keys)
 private end_unit_keys ::= !assignment_stmt (label_decl? (end_ | endprogram_ | endmodule_
@@ -965,6 +967,8 @@ control_edit ::= ":" | (integerliteral? '/') | (signed_int_literal dataedit)
 main_program ::= (program_stmt_with_eol)? block internal_subprogram_part? end_program_stmt {
 pin = 1; extends = program_unit
 mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranMainProgramImplMixin"
+  stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+  elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 private program_stmt_with_eol ::= program_stmt eol+ {pin = 1}
 // R1102 +
@@ -975,6 +979,8 @@ end_program_stmt ::=  label_decl? (endprogram_ data_name? | end_ (program_ data_
 module ::= module_stmt eol+ block module_subprogram_part? end_module_stmt {
 pin = 1; extends = program_unit
 mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranModuleImplMixin"
+  stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+  elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 // R1105
 module_stmt ::= label_decl? module_ program_unit_name { pin = 2 }
@@ -1005,6 +1011,8 @@ local_name ::= fidentifier { elementType = entity_decl }
 submodule ::= submodule_stmt eol+ block module_subprogram_part? end_submodule_stmt {
 pin = 1; extends = program_unit
 mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin"
+  stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+  elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 // R1117
 submodule_stmt ::= label_decl? submodule_ '(' parent_identifier ')' program_unit_name { pin = 2 }
@@ -1016,6 +1024,8 @@ end_submodule_stmt ::= label_decl? (endsubmodule_ data_name? | end_ (submodule_ 
 block_data ::= block_data_stmt eol+ block end_block_data_stmt {
 pin = 1; extends = program_unit
 mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranBlockDataImplMixin"
+  stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+  elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 // R1121
 block_data_stmt ::= label_decl? (blockdata_ | (block_ data_)) program_unit_name? { pin = 2 }
@@ -1091,6 +1101,8 @@ prefix_spec ::= declaration_type_spec | elemental_ | impure_ | module_ | pure_ |
 function_subprogram ::= function_stmt eol+ block internal_subprogram_part? end_function_stmt {
   pin = 1; extends = program_unit
   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranFunctionSubprogramImplMixin"
+    stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+    elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 // R1228
 function_stmt ::= label_decl? prefix? function_ program_unit_name '(' <<list data_name>>? ')' suffix? {
@@ -1105,6 +1117,8 @@ end_function_stmt ::= label_decl? ((end_ (function_ data_name?)?) | (endfunction
 subroutine_subprogram ::= subroutine_stmt eol+ block internal_subprogram_part? end_subroutine_stmt {
     pin = 1; extends = program_unit
     mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranSubroutineSubprogramImplMixin"
+  stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+  elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 // R1234
 subroutine_stmt ::= label_decl? prefix? subroutine_ program_unit_name ('(' <<list dummy_arg>>? ')' language_binding_spec? )?  {
@@ -1117,6 +1131,8 @@ end_subroutine_stmt ::= label_decl? ((end_ (subroutine_ data_name?)?) | (endsubr
 separate_module_subprogram ::= mp_subprogram_stmt eol+ block internal_subprogram_part? end_mp_subprogram_stmt {
     pin = 1; extends = program_unit
     mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranSeparateModuleSubprogramImplMixin"
+  stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+  elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 // R1238
 mp_subprogram_stmt ::= label_decl? module_ procedure_ program_unit_name {

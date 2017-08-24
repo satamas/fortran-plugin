@@ -1,5 +1,5 @@
 FILE
-  MODULE
+  FortranModuleImpl(MODULE)
     MODULE_STMT
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
@@ -211,7 +211,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
-      FUNCTION_SUBPROGRAM
+      FortranFunctionSubprogramImpl(FUNCTION)
         FUNCTION_STMT
           PREFIX
             PREFIX_SPEC

@@ -1,5 +1,5 @@
 FILE
-  SUBROUTINE_SUBPROGRAM
+  FortranSubroutineSubprogramImpl(SUBROUTINE)
     SUBROUTINE_STMT
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')

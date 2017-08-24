@@ -1,5 +1,5 @@
 FILE
-  MODULE
+  FortranModuleImpl(MODULE)
     MODULE_STMT
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')

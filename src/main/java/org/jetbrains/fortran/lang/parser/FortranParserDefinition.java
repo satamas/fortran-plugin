@@ -9,17 +9,17 @@ import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
+import com.intellij.psi.tree.IStubFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.fortran.FortranLanguage;
 import org.jetbrains.fortran.lang.FortranTypes;
+import org.jetbrains.fortran.lang.core.stubs.FortranFileStub;
 import org.jetbrains.fortran.lang.lexer.FortranLexer;
 import org.jetbrains.fortran.lang.psi.FortranFile;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.*;
 
 public class FortranParserDefinition implements ParserDefinition {
-    public static final IFileElementType FILE = new IFileElementType(FortranLanguage.INSTANCE);
-
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
@@ -33,7 +33,7 @@ public class FortranParserDefinition implements ParserDefinition {
 
     @Override
     public IFileElementType getFileNodeType() {
-        return FILE;
+        return FortranFileStub.Type.INSTANCE;
     }
 
     @NotNull

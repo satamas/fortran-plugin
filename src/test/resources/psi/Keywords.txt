@@ -1,5 +1,5 @@
 FILE
-  MAIN_PROGRAM
+  FortranMainProgramImpl(MAIN PROGRAM)
     BLOCK
       IMPLICIT_STMT
         PsiElement(keyword)('implicit')

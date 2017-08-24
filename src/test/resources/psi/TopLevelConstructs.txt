@@ -1,5 +1,5 @@
 FILE
-  MODULE
+  FortranModuleImpl(MODULE)
     MODULE_STMT
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
@@ -41,7 +41,7 @@ FILE
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
-      SUBROUTINE_SUBPROGRAM
+      FortranSubroutineSubprogramImpl(SUBROUTINE)
         SUBROUTINE_STMT
           PsiElement(keyword)('subroutine')
           PsiWhiteSpace(' ')
@@ -96,7 +96,7 @@ FILE
         PsiElement(identifier)('circle')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
-  FUNCTION_SUBPROGRAM
+  FortranFunctionSubprogramImpl(FUNCTION)
     FUNCTION_STMT
       PREFIX
         PREFIX_SPEC
@@ -184,7 +184,7 @@ FILE
       PsiElement(keyword)('end')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
-  FUNCTION_SUBPROGRAM
+  FortranFunctionSubprogramImpl(FUNCTION)
     FUNCTION_STMT
       PREFIX
         PREFIX_SPEC
@@ -214,7 +214,7 @@ FILE
       PsiElement(keyword)('endfunction')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
-  SUBROUTINE_SUBPROGRAM
+  FortranSubroutineSubprogramImpl(SUBROUTINE)
     SUBROUTINE_STMT
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
@@ -257,7 +257,7 @@ FILE
       PsiElement(keyword)('end')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
-  BLOCK_DATA
+  FortranBlockDataImpl(BLOCK DATA)
     BLOCK_DATA_STMT
       PsiElement(keyword)('block')
       PsiWhiteSpace(' ')
