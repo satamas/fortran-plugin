@@ -195,10 +195,12 @@ FILE
       EXTERNAL_STMT
         PsiElement(keyword)('external')
         PsiWhiteSpace(' ')
-        PsiElement(identifier)('sin')
+        ENTITY_DECL
+          PsiElement(identifier)('sin')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        PsiElement(identifier)('cos')
+        ENTITY_DECL
+          PsiElement(identifier)('cos')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       COMMON_STMT
@@ -336,7 +338,8 @@ FILE
                   PsiElement())(')')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
-              PsiElement(identifier)('i')
+              DATA_PATH
+                PsiElement(identifier)('i')
               PsiElement(=)('=')
               CONSTANT
                 PsiElement(integerliteral)('1')
@@ -383,7 +386,8 @@ FILE
                       PsiElement())(')')
                   PsiElement(,)(',')
                   PsiWhiteSpace(' ')
-                  PsiElement(identifier)('j')
+                  DATA_PATH
+                    PsiElement(identifier)('j')
                   PsiElement(=)('=')
                   CONSTANT
                     PsiElement(integerliteral)('1')
@@ -393,7 +397,8 @@ FILE
                   PsiElement())(')')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
-              PsiElement(identifier)('i')
+              DATA_PATH
+                PsiElement(identifier)('i')
               PsiElement(=)('=')
               CONSTANT
                 PsiElement(integerliteral)('1')
@@ -421,14 +426,16 @@ FILE
         PsiElement(keyword)('save')
         PsiWhiteSpace(' ')
         SAVED_ENTITY
-          PsiElement(identifier)('z')
+          DATA_PATH
+            PsiElement(identifier)('z')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       SAVE_STMT
         PsiElement(keyword)('save')
         PsiWhiteSpace(' ')
         SAVED_ENTITY
-          PsiElement(identifier)('z')
+          DATA_PATH
+            PsiElement(identifier)('z')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         SAVED_ENTITY
@@ -454,7 +461,8 @@ FILE
       DIMENSION_STMT
         PsiElement(keyword)('DIMENSION')
         PsiWhiteSpace(' ')
-        PsiElement(identifier)('M')
+        DATA_PATH
+          PsiElement(identifier)('M')
         PsiElement(()('(')
         PsiWhiteSpace(' ')
         EXPLICIT_SHAPE_SPEC
@@ -471,7 +479,8 @@ FILE
         PsiElement())(')')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        PsiElement(identifier)('A')
+        DATA_PATH
+          PsiElement(identifier)('A')
         PsiElement(()('(')
         EXPLICIT_SHAPE_SPEC
           DESIGNATOR

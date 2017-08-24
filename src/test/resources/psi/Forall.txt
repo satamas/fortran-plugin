@@ -8,7 +8,8 @@ FILE
           FORALL_HEADER
             PsiElement(()('(')
             FORALL_TRIPLET_SPEC
-              PsiElement(identifier)('i')
+              DATA_PATH
+                PsiElement(identifier)('i')
               PsiElement(=)('=')
               CONSTANT
                 PsiElement(integerliteral)('1')
@@ -28,7 +29,8 @@ FILE
             FORALL_HEADER
               PsiElement(()('(')
               FORALL_TRIPLET_SPEC
-                PsiElement(identifier)('j')
+                DATA_PATH
+                  PsiElement(identifier)('j')
                 PsiElement(=)('=')
                 CONSTANT
                   PsiElement(integerliteral)('2')
@@ -41,7 +43,8 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               FORALL_TRIPLET_SPEC
-                PsiElement(identifier)('i')
+                DATA_PATH
+                  PsiElement(identifier)('i')
                 PsiElement(=)('=')
                 CONSTANT
                   PsiElement(integerliteral)('1')
@@ -86,7 +89,8 @@ FILE
               FORALL_HEADER
                 PsiElement(()('(')
                 FORALL_TRIPLET_SPEC
-                  PsiElement(identifier)('i')
+                  DATA_PATH
+                    PsiElement(identifier)('i')
                   PsiElement(=)('=')
                   CONSTANT
                     PsiElement(integerliteral)('1')

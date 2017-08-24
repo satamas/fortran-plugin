@@ -169,7 +169,8 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               FORALL_TRIPLET_SPEC
-                PsiElement(identifier)('a')
+                DATA_PATH
+                  PsiElement(identifier)('a')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
                 PsiWhiteSpace(' ')

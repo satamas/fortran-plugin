@@ -84,7 +84,8 @@ FILE
               PsiElement(keyword)('associate')
               PsiWhiteSpace(' ')
               ASSOCIATION
-                PsiElement(identifier)('e')
+                ENTITY_DECL
+                  PsiElement(identifier)('e')
                 PsiElement(=>)('=>')
                 ADD_EXPR
                   CONSTANT
@@ -95,7 +96,8 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ASSOCIATION
-                PsiElement(identifier)('b')
+                ENTITY_DECL
+                  PsiElement(identifier)('b')
                 PsiElement(=>)('=>')
                 MULT_EXPR
                   CONSTANT

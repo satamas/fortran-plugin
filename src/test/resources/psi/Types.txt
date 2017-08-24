@@ -56,7 +56,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('person')
+          DATA_PATH
+            PsiElement(identifier)('person')
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
@@ -120,7 +121,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('kids')
+          DATA_PATH
+            PsiElement(identifier)('kids')
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
@@ -179,7 +181,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('AUXILIARY')
+          DATA_PATH
+            PsiElement(identifier)('AUXILIARY')
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
@@ -236,7 +239,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('NUMERIC_SEQ')
+          DATA_PATH
+            PsiElement(identifier)('NUMERIC_SEQ')
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
@@ -293,7 +297,8 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
-          PsiElement(identifier)('POINT')
+          DATA_PATH
+            PsiElement(identifier)('POINT')
       PsiElement(eol)('\n')
     END_MODULE_STMT
       PsiElement(keyword)('endmodule')
