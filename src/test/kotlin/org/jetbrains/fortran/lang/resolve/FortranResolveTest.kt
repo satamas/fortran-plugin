@@ -88,4 +88,9 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         val usageInfos = myFixture.testFindUsages("Function.f95")
         Assert.assertEquals(2, usageInfos.size)
     }
+
+    fun testSpecificationStmts() {
+        val usageInfos = myFixture.testFindUsages("SpecificationStmts.f95")
+        Assert.assertEquals(11, usageInfos.size)
+    }
 }
