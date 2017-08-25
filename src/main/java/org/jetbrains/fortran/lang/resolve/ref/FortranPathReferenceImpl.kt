@@ -1,6 +1,7 @@
 package org.jetbrains.fortran.lang.resolve.ref
 
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
@@ -11,6 +12,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
+import org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub
 
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
@@ -121,23 +123,29 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                         .getContainingFiles(FileTypeIndex.NAME, FortranFixedFormFileType, GlobalSearchScope.projectScope(element.project)))
 
         for (file in vFiles) {
-            var psiFile = PsiManager.getInstance(element.project).findFile(file)
-            if (psiFile !is FortranFile) psiFile = psiFile as FortranFixedFormFile
-            names.addAll(psiFile.children.filter { it is FortranProgramUnit }
-                    .filter{ element.referenceName.equals((it as FortranProgramUnit).name, true) }
-                    .map { it -> (it as FortranProgramUnit).unit }
-                    .filterNotNull()
-                    .filter { element.referenceName.equals(it.name, true) })
-            names.addAll(psiFile.children.filter { it is FortranFunctionSubprogram }
-                    .flatMap { f -> (f as FortranFunctionSubprogram).variables
-                            .filter { element.referenceName.equals(it.name, true)
-                                    && f.unit?.name.equals(it.name, true)
-                            }
-                    }.filterNotNull())
+            val psiFile = PsiManager.getInstance(element.project).findFile(file)
+            val fileStub = fortranFileStub(psiFile)
+            if ( fileStub != null) {
+                val unitStubs = fileStub.childrenStubs
+                        .filter{ it is FortranProgramUnitStub}
+                        .filter{ (it as FortranProgramUnitStub).name.equals(element.referenceName, true) }
+                names.addAll(unitStubs.map{it.psi as FortranNamedElement})
+                names.addAll(unitStubs.map{it.psi}.filterIsInstance(FortranFunctionSubprogram::class.java)
+                        .flatMap { f -> f.variables.filter { element.referenceName.equals(it.name, true) } }
+                        .filterNotNull())
+            } else if (psiFile != null) {
+                val unitPsi = psiFile.children.filter { it is FortranProgramUnit }
+                        .filter{ element.referenceName.equals((it as FortranProgramUnit).name, true) }
 
+                names.addAll(unitPsi.map { it -> (it as FortranProgramUnit).unit }.filterNotNull() )
+                names.addAll(unitPsi.filterIsInstance(FortranFunctionSubprogram::class.java)
+                        .flatMap { f -> f.variables.filter { element.referenceName.equals(it.name, true) } }
+                        .filterNotNull())
+            }
         }
 
         // modules
+        // speed up needed
         if (element.parent !is FortranUseStmt) { // We do not need recursion here
             val allModules = collectAllModules(programUnit, outerProgramUnit)
             for (module in allModules) {
@@ -212,3 +220,6 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return allNames
     }
 }
+
+fun fortranFileStub(file : PsiFile?) = if (file is FortranFile) file.stub else (file as? FortranFixedFormFile)?.stub
+
