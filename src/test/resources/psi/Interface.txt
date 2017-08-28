@@ -23,15 +23,15 @@ FILE
             FortranEntityDeclImpl(ENTITY_DECL)
               PsiElement(identifier)('solve')
             PsiElement(()('(')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('n')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('pmatrix')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('key')
             PsiElement())(')')
           PsiElement(eol)(';')
@@ -118,7 +118,7 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement(keyword)('function')
             PsiWhiteSpace(' ')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('solve')
         PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
@@ -129,19 +129,19 @@ FILE
             FortranEntityDeclImpl(ENTITY_DECL)
               PsiElement(identifier)('LPV')
             PsiElement(()('(')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('n')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('x')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('P')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('dP')
             PsiElement())(')')
           PsiElement(eol)('\n')
@@ -200,7 +200,7 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement(keyword)('subroutine')
             PsiWhiteSpace(' ')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('LPV')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')

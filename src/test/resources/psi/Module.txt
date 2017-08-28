@@ -22,7 +22,7 @@ FILE
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('q')
       PsiElement(eol)('\n')
-    MODULE_SUBPROGRAM_PART
+    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM)
       CONTAINS_STMT
         LABEL_DECL
           PsiElement(integerliteral)('3')
@@ -47,16 +47,16 @@ FILE
               PsiElement(integerliteral)('5')
             PsiWhiteSpace('     ')
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('x')
             PsiElement(=)('=')
             ADD_EXPR
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('y')
               PsiElement(+)('+')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('z')
           PsiElement(eol)('\n')
         INTERNAL_SUBPROGRAM_PART
@@ -81,7 +81,7 @@ FILE
               FortranEntityDeclImpl(ENTITY_DECL)
                 PsiElement(identifier)('b')
               PsiElement(()('(')
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('z')
               PsiElement())(')')
             PsiElement(eol)('\n')
@@ -94,7 +94,7 @@ FILE
                 PsiWhiteSpace(' ')
                 MULT_EXPR
                   DESIGNATOR
-                    DATA_PATH
+                    FortranDataPathImpl(DATA_PATH)
                       PsiElement(identifier)('z')
                   PsiElement(*)('*')
                   CONSTANT
@@ -135,7 +135,7 @@ FILE
     PsiElement(eol)('\n')
     FortranBlockImpl(BLOCK)
       <empty list>
-    MODULE_SUBPROGRAM_PART
+    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM)
       CONTAINS_STMT
         LABEL_DECL
           PsiElement(integerliteral)('13')

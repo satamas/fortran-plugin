@@ -62,7 +62,7 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(()('(')
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('if')
         PsiElement())(')')
         PsiWhiteSpace(' ')
@@ -78,19 +78,19 @@ FILE
           PsiWhiteSpace(' ')
           OUTPUT_ITEM
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('end')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           OUTPUT_ITEM
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('integer')
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           OUTPUT_ITEM
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('write')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT

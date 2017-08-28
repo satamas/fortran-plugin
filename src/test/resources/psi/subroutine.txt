@@ -6,19 +6,19 @@ FILE
       FortranEntityDeclImpl(ENTITY_DECL)
         PsiElement(identifier)('message_number_dp')
       PsiElement(()('(')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('level')
       PsiElement(,)(',')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('text')
       PsiElement(,)(',')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('number')
       PsiElement(,)(',')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('format')
       PsiElement(,)(',')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('units')
       PsiElement())(')')
     PsiElement(eol)('\n')
@@ -75,7 +75,7 @@ FILE
           KIND_SELECTOR
             PsiElement(()('(')
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('dp')
             PsiElement())(')')
         PsiElement(,)(',')
@@ -140,18 +140,18 @@ FILE
         PsiElement(()('(')
         PARAMETERS_SPEC
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('char_number')
         PsiElement(,)(',')
         PARAMETERS_SPEC
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('format')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         OUTPUT_ITEM
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('number')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -160,13 +160,13 @@ FILE
         PsiElement(()('(')
         REL_EXPR
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('level')
           PsiWhiteSpace(' ')
           PsiElement(LE)('<=')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('verbose_level')
         PsiElement())(')')
         PsiWhiteSpace(' ')
@@ -186,12 +186,12 @@ FILE
                 CONCAT_EXPR
                   CONCAT_EXPR
                     DESIGNATOR
-                      DATA_PATH
+                      FortranDataPathImpl(DATA_PATH)
                         PsiElement(identifier)('trim')
                         PsiElement(()('(')
                         SECTION_SUBSCRIPT
                           DESIGNATOR
-                            DATA_PATH
+                            FortranDataPathImpl(DATA_PATH)
                               PsiElement(identifier)('text')
                         PsiElement())(')')
                     PsiElement(//)('//')
@@ -199,17 +199,17 @@ FILE
                       PsiElement(stringliteral)('' '')
                   PsiElement(//)('//')
                   DESIGNATOR
-                    DATA_PATH
+                    FortranDataPathImpl(DATA_PATH)
                       PsiElement(identifier)('trim')
                       PsiElement(()('(')
                       SECTION_SUBSCRIPT
                         DESIGNATOR
-                          DATA_PATH
+                          FortranDataPathImpl(DATA_PATH)
                             PsiElement(identifier)('adjustl')
                             PsiElement(()('(')
                             SECTION_SUBSCRIPT
                               DESIGNATOR
-                                DATA_PATH
+                                FortranDataPathImpl(DATA_PATH)
                                   PsiElement(identifier)('char_number')
                             PsiElement())(')')
                       PsiElement())(')')
@@ -218,12 +218,12 @@ FILE
                   PsiElement(stringliteral)('' '')
               PsiElement(//)('//')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('trim')
                   PsiElement(()('(')
                   SECTION_SUBSCRIPT
                     DESIGNATOR
-                      DATA_PATH
+                      FortranDataPathImpl(DATA_PATH)
                         PsiElement(identifier)('units')
                   PsiElement())(')')
       PsiElement(eol)('\n')
@@ -233,5 +233,5 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('message_number_dp')

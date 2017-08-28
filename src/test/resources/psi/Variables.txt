@@ -342,5 +342,5 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('a')

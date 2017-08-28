@@ -135,5 +135,5 @@ FILE
     END_PROGRAM_STMT
       PsiElement(keyword)('endprogram')
       PsiWhiteSpace(' ')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('arraystest')

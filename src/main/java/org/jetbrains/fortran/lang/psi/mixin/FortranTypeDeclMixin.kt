@@ -3,26 +3,14 @@ package org.jetbrains.fortran.lang.psi.mixin
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
-import org.jetbrains.fortran.lang.FortranTypes
 import org.jetbrains.fortran.lang.core.stubs.FortranEntityDeclStub
 import org.jetbrains.fortran.lang.psi.*
-import org.jetbrains.fortran.lang.psi.ext.FortranStubbedNamedElementImpl
 
-abstract class FortranTypeDeclMixin : FortranStubbedNamedElementImpl<FortranEntityDeclStub>, FortranTypeDecl {
+
+abstract class FortranTypeDeclMixin : FortranEntityDeclMixin, FortranTypeDecl {
     constructor(node: ASTNode) : super(node)
 
     constructor(stub: FortranEntityDeclStub, nodeType: IStubElementType<*, *>) : super(stub, nodeType)
-
-    override fun getNameIdentifier(): PsiElement? = findChildByType(FortranTypes.IDENTIFIER)
-
-    override fun getName(): String? {
-        val stub = stub
-        return if (stub != null) stub.name else nameIdentifier?.text
-    }
-
-    override fun setName(name: String): PsiElement? {
-        return this
-    }
 
     override fun getAssumedShapeSpecList() = emptyList<FortranAssumedShapeSpec>()
     override fun getAssumedSizeSpec() : FortranAssumedSizeSpec? = null

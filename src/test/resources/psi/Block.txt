@@ -44,7 +44,7 @@ FILE
             FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
-                  DATA_PATH
+                  FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('a')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
@@ -110,7 +110,7 @@ FILE
             FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
-                  DATA_PATH
+                  FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('c')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')

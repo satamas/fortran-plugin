@@ -63,7 +63,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('dot')
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
@@ -84,7 +84,7 @@ FILE
               PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
-                TYPE_NAME
+                FortranTypeNameImpl(TYPE_NAME)
                   PsiElement(identifier)('dot')
               PsiElement())(')')
               PsiWhiteSpace(' ')
@@ -105,7 +105,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('cut')
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
@@ -126,7 +126,7 @@ FILE
               PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
-                TYPE_NAME
+                FortranTypeNameImpl(TYPE_NAME)
                   PsiElement(identifier)('cut')
               PsiElement())(')')
               PsiElement(,)(',')
@@ -151,7 +151,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('cutarray')
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
@@ -184,7 +184,7 @@ FILE
               PsiElement(keyword)('type')
               PsiElement(()('(')
               DERIVED_TYPE_SPEC
-                TYPE_NAME
+                FortranTypeNameImpl(TYPE_NAME)
                   PsiElement(identifier)('cutarray')
               PsiElement())(')')
               PsiWhiteSpace(' ')
@@ -200,12 +200,12 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('object')
       PsiElement(eol)('\n')
     PsiWhiteSpace('\n')
     PsiWhiteSpace('  ')
-    MODULE_SUBPROGRAM_PART
+    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM)
       CONTAINS_STMT
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
@@ -223,7 +223,7 @@ FILE
           FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('l')
           PsiElement(()('(')
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('o')
           PsiElement())(')')
         PsiElement(eol)('\n')
@@ -233,8 +233,8 @@ FILE
             PsiElement(keyword)('call')
             PsiWhiteSpace(' ')
             PROCEDURE_DESIGNATOR
-              DATA_PATH
-                DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('t1')
                 PsiElement(%)('%')
                 PsiElement(identifier)('sub')
@@ -246,11 +246,11 @@ FILE
             PsiElement(keyword)('return')
             PsiWhiteSpace(' ')
             DESIGNATOR
-              DATA_PATH
-                DATA_PATH
-                  DATA_PATH
-                    DATA_PATH
-                      DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
+                FortranDataPathImpl(DATA_PATH)
+                  FortranDataPathImpl(DATA_PATH)
+                    FortranDataPathImpl(DATA_PATH)
+                      FortranDataPathImpl(DATA_PATH)
                         PsiElement(identifier)('o')
                       PsiElement(%)('%')
                       PsiElement(identifier)('ar')
@@ -277,5 +277,5 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('a')

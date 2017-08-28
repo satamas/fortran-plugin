@@ -15,7 +15,7 @@ FILE
           PsiElement(()('(')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('l')
           PsiWhiteSpace(' ')
           PsiElement())(')')
@@ -26,12 +26,12 @@ FILE
         FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('k')
             PsiElement(=)('=')
             ADD_EXPR
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('k')
               PsiElement(+)('+')
               CONSTANT
@@ -51,7 +51,7 @@ FILE
           PsiElement(()('(')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('l')
           PsiWhiteSpace(' ')
           PsiElement())(')')
@@ -62,12 +62,12 @@ FILE
         FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('n')
             PsiElement(=)('=')
             ADD_EXPR
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('n')
               PsiElement(+)('+')
               CONSTANT
@@ -81,12 +81,12 @@ FILE
         FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('k')
             PsiElement(=)('=')
             ADD_EXPR
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('k')
               PsiElement(+)('+')
               CONSTANT
@@ -107,7 +107,7 @@ FILE
           PsiWhiteSpace(' ')
           REL_EXPR
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('pressure')
             PsiWhiteSpace(' ')
             PsiElement(GT)('.gt.')
@@ -129,7 +129,7 @@ FILE
               PsiWhiteSpace(' ')
               REL_EXPR
                 DESIGNATOR
-                  DATA_PATH
+                  FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('n')
                 PsiWhiteSpace(' ')
                 PsiElement(LT)('.lt.')
@@ -145,7 +145,7 @@ FILE
             FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
-                  DATA_PATH
+                  FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('x')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
@@ -156,7 +156,7 @@ FILE
               PsiWhiteSpace('        ')
               ASSIGNMENT_STMT
                 DESIGNATOR
-                  DATA_PATH
+                  FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('y')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
@@ -172,7 +172,7 @@ FILE
             FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
-                  DATA_PATH
+                  FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('z')
                 PsiWhiteSpace(' ')
                 PsiElement(=)('=')
@@ -196,7 +196,7 @@ FILE
           PsiWhiteSpace(' ')
           REL_EXPR
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('temperature')
             PsiWhiteSpace(' ')
             PsiElement(GT)('.gt.')
@@ -212,7 +212,7 @@ FILE
         FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('z')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
@@ -228,7 +228,7 @@ FILE
         FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('x')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
@@ -239,7 +239,7 @@ FILE
           PsiWhiteSpace('      ')
           ASSIGNMENT_STMT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('y')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
@@ -260,7 +260,7 @@ FILE
           PsiWhiteSpace(' ')
           LOOP_CONTROL
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('k')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
@@ -304,13 +304,13 @@ FILE
             PsiWhiteSpace(' ')
             REL_EXPR
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('values')
               PsiWhiteSpace(' ')
               PsiElement(LE)('.le.')
               PsiWhiteSpace(' ')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('atad')
             PsiWhiteSpace(' ')
             PsiElement())(')')
@@ -319,7 +319,7 @@ FILE
               PsiElement(keyword)('call')
               PsiWhiteSpace(' ')
               PROCEDURE_DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('punt')
           PsiElement(eol)('\n')
           PsiComment(comment)('!    deprecated')
@@ -334,7 +334,7 @@ FILE
             PsiElement(keyword)('to')
             PsiWhiteSpace(' ')
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('a')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
@@ -349,7 +349,7 @@ FILE
             PsiElement(keyword)('backspace')
             PsiWhiteSpace(' ')
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('a')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
@@ -367,7 +367,7 @@ FILE
               PsiElement(identifier)('iostat')
               PsiElement(=)('=')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('code')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
@@ -384,14 +384,14 @@ FILE
             PsiElement(keyword)('call')
             PsiWhiteSpace(' ')
             PROCEDURE_DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('oops')
                 PsiWhiteSpace(' ')
                 PsiElement(()('(')
                 PsiWhiteSpace(' ')
                 SECTION_SUBSCRIPT
                   DESIGNATOR
-                    DATA_PATH
+                    FortranDataPathImpl(DATA_PATH)
                       PsiElement(identifier)('text')
                 PsiWhiteSpace(' ')
                 PsiElement())(')')
@@ -418,7 +418,7 @@ FILE
               PsiElement(identifier)('iostat')
               PsiElement(=)('=')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('i')
             PsiWhiteSpace(' ')
             PsiElement())(')')
@@ -437,7 +437,7 @@ FILE
               PsiElement(identifier)('unit')
               PsiElement(=)('=')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('nout')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
@@ -445,7 +445,7 @@ FILE
               PsiElement(identifier)('iostat')
               PsiElement(=)('=')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('kode')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
@@ -530,7 +530,7 @@ FILE
             PsiWhiteSpace(' ')
             ADD_EXPR
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('n')
               PsiWhiteSpace(' ')
               PsiElement(+)('+')
@@ -553,7 +553,7 @@ FILE
               PsiElement(identifier)('opened')
               PsiElement(=)('=')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('ok')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
@@ -561,7 +561,7 @@ FILE
               PsiElement(identifier)('named')
               PsiElement(=)('=')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('hasname')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
@@ -569,7 +569,7 @@ FILE
               PsiElement(identifier)('name')
               PsiElement(=)('=')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('fn')
             PsiWhiteSpace(' ')
             PsiElement())(')')
@@ -647,7 +647,7 @@ FILE
               PsiElement(=)('=')
               PsiWhiteSpace(' ')
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('code')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
@@ -663,14 +663,14 @@ FILE
           PsiWhiteSpace('    ')
           ASSIGNMENT_STMT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('sphere')
                 PsiWhiteSpace(' ')
                 PsiElement(()('(')
                 PsiWhiteSpace(' ')
                 SECTION_SUBSCRIPT
                   DESIGNATOR
-                    DATA_PATH
+                    FortranDataPathImpl(DATA_PATH)
                       PsiElement(identifier)('r')
                 PsiWhiteSpace(' ')
                 PsiElement())(')')
@@ -686,7 +686,7 @@ FILE
                   PsiElement(*)('*')
                   PsiWhiteSpace(' ')
                   DESIGNATOR
-                    DATA_PATH
+                    FortranDataPathImpl(DATA_PATH)
                       PsiElement(identifier)('pi')
                 PsiWhiteSpace(' ')
                 PsiElement(*)('*')
@@ -695,7 +695,7 @@ FILE
                   PsiElement(()('(')
                   POWER_EXPR
                     DESIGNATOR
-                      DATA_PATH
+                      FortranDataPathImpl(DATA_PATH)
                         PsiElement(identifier)('r')
                     PsiElement(**)('**')
                     CONSTANT
@@ -729,24 +729,24 @@ FILE
       PsiWhiteSpace('    ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('j')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
         PsiWhiteSpace(' ')
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('MAXLOC')
             PsiWhiteSpace(' ')
             PsiElement(()('(')
             SECTION_SUBSCRIPT
               DESIGNATOR
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('ABS')
                   PsiElement(()('(')
                   SECTION_SUBSCRIPT
                     DESIGNATOR
-                      DATA_PATH
+                      FortranDataPathImpl(DATA_PATH)
                         PsiElement(identifier)('pQ')
                   PsiElement())(')')
             PsiElement(,)(',')
@@ -763,13 +763,13 @@ FILE
       POINTER_ASSIGNMENT_STMT
         DATA_POINTER_OBJECT
           DESIGNATOR
-            DATA_PATH
-              DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('amr_thebranches')
                 PsiElement(()('(')
                 SECTION_SUBSCRIPT
                   DESIGNATOR
-                    DATA_PATH
+                    FortranDataPathImpl(DATA_PATH)
                       PsiElement(identifier)('amr_branchcount')
                 PsiElement())(')')
               PsiElement(%)('%')
@@ -778,7 +778,7 @@ FILE
         PsiElement(=>)('=>')
         PsiWhiteSpace(' ')
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('a')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT

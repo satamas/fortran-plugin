@@ -15,10 +15,10 @@ FILE
     PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
     FortranBlockImpl(BLOCK)
-      USE_STMT
+      FortranUseStmtImpl(USE_STMT)
         PsiElement(keyword)('use')
         PsiWhiteSpace(' ')
-        DATA_PATH
+        FortranDataPathImpl(DATA_PATH)
           PsiElement(identifier)('core_lib')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
@@ -26,31 +26,31 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(:)(':')
         PsiWhiteSpace(' ')
-        ONLY_STMT
-          RENAME_STMT
+        FortranOnlyStmtImpl(ONLY_STMT)
+          FortranRenameStmtImpl(RENAME STMT)
             FortranEntityDeclImpl(ENTITY_DECL)
               PsiElement(identifier)('mp_set_compression')
             PsiWhiteSpace(' ')
             PsiElement(=>)('=>')
             PsiWhiteSpace(' ')
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('hdf5_set_compression')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      USE_STMT
+      FortranUseStmtImpl(USE_STMT)
         PsiElement(keyword)('use')
         PsiWhiteSpace(' ')
-        DATA_PATH
+        FortranDataPathImpl(DATA_PATH)
           PsiElement(identifier)('lib')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        RENAME_STMT
+        FortranRenameStmtImpl(RENAME STMT)
           FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('old_name')
           PsiWhiteSpace(' ')
           PsiElement(=>)('=>')
           PsiWhiteSpace(' ')
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('new_name')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -195,11 +195,11 @@ FILE
       EXTERNAL_STMT
         PsiElement(keyword)('external')
         PsiWhiteSpace(' ')
-        DATA_PATH
+        FortranDataPathImpl(DATA_PATH)
           PsiElement(identifier)('sin')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        DATA_PATH
+        FortranDataPathImpl(DATA_PATH)
           PsiElement(identifier)('cos')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -220,7 +220,7 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('ttl')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
@@ -237,7 +237,7 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('m')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
@@ -251,7 +251,7 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('N')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
@@ -268,7 +268,7 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('pair')
                 PsiElement(()('(')
                 SECTION_SUBSCRIPT
@@ -287,7 +287,7 @@ FILE
         DATA_STMT_SET
           DATA_STMT_OBJECT
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('VEC')
           PsiWhiteSpace(' ')
           PsiElement(/)('/')
@@ -323,22 +323,22 @@ FILE
               PsiElement(()('(')
               PsiWhiteSpace(' ')
               DATA_I_DO_OBJECT
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('s')
                   PsiElement(()('(')
                   SECTION_SUBSCRIPT
                     DESIGNATOR
-                      DATA_PATH
+                      FortranDataPathImpl(DATA_PATH)
                         PsiElement(identifier)('i')
                   PsiElement(,)(',')
                   SECTION_SUBSCRIPT
                     DESIGNATOR
-                      DATA_PATH
+                      FortranDataPathImpl(DATA_PATH)
                         PsiElement(identifier)('i')
                   PsiElement())(')')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('i')
               PsiElement(=)('=')
               CONSTANT
@@ -371,22 +371,22 @@ FILE
                   PsiElement(()('(')
                   PsiWhiteSpace(' ')
                   DATA_I_DO_OBJECT
-                    DATA_PATH
+                    FortranDataPathImpl(DATA_PATH)
                       PsiElement(identifier)('r')
                       PsiElement(()('(')
                       SECTION_SUBSCRIPT
                         DESIGNATOR
-                          DATA_PATH
+                          FortranDataPathImpl(DATA_PATH)
                             PsiElement(identifier)('i')
                       PsiElement(,)(',')
                       SECTION_SUBSCRIPT
                         DESIGNATOR
-                          DATA_PATH
+                          FortranDataPathImpl(DATA_PATH)
                             PsiElement(identifier)('j')
                       PsiElement())(')')
                   PsiElement(,)(',')
                   PsiWhiteSpace(' ')
-                  DATA_PATH
+                  FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('j')
                   PsiElement(=)('=')
                   CONSTANT
@@ -397,7 +397,7 @@ FILE
                   PsiElement())(')')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('i')
               PsiElement(=)('=')
               CONSTANT
@@ -426,7 +426,7 @@ FILE
         PsiElement(keyword)('save')
         PsiWhiteSpace(' ')
         SAVED_ENTITY
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('z')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -434,7 +434,7 @@ FILE
         PsiElement(keyword)('save')
         PsiWhiteSpace(' ')
         SAVED_ENTITY
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('z')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
@@ -449,11 +449,11 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(identifier)('average2')
         PsiElement(()('(')
-        DATA_PATH
+        FortranDataPathImpl(DATA_PATH)
           PsiElement(identifier)('x')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        DATA_PATH
+        FortranDataPathImpl(DATA_PATH)
           PsiElement(identifier)('y')
         PsiElement())(')')
       PsiElement(eol)('\n')
@@ -461,36 +461,36 @@ FILE
       DIMENSION_STMT
         PsiElement(keyword)('DIMENSION')
         PsiWhiteSpace(' ')
-        DATA_PATH
+        FortranDataPathImpl(DATA_PATH)
           PsiElement(identifier)('M')
         PsiElement(()('(')
         PsiWhiteSpace(' ')
         EXPLICIT_SHAPE_SPEC
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('N')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         EXPLICIT_SHAPE_SPEC
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('N')
         PsiWhiteSpace(' ')
         PsiElement())(')')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        DATA_PATH
+        FortranDataPathImpl(DATA_PATH)
           PsiElement(identifier)('A')
         PsiElement(()('(')
         EXPLICIT_SHAPE_SPEC
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('B')
           PsiWhiteSpace(' ')
           PsiElement(:)(':')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('C')
         PsiElement())(')')
       PsiElement(eol)('\n')
@@ -501,11 +501,11 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('A')
           PsiElement(,)(',')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('B')
           PsiElement())(')')
       PsiElement(eol)('\n')
@@ -516,7 +516,7 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('A')
               PsiElement(()('(')
               SECTION_SUBSCRIPT
@@ -526,7 +526,7 @@ FILE
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('B')
           PsiElement())(')')
       PsiElement(eol)('\n')
@@ -537,7 +537,7 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('A')
               PsiElement(()('(')
               SECTION_SUBSCRIPT
@@ -549,7 +549,7 @@ FILE
           EQUIVALENCE_OBJECT
             SUBSTRING
               PARENT_STRING
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('B')
                   PsiElement(()('(')
                   SECTION_SUBSCRIPT
@@ -575,7 +575,7 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('A')
               PsiElement(()('(')
               SECTION_SUBSCRIPT
@@ -587,7 +587,7 @@ FILE
           EQUIVALENCE_OBJECT
             SUBSTRING
               PARENT_STRING
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('B')
                   PsiElement(()('(')
                   SECTION_SUBSCRIPT
@@ -619,7 +619,7 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('A')
               PsiElement(()('(')
               SECTION_SUBSCRIPT
@@ -637,7 +637,7 @@ FILE
               PsiElement())(')')
           PsiElement(,)(',')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('B')
           PsiElement())(')')
         PsiElement(,)(',')
@@ -645,7 +645,7 @@ FILE
         EQUIVALENCE_SET
           PsiElement(()('(')
           EQUIVALENCE_OBJECT
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('A')
               PsiElement(()('(')
               SECTION_SUBSCRIPT
@@ -657,7 +657,7 @@ FILE
           EQUIVALENCE_OBJECT
             SUBSTRING
               PARENT_STRING
-                DATA_PATH
+                FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('B')
                   PsiElement(()('(')
                   SECTION_SUBSCRIPT

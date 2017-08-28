@@ -21,7 +21,7 @@ FILE
       PsiWhiteSpace('      ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('x')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
@@ -47,19 +47,19 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('a')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         OUTPUT_ITEM
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('c')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         OUTPUT_ITEM
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('b')
       PsiElement(eol)('\n')
       ASSIGNMENT_STMT
@@ -67,7 +67,7 @@ FILE
           PsiElement(integerliteral)('123')
         PsiWhiteSpace('   ')
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('y')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
@@ -83,7 +83,7 @@ FILE
       PsiWhiteSpace('      ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('str')
         PsiWhiteSpace(' ')
         PsiElement(=)('=')
@@ -96,7 +96,7 @@ FILE
       PsiWhiteSpace('      ')
       ASSIGNMENT_STMT
         DESIGNATOR
-          DATA_PATH
+          FortranDataPathImpl(DATA_PATH)
             PsiElement(identifier)('END')
             PsiElement(()('(')
             SECTION_SUBSCRIPT
@@ -108,7 +108,7 @@ FILE
         PsiWhiteSpace(' ')
         ADD_EXPR
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('STARTA')
               PsiElement(()('(')
               SECTION_SUBSCRIPT
@@ -123,7 +123,7 @@ FILE
               PsiElement(()('(')
               ADD_EXPR
                 DESIGNATOR
-                  DATA_PATH
+                  FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('NPIXA')
                     PsiElement(()('(')
                     SECTION_SUBSCRIPT
@@ -136,7 +136,7 @@ FILE
               PsiElement())(')')
             PsiElement(*)('*')
             DESIGNATOR
-              DATA_PATH
+              FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('STEPA')
                 PsiElement(()('(')
                 SECTION_SUBSCRIPT
@@ -150,5 +150,5 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
-      DATA_PATH
+      FortranDataPathImpl(DATA_PATH)
         PsiElement(identifier)('a')

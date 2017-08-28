@@ -1,5 +1,6 @@
 package org.jetbrains.fortran.lang.core.stubs
 
+import org.jetbrains.fortran.lang.psi.FortranRenameStmt
 import org.jetbrains.fortran.lang.psi.impl.*
 
 fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name) {
@@ -14,15 +15,24 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
     "PROGRAM_UNIT" -> FortranProgramUnitStub.Type("UNKNOWN PROGRAM UNIT", ::FortranProgramUnitImpl)
 
     "BLOCK" -> FortranBlockStub.Type
+    "MODULE_SUBPROGRAM_PART" -> FortranModuleSubprogramPartStub.Type
 
     // Statements
     // I do not know, how many of them we really need
     "TYPE_DECLARATION_STMT" -> FortranStatementStub.Type("TYPE_DECLARATION_STMT", ::FortranTypeDeclarationStmtImpl)
+    "USE_STMT" -> FortranStatementStub.Type("USE_STMT", ::FortranUseStmtImpl)
 
     // Entity Decl
     "ENTITY_DECL" -> FortranEntityDeclStub.Type("ENTITY_DECL", ::FortranEntityDeclImpl)
     "TYPE_DECL" -> FortranEntityDeclStub.Type("TYPE_DECL", ::FortranTypeDeclImpl)
 
+    // Use stmt-parts
+    "RENAME_STMT" -> FortranRenameStmtStub.Type
+    "ONLY_STMT" -> FortranOnlyStmtStub.Type
+
+    // Data path (for rename only)
+    "DATA_PATH" -> FortranDataPathStub.Type("DATA_PATH", ::FortranDataPathImpl)
+    "TYPE_NAME" -> FortranDataPathStub.Type("TYPE_NAME", ::FortranDataPathImpl)
     else -> error("Unknown element $name")
 }
 

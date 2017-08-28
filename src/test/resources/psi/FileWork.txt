@@ -105,7 +105,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('aaa')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
@@ -115,7 +115,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('bbb')
         PsiElement())(')')
       PsiElement(eol)('\n')
@@ -168,7 +168,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('ccc')
         PsiElement())(')')
       PsiElement(eol)('\n')
@@ -251,7 +251,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('f')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
@@ -259,7 +259,7 @@ FILE
           PsiElement(identifier)('nextrec')
           PsiElement(=)('=')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('nnn')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
@@ -267,7 +267,7 @@ FILE
           PsiElement(identifier)('readwrite')
           PsiElement(=)('=')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('l')
         PsiElement())(')')
       PsiElement(eol)('\n')
@@ -287,7 +287,7 @@ FILE
           PsiElement(=)('=')
           PsiWhiteSpace(' ')
           DESIGNATOR
-            DATA_PATH
+            FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('i')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
