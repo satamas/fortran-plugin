@@ -6,11 +6,11 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      ENTITY_DECL
+      FortranEntityDeclImpl(ENTITY_DECL)
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     FortranBlockImpl(BLOCK)
-      TYPE_DECLARATION_STMT
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
         LABEL_DECL
           PsiElement(integerliteral)('2')
         PsiWhiteSpace('   ')
@@ -19,7 +19,7 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('q')
       PsiElement(eol)('\n')
     MODULE_SUBPROGRAM_PART
@@ -38,7 +38,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('procedure')
           PsiWhiteSpace(' ')
-          ENTITY_DECL
+          FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('aa')
         PsiElement(eol)('\n')
         FortranBlockImpl(BLOCK)
@@ -78,7 +78,7 @@ FILE
               PsiWhiteSpace(' ')
               PsiElement(keyword)('function')
               PsiWhiteSpace(' ')
-              ENTITY_DECL
+              FortranEntityDeclImpl(ENTITY_DECL)
                 PsiElement(identifier)('b')
               PsiElement(()('(')
               DATA_PATH
@@ -130,7 +130,7 @@ FILE
         PsiElement(identifier)('a')
       PsiElement())(')')
       PsiWhiteSpace(' ')
-      ENTITY_DECL
+      FortranEntityDeclImpl(ENTITY_DECL)
         PsiElement(identifier)('suba')
     PsiElement(eol)('\n')
     FortranBlockImpl(BLOCK)
@@ -149,7 +149,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('subroutine')
           PsiWhiteSpace(' ')
-          ENTITY_DECL
+          FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('s')
           PsiElement(()('(')
           PsiElement())(')')

@@ -3,7 +3,7 @@ FILE
     PROGRAM_STMT
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
-      ENTITY_DECL
+      FortranEntityDeclImpl(ENTITY_DECL)
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     FortranBlockImpl(BLOCK)

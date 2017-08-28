@@ -392,7 +392,11 @@ derived_type_def ::= derived_type_stmt eol+ (type_param_def_stmt eol+)* (private
     mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranDerivedTypeDefImplMixin"
 }
 type_name ::= fidentifier { extends = data_name }
-type_decl ::= fidentifier { extends = entity_decl }
+type_decl ::= fidentifier { extends = entity_decl
+   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranTypeDeclMixin"
+   elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+   stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranEntityDeclStub'
+}
 // R426
 derived_type_stmt ::= label_decl? type_ ((',' <<list type_attr_spec>>)? '::')? type_decl ('(' <<list fidentifier>> ')')?  { pin = 4 }
 
@@ -499,7 +503,12 @@ ac_implied_do ::= '('<<list ac_value>> ',' id_loop_stmt ')'
 
 // Clause 5
 // R501
-type_declaration_stmt ::= label_decl? declaration_type_spec ((',' attr_spec)* '::')? <<list (entity_decl)>> {pin=2}
+type_declaration_stmt ::= label_decl? declaration_type_spec ((',' attr_spec)* '::')? <<list (entity_decl)>> {
+    pin=2
+    elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+    stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranStatementStub'
+    mixin = 'org.jetbrains.fortran.lang.psi.mixin.FortranStmtImplMixin'
+}
 // R502
 attr_spec ::= access_spec | allocatable_ | asynchronous_ | (codimension_ '[' coarray_spec ']')
              | contiguous_ | (dimension_ '(' array_spec ')') | external_
@@ -509,7 +518,9 @@ attr_spec ::= access_spec | allocatable_ | asynchronous_ | (codimension_ '[' coa
 entity_decl ::= fidentifier ('(' array_spec ')')? ('[' coarray_spec ']')?
                 ('*' char_length)? initialization? {
   implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranNamedElement" ]
-  mixin = "org.jetbrains.fortran.lang.psi.impl.FortranEntityDeclMixin"
+  mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranEntityDeclMixin"
+  elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+  stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranEntityDeclStub'
 }
 program_unit_name ::= fidentifier { elementType = entity_decl }
 // R504 is trivial
@@ -1070,7 +1081,7 @@ defined_io_generic_spec ::= read_ '(' (formatted_ | unformatted_) ')'
 // R1209
 import_stmt ::= label_decl? import_ ('::'? <<list fidentifier>>)? { pin =2 }
 // R1210
-external_stmt ::= label_decl? external_ ('::')? <<list local_name>> { pin = 2 }
+external_stmt ::= label_decl? external_ ('::')? <<list data_name>> { pin = 2 }
 // R1211
 procedure_declaration_stmt ::= label_decl? procedure_ '(' proc_interface? ')' ((',' proc_attr_spec)* '::')? <<list proc_decl>> { pin = 2 }
 // R1212

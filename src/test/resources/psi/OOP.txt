@@ -3,7 +3,7 @@ FILE
     MODULE_STMT
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      ENTITY_DECL
+      FortranEntityDeclImpl(ENTITY_DECL)
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
@@ -14,7 +14,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('dot')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -27,17 +27,17 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('x')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('y')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('z')
           PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
@@ -74,7 +74,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('cut')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -91,12 +91,12 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('a')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('b')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
@@ -116,7 +116,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('cutarray')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -142,7 +142,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('dat')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
@@ -162,7 +162,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('object')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -175,7 +175,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('id')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
@@ -191,7 +191,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('ar')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
@@ -220,7 +220,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('function')
           PsiWhiteSpace(' ')
-          ENTITY_DECL
+          FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('l')
           PsiElement(()('(')
           DATA_PATH

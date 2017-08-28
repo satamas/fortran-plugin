@@ -6,13 +6,13 @@ FILE
         PsiWhiteSpace(' ')
         PsiElement(keyword)('none')
       PsiElement(eol)('\n')
-      TYPE_DECLARATION_STMT
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('end')
           PsiWhiteSpace(' ')
           PsiElement(=)('=')
@@ -20,13 +20,13 @@ FILE
           CONSTANT
             PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
-      TYPE_DECLARATION_STMT
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('logical')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('if')
           PsiWhiteSpace(' ')
           PsiElement(=)('=')
@@ -34,13 +34,13 @@ FILE
           LOGICAL_LITERAL
             PsiElement(truekwd)('.true.')
       PsiElement(eol)('\n')
-      TYPE_DECLARATION_STMT
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('integer')
           PsiWhiteSpace(' ')
           PsiElement(=)('=')
@@ -49,7 +49,7 @@ FILE
             PsiElement(integerliteral)('1')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('write')
           PsiWhiteSpace(' ')
           PsiElement(=)('=')

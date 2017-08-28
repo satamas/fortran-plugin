@@ -1,3 +1,3 @@
 module away
-    use FarAway, renamed_a => a, renamed_pi => pi
+    use farAway, renamed_a => a, renamed_pi => pi
 endmodule

@@ -15,6 +15,14 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
 
     "BLOCK" -> FortranBlockStub.Type
 
+    // Statements
+    // I do not know, how many of them we really need
+    "TYPE_DECLARATION_STMT" -> FortranStatementStub.Type("TYPE_DECLARATION_STMT", ::FortranTypeDeclarationStmtImpl)
+
+    // Entity Decl
+    "ENTITY_DECL" -> FortranEntityDeclStub.Type("ENTITY_DECL", ::FortranEntityDeclImpl)
+    "TYPE_DECL" -> FortranEntityDeclStub.Type("TYPE_DECL", ::FortranTypeDeclImpl)
+
     else -> error("Unknown element $name")
 }
 

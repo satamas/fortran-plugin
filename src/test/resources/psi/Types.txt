@@ -3,7 +3,7 @@ FILE
     MODULE_STMT
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
-      ENTITY_DECL
+      FortranEntityDeclImpl(ENTITY_DECL)
         PsiElement(identifier)('types')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
@@ -14,7 +14,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('person')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -35,7 +35,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('forename')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
@@ -47,7 +47,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('age')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
@@ -67,7 +67,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('kids')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -84,7 +84,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('oldest_child')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
@@ -112,7 +112,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('other_kids')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
@@ -136,7 +136,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('AUXILIARY')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -149,7 +149,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('DIAGNOSTIC')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
@@ -172,7 +172,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('MESSAGE')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
@@ -190,7 +190,7 @@ FILE
         DERIVED_TYPE_STMT
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('NUMERIC_SEQ')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
@@ -206,7 +206,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('INT_VAL')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
@@ -218,7 +218,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('REAL_VAL')
           PsiElement(eol)('\n')
           PsiWhiteSpace('    ')
@@ -230,7 +230,7 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('LOG_VAL')
           PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
@@ -248,7 +248,7 @@ FILE
         DERIVED_TYPE_STMT
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
-          TYPE_DECL
+          FortranTypeDeclImpl(TYPE_DECL)
             PsiElement(identifier)('POINT')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
@@ -261,12 +261,12 @@ FILE
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('X')
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               COMPONENT_DECL
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('Y')
           PsiElement(eol)('\n')
         PsiWhiteSpace('    ')

@@ -3,7 +3,7 @@ FILE
     PROGRAM_STMT
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
-      ENTITY_DECL
+      FortranEntityDeclImpl(ENTITY_DECL)
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
@@ -21,11 +21,11 @@ FILE
         PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
         FortranBlockImpl(BLOCK)
-          TYPE_DECLARATION_STMT
+          FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
             INTRINSIC_TYPE_SPEC
               PsiElement(keyword)('integer')
             PsiWhiteSpace(' ')
-            ENTITY_DECL
+            FortranEntityDeclImpl(ENTITY_DECL)
               PsiElement(identifier)('a')
           PsiElement(eol)('\n')
           PsiWhiteSpace('\n')
@@ -84,7 +84,7 @@ FILE
               PsiElement(keyword)('associate')
               PsiWhiteSpace(' ')
               ASSOCIATION
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('e')
                 PsiElement(=>)('=>')
                 ADD_EXPR
@@ -96,7 +96,7 @@ FILE
               PsiElement(,)(',')
               PsiWhiteSpace(' ')
               ASSOCIATION
-                ENTITY_DECL
+                FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('b')
                 PsiElement(=>)('=>')
                 MULT_EXPR

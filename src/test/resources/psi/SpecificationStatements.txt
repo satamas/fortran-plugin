@@ -8,7 +8,7 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
-      ENTITY_DECL
+      FortranEntityDeclImpl(ENTITY_DECL)
         PsiElement(identifier)('average')
       PsiElement(()('(')
       PsiElement())(')')
@@ -28,7 +28,7 @@ FILE
         PsiWhiteSpace(' ')
         ONLY_STMT
           RENAME_STMT
-            ENTITY_DECL
+            FortranEntityDeclImpl(ENTITY_DECL)
               PsiElement(identifier)('mp_set_compression')
             PsiWhiteSpace(' ')
             PsiElement(=>)('=>')
@@ -45,7 +45,7 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         RENAME_STMT
-          ENTITY_DECL
+          FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('old_name')
           PsiWhiteSpace(' ')
           PsiElement(=>)('=>')
@@ -171,15 +171,15 @@ FILE
           PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      TYPE_DECLARATION_STMT
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('c')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('z')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
@@ -195,11 +195,11 @@ FILE
       EXTERNAL_STMT
         PsiElement(keyword)('external')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        DATA_PATH
           PsiElement(identifier)('sin')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        DATA_PATH
           PsiElement(identifier)('cos')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')

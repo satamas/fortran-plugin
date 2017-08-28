@@ -1,7 +1,7 @@
 FILE
   FortranMainProgramImpl(MAIN PROGRAM)
     FortranBlockImpl(BLOCK)
-      TYPE_DECLARATION_STMT
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('integer')
           KIND_SELECTOR
@@ -12,18 +12,18 @@ FILE
               PsiElement(integerliteral)('4')
             PsiElement())(')')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('a')
       PsiElement(eol)('\n')
-      TYPE_DECLARATION_STMT
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('integer')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('b')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        ENTITY_DECL
+        FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('c')
       PsiElement(eol)('\n')
     END_PROGRAM_STMT
