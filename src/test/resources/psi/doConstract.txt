@@ -9,7 +9,7 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       NONLABEL_DO_CONSTRUCT
         NONLABEL_DO_STMT
           LABEL_DECL
@@ -28,7 +28,7 @@ FILE
             CONSTANT
               PsiElement(integerliteral)('5')
         PsiElement(eol)('\n')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             LABEL_DECL
               PsiElement(integerliteral)('3')
@@ -74,7 +74,7 @@ FILE
               PsiElement(integerliteral)('7')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -120,7 +120,7 @@ FILE
             PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -196,7 +196,7 @@ FILE
               PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH

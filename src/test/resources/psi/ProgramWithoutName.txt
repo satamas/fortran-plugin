@@ -1,6 +1,6 @@
 FILE
   FortranMainProgramImpl(MAIN PROGRAM)
-    BLOCK
+    FortranBlockImpl(BLOCK)
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('integer')

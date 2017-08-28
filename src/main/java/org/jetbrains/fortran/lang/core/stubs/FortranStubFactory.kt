@@ -13,6 +13,8 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
     "SEPARATE_MODULE_SUBPROGRAM" -> FortranProgramUnitStub.Type("SEPARATE_MODULE_SUBPROGRAM", ::FortranSeparateModuleSubprogramImpl)
     "PROGRAM_UNIT" -> FortranProgramUnitStub.Type("UNKNOWN PROGRAM UNIT", ::FortranProgramUnitImpl)
 
+    "BLOCK" -> FortranBlockStub.Type
+
     else -> error("Unknown element $name")
 }
 

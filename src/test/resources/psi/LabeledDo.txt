@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('labeltests')
     PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       LABELED_DO_CONSTRUCT
         LABEL_DO_STMT
           PsiElement(keyword)('do')
@@ -25,7 +25,7 @@ FILE
             PsiElement(,)(',')
             CONSTANT
               PsiElement(integerliteral)('3')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           PsiElement(eol)('\n')
           PsiWhiteSpace(' ')
           ASSIGNMENT_STMT
@@ -62,7 +62,7 @@ FILE
                 PsiElement(,)(',')
                 CONSTANT
                   PsiElement(integerliteral)('5')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               PsiElement(eol)('\n')
               PsiWhiteSpace('          ')
               ASSIGNMENT_STMT
@@ -132,7 +132,7 @@ FILE
               PsiElement(,)(',')
               CONSTANT
                 PsiElement(integerliteral)('4')
-          BLOCK
+          FortranBlockImpl(BLOCK)
             PsiElement(eol)('\n')
             PsiWhiteSpace('          ')
             ASSIGNMENT_STMT
@@ -163,7 +163,7 @@ FILE
                 PsiElement(,)(',')
                 CONSTANT
                   PsiElement(integerliteral)('5')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               PsiElement(eol)('\n')
               PsiWhiteSpace('            ')
               ASSIGNMENT_STMT

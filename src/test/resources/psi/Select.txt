@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('select_test')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       CASE_CONSTRUCT
         SELECT_CASE_STMT
           PsiElement(keyword)('select')
@@ -41,7 +41,7 @@ FILE
             PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -63,7 +63,7 @@ FILE
             PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -87,7 +87,7 @@ FILE
             PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -109,7 +109,7 @@ FILE
             PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           <empty list>
         CASE_STMT
           PsiElement(keyword)('case')
@@ -118,7 +118,7 @@ FILE
             PsiElement(keyword)('default')
         PsiElement(eol)('\n')
         PsiWhiteSpace('       ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH

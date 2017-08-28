@@ -9,7 +9,7 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       TYPE_DECLARATION_STMT
         LABEL_DECL
           PsiElement(integerliteral)('2')
@@ -41,7 +41,7 @@ FILE
           ENTITY_DECL
             PsiElement(identifier)('aa')
         PsiElement(eol)('\n')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             LABEL_DECL
               PsiElement(integerliteral)('5')
@@ -85,7 +85,7 @@ FILE
                 PsiElement(identifier)('z')
               PsiElement())(')')
             PsiElement(eol)('\n')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               RETURN_STMT
                 LABEL_DECL
                   PsiElement(integerliteral)('8')
@@ -133,7 +133,7 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('suba')
     PsiElement(eol)('\n')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       <empty list>
     MODULE_SUBPROGRAM_PART
       CONTAINS_STMT
@@ -154,7 +154,7 @@ FILE
           PsiElement(()('(')
           PsiElement())(')')
         PsiElement(eol)('\n')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           <empty list>
         END_SUBROUTINE_STMT
           LABEL_DECL

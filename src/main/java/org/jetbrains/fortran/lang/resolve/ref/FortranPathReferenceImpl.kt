@@ -219,7 +219,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                 .plus(module.types.filter { element.referenceName.equals(it.name, true) }))
         return allNames
     }
+
+    fun fortranFileStub(file : PsiFile?) = if (file is FortranFile) file.stub else (file as? FortranFixedFormFile)?.stub
 }
 
-fun fortranFileStub(file : PsiFile?) = if (file is FortranFile) file.stub else (file as? FortranFixedFormFile)?.stub
 

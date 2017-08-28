@@ -1,6 +1,6 @@
 FILE
   FortranMainProgramImpl(MAIN PROGRAM)
-    BLOCK
+    FortranBlockImpl(BLOCK)
       FORMAT_STMT
         LABEL_DECL
           PsiElement(integerliteral)('1')

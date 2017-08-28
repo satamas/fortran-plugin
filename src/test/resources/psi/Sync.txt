@@ -1,6 +1,6 @@
 FILE
   FortranMainProgramImpl(MAIN PROGRAM)
-    BLOCK
+    FortranBlockImpl(BLOCK)
       LOCK_STMT
         PsiElement(keyword)('lock')
         PsiElement(()('(')

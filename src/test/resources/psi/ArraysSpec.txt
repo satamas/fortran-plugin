@@ -6,7 +6,7 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('arraystest')
     PsiElement(eol)('\n')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('real')

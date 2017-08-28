@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('types')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       DERIVED_TYPE_DEF
         DERIVED_TYPE_STMT
           PsiElement(keyword)('type')

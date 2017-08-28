@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('literals')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       ENUM_DEF
         ENUM_DEF_STMT
           PsiElement(keyword)('ENUM')

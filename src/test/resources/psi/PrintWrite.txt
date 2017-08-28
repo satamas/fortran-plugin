@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       PRINT_STMT
         PsiElement(keyword)('Print')
         PsiWhiteSpace(' ')

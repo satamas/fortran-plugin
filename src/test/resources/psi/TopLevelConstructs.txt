@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('circle')
     PsiElement(eol)('\n')
     PsiWhiteSpace('   ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       TYPE_DECLARATION_STMT
         INTRINSIC_TYPE_SPEC
           PsiElement(keyword)('real')
@@ -61,7 +61,7 @@ FILE
           PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    \t')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -119,7 +119,7 @@ FILE
       PsiElement())(')')
     PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
@@ -199,7 +199,7 @@ FILE
       PsiElement())(')')
     PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
@@ -234,7 +234,7 @@ FILE
       PsiElement())(')')
     PsiElement(eol)('\n')
     PsiWhiteSpace(' \t')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       ASSIGNMENT_STMT
         DESIGNATOR
           DATA_PATH
@@ -266,7 +266,7 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('setup')
     PsiElement(eol)('\n')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       <empty list>
     END_BLOCK_DATA_STMT
       PsiElement(keyword)('end')

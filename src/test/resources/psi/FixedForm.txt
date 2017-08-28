@@ -10,7 +10,7 @@ FILE
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       ACCEPT_STMT
         PsiElement(keyword)('accept')
         PsiWhiteSpace(' ')

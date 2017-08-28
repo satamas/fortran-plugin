@@ -6,7 +6,7 @@ FILE
       ENTITY_DECL
         PsiElement(identifier)('a')
     PsiElement(eol)('\n')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       <empty list>
     END_PROGRAM_STMT
       PsiElement(keyword)('endprogram')

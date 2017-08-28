@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('p')
     PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       IF_CONSTRUCT
         IF_THEN_STMT
           PsiElement(keyword)('if')
@@ -23,7 +23,7 @@ FILE
           PsiElement(keyword)('then')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -59,7 +59,7 @@ FILE
           PsiElement(keyword)('then')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -78,7 +78,7 @@ FILE
           PsiElement(keyword)('else')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -120,7 +120,7 @@ FILE
           PsiElement(keyword)('then')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           IF_CONSTRUCT
             IF_THEN_STMT
               PsiElement(keyword)('if')
@@ -142,7 +142,7 @@ FILE
               PsiElement(keyword)('then')
             PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
@@ -169,7 +169,7 @@ FILE
               PsiElement(keyword)('else')
             PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
@@ -209,7 +209,7 @@ FILE
           PsiElement(keyword)('then')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -225,7 +225,7 @@ FILE
           PsiElement(keyword)('else')
         PsiElement(eol)('\n')
         PsiWhiteSpace('      ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
             DESIGNATOR
               DATA_PATH
@@ -273,7 +273,7 @@ FILE
               PsiElement(integerliteral)('1')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ARITHMETIC_IF_STMT
             PsiElement(keyword)('if')
             PsiElement(()('(')

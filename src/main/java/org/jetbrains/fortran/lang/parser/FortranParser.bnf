@@ -792,7 +792,11 @@ forall_stmt ::= label_decl? forall_ forall_header forall_assignment_stmt { pin =
 
 // Clause 8
 // R801 + R208 we parse statements in any order while the standard has some restrictions. We'll check them in code revisions
-block ::= (eol | execution_part_construct)*
+block ::= (eol | execution_part_construct)* {
+    elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+    stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranBlockStub'
+    mixin = 'org.jetbrains.fortran.lang.psi.mixin.FortranBlockImplMixin'
+}
 // R802
 associate_construct ::= associate_stmt eol+ block end_associate_stmt { pin = 1; extends=executable_construct }
 // R803

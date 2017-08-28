@@ -10,7 +10,7 @@ FILE
     PsiComment(comment)('! just a comment')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       BLOCK_CONSTRUCT
         BLOCK_STMT
           CONSTRUCT_NAME_DECL
@@ -20,7 +20,7 @@ FILE
           PsiElement(keyword)('block')
         PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           TYPE_DECLARATION_STMT
             INTRINSIC_TYPE_SPEC
               PsiElement(keyword)('integer')
@@ -41,7 +41,7 @@ FILE
             PsiComment(comment)('!comment')
             PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
@@ -74,7 +74,7 @@ FILE
           PsiElement(keyword)('block')
         PsiElement(eol)('\n')
         PsiWhiteSpace('     ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           ASSOCIATE_CONSTRUCT
             ASSOCIATE_STMT
               CONSTRUCT_NAME_DECL
@@ -107,7 +107,7 @@ FILE
                     PsiElement(integerliteral)('3')
             PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH

@@ -14,7 +14,7 @@ FILE
       PsiElement())(')')
     PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       USE_STMT
         PsiElement(keyword)('use')
         PsiWhiteSpace(' ')

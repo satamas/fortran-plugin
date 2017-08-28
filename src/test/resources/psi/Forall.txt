@@ -1,6 +1,6 @@
 FILE
   FortranMainProgramImpl(MAIN PROGRAM)
-    BLOCK
+    FortranBlockImpl(BLOCK)
       FORALL_CONSTRUCT
         FORALL_CONSTRUCT_STMT
           PsiElement(keyword)('forall')
@@ -22,7 +22,7 @@ FILE
             PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('   ')
-        BLOCK
+        FortranBlockImpl(BLOCK)
           FORALL_STMT
             PsiElement(keyword)('forall')
             PsiWhiteSpace(' ')
@@ -103,7 +103,7 @@ FILE
                 PsiElement())(')')
             PsiElement(eol)('\n')
             PsiWhiteSpace(' ')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 LABEL_DECL
                   PsiElement(integerliteral)('2')
@@ -164,7 +164,7 @@ FILE
               PsiElement())(')')
             PsiElement(eol)('\n')
             PsiWhiteSpace('      ')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
@@ -190,7 +190,7 @@ FILE
               PsiElement())(')')
             PsiElement(eol)('\n')
             PsiWhiteSpace('      ')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH
@@ -204,7 +204,7 @@ FILE
               PsiElement(keyword)('elsewhere')
             PsiElement(eol)('\n')
             PsiWhiteSpace('      ')
-            BLOCK
+            FortranBlockImpl(BLOCK)
               ASSIGNMENT_STMT
                 DESIGNATOR
                   DATA_PATH

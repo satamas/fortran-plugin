@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('p')
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       ASSIGNMENT_STMT
         LABEL_DECL
           PsiElement(integerliteral)('1')

@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('gaussinter')
     PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       INTERFACE_BLOCK
         INTERFACE_STMT
           PsiElement(keyword)('interface')
@@ -40,7 +40,7 @@ FILE
           PsiComment(comment)('! NOTE: real *8 is not an official standard but works usually')
           PsiElement(eol)('\n')
           PsiWhiteSpace('              ')
-          BLOCK
+          FortranBlockImpl(BLOCK)
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
                 PsiElement(keyword)('real')
@@ -146,7 +146,7 @@ FILE
             PsiElement())(')')
           PsiElement(eol)('\n')
           PsiWhiteSpace('          ')
-          BLOCK
+          FortranBlockImpl(BLOCK)
             TYPE_DECLARATION_STMT
               INTRINSIC_TYPE_SPEC
                 PsiElement(keyword)('real')

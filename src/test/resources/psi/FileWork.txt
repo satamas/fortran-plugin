@@ -7,7 +7,7 @@ FILE
         PsiElement(identifier)('filework')
     PsiElement(eol)('\n')
     PsiWhiteSpace('    ')
-    BLOCK
+    FortranBlockImpl(BLOCK)
       OPEN_STMT
         PsiElement(keyword)('open')
         PsiWhiteSpace(' ')
