@@ -4,7 +4,6 @@ import com.intellij.psi.stubs.*
 import com.intellij.psi.stubs.IndexSink
 import org.jetbrains.fortran.lang.core.stubs.index.FortranNamedElementIndex
 import org.jetbrains.fortran.lang.psi.FortranDataPath
-import org.jetbrains.fortran.lang.psi.impl.FortranDataPathImpl
 
 class FortranDataPathStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>,

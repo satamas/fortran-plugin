@@ -21,7 +21,7 @@ abstract class FortranDataPathImplMixin : FortranStubbedElementImpl<FortranDataP
         "Path must contain identifier: $this ${this.text} at ${this.containingFile.virtualFile.path}"
     }
 
-    override val referenceName: String get() = referenceNameElement.text
+    override val referenceName: String get() = stub?.name ?: referenceNameElement.text
 }
 
 
