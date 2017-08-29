@@ -32,7 +32,7 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
 
     // Data path (for rename only)
     "DATA_PATH" -> FortranDataPathStub.Type("DATA_PATH", ::FortranDataPathImpl)
-    "TYPE_NAME" -> FortranDataPathStub.Type("TYPE_NAME", ::FortranDataPathImpl)
+    "TYPE_NAME" -> FortranDataPathStub.Type("TYPE_NAME", ::FortranTypeNameImpl)
     else -> error("Unknown element $name")
 }
 
