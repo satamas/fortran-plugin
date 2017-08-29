@@ -82,9 +82,10 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
 
         val innerType = if (innerPartTypeStmt is FortranTypeDeclarationStmt) {
             innerPartTypeStmt.derivedTypeSpec?.typeName
-        } else {
-            (innerPartTypeStmt as FortranDataComponentDefStmt?)?.derivedTypeSpec?.typeName
-        }
+        } else if (innerPartTypeStmt is FortranDataComponentDefStmt){
+            innerPartTypeStmt.derivedTypeSpec?.typeName
+        } else null
+
         if (innerType == null) {
             return emptyList()
         } else {

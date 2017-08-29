@@ -93,4 +93,10 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         val usageInfos = myFixture.testFindUsages("SpecificationStmts.f95")
         Assert.assertEquals(11, usageInfos.size)
     }
+
+    fun testTypeSearch() {
+        myFixture.configureByFiles("typeSearch.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals("x", (element.reference?.resolve() as FortranEntityDecl).name)
+    }
 }

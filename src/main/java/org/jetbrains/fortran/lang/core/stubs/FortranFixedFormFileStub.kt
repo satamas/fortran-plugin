@@ -1,9 +1,12 @@
 package org.jetbrains.fortran.lang.core.stubs
 
+import com.intellij.lang.ASTNode
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.StubBuilder
 import com.intellij.psi.stubs.*
 import com.intellij.psi.tree.IStubFileElementType
+import com.intellij.util.containers.ContainerUtil
 import org.jetbrains.fortran.FortranFixedFormLanguage
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile
 
