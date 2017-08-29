@@ -9,7 +9,6 @@ import org.jetbrains.fortran.lang.psi.mixin.FortranDataPathImplMixin
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.util.indexing.FileBasedIndex
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.lang.core.stubs.*
@@ -44,6 +43,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return resolveName(programUnit)
     }
 
+    // private methods which a parts of the resolveInner
     private fun resolveModuleRename(useStmt: FortranUseStmt) =
             useStmt.dataPath!!.reference.multiResolve().filterNotNull()
             .map { PsiTreeUtil.getParentOfType(it, FortranModule::class.java) }.filterNotNull()
@@ -74,7 +74,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return types.toList()
     }
 
-    fun resolveDifficultPath() : List<FortranNamedElement> {
+    private fun resolveDifficultPath() : List<FortranNamedElement> {
         val innerPart = (element.firstChild.reference as FortranPathReferenceImpl).multiResolve().filterNotNull()
 
         val innerPartTypeStmt = innerPart.map { PsiTreeUtil.getParentOfType(it, FortranTypeDeclarationStmt::class.java)
@@ -97,7 +97,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         }
     }
 
-    fun resolveName(programUnit: FortranProgramUnit) : List<FortranNamedElement> {
+    private fun resolveName(programUnit: FortranProgramUnit) : List<FortranNamedElement> {
         val outerProgramUnit : FortranProgramUnit
         // local variables
         val names = programUnit.variables.filter { element.referenceName.equals(it.name, true) }
@@ -130,44 +130,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return names.toList()
     }
 
-    fun collectAllModules(programUnit: FortranProgramUnit, outerProgramUnit: FortranProgramUnit)
-            : MutableSet<FortranDataPath> {
-        val allModules = outerProgramUnit.usedModules.toMutableSet()
-        if (programUnit != outerProgramUnit) allModules.addAll(programUnit.usedModules)
-        return allModules
-    }
-
-    fun collectAllModules(programUnit: FortranProgramUnit?) : MutableSet<FortranDataPath> {
-        return if (programUnit != null) collectAllModules(programUnit, programUnit) else emptySet<FortranDataPath>().toMutableSet()
-    }
-
-    fun collectAllTypesFromModules(allModules : MutableSet<FortranDataPath>) : MutableSet<FortranNamedElement>  {
-        val allTypes : MutableSet<FortranNamedElement> = mutableSetOf()
-        for (module in allModules) {
-            val onlyIsUsed = !(module.parent as FortranUseStmt).onlyStmtList.isEmpty()
-            val onlyList = (module.parent as FortranUseStmt).onlyStmtList
-                    .map { it.entityDecl?.name?.toLowerCase() }.filterNotNull()
-            val renameList = (module.parent as FortranUseStmt).renameStmtList
-                    .plus((module.parent as FortranUseStmt).onlyStmtList.map { it.renameStmt })
-                    .map { it?.dataPath?.referenceName?.toLowerCase() }.filterNotNull()
-
-            allTypes.addAll(module.reference.multiResolve().flatMap {
-                collectAllTypesFromModules(collectAllModules(PsiTreeUtil.getParentOfType(it, FortranModule::class.java)))
-            }.plus(module.reference.multiResolve().flatMap {
-                PsiTreeUtil.getParentOfType(it, FortranModule::class.java)?.types?.toList() ?: emptyList<FortranNamedElement>()
-            }).plus(module.reference.multiResolve().flatMap {
-                (PsiTreeUtil.getParentOfType(it, FortranModule::class.java)?.variables?.toList() ?: emptyList<FortranNamedElement>())
-                        .filter{ PsiTreeUtil.getParentOfType(it, FortranRenameStmt::class.java) != null }
-            }).filter {
-                element.referenceName.equals(it.name, true)
-                        && element.referenceName.toLowerCase() !in renameList
-                        && (!onlyIsUsed || element.referenceName.toLowerCase() in onlyList)
-            })
-        }
-        return allTypes
-    }
-
-    fun resolveInProjectFiles() : MutableSet<FortranNamedElement> {
+    // global search
+    private fun resolveInProjectFiles() : MutableSet<FortranNamedElement> {
         val result : MutableSet<FortranNamedElement> = mutableSetOf()
         // other files
         val vFiles = collectAllProjectFiles()
@@ -196,7 +160,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return result
     }
 
-    fun findModuleInProjectFiles(moduleName : String?) : MutableSet<FortranModule> {
+    private fun findModuleInProjectFiles(moduleName : String?) : MutableSet<FortranModule> {
         val result : MutableSet<FortranModule> = mutableSetOf()
         if (moduleName == null) return result
         val vFiles = collectAllProjectFiles()
@@ -218,6 +182,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return result
     }
 
+    // names from modules
     fun findNameInModule(module : FortranModule) : MutableSet<String> {
         if (module.name == null) return mutableSetOf()
         val stub = module.stub ?: return mutableSetOf(module.name!!.toLowerCase())
@@ -234,11 +199,11 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         // variables with a sought for name
         val block = stub.findChildStubByType(FortranBlockStub.Type)
         if (block?.childrenStubs?.filter{ it is FortranStatementStub}
-                    ?.filter{it.psi is FortranTypeDeclarationStmt}
-                    ?.any {
-                        it.childrenStubs.filter { es -> es is FortranEntityDeclStub }
-                                .any{ es -> element.referenceName.equals((es as FortranEntityDeclStub).name, true) }
-                    } ?: false) {
+                ?.filter{it.psi is FortranTypeDeclarationStmt}
+                ?.any {
+                    it.childrenStubs.filter { es -> es is FortranEntityDeclStub }
+                            .any{ es -> element.referenceName.equals((es as FortranEntityDeclStub).name, true) }
+                } ?: false) {
             result.add(module.name!!.toLowerCase())
         }
 
@@ -268,7 +233,6 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return result
     }
 
-    // real psi of
     fun findNamePsiInModule(module : FortranModule?, needToStudyStubs : Boolean) : MutableSet<FortranNamedElement> {
         if (module == null) return mutableSetOf()
         val allNames: MutableSet<FortranNamedElement> = mutableSetOf()
@@ -302,13 +266,49 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return allNames
     }
 
+    // types from modules
+    fun collectAllTypesFromModules(allModules : MutableSet<FortranDataPath>) : MutableSet<FortranNamedElement>  {
+        val allTypes : MutableSet<FortranNamedElement> = mutableSetOf()
+        for (module in allModules) {
+            val onlyIsUsed = !(module.parent as FortranUseStmt).onlyStmtList.isEmpty()
+            val onlyList = (module.parent as FortranUseStmt).onlyStmtList
+                    .map { it.entityDecl?.name?.toLowerCase() }.filterNotNull()
+            val renameList = (module.parent as FortranUseStmt).renameStmtList
+                    .plus((module.parent as FortranUseStmt).onlyStmtList.map { it.renameStmt })
+                    .map { it?.dataPath?.referenceName?.toLowerCase() }.filterNotNull()
+
+            allTypes.addAll(module.reference.multiResolve().flatMap {
+                collectAllTypesFromModules(collectAllModules(PsiTreeUtil.getParentOfType(it, FortranModule::class.java)))
+            }.plus(module.reference.multiResolve().flatMap {
+                PsiTreeUtil.getParentOfType(it, FortranModule::class.java)?.types?.toList() ?: emptyList<FortranNamedElement>()
+            }).plus(module.reference.multiResolve().flatMap {
+                (PsiTreeUtil.getParentOfType(it, FortranModule::class.java)?.variables?.toList() ?: emptyList<FortranNamedElement>())
+                        .filter{ PsiTreeUtil.getParentOfType(it, FortranRenameStmt::class.java) != null }
+            }).filter {
+                element.referenceName.equals(it.name, true)
+                        && element.referenceName.toLowerCase() !in renameList
+                        && (!onlyIsUsed || element.referenceName.toLowerCase() in onlyList)
+            })
+        }
+        return allTypes
+    }
+
+    // util methods
+    fun collectAllModules(programUnit: FortranProgramUnit, outerProgramUnit: FortranProgramUnit)
+            : MutableSet<FortranDataPath> {
+        val allModules = outerProgramUnit.usedModules.toMutableSet()
+        if (programUnit != outerProgramUnit) allModules.addAll(programUnit.usedModules)
+        return allModules
+    }
+
+    fun collectAllModules(programUnit: FortranProgramUnit?) : MutableSet<FortranDataPath> {
+        return if (programUnit != null) collectAllModules(programUnit, programUnit) else emptySet<FortranDataPath>().toMutableSet()
+    }
+
     fun fortranFileStub(file : PsiFile?) = if (file is FortranFile) file.stub else (file as? FortranFixedFormFile)?.stub
 
-    fun collectAllProjectFiles() = FileBasedIndex.getInstance()
-            .getContainingFiles(FileTypeIndex.NAME, FortranFileType, GlobalSearchScope.projectScope(element.project))
-            .plus(FileBasedIndex.getInstance()
-                    .getContainingFiles(FileTypeIndex.NAME, FortranFixedFormFileType, GlobalSearchScope.projectScope(element.project)))
-
+    fun collectAllProjectFiles() = FileTypeIndex.getFiles(FortranFileType, GlobalSearchScope.projectScope(element.project))
+            .plus(FileTypeIndex.getFiles(FortranFixedFormFileType, GlobalSearchScope.projectScope(element.project)))
 }
 
 
