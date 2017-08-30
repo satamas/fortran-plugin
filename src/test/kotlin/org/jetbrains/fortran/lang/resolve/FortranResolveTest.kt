@@ -116,6 +116,6 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         myFixture.configureByFiles("ProgramWithSubmoduleType.f95",
                 "ModuleWithSubmodule.f95", "SubmoduleWithSubmodule.f95", "Submodule.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("needle", (element.reference?.resolve() as FortranEntityDecl).name)
+        assertEquals("subtype", (element.reference?.resolve() as FortranEntityDecl).name)
     }
 }

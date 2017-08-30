@@ -390,6 +390,8 @@ derived_type_def ::= derived_type_stmt eol+ (type_param_def_stmt eol+)* (private
                      type_bound_procedure_part? end_type_stmt {
     pin = 1; extends = declaration_construct
     mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranDerivedTypeDefImplMixin"
+    elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+    stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranDerivedTypeDefStub'
 }
 type_name ::= fidentifier { extends = data_name
   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranTypeNameImplMixin"

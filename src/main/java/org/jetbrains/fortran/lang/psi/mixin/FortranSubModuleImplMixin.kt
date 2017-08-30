@@ -61,4 +61,8 @@ abstract class FortranSubModuleImplMixin : FortranProgramUnitImpl, FortranSubmod
                             PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { function.name.equals(it.name, true) }
                         }.filterNotNull())
                 .toTypedArray()
+
+    override val types: Array<FortranNamedElement>
+        get() = PsiTreeUtil.findChildrenOfType(block, FortranDerivedTypeDef::class.java)
+                .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
 }

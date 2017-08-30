@@ -25,6 +25,7 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
     // Entity Decl
     "ENTITY_DECL" -> FortranEntityDeclStub.Type("ENTITY_DECL", ::FortranEntityDeclImpl)
     "TYPE_DECL" -> FortranEntityDeclStub.Type("TYPE_DECL", ::FortranTypeDeclImpl)
+    "DERIVED_TYPE_DEF" -> FortranDerivedTypeDefStub.Type
 
     // Use stmt-parts
     "RENAME_STMT" -> FortranRenameStmtStub.Type

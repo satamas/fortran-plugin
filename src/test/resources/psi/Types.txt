@@ -8,7 +8,7 @@ FILE
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     FortranBlockImpl(BLOCK)
-      DERIVED_TYPE_DEF
+      FortranDerivedTypeDefImpl(TYPE DEF)
         DERIVED_TYPE_STMT
           PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
@@ -61,7 +61,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
-      DERIVED_TYPE_DEF
+      FortranDerivedTypeDefImpl(TYPE DEF)
         DERIVED_TYPE_STMT
           PsiElement(keyword)('type')
           PsiWhiteSpace(' ')
@@ -126,7 +126,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
-      DERIVED_TYPE_DEF
+      FortranDerivedTypeDefImpl(TYPE DEF)
         DERIVED_TYPE_STMT
           PsiElement(keyword)('TYPE')
           PsiElement(,)(',')
@@ -186,7 +186,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
-      DERIVED_TYPE_DEF
+      FortranDerivedTypeDefImpl(TYPE DEF)
         DERIVED_TYPE_STMT
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')
@@ -244,7 +244,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
-      DERIVED_TYPE_DEF
+      FortranDerivedTypeDefImpl(TYPE DEF)
         DERIVED_TYPE_STMT
           PsiElement(keyword)('TYPE')
           PsiWhiteSpace(' ')

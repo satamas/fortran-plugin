@@ -1,7 +1,7 @@
 submodule (moduleWithSubmodule : submoduleWithSubmodule) needleOwner
    integer :: needle = 42
 
-   type :: a
+   type :: subtype
        integer :: w
-   end type a
+   end type subtype
 end
