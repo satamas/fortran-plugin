@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.psi.FortranConstructNameDecl
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.FortranLabelDecl
-import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
+import org.jetbrains.fortran.lang.psi.FortranTypeDecl
 import org.jetbrains.fortran.lang.psi.mixin.FortranConstructNameDeclImplMixin
 
 
@@ -22,36 +22,33 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun getHelpId(psiElement: PsiElement): String? {
-        return null
+        return "I'm your help ID"
     }
 
-    override fun getType(element: PsiElement): String {
-        if (element is FortranLabelDecl) {
-            return "Fortran numerical label"
-        } else if (element is FortranConstructNameDecl) {
-            return "Construct name"
-        } else {
-            return ""
-        }
-    }
+    override fun getType(element: PsiElement): String =
+            when (element) {
+                is FortranLabelDecl -> "Fortran label"
+                is FortranConstructNameDecl -> "Construct name"
+                is FortranTypeDecl -> "Type"
+                is FortranEntityDecl -> "Entity"
+                else -> ""
+            }
 
-    override fun getDescriptiveName(element: PsiElement): String {
-        if (element is FortranLabelDecl) {
-            return element.text
-        } else if (element is FortranConstructNameDeclImplMixin) {
-            return element.gelLabelValue()
-        } else {
-            return ""
-        }
-    }
+    override fun getDescriptiveName(element: PsiElement): String =
+            when (element) {
+                is FortranLabelDecl -> element.text
+                is FortranConstructNameDeclImplMixin -> element.getLabelValue()
+                is FortranTypeDecl -> element.text
+                is FortranEntityDecl -> element.text
+                else -> ""
+            }
 
-    override fun getNodeText(element: PsiElement, useFullName: Boolean): String {
-        if (element is FortranLabelDecl) {
-            return element.parent.text
-        } else if (element is FortranConstructNameDeclImplMixin) {
-            return element.parent.text
-        } else {
-            return ""
-        }
-    }
+    override fun getNodeText(element: PsiElement, useFullName: Boolean): String =
+            when (element) {
+                is FortranLabelDecl -> element.parent.text
+                is FortranConstructNameDeclImplMixin -> element.parent.text
+                is FortranTypeDecl -> element.parent.text
+                is FortranEntityDecl -> element.parent.text
+                else -> ""
+            }
 }

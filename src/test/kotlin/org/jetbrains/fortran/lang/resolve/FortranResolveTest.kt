@@ -3,7 +3,6 @@ package org.jetbrains.fortran.lang.resolve
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import junit.framework.Assert
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
-import org.jetbrains.fortran.lang.psi.impl.FortranComponentDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
 
@@ -33,7 +32,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testConstructNameReference() {
         myFixture.configureByFiles("ConstructName.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("ifconstruct", (element.references[0].resolve() as FortranConstructNameDeclImpl).gelLabelValue())
+        assertEquals("ifconstruct", (element.references[0].resolve() as FortranConstructNameDeclImpl).getLabelValue())
     }
 
     // Name references (variables and fields)

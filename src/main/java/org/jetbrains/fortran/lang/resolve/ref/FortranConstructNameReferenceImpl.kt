@@ -18,6 +18,6 @@ class FortranConstructNameReferenceImpl(element: FortranConstructNameImplMixin) 
         val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return emptyList()
         // find all labels in it
         return PsiTreeUtil.findChildrenOfType(programUnit, FortranConstructNameDeclImpl::class.java)
-                .filter {element.gelLabelValue() == it.gelLabelValue() }
+                .filter {element.gelLabelValue() == it.getLabelValue() }
     }
 }
