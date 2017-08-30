@@ -411,7 +411,7 @@ type_attr_spec ::= abstract_ | access_spec | (bind_ '(' fidentifier ')') | (exte
 // R428
 private private_or_sequence ::= label_decl? (private_ | sequence_)  { pin = 2 }
 // R429
-end_type_stmt ::= label_decl? ((end_ type_) | endtype_) data_name? { pin = 2 }
+end_type_stmt ::= label_decl? ((end_ type_) | endtype_) type_name? { pin = 2 }
 // R430 is trivial
 // R431
 type_param_def_stmt ::= label_decl? integer_ (kind_selector)? ',' type_param_attr_spec '::' <<list type_param_decl>>
@@ -459,7 +459,7 @@ type_bound_procedure_stmt ::= label_decl? procedure_ (type_bound_procedure_stmt_
 private type_bound_procedure_stmt_part1 ::= '(' fidentifier ')' ',' <<list binding_attr>> '::' <<list fidentifier>> { pin = 1 }
 private type_bound_procedure_stmt_part2 ::= ((',' <<list binding_attr>>)? '::')? <<list type_bound_proc_decl>>
 // R449
-type_bound_proc_decl ::= fidentifier ('=>' fidentifier)?
+type_bound_proc_decl ::= local_name ('=>' data_name)?
 // R450
 type_bound_generic_stmt ::= label_decl? generic_ (',' access_spec)? '::' generic_spec '=>' <<list fidentifier>> { pin = 2}
 // R451

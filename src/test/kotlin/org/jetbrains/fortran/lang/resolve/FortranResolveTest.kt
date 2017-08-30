@@ -118,4 +118,10 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
         assertEquals("subtype", (element.reference?.resolve() as FortranEntityDecl).name)
     }
+
+    fun testMethod() {
+        myFixture.configureByFiles("Method.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals("print", (element.reference?.resolve() as FortranEntityDecl).name)
+    }
 }
