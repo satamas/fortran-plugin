@@ -12,7 +12,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.lang.core.stubs.*
-
+import org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         FortranReferenceBase<FortranDataPathImplMixin>(element), FortranReference {
@@ -120,13 +120,21 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         names.addAll(resolveInProjectFiles())
 
         // modules
-        // speed up needed
         if (element.parent !is FortranUseStmt) { // We do not need recursion here
             val allModules = collectAllModules(programUnit, outerProgramUnit)
             for (module in allModules) {
                 names.addAll(findModuleInProjectFiles(module.referenceName).filterNotNull()
                         .flatMap { findNamePsiInModule(it, true, mutableSetOf()) }.toList())
             }
+        }
+
+        // submodules
+        if (outerProgramUnit is FortranModule) {
+            names.addAll(findSubModulesInProjectFiles(outerProgramUnit.name, null).filterNotNull()
+                    .flatMap { findNamePsiInModule(it, true, mutableSetOf()) }.toList())
+        } else if (outerProgramUnit is FortranSubModuleImplMixin && outerProgramUnit.name?.count { it == ':' } == 1) {
+            names.addAll(findSubModulesInProjectFiles(outerProgramUnit.getModuleName(), outerProgramUnit.getPersonalName()).filterNotNull()
+                    .flatMap { findNamePsiInModule(it, true, mutableSetOf()) }.toList())
         }
         return names.toList()
     }
@@ -183,9 +191,38 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return result
     }
 
+    private fun findSubModulesInProjectFiles(moduleName : String?, subModuleName : String?) : MutableSet<FortranSubmodule> {
+        val result : MutableSet<FortranSubmodule> = mutableSetOf()
+        if (moduleName == null) return result
+        val vFiles = collectAllProjectFiles()
+
+        for (file in vFiles) {
+            val psiFile = PsiManager.getInstance(element.project).findFile(file)
+            val fileStub = fortranFileStub(psiFile)
+            if (fileStub != null) {
+                result.addAll(fileStub.childrenStubs
+                        .filter { it is FortranProgramUnitStub }.filter { it.psi is FortranSubModuleImplMixin }
+                        .map { (it.psi as FortranSubModuleImplMixin) }.filterNotNull()
+                        .filter {
+                            it.getModuleName().equals(moduleName, true)
+                            && (subModuleName == null || it.getSubModuleName().equals(subModuleName, true))
+                        })
+
+            } else if (psiFile != null) {
+                result.addAll(psiFile.children.filter { it is FortranSubModuleImplMixin }
+                        .filter {
+                            moduleName.equals((it as FortranSubModuleImplMixin).getModuleName(), true)
+                            && (subModuleName == null || it.getSubModuleName().equals(subModuleName, true))
+                        }
+                        .map { it -> (it as FortranSubModuleImplMixin) }.filterNotNull())
+            }
+        }
+        return result
+    }
+
     // names from modules
-    fun findNameInModule(module : FortranModule) : MutableSet<String> {
-        if (module.name == null) return mutableSetOf()
+    fun findNameInModule(module : FortranProgramUnit) : MutableSet<String> {
+        if (module.name == null || (module !is FortranModule && module !is FortranSubmodule)) return mutableSetOf()
         val stub = module.stub ?: return mutableSetOf(module.name!!.toLowerCase())
 
         val result : MutableSet<String> = mutableSetOf()
@@ -234,8 +271,10 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return result
     }
 
-    fun findNamePsiInModule(module : FortranModule?, needToStudyStubs : Boolean, allSeenModules : MutableSet<String>) : MutableSet<FortranNamedElement> {
-        if (module == null || module.name == null) return mutableSetOf()
+    fun findNamePsiInModule(module : FortranProgramUnit?, needToStudyStubs : Boolean, allSeenModules : MutableSet<String>) : MutableSet<FortranNamedElement> {
+        if (module == null || module.name == null || (module !is FortranModule && module !is FortranSubmodule)) {
+            return mutableSetOf()
+        }
         // loop check
         if (allSeenModules.contains(module.name!!.toLowerCase())) return mutableSetOf()
         allSeenModules.add(module.name!!.toLowerCase())
@@ -266,6 +305,15 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         } else {
             allNames.addAll(findNameInModule(module).flatMap { findModuleInProjectFiles(it) }
                     .flatMap { findNamePsiInModule(it, false, allSeenModules) })
+        }
+
+        // submodules
+        if (module is FortranModule) {
+            allNames.addAll(findSubModulesInProjectFiles(module.name, null).filterNotNull()
+                    .flatMap { findNamePsiInModule(it, true, mutableSetOf()) }.toList())
+        } else if ((module as FortranSubModuleImplMixin).name?.count { it == ':' } == 1){
+            allNames.addAll(findSubModulesInProjectFiles(module.getModuleName(), module.getPersonalName())
+                    .filterNotNull().flatMap { findNamePsiInModule(it, true, mutableSetOf()) }.toList())
         }
         allSeenModules.remove(module.name!!.toLowerCase())
         return allNames

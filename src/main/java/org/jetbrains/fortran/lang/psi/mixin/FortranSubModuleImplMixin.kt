@@ -17,6 +17,31 @@ abstract class FortranSubModuleImplMixin : FortranProgramUnitImpl, FortranSubmod
 
     override fun getNameIdentifier(): PsiElement? = submoduleStmt.entityDecl
 
+    override fun getName(): String? {
+        val stub = stub
+        if (stub != null) return stub.name
+        val moduleNamePsi = submoduleStmt.parentIdentifier?.firstChild as FortranDataPath?
+        val submoduleNamePsi = submoduleStmt.parentIdentifier?.lastChild as FortranDataPath?
+        if (moduleNamePsi == null) return nameIdentifier?.text
+        else {
+            if (submoduleNamePsi == null || submoduleNamePsi == moduleNamePsi) {
+                return moduleNamePsi.referenceName + ":" + nameIdentifier?.text
+            } else {
+                return moduleNamePsi.referenceName + ":" + submoduleNamePsi.referenceName + ":" + nameIdentifier?.text
+            }
+        }
+    }
+
+    fun getModuleName() : String? = name?.substringBefore(':')
+
+    fun getSubModuleName() : String? =
+            if (name?.count { it == ':' } == 2)
+                name?.substringAfter(':')?.substringBeforeLast(':')
+            else null
+
+
+    fun getPersonalName() : String? = if (name?.contains(':', true) ?: false) name?.substringAfterLast(':') else null
+
     override val variables: Array<FortranNamedElement>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
                 .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }

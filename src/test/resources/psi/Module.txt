@@ -127,7 +127,8 @@ FILE
       PsiWhiteSpace(' ')
       PsiElement(()('(')
       PARENT_IDENTIFIER
-        PsiElement(identifier)('a')
+        FortranDataPathImpl(DATA_PATH)
+          PsiElement(identifier)('a')
       PsiElement())(')')
       PsiWhiteSpace(' ')
       FortranEntityDeclImpl(ENTITY_DECL)

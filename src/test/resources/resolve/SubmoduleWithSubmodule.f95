@@ -1,0 +1,3 @@
+submodule (moduleWithSubmodule) submoduleWithSubmodule
+
+end submodule

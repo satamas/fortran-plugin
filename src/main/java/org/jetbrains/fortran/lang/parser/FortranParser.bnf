@@ -1058,7 +1058,7 @@ mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin"
 // R1117
 submodule_stmt ::= label_decl? submodule_ '(' parent_identifier ')' program_unit_name { pin = 2 }
 // R1118
-parent_identifier ::= fidentifier (':' fidentifier)?
+parent_identifier ::= data_name (':' data_name)?
 // R1119
 end_submodule_stmt ::= label_decl? (endsubmodule_ data_name? | end_ (submodule_ data_name?)?)  { pin = 2 }
 // R1120
