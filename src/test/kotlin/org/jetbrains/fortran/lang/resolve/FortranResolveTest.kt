@@ -124,4 +124,11 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
         assertEquals("print", (element.reference?.resolve() as FortranEntityDecl).name)
     }
+
+    fun testCommonBlocks() {
+        // Here we find all N usages of the common block. In IDE only N-1 usage will be shown
+        // The block where we use find usages is not shown in IDE
+        val usageInfos = myFixture.testFindUsages("CommonBlocksA.f95", "CommonBlocksB.f95")
+        Assert.assertEquals(3, usageInfos.size)
+    }
 }

@@ -649,9 +649,14 @@ equivalence_set ::= '(' equivalence_object ',' <<list equivalence_object>> ')'
 // R567
 equivalence_object ::= substring | data_path
 // R568
-common_stmt ::= label_decl? common_ (('/' fidentifier? '/') | '//')? <<list common_block_object>> ((',')? (('/' fidentifier? '/') | '//') <<list common_block_object>>)* { pin = 2 }
+common_stmt ::= label_decl? common_ (('/' common_block_decl? '/') | '//')? <<list common_block_object>> ((',')? (('/' common_block_decl? '/') | '//') <<list common_block_object>>)* { pin = 2 }
+common_block_decl ::= fidentifier {
+    implements=['org.jetbrains.fortran.lang.psi.ext.FortranNamedElement'
+                'org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement']
+    mixin='org.jetbrains.fortran.lang.psi.mixin.FortranCommonBlockDeclImplMixin'
+}
 // R569
-common_block_object ::= fidentifier ('(' array_spec ')')?
+common_block_object ::= data_name ('(' array_spec ')')?
 
 // Clause 6
 // R601 is implemented in clause 7

@@ -3,10 +3,7 @@ package org.jetbrains.fortran.ide.findUsages
 import com.intellij.lang.cacheBuilder.WordsScanner
 import com.intellij.lang.findUsages.FindUsagesProvider
 import com.intellij.psi.PsiElement
-import org.jetbrains.fortran.lang.psi.FortranConstructNameDecl
-import org.jetbrains.fortran.lang.psi.FortranEntityDecl
-import org.jetbrains.fortran.lang.psi.FortranLabelDecl
-import org.jetbrains.fortran.lang.psi.FortranTypeDecl
+import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.mixin.FortranConstructNameDeclImplMixin
 
 
@@ -19,6 +16,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
         return psiElement is FortranLabelDecl
                 || psiElement is FortranConstructNameDecl
                 || psiElement is FortranEntityDecl
+                || psiElement is FortranCommonBlockDecl
     }
 
     override fun getHelpId(psiElement: PsiElement): String? {

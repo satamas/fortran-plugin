@@ -230,18 +230,21 @@ FILE
         PsiElement(keyword)('common')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('c')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('c')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       COMMON_STMT
         PsiElement(keyword)('common')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('c')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('c')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('d')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('d')
           PsiElement(()('(')
           EXPLICIT_SHAPE_SPEC
             CONSTANT
@@ -255,37 +258,44 @@ FILE
         PsiElement(//)('//')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('c')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('c')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       COMMON_STMT
         PsiElement(keyword)('common')
         PsiWhiteSpace(' ')
         PsiElement(/)('/')
-        PsiElement(identifier)('x')
+        COMMON_BLOCK_DECL
+          PsiElement(identifier)('x')
         PsiElement(/)('/')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('c')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('c')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       COMMON_STMT
         PsiElement(keyword)('common')
         PsiWhiteSpace(' ')
         PsiElement(/)('/')
-        PsiElement(identifier)('x')
+        COMMON_BLOCK_DECL
+          PsiElement(identifier)('x')
         PsiElement(/)('/')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('c')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('c')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         PsiElement(/)('/')
-        PsiElement(identifier)('y')
+        COMMON_BLOCK_DECL
+          PsiElement(identifier)('y')
         PsiElement(/)('/')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('d')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('d')
           PsiElement(()('(')
           EXPLICIT_SHAPE_SPEC
             CONSTANT
@@ -297,18 +307,22 @@ FILE
         PsiElement(keyword)('common')
         PsiWhiteSpace(' ')
         PsiElement(/)('/')
-        PsiElement(identifier)('x')
+        COMMON_BLOCK_DECL
+          PsiElement(identifier)('x')
         PsiElement(/)('/')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('c')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('c')
         PsiWhiteSpace(' ')
         PsiElement(/)('/')
-        PsiElement(identifier)('y')
+        COMMON_BLOCK_DECL
+          PsiElement(identifier)('y')
         PsiElement(/)('/')
         PsiWhiteSpace(' ')
         COMMON_BLOCK_OBJECT
-          PsiElement(identifier)('d')
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('d')
           PsiElement(()('(')
           EXPLICIT_SHAPE_SPEC
             CONSTANT
