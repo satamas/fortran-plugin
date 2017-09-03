@@ -12,6 +12,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.lang.core.stubs.*
+import org.jetbrains.fortran.lang.psi.impl.FortranNameStmtImpl
 import org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
@@ -20,6 +21,15 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
     override val FortranDataPathImplMixin.referenceAnchor: PsiElement get() = referenceNameElement
 
     override fun getVariants(): Array<Any> = emptyArray()
+
+    override fun isReferenceTo(element: PsiElement?): Boolean {
+        val stmt = element?.parent
+        val file = stmt?.parent?.parent
+        if (stmt is FortranNameStmtImpl && (file is FortranFile || file is FortranFixedFormFile) ) {
+            return true
+        }
+        return super.isReferenceTo(element)
+    }
 
     override fun resolveInner(): List<FortranNamedElement> {
         // module rename
