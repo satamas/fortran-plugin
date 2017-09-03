@@ -1,5 +1,6 @@
 package org.jetbrains.fortran.lang.resolve.ref
 
+import com.intellij.openapi.application.runWriteAction
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
@@ -12,6 +13,8 @@ import com.intellij.psi.search.GlobalSearchScope
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.lang.core.stubs.*
+import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
+import org.jetbrains.fortran.lang.psi.impl.FortranEntityDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranNameStmtImpl
 import org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin
 
@@ -160,6 +163,29 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             names.addAll(findSubModulesInProjectFiles(outerProgramUnit.getModuleName(), outerProgramUnit.getPersonalName()).filterNotNull()
                     .flatMap { findNamePsiInModule(it, mutableSetOf(), false) }.toList())
         }
+
+        // let's try to live without real declaration
+        if (names.isEmpty()) {
+            val implicitStmts = PsiTreeUtil.findChildrenOfType(programUnit, FortranImplicitStmt::class.java)
+            if (implicitStmts.isEmpty() || implicitStmts.all { !it.implicitSpecList.isEmpty()}) {
+                val firstUsage = PsiTreeUtil.findChildrenOfType(outerProgramUnit.firstChild, FortranDataPath::class.java)
+                        .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
+                        .filter { it.name?.equals(element.name, true) ?: false }
+                        .toMutableList().firstOrNull() ?:
+                        PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(outerProgramUnit, FortranBlock::class.java ), FortranDataPath::class.java)
+                        .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
+                        .filter { it.name?.equals(element.name, true) ?: false }
+                        .toMutableList().firstOrNull() ?:
+                        PsiTreeUtil.findChildrenOfType(programUnit, FortranDataPath::class.java)
+                        .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
+                        .filter { it.name?.equals(element.name, true) ?: false }
+                        .toMutableList().first()
+
+                names.add(firstUsage)
+            }
+
+        }
+
         return names.toList()
     }
 

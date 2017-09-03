@@ -22,6 +22,17 @@ abstract class FortranDataPathImplMixin : FortranStubbedElementImpl<FortranDataP
     }
 
     override val referenceName: String get() = stub?.name ?: referenceNameElement.text
+
+    override fun getNameIdentifier(): PsiElement? = findChildByType(FortranTypes.IDENTIFIER)
+
+    override fun getName(): String? {
+        val stub = stub
+        return if (stub != null) stub.name else nameIdentifier?.text
+    }
+
+    override fun setName(name: String): PsiElement? {
+        return this
+    }
 }
 
 

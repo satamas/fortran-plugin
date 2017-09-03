@@ -17,6 +17,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
                 || psiElement is FortranConstructNameDecl
                 || psiElement is FortranEntityDecl
                 || psiElement is FortranCommonBlockDecl
+                || psiElement is FortranDataPath
     }
 
     override fun getHelpId(psiElement: PsiElement): String? {
@@ -30,6 +31,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
                 is FortranTypeDecl -> "Type"
                 is FortranEntityDecl -> "Entity"
                 is FortranCommonBlockDecl -> "Common Block"
+                is FortranDataPath -> "Variable"
                 else -> ""
             }
 
@@ -40,6 +42,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
                 is FortranTypeDecl -> element.text
                 is FortranEntityDecl -> element.text
                 is FortranCommonBlockDecl -> element.text
+                is FortranDataPath -> element.text
                 else -> ""
             }
 
@@ -50,6 +53,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
                 is FortranTypeDecl -> element.parent.text
                 is FortranEntityDecl -> element.parent.text
                 is FortranCommonBlockDecl -> element.text
+                is FortranDataPath -> element.text
                 else -> ""
             }
 }

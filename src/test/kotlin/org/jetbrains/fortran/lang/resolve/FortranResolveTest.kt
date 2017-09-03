@@ -2,6 +2,7 @@ package org.jetbrains.fortran.lang.resolve
 
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import junit.framework.Assert
+import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
@@ -125,10 +126,28 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         assertEquals("print", (element.reference?.resolve() as FortranEntityDecl).name)
     }
 
+    // Common block
     fun testCommonBlocks() {
         // Here we find all N usages of the common block. In IDE only N-1 usage will be shown
         // The block where we use find usages is not shown in IDE
         val usageInfos = myFixture.testFindUsages("CommonBlocksA.f95", "CommonBlocksB.f95")
+        Assert.assertEquals(3, usageInfos.size)
+    }
+
+    // Implicit
+    fun testImplicitUsages() {
+        val usageInfos = myFixture.testFindUsages("Implicit.f95", "CommonBlocksB.f95", "TwinOne.f95")
+        Assert.assertEquals(14, usageInfos.size)
+    }
+
+    fun testImplicit() {
+        myFixture.configureByFiles("Implicit.f95", "CommonBlocksB.f95", "TwinTwo.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals("X", (element.reference?.resolve() as FortranDataPath).name)
+    }
+
+    fun testImplicit2Usages() {
+        val usageInfos = myFixture.testFindUsages("Implicit2.f95")
         Assert.assertEquals(3, usageInfos.size)
     }
 }

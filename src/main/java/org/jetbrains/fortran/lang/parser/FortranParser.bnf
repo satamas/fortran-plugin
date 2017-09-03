@@ -671,7 +671,9 @@ parent_string ::= data_path | string_literal
 substring_range ::= (expr)? ':' (expr)?
 // R611
 data_path ::= data_path_start (data_path_part)* {
-  implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement"]
+  implements = [ "org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement"
+                     "org.jetbrains.fortran.lang.psi.ext.FortranNamedElement"
+                    "com.intellij.psi.PsiNameIdentifierOwner"]
   mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranDataPathImplMixin"
   elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
   stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranDataPathStub'
