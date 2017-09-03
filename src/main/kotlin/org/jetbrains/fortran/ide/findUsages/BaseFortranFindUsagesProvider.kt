@@ -20,7 +20,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun getHelpId(psiElement: PsiElement): String? {
-        return "I'm your help ID"
+        return null
     }
 
     override fun getType(element: PsiElement): String =
@@ -29,6 +29,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
                 is FortranConstructNameDecl -> "Construct name"
                 is FortranTypeDecl -> "Type"
                 is FortranEntityDecl -> "Entity"
+                is FortranCommonBlockDecl -> "Common Block"
                 else -> ""
             }
 
@@ -38,6 +39,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
                 is FortranConstructNameDeclImplMixin -> element.getLabelValue()
                 is FortranTypeDecl -> element.text
                 is FortranEntityDecl -> element.text
+                is FortranCommonBlockDecl -> element.text
                 else -> ""
             }
 
@@ -47,6 +49,7 @@ abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
                 is FortranConstructNameDeclImplMixin -> element.parent.text
                 is FortranTypeDecl -> element.parent.text
                 is FortranEntityDecl -> element.parent.text
+                is FortranCommonBlockDecl -> element.text
                 else -> ""
             }
 }
