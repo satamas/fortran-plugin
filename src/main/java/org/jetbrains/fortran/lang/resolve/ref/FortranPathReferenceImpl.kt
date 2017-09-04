@@ -13,8 +13,6 @@ import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.lang.core.stubs.*
 import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
-import org.jetbrains.fortran.lang.psi.impl.FortranNameStmtImpl
-import org.jetbrains.fortran.lang.psi.mixin.FortranProgramUnitImplMixin
 import org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
@@ -25,11 +23,11 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
     override fun getVariants(): Array<Any> = emptyArray()
 
     override fun isReferenceTo(element: PsiElement?): Boolean {
-        val stmt = element?.parent
+     /*   val stmt = element?.parent
         val file = stmt?.parent?.parent
         if (stmt is FortranNameStmtImpl && (file is FortranFile || file is FortranFixedFormFile) ) {
             return true
-        }
+        }*/
         return super.isReferenceTo(element)
     }
 
@@ -134,6 +132,12 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         names.addAll(PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(programUnit, FortranBlock::class.java), FortranInterfaceBlock::class.java)
                 .flatMap{ (it as FortranInterfaceBlock).subprograms.filter{ element.referenceName.equals(it.name, true) } })
 
+        // we are inside interface
+        val inter = PsiTreeUtil.getParentOfType(element, FortranInterfaceBody::class.java)
+        if (inter != null) {
+            names.addAll(PsiTreeUtil.findChildrenOfType(inter, FortranEntityDecl::class.java).filter{ element.referenceName.equals(it.name, true) } )
+        }
+
         // if we are real program unit
         if (programUnit.parent !is FortranModuleSubprogramPart
                 && programUnit.parent !is FortranInternalSubprogramPart) {
@@ -169,6 +173,11 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                     .flatMap { findNamePsiInModule(it, mutableSetOf(), false) }.toList())
         }
 
+        // let's check interfaces here. Maybe some declarations are excessive
+        if (names.any{ it.parent is FortranInterfaceStmt }) {
+            names.removeIf { it.parent !is FortranInterfaceStmt }
+        }
+
         // let's try to live without real declaration
         if (names.isEmpty()) {
             val implicitStmts = PsiTreeUtil.findChildrenOfType(programUnit, FortranImplicitStmt::class.java)
@@ -183,7 +192,6 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                     names.add(firstUsage)
                 }
             }
-
         }
 
         return names.toList()
@@ -319,8 +327,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                 allNames.addAll(interfaces?.childrenStubs?.filter{ it is FortranEntityDeclStub }
                         ?.filter { element.referenceName.equals((it as FortranProgramUnitStub).name, true) }
                         ?.map {it.psi as FortranNamedElement}?.filterNotNull() ?: emptyList())
-                allNames.addAll(interfaces?.childrenStubs?.filter{ it is FortranProgramUnitStub }
-                        ?.filter { element.referenceName.equals((it as FortranProgramUnitStub).name, true) }
+                allNames.addAll(interfaces?.childrenStubs?.filter{ it is FortranInterfaceBodyStub }
+                        ?.filter { element.referenceName.equals((it as FortranInterfaceBodyStub).name, true) }
                         ?.map {it.psi as FortranNamedElement}?.filterNotNull() ?: emptyList())
             }
 

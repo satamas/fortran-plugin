@@ -11,12 +11,11 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
     "SUBMODULE" -> FortranProgramUnitStub.Type("SUBMODULE", ::FortranSubmoduleImpl)
     "BLOCK_DATA" -> FortranProgramUnitStub.Type("BLOCK DATA", ::FortranBlockDataImpl)
     "SEPARATE_MODULE_SUBPROGRAM" -> FortranProgramUnitStub.Type("SEPARATE_MODULE_SUBPROGRAM", ::FortranSeparateModuleSubprogramImpl)
-    "INTERFACE_BODY" -> FortranProgramUnitStub.Type("INTERFACE BODY", ::FortranInterfaceBodyImpl)
     "PROGRAM_UNIT" -> FortranProgramUnitStub.Type("UNKNOWN PROGRAM UNIT", ::FortranProgramUnitImpl)
 
     "BLOCK" -> FortranBlockStub.Type
     "MODULE_SUBPROGRAM_PART" -> FortranModuleSubprogramPartStub.Type
-
+    "INTERFACE_BODY" -> FortranInterfaceBodyStub.Type
     // Statements
     // I do not know, how many of them we really need
     "TYPE_DECLARATION_STMT" -> FortranStatementStub.Type("TYPE_DECLARATION_STMT", ::FortranTypeDeclarationStmtImpl)

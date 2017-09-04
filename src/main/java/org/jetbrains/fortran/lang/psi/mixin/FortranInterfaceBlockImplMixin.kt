@@ -35,9 +35,10 @@ abstract class FortranInterfaceBlockImplMixin : FortranStubbedNamedElementImpl<F
                 return arrayOf(interfaceStmt.entityDecl!!)
             } else {
                 return interfaceBodyList.map{ it -> (it.firstChild as FortranNameStmt).entityDecl as FortranNamedElement}
-                        .plus(interfaceBodyList.filterIsInstance(FortranFunctionSubprogram::class.java)
+                        .plus(interfaceBodyList.filter{it.firstChild is FortranFunctionStmt }
                                 .flatMap { function ->
-                                    PsiTreeUtil.findChildrenOfType(function.block, FortranEntityDecl::class.java).filter { function.name.equals(it.name, true)  }
+                                    PsiTreeUtil.findChildrenOfType(function.block, FortranEntityDecl::class.java)
+                                            .filter { (function.firstChild as FortranFunctionStmt).name.equals(it.name, true)  }
                                 }.filterNotNull())
                         .plus(procedureStmtList.flatMap { PsiTreeUtil.findChildrenOfType(it, FortranEntityDecl::class.java) })
                         .toTypedArray()

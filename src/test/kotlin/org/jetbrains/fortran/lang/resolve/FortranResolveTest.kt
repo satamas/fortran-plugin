@@ -6,6 +6,7 @@ import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
+import org.jetbrains.fortran.lang.resolve.ref.FortranPathReferenceImpl
 
 
 class FortranResolveTest : LightCodeInsightFixtureTestCase() {
@@ -154,5 +155,27 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testNoImplicitStructures() {
         val usageInfos = myFixture.testFindUsages("Implicit3.f95")
         Assert.assertEquals(1, usageInfos.size)
+    }
+
+    // Interface
+    fun testInterface() {
+        myFixture.configureByFiles("Interface.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals("f", ((element.reference as FortranPathReferenceImpl?)?.multiResolve()?.firstOrNull() as FortranEntityDecl).name)
+    }
+
+    fun testInterfaceUsages() {
+        val usageInfos = myFixture.testFindUsages("Interface2.f95")
+        Assert.assertEquals(6, usageInfos.size)
+    }
+
+    fun testNamedInterfaceUsages() {
+        val usageInfos = myFixture.testFindUsages("NamedInterface.f95", "ProgramWithNamedInterface.f95")
+        Assert.assertEquals(3, usageInfos.size)
+    }
+
+    fun testNamedInterfaceUsages2() {
+        val usageInfos = myFixture.testFindUsages("ProgramWithNamedInterface2.f95", "NamedInterface2.f95")
+        Assert.assertEquals(0, usageInfos.size)
     }
 }

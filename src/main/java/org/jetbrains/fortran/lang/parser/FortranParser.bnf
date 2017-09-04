@@ -1105,7 +1105,7 @@ end_interface_stmt ::= label_decl? ((end_ interface_) | endinterface_) (data_nam
 // R1205
 interface_body ::= interface_function_body | interface_subroutine_body {
 mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranInterfaceBodyImplMixin"
-stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranInterfaceBodyStub'
 elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 private interface_function_body ::= function_stmt eol+ block? end_function_stmt { pin = 1 }
