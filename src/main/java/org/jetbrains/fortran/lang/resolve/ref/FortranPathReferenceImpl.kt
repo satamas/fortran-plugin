@@ -1,6 +1,5 @@
 package org.jetbrains.fortran.lang.resolve.ref
 
-import com.intellij.openapi.application.runWriteAction
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
@@ -14,7 +13,6 @@ import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.lang.core.stubs.*
 import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
-import org.jetbrains.fortran.lang.psi.impl.FortranEntityDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranNameStmtImpl
 import org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin
 
@@ -169,13 +167,14 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             val implicitStmts = PsiTreeUtil.findChildrenOfType(programUnit, FortranImplicitStmt::class.java)
             if (implicitStmts.isEmpty() || implicitStmts.all { !it.implicitSpecList.isEmpty()}) {
                 val firstUsage = PsiTreeUtil.findChildrenOfType(outerProgramUnit.firstChild, FortranDataPath::class.java)
-                        .filterImplicitDeclaration().firstOrNull() ?:
+                        .filterImplicitDeclaration() ?:
                         PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(outerProgramUnit, FortranBlock::class.java ), FortranDataPath::class.java)
-                        .filterImplicitDeclaration().firstOrNull() ?:
+                        .filterImplicitDeclaration() ?:
                         PsiTreeUtil.findChildrenOfType(programUnit, FortranDataPath::class.java)
-                        .filterImplicitDeclaration().first()
-
-                names.add(firstUsage)
+                        .filterImplicitDeclaration()
+                if (firstUsage != null) {
+                    names.add(firstUsage)
+                }
             }
 
         }
@@ -383,12 +382,12 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
     fun collectAllProjectFiles() = FileTypeIndex.getFiles(FortranFileType, GlobalSearchScope.projectScope(element.project))
             .plus(FileTypeIndex.getFiles(FortranFixedFormFileType, GlobalSearchScope.projectScope(element.project)))
 
-    fun <T : FortranDataPath> kotlin.collections.Iterable<T>.filterImplicitDeclaration(): List<T> =
+    fun <T : FortranDataPath> kotlin.collections.Iterable<T>.filterImplicitDeclaration(): T? =
         filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
         .filter { it.name?.equals(element.name, true) ?: false }
         .filter { (it as FortranDataPath).firstChild !is FortranDataPath }
-        .toMutableList()
-    
+        .toMutableList().firstOrNull()
+
 }
 
 

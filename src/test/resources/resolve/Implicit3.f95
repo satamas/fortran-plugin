@@ -1,5 +1,5 @@
-program a
+program aa
     x%a = 1
-    a = 2
-    write(*,*) x%<caret>a
+    <caret>a = 2
+    write(*,*) x%a
 end

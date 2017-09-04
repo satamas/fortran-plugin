@@ -152,8 +152,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     }
 
     fun testNoImplicitStructures() {
-        myFixture.configureByFiles("Implicit3.f95")
-        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertNull(element.reference?.resolve())
+        val usageInfos = myFixture.testFindUsages("Implicit3.f95")
+        Assert.assertEquals(1, usageInfos.size)
     }
 }
