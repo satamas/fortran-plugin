@@ -131,6 +131,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         // interfaces
         names.addAll(PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(programUnit, FortranBlock::class.java), FortranInterfaceBlock::class.java)
                 .flatMap{ (it as FortranInterfaceBlock).subprograms.filter{ element.referenceName.equals(it.name, true) } })
+        // enums
+        names.addAll(PsiTreeUtil.findChildrenOfType(programUnit, FortranEnumDef::class.java).flatMap { (it as FortranEnumDef).variables.filter{ element.referenceName.equals(it.name, true) } })
 
         // we are inside interface
         val inter = PsiTreeUtil.getParentOfType(element, FortranInterfaceBody::class.java)
@@ -150,6 +152,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             // interfaces
             names.addAll(PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(outerProgramUnit, FortranBlock::class.java), FortranInterfaceBlock::class.java)
                     .flatMap{ (it as FortranInterfaceBlock).subprograms.filter{ element.referenceName.equals(it.name, true) } })
+            // enums
+            names.addAll(PsiTreeUtil.findChildrenOfType(outerProgramUnit, FortranEnumDef::class.java).flatMap { (it as FortranEnumDef).variables.filter{ element.referenceName.equals(it.name, true) } })
 
         }
 
@@ -314,7 +318,9 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                     .plus(module.variables.filter { element.referenceName.equals(it.name, true) } )
                     .plus(PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(module, FortranBlock::class.java),
                             FortranInterfaceBlock::class.java )
-                            .flatMap { it.subprograms.filter { element.referenceName.equals(it.name, true) } }))
+                            .flatMap { it.subprograms.filter { element.referenceName.equals(it.name, true) } })
+                    .plus(PsiTreeUtil.findChildrenOfType( if (module is FortranModule) module.block else (module as FortranSubmodule).block,
+                            FortranEnumDef::class.java).flatMap { (it as FortranEnumDef).variables.filter{ element.referenceName.equals(it.name, true) } }))
         } else {
             if (!onlyTypes) {
                 // subprograms with a sought for name
@@ -329,6 +335,11 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                         ?.map {it.psi as FortranNamedElement}?.filterNotNull() ?: emptyList())
                 allNames.addAll(interfaces?.childrenStubs?.filter{ it is FortranInterfaceBodyStub }
                         ?.filter { element.referenceName.equals((it as FortranInterfaceBodyStub).name, true) }
+                        ?.map {it.psi as FortranNamedElement}?.filterNotNull() ?: emptyList())
+                // enum
+                val enums = module.stub.findChildStubByType(FortranEnumDefStub.Type)
+                allNames.addAll(enums?.childrenStubs?.filter{ it is FortranEntityDeclStub }
+                        ?.filter { element.referenceName.equals((it as FortranProgramUnitStub).name, true) }
                         ?.map {it.psi as FortranNamedElement}?.filterNotNull() ?: emptyList())
             }
 

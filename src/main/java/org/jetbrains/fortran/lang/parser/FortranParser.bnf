@@ -479,6 +479,8 @@ component_data_source ::= expr /*| variable*/ | proc_target
 enum_def ::= enum_def_stmt (eol | enumerator_def_stmt)* end_enum_stmt {
  pin = 1; extends = declaration_construct
  mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranEnumDefImplMixin"
+ elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+ stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranEnumDefStub'
 }
 // R459
 enum_def_stmt ::= label_decl? enum_ ',' bind_ '(' fidentifier ')' { pin = 4 }
@@ -491,7 +493,7 @@ private end_enum_keys ::= !assignment_stmt end_enum_stmt
 private enum_recover ::= !(eol | end_enum_keys)
 
 // R461
-enumerator ::= fidentifier ('=' expr)?
+enumerator ::= local_name ('=' expr)?
 // R462
 end_enum_stmt ::= label_decl? ((end_ enum_) | endenum_) { pin = 2 }
 // R463

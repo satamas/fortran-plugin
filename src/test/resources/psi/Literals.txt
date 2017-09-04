@@ -8,7 +8,7 @@ FILE
     PsiElement(eol)('\n')
     PsiWhiteSpace('  ')
     FortranBlockImpl(BLOCK)
-      ENUM_DEF
+      FortranEnumDefImpl(Enum)
         ENUM_DEF_STMT
           PsiElement(keyword)('ENUM')
           PsiElement(,)(',')
@@ -25,7 +25,8 @@ FILE
           PsiElement(::)('::')
           PsiWhiteSpace(' ')
           ENUMERATOR
-            PsiElement(identifier)('RED')
+            FortranEntityDeclImpl(ENTITY_DECL)
+              PsiElement(identifier)('RED')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
@@ -34,7 +35,8 @@ FILE
           PsiElement(,)(',')
           PsiWhiteSpace(' ')
           ENUMERATOR
-            PsiElement(identifier)('BLUE')
+            FortranEntityDeclImpl(ENTITY_DECL)
+              PsiElement(identifier)('BLUE')
             PsiWhiteSpace(' ')
             PsiElement(=)('=')
             PsiWhiteSpace(' ')
@@ -46,7 +48,8 @@ FILE
           PsiElement(keyword)('ENUMERATOR')
           PsiWhiteSpace(' ')
           ENUMERATOR
-            PsiElement(identifier)('YELLOW')
+            FortranEntityDeclImpl(ENTITY_DECL)
+              PsiElement(identifier)('YELLOW')
         PsiElement(eol)('\n')
         PsiWhiteSpace('  ')
         END_ENUM_STMT

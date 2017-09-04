@@ -36,6 +36,10 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
 
     // Interface
     "INTERFACE_BLOCK" -> FortranInterfaceBlockStub.Type
+
+    // ENUM
+    "ENUM_DEF" -> FortranEnumDefStub.Type
+
     else -> error("Unknown element $name")
 }
 

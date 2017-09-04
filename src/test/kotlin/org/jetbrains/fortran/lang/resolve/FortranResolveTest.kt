@@ -178,4 +178,11 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         val usageInfos = myFixture.testFindUsages("ProgramWithNamedInterface2.f95", "NamedInterface2.f95")
         Assert.assertEquals(0, usageInfos.size)
     }
+
+    // enum
+    fun testEnum() {
+        myFixture.configureByFiles("Enum.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals("RED", ((element.reference as FortranPathReferenceImpl?)?.multiResolve()?.firstOrNull() as FortranEntityDecl).name)
+    }
 }
