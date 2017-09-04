@@ -14,6 +14,7 @@ import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.lang.core.stubs.*
 import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
 import org.jetbrains.fortran.lang.psi.impl.FortranNameStmtImpl
+import org.jetbrains.fortran.lang.psi.mixin.FortranProgramUnitImplMixin
 import org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
@@ -129,17 +130,23 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         val names = programUnit.variables.filter { element.referenceName.equals(it.name, true) }
                 .toMutableSet()
         if (element.referenceName.equals(programUnit.unit?.name, true) ) names.add(programUnit.unit as FortranNamedElement)
+        // interfaces
+        names.addAll(PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(programUnit, FortranBlock::class.java), FortranInterfaceBlock::class.java)
+                .flatMap{ (it as FortranInterfaceBlock).subprograms.filter{ element.referenceName.equals(it.name, true) } })
 
         // if we are real program unit
         if (programUnit.parent !is FortranModuleSubprogramPart
                 && programUnit.parent !is FortranInternalSubprogramPart) {
             names.addAll(programUnit.subprograms.filter { element.referenceName.equals(it.name, true) })
-
             outerProgramUnit = programUnit
         } else {
             outerProgramUnit = PsiTreeUtil.getParentOfType(programUnit, FortranProgramUnit::class.java) ?: programUnit
             names.addAll(outerProgramUnit.variables.filter { element.referenceName.equals(it.name, true) })
             names.addAll(outerProgramUnit.subprograms.filter { element.referenceName.equals(it.name, true) })
+            // interfaces
+            names.addAll(PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(outerProgramUnit, FortranBlock::class.java), FortranInterfaceBlock::class.java)
+                    .flatMap{ (it as FortranInterfaceBlock).subprograms.filter{ element.referenceName.equals(it.name, true) } })
+
         }
 
         names.addAll(resolveInProjectFiles())
@@ -296,12 +303,23 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                 allNames.addAll(module.subprograms.filter { element.referenceName.equals(it.name, true) })
             }
             allNames.addAll(module.types.filter { element.referenceName.equals(it.name, true) }
-                    .plus(module.variables.filter { element.referenceName.equals(it.name, true) } ))
+                    .plus(module.variables.filter { element.referenceName.equals(it.name, true) } )
+                    .plus(PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(module, FortranBlock::class.java),
+                            FortranInterfaceBlock::class.java )
+                            .flatMap { it.subprograms.filter { element.referenceName.equals(it.name, true) } }))
         } else {
             if (!onlyTypes) {
                 // subprograms with a sought for name
                 val subprograms = module.stub.findChildStubByType(FortranModuleSubprogramPartStub.Type)
                 allNames.addAll(subprograms?.childrenStubs?.filter { it is FortranProgramUnitStub }
+                        ?.filter { element.referenceName.equals((it as FortranProgramUnitStub).name, true) }
+                        ?.map {it.psi as FortranNamedElement}?.filterNotNull() ?: emptyList())
+                // interfaces
+                val interfaces = module.stub.findChildStubByType(FortranInterfaceBlockStub.Type)
+                allNames.addAll(interfaces?.childrenStubs?.filter{ it is FortranEntityDeclStub }
+                        ?.filter { element.referenceName.equals((it as FortranProgramUnitStub).name, true) }
+                        ?.map {it.psi as FortranNamedElement}?.filterNotNull() ?: emptyList())
+                allNames.addAll(interfaces?.childrenStubs?.filter{ it is FortranProgramUnitStub }
                         ?.filter { element.referenceName.equals((it as FortranProgramUnitStub).name, true) }
                         ?.map {it.psi as FortranNamedElement}?.filterNotNull() ?: emptyList())
             }

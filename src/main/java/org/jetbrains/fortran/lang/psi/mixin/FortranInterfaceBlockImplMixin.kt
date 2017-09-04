@@ -2,12 +2,26 @@ package org.jetbrains.fortran.lang.psi.mixin
 
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
-import org.jetbrains.fortran.lang.psi.FortranDataPath
-import org.jetbrains.fortran.lang.psi.FortranInterfaceBlock
+import com.intellij.psi.stubs.IStubElementType
+import com.intellij.psi.util.PsiTreeUtil
+import org.jetbrains.fortran.lang.core.stubs.FortranInterfaceBlockStub
+import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
-import org.jetbrains.fortran.lang.psi.ext.FortranNamedElementImpl
+import org.jetbrains.fortran.lang.psi.ext.FortranStubbedNamedElementImpl
 
-abstract class FortranInterfaceBlockImplMixin(node : ASTNode) : FortranNamedElementImpl(node), FortranInterfaceBlock {
+
+abstract class FortranInterfaceBlockImplMixin : FortranStubbedNamedElementImpl<FortranInterfaceBlockStub>, FortranInterfaceBlock {
+    constructor(node: ASTNode) : super(node)
+
+    constructor(stub: FortranInterfaceBlockStub, nodeType: IStubElementType<*, *>) : super(stub, nodeType)
+
+    override fun getNameIdentifier(): PsiElement? = interfaceStmt.entityDecl
+
+    override fun getName(): String? {
+        val stub = stub
+        return if (stub != null) stub.name else nameIdentifier?.text
+    }
+
     override fun setName(name: String): PsiElement? {
         return this
     }
@@ -16,7 +30,19 @@ abstract class FortranInterfaceBlockImplMixin(node : ASTNode) : FortranNamedElem
         get() = emptyArray()
 
     override val subprograms: Array<FortranNamedElement>
-        get() = emptyArray()
+        get() {
+            if (name != null) {
+                return arrayOf(interfaceStmt.entityDecl!!)
+            } else {
+                return interfaceBodyList.map{ it -> (it.firstChild as FortranNameStmt).entityDecl as FortranNamedElement}
+                        .plus(interfaceBodyList.filterIsInstance(FortranFunctionSubprogram::class.java)
+                                .flatMap { function ->
+                                    PsiTreeUtil.findChildrenOfType(function.block, FortranEntityDecl::class.java).filter { function.name.equals(it.name, true)  }
+                                }.filterNotNull())
+                        .plus(procedureStmtList.flatMap { PsiTreeUtil.findChildrenOfType(it, FortranEntityDecl::class.java) })
+                        .toTypedArray()
+            }
+        }
 
     override val unit : FortranNamedElement? = null
 

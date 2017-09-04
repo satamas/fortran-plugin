@@ -4,6 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub
+import org.jetbrains.fortran.lang.psi.FortranBlock
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement

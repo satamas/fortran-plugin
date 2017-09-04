@@ -640,7 +640,7 @@ implicit_spec ::= ((integer_ | real_ | complex_ | logical_ | character_ | (doubl
 // R562
 letter_spec ::= fidentifier ('-' fidentifier)? { pin = 1 }
 // R563
-namelist_stmt ::= label_decl? namelist_ '/' fidentifier '/' <<list fidentifier>> ((',')? '/' fidentifier '/' <<list fidentifier>>)* { pin = 2 }
+namelist_stmt ::= label_decl? namelist_ '/' entity_decl '/' <<list data_name>> ((',')? '/' entity_decl '/' <<list data_name>>)* { pin = 2 }
 // R564 is trivial
 // R565
 equivalence_stmt ::= label_decl? equivalence_ <<list equivalence_set>> { pin = 3 }
@@ -1088,6 +1088,8 @@ end_block_data_stmt ::= label_decl? ((endblockdata_ data_name?)| (end_ (((block_
 interface_block ::= interface_stmt interface_specification end_interface_stmt {
  pin = 1; extends = declaration_construct
  mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranInterfaceBlockImplMixin"
+ elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+ stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranInterfaceBlockStub'
 }
 // R1202
 private interface_specification ::= !endinterface_keys ((eol) | interface_body | (procedure_stmt))* {
@@ -1097,15 +1099,19 @@ recoverWhile = interface_recover
 private endinterface_keys ::= !assignment_stmt label_decl? (end_ | endinterface_)
 private interface_recover ::= !(eol | endinterface_keys)
 // R1203
-interface_stmt ::= label_decl? ((abstract_ interface_) | (interface_ (generic_spec)?)) { pin = 2 }
+interface_stmt ::= label_decl? ((abstract_ interface_) | (interface_ (local_name | generic_spec)?)) { pin = 2 }
 // R1204
-end_interface_stmt ::= label_decl? ((end_ interface_) | endinterface_) (generic_spec)? { pin = 2 }
+end_interface_stmt ::= label_decl? ((end_ interface_) | endinterface_) (data_name | generic_spec)? { pin = 2 }
 // R1205
-interface_body ::= interface_function_body | interface_subroutine_body
+interface_body ::= interface_function_body | interface_subroutine_body {
+mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranInterfaceBodyImplMixin"
+stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub'
+elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
+}
 private interface_function_body ::= function_stmt eol+ block? end_function_stmt { pin = 1 }
 private interface_subroutine_body ::= subroutine_stmt eol+ block? end_subroutine_stmt { pin = 1 }
 // R1206
-procedure_stmt ::= label_decl? (module_)? procedure_ ('::')? <<list fidentifier>> { pin = 3 }
+procedure_stmt ::= label_decl? (module_)? procedure_ ('::')? <<list entity_decl>> { pin = 3 }
 // R1207
 generic_spec ::= fidentifier | (operator_ '(' defoperator ')')
               | assignment_ '(' '=' ')' | defined_io_generic_spec

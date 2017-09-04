@@ -8,15 +8,15 @@ FILE
     PsiElement(eol)('\n')
     PsiWhiteSpace('      ')
     FortranBlockImpl(BLOCK)
-      INTERFACE_BLOCK
+      FortranInterfaceBlockImpl(Interface block)
         INTERFACE_STMT
           PsiElement(keyword)('interface')
           PsiWhiteSpace(' ')
-          GENERIC_SPEC
+          FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('solve')
         PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
-        INTERFACE_BODY
+        FortranInterfaceBodyImpl(INTERFACE BODY)
           FUNCTION_STMT
             PsiElement(keyword)('function')
             PsiWhiteSpace(' ')
@@ -122,7 +122,7 @@ FILE
               PsiElement(identifier)('solve')
         PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
-        INTERFACE_BODY
+        FortranInterfaceBodyImpl(INTERFACE BODY)
           SUBROUTINE_STMT
             PsiElement(keyword)('subroutine')
             PsiWhiteSpace(' ')

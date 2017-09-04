@@ -1,6 +1,5 @@
 package org.jetbrains.fortran.lang.core.stubs
 
-import org.jetbrains.fortran.lang.psi.FortranRenameStmt
 import org.jetbrains.fortran.lang.psi.impl.*
 
 fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name) {
@@ -12,6 +11,7 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
     "SUBMODULE" -> FortranProgramUnitStub.Type("SUBMODULE", ::FortranSubmoduleImpl)
     "BLOCK_DATA" -> FortranProgramUnitStub.Type("BLOCK DATA", ::FortranBlockDataImpl)
     "SEPARATE_MODULE_SUBPROGRAM" -> FortranProgramUnitStub.Type("SEPARATE_MODULE_SUBPROGRAM", ::FortranSeparateModuleSubprogramImpl)
+    "INTERFACE_BODY" -> FortranProgramUnitStub.Type("INTERFACE BODY", ::FortranInterfaceBodyImpl)
     "PROGRAM_UNIT" -> FortranProgramUnitStub.Type("UNKNOWN PROGRAM UNIT", ::FortranProgramUnitImpl)
 
     "BLOCK" -> FortranBlockStub.Type
@@ -34,6 +34,9 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
     // Data path (for rename only)
     "DATA_PATH" -> FortranDataPathStub.Type("DATA_PATH", ::FortranDataPathImpl)
     "TYPE_NAME" -> FortranDataPathStub.Type("TYPE_NAME", ::FortranTypeNameImpl)
+
+    // Interface
+    "INTERFACE_BLOCK" -> FortranInterfaceBlockStub.Type
     else -> error("Unknown element $name")
 }
 
