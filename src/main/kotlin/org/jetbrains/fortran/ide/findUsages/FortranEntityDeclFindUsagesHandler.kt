@@ -9,10 +9,7 @@ import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.usageView.UsageInfo
 import com.intellij.util.Processor
-import org.jetbrains.fortran.lang.psi.FortranEntityDecl
-import org.jetbrains.fortran.lang.psi.FortranModule
-import org.jetbrains.fortran.lang.psi.FortranNameStmt
-import org.jetbrains.fortran.lang.psi.FortranProgramUnit
+import org.jetbrains.fortran.lang.psi.*
 
 class FortranEntityDeclFindUsagesHandler (
         element: FortranEntityDecl,
@@ -22,8 +19,10 @@ class FortranEntityDeclFindUsagesHandler (
     override fun createSearcher(element: PsiElement, processor: Processor<UsageInfo>, options: FindUsagesOptions): Searcher {
 
         var scope : SearchScope = options.searchScope
-        if (runReadAction{ element.parent !is FortranNameStmt } &&
-                runReadAction{PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) !is FortranModule}) {
+        val unit = runReadAction{PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java)}
+        val inter = runReadAction{PsiTreeUtil.getParentOfType(element, FortranInterfaceBody::class.java)}
+        if ((runReadAction{ element.parent !is FortranNameStmt } && (unit !is FortranModule)
+                && (unit !is FortranSubmodule)) || inter != null) {
             scope = runReadAction { GlobalSearchScope.fileScope(element.containingFile) }
         }
         options.searchScope = scope

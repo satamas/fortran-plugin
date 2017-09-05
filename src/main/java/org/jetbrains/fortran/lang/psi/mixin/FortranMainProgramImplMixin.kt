@@ -46,6 +46,6 @@ abstract class FortranMainProgramImplMixin : FortranProgramUnitImpl, FortranMain
                 .map{ it.dataPath }.filterNotNull().toTypedArray()
 
     override val types: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(block, FortranDerivedTypeDef::class.java)
+        get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranDerivedTypeDef::class.java)
                 .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
 }

@@ -5,9 +5,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.core.stubs.FortranEnumDefStub
-import org.jetbrains.fortran.lang.psi.FortranDataPath
-import org.jetbrains.fortran.lang.psi.FortranEntityDecl
-import org.jetbrains.fortran.lang.psi.FortranEnumDef
+import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.ext.FortranStubbedElementImpl
 
@@ -21,7 +19,9 @@ abstract class FortranEnumDefImplMixin : FortranStubbedElementImpl<FortranEnumDe
     }
 
     override val variables: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(this, FortranEntityDecl::class.java).toTypedArray()
+        get() = PsiTreeUtil.getStubChildrenOfTypeAsList(this, FortranEnumeratorDefStmt::class.java)
+                .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEnumerator::class.java)
+                }.map{ it.entityDecl }.toTypedArray()
 
 
     override val subprograms: Array<FortranNamedElement>

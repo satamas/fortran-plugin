@@ -34,14 +34,19 @@ abstract class FortranInterfaceBlockImplMixin : FortranStubbedNamedElementImpl<F
             if (name != null) {
                 return arrayOf(interfaceStmt.entityDecl!!)
             } else {
-                return interfaceBodyList.map{ it -> (it.firstChild as FortranNameStmt).entityDecl as FortranNamedElement}
-                        .plus(interfaceBodyList.filter{it.firstChild is FortranFunctionStmt }
-                                .flatMap { function ->
-                                    PsiTreeUtil.findChildrenOfType(function.block, FortranEntityDecl::class.java)
-                                            .filter { (function.firstChild as FortranFunctionStmt).entityDecl?.name.equals(it.name, true)  }
-                                }.filterNotNull())
-                        .plus(procedureStmtList.flatMap { PsiTreeUtil.findChildrenOfType(it, FortranEntityDecl::class.java) })
-                        .toTypedArray()
+                val functionsAndSubroutines = interfaceBodyList.map{
+                    ((it.functionStmt ?: it.subroutineStmt) as FortranNameStmt).entityDecl
+                }.filterNotNull()
+
+                val functionsDecls = interfaceBodyList.filter{ it.functionStmt != null }
+                        .flatMap { function ->
+                            PsiTreeUtil.getStubChildrenOfTypeAsList(function.block, FortranTypeDeclarationStmt::class.java)
+                                    .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
+                                    .filter { (function.firstChild as FortranFunctionStmt).entityDecl?.name.equals(it.name, true)  }
+                        }
+                val procedures = procedureStmtList.flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
+
+                return functionsAndSubroutines.plus(functionsDecls).plus(procedures).toTypedArray()
             }
         }
 

@@ -28,6 +28,6 @@ where StubT : FortranNamedStub, StubT : StubElement<*> {
 
     override fun getPresentation(): ItemPresentation {
         return PresentationData(
-                name, containingFile.toString(), getIcon(0), null)
+                name, containingFile.virtualFile.path, getIcon(0), null)
     }
 }

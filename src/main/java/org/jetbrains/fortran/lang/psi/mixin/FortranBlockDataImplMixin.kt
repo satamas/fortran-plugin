@@ -29,7 +29,7 @@ abstract class FortranBlockDataImplMixin : FortranProgramUnitImpl, FortranBlockD
                 FortranEntityDecl::class.java) as FortranNamedElement
 
     override val types: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(block, FortranDerivedTypeDef::class.java)
+        get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranDerivedTypeDef::class.java)
                 .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
 
     override val usedModules: Array<FortranDataPath>
