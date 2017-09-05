@@ -1,6 +1,6 @@
 FILE
   FortranSubroutineSubprogramImpl(SUBROUTINE)
-    SUBROUTINE_STMT
+    FortranSubroutineStmtImpl(SUBROUTINE_STMT)
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
       FortranEntityDeclImpl(ENTITY_DECL)

@@ -1,6 +1,6 @@
 FILE
   FortranModuleImpl(MODULE)
-    MODULE_STMT
+    FortranModuleStmtImpl(MODULE_STMT)
       LABEL_DECL
         PsiElement(integerliteral)('1')
       PsiWhiteSpace(' ')
@@ -30,7 +30,7 @@ FILE
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
       FortranSeparateModuleSubprogramImpl(SEPARATE_MODULE_SUBPROGRAM)
-        MP_SUBPROGRAM_STMT
+        FortranMpSubprogramStmtImpl(MP_SUBPROGRAM_STMT)
           LABEL_DECL
             PsiElement(integerliteral)('4')
           PsiWhiteSpace('   ')
@@ -119,7 +119,7 @@ FILE
       PsiElement(keyword)('endmodule')
   PsiElement(eol)('\n')
   FortranSubmoduleImpl(SUBMODULE)
-    SUBMODULE_STMT
+    FortranSubmoduleStmtImpl(SUBMODULE_STMT)
       LABEL_DECL
         PsiElement(integerliteral)('12')
       PsiWhiteSpace(' ')
@@ -136,7 +136,7 @@ FILE
     PsiElement(eol)('\n')
     FortranBlockImpl(BLOCK)
       <empty list>
-    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM)
+    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM PART)
       CONTAINS_STMT
         LABEL_DECL
           PsiElement(integerliteral)('13')
@@ -144,7 +144,7 @@ FILE
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
       FortranSubroutineSubprogramImpl(SUBROUTINE)
-        SUBROUTINE_STMT
+        FortranSubroutineStmtImpl(SUBROUTINE_STMT)
           LABEL_DECL
             PsiElement(integerliteral)('14')
           PsiWhiteSpace(' ')

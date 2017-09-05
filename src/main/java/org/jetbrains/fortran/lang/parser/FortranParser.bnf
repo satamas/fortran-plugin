@@ -65,7 +65,9 @@
 
   extends(".*(_expr|literal)")=expr
   implements("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)")='org.jetbrains.fortran.lang.psi.FortranNameStmt'
-  extends("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)")='org.jetbrains.fortran.lang.psi.impl.FortranNameStmtImpl'
+  elementTypeFactory("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+  stubClass("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") = 'org.jetbrains.fortran.lang.core.stubs.FortranStatementStub'
+  mixin("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") = "org.jetbrains.fortran.lang.psi.mixin.FortranStmtImplMixin"
   implements(".*_stmt")='org.jetbrains.fortran.lang.psi.FortranStmt'
   extends(".*_stmt")='org.jetbrains.fortran.lang.psi.impl.FortranStmtImpl'
 
@@ -1168,12 +1170,7 @@ function_subprogram ::= function_stmt eol+ block internal_subprogram_part? end_f
     elementTypeFactory ='org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory'
 }
 // R1228
-function_stmt ::= label_decl? prefix? function_ program_unit_name '(' <<list data_name>>? ')' suffix? {
-pin = 3;
- elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
- stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranStatementStub'
- mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranStmtImplMixin"
-}
+function_stmt ::= label_decl? prefix? function_ program_unit_name '(' <<list data_name>>? ')' suffix? { pin = 3; }
 // R1229 and R1230 are trivial
 // R1231
 suffix ::= (language_binding_spec (result_ '(' data_name ')')?) | (result_ '(' data_name ')' (language_binding_spec)?)

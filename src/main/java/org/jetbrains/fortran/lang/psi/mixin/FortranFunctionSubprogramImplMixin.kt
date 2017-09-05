@@ -42,7 +42,7 @@ abstract class FortranFunctionSubprogramImplMixin : FortranProgramUnitImpl, Fort
 
 
     override val usedModules: Array<FortranDataPath>
-        get() = PsiTreeUtil.findChildrenOfType(block, FortranUseStmt::class.java)
+        get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranUseStmt::class.java)
                 .map{ it.dataPath }.filterNotNull().toTypedArray()
 
     override val types: Array<FortranNamedElement>

@@ -18,17 +18,17 @@ abstract class FortranEntityDeclMixin : FortranStubbedNamedElementImpl<FortranEn
         return if (stub != null)
             stub.psi
         else
-            this
+            findChildByType(FortranTypes.IDENTIFIER)
     }
 
-    override fun getTextOffset(): Int = this.startOffsetInParent
+    override fun getTextOffset(): Int = node.startOffset
 
     override fun getName(): String? {
         val stub = stub
         return if (stub != null)
             stub.name
         else
-            text
+            nameIdentifier?.text
     }
 
     override fun setName(name: String): PsiElement? {

@@ -3,7 +3,7 @@ FILE
   PsiElement(eol)('\n')
   PsiWhiteSpace('      ')
   FortranMainProgramImpl(MAIN PROGRAM)
-    PROGRAM_STMT
+    FortranProgramStmtImpl(PROGRAM_STMT)
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       FortranEntityDeclImpl(ENTITY_DECL)

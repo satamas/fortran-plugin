@@ -1,6 +1,6 @@
 FILE
   FortranModuleImpl(MODULE)
-    MODULE_STMT
+    FortranModuleStmtImpl(MODULE_STMT)
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       FortranEntityDeclImpl(ENTITY_DECL)
@@ -123,7 +123,7 @@ FILE
         PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
         FortranInterfaceBodyImpl(Interface body)
-          SUBROUTINE_STMT
+          FortranSubroutineStmtImpl(SUBROUTINE_STMT)
             PsiElement(keyword)('subroutine')
             PsiWhiteSpace(' ')
             FortranEntityDeclImpl(ENTITY_DECL)

@@ -1,6 +1,6 @@
 FILE
   FortranModuleImpl(MODULE)
-    MODULE_STMT
+    FortranModuleStmtImpl(MODULE_STMT)
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       FortranEntityDeclImpl(ENTITY_DECL)

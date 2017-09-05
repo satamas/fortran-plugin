@@ -4,7 +4,7 @@ FILE
   PsiComment(comment)('! Comment line2')
   PsiElement(eol)('\n')
   FortranMainProgramImpl(MAIN PROGRAM)
-    PROGRAM_STMT
+    FortranProgramStmtImpl(PROGRAM_STMT)
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')
       FortranEntityDeclImpl(ENTITY_DECL)

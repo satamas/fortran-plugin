@@ -22,6 +22,13 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
     "TYPE_DECLARATION_STMT" -> FortranStatementStub.Type("TYPE_DECLARATION_STMT", ::FortranTypeDeclarationStmtImpl)
     "USE_STMT" -> FortranStatementStub.Type("USE_STMT", ::FortranUseStmtImpl)
     "FUNCTION_STMT" -> FortranStatementStub.Type("FUNCTION_STMT", ::FortranFunctionStmtImpl)
+    "PROGRAM_STMT" -> FortranStatementStub.Type("PROGRAM_STMT", ::FortranProgramStmtImpl)
+    "BLOCK_DATA_STMT" -> FortranStatementStub.Type("BLOCK_DATA_STMT", ::FortranBlockDataStmtImpl)
+    "SUBMODULE_STMT" -> FortranStatementStub.Type("SUBMODULE_STMT", ::FortranSubmoduleStmtImpl)
+    "MODULE_STMT" -> FortranStatementStub.Type("MODULE_STMT", ::FortranModuleStmtImpl)
+    "SUBROUTINE_STMT" -> FortranStatementStub.Type("SUBROUTINE_STMT", ::FortranSubroutineStmtImpl)
+    "MP_SUBPROGRAM_STMT" -> FortranStatementStub.Type("MP_SUBPROGRAM_STMT", ::FortranMpSubprogramStmtImpl)
+
     // Entity Decl
     "ENTITY_DECL" -> FortranEntityDeclStub.Type("ENTITY_DECL", ::FortranEntityDeclImpl)
     "TYPE_DECL" -> FortranEntityDeclStub.Type("TYPE_DECL", ::FortranTypeDeclImpl)

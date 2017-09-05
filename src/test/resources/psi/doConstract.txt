@@ -1,6 +1,6 @@
 FILE
   FortranMainProgramImpl(MAIN PROGRAM)
-    PROGRAM_STMT
+    FortranProgramStmtImpl(PROGRAM_STMT)
       LABEL_DECL
         PsiElement(integerliteral)('1')
       PsiWhiteSpace(' ')

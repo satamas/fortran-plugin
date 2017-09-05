@@ -1,6 +1,6 @@
 FILE
   FortranModuleImpl(MODULE)
-    MODULE_STMT
+    FortranModuleStmtImpl(MODULE_STMT)
       PsiElement(keyword)('module')
       PsiWhiteSpace(' ')
       FortranEntityDeclImpl(ENTITY_DECL)
@@ -42,7 +42,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
       FortranSubroutineSubprogramImpl(SUBROUTINE)
-        SUBROUTINE_STMT
+        FortranSubroutineStmtImpl(SUBROUTINE_STMT)
           PsiElement(keyword)('subroutine')
           PsiWhiteSpace(' ')
           FortranEntityDeclImpl(ENTITY_DECL)
@@ -215,7 +215,7 @@ FILE
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
   FortranSubroutineSubprogramImpl(SUBROUTINE)
-    SUBROUTINE_STMT
+    FortranSubroutineStmtImpl(SUBROUTINE_STMT)
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
       FortranEntityDeclImpl(ENTITY_DECL)
@@ -258,7 +258,7 @@ FILE
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
   FortranBlockDataImpl(BLOCK DATA)
-    BLOCK_DATA_STMT
+    FortranBlockDataStmtImpl(BLOCK_DATA_STMT)
       PsiElement(keyword)('block')
       PsiWhiteSpace(' ')
       PsiElement(keyword)('data')
