@@ -1,7 +1,7 @@
-package org.jetbrains.fortran.lang.core.stubs
+package org.jetbrains.fortran.lang.stubs
 
 import com.intellij.psi.stubs.*
-import org.jetbrains.fortran.lang.core.stubs.index.FortranNamedElementIndex
+import org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex
 import org.jetbrains.fortran.lang.psi.FortranDerivedTypeDef
 import org.jetbrains.fortran.lang.psi.impl.FortranDerivedTypeDefImpl
 

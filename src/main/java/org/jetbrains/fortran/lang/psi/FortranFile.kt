@@ -4,7 +4,7 @@ import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.psi.FileViewProvider
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranLanguage
-import org.jetbrains.fortran.lang.core.stubs.FortranProgramUnitStub
+import org.jetbrains.fortran.lang.stubs.FortranProgramUnitStub
 
 class FortranFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, FortranLanguage) {
 

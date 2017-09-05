@@ -4,11 +4,11 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import org.jetbrains.fortran.lang.FortranTypes
-import org.jetbrains.fortran.lang.core.stubs.FortranDataPathStub
+import org.jetbrains.fortran.lang.stubs.FortranDataPathStub
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.ext.FortranStubbedElementImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranPathReferenceImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranReference
+import org.jetbrains.fortran.lang.resolve.FortranPathReferenceImpl
+import org.jetbrains.fortran.lang.resolve.FortranReference
 
 abstract class FortranDataPathImplMixin : FortranStubbedElementImpl<FortranDataPathStub>, FortranDataPath {
     constructor(node: ASTNode) : super(node)

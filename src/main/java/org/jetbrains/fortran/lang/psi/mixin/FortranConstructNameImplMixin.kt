@@ -5,8 +5,8 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.FortranTypes
 import org.jetbrains.fortran.lang.psi.FortranConstructName
 import org.jetbrains.fortran.lang.psi.impl.FortranCompositeElementImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranConstructNameReferenceImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranReference
+import org.jetbrains.fortran.lang.resolve.FortranConstructNameReferenceImpl
+import org.jetbrains.fortran.lang.resolve.FortranReference
 
 
 abstract class FortranConstructNameImplMixin(node : ASTNode) : FortranCompositeElementImpl(node), FortranConstructName {

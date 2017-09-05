@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.resolve.ref
+package org.jetbrains.fortran.lang.resolve
 
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*

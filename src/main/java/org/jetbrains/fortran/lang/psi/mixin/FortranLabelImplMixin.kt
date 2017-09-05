@@ -4,8 +4,8 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.psi.FortranLabel
 import org.jetbrains.fortran.lang.psi.impl.FortranCompositeElementImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranLabelReferenceImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranReference
+import org.jetbrains.fortran.lang.resolve.FortranLabelReferenceImpl
+import org.jetbrains.fortran.lang.resolve.FortranReference
 
 abstract class FortranLabelImplMixin(node : ASTNode) : FortranCompositeElementImpl(node), FortranLabel {
         override val referenceNameElement: PsiElement get() = integerliteral

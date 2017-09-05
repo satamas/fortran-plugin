@@ -8,7 +8,7 @@ import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.stubs.StubElement
 import org.jetbrains.fortran.lang.FortranTypes
-import org.jetbrains.fortran.lang.core.stubs.FortranNamedStub
+import org.jetbrains.fortran.lang.stubs.FortranNamedStub
 
 abstract class FortranStubbedNamedElementImpl<StubT> : FortranStubbedElementImpl<StubT>,
         FortranNamedElement,

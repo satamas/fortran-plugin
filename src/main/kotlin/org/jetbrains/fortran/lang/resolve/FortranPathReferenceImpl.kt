@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.resolve.ref
+package org.jetbrains.fortran.lang.resolve
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -50,8 +50,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         }
 
         // resolve paths like a%b%c
-        if (element.firstChild is FortranDataPath)
-        {
+        if (element.firstChild is FortranDataPath) {
             return resolveDifficultPath()
         }
 

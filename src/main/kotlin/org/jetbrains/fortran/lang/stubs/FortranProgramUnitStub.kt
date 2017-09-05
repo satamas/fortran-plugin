@@ -1,9 +1,9 @@
-package org.jetbrains.fortran.lang.core.stubs
+package org.jetbrains.fortran.lang.stubs
 
 import com.intellij.psi.stubs.*
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import com.intellij.psi.stubs.IndexSink
-import org.jetbrains.fortran.lang.core.stubs.index.FortranNamedElementIndex
+import org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex
 
 class FortranProgramUnitStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>,

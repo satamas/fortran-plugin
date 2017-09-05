@@ -1,8 +1,8 @@
-package org.jetbrains.fortran.lang.core.stubs
+package org.jetbrains.fortran.lang.stubs
 
 import com.intellij.psi.stubs.*
 import com.intellij.psi.stubs.IndexSink
-import org.jetbrains.fortran.lang.core.stubs.index.FortranNamedElementIndex
+import org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 
 class FortranDataPathStub(

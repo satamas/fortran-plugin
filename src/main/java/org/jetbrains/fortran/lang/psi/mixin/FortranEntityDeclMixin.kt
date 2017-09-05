@@ -4,7 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import org.jetbrains.fortran.lang.FortranTypes
-import org.jetbrains.fortran.lang.core.stubs.FortranEntityDeclStub
+import org.jetbrains.fortran.lang.stubs.FortranEntityDeclStub
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.ext.FortranStubbedNamedElementImpl
 

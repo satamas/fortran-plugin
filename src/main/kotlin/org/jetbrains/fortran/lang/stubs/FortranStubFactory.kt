@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.core.stubs
+package org.jetbrains.fortran.lang.stubs
 
 import org.jetbrains.fortran.lang.psi.impl.*
 

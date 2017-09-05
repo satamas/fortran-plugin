@@ -6,7 +6,6 @@ import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranPathReferenceImpl
 
 
 class FortranResolveTest : LightCodeInsightFixtureTestCase() {

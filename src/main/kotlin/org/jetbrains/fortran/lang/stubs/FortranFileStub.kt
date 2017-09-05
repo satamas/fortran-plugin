@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.core.stubs
+package org.jetbrains.fortran.lang.stubs
 
 import com.intellij.psi.PsiFile
 import com.intellij.psi.StubBuilder

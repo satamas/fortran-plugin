@@ -3,7 +3,7 @@ package org.jetbrains.fortran.lang.psi.mixin
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
-import org.jetbrains.fortran.lang.core.stubs.FortranInterfaceBodyStub
+import org.jetbrains.fortran.lang.stubs.FortranInterfaceBodyStub
 import org.jetbrains.fortran.lang.psi.FortranInterfaceBody
 import org.jetbrains.fortran.lang.psi.FortranNameStmt
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement

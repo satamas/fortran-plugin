@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.resolve.ref
+package org.jetbrains.fortran.lang.resolve
 
 import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement

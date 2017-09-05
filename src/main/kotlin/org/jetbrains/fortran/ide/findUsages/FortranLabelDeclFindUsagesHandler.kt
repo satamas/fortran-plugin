@@ -12,7 +12,7 @@ import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelImpl
 import org.jetbrains.fortran.lang.psi.mixin.FortranLabelImplMixin
-import org.jetbrains.fortran.lang.resolve.ref.FortranLabelReferenceImpl
+import org.jetbrains.fortran.lang.resolve.FortranLabelReferenceImpl
 
 
 class FortranLabelDeclFindUsagesHandler (

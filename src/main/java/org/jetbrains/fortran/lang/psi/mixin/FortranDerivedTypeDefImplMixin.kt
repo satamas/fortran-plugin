@@ -4,7 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.lang.core.stubs.FortranDerivedTypeDefStub
+import org.jetbrains.fortran.lang.stubs.FortranDerivedTypeDefStub
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranDerivedTypeDef
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
@@ -28,7 +28,7 @@ abstract class FortranDerivedTypeDefImplMixin : FortranStubbedNamedElementImpl<F
     }
 
     override val variables: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(node.psi, FortranEntityDecl::class.java).toTypedArray()
+        get() = PsiTreeUtil.findChildrenOfType(this, FortranEntityDecl::class.java).toTypedArray()
 
     override val subprograms: Array<FortranNamedElement>
         get() = emptyArray()

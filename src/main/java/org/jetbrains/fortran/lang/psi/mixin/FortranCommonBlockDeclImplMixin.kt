@@ -5,8 +5,8 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.FortranTypes
 import org.jetbrains.fortran.lang.psi.FortranCommonBlockDecl
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElementImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranCommonBlockReferenceImpl
-import org.jetbrains.fortran.lang.resolve.ref.FortranReference
+import org.jetbrains.fortran.lang.resolve.FortranCommonBlockReferenceImpl
+import org.jetbrains.fortran.lang.resolve.FortranReference
 
 abstract class FortranCommonBlockDeclImplMixin(node : ASTNode) : FortranNamedElementImpl(node), FortranCommonBlockDecl {
     override fun getNameIdentifier(): PsiElement? = referenceNameElement

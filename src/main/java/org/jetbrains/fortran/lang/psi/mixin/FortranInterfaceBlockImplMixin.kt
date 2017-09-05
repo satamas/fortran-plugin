@@ -4,7 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.lang.core.stubs.FortranInterfaceBlockStub
+import org.jetbrains.fortran.lang.stubs.FortranInterfaceBlockStub
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.ext.FortranStubbedNamedElementImpl

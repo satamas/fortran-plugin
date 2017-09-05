@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.lang.core.stubs
+package org.jetbrains.fortran.lang.stubs
 
 import com.intellij.lang.ASTNode
 import com.intellij.psi.stubs.IStubElementType

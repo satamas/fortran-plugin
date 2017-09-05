@@ -12,7 +12,7 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.fortran.lang.FortranTypes;
-import org.jetbrains.fortran.lang.core.stubs.FortranFixedFormFileStub;
+import org.jetbrains.fortran.lang.stubs.FortranFixedFormFileStub;
 import org.jetbrains.fortran.lang.lexer.FortranLexer;
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile;
 

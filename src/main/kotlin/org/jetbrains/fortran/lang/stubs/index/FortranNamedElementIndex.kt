@@ -1,8 +1,8 @@
-package org.jetbrains.fortran.lang.core.stubs.index
+package org.jetbrains.fortran.lang.stubs.index
 
 import com.intellij.psi.stubs.StringStubIndexExtension
 import com.intellij.psi.stubs.StubIndexKey
-import org.jetbrains.fortran.lang.core.stubs.FortranFileStub
+import org.jetbrains.fortran.lang.stubs.FortranFileStub
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 
 class FortranNamedElementIndex : StringStubIndexExtension<FortranNamedElement>() {

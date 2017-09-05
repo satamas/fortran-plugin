@@ -5,7 +5,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.stubs.StubElement
 import org.jetbrains.fortran.lang.psi.FortranCompositeElement
-import org.jetbrains.fortran.lang.resolve.ref.FortranReference
+import org.jetbrains.fortran.lang.resolve.FortranReference
 
 abstract class FortranStubbedElementImpl <StubT : StubElement<*>>
     : StubBasedPsiElementBase<StubT>, FortranCompositeElement {

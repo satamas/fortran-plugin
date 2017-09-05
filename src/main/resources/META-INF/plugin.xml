@@ -58,7 +58,7 @@
         <findUsagesHandlerFactory implementation="org.jetbrains.fortran.ide.findUsages.FortranFindUsagesHandlerFactory"/>
 
         <!-- Indices -->
-        <stubIndex implementation="org.jetbrains.fortran.lang.core.stubs.index.FortranNamedElementIndex"/>
+        <stubIndex implementation="org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex"/>
 
     </extensions>
 
