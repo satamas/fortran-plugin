@@ -207,14 +207,14 @@ FILE
       PsiElement(eol)('\n')
     PsiWhiteSpace('\n')
     PsiWhiteSpace('  ')
-    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM)
+    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM PART)
       CONTAINS_STMT
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
       PsiWhiteSpace('\n')
       PsiWhiteSpace('  ')
       FortranFunctionSubprogramImpl(FUNCTION)
-        FUNCTION_STMT
+        FortranFunctionStmtImpl(FUNCTION_STMT)
           PREFIX
             PREFIX_SPEC
               INTRINSIC_TYPE_SPEC

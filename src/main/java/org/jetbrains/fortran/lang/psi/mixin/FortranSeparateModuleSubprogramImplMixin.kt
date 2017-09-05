@@ -19,12 +19,14 @@ abstract class FortranSeparateModuleSubprogramImplMixin : FortranProgramUnitImpl
     override fun getNameIdentifier(): PsiElement? = mpSubprogramStmt.entityDecl
 
     override val variables: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
-                .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
+        get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranTypeDeclarationStmt::class.java)
+                .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
                 .toTypedArray()
 
     override val unit: FortranNamedElement
-        get() = (mpSubprogramStmt.entityDecl as FortranNamedElement)
+        get() = PsiTreeUtil.getStubChildOfType(
+                PsiTreeUtil.getStubChildOfType(this, FortranMpSubprogramStmt::class.java),
+                FortranEntityDecl::class.java) as FortranNamedElement
 
     override val usedModules: Array<FortranDataPath>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranUseStmt::class.java)

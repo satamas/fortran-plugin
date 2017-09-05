@@ -17,7 +17,7 @@ FILE
         PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
         FortranInterfaceBodyImpl(Interface body)
-          FUNCTION_STMT
+          FortranFunctionStmtImpl(FUNCTION_STMT)
             PsiElement(keyword)('function')
             PsiWhiteSpace(' ')
             FortranEntityDeclImpl(ENTITY_DECL)

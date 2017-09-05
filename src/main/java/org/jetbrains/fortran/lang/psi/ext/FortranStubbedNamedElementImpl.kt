@@ -20,7 +20,7 @@ where StubT : FortranNamedStub, StubT : StubElement<*> {
     constructor(stub: StubT, nodeType: IStubElementType<*, *>) : super(stub, nodeType)
 
     override fun getNameIdentifier(): PsiElement?
-            = findChildByType(FortranTypes.IDENTIFIER)
+            = findChildByType(FortranTypes.ENTITY_DECL)
 
     override fun getNavigationElement(): PsiElement = nameIdentifier ?: this
 
@@ -28,6 +28,6 @@ where StubT : FortranNamedStub, StubT : StubElement<*> {
 
     override fun getPresentation(): ItemPresentation {
         return PresentationData(
-                name, "SOMEWHERE", getIcon(0), null)
+                name, containingFile.toString(), getIcon(0), null)
     }
 }

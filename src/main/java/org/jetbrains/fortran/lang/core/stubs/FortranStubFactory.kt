@@ -15,12 +15,13 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
 
     "BLOCK" -> FortranBlockStub.Type
     "MODULE_SUBPROGRAM_PART" -> FortranModuleSubprogramPartStub.Type
+    "INTERNAL_SUBPROGRAM_PART" -> FortranInternalSubprogramPartStub.Type
     "INTERFACE_BODY" -> FortranInterfaceBodyStub.Type
     // Statements
     // I do not know, how many of them we really need
     "TYPE_DECLARATION_STMT" -> FortranStatementStub.Type("TYPE_DECLARATION_STMT", ::FortranTypeDeclarationStmtImpl)
     "USE_STMT" -> FortranStatementStub.Type("USE_STMT", ::FortranUseStmtImpl)
-
+    "FUNCTION_STMT" -> FortranStatementStub.Type("FUNCTION_STMT", ::FortranFunctionStmtImpl)
     // Entity Decl
     "ENTITY_DECL" -> FortranEntityDeclStub.Type("ENTITY_DECL", ::FortranEntityDeclImpl)
     "TYPE_DECL" -> FortranEntityDeclStub.Type("TYPE_DECL", ::FortranTypeDeclImpl)

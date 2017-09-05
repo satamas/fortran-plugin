@@ -1,6 +1,6 @@
 FILE
   FortranFunctionSubprogramImpl(FUNCTION)
-    FUNCTION_STMT
+    FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
           INTRINSIC_TYPE_SPEC

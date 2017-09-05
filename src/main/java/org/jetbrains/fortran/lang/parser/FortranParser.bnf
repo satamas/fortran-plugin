@@ -289,7 +289,12 @@ private end_block_keys ::= !assignment_stmt ( label_decl? ( end_ | endblock_ | e
                          | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_stmt | endwhere_
                          | endforall_ | elsewhere_))
 // R210
-internal_subprogram_part ::= contains_stmt eol+ (eol | internal_subprogram)* { pin = 1 }
+internal_subprogram_part ::= contains_stmt eol+ (eol | internal_subprogram)* {
+pin = 1
+    elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+    stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranInternalSubprogramPartStub'
+    mixin = 'org.jetbrains.fortran.lang.psi.mixin.FortranInternalSubprogramPartImplMixin'
+}
 // R211
 private internal_subprogram ::= !(label_decl? (end_unit_keys | endprocedure_)) (function_subprogram | subroutine_subprogram) {
   pin = 1
@@ -1165,6 +1170,9 @@ function_subprogram ::= function_stmt eol+ block internal_subprogram_part? end_f
 // R1228
 function_stmt ::= label_decl? prefix? function_ program_unit_name '(' <<list data_name>>? ')' suffix? {
 pin = 3;
+ elementTypeFactory ="org.jetbrains.fortran.lang.core.stubs.FortranStubFactoryKt.fortranStubFactory"
+ stubClass = 'org.jetbrains.fortran.lang.core.stubs.FortranStatementStub'
+ mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranStmtImplMixin"
 }
 // R1229 and R1230 are trivial
 // R1231

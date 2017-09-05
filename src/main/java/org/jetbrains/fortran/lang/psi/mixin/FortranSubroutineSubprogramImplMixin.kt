@@ -19,23 +19,25 @@ abstract class FortranSubroutineSubprogramImplMixin : FortranProgramUnitImpl, Fo
 
 
     override val variables: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(block, FortranEntityDecl::class.java)
-                .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
-                .plus(subroutineStmt.entityDecl as FortranNamedElement)
+        get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranTypeDeclarationStmt::class.java)
+                .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
                 .toTypedArray()
 
     override val unit: FortranNamedElement
-        get() = (subroutineStmt.entityDecl as FortranNamedElement)
+        get() = PsiTreeUtil.getStubChildOfType(
+                PsiTreeUtil.getStubChildOfType(this, FortranSubroutineStmt::class.java),
+                FortranEntityDecl::class.java) as FortranNamedElement
 
     override val subprograms: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranProgramUnit::class.java)
-                .map{ it -> (it.firstChild as FortranNameStmt).entityDecl as FortranNamedElement}
-                .filter{ PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
-                .plus(PsiTreeUtil.findChildrenOfType(internalSubprogramPart, FortranFunctionSubprogram::class.java)
-                        .flatMap { function ->
-                            PsiTreeUtil.findChildrenOfType((function as FortranFunctionSubprogram).block, FortranEntityDecl::class.java).filter { function.name.equals(it.name, true)  }
-                        }.filterNotNull())
-                .toTypedArray()
+        get() {
+            val programUnits = PsiTreeUtil.getStubChildrenOfTypeAsList(internalSubprogramPart, FortranProgramUnit::class.java)
+
+            return programUnits.map{ it.unit }.filterNotNull()
+                    .plus(programUnits.filterIsInstance(FortranFunctionSubprogram::class.java)
+                            .flatMap { f -> f.variables.filter { f.unit?.name.equals(it.name, true) } }
+                            .filterNotNull())
+                    .toTypedArray()
+        }
 
     override val usedModules: Array<FortranDataPath>
         get() = PsiTreeUtil.findChildrenOfType(block, FortranUseStmt::class.java)

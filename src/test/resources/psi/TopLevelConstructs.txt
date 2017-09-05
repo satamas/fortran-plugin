@@ -36,7 +36,7 @@ FILE
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('radius')
       PsiElement(eol)('\n')
-    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM)
+    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM PART)
       CONTAINS_STMT
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
@@ -97,7 +97,7 @@ FILE
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
   FortranFunctionSubprogramImpl(FUNCTION)
-    FUNCTION_STMT
+    FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
           INTRINSIC_TYPE_SPEC
@@ -185,7 +185,7 @@ FILE
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
   FortranFunctionSubprogramImpl(FUNCTION)
-    FUNCTION_STMT
+    FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
           INTRINSIC_TYPE_SPEC
