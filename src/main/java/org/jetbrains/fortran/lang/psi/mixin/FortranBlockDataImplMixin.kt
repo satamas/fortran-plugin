@@ -17,21 +17,21 @@ abstract class FortranBlockDataImplMixin : FortranProgramUnitImpl, FortranBlockD
 
     override fun getNameIdentifier(): PsiElement? = blockDataStmt.entityDecl
 
-    override val variables: Array<FortranNamedElement>
+    override val variables: List<FortranNamedElement>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranTypeDeclarationStmt::class.java)
                 .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
-                .toTypedArray()
 
     override val unit: FortranNamedElement
-        get() = PsiTreeUtil.getStubChildOfType(
-                PsiTreeUtil.getStubChildOfType(this, FortranBlockDataStmt::class.java),
-                FortranEntityDecl::class.java) as FortranNamedElement
+        get() {
+            val blockDataStmt = PsiTreeUtil.getStubChildOfType(this, FortranBlockDataStmt::class.java)
+            return PsiTreeUtil.getStubChildOfType(blockDataStmt, FortranEntityDecl::class.java) as FortranNamedElement
+        }
 
-    override val types: Array<FortranNamedElement>
+    override val types: List<FortranNamedElement>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranDerivedTypeDef::class.java)
-                .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
+                .map{ it.derivedTypeStmt.typeDecl }
 
-    override val usedModules: Array<FortranDataPath>
+    override val usedModules: List<FortranDataPath>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranUseStmt::class.java)
-                .map{ it.dataPath }.filterNotNull().toTypedArray()
+                .mapNotNull{ it.dataPath }
 }

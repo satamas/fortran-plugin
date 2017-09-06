@@ -10,7 +10,7 @@ class FortranDataPathStub(
         override val name: String?
 ): StubBase<FortranDataPath>(parent, elementType), FortranNamedStub {
 
-    class Type<PsiT : FortranDataPath>(
+    class Type<out PsiT : FortranDataPath>(
             debugName: String,
             private val psiCtor: (FortranDataPathStub, IStubElementType<*, *>) -> PsiT
     ) : FortranStubElementType<FortranDataPathStub, FortranDataPath>(debugName) {

@@ -20,14 +20,13 @@ abstract class FortranSubModuleImplMixin : FortranProgramUnitImpl, FortranSubmod
         val stub = stub
         if (stub != null) return stub.name
         val moduleNamePsi = submoduleStmt.parentIdentifier?.firstChild as FortranDataPath?
+                ?: return nameIdentifier?.text
         val submoduleNamePsi = submoduleStmt.parentIdentifier?.lastChild as FortranDataPath?
-        if (moduleNamePsi == null) return nameIdentifier?.text
-        else {
-            if (submoduleNamePsi == null || submoduleNamePsi == moduleNamePsi) {
-                return moduleNamePsi.referenceName + ":" + nameIdentifier?.text
-            } else {
-                return moduleNamePsi.referenceName + ":" + submoduleNamePsi.referenceName + ":" + nameIdentifier?.text
-            }
+
+        return if (submoduleNamePsi == null || submoduleNamePsi == moduleNamePsi) {
+            moduleNamePsi.referenceName + ":" + nameIdentifier?.text
+        } else {
+            moduleNamePsi.referenceName + ":" + submoduleNamePsi.referenceName + ":" + nameIdentifier?.text
         }
     }
 
@@ -39,35 +38,35 @@ abstract class FortranSubModuleImplMixin : FortranProgramUnitImpl, FortranSubmod
             else null
 
 
-    fun getPersonalName() : String? = if (name?.contains(':', true) ?: false) name?.substringAfterLast(':') else null
+    fun getPersonalName() : String? = if (name?.contains(':', true) == true) name?.substringAfterLast(':') else null
 
-    override val variables: Array<FortranNamedElement>
+    override val variables: List<FortranNamedElement>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranTypeDeclarationStmt::class.java)
                 .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
-                .toTypedArray()
 
     override val unit: FortranNamedElement
-        get() = PsiTreeUtil.getStubChildOfType(
-                PsiTreeUtil.getStubChildOfType(this, FortranSubmoduleStmt::class.java),
-                FortranEntityDecl::class.java) as FortranNamedElement
-
-
-    override val subprograms: Array<FortranNamedElement>
         get() {
-            val programUnits = PsiTreeUtil.getStubChildrenOfTypeAsList(moduleSubprogramPart, FortranProgramUnit::class.java)
-
-            return programUnits.map{ it.unit }.filterNotNull()
-                    .plus(programUnits.filterIsInstance(FortranFunctionSubprogram::class.java)
-                            .flatMap { f -> f.variables.filter { f.unit?.name.equals(it.name, true) } }
-                            .filterNotNull())
-                    .toTypedArray()
+            val submoduleStmt = PsiTreeUtil.getStubChildOfType(this, FortranSubmoduleStmt::class.java)
+            return PsiTreeUtil.getStubChildOfType(submoduleStmt, FortranEntityDecl::class.java) as FortranNamedElement
         }
 
-    override val types: Array<FortranNamedElement>
-        get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranDerivedTypeDef::class.java)
-                .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
 
-    override val usedModules: Array<FortranDataPath>
+    override val subprograms: List<FortranNamedElement>
+        get() {
+            val programUnits = PsiTreeUtil.getStubChildrenOfTypeAsList(moduleSubprogramPart, FortranProgramUnit::class.java)
+            val functionsDeclarations = programUnits.filterIsInstance(FortranFunctionSubprogram::class.java)
+                    .flatMap { function ->
+                        function.variables.filter { function.unit?.name.equals(it.name, true) }
+                    }
+
+            return programUnits.mapNotNull{ it.unit } + functionsDeclarations
+        }
+
+    override val types: List<FortranNamedElement>
+        get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranDerivedTypeDef::class.java)
+                .map{ it.derivedTypeStmt.typeDecl }
+
+    override val usedModules: List<FortranDataPath>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranUseStmt::class.java)
-                .map{ it.dataPath }.filterNotNull().toTypedArray()
+                .mapNotNull{ it.dataPath }
 }

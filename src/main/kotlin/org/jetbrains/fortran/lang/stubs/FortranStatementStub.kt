@@ -6,7 +6,7 @@ import org.jetbrains.fortran.lang.psi.FortranStmt
 class FortranStatementStub (
         parent: StubElement<*>?, elementType: IStubElementType<*, *>
 ): StubBase<FortranStmt>(parent, elementType) {
-    class Type<PsiT : FortranStmt>(
+    class Type<out PsiT : FortranStmt>(
             debugName: String,
             private val psiCtor: (FortranStatementStub, IStubElementType<*, *>) -> PsiT
     ) : FortranStubElementType<FortranStatementStub, FortranStmt>(debugName) {

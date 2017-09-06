@@ -27,17 +27,17 @@ abstract class FortranDerivedTypeDefImplMixin : FortranStubbedNamedElementImpl<F
         return if (stub != null) stub.name else nameIdentifier?.text
     }
 
-    override val variables: Array<FortranNamedElement>
-        get() = PsiTreeUtil.findChildrenOfType(this, FortranEntityDecl::class.java).toTypedArray()
+    override val variables: List<FortranNamedElement>
+        get() = PsiTreeUtil.findChildrenOfType(this, FortranEntityDecl::class.java).toList()
 
-    override val subprograms: Array<FortranNamedElement>
-        get() = emptyArray()
+    override val subprograms: List<FortranNamedElement>
+        get() = emptyList()
 
     override val unit : FortranNamedElement? = null
 
-    override val usedModules: Array<FortranDataPath>
-        get() = emptyArray()
+    override val usedModules: List<FortranDataPath>
+        get() = emptyList()
 
-    override val types: Array<FortranNamedElement>
-        get() = emptyArray()
+    override val types: List<FortranNamedElement>
+        get() = emptyList()
 }

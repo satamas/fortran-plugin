@@ -7,7 +7,7 @@ import org.jetbrains.fortran.lang.psi.FortranCompositeElement
 interface FortranReference : PsiPolyVariantReference {
     override fun getElement(): FortranCompositeElement
 
-    override fun resolve(): PsiElement? //FortranCompositeElement?
+    override fun resolve(): PsiElement?
 
     fun multiResolve(): List<FortranCompositeElement>
 }

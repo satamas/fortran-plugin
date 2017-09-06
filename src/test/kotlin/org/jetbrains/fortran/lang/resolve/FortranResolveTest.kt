@@ -1,7 +1,6 @@
 package org.jetbrains.fortran.lang.resolve
 
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
-import junit.framework.Assert
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
@@ -15,7 +14,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     // Labels
     fun testFindLabelUsages() {
         val usageInfos = myFixture.testFindUsages("Label.f")
-        Assert.assertEquals(3, usageInfos.size)
+        assertEquals(3, usageInfos.size)
     }
 
     fun testLabelReference() {
@@ -27,7 +26,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     // Construct Names
     fun testConstructNameUsages() {
         val usageInfos = myFixture.testFindUsages("ConstructName.f95")
-        Assert.assertEquals(2, usageInfos.size)
+        assertEquals(2, usageInfos.size)
     }
 
     fun testConstructNameReference() {
@@ -46,7 +45,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testUseOnlyNotAvailable() {
         myFixture.configureByFiles("UseOnlyNotAvailable.f95", "Module.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        Assert.assertNull(element.reference?.resolve())
+        assertNull(element.reference?.resolve())
     }
 
     fun testComponents() {
@@ -57,7 +56,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
 
     fun testNoExcessiveUsages() {
         val usageInfos = myFixture.testFindUsages("Components.f95", "Module.f95")
-        Assert.assertEquals(3, usageInfos.size)
+        assertEquals(3, usageInfos.size)
     }
 
     fun testRenamedType() {
@@ -86,12 +85,12 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
 
     fun testFunction() {
         val usageInfos = myFixture.testFindUsages("Function.f95")
-        Assert.assertEquals(2, usageInfos.size)
+        assertEquals(2, usageInfos.size)
     }
 
     fun testSpecificationStmts() {
         val usageInfos = myFixture.testFindUsages("SpecificationStmts.f95")
-        Assert.assertEquals(11, usageInfos.size)
+        assertEquals(11, usageInfos.size)
     }
 
     fun testTypeSearch() {
@@ -131,13 +130,13 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         // Here we find all N usages of the common block. In IDE only N-1 usage will be shown
         // The block where we use find usages is not shown in IDE
         val usageInfos = myFixture.testFindUsages("CommonBlocksA.f95", "CommonBlocksB.f95")
-        Assert.assertEquals(3, usageInfos.size)
+        assertEquals(3, usageInfos.size)
     }
 
     // Implicit
     fun testImplicitUsages() {
         val usageInfos = myFixture.testFindUsages("Implicit.f95", "CommonBlocksB.f95", "TwinOne.f95")
-        Assert.assertEquals(14, usageInfos.size)
+        assertEquals(14, usageInfos.size)
     }
 
     fun testImplicit() {
@@ -148,12 +147,12 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
 
     fun testImplicit2Usages() {
         val usageInfos = myFixture.testFindUsages("Implicit2.f95")
-        Assert.assertEquals(3, usageInfos.size)
+        assertEquals(3, usageInfos.size)
     }
 
     fun testNoImplicitStructures() {
         val usageInfos = myFixture.testFindUsages("Implicit3.f95")
-        Assert.assertEquals(1, usageInfos.size)
+        assertEquals(1, usageInfos.size)
     }
 
     // Interface
@@ -165,17 +164,17 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
 
     fun testInterfaceUsages() {
         val usageInfos = myFixture.testFindUsages("Interface2.f95")
-        Assert.assertEquals(6, usageInfos.size)
+        assertEquals(6, usageInfos.size)
     }
 
     fun testNamedInterfaceUsages() {
         val usageInfos = myFixture.testFindUsages("NamedInterface.f95", "ProgramWithNamedInterface.f95")
-        Assert.assertEquals(3, usageInfos.size)
+        assertEquals(3, usageInfos.size)
     }
 
     fun testNamedInterfaceUsages2() {
         val usageInfos = myFixture.testFindUsages("ProgramWithNamedInterface2.f95", "NamedInterface2.f95")
-        Assert.assertEquals(0, usageInfos.size)
+        assertEquals(0, usageInfos.size)
     }
 
     // enum

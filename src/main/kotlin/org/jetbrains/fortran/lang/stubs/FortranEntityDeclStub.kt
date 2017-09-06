@@ -9,7 +9,7 @@ class FortranEntityDeclStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>,
         override val name: String?
 ): StubBase<FortranEntityDecl>(parent, elementType), FortranNamedStub {
-    class Type<PsiT : FortranEntityDecl>(
+    class Type<out PsiT : FortranEntityDecl>(
             debugName: String,
             private val psiCtor: (FortranEntityDeclStub, IStubElementType<*, *>) -> PsiT
     ) : FortranStubElementType<FortranEntityDeclStub, FortranEntityDecl>(debugName) {

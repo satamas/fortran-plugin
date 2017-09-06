@@ -13,23 +13,11 @@ abstract class FortranEntityDeclMixin : FortranStubbedNamedElementImpl<FortranEn
 
     constructor(stub: FortranEntityDeclStub, nodeType: IStubElementType<*, *>) : super(stub, nodeType)
 
-    override fun getNameIdentifier(): PsiElement? {
-        val stub = stub
-        return if (stub != null)
-            stub.psi
-        else
-            findChildByType(FortranTypes.IDENTIFIER)
-    }
+    override fun getNameIdentifier(): PsiElement? = stub?.psi ?: findChildByType(FortranTypes.IDENTIFIER)
 
     override fun getTextOffset(): Int = node.startOffset
 
-    override fun getName(): String? {
-        val stub = stub
-        return if (stub != null)
-            stub.name
-        else
-            nameIdentifier?.text
-    }
+    override fun getName(): String? = stub?.name ?: nameIdentifier?.text
 
     override fun setName(name: String): PsiElement? {
         return this

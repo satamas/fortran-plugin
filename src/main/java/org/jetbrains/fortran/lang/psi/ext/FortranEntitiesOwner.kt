@@ -4,13 +4,13 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 
 interface FortranEntitiesOwner : PsiElement {
-    val subprograms : Array<FortranNamedElement>
+    val subprograms : List<FortranNamedElement>
 
-    val variables : Array<FortranNamedElement>
+    val variables : List<FortranNamedElement>
 
     val unit : FortranNamedElement?
 
-    val usedModules : Array<FortranDataPath>
+    val usedModules : List<FortranDataPath>
 
-    val types : Array<FortranNamedElement>
+    val types : List<FortranNamedElement>
 }

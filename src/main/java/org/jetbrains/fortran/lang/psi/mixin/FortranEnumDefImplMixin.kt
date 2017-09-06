@@ -18,20 +18,20 @@ abstract class FortranEnumDefImplMixin : FortranStubbedElementImpl<FortranEnumDe
         return this
     }
 
-    override val variables: Array<FortranNamedElement>
+    override val variables: List<FortranNamedElement>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(this, FortranEnumeratorDefStmt::class.java)
-                .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEnumerator::class.java)
-                }.map{ it.entityDecl }.toTypedArray()
+                .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEnumerator::class.java) }
+                .map{ it.entityDecl }.toList()
 
 
-    override val subprograms: Array<FortranNamedElement>
-        get() = emptyArray()
+    override val subprograms: List<FortranNamedElement>
+        get() = emptyList()
 
     override val unit : FortranNamedElement? = null
 
-    override val usedModules: Array<FortranDataPath>
-        get() = emptyArray()
+    override val usedModules: List<FortranDataPath>
+        get() = emptyList()
 
-    override val types: Array<FortranNamedElement>
-        get() = emptyArray()
+    override val types: List<FortranNamedElement>
+        get() = emptyList()
 }

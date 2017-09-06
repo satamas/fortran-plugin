@@ -17,32 +17,31 @@ abstract class FortranSubroutineSubprogramImplMixin : FortranProgramUnitImpl, Fo
     override fun getNameIdentifier(): PsiElement? = subroutineStmt.entityDecl
 
 
-    override val variables: Array<FortranNamedElement>
+    override val variables: List<FortranNamedElement>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranTypeDeclarationStmt::class.java)
                 .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
-                .toTypedArray()
 
     override val unit: FortranNamedElement
-        get() = PsiTreeUtil.getStubChildOfType(
-                PsiTreeUtil.getStubChildOfType(this, FortranSubroutineStmt::class.java),
-                FortranEntityDecl::class.java) as FortranNamedElement
+        get() {
+            val subroutineStmt = PsiTreeUtil.getStubChildOfType(this, FortranSubroutineStmt::class.java)
+            return PsiTreeUtil.getStubChildOfType(subroutineStmt, FortranEntityDecl::class.java) as FortranNamedElement
+        }
 
-    override val subprograms: Array<FortranNamedElement>
+    override val subprograms: List<FortranNamedElement>
         get() {
             val programUnits = PsiTreeUtil.getStubChildrenOfTypeAsList(internalSubprogramPart, FortranProgramUnit::class.java)
 
-            return programUnits.map{ it.unit }.filterNotNull()
+            return programUnits.mapNotNull{ it.unit }
                     .plus(programUnits.filterIsInstance(FortranFunctionSubprogram::class.java)
                             .flatMap { f -> f.variables.filter { f.unit?.name.equals(it.name, true) } }
-                            .filterNotNull())
-                    .toTypedArray()
+                    )
         }
 
-    override val usedModules: Array<FortranDataPath>
+    override val usedModules: List<FortranDataPath>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranUseStmt::class.java)
-                .map{ it.dataPath }.filterNotNull().toTypedArray()
+                .mapNotNull{ it.dataPath }
 
-    override val types: Array<FortranNamedElement>
+    override val types: List<FortranNamedElement>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranDerivedTypeDef::class.java)
-                .map{ it.derivedTypeStmt.typeDecl }.filterNotNull().toTypedArray()
+                .map{ it.derivedTypeStmt.typeDecl }
 }

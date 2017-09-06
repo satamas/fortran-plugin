@@ -17,5 +17,5 @@ abstract class FortranConstructNameDeclImplMixin(node : ASTNode) : FortranNamedE
         return this
     }
 
-    fun getLabelValue() = nameIdentifier.text
+    fun getLabelValue() : String = nameIdentifier.text
 }

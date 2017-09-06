@@ -25,17 +25,17 @@ abstract class FortranProgramUnitImplMixin : FortranStubbedNamedElementImpl<Fort
         return if (stub != null) stub.name else nameIdentifier?.text
     }
 
-    override val variables: Array<FortranNamedElement>
-        get() = emptyArray()
+    override val variables: List<FortranNamedElement>
+        get() = emptyList()
 
-    override val subprograms: Array<FortranNamedElement>
-        get() = emptyArray()
+    override val subprograms: List<FortranNamedElement>
+        get() = emptyList()
 
     override val unit : FortranNamedElement? = null
 
-    override val usedModules: Array<FortranDataPath>
-        get() = emptyArray()
+    override val usedModules: List<FortranDataPath>
+        get() = emptyList()
 
-    override val types: Array<FortranNamedElement>
-        get() = emptyArray()
+    override val types: List<FortranNamedElement>
+        get() = emptyList()
 }

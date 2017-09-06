@@ -11,8 +11,8 @@ import com.intellij.util.Processor
 import java.util.*
 
 
-abstract class FortranFindUsagesHandler <T : PsiElement>(psiElement: T,
-       val factory: FortranFindUsagesHandlerFactory)
+abstract class FortranFindUsagesHandler <out T : PsiElement>(psiElement: T,
+                                                             val factory: FortranFindUsagesHandlerFactory)
     : FindUsagesHandler(psiElement) {
 
     @Suppress("UNCHECKED_CAST") fun getElement(): T {
@@ -36,14 +36,12 @@ abstract class FortranFindUsagesHandler <T : PsiElement>(psiElement: T,
         val results = Collections.synchronizedList(arrayListOf<PsiReference>())
         val options = findUsagesOptions.clone()
         options.searchScope = searchScope
-        searchReferences(target, object : Processor<UsageInfo> {
-            override fun process(info: UsageInfo): Boolean {
-                val reference = info.reference
-                if (reference != null) {
-                    results.add(reference)
-                }
-                return true
+        searchReferences(target, Processor { info ->
+            val reference = info.reference
+            if (reference != null) {
+                results.add(reference)
             }
+            true
         }, options)
         return results
     }

@@ -11,12 +11,10 @@ class FortranFixedFormFile(viewProvider: FileViewProvider) : PsiFileBase(viewPro
 
     override fun getFileType(): FortranFixedFormFileType = FortranFixedFormFileType
 
-   // override fun getStub(): FortranFixedFormFileStub? = super.getStub() as FortranFixedFormFileStub?
-
-    val programUnits : Array<FortranProgramUnit>
+    val programUnits : List<FortranProgramUnit>
         get() = if (stub != null)
-            stub!!.childrenStubs.filter { it is FortranProgramUnitStub }.map{ it.psi as FortranProgramUnit}.toTypedArray()
+            stub!!.childrenStubs.filter { it is FortranProgramUnitStub }.map{ it.psi as FortranProgramUnit}
         else
-            children.filter { it is FortranProgramUnit }.map{ it as FortranProgramUnit}.toTypedArray()
+            children.filter { it is FortranProgramUnit }.map{ it as FortranProgramUnit}
 
 }

@@ -16,10 +16,7 @@ abstract class FortranInterfaceBodyImplMixin : FortranStubbedNamedElementImpl<Fo
 
     override fun getNameIdentifier(): PsiElement? = (firstChild as FortranNameStmt).entityDecl
 
-    override fun getName(): String? {
-        val stub = stub
-        return if (stub != null) stub.name else nameIdentifier?.text
-    }
+    override fun getName(): String? = stub?.name ?: nameIdentifier?.text
 
     override fun setName(name: String): PsiElement? {
         return this
