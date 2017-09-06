@@ -1,0 +1,11 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="cidr.debugger">
+        <languageSupportFactory implementation="org.jetbrains.fortran.debugger.lang.FortranDebuggerLanguageSupportFactory"
+                                order="first"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <programRunner implementation="org.jetbrains.fortran.debugger.runconfig.FortranRunner"/>
+        <xdebugger.breakpointType implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointType"/>
+    </extensions>
+</idea-plugin>

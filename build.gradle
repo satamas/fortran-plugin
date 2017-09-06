@@ -17,6 +17,7 @@ buildscript {
 plugins {
     id 'org.jetbrains.intellij' version "0.2.14"
     id 'org.jetbrains.kotlin.jvm' version '1.1.3-2'
+    id 'de.undercouch.download' version '3.2.0'
 }
 
 allprojects {
@@ -33,6 +34,7 @@ allprojects {
         downloadSources Boolean.valueOf(downloadIdeaSources)
         updateSinceUntilBuild = false
         instrumentCode = false
+        alternativeIdePath = "debugger/lib/clion"
     }
 
     repositories {
@@ -114,3 +116,43 @@ def parserTask(project, parserName, pkg) {
         outputs.dir dst
     })
 }
+
+project(':') {
+    sourceSets {
+        main {
+            kotlin.srcDirs += 'debugger/src/main/kotlin'
+            compileClasspath += files("debugger/lib/clion/lib/clion.jar")
+        }
+    }
+}
+
+def isWindows = System.getProperty("os.name").toLowerCase().indexOf( "win" ) >= 0
+
+task downloadClion(type: de.undercouch.gradle.tasks.download.Download) {
+    if (isWindows) {
+        src "https://download.jetbrains.com/cpp/CLion-${clionVersion}.zip"
+        dest new File(project.projectDir, "debugger/lib/clion-${clionVersion}.zip")
+    } else {
+        src "https://download.jetbrains.com/cpp/CLion-${clionVersion}.tar.gz"
+        dest new File(project.projectDir, "debugger/lib/clion-${clionVersion}.tar.gz")
+    }
+
+    overwrite false
+}
+
+task unpackClion(dependsOn: downloadClion, type: Copy) {
+    if (isWindows) {
+        from zipTree("debugger/lib/clion-${clionVersion}.zip")
+        into new File(project.projectDir, "debugger/lib/clion")
+    } else {
+        from tarTree(resources.gzip("debugger/lib/clion-${clionVersion}.tar.gz"))
+        into new File(project.projectDir, "debugger/lib/")
+
+        doLast {
+            file("debugger/lib/clion-${clionVersion}").renameTo(file("debugger/lib/clion"))
+        }
+    }
+
+}
+
+compileKotlin.dependsOn unpackClion

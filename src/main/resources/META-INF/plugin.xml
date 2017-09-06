@@ -19,6 +19,7 @@
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="171.0"/>
 
+    <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
     <depends>com.intellij.modules.lang</depends>
 
 
