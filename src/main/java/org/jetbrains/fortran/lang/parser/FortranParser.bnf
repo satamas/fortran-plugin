@@ -1058,7 +1058,7 @@ rename_stmt ::= (local_name '=>' data_name)
   mixin = 'org.jetbrains.fortran.lang.psi.mixin.FortranRenameStmtImlMixin'
 }
 // R1112
-only_stmt ::= rename_stmt | (local_name !'(') | generic_spec {
+only_stmt ::= rename_stmt | (data_name !'(') | generic_spec {
   elementTypeFactory ="org.jetbrains.fortran.lang.stubs.FortranStubFactoryKt.fortranStubFactory"
   stubClass = 'org.jetbrains.fortran.lang.stubs.FortranOnlyStmtStub'
   mixin = 'org.jetbrains.fortran.lang.psi.mixin.FortranOnlyStmtImplMixin'

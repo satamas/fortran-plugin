@@ -164,7 +164,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         names.addAll(collectRenamedNames(programUnit).filter { element.referenceName.equals(it.name, true) })
 
         // modules
-        if (element.parent !is FortranUseStmt) { // We do not need recursion here
+        if (element.parent !is FortranUseStmt || element !is FortranDataPath) { // We do not need recursion here
             val allModules = collectAllUseStmts(programUnit, outerProgramUnit)
             for (module in allModules) {
                 names.addAll(importNamesFromModule(module, mutableSetOf(), false).toList())
@@ -192,9 +192,9 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                 val firstUsage = PsiTreeUtil.findChildrenOfType(outerProgramUnit.firstChild, FortranDataPath::class.java)
                         .filterImplicitDeclaration() ?:
                         PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(outerProgramUnit, FortranBlock::class.java ), FortranDataPath::class.java)
-                        .filterImplicitDeclaration() ?:
+                        .filter{it.parent !is FortranRenameStmt }.filterImplicitDeclaration() ?:
                         PsiTreeUtil.findChildrenOfType(programUnit, FortranDataPath::class.java)
-                        .filterImplicitDeclaration()
+                        .filter{it.parent !is FortranRenameStmt }.filterImplicitDeclaration()
                 if (firstUsage != null) {
                     names.add(firstUsage)
                 }
@@ -325,10 +325,10 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
 
         val onlyIsUsed = !(module.parent as FortranUseStmt).onlyStmtList.isEmpty()
         val onlyList = (module.parent as FortranUseStmt).onlyStmtList
-                    .mapNotNull { it.entityDecl?.name?.toLowerCase() }
+                    .mapNotNull { it.dataPath?.referenceName?.toLowerCase() }
         val renameInOnly = (module.parent as FortranUseStmt).onlyStmtList.map { it.renameStmt }
         val renameList = ((module.parent as FortranUseStmt).renameStmtList + renameInOnly)
-                    .mapNotNull { it?.dataPath?.referenceName?.toLowerCase() }
+                    .mapNotNull { it?.entityDecl?.name?.toLowerCase() }
 
         result.addAll(module.reference.multiResolve().flatMap {
                 findNamePsiInModule(PsiTreeUtil.getParentOfType(it, FortranModule::class.java), allSeenModules, onlyTypes)
