@@ -6,6 +6,7 @@ import com.jetbrains.cidr.execution.debugger.CidrDebugProcess
 import com.jetbrains.cidr.execution.debugger.backend.LLValue
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrDebuggerTypesHelper
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrMemberValue
+import org.jetbrains.fortran.lang.psi.FortranCodeFragmentFactory
 import org.jetbrains.fortran.lang.psi.FortranCompositeElement
 import org.jetbrains.fortran.lang.psi.FortranFile
 import org.jetbrains.fortran.lang.psi.ext.getNextNonCommentSibling
@@ -33,12 +34,10 @@ class FortranDebuggerTypesHelper(process: CidrDebugProcess) : CidrDebuggerTypesH
 }
 
 private fun resolveToDeclaration(ctx: PsiElement?, name: String): PsiElement? {
-    return ctx
- /*
     val composite = ctx?.getNextNonCommentSibling()?.parentOfType<FortranCompositeElement>(strict = false)
             ?: return null
-    val path = FortranCodeFragmcentFactory(composite.project).createLocalVariable(name, composite)
+    val path = FortranCodeFragmentFactory(composite.project).createPath(name, composite)
             ?: return null
 
-    return null*/
+    return path.reference.resolve()
 }
