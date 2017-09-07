@@ -8,11 +8,11 @@
       Fortran language support<br>
       The plugin supports FORTRAN 77, FORTRAN 90, FORTRAN 95, FORTRAN 2003 and FORTRAN 2008 source code.
       Several nonstandard extensions are also supported.
-      Lexer, parser, syntax highlighter, commenter, formatter, folding and labels navigation are provided.
+      Lexer, parser, syntax highlighter, commenter, formatter, folding and navigation are provided.
     ]]></description>
 
     <change-notes><![CDATA[
-      08.2017 Labels navigation added.<br>
+      08.2017 Navigation added.<br>
       07.2017 Folding added<br>
       06.2017 Commenter and Formatter added.<br>
       05.2017 First version of the plugin with lexer, parser and simple highlighter.<br>
