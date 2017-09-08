@@ -189,9 +189,12 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         if (names.isEmpty()) {
             val implicitStmts = PsiTreeUtil.findChildrenOfType(programUnit, FortranImplicitStmt::class.java)
             if (implicitStmts.isEmpty() || implicitStmts.all { !it.implicitSpecList.isEmpty()}) {
-                val firstUsage = PsiTreeUtil.findChildrenOfType(outerProgramUnit.firstChild, FortranDataPath::class.java)
-                        .filterImplicitDeclaration() ?:
-                        PsiTreeUtil.findChildrenOfType(PsiTreeUtil.findChildOfType(outerProgramUnit, FortranBlock::class.java ), FortranDataPath::class.java)
+
+                val outerProgramUnitBlock = PsiTreeUtil.findChildOfType(outerProgramUnit, FortranBlock::class.java)
+                val outerProgramUnitStmt = if (outerProgramUnit.firstChild != outerProgramUnitBlock) outerProgramUnit.firstChild else null
+                val firstUsage = PsiTreeUtil.findChildrenOfType(outerProgramUnitStmt, FortranDataPath::class.java)
+                        .filter{it.parent !is FortranRenameStmt }.filterImplicitDeclaration() ?:
+                        PsiTreeUtil.findChildrenOfType(outerProgramUnitBlock, FortranDataPath::class.java)
                         .filter{it.parent !is FortranRenameStmt }.filterImplicitDeclaration() ?:
                         PsiTreeUtil.findChildrenOfType(programUnit, FortranDataPath::class.java)
                         .filter{it.parent !is FortranRenameStmt }.filterImplicitDeclaration()
@@ -328,7 +331,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
                     .mapNotNull { it.dataPath?.referenceName?.toLowerCase() }
         val renameInOnly = (module.parent as FortranUseStmt).onlyStmtList.map { it.renameStmt }
         val renameList = ((module.parent as FortranUseStmt).renameStmtList + renameInOnly)
-                    .mapNotNull { it?.entityDecl?.name?.toLowerCase() }
+                    .mapNotNull { it?.dataPath?.referenceName?.toLowerCase() }
 
         result.addAll(module.reference.multiResolve().flatMap {
                 findNamePsiInModule(PsiTreeUtil.getParentOfType(it, FortranModule::class.java), allSeenModules, onlyTypes)

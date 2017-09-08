@@ -6,7 +6,7 @@ function NewtonN(f, x_old)
     external :: f
 
     interface
-        function f(x)
+        function F(x)
             real(8), dimension (:), pointer :: f, x
         end function f
     end interface

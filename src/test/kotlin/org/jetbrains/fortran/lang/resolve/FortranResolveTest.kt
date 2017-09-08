@@ -1,10 +1,13 @@
 package org.jetbrains.fortran.lang.resolve
 
+import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
+import org.jetbrains.fortran.lang.psi.FortranStmt
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
+import org.jetbrains.fortran.lang.psi.impl.FortranWriteStmtImpl
 
 
 class FortranResolveTest : LightCodeInsightFixtureTestCase() {
@@ -39,7 +42,9 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testUseOnlyAvailable() {
         myFixture.configureByFiles("UseOnlyAvailable.f95", "Module.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("x", (element.reference?.resolve() as FortranEntityDecl).name)
+        val declaration = element.reference?.resolve() as FortranEntityDecl
+        assertEquals("x", declaration.name)
+        assertEquals("Module.f95", declaration.containingFile.name)
     }
 
     fun testUseOnlyNotAvailable() {
@@ -51,7 +56,9 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testComponents() {
         myFixture.configureByFiles("Components.f95", "Module.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("x", (element.reference?.resolve() as FortranEntityDecl).name)
+        val declaration = element.reference?.resolve() as FortranEntityDecl
+        assertEquals("x", declaration.name)
+        assertEquals("Module.f95", declaration.containingFile.name)
     }
 
     fun testNoExcessiveUsages() {
@@ -62,25 +69,51 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testRenamedType() {
         myFixture.configureByFiles("RenamedType.f95", "Module.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("x", (element.reference?.resolve() as FortranEntityDecl).name)
+        val declaration = element.reference?.resolve() as FortranEntityDecl
+        assertEquals("x", declaration.name)
+        assertEquals("Module.f95", declaration.containingFile.name)
+    }
+
+    fun testRenamedIsNotAvailable() {
+        myFixture.configureByFiles("RenamedIsNotAvailable.f95", "FarAwayModule.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        val declaration = element.reference?.resolve() as FortranDataPath
+        assertEquals("pi", declaration.name)
+        assertEquals(FortranWriteStmtImpl::class.java,
+                PsiTreeUtil.getParentOfType(declaration, FortranStmt::class.java)!!::class.java)
+    }
+
+    fun testRenamedIsNotAvailable2() {
+        myFixture.configureByFiles("RenamedIsNotAvailable2.f95", "FarAwayModule.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        val declaration = element.reference?.resolve() as FortranDataPath
+        assertEquals("pi", declaration.name)
+        assertEquals(FortranWriteStmtImpl::class.java,
+                PsiTreeUtil.getParentOfType(declaration, FortranStmt::class.java)!!::class.java)
     }
 
     fun testDeepUsage() {
         myFixture.configureByFiles("DeepUsage.f95", "CloseModule.f95", "AwayModule.f95", "FarAwayModule.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("data", (element.reference?.resolve() as FortranEntityDecl).name)
+        val declaration = element.reference?.resolve() as FortranEntityDecl
+        assertEquals("data", declaration.name)
+        assertEquals("FarAwayModule.f95", declaration.containingFile.name)
     }
 
     fun testDeepPiUsage() {
         myFixture.configureByFiles("DeepPiUsage.f95", "CloseModule.f95", "AwayModule.f95", "FarAwayModule.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("renamed_pi", (element.reference?.resolve() as FortranEntityDecl).name)
+        val declaration = element.reference?.resolve() as FortranEntityDecl
+        assertEquals("renamed_pi", declaration.name)
+        assertEquals("AwayModule.f95", declaration.containingFile.name)
     }
 
     fun testDeepEUsage() {
         myFixture.configureByFiles("DeepEUsage.f95", "CloseModule.f95", "AwayModule.f95", "FarAwayModule.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("E", (element.reference?.resolve() as FortranEntityDecl).name)
+        val declaration = element.reference?.resolve() as FortranEntityDecl
+        assertEquals("E", declaration.name)
+        assertEquals("FarAwayModule.f95", declaration.containingFile.name)
     }
 
     fun testFunction() {
@@ -109,14 +142,18 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         myFixture.configureByFiles("ProgramWithSubmodule.f95",
                 "ModuleWithSubmodule.f95", "SubmoduleWithSubmodule.f95", "Submodule.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("needle", (element.reference?.resolve() as FortranEntityDecl).name)
+        val declaration = element.reference?.resolve() as FortranEntityDecl
+        assertEquals("needle", declaration.name)
+        assertEquals("Submodule.f95", declaration.containingFile.name)
     }
 
     fun testSubmoduleType() {
         myFixture.configureByFiles("ProgramWithSubmoduleType.f95",
                 "ModuleWithSubmodule.f95", "SubmoduleWithSubmodule.f95", "Submodule.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("subtype", (element.reference?.resolve() as FortranEntityDecl).name)
+        val declaration = element.reference?.resolve() as FortranEntityDecl
+        assertEquals("subtype", declaration.name)
+        assertEquals("Submodule.f95", declaration.containingFile.name)
     }
 
     fun testMethod() {
@@ -142,7 +179,9 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testImplicit() {
         myFixture.configureByFiles("Implicit.f95", "CommonBlocksB.f95", "TwinTwo.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("X", (element.reference?.resolve() as FortranDataPath).name)
+        val declaration = element.reference?.resolve() as FortranDataPath
+        assertEquals("X", declaration.name)
+        assertEquals("Implicit.f95", declaration.containingFile.name)
     }
 
     fun testImplicit2Usages() {
@@ -159,7 +198,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testInterface() {
         myFixture.configureByFiles("Interface.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals("f", ((element.reference as FortranPathReferenceImpl?)?.multiResolve()?.firstOrNull() as FortranEntityDecl).name)
+        assertEquals("F", ((element.reference as FortranPathReferenceImpl?)?.multiResolve()?.firstOrNull() as FortranEntityDecl).name)
     }
 
     fun testInterfaceUsages() {
