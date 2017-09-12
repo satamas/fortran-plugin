@@ -5,7 +5,8 @@
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <programRunner implementation="org.jetbrains.fortran.debugger.runconfig.FortranRunner"/>
+        <programRunner implementation="org.jetbrains.fortran.debugger.runconfig.FortranRunner" order="first"/>
+
         <xdebugger.breakpointType implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointType"/>
     </extensions>
 </idea-plugin>

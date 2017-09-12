@@ -34,10 +34,10 @@ class FortranDebuggerTypesHelper(process: CidrDebugProcess) : CidrDebuggerTypesH
 }
 
 private fun resolveToDeclaration(ctx: PsiElement?, name: String): PsiElement? {
-    val composite = ctx?.getNextNonCommentSibling()?.parentOfType<FortranCompositeElement>(strict = false)
+   /* val composite = ctx?.getNextNonCommentSibling()?.parentOfType<FortranCompositeElement>(strict = false)
             ?: return null
     val path = FortranCodeFragmentFactory(composite.project).createPath(name, composite)
-            ?: return null
+            ?: return null*/
 
-    return path.reference.resolve()
+    return ctx//path.reference.resolve()
 }
