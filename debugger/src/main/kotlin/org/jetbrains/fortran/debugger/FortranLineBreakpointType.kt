@@ -14,5 +14,4 @@ class FortranLineBreakpointType : CidrLineBreakpointType(
 ) {
     override fun canPutAt(file: VirtualFile, line: Int, project: Project): Boolean =
             file.fileType == FortranFileType     || file.fileType == FortranFixedFormFileType
-         || file.fileType == OCFileType.INSTANCE || file.fileType == AsmFileType.INSTANCE
 }

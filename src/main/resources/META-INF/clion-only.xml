@@ -8,5 +8,10 @@
         <programRunner implementation="org.jetbrains.fortran.debugger.runconfig.FortranRunner" order="first"/>
 
         <xdebugger.breakpointType implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointType"/>
+
+        <!--      <applicationService serviceInterface="com.jetbrains.cidr.execution.debugger.breakpoints.CidrLineBreakpointFileTypesProvider"
+                              serviceImplementation="org.jetbrains.fortran.debugger.FortranLineBreakpointFileTypesProvider"/>
+  -->
+
     </extensions>
 </idea-plugin>

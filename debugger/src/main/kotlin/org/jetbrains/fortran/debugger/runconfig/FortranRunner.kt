@@ -7,6 +7,8 @@ import com.intellij.execution.executors.DefaultDebugExecutor
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.execution.ui.RunContentDescriptor
+import com.intellij.psi.search.FileTypeIndex
+import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.xdebugger.XDebugProcess
 import com.intellij.xdebugger.XDebugSession
 import com.intellij.xdebugger.XDebugSessionListener
@@ -18,6 +20,8 @@ import com.jetbrains.cidr.execution.CidrCommandLineState
 import com.jetbrains.cidr.execution.CidrRunProfile
 import com.jetbrains.cidr.execution.CidrRunner
 import com.jetbrains.cidr.execution.debugger.CidrLocalDebugProcess
+import org.jetbrains.fortran.FortranFileType
+import org.jetbrains.fortran.FortranFixedFormFileType
 
 class FortranRunner : CidrRunner() {
     override fun getRunnerId() = "FortranRunner"
@@ -50,9 +54,14 @@ class FortranRunner : CidrRunner() {
                 }
                 val defaultDebugProcess : XDebugProcess = state.startDebugProcess(session)
 
-                if (defaultDebugProcess is CidrLocalDebugProcess && state.launcher is CMakeLauncher) {
+
+                val fortranFiles = FileTypeIndex.getFiles(FortranFileType, GlobalSearchScope.projectScope(session.project))
+                        .plus(FileTypeIndex.getFiles(FortranFixedFormFileType, GlobalSearchScope.projectScope(session.project)))
+                if (defaultDebugProcess is CidrLocalDebugProcess && state.launcher is CMakeLauncher
+                        && !fortranFiles.isEmpty()) {
+
                     defaultDebugProcess.stop()
-                    val newProc = FortranDebugProcess(defaultDebugProcess.runParameters, session, state.consoleBuilder)
+                    val newProc = FortranDebugProcess((defaultDebugProcess).runParameters, session, state.consoleBuilder)
                     newProc.start()
                     return newProc
                 }
