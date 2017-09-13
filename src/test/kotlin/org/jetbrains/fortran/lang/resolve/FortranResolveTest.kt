@@ -23,7 +23,7 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
     fun testLabelReference() {
         myFixture.configureByFiles("Label.f")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
-        assertEquals(10, (element.references[0].resolve() as FortranLabelDeclImpl).gelLabelValue())
+        assertEquals(10, (element.references[0].resolve() as FortranLabelDeclImpl).getLabelValue())
     }
 
     // Construct Names

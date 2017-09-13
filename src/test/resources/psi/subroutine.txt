@@ -143,10 +143,9 @@ FILE
             FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('char_number')
         PsiElement(,)(',')
-        PARAMETERS_SPEC
-          DESIGNATOR
-            FortranDataPathImpl(DATA_PATH)
-              PsiElement(identifier)('format')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('format')
         PsiElement())(')')
         PsiWhiteSpace(' ')
         OUTPUT_ITEM
@@ -176,8 +175,7 @@ FILE
           PARAMETERS_SPEC
             PsiElement(*)('*')
           PsiElement(,)(',')
-          PARAMETERS_SPEC
-            PsiElement(*)('*')
+          PsiElement(*)('*')
           PsiElement())(')')
           PsiWhiteSpace(' ')
           OUTPUT_ITEM

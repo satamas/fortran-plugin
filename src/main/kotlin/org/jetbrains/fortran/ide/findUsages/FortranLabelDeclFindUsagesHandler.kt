@@ -78,7 +78,7 @@ class FortranLabelDeclFindUsagesHandler (
                 addTask {
                     runReadAction{ PsiTreeUtil.findChildrenOfType(
                             PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) , FortranLabelImpl::class.java)
-                    }.filter { (element as FortranLabelDeclImpl).gelLabelValue() == it.gelLabelValue() }
+                    }.filter { (element as FortranLabelDeclImpl).getLabelValue() == it.getLabelValue() }
                      .map{ FortranLabelReferenceImpl(it as FortranLabelImplMixin) }
                      .all { processUsage(processor, it) }
                 }

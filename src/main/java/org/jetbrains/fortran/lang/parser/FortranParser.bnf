@@ -231,14 +231,30 @@ private wait_          ::= <<parseKeyword "WAIT">>
 private where_         ::= <<parseKeyword "WHERE">>
 private while_         ::= <<parseKeyword "WHILE">>
 private write_         ::= <<parseKeyword "WRITE">>
+private unit_          ::= <<parseKeyword "UNIT">>
 
 // Clause 0
 // System parts needed for this implementation
 // format is *, label or expression, matches all possibilities
-parameters_spec ::= !')' (fidentifier '=')? format {
+parameters_spec ::= !')' fidentifier '=' format {
   pin = 1
   recoverWhile = parameter_spec_recover
 }
+
+parameters_spec_with_unit ::= !')' (((unit_ '=')? unit_or_expression !'=') | (fidentifier '=' format)) {
+  pin = 1
+  recoverWhile = parameter_spec_recover
+}
+
+parameters_spec_with_unit_decl ::= !')' (((unit_ '=')? unit_decl_or_expression !'=') | (fidentifier '=' format)) {
+  pin = 1
+  recoverWhile = parameter_spec_recover
+}
+io_unit_spec ::= (unit_ '=')? ('*' | unit_or_expression) { elementType = parameters_spec}
+private io_control_spec_list ::= ( io_unit_spec ',' format !'=' (',' <<list parameters_spec>>)?)
+                                | (io_unit_spec (',' <<list parameters_spec>>)?)
+                                | <<list parameters_spec_with_unit>>
+
 private parameter_spec_recover ::= !(')' | ',')
 // Clause 1 (ready)
 // R101
@@ -246,6 +262,13 @@ private meta list ::= <<param>> ( ',' <<param>> )*
 private meta noncomalist ::= <<param>> ( ','? <<param>> )*
 // R102 and R103 are trivial
 external fidentifier ::= parseIdentifier
+
+private label_or_expression ::= label !expr_sign | expr
+private unit_or_expression ::= unit !expr_sign | expr
+private unit_decl_or_expression ::= unit_decl !expr_sign | expr
+private expr_sign ::= (defoperator | '.eqv.' | '.neqv.' | '.or.' | '.and.' | '.not.'
+                       | rel_op | '//' | '+' | '-' | '*' | '/' | '**' | '(' | '[')
+
 
 private string_literal ::= stringliteral | multiline_string_literal
 multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
@@ -348,6 +371,14 @@ label_decl ::= integerliteral {
 label ::= integerliteral {
     implements=['org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement']
     mixin='org.jetbrains.fortran.lang.psi.mixin.FortranLabelImplMixin'
+}
+unit_decl ::= integerliteral {
+    implements=['org.jetbrains.fortran.lang.psi.ext.FortranNamedElement']
+    mixin='org.jetbrains.fortran.lang.psi.mixin.FortranUnitDeclImplMixin'
+}
+unit ::= integerliteral {
+    implements=['org.jetbrains.fortran.lang.psi.ext.FortranReferenceElement']
+    mixin='org.jetbrains.fortran.lang.psi.mixin.FortranUnitImplMixin'
 }
 construct_name_decl ::= fidentifier  ':' {
     implements=['org.jetbrains.fortran.lang.psi.ext.FortranNamedElement']
@@ -950,24 +981,24 @@ unlock_stmt ::= label_decl? unlock_ '(' variable (',' <<list parameters_spec>>)?
 //io_unit ::= '*' | variable | expr
 // R902, R903 are trivial
 // R904
-open_stmt ::= label_decl? open_ '(' <<list parameters_spec>> ')' {pin = 3}
+open_stmt ::= label_decl? open_ '(' <<list parameters_spec_with_unit_decl>> ')' {pin = 3}
 // R905 is not for parser
 // R906, R907 are trivial
 // R908
-close_stmt ::= label_decl? close_ '(' <<list parameters_spec>> ')' {pin = 3}
+close_stmt ::= label_decl? close_ '(' <<list parameters_spec_with_unit>> ')' {pin = 3}
 // R909 is not for parser
 // R910
 read_stmt ::= label_decl? read_ (io_control_read | format_read) {pin = 2}
-private io_control_read ::= '(' <<list parameters_spec>> ')' ','? <<list input_item>>? { pin = 1}
+private io_control_read ::= '(' io_control_spec_list ')' ','? <<list input_item>>? { pin = 1}
 private format_read ::= format (',' <<list input_item>>?)?
 // R911
-write_stmt ::= label_decl? write_ '(' <<list parameters_spec>> ')' ','? <<list output_item>>? { pin= 3 }
+write_stmt ::= label_decl? write_ '(' io_control_spec_list ')' ','? <<list output_item>>? { pin= 3 }
 // R912
 print_stmt ::= label_decl? print_ format ','? <<list output_item>>? { pin = 3 }
 // R913 is not for parser
 // R914 is trivial
 // R915
-private format ::= '*' /*| label*/ | expr
+private format ::= '*'  | label_or_expression
 // we can match label when it's really an expression, but expression matches a label too
 // R916
 input_item ::= variable | io_implied_do
@@ -980,19 +1011,19 @@ io_implied_do_object ::= (input_item | output_item) !'=' { pin = 2 }
 // R921 (unused maybe)
 //dtv_type_spec ::= (type | classkwd) '(' derived_type_spec ')' { pin =1 }
 // R922
-wait_stmt ::= label_decl? wait_ '(' <<list parameters_spec>> ')' { pin =2 }
+wait_stmt ::= label_decl? wait_ '(' <<list parameters_spec_with_unit>> ')' { pin =2 }
 // R923 is not for parser
 // R924
-backspace_stmt ::= label_decl? backspace_ (('(' <<list parameters_spec>> ')') | expr ) { pin = 2 }
+backspace_stmt ::= label_decl? backspace_ (('(' <<list parameters_spec_with_unit>> ')') | expr ) { pin = 2 }
 // R925
-endfile_stmt ::= label_decl? endfile_ (('(' <<list parameters_spec>> ')') | expr) { pin = 2 }
+endfile_stmt ::= label_decl? endfile_ (('(' <<list parameters_spec_with_unit>> ')') | expr) { pin = 2 }
 // R926
-rewind_stmt ::= label_decl? rewind_ (('(' <<list parameters_spec>> ')') | expr) { pin = 2}
+rewind_stmt ::= label_decl? rewind_ (('(' <<list parameters_spec_with_unit>> ')') | expr) { pin = 2}
 // R927 + R929 are not for parser
 // R928
-flush_stmt ::= label_decl? flush_ (('(' <<list parameters_spec>> ')') | expr) { pin = 2}
+flush_stmt ::= label_decl? flush_ (('(' <<list parameters_spec_with_unit>> ')') | expr) { pin = 2}
 // R930
-inquire_stmt ::= label_decl? inquire_ (inquire_with_iolength | ('(' <<list parameters_spec>> ')'))  { pin = 2}
+inquire_stmt ::= label_decl? inquire_ (inquire_with_iolength | ('(' <<list parameters_spec_with_unit>> ')'))  { pin = 2}
 private inquire_with_iolength ::= '(' iolength_ '=' expr /*variable */')' <<list output_item>> { pin = 2}
 // R931 is not for parser
 

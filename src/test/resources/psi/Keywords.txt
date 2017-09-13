@@ -72,8 +72,7 @@ FILE
           PARAMETERS_SPEC
             PsiElement(*)('*')
           PsiElement(,)(',')
-          PARAMETERS_SPEC
-            PsiElement(*)('*')
+          PsiElement(*)('*')
           PsiElement())(')')
           PsiWhiteSpace(' ')
           OUTPUT_ITEM

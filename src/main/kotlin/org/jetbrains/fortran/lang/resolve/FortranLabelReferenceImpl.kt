@@ -18,7 +18,7 @@ class FortranLabelReferenceImpl(element: FortranLabelImplMixin) :
     override fun resolveInner(): List<FortranNamedElement> {
         val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return emptyList()
         return PsiTreeUtil.findChildrenOfType(programUnit, FortranLabelDeclImpl::class.java)
-                .filter { element.gelLabelValue() == it.gelLabelValue() }
+                .filter { element.getLabelValue() == it.getLabelValue() }
                 .toMutableList()
     }
 }
