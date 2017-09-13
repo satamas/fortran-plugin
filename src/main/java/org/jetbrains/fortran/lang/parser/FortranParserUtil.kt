@@ -1,7 +1,7 @@
-package org.jetbrains.fortran.lang.parser;
+package org.jetbrains.fortran.lang.parser
 
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.parser.GeneratedParserUtilBase;
+import com.intellij.lang.PsiBuilder
+import com.intellij.lang.parser.GeneratedParserUtilBase
 
 /**
  * Created by Sergei on 13.04.17.
@@ -23,10 +23,5 @@ object FortranParserUtil : GeneratedParserUtilBase() {
     @JvmStatic
     fun parseLabeledDoConstruct(builder: PsiBuilder, level: Int): Boolean {
         return LabeledDoConstructParser().parse(builder, level)
-    }
-
-    @JvmStatic
-    fun parseLabelOrExpression(builder: PsiBuilder, level: Int): Boolean {
-        return LabelOrExpressionParser().parse(builder, level)
     }
 }

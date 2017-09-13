@@ -235,27 +235,36 @@ private unit_          ::= <<parseKeyword "UNIT">>
 
 // Clause 0
 // System parts needed for this implementation
-// format is *, label or expression, matches all possibilities
-parameters_spec ::= !')' fidentifier '=' format {
+// format is *, label or expression, matches all possibilities in specifications
+parameters_spec ::= !')' fidentifier '=' parameter_value {
   pin = 1
   recoverWhile = parameter_spec_recover
 }
 
-parameters_spec_with_unit ::= !')' (((unit_ '=')? unit_or_expression !'=') | (fidentifier '=' format)) {
+parameters_spec_with_unit ::= !')' (((unit_ '=')? unit_or_expression !'=') | (fidentifier '=' parameter_value)) {
   pin = 1
   recoverWhile = parameter_spec_recover
+  elementType = parameters_spec
 }
 
-parameters_spec_with_unit_decl ::= !')' (((unit_ '=')? unit_decl_or_expression !'=') | (fidentifier '=' format)) {
+parameters_spec_with_unit_decl ::= !')' (((unit_ '=')? unit_decl_or_expression !'=') | (fidentifier '=' parameter_value)) {
   pin = 1
   recoverWhile = parameter_spec_recover
+  elementType = parameters_spec
 }
+
 io_unit_spec ::= (unit_ '=')? ('*' | unit_or_expression) { elementType = parameters_spec}
-private io_control_spec_list ::= ( io_unit_spec ',' format !'=' (',' <<list parameters_spec>>)?)
+private io_control_spec_list ::= ( io_unit_spec ',' parameter_value !'=' (',' <<list parameters_spec>>)?)
                                 | (io_unit_spec (',' <<list parameters_spec>>)?)
                                 | <<list parameters_spec_with_unit>>
 
 private parameter_spec_recover ::= !(')' | ',')
+private label_or_expression ::= label !expr_sign | expr
+private unit_or_expression ::= unit !expr_sign | expr
+private unit_decl_or_expression ::= unit_decl !expr_sign | expr
+private expr_sign ::= (defoperator | '.eqv.' | '.neqv.' | '.or.' | '.and.' | '.not.'
+                       | rel_op | '//' | '+' | '-' | '*' | '/' | '**' | '(' | '[')
+
 // Clause 1 (ready)
 // R101
 private meta list ::= <<param>> ( ',' <<param>> )*
@@ -263,15 +272,9 @@ private meta noncomalist ::= <<param>> ( ','? <<param>> )*
 // R102 and R103 are trivial
 external fidentifier ::= parseIdentifier
 
-private label_or_expression ::= label !expr_sign | expr
-private unit_or_expression ::= unit !expr_sign | expr
-private unit_decl_or_expression ::= unit_decl !expr_sign | expr
-private expr_sign ::= (defoperator | '.eqv.' | '.neqv.' | '.or.' | '.and.' | '.not.'
-                       | rel_op | '//' | '+' | '-' | '*' | '/' | '**' | '(' | '[')
-
-
 private string_literal ::= stringliteral | multiline_string_literal
 multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
+
 // Clause 2
 // R201
 private program ::=  (eol | program_unit)*
@@ -990,15 +993,15 @@ close_stmt ::= label_decl? close_ '(' <<list parameters_spec_with_unit>> ')' {pi
 // R910
 read_stmt ::= label_decl? read_ (io_control_read | format_read) {pin = 2}
 private io_control_read ::= '(' io_control_spec_list ')' ','? <<list input_item>>? { pin = 1}
-private format_read ::= format (',' <<list input_item>>?)?
+private format_read ::= parameter_value (',' <<list input_item>>?)?
 // R911
 write_stmt ::= label_decl? write_ '(' io_control_spec_list ')' ','? <<list output_item>>? { pin= 3 }
 // R912
-print_stmt ::= label_decl? print_ format ','? <<list output_item>>? { pin = 3 }
+print_stmt ::= label_decl? print_ parameter_value ','? <<list output_item>>? { pin = 3 }
 // R913 is not for parser
 // R914 is trivial
 // R915
-private format ::= '*'  | label_or_expression
+private parameter_value ::= '*'  | label_or_expression
 // we can match label when it's really an expression, but expression matches a label too
 // R916
 input_item ::= variable | io_implied_do
@@ -1250,7 +1253,7 @@ assigned_goto_stmt ::= label_decl? (goto_ | (go_ to_)) fidentifier (','? '(' <<l
 include_stmt ::= label_decl? include_ string_literal { pin = 2 }
 
 // nonstandard
-accept_stmt ::= label_decl? accept_  format (',' <<list input_item>>)?  {pin = 2}
-encode_stmt ::= label_decl? encode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list output_item>> { pin = 2}
-decode_stmt ::= label_decl? decode_ '(' expr ',' format ',' designator (',' <<list parameters_spec>>)?')' <<list input_item>> { pin = 2 }
-type_stmt ::= label_decl? type_ format (','? <<list output_item>>?) { pin = 4 }
+accept_stmt ::= label_decl? accept_  parameter_value (',' <<list input_item>>)?  {pin = 2}
+encode_stmt ::= label_decl? encode_ '(' expr ',' parameter_value ',' designator (',' <<list parameters_spec>>)?')' <<list output_item>> { pin = 2}
+decode_stmt ::= label_decl? decode_ '(' expr ',' parameter_value ',' designator (',' <<list parameters_spec>>)?')' <<list input_item>> { pin = 2 }
+type_stmt ::= label_decl? type_ parameter_value (','? <<list output_item>>?) { pin = 4 }
