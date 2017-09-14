@@ -18,7 +18,8 @@ class FortranFmtBlock(
         private val indent: Indent,
         private val wrap: Wrap?,
         private val settings: CodeStyleSettings,
-        private val spacingBuilder: SpacingBuilder
+        private val spacingBuilder: SpacingBuilder,
+        private val isFixedForm : Boolean
 ) : ASTBlock {
     private val blockIsIncomplete: Boolean by lazy { FormatterUtil.isIncomplete(node) }
     private val blockSubBlocks: List<Block> by lazy { buildChildren() }
@@ -36,8 +37,9 @@ class FortranFmtBlock(
     override fun toString() = "${node.text} $textRange"
 
     private fun buildChildren(): List<Block> {
-        val blocks = ArrayList<Block>()
+        if (isFixedForm) return emptyList()
 
+        val blocks = ArrayList<Block>()
         val alignment = getAlignmentStrategy()
         var child: ASTNode? = node.firstChildNode
         while (child != null) {
@@ -58,7 +60,8 @@ class FortranFmtBlock(
                     computeIndent(child),
                     null,
                     settings,
-                    spacingBuilder))
+                    spacingBuilder,
+                    isFixedForm))
             child = child.treeNext
         }
         return blocks
@@ -97,20 +100,20 @@ class FortranFmtBlock(
 
     fun computeIndent(child: ASTNode): Indent = when {
         // inside blocks
-            node.psi is FortranMainProgram && node.psi.firstChild !is FortranStmt -> Indent.getNoneIndent()
-            node.psi is FortranProgramUnit && child.psi !is FortranStmt
-                    && child.psi !is FortranInternalSubprogramPart
-                    && child.psi !is FortranModuleSubprogramPart -> Indent.getNormalIndent()
-            node.psi is FortranExecutableConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
-            node.psi is FortranEnumDef && child.psi is FortranEnumeratorDefStmt -> Indent.getNormalIndent()
-            node.psi is FortranEnumDef && child.psi !is FortranEnumeratorDefStmt -> Indent.getNoneIndent()
-            node.psi is FortranDeclarationConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
-            node.psi is FortranInternalSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
-            node.psi is FortranModuleSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
-            node.psi is FortranInterfaceBody && child.psi !is FortranStmt -> Indent.getNormalIndent()
+        node.psi is FortranMainProgram && node.psi.firstChild !is FortranStmt -> Indent.getNoneIndent()
+        node.psi is FortranProgramUnit && child.psi !is FortranStmt
+                && child.psi !is FortranInternalSubprogramPart
+                && child.psi !is FortranModuleSubprogramPart -> Indent.getNormalIndent()
+        node.psi is FortranExecutableConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
+        node.psi is FortranEnumDef && child.psi is FortranEnumeratorDefStmt -> Indent.getNormalIndent()
+        node.psi is FortranEnumDef && child.psi !is FortranEnumeratorDefStmt -> Indent.getNoneIndent()
+        node.psi is FortranDeclarationConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
+        node.psi is FortranInternalSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
+        node.psi is FortranModuleSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
+        node.psi is FortranInterfaceBody && child.psi !is FortranStmt -> Indent.getNormalIndent()
         // Line continuation
-            oneLineElement() && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
-            else -> Indent.getNoneIndent()
+        oneLineElement() && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
+        else -> Indent.getNoneIndent()
     }
 
     fun computeSpacing(child1: Block?, child2: Block): Spacing? {

@@ -6,9 +6,7 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.mixin.FortranConstructNameDeclImplMixin
 
-
-abstract class BaseFortranFindUsagesProvider : FindUsagesProvider {
-    protected abstract val isFixedFormFortran: Boolean
+class FortranFindUsagesProvider : FindUsagesProvider {
 
     override fun getWordsScanner(): WordsScanner? = null
 

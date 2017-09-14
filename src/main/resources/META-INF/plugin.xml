@@ -35,26 +35,28 @@
         <lang.syntaxHighlighterFactory language="Fortran fixed form"
                                        implementationClass="org.jetbrains.fortran.ide.highlighter.FortranFixedFormSyntaxHighlighterFactory"/>
         <stubElementTypeHolder class="org.jetbrains.fortran.lang.FortranTypes"/>
+
         <!-- Color Settings -->
         <colorSettingsPage implementation="org.jetbrains.fortran.ide.highlighter.FortranColorSettingsPage"/>
+
         <!-- Annotator -->
         <annotator language="Fortran" implementationClass="org.jetbrains.fortran.ide.annotator.FortranHighlightingAnnotator"/>
 
         <!-- Formatter -->
         <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.ide.formatter.FortranFormattingModelBuilder"/>
+        <lang.formatter language="Fortran fixed form" implementationClass="org.jetbrains.fortran.ide.formatter.FortranFixedFormFormattingModelBuilder"/>
         <codeStyleSettingsProvider implementation="org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider implementation="org.jetbrains.fortran.ide.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
+        <!-- Commenter -->
         <lang.commenter language="Fortran" implementationClass="org.jetbrains.fortran.ide.commenter.FortranCommenter"/>
+        <lang.commenter language="Fortran fixed form" implementationClass="org.jetbrains.fortran.ide.commenter.FortranFixedFormCommenter"/>
 
         <!-- Folding -->
         <lang.foldingBuilder language="Fortran" implementationClass="org.jetbrains.fortran.ide.folding.FortranFoldingBuilder"/>
-        <lang.foldingBuilder language="Fortran fixed form" implementationClass="org.jetbrains.fortran.ide.folding.FortranFoldingBuilder"/>
 
         <!-- Navigation -->
         <lang.findUsagesProvider language="Fortran"
-                                 implementationClass="org.jetbrains.fortran.ide.findUsages.FreeFormFortranFindUsagesProvider"/>
-        <lang.findUsagesProvider language="Fortran fixed form"
-                                 implementationClass="org.jetbrains.fortran.ide.findUsages.FixedFormFortranFindUsagesProvider"/>
+                                 implementationClass="org.jetbrains.fortran.ide.findUsages.FortranFindUsagesProvider"/>
         <usageTypeProvider implementation="org.jetbrains.fortran.ide.findUsages.FortranUsageTypeProvider"/>
         <findUsagesHandlerFactory implementation="org.jetbrains.fortran.ide.findUsages.FortranFindUsagesHandlerFactory"/>
 
@@ -63,8 +65,6 @@
 
         <!-- Inspections -->
         <lang.inspectionSuppressor language="Fortran"
-                                   implementationClass="org.jetbrains.fortran.ide.inspections.FortranInspectionSuppressor"/>
-        <lang.inspectionSuppressor language="Fortran fixed form"
                                    implementationClass="org.jetbrains.fortran.ide.inspections.FortranInspectionSuppressor"/>
 
         <localInspection language="Fortran" groupName="Fortran"
