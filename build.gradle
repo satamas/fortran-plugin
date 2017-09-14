@@ -78,7 +78,7 @@ static def codegenTask(project, task) {
 
 def lexerTask(project, lexerName, pkg) {
     return codegenTask(project, tasks.create("generate${lexerName}", JavaExec) {
-        def src = "$project.projectDir/src/main/java/org/jetbrains/fortran/lang/lexer/${lexerName}.flex"
+        def src = "$project.projectDir/src/main/kotlin/org/jetbrains/fortran/lang/lexer/${lexerName}.flex"
         def dst = "$project.projectDir/src/gen/$pkg"
 
         main = 'jflex.Main'
@@ -97,7 +97,7 @@ def lexerTask(project, lexerName, pkg) {
 def parserTask(project, parserName, pkg) {
     return codegenTask(project, tasks.create("generate${parserName}", JavaExec) {
         def dstRoot = "$project.projectDir/src/gen/"
-        def src = "$project.projectDir/src/main/java/org/jetbrains/fortran/lang/parser/${parserName}.bnf"
+        def src = "$project.projectDir/src/main/kotlin/org/jetbrains/fortran/lang/parser/${parserName}.bnf"
         def dst = "$dstRoot/$pkg"
         doFirst {
             delete file("$dstRoot/org/jetbrains/fortran/lang/parser")
