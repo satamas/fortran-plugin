@@ -61,6 +61,18 @@
         <!-- Indices -->
         <stubIndex implementation="org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex"/>
 
+        <!-- Inspections -->
+        <lang.inspectionSuppressor language="Fortran"
+                                   implementationClass="org.jetbrains.fortran.ide.inspections.FortranInspectionSuppressor"/>
+        <lang.inspectionSuppressor language="Fortran fixed form"
+                                   implementationClass="org.jetbrains.fortran.ide.inspections.FortranInspectionSuppressor"/>
+
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Unresolved label"
+                         enabledByDefault="true" level="ERROR"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnresolvedLabelInspection"/>
+
     </extensions>
 
     <actions>

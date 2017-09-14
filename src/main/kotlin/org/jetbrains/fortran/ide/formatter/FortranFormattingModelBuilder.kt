@@ -57,7 +57,7 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
 
     }
 
-    
+
     override fun createModel(element: PsiElement, settings: CodeStyleSettings): FormattingModel {
 
         val block = FortranFmtBlock(element.node, null, Indent.getNormalIndent(), null, settings, createSpacingBuilder(settings))
