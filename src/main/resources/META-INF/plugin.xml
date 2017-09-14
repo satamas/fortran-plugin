@@ -74,10 +74,16 @@
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnresolvedLabelInspection"/>
 
         <localInspection language="Fortran" groupName="Fortran"
-                         displayName="Incorrect construct name"
+                         displayName="Construct name mismatch"
                          enabledByDefault="true" level="ERROR"
                          applyToDialects="true"
-                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranIncorrectConstructNameInspection"/>
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranConstructNameMismatchInspection"/>
+
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Program unit name mismatch"
+                         enabledByDefault="true" level="ERROR"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranProgramUnitNameMismatchInspection"/>
 
     </extensions>
 
