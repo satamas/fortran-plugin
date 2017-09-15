@@ -26,11 +26,7 @@ class FortranUnallowedStmtInspection : LocalInspectionTool() {
                                 holder.registerProblem(stmt, "This statement is not allowed in where construct")
                             }
                         }
-                        is FortranExecutableConstruct -> {
-                            if (stmt is FortranSpecificationStmt) {
-                                holder.registerProblem(stmt, "Specification statement is not allowed here")
-                            }
-                        }
+
                         is FortranProgramUnit -> {
                             val programUnitOwner = blockOwner.parent
 
@@ -42,6 +38,18 @@ class FortranUnallowedStmtInspection : LocalInspectionTool() {
                             }
                         }
                     }
+                }
+
+                override fun visitSpecificationStmt(stmt: FortranSpecificationStmt) {
+                    val block = stmt.parent as? FortranBlock ?: return
+                    val blockOwner = block.parent ?: return
+
+                    when (blockOwner) {
+                        is FortranExecutableConstruct -> {
+                            holder.registerProblem(stmt, "Specification statement is not allowed here")
+                        }
+                    }
+
                 }
             }
 

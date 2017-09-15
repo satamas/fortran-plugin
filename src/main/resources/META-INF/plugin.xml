@@ -91,6 +91,12 @@
                          applyToDialects="true"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnallowedStmtInspection"/>
 
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Unallowed construct"
+                         enabledByDefault="true" level="ERROR"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnallowedConstructInspection"/>
+
     </extensions>
 
     <actions>
