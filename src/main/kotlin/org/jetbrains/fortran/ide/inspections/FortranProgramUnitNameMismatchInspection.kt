@@ -7,7 +7,7 @@ import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
 import org.jetbrains.fortran.lang.psi.*
 
 class FortranProgramUnitNameMismatchInspection : LocalInspectionTool() {
-    override fun getDisplayName() = "Program Unit name mismatch"
+    override fun getDisplayName() = "Program unit name mismatch"
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean) =
             object : FortranVisitor() {
@@ -34,8 +34,8 @@ class FortranProgramUnitNameMismatchInspection : LocalInspectionTool() {
                     if (endStmtDataPath != null && !endStmtDataPath.referenceName.equals(stmtName, false)) {
                         holder.registerProblemForReference(endStmtDataPath.reference,
                                 ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
-                                "Program Unit name mismatch",
-                                SubstituteTextFix(endStmtDataPath.textRange, stmtName, "Program Unit name fix")
+                                "Program unit name mismatch",
+                                SubstituteTextFix(endStmtDataPath.textRange, stmtName, "Program unit name fix")
                         )
                     }
                 }
