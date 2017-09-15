@@ -25,6 +25,10 @@ class FortranUnallowedConstructInspection : LocalInspectionTool() {
                             }
                         }
 
+                        is FortranModule -> holder.registerProblem(construct, "Executable construct is not allowed in module")
+                        is FortranSubmodule -> holder.registerProblem(construct, "Executable construct is not allowed in submodule")
+                        is FortranBlockData -> holder.registerProblem(construct, "Executable construct is not allowed in blockdata")
+
                         is FortranProgramUnit -> {
                             val programUnitOwner = blockOwner.parent
 
@@ -35,17 +39,14 @@ class FortranUnallowedConstructInspection : LocalInspectionTool() {
                     }
                 }
 
-                override fun visitEnumDef(o: FortranEnumDef) {
-                    super.visitEnumDef(o)
+                override fun visitDeclarationConstruct(construct: FortranDeclarationConstruct) {
+                    val block = construct.parent as? FortranBlock ?: return
+                    val blockOwner = block.parent ?: return
+
+                    if (blockOwner is FortranExecutableConstruct) {
+                        holder.registerProblem(construct, "Declaration construct is not allowed in executable construct")
+                    }
                 }
 
-                override fun visitTypeDecl(o: FortranTypeDecl) {
-                    super.visitTypeDecl(o)
-                }
-
-                override fun visitInterfaceBlock(o: FortranInterfaceBlock) {
-                    super.visitInterfaceBlock(o)
-                }
             }
-
 }

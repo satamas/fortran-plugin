@@ -26,16 +26,16 @@ class FortranUnallowedStmtInspection : LocalInspectionTool() {
                                 holder.registerProblem(stmt, "This statement is not allowed in where construct")
                             }
                         }
+                    }
 
-                        is FortranProgramUnit -> {
-                            val programUnitOwner = blockOwner.parent
-
-                            if (programUnitOwner is FortranInterfaceSpecification && stmt !is FortranImportStmt
-                                    && stmt !is FortranUseStmt && stmt !is FortranSpecificationStmt
-                                    && stmt !is FortranImplicitStmt && stmt !is FortranParameterStmt
-                                    && stmt !is FortranFormatStmt && stmt !is FortranEntryStmt) {
-                                holder.registerProblem(stmt, "This statement is not allowed in interface")
-                            }
+                    if ( stmt !is FortranImportStmt
+                         && stmt !is FortranUseStmt && stmt !is FortranSpecificationStmt
+                         && stmt !is FortranImplicitStmt && stmt !is FortranParameterStmt
+                         && stmt !is FortranFormatStmt && stmt !is FortranEntryStmt) {
+                        if (blockOwner is FortranModule || blockOwner is FortranSubmodule || blockOwner is FortranBlockData) {
+                            holder.registerProblem(stmt, "This statement is not allowed in this program unit")
+                        } else if (blockOwner.parent is FortranInterfaceSpecification){
+                            holder.registerProblem(stmt, "This statement is not allowed inside the interface")
                         }
                     }
                 }
