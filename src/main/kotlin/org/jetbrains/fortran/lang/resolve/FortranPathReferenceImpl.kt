@@ -39,9 +39,9 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         }
 
         // inside interface
-        val interfaceBody = PsiTreeUtil.getParentOfType(element, FortranInterfaceBody::class.java)
+        val interfaceBody = programUnit.parent as? FortranInterfaceSpecification
         if (interfaceBody != null) {
-            return collectNamesInInterfaceBody(interfaceBody)
+            return collectNamesInInterfaceBody(programUnit)
         }
 
         // resolve paths like a%b%c
@@ -344,12 +344,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return result
     }
 
-    private fun collectNamesInInterfaceBody(body : FortranInterfaceBody) : List<FortranNamedElement> {
-        return PsiTreeUtil.getStubChildrenOfTypeAsList(body.block, FortranTypeDeclarationStmt::class.java)
-                .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
-                .plus(PsiTreeUtil.getStubChildrenOfTypeAsList(body.functionStmt, FortranEntityDecl::class.java))
-                .plus(PsiTreeUtil.getStubChildrenOfTypeAsList(body.subroutineStmt, FortranEntityDecl::class.java))
-                .filter{ element.referenceName.equals(it.name, true) }
+    private fun collectNamesInInterfaceBody(body : FortranProgramUnit) : List<FortranNamedElement> {
+        return body.variables + PsiTreeUtil.getChildOfType(body, FortranNameStmt::class.java)!!.entityDecl!!
     }
 
     private fun <T : FortranDataPath> kotlin.collections.Iterable<T>.filterImplicitDeclaration(): T? =

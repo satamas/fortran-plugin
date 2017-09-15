@@ -85,6 +85,12 @@
                          applyToDialects="true"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranProgramUnitNameMismatchInspection"/>
 
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Unallowed statement"
+                         enabledByDefault="true" level="ERROR"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnallowedStmtInspection"/>
+
     </extensions>
 
     <actions>

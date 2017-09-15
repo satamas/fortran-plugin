@@ -16,7 +16,7 @@ fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name)
     "BLOCK" -> FortranBlockStub.Type
     "MODULE_SUBPROGRAM_PART" -> FortranModuleSubprogramPartStub.Type
     "INTERNAL_SUBPROGRAM_PART" -> FortranInternalSubprogramPartStub.Type
-    "INTERFACE_BODY" -> FortranInterfaceBodyStub.Type
+    "INTERFACE_SPECIFICATION" -> FortranInterfaceSpecificationStub.Type
     // Statements
     // I do not know, how many of them we really need
     "TYPE_DECLARATION_STMT" -> FortranStatementStub.Type("TYPE_DECLARATION_STMT", ::FortranTypeDeclarationStmtImpl)

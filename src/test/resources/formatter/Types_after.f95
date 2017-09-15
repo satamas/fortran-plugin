@@ -1,10 +1,12 @@
 module types
     interface inter
 
+
         function f(n);
             real(8) :: f
             integer n
         end function f
+
 
         subroutine s(n)
             integer :: n
