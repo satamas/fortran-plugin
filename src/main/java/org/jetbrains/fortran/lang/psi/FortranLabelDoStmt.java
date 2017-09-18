@@ -5,15 +5,14 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
 public interface FortranLabelDoStmt extends FortranStmt {
+    @Nullable
+    FortranConstructNameDecl getConstructNameDecl();
 
     @NotNull
     FortranLabel getLabel();
 
     @Nullable
     FortranLabelDecl getLabelDecl();
-
-    @Nullable
-    FortranConstructName getConstructName();
 
     @Nullable
     FortranExpr getExpr();

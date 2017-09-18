@@ -20,6 +20,7 @@ class FortranConstructNameMismatchInspection : LocalInspectionTool() {
                             is FortranCaseConstruct -> construct.selectCaseStmt.constructNameDecl?.name
                             is FortranCriticalConstruct -> construct.criticalStmt.constructNameDecl?.name
                             is FortranNonlabelDoConstruct -> construct.nonlabelDoStmt.constructNameDecl?.name
+                            is FortranLabeledDoConstruct -> construct.labelDoStmt.constructNameDecl?.name
                             is FortranForallConstruct -> construct.forallConstructStmt.constructNameDecl?.name
                             is FortranIfConstruct -> construct.ifThenStmt.constructNameDecl?.name
                             is FortranSelectTypeConstruct -> construct.selectTypeStmt.constructNameDecl?.name

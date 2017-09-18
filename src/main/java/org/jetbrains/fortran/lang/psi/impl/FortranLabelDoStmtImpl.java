@@ -25,8 +25,8 @@ public class FortranLabelDoStmtImpl extends FortranStmtImpl implements FortranLa
 
     @Override
     @Nullable
-    public FortranConstructName getConstructName() {
-        return findChildByClass(FortranConstructName.class);
+    public FortranConstructNameDecl getConstructNameDecl() {
+        return findChildByClass(FortranConstructNameDecl.class);
     }
     @Override
     @Nullable

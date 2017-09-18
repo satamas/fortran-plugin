@@ -91,6 +91,17 @@
                          applyToDialects="true"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranStmtOrderInspection"/>
 
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Unused label"
+                         enabledByDefault="true" level="WEEK WARNING"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnusedLabelInspection"/>
+
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Unused construct name"
+                         enabledByDefault="true" level="WEEK WARNING"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnusedConstructNameInspection"/>
 
     </extensions>
 

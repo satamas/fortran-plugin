@@ -29,7 +29,7 @@ class FortranErrorAnnotator : Annotator, HighlightRangeExtension {
             override fun visitConstructNameDecl(decl: FortranConstructNameDecl) {
                 val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return
                 val declarations = PsiTreeUtil.findChildrenOfType(programUnit, FortranConstructNameDeclImpl::class.java)
-                        .filter { decl.name == it.name }
+                        .filter { decl.name.equals(it.name, true) }
                 if (declarations.size > 1) {
                     holder.createErrorAnnotation(
                             decl, "Duplicated construct name `${decl.name}` declaration"

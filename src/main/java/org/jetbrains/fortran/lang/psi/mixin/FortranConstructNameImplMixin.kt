@@ -16,5 +16,5 @@ abstract class FortranConstructNameImplMixin(node : ASTNode) : FortranCompositeE
 
     override fun getReference(): FortranReference = FortranConstructNameReferenceImpl(this)
 
-    fun gelLabelValue() : String = referenceNameElement.text
+    fun getLabelValue() : String = referenceNameElement.text
 }
