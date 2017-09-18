@@ -4,10 +4,7 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.application.runReadAction
-import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.ide.findUsages.FortranLabelDeclFindUsagesHandler
 import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
 import org.jetbrains.fortran.lang.psi.FortranLabelDecl
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
