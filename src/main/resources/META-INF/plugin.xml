@@ -41,7 +41,7 @@
 
         <!-- Annotator -->
         <annotator language="Fortran" implementationClass="org.jetbrains.fortran.ide.annotator.FortranHighlightingAnnotator"/>
-
+        <annotator language="Fortran" implementationClass="org.jetbrains.fortran.ide.annotator.FortranErrorAnnotator"/>
         <!-- Formatter -->
         <lang.formatter language="Fortran" implementationClass="org.jetbrains.fortran.ide.formatter.FortranFormattingModelBuilder"/>
         <lang.formatter language="Fortran fixed form" implementationClass="org.jetbrains.fortran.ide.formatter.FortranFixedFormFormattingModelBuilder"/>

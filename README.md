@@ -38,5 +38,5 @@ One can easily change this settings. Please, visit
 [File Types Help](https://www.jetbrains.com/help/idea/file-types.html) for further detail.
 
 Now the plugin provides lexer, parser, simple syntax highlighter, formatter (for free source firm files only), 
-commenter (for free source firm files only), code folding and navigation (Find Usages and Go to Definition).
+commenter, code folding and navigation (Find Usages and Go to Definition) and several code inspections.
 
