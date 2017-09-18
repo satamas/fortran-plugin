@@ -2,6 +2,7 @@ package org.jetbrains.fortran.ide.inspections
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.psi.*
 
 class FortranStmtOrderInspection : LocalInspectionTool() {
@@ -22,19 +23,12 @@ class FortranStmtOrderInspection : LocalInspectionTool() {
                             } else if (blockOwner is FortranModule || blockOwner is FortranSubmodule
                                     || blockOwner is FortranBlockData) {
                                 visitModuleLikeProgramUnit(block)
+                            } else if (blockOwner is FortranMainProgram || blockOwner is FortranFunctionSubprogram
+                               || blockOwner is FortranSubroutineSubprogram || blockOwner is FortranSeparateModuleSubprogram) {
+                                vistiExecutionProgramUnit(block)
                             }
                         }
                     }
-
-                   /* if ( stmt !is FortranImportStmt
-                         && stmt !is FortranUseStmt && stmt !is FortranSpecificationStmt
-                         && stmt !is FortranImplicitStmt && stmt !is FortranParameterStmt
-                         && stmt !is FortranFormatStmt && stmt !is FortranEntryStmt) {
-                        if (blockOwner is FortranModule || blockOwner is FortranSubmodule || blockOwner is FortranBlockData) {
-                            } else if (blockOwner.parent is FortranInterfaceSpecification){
-                            holder.registerProblem(stmt, "This statement is not allowed inside the interface")
-                        }
-                    }*/
                 }
 
                 private fun visitForallBlock(block: FortranBlock) {
@@ -93,6 +87,53 @@ class FortranStmtOrderInspection : LocalInspectionTool() {
 
                     }
                 }
+
+                private fun vistiExecutionProgramUnit(block : FortranBlock) {
+                    var level = BlockPart.USE_STATEMENTS
+                    for (stmt in block.children) {
+                        level = upgradeLevel(level, stmt)
+                        checkStmtLevel(level, stmt)
+                    }
+                }
+
+                private fun upgradeLevel(level : BlockPart, stmt : PsiElement) : BlockPart {
+                    if (stmt is FortranUseStmt) {
+                        return level
+                    }
+                    if (stmt is FortranImportStmt) {
+                        return maxOf(level, BlockPart.IMPORT_STATEMENTS)
+                    }
+                    if (stmt is FortranImplicitStmt || stmt is FortranParameterStmt
+                            || stmt is FortranFormatStmt || stmt is FortranEntryStmt) {
+                        return maxOf(level, BlockPart.IMPLICIT_STATEMENTS)
+                    }
+                    if (stmt is FortranDeclarationStmt || stmt is FortranDeclarationConstruct) {
+                        return maxOf(level, BlockPart.DECLARATION_PART)
+                    }
+                    return BlockPart.EXECUTION_PART
+                }
+
+                private fun checkStmtLevel(level : BlockPart, stmt : PsiElement) {
+                    if (stmt is FortranUseStmt && level > BlockPart.USE_STATEMENTS) {
+                        holder.registerProblem(stmt, "Use statement is not allowed here")
+                    } else if (stmt is FortranImportStmt && level > BlockPart.IMPORT_STATEMENTS) {
+                        holder.registerProblem(stmt, "Import statement is not allowed here")
+                    } else if (stmt is FortranImplicitStmt && level > BlockPart.IMPLICIT_STATEMENTS) {
+                        holder.registerProblem(stmt, "Implicit statement must be in implicit part")
+                    } else if (stmt is FortranDeclarationStmt && stmt !is FortranEntryStmt && stmt !is FortranFormatStmt
+                               && level == BlockPart.EXECUTION_PART) {
+                        holder.registerProblem(stmt, "Specification statement must be in specification part")
+                    } else if (stmt is FortranDeclarationConstruct && level == BlockPart.EXECUTION_PART) {
+                        holder.registerProblem(stmt, "Declaration construct must be in specification part")
+                    }
+                }
             }
 
+    private enum class BlockPart {
+        USE_STATEMENTS,
+        IMPORT_STATEMENTS,
+        IMPLICIT_STATEMENTS,
+        DECLARATION_PART,
+        EXECUTION_PART
+    }
 }

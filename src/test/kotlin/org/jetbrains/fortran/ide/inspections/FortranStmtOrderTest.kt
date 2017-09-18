@@ -61,4 +61,20 @@ class FortranStmtOrderTest()
         end
     """)
 
+    fun testSmtOrder() = checkByText("""
+        program testStmtsOrder
+            import T
+            <error descr="Use statement is not allowed here">use a</error>
+            parameter pi = 3.14
+            implicit none
+            <error descr="Import statement is not allowed here">import E</error>
+            integer :: a
+            <error descr="Implicit statement must be in implicit part">implicit none</error>
+            a = a + 1
+            <error descr="Specification statement must be in specification part">integer :: b</error>
+            format (1PE12.4, I10)
+        end program
+
+    """)
+
 }
