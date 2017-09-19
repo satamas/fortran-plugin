@@ -12,7 +12,7 @@ class FortranUnusedLabelTest()
         <weak_warning descr="Unused label declaration">1<caret></weak_warning> continue
         end
     """, """
-         continue
+        continue
         end
     """, true, false, true)
 }
