@@ -31,7 +31,7 @@ class FortranProgramUnitNameMismatchInspection : LocalInspectionTool() {
                         else -> null
                     }
 
-                    if (endStmtDataPath != null && !endStmtDataPath.referenceName.equals(stmtName, false)) {
+                    if (endStmtDataPath != null && !endStmtDataPath.referenceName.equals(stmtName, true)) {
                         holder.registerProblemForReference(endStmtDataPath.reference,
                                 ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
                                 "Program unit name mismatch",

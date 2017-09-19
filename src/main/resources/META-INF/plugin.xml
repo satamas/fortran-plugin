@@ -60,6 +60,11 @@
         <usageTypeProvider implementation="org.jetbrains.fortran.ide.findUsages.FortranUsageTypeProvider"/>
         <findUsagesHandlerFactory implementation="org.jetbrains.fortran.ide.findUsages.FortranFindUsagesHandlerFactory"/>
 
+        <!-- Structure View -->
+
+        <lang.psiStructureViewFactory language="Fortran"
+                                      implementationClass="org.jetbrains.fortran.ide.structure.FortranPsiStructureViewFactory"/>
+
         <!-- Indices -->
         <stubIndex implementation="org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex"/>
 

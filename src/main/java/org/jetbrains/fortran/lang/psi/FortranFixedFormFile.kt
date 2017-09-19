@@ -7,7 +7,7 @@ import org.jetbrains.fortran.FortranFixedFormLanguage
 import org.jetbrains.fortran.lang.stubs.FortranProgramUnitStub
 
 
-class FortranFixedFormFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, FortranFixedFormLanguage) {
+class FortranFixedFormFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, FortranFixedFormLanguage), FortranCompositeElement {
 
     override fun getFileType(): FortranFixedFormFileType = FortranFixedFormFileType
 

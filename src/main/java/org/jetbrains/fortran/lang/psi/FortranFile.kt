@@ -6,7 +6,7 @@ import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranLanguage
 import org.jetbrains.fortran.lang.stubs.FortranProgramUnitStub
 
-class FortranFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, FortranLanguage) {
+class FortranFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, FortranLanguage), FortranCompositeElement {
 
     override fun getFileType(): FortranFileType = FortranFileType
 
