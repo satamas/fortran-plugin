@@ -24,6 +24,13 @@
 
     <depends>com.intellij.modules.lang</depends>
 
+
+    <project-components>
+        <component>
+            <implementation-class>org.jetbrains.fortran.ide.FortranCodeModificationListener</implementation-class>
+        </component>
+    </project-components>
+
     <extensions defaultExtensionNs="com.intellij">
         <fileTypeFactory implementation="org.jetbrains.fortran.FortranFileTypeFactory"/>
         <lang.parserDefinition language="Fortran" implementationClass="org.jetbrains.fortran.lang.parser.FortranParserDefinition"/>
