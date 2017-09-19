@@ -1,0 +1,3 @@
+      write (*,*)
+     !"AA"<caret>
+      end

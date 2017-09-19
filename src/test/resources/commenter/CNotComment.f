@@ -1,0 +1,2 @@
+      contin<caret>ue
+      end
