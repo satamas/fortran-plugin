@@ -58,6 +58,9 @@
         <lang.commenter language="Fortran" implementationClass="org.jetbrains.fortran.ide.commenter.FortranCommenter"/>
         <lang.commenter language="Fortran fixed form" implementationClass="org.jetbrains.fortran.ide.commenter.FortranFixedFormCommenter"/>
 
+        <!-- Matchers -->
+        <lang.braceMatcher language="Fortran" implementationClass="org.jetbrains.fortran.ide.typing.FortranBraceMatcher"/>
+
         <!-- Folding -->
         <lang.foldingBuilder language="Fortran" implementationClass="org.jetbrains.fortran.ide.folding.FortranFoldingBuilder"/>
 
