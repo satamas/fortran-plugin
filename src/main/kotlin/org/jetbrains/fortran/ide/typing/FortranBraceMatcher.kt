@@ -1,13 +1,9 @@
 package org.jetbrains.fortran.ide.typing
 
 import com.intellij.codeInsight.highlighting.PairedBraceMatcherAdapter
-import com.intellij.lang.BracePair
-import com.intellij.lang.PairedBraceMatcher
 import com.intellij.openapi.editor.highlighter.HighlighterIterator
 import com.intellij.openapi.fileTypes.FileType
-import com.intellij.psi.PsiFile
 import com.intellij.psi.TokenType
-import com.intellij.psi.tree.IElementType
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.FortranLanguage
@@ -46,8 +42,13 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         if (left  && tokenText in WORD_LEFT_BRACE) {
             // end is not before us
             if (tokenText != "then") {
-                return notAfterEnd(iterator, fileText)
-                      && notWhereOrForallStmt(tokenText, iterator)
+                return if (tokenText == "do") {
+                    val label = labeledDo(iterator, fileText)
+                    notAfterEnd(iterator, fileText) && notWhereOrForallStmt(tokenText, iterator)
+                            && (label == 0 || labeledDoHasEnd(iterator, fileText, label))
+                } else {
+                    notAfterEnd(iterator, fileText) && notWhereOrForallStmt(tokenText, iterator)
+                }
             }
             return true
         }
@@ -64,10 +65,11 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         var count = 1
         try {
             iterator.retreat()
+            if (iterator.atEnd()) return true
             while (iterator.tokenType != FortranTokenType.WORD) {
-                if (iterator.atEnd()) return true
                 if (iterator.tokenType === EOL) return true
                 iterator.retreat()
+                if (iterator.atEnd()) return true
                 count++
             }
 
@@ -82,10 +84,11 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         var count = 1
         try {
             iterator.advance()
+            if (iterator.atEnd()) return false
             while (iterator.tokenType != FortranTokenType.WORD) {
-                if (iterator.atEnd()) return false
                 if (iterator.tokenType === EOL) return false
                 iterator.advance()
+                if (iterator.atEnd()) return false
                 count++
             }
             val wordText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
@@ -102,28 +105,27 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         try {
             // need open parenthesis
             while (iterator.tokenType != LPAR) {
-                if (iterator.atEnd()) return false
                 if (iterator.tokenType === EOL) return false
                 iterator.advance()
+                if (iterator.atEnd()) return false
                 count++
             }
             iterator.advance()
             count++
             // need all parenthesis to be closed
             while (braceCount > 0) {
-                println(braceCount)
-                if (iterator.atEnd()) return false
                 if (iterator.tokenType === EOL) return false
                 if (iterator.tokenType === LPAR)braceCount++
                 if (iterator.tokenType === RPAR) braceCount--
                 iterator.advance()
+                if (iterator.atEnd()) return false
                 count++
             }
             // this might be the end of line
             while (iterator.tokenType != EOL) {
-                if (iterator.atEnd()) return false
                 if (iterator.tokenType === FortranTokenType.WORD) return false
                 iterator.advance()
+                if (iterator.atEnd()) return false
                 count++
             }
             return true
@@ -137,12 +139,12 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         var count = 1
         try {
             iterator.advance()
+            if (iterator.atEnd()) return false
             while (iterator.tokenType === TokenType.WHITE_SPACE) {
-                if (iterator.atEnd()) return false
                 iterator.advance()
+                if (iterator.atEnd()) return false
                 count++
             }
-            if (iterator.atEnd()) return false
             return (iterator.tokenType === EQ || iterator.tokenType === POINTER_ASSMNT
                     || iterator.tokenType === LPAR || iterator.tokenType === LBRACKET)
         } finally {
@@ -150,21 +152,61 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         }
     }
 
-  /*  private fun labeledDo(iterator: HighlighterIterator): Boolean {
+    private fun labeledDo(iterator: HighlighterIterator, fileText: CharSequence): Int {
         var count = 1
         try {
             iterator.advance()
+            if (iterator.atEnd()) return 0
             while (iterator.tokenType === TokenType.WHITE_SPACE) {
-                if (iterator.atEnd()) return false
                 iterator.advance()
+                if (iterator.atEnd()) return 0
                 count++
             }
-            if (iterator.atEnd()) return false
-            return (iterator.tokenType === INTEGERLITERAL)
+            if (iterator.atEnd()) return 0
+            return if (iterator.tokenType === INTEGERLITERAL)
+                    fileText.subSequence(iterator.start, iterator.end).toString().toInt()
+                else 0
         } finally {
             retreatIteratorBack(iterator, count)
         }
-    }*/
+    }
+
+    private fun labeledDoHasEnd(iterator: HighlighterIterator, fileText: CharSequence, label: Int): Boolean {
+        var count = 0
+        try {
+            while (true) {
+                // string end
+                while (iterator.tokenType != EOL) {
+                    iterator.advance()
+                    if (iterator.atEnd()) return false
+                    count++
+                }
+                if (iterator.atEnd()) return false
+                while (iterator.tokenType === TokenType.WHITE_SPACE || iterator.tokenType === EOL) {
+                    iterator.advance()
+                    if (iterator.atEnd()) return false
+                    count++
+                }
+
+                if (iterator.tokenType === INTEGERLITERAL
+                        && label == fileText.subSequence(iterator.start, iterator.end).toString().toInt()) {
+                    while (iterator.tokenType != FortranTokenType.WORD && iterator.tokenType != EOL) {
+                        if (iterator.tokenType === EOL) return false
+                        iterator.advance()
+                        if (iterator.atEnd()) return false
+                        count++
+                    }
+                    val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
+                    return (tokenText == "end" || tokenText == "enddo")
+                }
+                iterator.advance()
+                if (iterator.atEnd()) return false
+                count++
+            }
+        } finally {
+            retreatIteratorBack(iterator, count)
+        }
+    }
 
     private fun advanceIteratorBack(iterator: HighlighterIterator, count : Int) {
         var localCount = count
@@ -225,21 +267,4 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
     }
 }
 
-private class FortranBaseBraceMatcher : PairedBraceMatcher {
 
-    override fun getPairs() = PAIRS
-
-    override fun isPairedBracesAllowedBeforeType(lbraceType: IElementType, next: IElementType?): Boolean =
-            true
-
-    override fun getCodeConstructStart(file: PsiFile?, openingBraceOffset: Int): Int = openingBraceOffset
-
-    companion object {
-        private val PAIRS: Array<BracePair> = arrayOf(
-                BracePair(LPAR, RPAR, false),
-                BracePair(LBRACKET, RBRACKET, false),
-                BracePair(ARRAYLBR, ARRAYRBR, false),
-                BracePair(FortranTokenType.WORD, FortranTokenType.WORD, true)
-        )
-    }
-}
