@@ -6,6 +6,7 @@ import com.intellij.lang.PairedBraceMatcher
 import com.intellij.openapi.editor.highlighter.HighlighterIterator
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.PsiFile
+import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
@@ -39,9 +40,9 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         }
     }
 
-    // тут нужно много качественных проверок, а то скобки разбредутся
     private fun isWordBrace(iterator: HighlighterIterator, fileText: CharSequence, left: Boolean): Boolean {
         val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
+        if (aVariable(iterator)) return false
         if (left  && tokenText in WORD_LEFT_BRACE) {
             // end is not before us
             if (tokenText != "then") {
@@ -72,11 +73,10 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
 
             return fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase() != "end"
         } finally {
-            while (count-- > 0) {
-                iterator.advance()
-            }
+            advanceIteratorBack(iterator, count)
         }
     }
+
 
     private fun elseIsNotLastKeyWord(iterator: HighlighterIterator, fileText: CharSequence): Boolean {
         var count = 1
@@ -91,9 +91,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             val wordText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
             return wordText == "if" || wordText == "where"
         } finally {
-            while (count-- > 0) {
-                iterator.retreat()
-            }
+            retreatIteratorBack(iterator, count)
         }
     }
 
@@ -130,9 +128,55 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             }
             return true
         } finally {
-            while (count-- > 0) {
-                iterator.retreat()
+            retreatIteratorBack(iterator, count)
+        }
+    }
+
+    // we are variable if next token is =, =>, ( or [
+    private fun aVariable(iterator: HighlighterIterator): Boolean {
+        var count = 1
+        try {
+            iterator.advance()
+            while (iterator.tokenType === TokenType.WHITE_SPACE) {
+                if (iterator.atEnd()) return false
+                iterator.advance()
+                count++
             }
+            if (iterator.atEnd()) return false
+            return (iterator.tokenType === EQ || iterator.tokenType === POINTER_ASSMNT
+                    || iterator.tokenType === LPAR || iterator.tokenType === LBRACKET)
+        } finally {
+            retreatIteratorBack(iterator, count)
+        }
+    }
+
+  /*  private fun labeledDo(iterator: HighlighterIterator): Boolean {
+        var count = 1
+        try {
+            iterator.advance()
+            while (iterator.tokenType === TokenType.WHITE_SPACE) {
+                if (iterator.atEnd()) return false
+                iterator.advance()
+                count++
+            }
+            if (iterator.atEnd()) return false
+            return (iterator.tokenType === INTEGERLITERAL)
+        } finally {
+            retreatIteratorBack(iterator, count)
+        }
+    }*/
+
+    private fun advanceIteratorBack(iterator: HighlighterIterator, count : Int) {
+        var localCount = count
+        while (localCount-- > 0) {
+            iterator.advance()
+        }
+    }
+
+    private fun retreatIteratorBack(iterator: HighlighterIterator, count : Int) {
+        var localCount = count
+        while (localCount-- > 0) {
+            iterator.retreat()
         }
     }
 
