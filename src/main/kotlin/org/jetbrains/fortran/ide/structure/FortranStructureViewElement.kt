@@ -8,7 +8,6 @@ import com.intellij.pom.Navigatable
 import com.intellij.psi.NavigatablePsiElement
 import org.jetbrains.fortran.FortranIcons
 import org.jetbrains.fortran.lang.psi.*
-import com.intellij.icons.AllIcons
 
 class FortranStructureViewElement(
         val psi: FortranCompositeElement
@@ -22,16 +21,16 @@ class FortranStructureViewElement(
         is FortranFixedFormFile -> PresentationData(psi.name, null, FortranIcons.fileTypeIcon, null)
 
     // program units
-        is FortranMainProgram -> PresentationData(psi.programStmt?.text ?: "Program", null, AllIcons.Nodes.Parameter, null)
-        is FortranFunctionSubprogram -> PresentationData(psi.functionStmt.text, null, AllIcons.Nodes.Field, null)
-        is FortranSubroutineSubprogram -> PresentationData(psi.subroutineStmt.text, null, AllIcons.Nodes.Static, null)
-        is FortranModule -> PresentationData(psi.moduleStmt.text, null, AllIcons.Nodes.Method, null)
-        is FortranSubmodule -> PresentationData(psi.submoduleStmt.text, null, AllIcons.Nodes.AbstractMethod, null)
-        is FortranSeparateModuleSubprogram -> PresentationData(psi.mpSubprogramStmt.text, null, AllIcons.Nodes.Static, null)
-        is FortranBlockData -> PresentationData(psi.blockDataStmt.text, null, AllIcons.Javaee.DataSourceImport, null)
+        is FortranMainProgram -> PresentationData(psi.programStmt?.text ?: "Program", null, FortranIcons.mainProgramIcon, null)
+        is FortranFunctionSubprogram -> PresentationData(psi.functionStmt.text, null, FortranIcons.functionIcon, null)
+        is FortranSubroutineSubprogram -> PresentationData(psi.subroutineStmt.text, null, FortranIcons.subroutineIcon, null)
+        is FortranModule -> PresentationData(psi.moduleStmt.text, null, FortranIcons.moduleIcon, null)
+        is FortranSubmodule -> PresentationData(psi.submoduleStmt.text, null, FortranIcons.submoduleIcon, null)
+        is FortranSeparateModuleSubprogram -> PresentationData(psi.mpSubprogramStmt.text, null, FortranIcons.separateModuleSubprogramIcon, null)
+        is FortranBlockData -> PresentationData(psi.blockDataStmt.text, null, FortranIcons.blockDataIcon, null)
 
     // types
-        is FortranDerivedTypeDef -> PresentationData(psi.derivedTypeStmt.typeDecl.text, null, AllIcons.Nodes.Class, null)
+        is FortranDerivedTypeDef -> PresentationData(psi.derivedTypeStmt.typeDecl.text, null, FortranIcons.typeIcon, null)
 
     // variables
         is FortranEntityDecl -> {
@@ -40,17 +39,17 @@ class FortranStructureViewElement(
                     val typeName = ((psi.parent as FortranTypeDeclarationStmt).intrinsicTypeSpec
                             ?: (psi.parent as FortranTypeDeclarationStmt).derivedTypeSpec)?.text
                     PresentationData(psi.name + ": " + typeName,
-                            null, AllIcons.Nodes.Variable, null
+                            null, FortranIcons.variableIcon, null
                     )
                 }
                 psi.parent.parent is FortranDataComponentDefStmt -> {
                     val typeName = ((psi.parent.parent as FortranDataComponentDefStmt).intrinsicTypeSpec
                             ?: (psi.parent.parent as FortranDataComponentDefStmt).derivedTypeSpec)?.text
                     PresentationData(psi.name + ": " + typeName,
-                            null, AllIcons.Nodes.Variable, null
+                            null, FortranIcons.variableIcon, null
                     )
                 }
-                else -> PresentationData(psi.name, null, AllIcons.Nodes.Method, null)
+                else -> PresentationData(psi.name, null, FortranIcons.methodIcon, null)
             }
         }
         else -> PresentationData(psi.text, null, null, null)

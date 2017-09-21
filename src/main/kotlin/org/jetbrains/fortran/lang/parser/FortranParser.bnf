@@ -821,7 +821,7 @@ private pointer_a_with_data_pointer ::= label_decl? data_pointer_object (('(' <<
                                 | ('(' <<list bounds_spec>>')')?) '=>' variable { pin = 4 }
 private pointer_a_with_proc_pointer ::= label_decl? proc_pointer_object '=>' proc_target { pin = 3 }
 // R734
-data_pointer_object ::= (fidentifier !("%" | "(")) | (variable /*'%' fidentifier*/)
+data_pointer_object ::= (data_name !("%" | "(")) | (variable /*'%' fidentifier*/)
 // R735
 bounds_spec ::= expr ':'
 // R736
