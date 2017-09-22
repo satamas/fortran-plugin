@@ -9,6 +9,8 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.openapi.util.Ref
+import com.intellij.psi.PsiDocumentManager
+import com.intellij.psi.impl.source.codeStyle.CodeEditUtil
 import org.jetbrains.fortran.lang.psi.*
 
 class FortranEnterHandler : EnterHandlerDelegateAdapter() {

@@ -69,8 +69,8 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             while (iterator.tokenType != FortranTokenType.WORD) {
                 if (iterator.tokenType === EOL) return true
                 iterator.retreat()
-                if (iterator.atEnd()) return true
                 count++
+                if (iterator.atEnd()) return true
             }
 
             return fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase() != "end"
@@ -88,8 +88,8 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             while (iterator.tokenType != FortranTokenType.WORD) {
                 if (iterator.tokenType === EOL) return false
                 iterator.advance()
-                if (iterator.atEnd()) return false
                 count++
+                if (iterator.atEnd()) return false
             }
             val wordText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
             return wordText == "if" || wordText == "where"
@@ -107,26 +107,27 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             while (iterator.tokenType != LPAR) {
                 if (iterator.tokenType === EOL) return false
                 iterator.advance()
-                if (iterator.atEnd()) return false
                 count++
+                if (iterator.atEnd()) return false
             }
             iterator.advance()
             count++
+            if (iterator.atEnd()) return false
             // need all parenthesis to be closed
             while (braceCount > 0) {
                 if (iterator.tokenType === EOL) return false
                 if (iterator.tokenType === LPAR)braceCount++
                 if (iterator.tokenType === RPAR) braceCount--
                 iterator.advance()
-                if (iterator.atEnd()) return false
                 count++
+                if (iterator.atEnd()) return false
             }
             // this might be the end of line
             while (iterator.tokenType != EOL) {
                 if (iterator.tokenType === FortranTokenType.WORD) return false
                 iterator.advance()
-                if (iterator.atEnd()) return false
                 count++
+                if (iterator.atEnd()) return false
             }
             return true
         } finally {
@@ -142,8 +143,8 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             if (iterator.atEnd()) return false
             while (iterator.tokenType === TokenType.WHITE_SPACE) {
                 iterator.advance()
-                if (iterator.atEnd()) return false
                 count++
+                if (iterator.atEnd()) return false
             }
             return (iterator.tokenType === EQ || iterator.tokenType === POINTER_ASSMNT
                     || iterator.tokenType === LPAR || iterator.tokenType === LBRACKET)
@@ -159,8 +160,8 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             if (iterator.atEnd()) return 0
             while (iterator.tokenType === TokenType.WHITE_SPACE) {
                 iterator.advance()
-                if (iterator.atEnd()) return 0
                 count++
+                if (iterator.atEnd()) return 0
             }
             if (iterator.atEnd()) return 0
             return if (iterator.tokenType === INTEGERLITERAL)
@@ -178,14 +179,14 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                 // string end
                 while (iterator.tokenType != EOL) {
                     iterator.advance()
-                    if (iterator.atEnd()) return false
                     count++
+                    if (iterator.atEnd()) return false
                 }
                 if (iterator.atEnd()) return false
                 while (iterator.tokenType === TokenType.WHITE_SPACE || iterator.tokenType === EOL) {
                     iterator.advance()
-                    if (iterator.atEnd()) return false
                     count++
+                    if (iterator.atEnd()) return false
                 }
 
                 if (iterator.tokenType === INTEGERLITERAL
@@ -193,15 +194,15 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                     while (iterator.tokenType != FortranTokenType.WORD && iterator.tokenType != EOL) {
                         if (iterator.tokenType === EOL) return false
                         iterator.advance()
-                        if (iterator.atEnd()) return false
                         count++
+                        if (iterator.atEnd()) return false
                     }
                     val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
                     return (tokenText == "end" || tokenText == "enddo")
                 }
                 iterator.advance()
-                if (iterator.atEnd()) return false
                 count++
+                if (iterator.atEnd()) return false
             }
         } finally {
             retreatIteratorBack(iterator, count)
@@ -252,6 +253,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                 "endblockdata",
                 "endmodule",
                 "endsubmodule",
+                "endprocedure",
                 "endenum",
                 "endtype",
                 "endinterface",
