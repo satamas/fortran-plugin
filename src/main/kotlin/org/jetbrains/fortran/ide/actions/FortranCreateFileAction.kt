@@ -15,6 +15,10 @@ class FortranCreateFileAction : CreateFileFromTemplateAction(FortranCreateFileAc
     override fun buildDialog(project: Project?, directory: PsiDirectory?,
                              builder: CreateFileFromTemplateDialog.Builder) {
         builder.setTitle(CAPTION).addKind("Empty File", FortranIcons.fileTypeIcon, "Fortran File")
+                .addKind("Main Program", FortranIcons.mainProgramIcon, "Main Program")
+                .addKind("Module", FortranIcons.moduleIcon, "Module")
+                .addKind("Function", FortranIcons.functionIcon, "Function")
+                .addKind("Subroutine", FortranIcons.subroutineIcon, "Subroutine")
     }
 
     private companion object {

@@ -9,7 +9,7 @@ object FortranFileType : LanguageFileType(FortranLanguage) {
 
     override fun getDescription() = "Fortran language file"
 
-    override fun getDefaultExtension() = DEFAULT_EXTENSIONS[1]
+    override fun getDefaultExtension() = DEFAULT_EXTENSIONS[0]
 
     override fun getIcon() = FortranIcons.fileTypeIcon
 }
