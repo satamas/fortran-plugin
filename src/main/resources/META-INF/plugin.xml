@@ -61,7 +61,7 @@
 
         <!-- Matchers -->
         <lang.braceMatcher language="Fortran" implementationClass="org.jetbrains.fortran.ide.typing.FortranBraceMatcher"/>
-
+        <enterHandlerDelegate implementation="org.jetbrains.fortran.ide.typing.FortranEnterHandler"/>
         <!-- Folding -->
         <lang.foldingBuilder language="Fortran" implementationClass="org.jetbrains.fortran.ide.folding.FortranFoldingBuilder"/>
 
