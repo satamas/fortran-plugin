@@ -42,7 +42,7 @@ class FortranStructureViewElement(
                             null, FortranIcons.variableIcon, null
                     )
                 }
-                psi.parent.parent is FortranDataComponentDefStmt -> {
+                psi.isValid && psi.parent.parent is FortranDataComponentDefStmt -> {
                     val typeName = ((psi.parent.parent as FortranDataComponentDefStmt).intrinsicTypeSpec
                             ?: (psi.parent.parent as FortranDataComponentDefStmt).derivedTypeSpec)?.text
                     PresentationData(psi.name + ": " + typeName,
