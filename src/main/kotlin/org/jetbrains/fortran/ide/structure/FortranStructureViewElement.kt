@@ -6,8 +6,11 @@ import com.intellij.ide.util.treeView.smartTree.TreeElement
 import com.intellij.navigation.ItemPresentation
 import com.intellij.pom.Navigatable
 import com.intellij.psi.NavigatablePsiElement
+import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.psi.util.PsiUtil
 import org.jetbrains.fortran.FortranIcons
 import org.jetbrains.fortran.lang.psi.*
+import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
 
 class FortranStructureViewElement(
         val psi: FortranCompositeElement
@@ -31,27 +34,7 @@ class FortranStructureViewElement(
 
     // types
         is FortranDerivedTypeDef -> PresentationData(psi.derivedTypeStmt.typeDecl.text, null, FortranIcons.typeIcon, null)
-
-    // variables
-        is FortranEntityDecl -> {
-            when {
-                psi.parent is FortranTypeDeclarationStmt -> {
-                    val typeName = ((psi.parent as FortranTypeDeclarationStmt).intrinsicTypeSpec
-                            ?: (psi.parent as FortranTypeDeclarationStmt).derivedTypeSpec)?.text
-                    PresentationData(psi.name + ": " + typeName,
-                            null, FortranIcons.variableIcon, null
-                    )
-                }
-                psi.isValid && psi.parent.parent is FortranDataComponentDefStmt -> {
-                    val typeName = ((psi.parent.parent as FortranDataComponentDefStmt).intrinsicTypeSpec
-                            ?: (psi.parent.parent as FortranDataComponentDefStmt).derivedTypeSpec)?.text
-                    PresentationData(psi.name + ": " + typeName,
-                            null, FortranIcons.variableIcon, null
-                    )
-                }
-                else -> PresentationData(psi.name, null, FortranIcons.methodIcon, null)
-            }
-        }
+        is FortranInterfaceBlock -> PresentationData(psi.interfaceStmt.text, null, FortranIcons.interfaceIcon, null)
         else -> PresentationData(psi.text, null, null, null)
     }
 
@@ -63,10 +46,11 @@ class FortranStructureViewElement(
         get() {
             return when (psi) {
                 is FortranFile -> psi.programUnits
-                is FortranProgramUnit -> psi.variables +
-                        psi.subprograms.filter{ it.parent is FortranBeginUnitStmt }.map{it.parent.parent as FortranCompositeElement} +
-                        psi.types.map{it.parent.parent as FortranCompositeElement}
-                is FortranDerivedTypeDef -> psi.variables.filter{ it.parent !is FortranDerivedTypeStmt }
+                is FortranProgramUnit -> psi.subprograms.filter{ it.parent is FortranBeginUnitStmt }.map{it.parent.parent as FortranCompositeElement} +
+                        psi.types.map{it.parent.parent as FortranCompositeElement} +
+                        (PsiTreeUtil.getChildrenOfType((psi as FortranProgramUnitImpl).getBlock(), FortranInterfaceBlock::class.java) ?: arrayOf())
+                is FortranInterfaceBlock -> psi.interfaceSpecification?.programUnitList?.filterNotNull() ?: emptyList()
+
                 else -> emptyList()
             }
         }

@@ -15,13 +15,13 @@ class FortranStructureViewModel(editor: Editor?, file: PsiFile)
     init {
         withSuitableClasses(FortranNamedElement::class.java)
     }
-
     override fun isAlwaysShowsPlus(element: StructureViewTreeElement)
             = element.value is FortranFile || element.value is FortranFixedFormFile
 
     override fun isAlwaysLeaf(element: StructureViewTreeElement) =
             when (element.value) {
                 is FortranEntityDecl -> true
+                is FortranDerivedTypeDef -> true
                 else -> false
             }
 }

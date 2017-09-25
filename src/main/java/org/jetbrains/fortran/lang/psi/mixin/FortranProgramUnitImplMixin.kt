@@ -3,6 +3,8 @@ package org.jetbrains.fortran.lang.psi.mixin
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
+import com.intellij.psi.util.PsiTreeUtil
+import org.jetbrains.fortran.lang.psi.FortranBlock
 import org.jetbrains.fortran.lang.stubs.FortranProgramUnitStub
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
@@ -38,4 +40,6 @@ abstract class FortranProgramUnitImplMixin : FortranStubbedNamedElementImpl<Fort
 
     override val types: List<FortranNamedElement>
         get() = emptyList()
+
+    open fun getBlock(): FortranBlock? = PsiTreeUtil.getStubChildOfType(this, FortranBlock::class.java)
 }

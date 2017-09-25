@@ -16,7 +16,7 @@ object FortranIcons {
 
     // types
     val typeIcon = AllIcons.Nodes.Class
-
+    val interfaceIcon = AllIcons.Nodes.Interface
     // variables
     val variableIcon = AllIcons.Nodes.Variable
     val methodIcon = AllIcons.Nodes.Method
