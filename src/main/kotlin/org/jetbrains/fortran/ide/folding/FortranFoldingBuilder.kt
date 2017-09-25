@@ -10,9 +10,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.*
-import org.jetbrains.fortran.lang.psi.ext.beginConstructStatement
-import org.jetbrains.fortran.lang.psi.ext.endConstructStatement
-import org.jetbrains.fortran.lang.psi.ext.lastChildOfType
+import org.jetbrains.fortran.lang.psi.ext.*
 import java.util.*
 
 class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
@@ -53,8 +51,7 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
                 FortranBlockDataStmt::class,
                 FortranFunctionStmt::class,
                 FortranSubroutineStmt::class,
-                FortranMpSubprogramStmt::class,
-                FortranContainsStmt::class
+                FortranMpSubprogramStmt::class
         )
 
         val foldableConstructEndStatements = listOf(
@@ -78,22 +75,38 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
                 FortranEndBlockDataStmt::class,
                 FortranEndFunctionStmt::class,
                 FortranEndSubroutineStmt::class,
-                FortranEndMpSubprogramStmt::class,
-                FortranContainsStmt::class
+                FortranEndMpSubprogramStmt::class
         )
+
+        override fun visitModuleSubprogramPart(o: FortranModuleSubprogramPart) {
+            foldAfterContains(o)
+        }
+
+        override fun visitTypeBoundProcedurePart(o: FortranTypeBoundProcedurePart) {
+            foldAfterContains(o)
+        }
+
+        override fun visitInternalSubprogramPart(o: FortranInternalSubprogramPart) {
+            foldAfterContains(o)
+        }
+
+        private fun foldAfterContains(subprogramPart : FortranCompositeElement) {
+            val lastElement = subprogramPart.lastChildOfType(FortranCompositeElement::class) ?: return
+            val range = TextRange(subprogramPart.firstChild.node.startOffset + subprogramPart.firstChild.textLength, lastElement.node.startOffset+lastElement.node.textLength)
+            descriptors += FoldingDescriptor(subprogramPart.node, range)
+        }
 
         override fun visitDeclarationConstruct(o: FortranDeclarationConstruct) =
                 foldBetweenStatements(o, o.beginConstructStatement, o.endConstructStatement)
 
         override fun visitBlock(block: FortranBlock) {
             val parent = block.parent
+
             if (parent is FortranLabeledDoConstruct) {
-                if (parent.doTermActionStmt != null) {
-                    foldBetweenStatements(block, parent.labelDoStmt, parent.doTermActionStmt)
-                } else if (parent.labeledDoTermConstract != null) {
-                    foldBetweenStatements(block, parent.labelDoStmt, parent.labeledDoTermConstract)
-                } else if (parent.endDoStmt != null) {
-                    foldBetweenStatements(block, parent.labelDoStmt, parent.endDoStmt)
+                when {
+                    parent.doTermActionStmt != null -> foldBetweenStatements(block, parent.labelDoStmt, parent.doTermActionStmt)
+                    parent.labeledDoTermConstract != null -> foldBetweenStatements(block, parent.labelDoStmt, parent.labeledDoTermConstract)
+                    parent.endDoStmt != null -> foldBetweenStatements(block, parent.labelDoStmt, parent.endDoStmt)
                 }
                 return
             }
@@ -101,10 +114,7 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
             val prev = PsiTreeUtil.getPrevSiblingOfType(block, FortranCompositeElement::class.java) ?: return
             val startFoldableStatementType = foldableConstructStartStatements.find { it.isInstance(prev) } ?: return
 
-            var next = PsiTreeUtil.getNextSiblingOfType(block, FortranCompositeElement::class.java)
-            if (next is FortranInternalSubprogramPart) next = next.containsStmt
-            else if (next is FortranTypeBoundProcedurePart) next = next.containsStmt
-            else if (next is FortranModuleSubprogramPart) next = next.containsStmt
+            val next = PsiTreeUtil.getNextSiblingOfType(block, FortranStmt::class.java)
 
             val endFoldableStatementType = foldableConstructEndStatements.find { it.isInstance(next) } ?: return
 

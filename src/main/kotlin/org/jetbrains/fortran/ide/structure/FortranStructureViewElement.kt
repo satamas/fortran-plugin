@@ -7,7 +7,6 @@ import com.intellij.navigation.ItemPresentation
 import com.intellij.pom.Navigatable
 import com.intellij.psi.NavigatablePsiElement
 import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.psi.util.PsiUtil
 import org.jetbrains.fortran.FortranIcons
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
