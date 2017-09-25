@@ -64,7 +64,7 @@ class FortranStructureViewElement(
             return when (psi) {
                 is FortranFile -> psi.programUnits
                 is FortranProgramUnit -> psi.variables +
-                        psi.subprograms.filter{ it.parent is FortranNameStmt }.map{it.parent.parent as FortranCompositeElement} +
+                        psi.subprograms.filter{ it.parent is FortranBeginUnitStmt }.map{it.parent.parent as FortranCompositeElement} +
                         psi.types.map{it.parent.parent as FortranCompositeElement}
                 is FortranDerivedTypeDef -> psi.variables.filter{ it.parent !is FortranDerivedTypeStmt }
                 else -> emptyList()

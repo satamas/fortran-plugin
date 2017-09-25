@@ -9,9 +9,8 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.openapi.util.Ref
-import com.intellij.psi.PsiDocumentManager
-import com.intellij.psi.impl.source.codeStyle.CodeEditUtil
 import org.jetbrains.fortran.lang.psi.*
+import org.jetbrains.fortran.lang.psi.ext.*
 
 class FortranEnterHandler : EnterHandlerDelegateAdapter() {
 
@@ -35,45 +34,9 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
 
         when (constructOrUnit) {
             // program units
-            is FortranMainProgram -> if (constructOrUnit.programStmt != null && constructOrUnit.endProgramStmt == null) {
-                val programName = constructOrUnit.programStmt!!.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end program $programName")
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranFunctionSubprogram -> if (constructOrUnit.endFunctionStmt == null) {
-                val functionName = constructOrUnit.functionStmt.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end function $functionName")
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranSubroutineSubprogram -> if (constructOrUnit.endSubroutineStmt == null) {
-                val subroutineName = constructOrUnit.subroutineStmt.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end subroutine $subroutineName")
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranModule -> if (constructOrUnit.endModuleStmt == null) {
-                val moduleName = constructOrUnit.moduleStmt.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end module $moduleName")
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranSubmodule -> if (constructOrUnit.endSubmoduleStmt == null) {
-                val submoduleName = constructOrUnit.submoduleStmt.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end submodule $submoduleName")
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranBlockData -> if (constructOrUnit.endBlockDataStmt == null) {
-                val blockDataName = constructOrUnit.blockDataStmt.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end block data $blockDataName")
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranSeparateModuleSubprogram -> if (constructOrUnit.endMpSubprogramStmt == null) {
-                val subprogramName = constructOrUnit.mpSubprogramStmt.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end procedure $subprogramName")
+            is FortranProgramUnit -> if (constructOrUnit.beginUnitStmt != null && constructOrUnit.endUnitStmt == null) {
+                val programUnitName = constructOrUnit.beginUnitStmt!!.entityDecl!!.name
+                editor.document.insertString(offset, "\n${indentString}end ${constructOrUnit.unitType} $programUnitName")
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
@@ -100,57 +63,9 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
             }
 
             // executable constructs
-            is FortranAssociateConstruct -> if (constructOrUnit.endAssociateStmt == null) {
-                val constructName = constructOrUnit.associateStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "associate", constructName)
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranBlockConstruct -> if (constructOrUnit.endBlockStmt == null) {
-                val constructName = constructOrUnit.blockStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "block", constructName)
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranCaseConstruct -> if (constructOrUnit.endSelectStmt == null) {
-                val constructName = constructOrUnit.selectCaseStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "select", constructName)
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranCriticalConstruct -> if (constructOrUnit.endCriticalStmt == null) {
-                val constructName = constructOrUnit.criticalStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "critical", constructName)
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranNonlabelDoConstruct -> if (constructOrUnit.endDoStmt == null) {
-                val constructName = constructOrUnit.nonlabelDoStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "do", constructName)
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranForallConstruct -> if (constructOrUnit.endForallStmt == null) {
-                val constructName = constructOrUnit.forallConstructStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "forall", constructName)
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranIfConstruct -> if (constructOrUnit.endIfStmt == null) {
-                val constructName = constructOrUnit.ifThenStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "if", constructName)
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranSelectTypeConstruct -> if (constructOrUnit.endSelectStmt == null) {
-                val constructName = constructOrUnit.selectTypeStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "select", constructName)
-                return EnterHandlerDelegate.Result.DefaultForceIndent
-            }
-
-            is FortranWhereConstruct -> if (constructOrUnit.endWhereStmt == null) {
-                val constructName = constructOrUnit.whereConstructStmt.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, "where", constructName)
+            is FortranExecutableConstruct -> if (constructOrUnit.endConstructStmt == null) {
+                val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name
+                insertEndConstructString(editor, offset, indentString, constructOrUnit.constructType, constructName)
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
         }
@@ -158,7 +73,7 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
         return super.postProcessEnter(file, editor, dataContext)
     }
 
-    private fun insertEndConstructString(editor: Editor, offset: Int, indentString: String?, construct: String, constructName: String?) {
+    private fun insertEndConstructString(editor: Editor, offset: Int, indentString: String?, construct: String?, constructName: String?) {
         if (constructName != null){
             editor.document.insertString(offset, "\n${indentString}end $construct $constructName")
         } else {

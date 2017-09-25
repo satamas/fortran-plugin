@@ -16,7 +16,7 @@ class FortranEntityDeclFindUsagesHandler (
         var scope : SearchScope = searchScope
         val unit = runReadAction{PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java)}
         val inter = runReadAction{PsiTreeUtil.getParentOfType(element, FortranInterfaceSpecification::class.java)}
-        if ((runReadAction{ element.parent !is FortranNameStmt } && (unit !is FortranModule)
+        if ((runReadAction{ element.parent !is FortranBeginUnitStmt } && (unit !is FortranModule)
                 && (unit !is FortranSubmodule)) || inter != null) {
             scope = runReadAction { GlobalSearchScope.fileScope(element.containingFile) }
         }

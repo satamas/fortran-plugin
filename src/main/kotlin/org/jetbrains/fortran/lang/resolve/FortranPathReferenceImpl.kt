@@ -345,7 +345,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
     }
 
     private fun collectNamesInInterfaceBody(body : FortranProgramUnit) : List<FortranNamedElement> {
-        return body.variables + PsiTreeUtil.getChildOfType(body, FortranNameStmt::class.java)!!.entityDecl!!
+        return body.variables + PsiTreeUtil.getChildOfType(body, FortranBeginUnitStmt::class.java)!!.entityDecl!!
     }
 
     private fun <T : FortranDataPath> kotlin.collections.Iterable<T>.filterImplicitDeclaration(): T? =

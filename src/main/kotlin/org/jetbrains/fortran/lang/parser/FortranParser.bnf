@@ -64,7 +64,8 @@
   ]
 
   extends(".*(_expr|literal)")=expr
-  implements("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)")='org.jetbrains.fortran.lang.psi.FortranNameStmt'
+  implements("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)")='org.jetbrains.fortran.lang.psi.FortranBeginUnitStmt'
+  implements("(associate_stmt|block_stmt|select_case_stmt|critical_stmt|nonlabel_do_stmt|labeled_do_stmt_stmt|forall_construct_stmt|if_then_stmt|select_type_stmt|where_construct_stmt)")='org.jetbrains.fortran.lang.psi.FortranBeginConstructStmt'
   elementTypeFactory("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") ="org.jetbrains.fortran.lang.stubs.FortranStubFactoryKt.fortranStubFactory"
   stubClass("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") = 'org.jetbrains.fortran.lang.stubs.FortranStatementStub'
   mixin("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") = "org.jetbrains.fortran.lang.psi.mixin.FortranStmtImplMixin"
