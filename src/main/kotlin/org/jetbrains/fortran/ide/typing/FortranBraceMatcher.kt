@@ -38,14 +38,13 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
 
     private fun isWordBrace(iterator: HighlighterIterator, fileText: CharSequence, left: Boolean): Boolean {
         val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
-        if (aVariable(iterator)) return false
-        if (left  && tokenText in WORD_LEFT_BRACE) {
+        if (left && tokenText in WORD_LEFT_BRACE) {
+            if (aVariable(iterator)) return false
             // end is not before us
             if (tokenText != "then") {
                 return if (tokenText == "do") {
                     val label = labeledDo(iterator, fileText)
-                    notAfterEnd(iterator, fileText) && notWhereOrForallStmt(tokenText, iterator)
-                            && (label == 0 || labeledDoHasEnd(iterator, fileText, label))
+                    notAfterEnd(iterator, fileText) && (label == 0 || labeledDoHasEnd(iterator, fileText, label))
                 } else {
                     notAfterEnd(iterator, fileText) && notWhereOrForallStmt(tokenText, iterator)
                 }
@@ -53,6 +52,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             return true
         }
         if (!left && tokenText in WORD_RIGHT_BRACE) {
+            if (aVariable(iterator)) return false
             if (tokenText == "else") {
                 return elseIsNotLastKeyWord(iterator, fileText)
             }
@@ -116,7 +116,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             // need all parenthesis to be closed
             while (braceCount > 0) {
                 if (iterator.tokenType === EOL) return false
-                if (iterator.tokenType === LPAR)braceCount++
+                if (iterator.tokenType === LPAR) braceCount++
                 if (iterator.tokenType === RPAR) braceCount--
                 iterator.advance()
                 count++
@@ -139,6 +139,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
     private fun aVariable(iterator: HighlighterIterator): Boolean {
         var count = 1
         try {
+            // simple check
             iterator.advance()
             if (iterator.atEnd()) return false
             while (iterator.tokenType === TokenType.WHITE_SPACE) {
@@ -146,8 +147,26 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                 count++
                 if (iterator.atEnd()) return false
             }
-            return (iterator.tokenType === EQ || iterator.tokenType === POINTER_ASSMNT
-                    || iterator.tokenType === LPAR || iterator.tokenType === LBRACKET)
+            if (iterator.tokenType === EQ || iterator.tokenType === POINTER_ASSMNT || iterator.tokenType === LBRACKET) {
+                return true
+            }
+            if (iterator.tokenType != LPAR) {
+                return false
+            }
+
+            // difficult check
+            var braceCount = 0
+            while (iterator.tokenType != EOL) {
+                if (iterator.tokenType === LPAR) braceCount++
+                if (iterator.tokenType === RPAR) braceCount--
+                if ((iterator.tokenType === EQ && braceCount == 0) || iterator.tokenType === POINTER_ASSMNT) {
+                    return true
+                }
+                iterator.advance()
+                count++
+                if (iterator.atEnd()) return false
+            }
+            return false
         } finally {
             retreatIteratorBack(iterator, count)
         }

@@ -22,6 +22,9 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
             dataContext: DataContext,
             originalHandler: EditorActionHandler?
     ): EnterHandlerDelegate.Result? {
+        // we don't want to deal with fixed form now
+        if (file is FortranFixedFormFile) return super.postProcessEnter(file, editor, dataContext)
+
         val offset = editor.caretModel.offset
         val lineStartOffset = editor.caretModel.visualLineStart
         val indentString = CodeStyleManager.getInstance(file.project)!!.getLineIndent(editor.document, lineStartOffset)
