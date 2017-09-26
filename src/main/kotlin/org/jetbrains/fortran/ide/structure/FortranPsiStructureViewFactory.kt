@@ -12,9 +12,10 @@ class FortranPsiStructureViewFactory : PsiStructureViewFactory {
     override fun getStructureViewBuilder(psiFile: PsiFile): StructureViewBuilder? {
         if (psiFile !is FortranFile) return null
         return object : TreeBasedStructureViewBuilder() {
-            override fun createStructureViewModel(editor: Editor?): StructureViewModel {
-                return FortranStructureViewModel(editor, psiFile)
-            }
+
+            override fun createStructureViewModel(editor: Editor?): StructureViewModel
+                    = FortranStructureViewModel(editor, psiFile)
+
         }
     }
 }

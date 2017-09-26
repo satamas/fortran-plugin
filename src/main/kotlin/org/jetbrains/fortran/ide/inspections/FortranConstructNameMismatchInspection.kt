@@ -5,6 +5,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
 import org.jetbrains.fortran.lang.psi.*
+import org.jetbrains.fortran.lang.psi.ext.beginConstructStmt
 
 class FortranConstructNameMismatchInspection : LocalInspectionTool() {
     override fun getDisplayName() = "Construct name mismatch"
@@ -14,19 +15,7 @@ class FortranConstructNameMismatchInspection : LocalInspectionTool() {
                 override fun visitConstructName(name: FortranConstructName) {
                     if (name.parent !is FortranExitStmt) {
                         val construct = name.parent.parent
-                        val realName = when(construct) {
-                            is FortranAssociateConstruct -> construct.associateStmt.constructNameDecl?.name
-                            is FortranBlockConstruct -> construct.blockStmt.constructNameDecl?.name
-                            is FortranCaseConstruct -> construct.selectCaseStmt.constructNameDecl?.name
-                            is FortranCriticalConstruct -> construct.criticalStmt.constructNameDecl?.name
-                            is FortranNonlabelDoConstruct -> construct.nonlabelDoStmt.constructNameDecl?.name
-                            is FortranLabeledDoConstruct -> construct.labelDoStmt.constructNameDecl?.name
-                            is FortranForallConstruct -> construct.forallConstructStmt.constructNameDecl?.name
-                            is FortranIfConstruct -> construct.ifThenStmt.constructNameDecl?.name
-                            is FortranSelectTypeConstruct -> construct.selectTypeStmt.constructNameDecl?.name
-                            is FortranWhereConstruct -> construct.whereConstructStmt.constructNameDecl?.name
-                            else -> null
-                        }
+                        val realName = (construct as FortranExecutableConstruct).beginConstructStmt?.constructNameDecl?.name
 
                         if (!name.referenceName.equals(realName, true)) {
                             holder.registerProblemForReference(name.reference,

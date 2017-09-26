@@ -16,7 +16,7 @@ val FortranProgramUnit.beginUnitStmt: FortranBeginUnitStmt? get() {
     }
 }
 
-val FortranProgramUnit.endUnitStmt: FortranStmt? get() {
+val FortranProgramUnit.endUnitStmt: FortranEndUnitStmt? get() {
     return when (this) {
         is FortranMainProgram -> this.endProgramStmt
         is FortranBlockData -> this.endBlockDataStmt

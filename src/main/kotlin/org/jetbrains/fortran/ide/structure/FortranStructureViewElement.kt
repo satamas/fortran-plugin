@@ -45,9 +45,12 @@ class FortranStructureViewElement(
         get() {
             return when (psi) {
                 is FortranFile -> psi.programUnits
-                is FortranProgramUnit -> psi.subprograms.filter{ it.parent is FortranBeginUnitStmt }.map{it.parent.parent as FortranCompositeElement} +
-                        psi.types.map{it.parent.parent as FortranCompositeElement} +
-                        (PsiTreeUtil.getChildrenOfType((psi as FortranProgramUnitImpl).getBlock(), FortranInterfaceBlock::class.java) ?: arrayOf())
+                is FortranProgramUnit -> {
+                    val subprograms = psi.subprograms.filter { it.parent is FortranBeginUnitStmt }.map { it.parent.parent as FortranCompositeElement }
+                    val types = psi.types.map { it.parent.parent as FortranCompositeElement }
+                    val interfaces = PsiTreeUtil.getChildrenOfType((psi as FortranProgramUnitImpl).getBlock(), FortranInterfaceBlock::class.java)?.toList() ?: emptyList()
+                    subprograms + types + interfaces
+                }
                 is FortranInterfaceBlock -> psi.interfaceSpecification?.programUnitList?.filterNotNull() ?: emptyList()
 
                 else -> emptyList()
