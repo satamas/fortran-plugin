@@ -16,6 +16,27 @@ class FortranBraceMatcherTest : LightPlatformCodeInsightFixtureTestCase() {
              """, ")"
     )
 
+    fun testType() = doMatch("""
+            <caret>program a
+            type (met_data), intent(inout) :: fg_data
+
+            integer :: i
+            do i=1,4
+                write(*,*) i
+            enddo
+            end""", "end")
+
+    fun testTypeDecl() = doMatch("""
+            program a
+            <caret>type :: fg_data
+                integer :: a
+            endtype fg_data
+            integer :: i
+            do i=1,4
+                write(*,*) i
+            enddo
+            end""", "endtype")
+
     fun testProgram() = doMatch("""
              <caret>program a
              integer :: i

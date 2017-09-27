@@ -39,7 +39,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
     private fun isWordBrace(iterator: HighlighterIterator, fileText: CharSequence, left: Boolean): Boolean {
         val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
         if (left && tokenText in WORD_LEFT_BRACE) {
-            if (aVariable(iterator)) return false
+            if (aVariableOrType(iterator)) return false
             // end is not before us
             if (tokenText != "then") {
                 return if (tokenText == "do") {
@@ -52,7 +52,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             return true
         }
         if (!left && tokenText in WORD_RIGHT_BRACE) {
-            if (aVariable(iterator)) return false
+            if (aVariableOrType(iterator)) return false
             if (tokenText == "else") {
                 return elseIsNotLastKeyWord(iterator, fileText)
             }
@@ -135,8 +135,9 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         }
     }
 
-    // we are variable if next token is =, =>, ( or [
-    private fun aVariable(iterator: HighlighterIterator): Boolean {
+    // we are variable if next token is =, =>
+    // type if somewhere later in this line is ::
+    private fun aVariableOrType(iterator: HighlighterIterator): Boolean {
         var count = 1
         try {
             // simple check
@@ -159,7 +160,8 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             while (iterator.tokenType != EOL) {
                 if (iterator.tokenType === LPAR) braceCount++
                 if (iterator.tokenType === RPAR) braceCount--
-                if ((iterator.tokenType === EQ && braceCount == 0) || iterator.tokenType === POINTER_ASSMNT) {
+                if (braceCount == 0 && (iterator.tokenType === EQ || iterator.tokenType === POINTER_ASSMNT
+                        || iterator.tokenType === COLONCOLON)) {
                     return true
                 }
                 iterator.advance()

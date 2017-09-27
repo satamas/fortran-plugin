@@ -21,7 +21,7 @@ class FortranProgramUnitNameMismatchInspection : LocalInspectionTool() {
                         holder.registerProblemForReference(endStmtDataPath.reference,
                                 ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
                                 "Program unit name mismatch",
-                                SubstituteTextFix(endStmtDataPath.textRange, stmtName, "Program unit name fix")
+                                SubstituteTextFix(endStmtDataPath.textRange, stmtName, "Fix unit name")
                         )
                     }
                 }

@@ -40,6 +40,7 @@ class FortranFixedFormCommenter : Commenter, SelfManagingCommenter<CommenterData
 
         return   ((offset == realLineStartOffset) && (CharArrayUtil.regionMatches(document.charsSequence, offset, offset+1, "c")
                     || CharArrayUtil.regionMatches(document.charsSequence, offset, offset+1, "C")
+                    || CharArrayUtil.regionMatches(document.charsSequence, offset, offset+1, "c")
                     || CharArrayUtil.regionMatches(document.charsSequence, offset, offset+1, "*")))
                 || ((offset - realLineStartOffset != 5) && CharArrayUtil.regionMatches(document.charsSequence, offset, offset+1, "!"))
     }
