@@ -4,6 +4,7 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.application.runReadAction
+import com.intellij.psi.SmartPointerManager
 import com.intellij.psi.TokenType
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
@@ -29,7 +30,8 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
                 if (results.isEmpty()) {
                     val whiteSpaceSize = if (label.nextSibling.node.elementType != TokenType.WHITE_SPACE) 0 else label.nextSibling.textLength
                     holder.registerProblem(label, "Unused label declaration", ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                            SubstituteTextFix(label.textRange.grown(whiteSpaceSize), "", "Delete label declaration"))
+                            SubstituteTextFix(SmartPointerManager.getInstance(label.project).createSmartPsiElementPointer(label),
+                                    SmartPointerManager.getInstance(label.project).createSmartPsiElementPointer(label), "", "Delete label declaration"))
                 }
             }
         }

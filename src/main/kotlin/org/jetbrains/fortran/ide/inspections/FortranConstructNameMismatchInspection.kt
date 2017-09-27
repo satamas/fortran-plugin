@@ -3,6 +3,7 @@ package org.jetbrains.fortran.ide.inspections
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.psi.SmartPointerManager
 import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.beginConstructStmt
@@ -21,7 +22,8 @@ class FortranConstructNameMismatchInspection : LocalInspectionTool() {
                             holder.registerProblemForReference(name.reference,
                                     ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
                                     "Construct name mismatch",
-                                    SubstituteTextFix(name.textRange, realName, "Construct name fix")
+                                    SubstituteTextFix(SmartPointerManager.getInstance(name.project).createSmartPsiElementPointer(name),
+                                            SmartPointerManager.getInstance(name.project).createSmartPsiElementPointer(name), realName, "Construct name fix")
                             )
                         }
                     }
