@@ -14,12 +14,31 @@ import org.jetbrains.fortran.lang.psi.FortranCompositeElement
  * @param text The text that will be placed starting from `range.startOffset`. If `null`, no text will be inserted.
  * @param fixName The name to use for the fix instead of the default one to better fit the inspection.
  */
-class SubstituteTextFix(
-        private val startRangeElementPointer: SmartPsiElementPointer<FortranCompositeElement>,
-        private val endRangeElementPointer: SmartPsiElementPointer<FortranCompositeElement>,
-        private val text: String?,
-        private val fixName: String
-) : LocalQuickFix {
+class SubstituteTextFix : LocalQuickFix {
+    private val startRangeElementPointer: SmartPsiElementPointer<PsiElement>
+    private val endRangeElementPointer: SmartPsiElementPointer<PsiElement>
+    private val text: String?
+    private val fixName: String
+
+    constructor(startRangeElementPointer: SmartPsiElementPointer<PsiElement>,
+                endRangeElementPointer: SmartPsiElementPointer<PsiElement>,
+                text: String?, fixName: String
+    ) {
+        this.startRangeElementPointer = startRangeElementPointer
+        this.endRangeElementPointer = endRangeElementPointer
+        this.text = text
+        this.fixName = fixName
+    }
+
+    constructor(rangeElementPointer: SmartPsiElementPointer<PsiElement>,
+                text: String?, fixName: String
+    ) {
+        this.startRangeElementPointer = rangeElementPointer
+        this.endRangeElementPointer = rangeElementPointer
+        this.text = text
+        this.fixName = fixName
+    }
+
     override fun getName() = fixName
     override fun getFamilyName() = "Substitute one text to another"
 

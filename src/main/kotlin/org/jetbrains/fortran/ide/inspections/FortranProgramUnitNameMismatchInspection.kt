@@ -3,11 +3,11 @@ package org.jetbrains.fortran.ide.inspections
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
-import com.intellij.psi.SmartPointerManager
 import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.beginUnitStmt
 import org.jetbrains.fortran.lang.psi.ext.endUnitStmt
+import org.jetbrains.fortran.lang.psi.ext.smartPointer
 
 class FortranProgramUnitNameMismatchInspection : LocalInspectionTool() {
     override fun getDisplayName() = "Program unit name mismatch"
@@ -22,8 +22,7 @@ class FortranProgramUnitNameMismatchInspection : LocalInspectionTool() {
                         holder.registerProblemForReference(endStmtDataPath.reference,
                                 ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
                                 "Program unit name mismatch",
-                                SubstituteTextFix(SmartPointerManager.getInstance(endStmtDataPath.project).createSmartPsiElementPointer(endStmtDataPath),
-                                        SmartPointerManager.getInstance(endStmtDataPath.project).createSmartPsiElementPointer(endStmtDataPath), stmtName, "Fix unit name")
+                                SubstituteTextFix(endStmtDataPath.smartPointer(), stmtName, "Fix unit name")
                         )
                     }
                 }
