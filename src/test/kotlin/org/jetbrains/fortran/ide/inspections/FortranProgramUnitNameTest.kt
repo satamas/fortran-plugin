@@ -13,7 +13,7 @@ class FortranProgramUnitNameTest()
         end program <error descr="Program unit name mismatch">myFunction</error>
     """)
 
-    fun testFix() = checkFixByText("Program unit name fix", """
+    fun testFix() = checkFixByText("Fix unit name", """
         program myProgram
             write(*,*) "!"
         end program <error descr="Program unit name mismatch">myFunction<caret></error>

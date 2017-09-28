@@ -12,7 +12,9 @@ class FortranFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, Fo
 
     val programUnits : List<FortranProgramUnit>
         get() = if (stub != null)
-            stub!!.childrenStubs.filter { it is FortranProgramUnitStub }.map{ it.psi as FortranProgramUnit }
+            stub!!.childrenStubs
+                    .filter { it is FortranProgramUnitStub }
+                    .map{ it.psi as FortranProgramUnit }
         else
             children.filter { it is FortranProgramUnit }.map{ it as FortranProgramUnit }
 
