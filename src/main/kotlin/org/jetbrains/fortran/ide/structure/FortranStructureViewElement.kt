@@ -45,6 +45,7 @@ class FortranStructureViewElement(
         get() {
             return when (psi) {
                 is FortranFile -> psi.programUnits
+                is FortranFixedFormFile -> psi.programUnits
                 is FortranProgramUnit -> {
                     val subprograms = psi.subprograms.filter { it.parent is FortranBeginUnitStmt }.map { it.parent.parent as FortranCompositeElement }
                     val types = psi.types.map { it.parent.parent as FortranCompositeElement }
