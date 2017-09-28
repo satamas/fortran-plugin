@@ -29,7 +29,7 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
 
                 if (results.isEmpty()) {
                     val lastElement = if (label.nextSibling.node.elementType != TokenType.WHITE_SPACE) label else label.nextSibling
-                    holder.registerProblem(label, "Unused label declaration", ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                    holder.registerProblem(label, "Unused label declaration", ProblemHighlightType.LIKE_UNUSED_SYMBOL,
                             SubstituteTextFix(label.smartPointer(), lastElement.smartPointer(), "", "Delete label declaration"))
                 }
             }

@@ -13,6 +13,7 @@ val FortranExecutableConstruct.beginConstructStmt: FortranBeginConstructStmt? ge
         is FortranIfConstruct -> this.ifThenStmt
         is FortranSelectTypeConstruct -> this.selectTypeStmt
         is FortranWhereConstruct -> this.whereConstructStmt
+        is FortranLabeledDoConstruct -> this.labelDoStmt
         else -> null
     }
 }
@@ -28,6 +29,7 @@ val FortranExecutableConstruct.endConstructStmt: FortranStmt? get() {
         is FortranIfConstruct -> this.endIfStmt
         is FortranSelectTypeConstruct -> this.selectTypeStmt
         is FortranWhereConstruct -> this.endWhereStmt
+        is FortranLabeledDoConstruct -> this.endDoStmt
         else -> null
     }
 }
@@ -43,6 +45,7 @@ val FortranExecutableConstruct.constructType: String? get() {
         is FortranIfConstruct -> "if"
         is FortranSelectTypeConstruct -> "select"
         is FortranWhereConstruct -> "where"
+        is FortranLabeledDoConstruct -> "do"
         else -> null
     }
 }

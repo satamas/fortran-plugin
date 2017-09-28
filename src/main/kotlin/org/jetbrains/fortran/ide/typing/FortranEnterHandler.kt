@@ -65,6 +65,14 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
+            // labeled do is not like all other peoples do
+            is FortranLabeledDoConstruct -> if (constructOrUnit.endConstructStmt == null) {
+                val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name
+                val indentStringWithLabel = indentString + constructOrUnit.labelDoStmt.label.text + " "
+                insertEndConstructString(editor, offset, indentStringWithLabel, constructOrUnit.constructType, constructName)
+                return EnterHandlerDelegate.Result.DefaultForceIndent
+
+            }
             // executable constructs
             is FortranExecutableConstruct -> if (constructOrUnit.endConstructStmt == null) {
                 val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name

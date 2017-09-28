@@ -12,6 +12,7 @@ import org.jetbrains.fortran.lang.psi.FortranVisitor
 import org.jetbrains.fortran.lang.psi.ext.smartPointer
 
 
+
 class FortranUnusedConstructNameInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): FortranVisitor {
         return object : FortranVisitor() {
@@ -19,8 +20,11 @@ class FortranUnusedConstructNameInspection : LocalInspectionTool() {
             override fun visitConstructNameDecl(name: FortranConstructNameDecl) {
                 if (ReferencesSearch.search(name, GlobalSearchScope.fileScope(name.containingFile)).findFirst() == null) {
                     val lastElement = if (name.nextSibling.node.elementType != TokenType.WHITE_SPACE) name else name.nextSibling
-                    holder.registerProblem(name, "Unused construct name", ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                            SubstituteTextFix(name.smartPointer(), lastElement.smartPointer(), "", "Delete construct name"))
+                    holder.registerProblem(name,
+                            "Unused construct name",
+                            ProblemHighlightType.LIKE_UNUSED_SYMBOL,
+                            SubstituteTextFix(name.smartPointer(), lastElement.smartPointer(), "", "Delete construct name")
+                    )
                 }
             }
         }

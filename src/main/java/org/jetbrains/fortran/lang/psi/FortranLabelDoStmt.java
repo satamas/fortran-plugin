@@ -4,7 +4,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FortranLabelDoStmt extends FortranStmt {
+public interface FortranLabelDoStmt extends FortranBeginConstructStmt {
     @Nullable
     FortranConstructNameDecl getConstructNameDecl();
 
