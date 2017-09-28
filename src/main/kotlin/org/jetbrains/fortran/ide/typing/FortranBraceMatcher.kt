@@ -285,7 +285,8 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                 "endwhere",
                 "enddo",
                 "endif",
-                "else"
+                "else",
+                "elseif"
         )
     }
 }

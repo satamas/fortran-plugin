@@ -22,7 +22,7 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
 
             override fun visitLabelDecl(label: FortranLabelDecl) {
                 // custom searcher for leading zeros
-                val unit = PsiTreeUtil.getParentOfType(label, FortranProgramUnit::class.java)
+                val unit = runReadAction{ PsiTreeUtil.getParentOfType(label, FortranProgramUnit::class.java)}
                 val results = runReadAction{ PsiTreeUtil.findChildrenOfType(unit, FortranLabelImpl::class.java)
                 }.filter { (label as FortranLabelDeclImpl).getLabelValue() == it.getLabelValue() }
                         .map{ FortranLabelReferenceImpl(it as FortranLabelImplMixin) }
