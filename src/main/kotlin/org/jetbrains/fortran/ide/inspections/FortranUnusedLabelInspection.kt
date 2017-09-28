@@ -4,9 +4,11 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.application.runReadAction
+import com.intellij.psi.PsiFile
 import com.intellij.psi.TokenType
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
+import org.jetbrains.fortran.lang.psi.FortranFile
 import org.jetbrains.fortran.lang.psi.FortranLabelDecl
 import org.jetbrains.fortran.lang.psi.FortranProgramUnit
 import org.jetbrains.fortran.lang.psi.FortranVisitor
@@ -29,8 +31,13 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
 
                 if (results.isEmpty()) {
                     val lastElement = if (label.nextSibling.node.elementType != TokenType.WHITE_SPACE) label else label.nextSibling
-                    holder.registerProblem(label, "Unused label declaration", ProblemHighlightType.LIKE_UNUSED_SYMBOL,
-                            SubstituteTextFix(label.smartPointer(), lastElement.smartPointer(), "", "Delete label declaration"))
+                    if (runReadAction{ PsiTreeUtil.getParentOfType(label, PsiFile::class.java)} is FortranFile) {
+                        holder.registerProblem(label, "Unused label declaration", ProblemHighlightType.LIKE_UNUSED_SYMBOL,
+                                SubstituteTextFix(label.smartPointer(), lastElement.smartPointer(), "", "Delete label declaration"))
+                    } else {
+                        holder.registerProblem(label, "Unused label declaration", ProblemHighlightType.LIKE_UNUSED_SYMBOL,
+                                SubstituteTextFix(label.smartPointer(), " ".repeat(label.textLength), "Delete label declaration"))
+                    }
                 }
             }
         }
