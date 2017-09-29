@@ -7,12 +7,12 @@ import org.jetbrains.fortran.FortranFileType
 
 class FortranPsiFactory(private val project: Project) {
     fun tryCreatePath(text: String): FortranDataPath? {
-        val path = createFromText<FortranDataPath>("fn main() { $text;}") ?: return null
+        val path = createFromText<FortranDataPath>("${text} = 0; end") ?: return null
         if (path.text != text) return null
         return path
     }
 
     private inline fun <reified T : FortranCompositeElement> createFromText(code: String): T? =
             PsiTreeUtil.findChildOfType(PsiFileFactory.getInstance(project)
-                    .createFileFromText("DUMMY.rs", FortranFileType, code), T::class.java)
+                    .createFileFromText("DUMMY.f95", FortranFileType, code), T::class.java)
 }
