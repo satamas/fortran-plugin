@@ -9,6 +9,6 @@ class FortranFixedFormFileTypeFactory : FileTypeFactory() {
     }
 
     override fun createFileTypes(fileTypeConsumer: FileTypeConsumer) {
-        fileTypeConsumer.consume(FortranFileType, fixedFormExtensions)
+        fileTypeConsumer.consume(FortranFixedFormFileType, fixedFormExtensions)
     }
 }
