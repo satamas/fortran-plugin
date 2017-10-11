@@ -508,7 +508,7 @@ private type_bound_procedure_stmt_part2 ::= ((',' <<list binding_attr>>)? '::')?
 // R449
 type_bound_proc_decl ::= local_name ('=>' data_name)?
 // R450
-type_bound_generic_stmt ::= label_decl? generic_ (',' access_spec)? '::' generic_spec '=>' <<list fidentifier>> { pin = 2}
+type_bound_generic_stmt ::= label_decl? generic_ (',' access_spec)? '::' ((fidentifier !'(') | generic_spec) '=>' <<list fidentifier>> { pin = 2}
 // R451
 binding_attr ::= (pass_ ('(' fidentifier ')')?) | nopass_ | nonoverridable_ | deferred_ | access_spec
 // R452
@@ -1151,14 +1151,14 @@ recoverWhile = interface_recover
 private endinterface_keys ::= !assignment_stmt label_decl? (end_ | endinterface_)
 private interface_recover ::= !(eol | endinterface_keys)
 // R1203
-interface_stmt ::= label_decl? ((abstract_ interface_) | (interface_ (local_name | generic_spec)?)) { pin = 2 }
+interface_stmt ::= label_decl? ((abstract_ interface_) | (interface_ (local_name !'(' | generic_spec)?)) { pin = 2 }
 // R1204
-end_interface_stmt ::= label_decl? ((end_ interface_) | endinterface_) (data_name | generic_spec)? { pin = 2 }
+end_interface_stmt ::= label_decl? ((end_ interface_) | endinterface_) (data_name !'(' | generic_spec)? { pin = 2 }
 // R1205
 // R1206
 procedure_stmt ::= label_decl? (module_)? procedure_ ('::')? <<list entity_decl>> { pin = 3 }
 // R1207
-generic_spec ::= fidentifier | (operator_ '(' defoperator ')')
+generic_spec ::= (operator_ '(' (defoperator | '**' | '*' | '/' | '+' | '-' | '//' | rel_op | '.not.' | '.and.' | '.or.' | '.eqv.' | '.neqv.') ')')
               | assignment_ '(' '=' ')' | defined_io_generic_spec
 // R1208
 defined_io_generic_spec ::= read_ '(' (formatted_ | unformatted_) ')'
