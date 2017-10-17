@@ -6,6 +6,7 @@ import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.util.Expirable
 import com.intellij.openapi.util.io.FileUtil
 import com.jetbrains.cidr.cpp.execution.debugger.backend.GDBDriverConfiguration
+import com.jetbrains.cidr.execution.Installer
 import com.jetbrains.cidr.execution.debugger.CidrStackFrame
 import com.jetbrains.cidr.execution.debugger.backend.*
 import com.jetbrains.cidr.execution.debugger.backend.gdb.GDBDriver
@@ -28,19 +29,18 @@ class FortranGDBDriverProxy(val configuration : GDBDriverConfiguration) : Debugg
     }
 
     @Throws(ExecutionException::class)
-    override fun createDriverCommandLine(driver: DebuggerDriver): GeneralCommandLine {
-        val standardCommandLine = configuration.createDriverCommandLine(driver)
+    override fun createDriverCommandLine(driver: DebuggerDriver, installer : Installer): GeneralCommandLine {
+        val standardCommandLine = configuration.createDriverCommandLine(driver, installer)
         standardCommandLine.putUserData(GDBDriver.PRETTY_PRINTERS_PATH,
             FileUtil.toSystemIndependentName(getFortranPrettyPrinters().absolutePath))
-
         return standardCommandLine
     }
 
-    override fun convertToLocalPath(absolutePath: String?): String {
+    override fun convertToLocalPath(absolutePath: String?): String? {
         return configuration.convertToLocalPath(absolutePath)
     }
 
-    override fun convertToEnvPath(localPath: String?): String {
+    override fun convertToEnvPath(localPath: String?): String? {
         return configuration.convertToEnvPath(localPath)
     }
 
