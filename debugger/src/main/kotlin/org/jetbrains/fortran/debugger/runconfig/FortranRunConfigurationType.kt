@@ -13,7 +13,7 @@ class FortranRunConfigurationType private constructor()
     : CMakeRunConfigurationType("FortranRunConfiguration",
         "Fortran",
         "Fortran CMake run configuration",
-        FortranIcons.fileTypeIcon) {
+        FortranIcons.fileTypeIcon){
 
     override fun createRunConfiguration(project: Project, factory: ConfigurationFactory): FortranRunConfiguration {
         return FortranRunConfiguration(project, factory, "")

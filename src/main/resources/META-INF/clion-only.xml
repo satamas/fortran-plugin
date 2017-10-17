@@ -7,6 +7,5 @@
     <extensions defaultExtensionNs="com.intellij">
         <configurationType implementation="org.jetbrains.fortran.debugger.runconfig.FortranRunConfigurationType"/>
         <xdebugger.breakpointType implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointType"/>
-
     </extensions>
 </idea-plugin>
