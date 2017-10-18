@@ -8,6 +8,7 @@ import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
 import com.intellij.xdebugger.impl.ui.tree.actions.XDebuggerTreeActionBase
 import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrPhysicalValue
+import javax.swing.tree.TreePath
 
 
 class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
@@ -16,18 +17,13 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
         val p = e.project
         if (p != null && node != null && node.valueContainer is CidrPhysicalValue && node.isComputed) {
             val debugValue = node.valueContainer as CidrPhysicalValue
-            showNumericViewer(p, debugValue);
+            showNumericViewer(p, debugValue)
         }
     }
 
     private fun showNumericViewer(project: Project, debugValue : CidrPhysicalValue) {
-        FortranDataView.getInstance(project).show(debugValue, PlatformUtils.isPyCharmPro());
+        FortranDataView.getInstance(project).show(debugValue, PlatformUtils.isPyCharmPro())
     }
-
-    companion object {
-        fun getSelectedPaths(dataContext : DataContext) = XDebuggerTree.getTree(dataContext)?.selectionPaths
-    }
-
 
     override fun update(e : AnActionEvent) {
         e.presentation.isVisible = false
@@ -35,25 +31,30 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
         if (paths != null) {
             if (paths.size > 1) {
                 e.presentation.isVisible = false
-                return;
+                return
             }
 
             val node = getSelectedNode(e.dataContext)
             if (node != null && node.valueContainer is CidrPhysicalValue && node.isComputed) {
                 val debugValue = node.valueContainer as CidrPhysicalValue
 
-           //     val nodeType = debugValue.typesHelper.
-           //     println(nodeType)
-          //      println( debugValue.presentationVar.typeClass?.toString())
-                if (true) {
-                    e.presentation.text = "View as Array";
-                    e.presentation.isVisible = true;
+                if (isFortranArray(debugValue.type)) {
+                    e.presentation.text = "View as Array"
+                    e.presentation.isVisible = true
                 }
             }
             else
             {
                 e.presentation.isVisible = false
             }
+        }
+    }
+
+    companion object {
+        fun getSelectedPaths(dataContext : DataContext):Array<TreePath>?  = XDebuggerTree.getTree(dataContext)?.selectionPaths
+
+        fun isFortranArray(type : String) : Boolean {
+            return type.contains('(') && !type.substringAfterLast('(').contains("kind")
         }
     }
 }
