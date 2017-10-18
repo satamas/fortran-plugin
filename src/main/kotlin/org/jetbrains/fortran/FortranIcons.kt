@@ -7,6 +7,8 @@ import javax.swing.Icon
 object FortranIcons {
     val fileTypeIcon = IconLoader.getIcon("/icons/fortran.png")
 
+    val runConfigurationIcon = fileTypeIcon
+
     val mainProgramIcon : Icon = AllIcons.Nodes.Parameter
     val functionIcon : Icon = AllIcons.Nodes.Field
     val subroutineIcon : Icon = AllIcons.Nodes.Static
