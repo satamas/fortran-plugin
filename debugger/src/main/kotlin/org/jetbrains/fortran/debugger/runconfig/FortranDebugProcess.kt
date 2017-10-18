@@ -1,6 +1,5 @@
 package org.jetbrains.fortran.debugger.runconfig
 
-import com.intellij.execution.ExecutionException
 import com.intellij.execution.filters.TextConsoleBuilder
 import com.intellij.xdebugger.XDebugSession
 import com.intellij.xdebugger.breakpoints.XBreakpoint
@@ -11,8 +10,7 @@ import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
 import com.jetbrains.cidr.execution.debugger.breakpoints.CidrBreakpointHandler
 import org.jetbrains.fortran.debugger.FortranLineBreakpointType
 
-class FortranDebugProcess @Throws(ExecutionException::class)
-constructor(parameters: RunParameters, session: XDebugSession, consoleBuilder: TextConsoleBuilder)
+class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, consoleBuilder: TextConsoleBuilder)
     : CidrLocalDebugProcess(parameters, session, consoleBuilder) {
 
     private val fortranBreakPointHandler = createFortranBreakpointHandler()
