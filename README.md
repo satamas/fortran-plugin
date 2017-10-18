@@ -27,7 +27,11 @@ To start work with your Fortran project use `New > Project from existing sources
 In CLion it is also possible to load `CMake` based projects, see 
 [instruction](https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html). 
 Example of Fortran project build with `CMake` can be found [here](https://cmake.org/Wiki/CMakeForFortranExample). 
-Using `CMake` project in CLion allows you to compile and run project from the IDE.
+Using `CMake` project in CLion allows you to compile, run and debug project from the IDE.
+
+To debug Fortran projects please add Fortran run configuration `Edit Configurations > Add New Configuration > Fortran`, 
+select it in `Select Run/Debug configuration` menu and choose GDB as a working debugger. More detail about debugging in Clion
+is available in [Clion help](https://www.jetbrains.com/help/clion/debugger.html).
 
 Fortran source files might be in two forms: free form and fixed form. 
 For now some features are available only for free form.
@@ -37,6 +41,6 @@ while `.f90`, `.f95`, `.f03` and `.f08` files are in free source form.
 One can easily change this settings. Please, visit 
 [File Types Help](https://www.jetbrains.com/help/idea/file-types.html) for further detail.
 
-Now the plugin provides lexer, parser, simple syntax highlighter, formatter (for free source firm files only), 
+Now the plugin provides lexer, parser, debugger, simple syntax highlighter, formatter (for free source firm files only), 
 commenter, code folding and navigation (Find Usages and Go to Definition), brace matcher, structure view and several code inspections.
 

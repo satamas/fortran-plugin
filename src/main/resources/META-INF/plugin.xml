@@ -1,18 +1,18 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>1.5.1</version>
+    <version>1.6</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
       Fortran language support<br>
       The plugin supports FORTRAN 77, FORTRAN 90, FORTRAN 95, FORTRAN 2003 and FORTRAN 2008 source code.
       Several nonstandard extensions are also supported.
-      Lexer, parser, syntax highlighter, commenter, formatter, folding, navigation, structure view, brace matcher and some inspections are provided.
+      Lexer, parser, syntax highlighter, debugger, commenter, formatter, folding, navigation, structure view, brace matcher and some inspections are provided.
     ]]></description>
 
     <change-notes><![CDATA[
-      File structure added. Labels and construct names support improved. Commenter for fixed form added. Folding improved.
+        GNU debugger support added.
     ]]>
     </change-notes>
 
