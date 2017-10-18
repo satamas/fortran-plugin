@@ -42,9 +42,10 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
             if (node != null && node.valueContainer is CidrPhysicalValue && node.isComputed) {
                 val debugValue = node.valueContainer as CidrPhysicalValue
 
-                val nodeType = debugValue.type
-                println(nodeType)
-                if ("array" == nodeType) {
+           //     val nodeType = debugValue.typesHelper.
+           //     println(nodeType)
+          //      println( debugValue.presentationVar.typeClass?.toString())
+                if (true) {
                     e.presentation.text = "View as Array";
                     e.presentation.isVisible = true;
                 }

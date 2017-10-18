@@ -1,7 +1,9 @@
 package org.jetbrains.fortran.debugger.runconfig
 
 import com.intellij.execution.filters.TextConsoleBuilder
+import com.intellij.util.containers.ContainerUtil
 import com.intellij.xdebugger.XDebugSession
+import com.intellij.xdebugger.XDebugSessionListener
 import com.intellij.xdebugger.breakpoints.XBreakpoint
 import com.intellij.xdebugger.breakpoints.XBreakpointHandler
 import com.intellij.xdebugger.frame.XValueChildrenList
@@ -11,15 +13,26 @@ import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
 import com.jetbrains.cidr.execution.debugger.breakpoints.CidrBreakpointHandler
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrValue
 import com.jetbrains.python.debugger.ArrayChunk
-import com.jetbrains.python.debugger.ArrayChunkBuilder
 import com.jetbrains.python.debugger.PyDebuggerException
+import com.jetbrains.python.debugger.PyFrameListener
 import com.jetbrains.python.debugger.dataview.DataViewFrameAccessor
 import com.jetbrains.python.debugger.dataview.DataViewValueHolder
 import org.jetbrains.fortran.debugger.FortranLineBreakpointType
 
 class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, consoleBuilder: TextConsoleBuilder)
-    : CidrLocalDebugProcess(parameters, session, consoleBuilder) {
+    : CidrLocalDebugProcess(parameters, session, consoleBuilder)
+    , DataViewFrameAccessor {
+    init {
+        session.addSessionListener(object : XDebugSessionListener {
+            override fun stackFrameChanged() {
+                for (listener in myFrameListeners) {
+                    listener.frameChanged()
+                }
+            }
+        })
+    }
 
+    private val myFrameListeners = ContainerUtil.createLockFreeCopyOnWriteList<PyFrameListener>()
     private val fortranBreakPointHandler = createFortranBreakpointHandler()
 
     private fun createFortranBreakpointHandler(): CidrBreakpointHandler {
@@ -57,4 +70,7 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
         throw PyDebuggerException("AAAAAAAAAAAAAA")
     }
 
+    override fun addFrameListener(listener: PyFrameListener) {
+        myFrameListeners.add(listener)
+    }
 }
