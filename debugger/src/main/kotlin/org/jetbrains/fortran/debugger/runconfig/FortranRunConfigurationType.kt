@@ -1,7 +1,6 @@
 package org.jetbrains.fortran.debugger.runconfig
 
 import com.intellij.execution.configurations.ConfigurationFactory
-import com.intellij.execution.configurations.ConfigurationTypeUtil
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.project.Project
 import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfiguration
@@ -9,7 +8,7 @@ import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfigurationSettingsEditor
 import com.jetbrains.cidr.cpp.execution.CMakeRunConfigurationType
 import org.jetbrains.fortran.FortranIcons
 
-class FortranRunConfigurationType private constructor()
+class FortranRunConfigurationType
     : CMakeRunConfigurationType("FortranRunConfiguration",
         "Fortran",
         "Fortran CMake run configuration",
@@ -21,11 +20,5 @@ class FortranRunConfigurationType private constructor()
 
     override fun createEditor(project: Project): SettingsEditor<out CMakeAppRunConfiguration> {
         return CMakeAppRunConfigurationSettingsEditor(project, getHelper(project))
-    }
-
-    companion object {
-
-        val instance: FortranRunConfigurationType
-            get() = ConfigurationTypeUtil.findConfigurationType(FortranRunConfigurationType::class.java)
     }
 }

@@ -8,8 +8,6 @@ import com.jetbrains.cidr.execution.debugger.backend.LLValue
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrDebuggerTypesHelper
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrMemberValue
 import org.jetbrains.fortran.lang.psi.*
-import org.jetbrains.fortran.lang.psi.ext.getNextNonCommentSibling
-import org.jetbrains.fortran.lang.psi.ext.parentOfType
 
 class FortranDebuggerTypesHelper(process: CidrDebugProcess) : CidrDebuggerTypesHelper(process) {
     override fun computeSourcePosition(value: CidrMemberValue): XSourcePosition? = null
