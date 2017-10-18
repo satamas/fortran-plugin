@@ -9,13 +9,10 @@ import com.intellij.openapi.project.Project
 import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfiguration
 import com.jetbrains.cidr.execution.CidrCommandLineState
 
-class FortranRunConfiguration constructor( project:Project,
-                                                     factory : ConfigurationFactory , name : String )
+class FortranRunConfiguration(project: Project, factory: ConfigurationFactory, name: String)
     : CMakeAppRunConfiguration(project, factory, name) {
-
     @Throws(ExecutionException::class)
     override fun getState(executor: Executor, env: ExecutionEnvironment): CidrCommandLineState? {
         return CidrCommandLineState(env, FortranLauncher(this))
     }
-
 }
