@@ -10,7 +10,12 @@ class FortranDataViewValueHolder(private val cidrValue: CidrPhysicalValue) : Dat
 
     override fun isTemporary(): Boolean = false
     override fun isErrorOnEval(): Boolean = false
-    override fun getType(): String? = cidrValue.type
+    override fun getType(): String? {
+      return if (cidrValue.type.contains('(') && !cidrValue.type.substringAfterLast('(').contains("kind") )
+          "ndarray"
+      else
+          cidrValue.type
+    }
     override fun getName(): String = cidrValue.name
     override fun getFrameAccessor(): FortranDebugProcess = cidrValue.process as FortranDebugProcess
     override fun getTempName(): String? = cidrValue.name

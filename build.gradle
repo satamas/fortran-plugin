@@ -122,7 +122,7 @@ project(':') {
         main {
             kotlin.srcDirs += 'debugger/src/main/kotlin'
             compileClasspath += files("debugger/lib/clion/lib/clion.jar")
-            compileClasspath += files("debugger/lib/clion/plugins/python/lib/python_src")
+            compileClasspath += files("debugger/lib/clion/plugins/python/lib/python.jar")
          //   compileClasspath += files("../../JetBrains/idea-ultimate-src/out/classes/production/python-pydev")
          //   compileClasspath += files("../../JetBrains/idea-ultimate-src/out/classes/production/python-community")
 

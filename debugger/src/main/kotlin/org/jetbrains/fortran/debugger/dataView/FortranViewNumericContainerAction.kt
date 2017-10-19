@@ -53,7 +53,7 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
     companion object {
         fun getSelectedPaths(dataContext : DataContext):Array<TreePath>?  = XDebuggerTree.getTree(dataContext)?.selectionPaths
 
-        fun isFortranArray(type : String) : Boolean {
+        private fun isFortranArray(type : String) : Boolean {
             return type.contains('(') && !type.substringAfterLast('(').contains("kind")
         }
     }
