@@ -11,19 +11,17 @@ import com.intellij.xdebugger.frame.XCompositeNode
 import com.intellij.xdebugger.frame.XDebuggerTreeNodeHyperlink
 import com.intellij.xdebugger.frame.XValueChildrenList
 import com.jetbrains.cidr.execution.RunParameters
-import com.jetbrains.cidr.execution.debugger.CidrLocalDebugProcess
+import com.jetbrains.cidr.execution.debugger.*
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
 import com.jetbrains.cidr.execution.debugger.breakpoints.CidrBreakpointHandler
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrPhysicalValue
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrValue
-import com.jetbrains.cidr.execution.debugger.evaluation.EvaluationContext
-import com.jetbrains.python.debugger.ArrayChunk
-import com.jetbrains.python.debugger.ArrayChunkBuilder
-import com.jetbrains.python.debugger.PyDebuggerException
-import com.jetbrains.python.debugger.PyFrameListener
+import com.jetbrains.python.debugger.*
 import com.jetbrains.python.debugger.dataview.DataViewFrameAccessor
 import com.jetbrains.python.debugger.dataview.DataViewValueHolder
 import org.jetbrains.fortran.debugger.FortranLineBreakpointType
+import java.util.concurrent.Semaphore
+import java.util.concurrent.TimeUnit
 import javax.swing.Icon
 
 class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, consoleBuilder: TextConsoleBuilder)
@@ -74,32 +72,49 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
     @Throws(PyDebuggerException::class)
     override fun getArrayItems(holder: DataViewValueHolder, rowOffset: Int, colOffset: Int, rows: Int, cols: Int, format: String): ArrayChunk
     {
-        val result = ArrayChunkBuilder().setHolder(holder)
-        doGetArrayItems(holder, result)
+        val result = ArrayChunkBuilder().setHolder(holder).setSlicePresentation(holder.getName()).setMin("0").setMax("4")
+        val node = DataViewNode(result, holder.getName())
 
-        return result.createArrayChunk()
-    }
 
-    private fun doGetArrayItems(holder: DataViewValueHolder, result: ArrayChunkBuilder) {
-        postCommand { driver ->
-            val context = (holder.value as CidrPhysicalValue).createEvaluationContext(driver, null)
-            val node = DataViewNode(result, context)
-            (holder.value as CidrPhysicalValue).computeChildren(node)
+        val semaphore = Semaphore(0)
+
+          (holder.value as CidrPhysicalValue).frame.computeChildren(node)
+
+        try {
+                semaphore.tryAcquire(2000, TimeUnit.MILLISECONDS)
+        } catch (ignore: InterruptedException) {
         }
+
+        val chunk = result.createArrayChunk()
+        return chunk
     }
+
 
     override fun addFrameListener(listener: PyFrameListener) {
         myFrameListeners.add(listener)
     }
 
-    private class DataViewNode(val builder: ArrayChunkBuilder, private val myContext: EvaluationContext) : XCompositeNode {
+
+
+    private class DataViewNode(val builder: ArrayChunkBuilder, val varName : String) : XCompositeNode {
 
         override fun addChildren(children: XValueChildrenList, last: Boolean) {
             for (i in 0 until children.size()) {
-                builder.setData(arrayOf(arrayOf(children)))
-                builder.setRows(1)
-                builder.setColumns(2)
+                if (children.getName(i).equals(varName)) {
+                    children.getValue(i).computeChildren(this)
+                    return
+
+                }
             }
+                val data = mutableListOf<Array<String>>()
+                for (i in 0 until children.size()) {
+                    data.add(arrayOf(children.getValue(i).toString().substringBeforeLast(":")))
+                }
+                builder.setData(data.toTypedArray())
+                builder.setRows(children.size())
+                builder.setColumns(1)
+                builder.setType("i")
+                builder.setFormat("%.5f")
         }
 
         override fun tooManyChildren(remaining: Int) {
