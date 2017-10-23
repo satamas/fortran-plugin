@@ -21,6 +21,7 @@ import com.jetbrains.python.debugger.*
 import com.jetbrains.python.debugger.dataview.DataViewFrameAccessor
 import com.jetbrains.python.debugger.dataview.DataViewValueHolder
 import org.jetbrains.fortran.debugger.FortranLineBreakpointType
+import org.jetbrains.fortran.debugger.dataView.FortranViewNumericContainerAction
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import javax.swing.Icon
@@ -74,13 +75,12 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
     override fun getArrayItems(holder: DataViewValueHolder, rowOffset: Int, colOffset: Int, rows: Int, cols: Int, format: String): ArrayChunk
     {
         val result = ArrayChunkBuilder().setHolder(holder).setSlicePresentation(holder.getName())
-
-
         postCommand { driver ->
             val context = createEvaluationContext(driver, null, session.currentStackFrame as CidrStackFrame)
             val node = DataViewNode(context, result, holder.getName())
             (holder.value as CidrPhysicalValue).frame.computeChildren(node)
         }
+
         val semaphore = Semaphore(0)
 
 
@@ -101,7 +101,14 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
 
 
 
-    private class DataViewNode(val context : EvaluationContext, val builder: ArrayChunkBuilder, val varName : String) : XCompositeNode {
+    private class DataViewNode(val context : EvaluationContext,
+                               val builder: ArrayChunkBuilder,
+                               val varName : String) : XCompositeNode {
+        var is2D : Boolean = false
+        var rowN : Int = 0
+        val data = mutableListOf<MutableList<String>>()
+        val rowNames = mutableListOf<String>()
+        val colNames = mutableListOf<String>()
 
         override fun addChildren(children: XValueChildrenList, last: Boolean) {
             for (i in 0 until children.size()) {
@@ -111,6 +118,7 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
 
                 }
             }
+
             // type
             val type = (children.getValue(0) as CidrPhysicalValue).type
             val arrayType = when {
@@ -121,29 +129,78 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             }
             builder.setType(arrayType)
 
-            val data = mutableListOf<Array<String>>()
-            val rowNames = mutableListOf<String>()
-            var min : Double? = null
-            var max : Double? = null
-            for (i in 0 until children.size()) {
-                val cidrValue = (children.getValue(i) as CidrPhysicalValue)
-                val value = cidrValue.getVarData(context).value
-                val number = java.lang.Double.parseDouble(value)
-                min = if (min != null) minOf(min, number) else number
-                max = if (max != null) maxOf(max, number) else number
-                data.add(arrayOf(value))
-                rowNames.add(cidrValue.name)
+            val in2D : Boolean
+            if (FortranViewNumericContainerAction.isFortranIntrinsicTypeArray(
+                    (children.getValue(0) as CidrPhysicalValue).type
+            )) {
+                is2D = true
+                in2D = false
+            } else {
+                in2D = true
             }
-            builder.setData(data.toTypedArray())
-            builder.setRows(children.size())
-            builder.setColumns(1)
 
+            for (i in 0 until children.size()) {
+                if (is2D){
+                    if (in2D) {
+                        val cidrValue = (children.getValue(i) as CidrPhysicalValue)
+                        val value = cidrValue.getVarData(context).value
+                        if (rowN == 0) {
+                            data.add(mutableListOf())
+                            rowNames.add((children.getValue(i) as CidrPhysicalValue).name)
+                        }
+                        data[i].add(value)
+                    } else {
+                        children.getValue(i).computeChildren(this)
+                        (children.getValue(i) as CidrPhysicalValue).process.postCommand {
+                            colNames.add((children.getValue(i) as CidrPhysicalValue).name)
+                            rowN++;
+                        }
+                    }
+                } else {
+                    val cidrValue = (children.getValue(i) as CidrPhysicalValue)
+                    val value = cidrValue.getVarData(context).value
+                    data.add(mutableListOf(value))
+                    rowNames.add(cidrValue.name)
+                }
+            }
+            if (is2D && in2D) return
+            (children.getValue(0) as CidrPhysicalValue).process.postCommand {
+                val dataArrayList = mutableListOf<Array<String>>()
+                for (i in data) {
+                    dataArrayList.add(i.toTypedArray())
+                }
+                builder.setData(dataArrayList.toTypedArray())
 
-            builder.setFormat("%.5f")
-            builder.setMin(min.toString())
-            builder.setMax(max.toString())
-            builder.setRowLabels(rowNames)
-            builder.setColHeaders(mutableListOf(ArrayChunk.ColHeader("1",arrayType,"%.5f",max.toString(), min.toString())))
+                // min max
+                var min: Double? = null
+                var max: Double? = null
+                for (i in data) {
+                    for(j in i) {
+                        val number = java.lang.Double.parseDouble(j)
+                        min = if (min != null) minOf(min, number) else number
+                        max = if (max != null) maxOf(max, number) else number
+                    }
+                }
+
+                val colHeaders = mutableListOf<ArrayChunk.ColHeader>()
+                if (is2D) {
+                    builder.setRows(data.size)
+                    builder.setColumns(data[0].size)
+                    for (i in colNames) {
+                        colHeaders.add(ArrayChunk.ColHeader(i, arrayType, "%.5f", max.toString(), min.toString()))
+                    }
+                } else {
+                    builder.setRows(children.size())
+                    builder.setColumns(1)
+                    colHeaders.add(ArrayChunk.ColHeader("1", arrayType, "%.5f", max.toString(), min.toString()))
+                }
+
+                builder.setFormat("%.5f")
+                builder.setMin(min.toString())
+                builder.setMax(max.toString())
+                builder.setRowLabels(rowNames)
+                builder.setColHeaders(colHeaders)
+            }
         }
 
         override fun tooManyChildren(remaining: Int) {
