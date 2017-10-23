@@ -12,7 +12,7 @@ class FortranDataViewValueHolder(private val cidrValue: CidrPhysicalValue) : Dat
     override fun isErrorOnEval(): Boolean = false
     override fun getType(): String? {
       return if (cidrValue.type.contains('(') && !cidrValue.type.substringAfterLast('(').contains("kind") )
-          "ndarray"
+          "DataFrame"
       else
           cidrValue.type
     }

@@ -113,22 +113,26 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             }
             // type
             val type = (children.getValue(0) as CidrPhysicalValue).type
-            when {
-                type.contains("integer") -> builder.setType("i")
-                type.contains("real") -> builder.setType("f")
-                type.contains("logical") -> builder.setType("b")
-                else -> builder.setType("c")
+            val arrayType = when {
+                type.contains("integer") -> "i"
+                type.contains("real") -> "f"
+                type.contains("logical") -> "b"
+                else -> "c"
             }
+            builder.setType(arrayType)
 
             val data = mutableListOf<Array<String>>()
+            val rowNames = mutableListOf<String>()
             var min : Double? = null
             var max : Double? = null
             for (i in 0 until children.size()) {
-                val value = (children.getValue(i) as CidrPhysicalValue).getVarData(context).value
+                val cidrValue = (children.getValue(i) as CidrPhysicalValue)
+                val value = cidrValue.getVarData(context).value
                 val number = java.lang.Double.parseDouble(value)
                 min = if (min != null) minOf(min, number) else number
                 max = if (max != null) maxOf(max, number) else number
                 data.add(arrayOf(value))
+                rowNames.add(cidrValue.name)
             }
             builder.setData(data.toTypedArray())
             builder.setRows(children.size())
@@ -138,7 +142,8 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             builder.setFormat("%.5f")
             builder.setMin(min.toString())
             builder.setMax(max.toString())
-
+            builder.setRowLabels(rowNames)
+            builder.setColHeaders(mutableListOf(ArrayChunk.ColHeader("1",arrayType,"%.5f",max.toString(), min.toString())))
         }
 
         override fun tooManyChildren(remaining: Int) {
