@@ -90,8 +90,7 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
         } catch (ignore: InterruptedException) {
         }
 
-        val chunk = result.createArrayChunk()
-        return chunk
+        return result.createArrayChunk()
     }
 
 
@@ -104,13 +103,13 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
     private class DataViewNode(val context : EvaluationContext,
                                val builder: ArrayChunkBuilder,
                                val varName : String) : XCompositeNode {
-        var is2D : Boolean = false
-        var rowN : Int = 0
-        val data = mutableListOf<MutableList<String>>()
-        val rowNames = mutableListOf<String>()
-        val colNames = mutableListOf<String>()
+        private var arrayIs2D: Boolean = false
+        private val data = mutableListOf<MutableList<String>>()
+        private val rowNames = mutableListOf<String>()
+        private val colNames = mutableListOf<String>()
 
         override fun addChildren(children: XValueChildrenList, last: Boolean) {
+            // find variable in a frame
             for (i in 0 until children.size()) {
                 if (children.getName(i).equals(varName, true)) {
                     children.getValue(i).computeChildren(this)
@@ -119,88 +118,86 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                 }
             }
 
+            val firstChildren = children.getValue(0) as CidrPhysicalValue
+            val process = firstChildren.process
+
             // type
-            val type = (children.getValue(0) as CidrPhysicalValue).type
-            val arrayType = when {
-                type.contains("integer") -> "i"
-                type.contains("real") -> "f"
-                type.contains("logical") -> "b"
-                else -> "c"
-            }
+            val arrayType = computeArrayChunkType(firstChildren.type)
             builder.setType(arrayType)
 
-            val in2D : Boolean
-            if (FortranViewNumericContainerAction.isFortranIntrinsicTypeArray(
-                    (children.getValue(0) as CidrPhysicalValue).type
-            )) {
-                is2D = true
-                in2D = false
+            val lastLevel : Boolean
+            if (FortranViewNumericContainerAction.isFortranIntrinsicTypeArray(firstChildren.type)) {
+                arrayIs2D = true
+                lastLevel = false
             } else {
-                in2D = true
+                lastLevel = true
             }
 
             for (i in 0 until children.size()) {
-                if (is2D){
-                    if (in2D) {
+                if (arrayIs2D){
+                    if (lastLevel) {
                         val cidrValue = (children.getValue(i) as CidrPhysicalValue)
-                        val value = cidrValue.getVarData(context).value
-                        if (rowN == 0) {
+                        if (data.size <= i) {
                             data.add(mutableListOf())
-                            rowNames.add((children.getValue(i) as CidrPhysicalValue).name)
+                            rowNames.add(cidrValue.name)
                         }
-                        data[i].add(value)
+                        data[i].add(cidrValue.getVarData(context).value)
                     } else {
                         children.getValue(i).computeChildren(this)
-                        (children.getValue(i) as CidrPhysicalValue).process.postCommand {
+                        process.postCommand {
                             colNames.add((children.getValue(i) as CidrPhysicalValue).name)
-                            rowN++;
                         }
                     }
                 } else {
                     val cidrValue = (children.getValue(i) as CidrPhysicalValue)
-                    val value = cidrValue.getVarData(context).value
-                    data.add(mutableListOf(value))
+                    data.add(mutableListOf(cidrValue.getVarData(context).value))
                     rowNames.add(cidrValue.name)
                 }
             }
-            if (is2D && in2D) return
-            (children.getValue(0) as CidrPhysicalValue).process.postCommand {
-                val dataArrayList = mutableListOf<Array<String>>()
-                for (i in data) {
-                    dataArrayList.add(i.toTypedArray())
-                }
+            if (arrayIs2D && lastLevel) return
+
+            // prepare final result
+            process.postCommand {
+                val dataArrayList = data.map { it.toTypedArray() }
                 builder.setData(dataArrayList.toTypedArray())
 
                 // min max
-                var min: Double? = null
-                var max: Double? = null
-                for (i in data) {
-                    for(j in i) {
-                        val number = java.lang.Double.parseDouble(j)
-                        min = if (min != null) minOf(min, number) else number
-                        max = if (max != null) maxOf(max, number) else number
-                    }
-                }
+                val (min, max) = computeMinMax()
 
                 val colHeaders = mutableListOf<ArrayChunk.ColHeader>()
-                if (is2D) {
-                    builder.setRows(data.size)
-                    builder.setColumns(data[0].size)
-                    for (i in colNames) {
-                        colHeaders.add(ArrayChunk.ColHeader(i, arrayType, "%.5f", max.toString(), min.toString()))
-                    }
+                if (arrayIs2D) {
+                    colNames.mapTo(colHeaders) { ArrayChunk.ColHeader(it, arrayType, "%.5f", max, min) }
                 } else {
-                    builder.setRows(children.size())
-                    builder.setColumns(1)
-                    colHeaders.add(ArrayChunk.ColHeader("1", arrayType, "%.5f", max.toString(), min.toString()))
+                    colHeaders.add(ArrayChunk.ColHeader("1", arrayType, "%.5f", max, min))
                 }
 
+                builder.setRows(data.size)
+                builder.setColumns(data[0].size)
                 builder.setFormat("%.5f")
-                builder.setMin(min.toString())
-                builder.setMax(max.toString())
+                builder.setMin(min).setMax(max)
                 builder.setRowLabels(rowNames)
                 builder.setColHeaders(colHeaders)
             }
+        }
+
+        private fun computeArrayChunkType(type : String) = when {
+            type.contains("integer") -> "i"
+            type.contains("real") -> "f"
+            type.contains("logical") -> "b"
+            else -> "c"
+        }
+
+        private fun computeMinMax() : Pair<String, String> {
+            var min: Double? = null
+            var max: Double? = null
+            for (i in data) {
+                for(j in i) {
+                    val number = java.lang.Double.parseDouble(j)
+                    min = if (min != null) minOf(min, number) else number
+                    max = if (max != null) maxOf(max, number) else number
+                }
+            }
+            return Pair(min.toString(), max.toString())
         }
 
         override fun tooManyChildren(remaining: Int) {
