@@ -13,7 +13,6 @@ import com.intellij.xdebugger.frame.XValueChildrenList
 import com.jetbrains.cidr.execution.RunParameters
 import com.jetbrains.cidr.execution.debugger.*
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
-import com.jetbrains.cidr.execution.debugger.backend.gdb.GDBDriver
 import com.jetbrains.cidr.execution.debugger.breakpoints.CidrBreakpointHandler
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrPhysicalValue
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrValue
@@ -106,24 +105,39 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
 
         override fun addChildren(children: XValueChildrenList, last: Boolean) {
             for (i in 0 until children.size()) {
-                if (children.getName(i).equals(varName)) {
+                if (children.getName(i).equals(varName, true)) {
                     children.getValue(i).computeChildren(this)
                     return
 
                 }
             }
+            // type
+            val type = (children.getValue(0) as CidrPhysicalValue).type
+            when {
+                type.contains("integer") -> builder.setType("i")
+                type.contains("real") -> builder.setType("f")
+                type.contains("logical") -> builder.setType("b")
+                else -> builder.setType("c")
+            }
+
             val data = mutableListOf<Array<String>>()
+            var min : Double? = null
+            var max : Double? = null
             for (i in 0 until children.size()) {
                 val value = (children.getValue(i) as CidrPhysicalValue).getVarData(context).value
+                val number = java.lang.Double.parseDouble(value)
+                min = if (min != null) minOf(min, number) else number
+                max = if (max != null) maxOf(max, number) else number
                 data.add(arrayOf(value))
             }
             builder.setData(data.toTypedArray())
             builder.setRows(children.size())
             builder.setColumns(1)
-            builder.setType("i")
+
+
             builder.setFormat("%.5f")
-            builder.setMin("-100")
-            builder.setMax("100")
+            builder.setMin(min.toString())
+            builder.setMax(max.toString())
 
         }
 
