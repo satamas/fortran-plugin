@@ -141,10 +141,11 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                             data.add(mutableListOf())
                             rowNames.add(cidrValue.name)
                         }
-                        if (arrayType == "c") {
-                            data[i].add(ComplexNumber(cidrValue.getVarData(context).value).toString())
-                        } else {
-                            data[i].add(cidrValue.getVarData(context).value)
+                        val valData = cidrValue.getVarData(context).value
+                        when (arrayType) {
+                            "c" -> data[i].add(ComplexNumber(valData).toString())
+                            "b" -> data[i].add(if (valData.equals(".true.", true)) "True" else "False")
+                            else -> data[i].add(valData)
                         }
                     } else {
                         children.getValue(i).computeChildren(this)
@@ -154,7 +155,13 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                     }
                 } else {
                     val cidrValue = (children.getValue(i) as CidrPhysicalValue)
-                    data.add(mutableListOf(cidrValue.getVarData(context).value))
+                    val valData = cidrValue.getVarData(context).value
+                    when (arrayType) {
+                        "c" -> data.add(mutableListOf(ComplexNumber(valData).toString()))
+                        "b" -> data.add(mutableListOf(if (valData.equals(".true.", true)) "True" else "False"))
+
+                        else -> data.add(mutableListOf(valData))
+                    }
                     rowNames.add(cidrValue.name)
                 }
             }
@@ -165,7 +172,7 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                 val dataArrayList = data.map { it.toTypedArray() }
                 builder.setData(dataArrayList.toTypedArray())
 
-                val (min, max) = computeMinMax(arrayType == "c")
+                val (min, max) = computeMinMax(arrayType)
 
                 val colHeaders = mutableListOf<ArrayChunk.ColHeader>()
 
@@ -191,8 +198,8 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             else -> "c"
         }
 
-        private fun computeMinMax(isComplex: Boolean) : Pair<String, String> {
-            if (isComplex) {
+        private fun computeMinMax(type: String) : Pair<String, String> {
+            if (type == "c") {
                 var min: ComplexNumber? = null
                 var max: ComplexNumber? = null
                 for (i in data) {
@@ -204,6 +211,8 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                     }
                 }
                 return Pair(min.toString(), max.toString())
+            } else if (type == "b") {
+                return Pair("False", "True")
             } else {
                 var min: Double? = null
                 var max: Double? = null
@@ -219,11 +228,9 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
         }
 
         override fun tooManyChildren(remaining: Int) {
-
         }
 
         override fun setErrorMessage(errorMessage: String) {
-
         }
 
         override fun setErrorMessage(errorMessage: String, link: XDebuggerTreeNodeHyperlink?) {
