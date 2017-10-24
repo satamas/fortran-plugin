@@ -86,7 +86,7 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
 
 
         try {
-                semaphore.tryAcquire(2000, TimeUnit.MILLISECONDS)
+                semaphore.tryAcquire(200, TimeUnit.MILLISECONDS)
         } catch (ignore: InterruptedException) {
         }
 
@@ -141,7 +141,11 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                             data.add(mutableListOf())
                             rowNames.add(cidrValue.name)
                         }
-                        data[i].add(cidrValue.getVarData(context).value)
+                        if (arrayType == "c") {
+                            data[i].add(ComplexNumber(cidrValue.getVarData(context).value).toString())
+                        } else {
+                            data[i].add(cidrValue.getVarData(context).value)
+                        }
                     } else {
                         children.getValue(i).computeChildren(this)
                         process.postCommand {
@@ -161,10 +165,10 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                 val dataArrayList = data.map { it.toTypedArray() }
                 builder.setData(dataArrayList.toTypedArray())
 
-                // min max
-                val (min, max) = computeMinMax()
+                val (min, max) = computeMinMax(arrayType == "c")
 
                 val colHeaders = mutableListOf<ArrayChunk.ColHeader>()
+
                 if (arrayIs2D) {
                     colNames.mapTo(colHeaders) { ArrayChunk.ColHeader(it, arrayType, "%.5f", max, min) }
                 } else {
@@ -187,17 +191,31 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             else -> "c"
         }
 
-        private fun computeMinMax() : Pair<String, String> {
-            var min: Double? = null
-            var max: Double? = null
-            for (i in data) {
-                for(j in i) {
-                    val number = java.lang.Double.parseDouble(j)
-                    min = if (min != null) minOf(min, number) else number
-                    max = if (max != null) maxOf(max, number) else number
+        private fun computeMinMax(isComplex: Boolean) : Pair<String, String> {
+            if (isComplex) {
+                var min: ComplexNumber? = null
+                var max: ComplexNumber? = null
+                for (i in data) {
+                    for(j in i) {
+                        val signIndex = j.indexOfLast { it == '+' || it == '-' }
+                        val number = ComplexNumber(j.substring(0,signIndex), j.substring(signIndex,j.lastIndex))
+                        min = if (min != null) minOf(min, number) else number
+                        max = if (max != null) maxOf(max, number) else number
+                    }
                 }
+                return Pair(min.toString(), max.toString())
+            } else {
+                var min: Double? = null
+                var max: Double? = null
+                for (i in data) {
+                    for(j in i) {
+                        val number = j.toDouble()
+                        min = if (min != null) minOf(min, number) else number
+                        max = if (max != null) maxOf(max, number) else number
+                    }
+                }
+                return Pair(min.toString(), max.toString())
             }
-            return Pair(min.toString(), max.toString())
         }
 
         override fun tooManyChildren(remaining: Int) {
@@ -224,5 +242,40 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
         }
 
         override fun setAlreadySorted(alreadySorted: Boolean) {}
+
+
+    }
+
+
+    private class ComplexNumber : Comparable<ComplexNumber> {
+        constructor(fortranComplex: String) {
+            val comaIndex = fortranComplex.indexOf(',')
+            this.realPart = fortranComplex.substring(1, comaIndex).toDouble()
+            this.imPart = fortranComplex.substring(comaIndex+1, fortranComplex.lastIndex).toDouble()
+        }
+
+        constructor(real : String, im: String) {
+            this.realPart = real.toDouble()
+            this.imPart = im.toDouble()
+        }
+
+        val realPart: Double
+        val imPart: Double
+
+
+        override fun toString() : String {
+            return if (imPart < 0) realPart.toString() + imPart.toString() + "j"
+            else realPart.toString() + "+" + imPart.toString() + "j"
+        }
+
+        override fun compareTo(other: ComplexNumber): Int {
+            return if (realPart == other.realPart && imPart == other.imPart) {
+                0
+            } else if ((realPart < other.realPart || ((realPart == other.realPart && imPart < other.imPart)))) {
+                1
+            } else {
+                -1
+            }
+        }
     }
 }

@@ -56,6 +56,7 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
         fun isFortranIntrinsicTypeArray(type : String) : Boolean {
             return type.contains('(') && !type.substringAfterLast('(').contains("kind")
                     && type.contains(Regex("integer|real|logical|complex"))
+                    && type.substringAfterLast('(').count { it ==',' } <= 1 // we don't know what to do with 3D
         }
     }
 }
