@@ -141,12 +141,7 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                             data.add(mutableListOf())
                             rowNames.add(cidrValue.name)
                         }
-                        val valData = cidrValue.getVarData(context).value
-                        when (arrayType) {
-                            "c" -> data[i].add(ComplexNumber(valData).toString())
-                            "b" -> data[i].add(if (valData.equals(".true.", true)) "True" else "False")
-                            else -> data[i].add(valData)
-                        }
+                        addToRow(cidrValue.getVarData(context).value, arrayType, i)
                     } else {
                         children.getValue(i).computeChildren(this)
                         process.postCommand {
@@ -155,13 +150,7 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                     }
                 } else {
                     val cidrValue = (children.getValue(i) as CidrPhysicalValue)
-                    val valData = cidrValue.getVarData(context).value
-                    when (arrayType) {
-                        "c" -> data.add(mutableListOf(ComplexNumber(valData).toString()))
-                        "b" -> data.add(mutableListOf(if (valData.equals(".true.", true)) "True" else "False"))
-
-                        else -> data.add(mutableListOf(valData))
-                    }
+                    addTo1DArray(cidrValue.getVarData(context).value, arrayType)
                     rowNames.add(cidrValue.name)
                 }
             }
@@ -198,33 +187,55 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             else -> "c"
         }
 
-        private fun computeMinMax(type: String) : Pair<String, String> {
-            if (type == "c") {
-                var min: ComplexNumber? = null
-                var max: ComplexNumber? = null
-                for (i in data) {
-                    for(j in i) {
-                        val signIndex = j.indexOfLast { it == '+' || it == '-' }
-                        val number = ComplexNumber(j.substring(0,signIndex), j.substring(signIndex,j.lastIndex))
-                        min = if (min != null) minOf(min, number) else number
-                        max = if (max != null) maxOf(max, number) else number
-                    }
-                }
-                return Pair(min.toString(), max.toString())
-            } else if (type == "b") {
-                return Pair("False", "True")
-            } else {
-                var min: Double? = null
-                var max: Double? = null
-                for (i in data) {
-                    for(j in i) {
-                        val number = j.toDouble()
-                        min = if (min != null) minOf(min, number) else number
-                        max = if (max != null) maxOf(max, number) else number
-                    }
-                }
-                return Pair(min.toString(), max.toString())
+        private fun addTo1DArray(valData : String, arrayType : String) {
+            when (arrayType) {
+                "c" -> data.add(mutableListOf(ComplexNumber(valData).toString()))
+                "b" -> data.add(mutableListOf(if (valData.equals(".true.", true)) "True" else "False"))
+                else -> data.add(mutableListOf(valData))
             }
+        }
+
+        private fun addToRow(valData : String, arrayType : String, row : Int) {
+            when (arrayType) {
+                "c" -> data[row].add(ComplexNumber(valData).toString())
+                "b" -> data[row].add(if (valData.equals(".true.", true)) "True" else "False")
+                else -> data[row].add(valData)
+            }
+        }
+
+        private fun computeMinMax(type: String) : Pair<String, String> {
+            return when (type) {
+                "c" -> computeComplexMinMax()
+                "b" -> Pair("False", "True")
+                else -> computeDoubleMinMax()
+            }
+        }
+
+        private fun computeComplexMinMax() : Pair<String, String> {
+            var min: ComplexNumber? = null
+            var max: ComplexNumber? = null
+            for (i in data) {
+                for(j in i) {
+                    val signIndex = j.indexOfLast { it == '+' || it == '-' }
+                    val number = ComplexNumber(j.substring(0,signIndex), j.substring(signIndex,j.lastIndex))
+                    min = if (min != null) minOf(min, number) else number
+                    max = if (max != null) maxOf(max, number) else number
+                }
+            }
+            return Pair(min.toString(), max.toString())
+        }
+
+        private fun computeDoubleMinMax() : Pair<String, String> {
+            var min: Double? = null
+            var max: Double? = null
+            for (i in data) {
+                for(j in i) {
+                    val number = j.toDouble()
+                    min = if (min != null) minOf(min, number) else number
+                    max = if (max != null) maxOf(max, number) else number
+                }
+            }
+            return Pair(min.toString(), max.toString())
         }
 
         override fun tooManyChildren(remaining: Int) {

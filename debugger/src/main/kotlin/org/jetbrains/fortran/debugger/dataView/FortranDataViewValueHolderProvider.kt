@@ -10,7 +10,7 @@ import org.jetbrains.fortran.debugger.runconfig.FortranDebugProcess
 class FortranDataViewValueHolderProvider : DataViewValueHolderProvider() {
     override fun createHolder(value: XNamedValue): DataViewValueHolder? {
         return if (value is CidrPhysicalValue && value.process is FortranDebugProcess) {
-            FortranDataViewValueHolder(value as CidrPhysicalValue)
+            FortranDataViewValueHolder(value)
         } else null
     }
 }

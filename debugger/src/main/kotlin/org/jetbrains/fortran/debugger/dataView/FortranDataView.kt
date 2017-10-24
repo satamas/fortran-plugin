@@ -36,35 +36,35 @@ class FortranDataView(project: Project) : DataView(project) {
             DataView.LOG.error("Tool window '" + DataView.DATA_VIEWER_ID + "' is not found")
             return
         }
-        window!!.getContentManager().getReady(this).doWhenDone({
+        window.contentManager.getReady(this).doWhenDone({
             val selectedInfo = addTab(value.process as FortranDebugProcess)
-            val dataViewerPanel = selectedInfo.getComponent() as DataViewerPanel
+            val dataViewerPanel = selectedInfo.component as DataViewerPanel
             dataViewerPanel.apply(DataViewValueHolderFactory.createHolder(value))
         })
-        window!!.show(null)
-        val dataView = window!!.getContentManager().getContent(0)
+        window.show(null)
+        val dataView = window.contentManager.getContent(0)
         if (dataView != null) {
-            window!!.getContentManager().setSelectedContent(dataView!!)
+            window.contentManager.setSelectedContent(dataView)
         }
     }
 
     override fun addTab(frameAccessor: DataViewFrameAccessor): TabInfo {
         if (hasOnlyEmptyTab()) {
-            myTabs.removeTab(myTabs.getSelectedInfo())
+            myTabs.removeTab(myTabs.selectedInfo)
         }
         val panel = DataViewerPanel(myProject, frameAccessor)
         val info = TabInfo(panel)
 
         if (frameAccessor is XDebugProcess) {
-            info.setIcon(AllIcons.Toolwindows.ToolWindowDebugger)
-            val name = (frameAccessor as XDebugProcess).getSession().getSessionName()
-            info.setTooltipText("Connected to debug session '$name'")
+            info.icon = AllIcons.Toolwindows.ToolWindowDebugger
+            val name = (frameAccessor as XDebugProcess).session.sessionName
+            info.tooltipText = "Connected to debug session '$name'"
         }
-        info.setText(DataView.EMPTY_TAB_NAME)
-        info.setPreferredFocusableComponent(panel.getSliceTextField())
+        info.text = DataView.EMPTY_TAB_NAME
+        info.preferredFocusableComponent = panel.sliceTextField
         info.setActions(DefaultActionGroup(NewViewerAction(frameAccessor)), ActionPlaces.UNKNOWN)
         info.setTabLabelActions(DefaultActionGroup(CloseViewerAction(info, frameAccessor)), ActionPlaces.UNKNOWN)
-        panel.addListener({ name -> info.setText(name) })
+        panel.addListener({ name -> info.text = name })
         myTabs.addTab(info)
         myTabs.select(info, true)
         return info
