@@ -22,9 +22,10 @@ import com.jetbrains.python.debugger.dataview.DataViewFrameAccessor
 import com.jetbrains.python.debugger.dataview.DataViewValueHolder
 import org.jetbrains.fortran.debugger.FortranLineBreakpointType
 import org.jetbrains.fortran.debugger.dataView.FortranViewNumericContainerAction
-import java.util.concurrent.Semaphore
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
 import javax.swing.Icon
+
 
 class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, consoleBuilder: TextConsoleBuilder)
     : CidrLocalDebugProcess(parameters, session, consoleBuilder)
@@ -74,23 +75,15 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
     @Throws(PyDebuggerException::class)
     override fun getArrayItems(holder: DataViewValueHolder, rowOffset: Int, colOffset: Int, rows: Int, cols: Int, format: String): ArrayChunk
     {
-        val result = ArrayChunkBuilder().setHolder(holder).setSlicePresentation(holder.getName())
-        postCommand { driver ->
-            val context = createEvaluationContext(driver, null, session.currentStackFrame as CidrStackFrame)
-            val node = DataViewNode(context, result, holder.getName())
-            (holder.value as CidrPhysicalValue).frame.computeChildren(node)
-        }
+        val result : ArrayChunkBuilder = ArrayChunkBuilder().setHolder(holder).setSlicePresentation(holder.getName())
+        val context = createEvaluationContext(driverInTests, null, session.currentStackFrame as CidrStackFrame)
 
-        val semaphore = Semaphore(0)
+        val future : CompletableFuture<ArrayChunkBuilder> = CompletableFuture()
+        val node = DataViewNode(context, result, holder.getName(), future)
 
+        (holder.value as CidrPhysicalValue).frame.computeChildren(node)
 
-
-        try {
-                semaphore.tryAcquire(200, TimeUnit.MILLISECONDS)
-        } catch (ignore: InterruptedException) {
-        }
-
-        return result.createArrayChunk()
+        return future.get(3000, TimeUnit.MILLISECONDS).createArrayChunk()
     }
 
 
@@ -102,11 +95,14 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
 
     private class DataViewNode(val context : EvaluationContext,
                                val builder: ArrayChunkBuilder,
-                               val varName : String) : XCompositeNode {
+                               val varName : String,
+                               val future : CompletableFuture<ArrayChunkBuilder>) : XCompositeNode {
         private var arrayIs2D: Boolean = false
         private val data = mutableListOf<MutableList<String>>()
         private val rowNames = mutableListOf<String>()
         private val colNames = mutableListOf<String>()
+
+
 
         override fun addChildren(children: XValueChildrenList, last: Boolean) {
             // find variable in a frame
@@ -177,7 +173,9 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                 builder.setMin(min).setMax(max)
                 builder.setRowLabels(rowNames)
                 builder.setColHeaders(colHeaders)
+                future.complete(builder)
             }
+
         }
 
         private fun computeArrayChunkType(type : String) = when {
