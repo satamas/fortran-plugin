@@ -100,88 +100,96 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
     }
 
 
-
-    private class DataViewNode(val context : EvaluationContext,
-                               val future : CompletableFuture<ArrayChunkBuilder>) : XCompositeNode {
-        private var arrayIs2D: Boolean = false
-        private val data = mutableListOf<MutableList<String>>()
-        private val rowNames = mutableListOf<String>()
-        private val colNames = mutableListOf<String>()
-        private val builder = ArrayChunkBuilder()
-
-        override fun addChildren(children: XValueChildrenList, last: Boolean) {
-            val firstChildren = children.getValue(0) as CidrPhysicalValue
-            val process = firstChildren.process
-
-            // type
-            val arrayType = computeArrayChunkType(firstChildren.type)
-            builder.setType(arrayType)
-
-            val lastLevel : Boolean
-            if (FortranViewNumericContainerAction.isFortranIntrinsicTypeArray(firstChildren.type)) {
-                arrayIs2D = true
-                lastLevel = false
-            } else {
-                lastLevel = true
-            }
-
-            for (i in 0 until children.size()) {
-                if (arrayIs2D){
-                    if (lastLevel) {
-                        val cidrValue = (children.getValue(i) as CidrPhysicalValue)
-                        if (data.size <= i) {
-                            data.add(mutableListOf())
-                            rowNames.add(cidrValue.name)
-                        }
-                        addToRow(cidrValue.getVarData(context).value, arrayType, i)
-                    } else {
-                        children.getValue(i).computeChildren(this)
-                        process.postCommand {
-                            colNames.add((children.getValue(i) as CidrPhysicalValue).name)
-                        }
-                    }
-                } else {
-                    val cidrValue = (children.getValue(i) as CidrPhysicalValue)
-                    addTo1DArray(cidrValue.getVarData(context).value, arrayType)
-                    rowNames.add(cidrValue.name)
-                }
-            }
-            if (arrayIs2D && lastLevel) return
-
-            // prepare final result
-            process.postCommand {
-                val dataArrayList = data.map { it.toTypedArray() }
-                builder.setData(dataArrayList.toTypedArray())
-
-                val (min, max) = computeMinMax(arrayType)
-
-                val colHeaders = mutableListOf<ArrayChunk.ColHeader>()
-
-                if (arrayIs2D) {
-                    colNames.mapTo(colHeaders) { ArrayChunk.ColHeader(it, arrayType, "%.5f", max, min) }
-                } else {
-                    colHeaders.add(ArrayChunk.ColHeader("1", arrayType, "%.5f", max, min))
-                }
-
-                builder.setRows(data.size)
-                builder.setColumns(data[0].size)
-                builder.setFormat("%.5f")
-                builder.setMin(min).setMax(max)
-                builder.setRowLabels(rowNames)
-                builder.setColHeaders(colHeaders)
-                future.complete(builder)
-            }
-
-        }
-
-        private fun computeArrayChunkType(type : String) = when {
+    private abstract class DataViewNodeBase : XCompositeNode {
+        protected fun computeArrayChunkType(type : String) = when {
             type.contains("integer") -> "i"
             type.contains("real") -> "f"
             type.contains("logical") -> "b"
             else -> "c"
         }
 
-        private fun addTo1DArray(valData : String, arrayType : String) {
+        override fun tooManyChildren(remaining: Int) {}
+
+        override fun setErrorMessage(errorMessage: String) {}
+
+        override fun setErrorMessage(errorMessage: String, link: XDebuggerTreeNodeHyperlink?) {
+            setErrorMessage(errorMessage)
+        }
+
+        override fun setMessage(message: String,
+                                icon: Icon?,
+                                attributes: SimpleTextAttributes,
+                                link: XDebuggerTreeNodeHyperlink?) {
+        }
+
+        override fun isObsolete(): Boolean {
+            return false
+        }
+
+        override fun setAlreadySorted(alreadySorted: Boolean) {}
+    }
+
+    private class DataViewNode(val context : EvaluationContext,
+                               val future : CompletableFuture<ArrayChunkBuilder>) : DataViewNodeBase() {
+
+        override fun addChildren(children: XValueChildrenList, last: Boolean) {
+            val data = mutableListOf<MutableList<String>>()
+            val rowNames = mutableListOf<String>()
+            val colNames = mutableListOf<String>()
+            val builder = ArrayChunkBuilder()
+
+            val firstChildren = children.getValue(0) as CidrPhysicalValue
+            val arrayType = computeArrayChunkType(firstChildren.type)
+            builder.setType(arrayType)
+
+            val arrayIs2D = FortranViewNumericContainerAction.isFortranTypeArray(firstChildren.type)
+
+            for (i in 0 until children.size()) {
+                if (arrayIs2D) {
+                    val future : CompletableFuture<MutableList<String>> = CompletableFuture()
+                    val futureNames : CompletableFuture<MutableList<String>> = CompletableFuture()
+                    val node = DataView2DArrayLineNode(context, future, futureNames, i == 0)
+                    children.getValue(i).computeChildren(node)
+                    val newCol = future.get()
+                    if (i == 0) {
+                        rowNames.addAll(futureNames.get())
+                        (0 until newCol.size).mapTo(data) { mutableListOf(newCol[it]) }
+                    } else {
+                        for (j in 0 until newCol.size) {
+                            data[j].add(newCol[j])
+                        }
+                    }
+                    colNames.add((children.getValue(i) as CidrPhysicalValue).name)
+                } else {
+                    val cidrValue = (children.getValue(i) as CidrPhysicalValue)
+                    addTo1DArray(data, cidrValue.getVarData(context).value, arrayType)
+                    rowNames.add(cidrValue.name)
+                }
+            }
+
+            // prepare final result
+            val dataArrayList = data.map { it.toTypedArray() }
+            builder.setData(dataArrayList.toTypedArray())
+
+            val (min, max) = computeMinMax(data, arrayType)
+
+            val colHeaders = mutableListOf<ArrayChunk.ColHeader>()
+
+            if (arrayIs2D) {
+                colNames.mapTo(colHeaders) { ArrayChunk.ColHeader(it, arrayType, "%.5f", max, min) }
+            } else {
+                colHeaders.add(ArrayChunk.ColHeader("1", arrayType, "%.5f", max, min))
+            }
+            builder.setRows(data.size)
+            builder.setColumns(data[0].size)
+            builder.setFormat("%.5f")
+            builder.setMin(min).setMax(max)
+            builder.setRowLabels(rowNames)
+            builder.setColHeaders(colHeaders)
+            future.complete(builder)
+        }
+
+        private fun addTo1DArray(data : MutableList<MutableList<String>>, valData : String, arrayType : String) {
             when (arrayType) {
                 "c" -> data.add(mutableListOf(ComplexNumber(valData).toString()))
                 "b" -> data.add(mutableListOf(if (valData.equals(".true.", true)) "True" else "False"))
@@ -189,23 +197,15 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             }
         }
 
-        private fun addToRow(valData : String, arrayType : String, row : Int) {
-            when (arrayType) {
-                "c" -> data[row].add(ComplexNumber(valData).toString())
-                "b" -> data[row].add(if (valData.equals(".true.", true)) "True" else "False")
-                else -> data[row].add(valData)
-            }
-        }
-
-        private fun computeMinMax(type: String) : Pair<String, String> {
+        private fun computeMinMax(data : MutableList<MutableList<String>>, type: String) : Pair<String, String> {
             return when (type) {
-                "c" -> computeComplexMinMax()
+                "c" -> computeComplexMinMax(data)
                 "b" -> Pair("False", "True")
-                else -> computeDoubleMinMax()
+                else -> computeDoubleMinMax(data)
             }
         }
 
-        private fun computeComplexMinMax() : Pair<String, String> {
+        private fun computeComplexMinMax(data : MutableList<MutableList<String>>) : Pair<String, String> {
             var min: ComplexNumber? = null
             var max: ComplexNumber? = null
             for (i in data) {
@@ -219,7 +219,7 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             return Pair(min.toString(), max.toString())
         }
 
-        private fun computeDoubleMinMax() : Pair<String, String> {
+        private fun computeDoubleMinMax(data : MutableList<MutableList<String>>) : Pair<String, String> {
             var min: Double? = null
             var max: Double? = null
             for (i in data) {
@@ -231,33 +231,34 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             }
             return Pair(min.toString(), max.toString())
         }
-
-        override fun tooManyChildren(remaining: Int) {
-        }
-
-        override fun setErrorMessage(errorMessage: String) {
-        }
-
-        override fun setErrorMessage(errorMessage: String, link: XDebuggerTreeNodeHyperlink?) {
-            setErrorMessage(errorMessage)
-        }
-
-        override fun setMessage(message: String,
-                                icon: Icon?,
-                                attributes: SimpleTextAttributes,
-                                link: XDebuggerTreeNodeHyperlink?) {
-
-        }
-
-        override fun isObsolete(): Boolean {
-            return false
-        }
-
-        override fun setAlreadySorted(alreadySorted: Boolean) {}
-
-
     }
 
+    private class DataView2DArrayLineNode(val context : EvaluationContext,
+                               val future : CompletableFuture<MutableList<String>>,
+                               val futureNames : CompletableFuture<MutableList<String>>,
+                               val needToComputeNames: Boolean) : DataViewNodeBase() {
+
+        override fun addChildren(children: XValueChildrenList, last: Boolean) {
+            val list = mutableListOf<String>()
+            val rowNames = mutableListOf<String>()
+            val arrayType = computeArrayChunkType((children.getValue(0) as CidrPhysicalValue).type)
+
+            for (i in 0 until children.size()) {
+                val cidrValue = (children.getValue(i) as CidrPhysicalValue)
+                val cidrValueData = cidrValue.getVarData(context).value
+                when (arrayType) {
+                    "c" -> list.add(ComplexNumber(cidrValueData).toString())
+                    "b" -> list.add(if (cidrValueData.equals(".true.", true)) "True" else "False")
+                    else -> list.add(cidrValueData)
+                }
+                if (needToComputeNames) {
+                    rowNames.add(cidrValue.name)
+                }
+            }
+            future.complete(list)
+            futureNames.complete(rowNames)
+        }
+    }
 
     private class ComplexNumber : Comparable<ComplexNumber> {
         constructor(fortranComplex: String) {

@@ -38,7 +38,7 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
             if (node != null && node.valueContainer is CidrPhysicalValue && node.isComputed) {
                 val debugValue = node.valueContainer as CidrPhysicalValue
 
-                if (isFortranIntrinsicTypeArray(debugValue.type)) {
+                if (isFortranTypeArray(debugValue.type)) {
                     e.presentation.text = "View as Array"
                     e.presentation.isVisible = true
                 }
@@ -53,7 +53,7 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
     companion object {
         fun getSelectedPaths(dataContext : DataContext):Array<TreePath>?  = XDebuggerTree.getTree(dataContext)?.selectionPaths
 
-        fun isFortranIntrinsicTypeArray(type : String) : Boolean {
+        fun isFortranTypeArray(type : String) : Boolean {
             return type.contains('(') && !type.substringAfterLast('(').contains("kind")
                     && type.contains(Regex("integer|real|logical|complex"))
                     && type.substringAfterLast('(').count { it ==',' } <= 1 // we don't know what to do with 3D
