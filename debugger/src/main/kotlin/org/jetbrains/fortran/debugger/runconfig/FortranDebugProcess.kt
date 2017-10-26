@@ -8,17 +8,13 @@ import com.intellij.xdebugger.XDebugSession
 import com.intellij.xdebugger.XDebugSessionListener
 import com.intellij.xdebugger.breakpoints.XBreakpoint
 import com.intellij.xdebugger.breakpoints.XBreakpointHandler
-import com.intellij.xdebugger.frame.XCompositeNode
-import com.intellij.xdebugger.frame.XDebuggerTreeNodeHyperlink
-import com.intellij.xdebugger.frame.XValueChildrenList
+import com.intellij.xdebugger.frame.*
+import com.intellij.xdebugger.impl.ui.tree.nodes.XEvaluationCallbackBase
 import com.jetbrains.cidr.execution.RunParameters
 import com.jetbrains.cidr.execution.debugger.*
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
 import com.jetbrains.cidr.execution.debugger.breakpoints.CidrBreakpointHandler
-import com.jetbrains.cidr.execution.debugger.evaluation.CidrMemberValue
-import com.jetbrains.cidr.execution.debugger.evaluation.CidrPhysicalValue
-import com.jetbrains.cidr.execution.debugger.evaluation.CidrValue
-import com.jetbrains.cidr.execution.debugger.evaluation.EvaluationContext
+import com.jetbrains.cidr.execution.debugger.evaluation.*
 import com.jetbrains.python.debugger.*
 import com.jetbrains.python.debugger.dataview.DataViewFrameAccessor
 import com.jetbrains.python.debugger.dataview.DataViewValueHolder
@@ -62,16 +58,35 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
         }
     }
 
+
+
     // for data view
     @Throws(PyDebuggerException::class)
     override fun evaluate(expression: String, execute: Boolean, doTrunc: Boolean): CidrValue {
-        throw PyDebuggerException("AAAAAAAAAAAAAA")
+        val future : CompletableFuture<CidrPhysicalValue> = CompletableFuture()
+        val node = EvaluationNode(future)
+        if (expression == "result") {
+            throw PyDebuggerException("Unable to evaluate evaluated value!")
+        }
+        evaluator?.evaluate(expression, object : XEvaluationCallbackBase() {
+            override fun evaluated(result: XValue) {
+                node.addChildren(XValueChildrenList.singleton("result", result), true)
+            }
+
+            override fun errorOccurred(errorMessage: String) {
+                node.setErrorMessage(errorMessage)
+            }
+        }, null)
+        return future.get(3000, TimeUnit.MILLISECONDS)
     }
 
 
     @Throws(PyDebuggerException::class)
     override fun loadFrame(): XValueChildrenList? {
-        throw PyDebuggerException("AAAAAAAAAAAAAA")
+        val future : CompletableFuture<XValueChildrenList> = CompletableFuture()
+        val node = LoadFrameNode(future)
+        session.currentStackFrame?.computeChildren(node)
+        return future.get(1000, TimeUnit.MILLISECONDS)
     }
 
     @Throws(PyDebuggerException::class)
@@ -257,6 +272,19 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             }
             future.complete(list)
             futureNames.complete(rowNames)
+        }
+    }
+
+    private class EvaluationNode(val future : CompletableFuture<CidrPhysicalValue>) : DataViewNodeBase() {
+        override fun addChildren(children: XValueChildrenList, last: Boolean) {
+            val evaluatedValue = children.getValue(0) as CidrPhysicalValue
+            future.complete(evaluatedValue)
+        }
+    }
+
+    private class LoadFrameNode(val future : CompletableFuture<XValueChildrenList>) : DataViewNodeBase() {
+        override fun addChildren(children: XValueChildrenList, last: Boolean) {
+            future.complete(children)
         }
     }
 
