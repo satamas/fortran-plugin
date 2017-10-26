@@ -2,6 +2,7 @@ package org.jetbrains.fortran.debugger.runconfig
 
 import com.intellij.execution.filters.TextConsoleBuilder
 import com.intellij.ui.SimpleTextAttributes
+import com.intellij.util.SmartList
 import com.intellij.util.containers.ContainerUtil
 import com.intellij.xdebugger.XDebugSession
 import com.intellij.xdebugger.XDebugSessionListener
@@ -14,6 +15,7 @@ import com.jetbrains.cidr.execution.RunParameters
 import com.jetbrains.cidr.execution.debugger.*
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
 import com.jetbrains.cidr.execution.debugger.breakpoints.CidrBreakpointHandler
+import com.jetbrains.cidr.execution.debugger.evaluation.CidrMemberValue
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrPhysicalValue
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrValue
 import com.jetbrains.cidr.execution.debugger.evaluation.EvaluationContext
@@ -75,15 +77,21 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
     @Throws(PyDebuggerException::class)
     override fun getArrayItems(holder: DataViewValueHolder, rowOffset: Int, colOffset: Int, rows: Int, cols: Int, format: String): ArrayChunk
     {
-        val result : ArrayChunkBuilder = ArrayChunkBuilder().setHolder(holder).setSlicePresentation(holder.getName())
         val context = createEvaluationContext(driverInTests, null, session.currentStackFrame as CidrStackFrame)
 
         val future : CompletableFuture<ArrayChunkBuilder> = CompletableFuture()
-        val node = DataViewNode(context, result, holder.getName(), future)
+        val node = DataViewNode(context, future)
 
-        (holder.value as CidrPhysicalValue).frame.computeChildren(node)
+        // (holder.value as CidrPhysicalValue).computeChildren(context, node) gives some problems with hashes
+        // we don't use hashing. As a result, this part works
+        val physicalValue = holder.value as CidrPhysicalValue
+        val childrenList = driverInTests.getVariableChildren(physicalValue.`var`, -1, -1).list
+        val values = SmartList<CidrValue>()
+        childrenList.mapTo(values) { CidrMemberValue(it, physicalValue, false) }
+        CidrValue.addAllTo(values, node)
 
-        return future.get(3000, TimeUnit.MILLISECONDS).createArrayChunk()
+        return future.get(3000, TimeUnit.MILLISECONDS).setHolder(holder)
+                .setSlicePresentation(holder.getName()).createArrayChunk()
     }
 
 
@@ -94,26 +102,14 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
 
 
     private class DataViewNode(val context : EvaluationContext,
-                               val builder: ArrayChunkBuilder,
-                               val varName : String,
                                val future : CompletableFuture<ArrayChunkBuilder>) : XCompositeNode {
         private var arrayIs2D: Boolean = false
         private val data = mutableListOf<MutableList<String>>()
         private val rowNames = mutableListOf<String>()
         private val colNames = mutableListOf<String>()
-
-
+        private val builder = ArrayChunkBuilder()
 
         override fun addChildren(children: XValueChildrenList, last: Boolean) {
-            // find variable in a frame
-            for (i in 0 until children.size()) {
-                if (children.getName(i).equals(varName, true)) {
-                    children.getValue(i).computeChildren(this)
-                    return
-
-                }
-            }
-
             val firstChildren = children.getValue(0) as CidrPhysicalValue
             val process = firstChildren.process
 
