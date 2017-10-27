@@ -86,6 +86,12 @@
         <!-- Indices -->
         <stubIndex implementation="org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex"/>
 
+        <!-- Intentions -->
+        <intentionAction>
+            <className>org.jetbrains.fortran.ide.intentions.FortranFixedFormConverter</className>
+            <category>Fortran</category>
+        </intentionAction>
+
         <!-- Inspections -->
         <lang.inspectionSuppressor language="Fortran"
                                    implementationClass="org.jetbrains.fortran.ide.inspections.FortranInspectionSuppressor"/>
