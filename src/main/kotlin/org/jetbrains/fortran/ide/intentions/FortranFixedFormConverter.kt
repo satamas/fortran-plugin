@@ -11,9 +11,13 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
+import com.intellij.psi.impl.file.PsiFileImplUtil
+import com.intellij.psi.impl.source.codeStyle.CodeStyleManagerImpl
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.IncorrectOperationException
+import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile
+import org.jetbrains.fortran.lang.psi.FortranTokenType
 
 class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
     override fun getText(): String {
@@ -28,14 +32,22 @@ class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
     override fun invoke(project: Project, editor: Editor, file: PsiFile) {
         if (!FileModificationService.getInstance().preparePsiElementForWrite(file)) return
         val scope = getScope(file)
-        val document = PsiDocumentManager.getInstance(project).getDocument(file)
+        val document = PsiDocumentManager.getInstance(project).getDocument(file) ?: return
+
         runWriteAction {
             if (scope != null) {
-                val comments = PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java)
+                val commentsAndWraps = PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java)
+                val comments = commentsAndWraps.filter { it.tokenType == FortranTokenType.LINE_COMMENT }
                 comments.forEach { reComment(document, it)}
+                val wraps = commentsAndWraps.filter { it.tokenType == FortranTokenType.LINE_CONTINUE }
+                wraps.forEach { reWrap(document, it) }
             }
 
-            file.virtualFile.rename(this, file.name.substringBeforeLast('.') + ".f90")
+            val newFile = PsiFileImplUtil.setName(file, file.name.substringBeforeLast('.') + "." + FortranFileType.defaultExtension)
+
+            PsiDocumentManager.getInstance(project).commitAllDocuments()
+
+            CodeStyleManagerImpl(project).reformatText(newFile, 0, newFile.textLength)
         }
     }
 
@@ -43,6 +55,12 @@ class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
         if (document == null) return
         document.deleteString(comment.textOffset, comment.textOffset + 1)
         document.insertString(comment.textOffset, "!")
+    }
+
+    private fun reWrap(document : Document?, comment: PsiComment) {
+        if (document == null) return
+        document.deleteString(comment.textOffset, comment.textOffset + comment.textLength)
+        document.insertString(comment.textOffset, "& \n")
     }
 
     override fun isAvailable(project: Project, editor: Editor, file: PsiFile): Boolean {
