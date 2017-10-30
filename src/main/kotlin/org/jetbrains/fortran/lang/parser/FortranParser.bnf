@@ -70,12 +70,7 @@
   elementTypeFactory("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") ="org.jetbrains.fortran.lang.stubs.FortranStubFactoryKt.fortranStubFactory"
   stubClass("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") = 'org.jetbrains.fortran.lang.stubs.FortranStatementStub'
   mixin("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)") = "org.jetbrains.fortran.lang.psi.mixin.FortranStmtImplMixin"
-//  implements("(parameter_stmt|procedure_declaration_stmt|laration_stmt|stmt_function_stmt|access_stmt|allocatable_stmt)")='org.jetbrains.fortran.lang.psi.FortranSpecificationStmt'
-//  implements("(asynchronous_stmt|bind_stmt|codimension_stmt|common_stmt|dimension_stmt|equivalence_stmt|external_stmt|intent_stmt|intrinsic_stmt)")='org.jetbrains.fortran.lang.psi.FortranSpecificationStmt'
-//  implements("(namelist_stmt|optional_stmt|pointer_stmt|protected_stmt|save_stmt|target_stmt|volatile_stmt|value_stmt)")='org.jetbrains.fortran.lang.psi.FortranSpecificationStmt'
   implements(".*_stmt")='org.jetbrains.fortran.lang.psi.FortranStmt'
-//  extends(".*_stmt")='org.jetbrains.fortran.lang.psi.impl.FortranStmtImpl'
-
   consumeTokenMethod(".*_expr|expr")="consumeTokenFast"
 }
 
