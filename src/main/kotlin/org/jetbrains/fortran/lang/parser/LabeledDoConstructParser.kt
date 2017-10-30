@@ -115,6 +115,7 @@ class LabeledDoConstructParser : Parser {
 
     private fun doTermActionStmt(builder: PsiBuilder, level: Int): Boolean {
         if (!recursion_guard_(builder, level, "do_term_action_stmt")) return false
+        if (!nextTokenIs(builder, INTEGERLITERAL)) return false
         val marker = enter_section_(builder)
         val result: Boolean = execution_part_construct(builder, level + 1)
         exit_section_(builder, marker, null, result)
