@@ -132,6 +132,11 @@
                          applyToDialects="true"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnusedConstructNameInspection"/>
 
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Labeled do construct is deprecated"
+                         enabledByDefault="true" level="WARNING"
+                         applyToDialects="false"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranLabeledDoInspection"/>
     </extensions>
 
     <actions>
