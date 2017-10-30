@@ -71,7 +71,6 @@ class LabelDoFix(private val labelDoConstructPointer: SmartPsiElementPointer<Psi
                 labelDecl.textRange.endOffset
             else
                 labelDecl.nextSibling.textOffset + labelDecl.nextSibling.textLength
-            println(rangeEnd)
             document.deleteString(labelDecl.textOffset, rangeEnd)
         }
     }
