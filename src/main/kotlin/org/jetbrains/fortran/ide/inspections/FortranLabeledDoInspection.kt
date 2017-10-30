@@ -16,11 +16,15 @@ class FortranLabeledDoInspection : LocalInspectionTool() {
             object : FortranVisitor() {
                 override fun visitExecutableConstruct(labelDo: FortranExecutableConstruct) {
                     if (labelDo !is FortranLabeledDoConstruct) return
-                    holder.registerProblem(labelDo.labelDoStmt.label,
-                            "Labeled do construct is deprecated",
-                            ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                            LabelDoFix(labelDo.smartPointer())
-                    )
+                    if (labelDo.parent !is FortranLabeledDoConstruct
+                            && (labelDo.labeledDoTermConstract != null || labelDo.doTermActionStmt != null
+                            || labelDo.endDoStmt != null)) {
+                        holder.registerProblem(labelDo.labelDoStmt.label,
+                                "Labeled do construct is deprecated",
+                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                                LabelDoFix(labelDo.smartPointer())
+                        )
+                    }
                 }
             }
 }
