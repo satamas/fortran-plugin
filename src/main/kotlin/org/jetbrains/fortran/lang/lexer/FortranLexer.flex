@@ -210,11 +210,13 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ^"#"+ { return LINE_COMMENT; }
     ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
     ^({WHITE_SPACE_CHAR})+ { if (yylength() > 6) yypushback(yylength()-6); return FIRST_WHITE_SPACE; }
-    ^[^0-9cCdD#*!\040\t\n\r].{5} { return BAD_CHARACTER; }
-    ^[0-9\040dD][^0-9!\040\t\n\r].{4} { return BAD_CHARACTER; }
-    ^[0-9\040dD]{2}[^0-9!\040\t\n\r].{3} { return BAD_CHARACTER; }
-    ^[0-9\040dD]{3}[^0-9!\040\t\n\r].{2} { return BAD_CHARACTER; }
-    ^[0-9\040dD]{4}[^0-9!\040\t\n\r].{1} { return BAD_CHARACTER; }
+    ^[^0-9cCdD#*!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
+    ^[0-9\040dD][^0-9!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
+    ^[0-9\040dD]{2}[^0-9!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
+    ^[0-9\040dD]{3}[^0-9!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
+    ^[0-9\040dD]{4}[^0-9!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
+    ^[0-9\040dD]{5}[^0-9!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
+
 }
 
 <FREEFORM_LINE_CONTINUE> {
