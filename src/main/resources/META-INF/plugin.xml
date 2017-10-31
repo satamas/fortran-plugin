@@ -59,6 +59,7 @@
                 implementation="org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider
                 implementation="org.jetbrains.fortran.ide.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
+        <editorNotificationProvider implementation="org.jetbrains.fortran.ide.formatter.FortranSourceFormNotificationProvider"/>
         <!-- Commenter -->
         <lang.commenter language="Fortran" implementationClass="org.jetbrains.fortran.ide.commenter.FortranCommenter"/>
         <lang.commenter language="Fortran fixed form"

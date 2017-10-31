@@ -29,7 +29,7 @@ class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
     }
 
     @Throws(IncorrectOperationException::class)
-    override fun invoke(project: Project, editor: Editor, file: PsiFile) {
+    override fun invoke(project: Project, editor: Editor?, file: PsiFile) {
         if (!FileModificationService.getInstance().preparePsiElementForWrite(file)) return
         val scope = getScope(file)
         val document = PsiDocumentManager.getInstance(project).getDocument(file) ?: return
