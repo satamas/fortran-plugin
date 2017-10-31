@@ -135,7 +135,7 @@
         <localInspection language="Fortran" groupName="Fortran"
                          displayName="Labeled do construct is deprecated"
                          enabledByDefault="true" level="WARNING"
-                         applyToDialects="false"
+                         applyToDialects="true"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranLabeledDoInspection"/>
     </extensions>
 

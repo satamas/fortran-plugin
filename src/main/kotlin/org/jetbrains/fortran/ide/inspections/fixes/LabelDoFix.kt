@@ -26,15 +26,20 @@ class LabelDoFix(private val labelDoConstructPointer: SmartPsiElementPointer<Psi
         val innerLoop = labelDoConstruct.labeledDoTermConstract
         val file = descriptor.psiElement.containingFile
         val document = PsiDocumentManager.getInstance(project).getDocument(file) ?: return
-        val indentString = CodeStyleManager.getInstance(file.project)!!.getLineIndent(document, labelDoConstruct.labelDoStmt.textOffset) ?: ""
+
+        val indentString = if (file is FortranFile)
+            CodeStyleManager.getInstance(file.project)!!.getLineIndent(document, labelDoConstruct.labelDoStmt.textOffset) ?: ""
+        else
+            "      "
+
         when {
             innerLoop != null -> addEndStmt(innerLoop, document, indentString, labelDoConstruct.labelDoStmt.constructNameDecl?.name)
             termStmt != null -> {
                 addEndStmt(termStmt, document, indentString, labelDoConstruct.labelDoStmt.constructNameDecl?.name)
-                deleteLabelIfPossible(termStmt.firstChild, document)
+                deleteLabelIfPossible(termStmt.firstChild, document, file is FortranFixedFormFile)
             }
             else -> // if we have end do we don't need to add it
-                deleteLabelIfPossible(labelDoConstruct.endDoStmt!!.labelDecl, document)
+                deleteLabelIfPossible(labelDoConstruct.endDoStmt!!.labelDecl, document, file is FortranFixedFormFile)
         }
         // beginning of the loop must be processed after the end not to change textranges before we use them
         removeLabelFromDoStmt(labelDoConstruct.labelDoStmt, document)
@@ -58,7 +63,7 @@ class LabelDoFix(private val labelDoConstructPointer: SmartPsiElementPointer<Psi
         document.insertString(lastElement.textOffset + lastElement.textLength, text)
     }
 
-    private fun deleteLabelIfPossible(label: PsiElement?, document : Document) {
+    private fun deleteLabelIfPossible(label: PsiElement?, document : Document, fixedForm : Boolean) {
         val labelDecl = label as? FortranLabelDecl ?: return
         val unit = runReadAction { PsiTreeUtil.getParentOfType(labelDecl, FortranProgramUnit::class.java) }
         val results = runReadAction {
@@ -71,7 +76,9 @@ class LabelDoFix(private val labelDoConstructPointer: SmartPsiElementPointer<Psi
                 labelDecl.textRange.endOffset
             else
                 labelDecl.nextSibling.textOffset + labelDecl.nextSibling.textLength
-            document.deleteString(labelDecl.textOffset, rangeEnd)
+            val startRange = labelDecl.textOffset
+            document.deleteString(startRange, rangeEnd)
+            if (fixedForm) document.insertString(startRange, " ".repeat(rangeEnd - startRange))
         }
     }
 }
