@@ -8,6 +8,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import com.intellij.ui.EditorNotificationPanel
 import com.intellij.ui.EditorNotifications
+import org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettings
 import org.jetbrains.fortran.ide.intentions.FortranFixedFormConverter
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile
 
@@ -20,7 +21,7 @@ class FortranSourceFormNotificationProvider(private val myProject: Project) : Ed
     }
 
     override fun createNotificationPanel(file: VirtualFile, fileEditor: FileEditor): EditorNotificationPanel? {
-        if (userDoesntLikeUs) return null
+        if (userDoesntLikeUs || !FortranCodeStyleSettings.SHOW_SOURCE_FORM_CONVERTER_PANEL) return null
         val psiFile = (PsiManager.getInstance(myProject).findFile(file) ?: return null) as? FortranFixedFormFile ?: return null
 
         return FortranSourceFormNotificationPanel(myProject, psiFile)
@@ -32,12 +33,21 @@ class FortranSourceFormNotificationProvider(private val myProject: Project) : Ed
             setText("Fixed source form is deprecated. Translate file to free form?")
 
             createActionLabel("Translate") { translate(project, file) }.toolTipText = "Translate file"
-            createActionLabel("Hide") { hideNotification() }.toolTipText = "Hide this notification"
+            createActionLabel("Hide") { hideNotification(project) }.toolTipText = "Hide this notification"
+            createActionLabel("Don't show again") { killNotifications(project) }.toolTipText = "Don't show this message again"
         }
 
-        private fun hideNotification() {
+        private fun hideNotification(project: Project) {
             isVisible = false
             userDoesntLikeUs = true
+            EditorNotifications.getInstance(project).updateAllNotifications()
+        }
+
+        private fun killNotifications(project: Project) {
+            isVisible = false
+            userDoesntLikeUs = true
+            FortranCodeStyleSettings.SHOW_SOURCE_FORM_CONVERTER_PANEL = false
+            EditorNotifications.getInstance(project).updateAllNotifications()
         }
 
         private fun translate(project: Project, file: FortranFixedFormFile) {
