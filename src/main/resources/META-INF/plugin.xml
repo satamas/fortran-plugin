@@ -92,7 +92,10 @@
             <className>org.jetbrains.fortran.ide.intentions.FortranFixedFormConverter</className>
             <category>Fortran</category>
         </intentionAction>
-
+        <intentionAction>
+            <className>org.jetbrains.fortran.ide.intentions.FortranIfStatementToConstructIntention</className>
+            <category>Fortran</category>
+        </intentionAction>
         <!-- Inspections -->
         <lang.inspectionSuppressor language="Fortran"
                                    implementationClass="org.jetbrains.fortran.ide.inspections.FortranInspectionSuppressor"/>

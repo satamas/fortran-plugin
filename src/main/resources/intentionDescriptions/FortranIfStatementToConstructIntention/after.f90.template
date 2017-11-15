@@ -1,0 +1,5 @@
+program programName
+    if (.true.) then
+        write("Condition is true")
+    end if
+end
