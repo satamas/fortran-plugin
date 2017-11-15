@@ -8,6 +8,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.util.PsiTreeUtil
+import org.jetbrains.fortran.lang.psi.FortranFile
 import org.jetbrains.fortran.lang.psi.FortranIfStmt
 
 class FortranIfStatementToConstructIntention : BaseElementAtCaretIntentionAction() {
@@ -23,8 +24,13 @@ class FortranIfStatementToConstructIntention : BaseElementAtCaretIntentionAction
     override fun invoke(project: Project, editor: Editor, element: PsiElement) {
         if (!FileModificationService.getInstance().preparePsiElementForWrite(element)) return
         val ifStmnt = findApplicableContext(element) ?: return
-        val lineStartOffset = editor.caretModel.visualLineStart
-        val indentString = CodeStyleManager.getInstance(project)!!.getLineIndent(editor.document, lineStartOffset)
+        val ifStartOffset = ifStmnt.textOffset //editor.caretModel.visualLineStart
+        val file = element.containingFile
+        val indentString = if ( file is FortranFile)
+            CodeStyleManager.getInstance(project)!!.getLineIndent(editor.document, ifStartOffset) ?: ""
+        else
+            "      "
+
         val constructText = "then\n$indentString    ${ifStmnt.actionStmt.text}\n${indentString}end if"
         runWriteAction {
                 val deletedRange = ifStmnt.actionStmt.textRange
