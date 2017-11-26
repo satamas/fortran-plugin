@@ -785,7 +785,7 @@ or_expr     ::= expr '.or.' expr { pin = 2 }
 and_expr    ::= expr '.and.' expr { pin = 2 }
 not_expr    ::= '.not.' expr { pin = 1 }
 rel_expr    ::= expr rel_op expr { pin = 2 }
-private rel_op ::= '.eq.' | '.ne.' | '.lt.' | '.le.' | '.gt.' | '.ge.'
+rel_op ::= '.eq.' | '.ne.' | '.lt.' | '.le.' | '.gt.' | '.ge.'
                  | '=='   | '/='   | '<'    | '<='   | '>'    | '>='
 concat_expr ::= expr '//' expr { pin = 2 }
 add_expr    ::= expr ('+' | '-') expr { pin = 2 }
