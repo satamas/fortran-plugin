@@ -110,7 +110,8 @@ FILE
               FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('pressure')
             PsiWhiteSpace(' ')
-            PsiElement(GT)('.gt.')
+            REL_OP
+              PsiElement(GT)('.gt.')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(floatingpointliteral)('1000.0')
@@ -132,7 +133,8 @@ FILE
                   FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('n')
                 PsiWhiteSpace(' ')
-                PsiElement(LT)('.lt.')
+                REL_OP
+                  PsiElement(LT)('.lt.')
                 PsiWhiteSpace(' ')
                 CONSTANT
                   PsiElement(floatingpointliteral)('0.0')
@@ -199,7 +201,8 @@ FILE
               FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('temperature')
             PsiWhiteSpace(' ')
-            PsiElement(GT)('.gt.')
+            REL_OP
+              PsiElement(GT)('.gt.')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(floatingpointliteral)('547.0')
@@ -307,7 +310,8 @@ FILE
                 FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('values')
               PsiWhiteSpace(' ')
-              PsiElement(LE)('.le.')
+              REL_OP
+                PsiElement(LE)('.le.')
               PsiWhiteSpace(' ')
               DESIGNATOR
                 FortranDataPathImpl(DATA_PATH)

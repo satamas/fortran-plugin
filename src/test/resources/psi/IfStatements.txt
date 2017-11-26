@@ -28,7 +28,8 @@ FILE
               FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('x')
           PsiWhiteSpace(' ')
-          PsiElement(GT)('>')
+          REL_OP
+            PsiElement(GT)('>')
           PsiWhiteSpace(' ')
           CONSTANT
             PsiElement(integerliteral)('0')
