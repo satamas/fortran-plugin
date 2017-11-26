@@ -37,7 +37,8 @@ FILE
               FortranDataPathImpl(DATA_PATH)
                 PsiElement(identifier)('c')
             PsiWhiteSpace(' ')
-            PsiElement(EQEQ)('==')
+            REL_OP
+              PsiElement(EQEQ)('==')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('0')
@@ -72,7 +73,8 @@ FILE
                   FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('c')
                 PsiWhiteSpace(' ')
-                PsiElement(EQEQ)('==')
+                REL_OP
+                  PsiElement(EQEQ)('==')
                 PsiWhiteSpace(' ')
                 CONSTANT
                   PsiElement(integerliteral)('0')
@@ -90,7 +92,8 @@ FILE
             CONSTANT
               PsiElement(floatingpointliteral)('10._8')
             PsiWhiteSpace(' ')
-            PsiElement(GT)('>')
+            REL_OP
+              PsiElement(GT)('>')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('1')
@@ -101,7 +104,8 @@ FILE
             CONSTANT
               PsiElement(floatingpointliteral)('1.E+1_8')
             PsiWhiteSpace(' ')
-            PsiElement(GT)('>')
+            REL_OP
+              PsiElement(GT)('>')
             PsiWhiteSpace(' ')
             CONSTANT
               PsiElement(integerliteral)('0')
