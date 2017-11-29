@@ -29,7 +29,7 @@ class FortranNonstandardKindInspection : LocalInspectionTool() {
                         "(kind=$kindSelectorText)"
                     }
                     holder.registerProblem(kindSelector,
-                            "Obsolete operator",
+                            "Nonstandard Kind Selector",
                             ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
                             SubstituteTextFix(kindSelector.smartPointer(), newKindSelector, "Nonstandard Kind Selector fix")
                     )
