@@ -130,10 +130,10 @@ def isWindows = System.getProperty("os.name").toLowerCase().indexOf( "win" ) >= 
 
 task downloadClion(type: de.undercouch.gradle.tasks.download.Download) {
     if (isWindows) {
-        src "https://download-cf.jetbrains.com/cpp/CLion-${clionVersion}.zip"
+        src "https://download.jetbrains.com/cpp/CLion-${clionVersion}.zip"
         dest new File(project.projectDir, "debugger/lib/clion-${clionVersion}.zip")
     } else {
-        src "https://download-cf.jetbrains.com/cpp/CLion-${clionVersion}.tar.gz"
+        src "https://download.jetbrains.com/cpp/CLion-${clionVersion}.tar.gz"
         dest new File(project.projectDir, "debugger/lib/clion-${clionVersion}.tar.gz")
     }
 
