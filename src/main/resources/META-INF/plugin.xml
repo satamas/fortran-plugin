@@ -143,6 +143,12 @@
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranLabeledDoInspection"/>
 
         <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Continue statement without label"
+                         enabledByDefault="true" level="WARNING"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranContinueInspection"/>
+
+        <localInspection language="Fortran" groupName="Fortran"
                          displayName="Obsolete operator"
                          enabledByDefault="true" level="WARNING"
                          applyToDialects="false"
@@ -153,6 +159,7 @@
                          enabledByDefault="true" level="WARNING"
                          applyToDialects="false"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranNonstandardKindInspection"/>
+
     </extensions>
 
     <actions>
