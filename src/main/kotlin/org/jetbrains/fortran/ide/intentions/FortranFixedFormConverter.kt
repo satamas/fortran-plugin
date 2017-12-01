@@ -36,8 +36,8 @@ class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
 
         runWriteAction {
             if (scope != null) {
-                val commentsAndWraps = PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java).reversed()
-                commentsAndWraps.forEach{
+                val commentsAndWraps = PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java).toList()
+                commentsAndWraps.asReversed().forEach{
                     if (it.tokenType == FortranTokenType.LINE_COMMENT)
                         reComment(document, it)
                     else
@@ -53,16 +53,12 @@ class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
         }
     }
 
-    private fun reComment(document : Document?, comment: PsiComment) {
-        if (document == null) return
-        document.deleteString(comment.textOffset, comment.textOffset + 1)
-        document.insertString(comment.textOffset, "!")
+    private fun reComment(document : Document, comment: PsiComment) {
+        document.replaceString(comment.textOffset, comment.textOffset + 1, "!")
     }
 
-    private fun reWrap(document : Document?, comment: PsiComment) {
-        if (document == null) return
-        document.deleteString(comment.textOffset, comment.textOffset + comment.textLength)
-        document.insertString(comment.textOffset, "& \n")
+    private fun reWrap(document : Document, comment: PsiComment) {
+        document.replaceString(comment.textOffset, comment.textOffset + comment.textLength, "& \n")
     }
 
     override fun isAvailable(project: Project, editor: Editor, file: PsiFile): Boolean {
