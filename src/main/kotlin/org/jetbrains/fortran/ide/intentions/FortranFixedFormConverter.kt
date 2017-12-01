@@ -36,11 +36,13 @@ class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
 
         runWriteAction {
             if (scope != null) {
-                val commentsAndWraps = PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java)
-                val comments = commentsAndWraps.filter { it.tokenType == FortranTokenType.LINE_COMMENT }
-                comments.forEach { reComment(document, it)}
-                val wraps = commentsAndWraps.filter { it.tokenType == FortranTokenType.LINE_CONTINUE }
-                wraps.forEach { reWrap(document, it) }
+                val commentsAndWraps = PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java).reversed()
+                commentsAndWraps.forEach{
+                    if (it.tokenType == FortranTokenType.LINE_COMMENT)
+                        reComment(document, it)
+                    else
+                        reWrap(document, it)
+                }
             }
 
             val newFile = PsiFileImplUtil.setName(file, file.name.substringBeforeLast('.') + "." + FortranFileType.defaultExtension)
