@@ -19,7 +19,7 @@ class FortranLabeledDoInspection : LocalInspectionTool() {
                     if (labelDo.parent !is FortranLabeledDoConstruct
                             && (labelDo.labeledDoTermConstract != null || labelDo.doTermActionStmt != null
                             || labelDo.endDoStmt != null)) {
-                        holder.registerProblem(labelDo.labelDoStmt.label,
+                        holder.registerProblem(labelDo.labelDoStmt,
                                 "Labeled do construct is deprecated",
                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
                                 LabelDoFix(labelDo.smartPointer())

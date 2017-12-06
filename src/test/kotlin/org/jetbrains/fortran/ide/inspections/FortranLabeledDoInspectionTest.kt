@@ -4,7 +4,7 @@ class FortranLabeledDoInspectionTest()
     : FortranInspectionsBaseTestCase(FortranLabeledDoInspection()) {
 
     fun testEndDo() = checkFixByText("Convert to Nonlabaled do construct","""program a
-    do <warning descr="Labeled do construct is deprecated">1<caret></warning> j = 1, 3
+    <warning descr="Labeled do construct is deprecated">do 1<caret> j = 1, 3</warning>
     1 end do
     end
     """, """program a
@@ -14,7 +14,7 @@ class FortranLabeledDoInspectionTest()
     """, true)
 
     fun testUsedLabel() = checkFixByText("Convert to Nonlabaled do construct","""program a
-    do <warning descr="Labeled do construct is deprecated">1<caret></warning> j = 1, 3
+    <warning descr="Labeled do construct is deprecated">do 1 j = 1, 3<caret></warning>
     1 end do
     goto 1
     end
@@ -26,7 +26,7 @@ class FortranLabeledDoInspectionTest()
     """, true)
 
     fun testTermAction() = checkFixByText("Convert to Nonlabaled do construct","""program a
-    do <warning descr="Labeled do construct is deprecated">1<caret></warning> j = 1, 3
+    <warning descr="Labeled do construct is deprecated">do 1<caret>j = 1, 3</warning>
         1 a = 1
     end
     """, """program a
@@ -37,7 +37,7 @@ class FortranLabeledDoInspectionTest()
     """, true)
 
     fun testTermConstruct() = checkFixByText("Convert to Nonlabaled do construct","""program a
-    do <warning descr="Labeled do construct is deprecated">1<caret></warning> j = 1, 3
+    <warning descr="Labeled do construct is deprecated">do 1<caret> j = 1, 3</warning>
         do 1 i = 1,4
 
         1 end do
