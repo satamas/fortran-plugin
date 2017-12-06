@@ -35,14 +35,22 @@ class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
         val document = PsiDocumentManager.getInstance(project).getDocument(file) ?: return
 
         runWriteAction {
+            var oldTextStart = 0
+            val builder = StringBuilder()
             if (scope != null) {
-                val commentsAndWraps = PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java).toList()
-                commentsAndWraps.asReversed().forEach{
-                    if (it.tokenType == FortranTokenType.LINE_COMMENT)
-                        reComment(document, it)
-                    else
-                        reWrap(document, it)
+
+                PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java).forEach{
+                    builder.append(document.charsSequence.subSequence(oldTextStart, it.textOffset))
+                    if (it.tokenType == FortranTokenType.LINE_COMMENT) {
+                        builder.append("!")
+                        oldTextStart = it.textOffset + 1
+                    } else {
+                        builder.append("& \n")
+                        oldTextStart = it.textRange.endOffset
+                    }
                 }
+                builder.append(document.charsSequence.subSequence(oldTextStart, document.charsSequence.lastIndex))
+                document.setText(builder)
             }
 
             val newFile = PsiFileImplUtil.setName(file, file.name.substringBeforeLast('.') + "." + FortranFileType.defaultExtension)
@@ -51,14 +59,6 @@ class FortranFixedFormConverter : IntentionAction, LowPriorityAction {
 
             CodeStyleManagerImpl(project).reformatText(newFile, 0, newFile.textLength)
         }
-    }
-
-    private fun reComment(document : Document, comment: PsiComment) {
-        document.replaceString(comment.textOffset, comment.textOffset + 1, "!")
-    }
-
-    private fun reWrap(document : Document, comment: PsiComment) {
-        document.replaceString(comment.textOffset, comment.textOffset + comment.textLength, "& \n")
     }
 
     override fun isAvailable(project: Project, editor: Editor, file: PsiFile): Boolean {
