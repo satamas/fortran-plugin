@@ -26,14 +26,14 @@ class FortranContinueInspection : LocalInspectionTool() {
                         if (firstStmt != null && lastStmt != null) {
                             holder.registerProblem(continueStmt,
                                     "Continue statement without label",
-                                    ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                                    ProblemHighlightType.LIKE_UNUSED_SYMBOL,
                                     SubstituteTextFix(firstStmt.smartPointer(), lastStmt.smartPointer(), "", "Continue statement without label fix")
                             )
                         } else {
                             val lastElement = if (continueStmt.nextSibling?.node?.elementType != TokenType.WHITE_SPACE) continueStmt else continueStmt.nextSibling
                             holder.registerProblem(continueStmt,
                                     "Continue statement without label",
-                                    ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                                    ProblemHighlightType.LIKE_UNUSED_SYMBOL,
                                     SubstituteTextFix(continueStmt.smartPointer(), lastElement.smartPointer(), "", "Continue statement without label fix")
                             )
                         }
