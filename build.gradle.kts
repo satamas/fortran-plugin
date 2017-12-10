@@ -154,7 +154,7 @@ project(":") {
         if (isWindows) {
             onlyIf { !file("${project.projectDir}/debugger/lib/clion-$clionVersion").exists() }
             from(zipTree("debugger/lib/clion-$clionVersion.zip"))
-            into(file("${project.projectDir}/debugger/lib/"))
+            into(file("${project.projectDir}/debugger/lib/clion-$clionVersion"))
         } else {
             onlyIf { !file("${project.projectDir}/debugger/lib/clion-$clionVersion").exists() }
             from(tarTree("debugger/lib/clion-$clionVersion.tar.gz"))
