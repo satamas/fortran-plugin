@@ -36,13 +36,13 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
     }
 
     companion object {
-        fun isUnusedLabel(label: FortranLabelDecl, maximumRefsCount: Int = 0) : Boolean {
+        fun isUnusedLabel(label: FortranLabelDecl) : Boolean {
             // custom searcher for leading zeros
             val unit = runReadAction{ PsiTreeUtil.getParentOfType(label, FortranProgramUnit::class.java)}
             val results = runReadAction{ PsiTreeUtil.findChildrenOfType(unit, FortranLabelImpl::class.java)
             }.filter { (label as FortranLabelDeclImpl).getLabelValue() == it.getLabelValue() }
                     .map{ FortranLabelReferenceImpl(it as FortranLabelImplMixin) }
-            return results.size <= maximumRefsCount
+            return results.isEmpty()
         }
 
         fun createFix(label: FortranLabelDecl) : LocalQuickFix {

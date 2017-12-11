@@ -36,6 +36,18 @@ class FortranLabeledDoInspectionTest()
     end
     """, true)
 
+    fun testContinue() = checkFixByText("Convert to Nonlabaled do construct","""program a
+    <warning descr="Labeled do construct is deprecated">do 1<caret>j = 1, 3</warning>
+        a = 1
+        1 continue
+    end
+    """, """program a
+    do j = 1, 3
+        a = 1
+    end do
+    end
+    """, true)
+
     fun testTermConstruct() = checkFixByText("Convert to Nonlabaled do construct","""program a
     <warning descr="Labeled do construct is deprecated">do 1<caret> j = 1, 3</warning>
         do 1 i = 1,4
