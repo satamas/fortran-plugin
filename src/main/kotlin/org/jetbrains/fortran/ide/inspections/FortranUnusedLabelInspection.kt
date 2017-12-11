@@ -1,6 +1,7 @@
 package org.jetbrains.fortran.ide.inspections
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.application.runReadAction
@@ -22,7 +23,7 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): FortranVisitor {
         return object : FortranVisitor() {
             override fun visitLabelDecl(label: FortranLabelDecl) {
-                if (needFix(label)) {
+                if (isUnusedLabel(label)) {
                     holder.registerProblem(
                             label,
                             "Unused label declaration",
@@ -35,7 +36,7 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
     }
 
     companion object {
-        fun needFix(label: FortranLabelDecl, maximumRefsCount: Int = 0) : Boolean {
+        fun isUnusedLabel(label: FortranLabelDecl, maximumRefsCount: Int = 0) : Boolean {
             // custom searcher for leading zeros
             val unit = runReadAction{ PsiTreeUtil.getParentOfType(label, FortranProgramUnit::class.java)}
             val results = runReadAction{ PsiTreeUtil.findChildrenOfType(unit, FortranLabelImpl::class.java)
@@ -44,7 +45,7 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
             return results.size <= maximumRefsCount
         }
 
-        fun createFix(label: FortranLabelDecl) : SubstituteTextFix {
+        fun createFix(label: FortranLabelDecl) : LocalQuickFix {
             val freeForm = runReadAction{ PsiTreeUtil.getParentOfType(label, PsiFile::class.java)} is FortranFile
             val lastElement = if (freeForm && label.nextSibling.node.elementType != TokenType.WHITE_SPACE)
                 label
