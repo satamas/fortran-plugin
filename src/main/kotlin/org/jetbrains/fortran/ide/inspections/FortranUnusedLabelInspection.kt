@@ -36,17 +36,17 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
     }
 
     companion object {
-        fun isUnusedLabel(label: FortranLabelDecl) : Boolean {
+        fun isUnusedLabel(label: FortranLabelDecl): Boolean {
             // custom searcher for leading zeros
-            val unit = runReadAction{ PsiTreeUtil.getParentOfType(label, FortranProgramUnit::class.java)}
-            val results = runReadAction{ PsiTreeUtil.findChildrenOfType(unit, FortranLabelImpl::class.java)
-            }.filter { (label as FortranLabelDeclImpl).getLabelValue() == it.getLabelValue() }
-                    .map{ FortranLabelReferenceImpl(it as FortranLabelImplMixin) }
+            val unit = runReadAction { PsiTreeUtil.getParentOfType(label, FortranProgramUnit::class.java) }
+            val results = runReadAction { PsiTreeUtil.findChildrenOfType(unit, FortranLabelImpl::class.java) }
+                    .filter { (label as FortranLabelDeclImpl).getLabelValue() == it.getLabelValue() }
+                    .map { FortranLabelReferenceImpl(it as FortranLabelImplMixin) }
             return results.isEmpty()
         }
 
-        fun createFix(label: FortranLabelDecl) : LocalQuickFix {
-            val freeForm = runReadAction{ PsiTreeUtil.getParentOfType(label, PsiFile::class.java)} is FortranFile
+        fun createFix(label: FortranLabelDecl): LocalQuickFix {
+            val freeForm = runReadAction { PsiTreeUtil.getParentOfType(label, PsiFile::class.java) } is FortranFile
             val lastElement = if (!freeForm || label.nextSibling.node.elementType != TokenType.WHITE_SPACE)
                 label
             else
