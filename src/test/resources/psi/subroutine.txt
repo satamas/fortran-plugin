@@ -162,7 +162,8 @@ FILE
             FortranDataPathImpl(DATA_PATH)
               PsiElement(identifier)('level')
           PsiWhiteSpace(' ')
-          PsiElement(LE)('<=')
+          REL_OP
+            PsiElement(LE)('<=')
           PsiWhiteSpace(' ')
           DESIGNATOR
             FortranDataPathImpl(DATA_PATH)

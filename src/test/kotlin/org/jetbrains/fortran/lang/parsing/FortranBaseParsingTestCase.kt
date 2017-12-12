@@ -13,7 +13,7 @@ import org.jetbrains.fortran.lang.parser.FortranParserDefinition
 import org.jetbrains.fortran.test.FortranTestDataFixture
 
 abstract class FortranBaseParsingTestCase : ParsingTestCase(".", "f", FortranParserDefinition(), FortranFixedFormParserDefinition()) {
-    override fun getTestDataPath() = "${FortranTestDataFixture().getLangTestData()}/psi"
+    override fun getTestDataPath() = "src/test/resources/psi"
 
     override fun includeRanges() = true
 

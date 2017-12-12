@@ -59,6 +59,7 @@
                 implementation="org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider
                 implementation="org.jetbrains.fortran.ide.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
+        <editorNotificationProvider implementation="org.jetbrains.fortran.ide.formatter.FortranSourceFormNotificationProvider"/>
         <!-- Commenter -->
         <lang.commenter language="Fortran" implementationClass="org.jetbrains.fortran.ide.commenter.FortranCommenter"/>
         <lang.commenter language="Fortran fixed form"
@@ -86,6 +87,15 @@
         <!-- Indices -->
         <stubIndex implementation="org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex"/>
 
+        <!-- Intentions -->
+        <intentionAction>
+            <className>org.jetbrains.fortran.ide.intentions.FortranFixedFormConverter</className>
+            <category>Fortran</category>
+        </intentionAction>
+        <intentionAction>
+            <className>org.jetbrains.fortran.ide.intentions.FortranIfStatementToConstructIntention</className>
+            <category>Fortran</category>
+        </intentionAction>
         <!-- Inspections -->
         <lang.inspectionSuppressor language="Fortran"
                                    implementationClass="org.jetbrains.fortran.ide.inspections.FortranInspectionSuppressor"/>
@@ -125,6 +135,30 @@
                          enabledByDefault="true" level="WEAK WARNING"
                          applyToDialects="true"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranUnusedConstructNameInspection"/>
+
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Labeled do construct is deprecated"
+                         enabledByDefault="true" level="WARNING"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranLabeledDoInspection"/>
+
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Continue statement without label"
+                         enabledByDefault="true" level="WARNING"
+                         applyToDialects="true"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranContinueInspection"/>
+
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Obsolete operator"
+                         enabledByDefault="true" level="WARNING"
+                         applyToDialects="false"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranObsoleteOperatorInspection"/>
+
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Obsolete operator"
+                         enabledByDefault="true" level="WARNING"
+                         applyToDialects="false"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranNonstandardKindInspection"/>
 
     </extensions>
 
