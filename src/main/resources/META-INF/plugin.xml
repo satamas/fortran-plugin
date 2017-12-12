@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2017.2-1</version>
+    <version>2017.2-2</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,7 +12,14 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        GNU debugger support added.
+        <ul>
+            <li>Fixed form to free form converter</li>
+            <li>Labeled do construct inspection</li>
+            <li>If statement to construct converter</li>
+            <li>Obsolete operators inspection</li>
+            <li>Non standard kind selector inspection</li>
+            <li>Fixes</li>
+        </ul>
     ]]>
     </change-notes>
 
