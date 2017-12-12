@@ -47,7 +47,7 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
 
         fun createFix(label: FortranLabelDecl) : LocalQuickFix {
             val freeForm = runReadAction{ PsiTreeUtil.getParentOfType(label, PsiFile::class.java)} is FortranFile
-            val lastElement = if (freeForm && label.nextSibling.node.elementType != TokenType.WHITE_SPACE)
+            val lastElement = if (!freeForm || label.nextSibling.node.elementType != TokenType.WHITE_SPACE)
                 label
             else
                 label.nextSibling

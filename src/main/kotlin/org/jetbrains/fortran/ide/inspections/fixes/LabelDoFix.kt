@@ -85,9 +85,9 @@ class LabelDoFix(private val labelDoConstructPointer: SmartPsiElementPointer<Psi
             val lastStmt = nonlabeledDoConstruct.block?.lastChildOfType(FortranStmt::class)
             deleteLabelIfPossible(lastStmt?.firstChild, project, newDescriptor)
             if (lastStmt is FortranContinueStmt) {
-                val continuePointer = lastStmt.smartPointer()
+                val continuePointer = lastStmt.lastChild.smartPointer()
                 PsiDocumentManager.getInstance(project).commitDocument(document)
-                val continueStmt = continuePointer.element as FortranContinueStmt
+                val continueStmt = continuePointer.element?.parent as? FortranContinueStmt ?: return
                 if (continueStmt.labelDecl == null) {
                     FortranContinueInspection.createFix(continueStmt).applyFix(project, newDescriptor)
                 }
