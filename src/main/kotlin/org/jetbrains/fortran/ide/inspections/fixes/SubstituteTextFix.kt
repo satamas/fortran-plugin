@@ -3,11 +3,9 @@ package org.jetbrains.fortran.ide.inspections.fixes
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.SmartPsiElementPointer
-import org.jetbrains.fortran.lang.psi.FortranCompositeElement
 
 /**
  * Fix that removes the given range from the document and places a text onto its place.

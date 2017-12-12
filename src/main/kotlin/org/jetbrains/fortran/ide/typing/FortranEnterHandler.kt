@@ -66,7 +66,9 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
             }
 
             // labeled do is not like all other peoples do
-            is FortranLabeledDoConstruct -> if (constructOrUnit.endConstructStmt == null) {
+            is FortranLabeledDoConstruct -> if (constructOrUnit.endConstructStmt == null
+                    && constructOrUnit.doTermActionStmt == null
+                    && constructOrUnit.labeledDoTermConstract == null) {
                 val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name
                 val indentStringWithLabel = indentString + constructOrUnit.labelDoStmt.label.text + " "
                 insertEndConstructString(editor, offset, indentStringWithLabel, constructOrUnit.constructType, constructName)

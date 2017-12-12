@@ -25,9 +25,9 @@ FILE
             PsiElement(,)(',')
             CONSTANT
               PsiElement(integerliteral)('3')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace(' ')
         FortranBlockImpl(BLOCK)
-          PsiElement(eol)('\n')
-          PsiWhiteSpace(' ')
           ASSIGNMENT_STMT
             LABEL_DECL
               PsiElement(integerliteral)('1')
@@ -62,9 +62,9 @@ FILE
                 PsiElement(,)(',')
                 CONSTANT
                   PsiElement(integerliteral)('5')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('          ')
             FortranBlockImpl(BLOCK)
-              PsiElement(eol)('\n')
-              PsiWhiteSpace('          ')
               ASSIGNMENT_STMT
                 DESIGNATOR
                   FortranDataPathImpl(DATA_PATH)
@@ -132,9 +132,9 @@ FILE
               PsiElement(,)(',')
               CONSTANT
                 PsiElement(integerliteral)('4')
+          PsiElement(eol)('\n')
+          PsiWhiteSpace('          ')
           FortranBlockImpl(BLOCK)
-            PsiElement(eol)('\n')
-            PsiWhiteSpace('          ')
             ASSIGNMENT_STMT
               DESIGNATOR
                 FortranDataPathImpl(DATA_PATH)
@@ -163,9 +163,9 @@ FILE
                 PsiElement(,)(',')
                 CONSTANT
                   PsiElement(integerliteral)('5')
+            PsiElement(eol)('\n')
+            PsiWhiteSpace('            ')
             FortranBlockImpl(BLOCK)
-              PsiElement(eol)('\n')
-              PsiWhiteSpace('            ')
               ASSIGNMENT_STMT
                 DESIGNATOR
                   FortranDataPathImpl(DATA_PATH)

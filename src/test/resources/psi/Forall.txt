@@ -61,7 +61,8 @@ FILE
                   FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('j')
                 PsiWhiteSpace(' ')
-                PsiElement(NEQ)('/=')
+                REL_OP
+                  PsiElement(NEQ)('/=')
                 PsiWhiteSpace(' ')
                 DESIGNATOR
                   FortranDataPathImpl(DATA_PATH)
@@ -132,7 +133,8 @@ FILE
                 FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('l')
               PsiWhiteSpace(' ')
-              PsiElement(LT)('<')
+              REL_OP
+                PsiElement(LT)('<')
               PsiWhiteSpace(' ')
               CONSTANT
                 PsiElement(integerliteral)('0')
@@ -158,7 +160,8 @@ FILE
                 DESIGNATOR
                   FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('k')
-                PsiElement(LT)('<')
+                REL_OP
+                  PsiElement(LT)('<')
                 CONSTANT
                   PsiElement(integerliteral)('0')
               PsiElement())(')')
@@ -184,7 +187,8 @@ FILE
                 DESIGNATOR
                   FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('k')
-                PsiElement(LT)('<')
+                REL_OP
+                  PsiElement(LT)('<')
                 CONSTANT
                   PsiElement(integerliteral)('3')
               PsiElement())(')')

@@ -20,6 +20,7 @@ class LabeledDoConstructParser : Parser {
         val labelValue = parseLabelDoStmt(builder, level + 1)
         result = labelValue != -1
         pinned = result // pin = 1
+        result = result && report_error_(builder, eols(builder, level + 1))
         result = result && report_error_(builder, parseLabeledDoBlock(builder, level + 1, labelValue))
         result = pinned && (end_do(builder, level + 1)
                 || LabeledDoConstructParser().parse(builder, level + 1)
@@ -49,6 +50,21 @@ class LabeledDoConstructParser : Parser {
         }
         exit_section_(builder, level, marker_, false, false, null)
         return result || pinned
+    }
+
+    // eol+
+    private fun eols(builder_: PsiBuilder, level_: Int): Boolean {
+        if (!recursion_guard_(builder_, level_, "labeled_do_construct_eol")) return false
+        val marker_ = enter_section_(builder_)
+        val result_: Boolean = consumeToken(builder_, EOL)
+        var pos_ = current_position_(builder_)
+        while (result_) {
+            if (!consumeToken(builder_, EOL)) break
+            if (!empty_element_parsed_guard_(builder_, "labeled_do_construct_eol", pos_)) break
+            pos_ = current_position_(builder_)
+        }
+        exit_section_(builder_, marker_, null, result_)
+        return result_
     }
 
     //
@@ -115,6 +131,7 @@ class LabeledDoConstructParser : Parser {
 
     private fun doTermActionStmt(builder: PsiBuilder, level: Int): Boolean {
         if (!recursion_guard_(builder, level, "do_term_action_stmt")) return false
+        if (!nextTokenIs(builder, INTEGERLITERAL)) return false
         val marker = enter_section_(builder)
         val result: Boolean = execution_part_construct(builder, level + 1)
         exit_section_(builder, marker, null, result)

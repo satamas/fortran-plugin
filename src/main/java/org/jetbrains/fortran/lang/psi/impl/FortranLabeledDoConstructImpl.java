@@ -2,7 +2,6 @@ package org.jetbrains.fortran.lang.psi.impl;
 
 import java.util.List;
 
-import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElementVisitor;
@@ -35,7 +34,7 @@ public class FortranLabeledDoConstructImpl extends FortranExecutableConstructImp
     @Nullable
     @Override
     public FortranStmt getDoTermActionStmt() {
-        return (getLastChild() instanceof FortranStmt) ? (FortranStmt)getLastChild() : null;
+        return (getLastChild() instanceof FortranStmt && !(getLastChild() instanceof FortranEndDoStmt)) ? (FortranStmt)getLastChild() : null;
     }
 
     @Nullable

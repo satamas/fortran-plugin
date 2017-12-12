@@ -1,0 +1,3 @@
+program programName
+    if (.true.) write("Condition is true")
+end

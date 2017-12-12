@@ -13,4 +13,9 @@ class FortranCodeStyleSettings(container : CodeStyleSettings)
 
     @JvmField var SPACE_BEFORE_DOUBLE_COLON = true
     @JvmField var SPACE_AFTER_DOUBLE_COLON = true
+
+    companion object {
+        @JvmField var SHOW_SOURCE_FORM_CONVERTER_PANEL = true
+    }
+
 }
