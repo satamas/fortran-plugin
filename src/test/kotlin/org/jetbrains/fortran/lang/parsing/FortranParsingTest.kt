@@ -92,4 +92,6 @@ class FortranParsingTest : FortranBaseParsingTestCase() {
     @Throws(Exception::class)
     fun testOperator() = doParsingTest(FortranTestDataFixture().navigationMetadata("Operator.f95"))
 
+    @Throws(Exception::class)
+    fun testSelectType() = doParsingTest(FortranTestDataFixture().navigationMetadata("SelectType.f95"))
 }
