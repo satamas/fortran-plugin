@@ -40,6 +40,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
         val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
         if (left && tokenText in WORD_LEFT_BRACE) {
             if (aVariableOrType(iterator)) return false
+            if (typeKeywordInSelectTypeConstruct(tokenText, fileText, iterator)) return false
             // end is not before us
             if (tokenText != "then") {
                 return if (tokenText == "do") {
@@ -93,6 +94,48 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
             }
             val wordText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
             return wordText == "if" || wordText == "where"
+        } finally {
+            retreatIteratorBack(iterator, count)
+        }
+    }
+
+    private fun typeKeywordInSelectTypeConstruct(tokenText: String, fileText: CharSequence, iterator: HighlighterIterator): Boolean {
+        if (tokenText != "type" && tokenText != "class") return false
+
+        return typeAfterSelect(fileText, iterator) || typeBeforeIsOrDefault(fileText, iterator)
+    }
+
+    private fun typeAfterSelect(fileText: CharSequence, iterator: HighlighterIterator): Boolean {
+        var count = 1
+        try {
+            iterator.retreat()
+            if (iterator.atEnd()) return false
+            while (iterator.tokenType != FortranTokenType.WORD) {
+                if (iterator.tokenType === EOL) return false
+                iterator.retreat()
+                count++
+                if (iterator.atEnd()) return false
+            }
+
+            return (fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase() == "select")
+        } finally {
+            advanceIteratorBack(iterator, count)
+        }
+    }
+
+    private fun typeBeforeIsOrDefault(fileText: CharSequence, iterator: HighlighterIterator): Boolean {
+        var count = 1
+        try {
+            iterator.advance()
+            if (iterator.atEnd()) return false
+            while (iterator.tokenType != FortranTokenType.WORD) {
+                if (iterator.tokenType === EOL) return false
+                iterator.advance()
+                count++
+                if (iterator.atEnd()) return false
+            }
+            val text = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
+            return (text == "is" || text == "default")
         } finally {
             retreatIteratorBack(iterator, count)
         }

@@ -88,6 +88,36 @@ class FortranBraceMatcherTest : LightPlatformCodeInsightFixtureTestCase() {
              """, "endforall"
     )
 
+    fun testSubroutineWithSelectType() = doMatch("""
+    <caret>subroutine a()
+        integer :: i
+
+        select type(i)
+        type is (integer)
+            write(*,*) "integer"
+        type is (real(4))
+            write(*,*) "real(4)"
+        class default
+            write(*,*) "unknown"
+        end select
+    endsubroutine
+    """, "endsubroutine")
+
+    fun testSelectType() = doMatch("""
+    subroutine a()
+        integer :: i
+
+        <caret>select type(i)
+        type is (integer)
+            write(*,*) "integer"
+        type is (real(4))
+            write(*,*) "real(4)"
+        class default
+            write(*,*) "unknown"
+        endselect
+    endsubroutine
+    """, "endselect")
+
     private fun doMatch(@Language("Fortran") source: String, coBrace: String) {
         myFixture.configureByText(FortranFileType, source)
         assertEquals(
