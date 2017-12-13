@@ -315,7 +315,7 @@ private execution_part_construct ::= !(end_block_keys) ( action_stmt | labeled_d
 private block_recover ::= !(eol | end_block_keys)
 private end_block_keys ::= !assignment_stmt ( label_decl? ( end_ | endblock_ | endcritical_ | enddo_ | endfunction_ | endif_ | endmodule_ | endprocedure_
                          | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_stmt | endwhere_
-                         | endforall_ | elsewhere_))
+                         | endforall_ | elsewhere_ | (type_ is_) | (class_ is_) | (class_ default_)))
 // R210
 internal_subprogram_part ::= contains_stmt eol+ (eol | internal_subprogram)* {
 pin = 1

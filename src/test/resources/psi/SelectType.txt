@@ -1,0 +1,122 @@
+FILE
+  FortranSubroutineSubprogramImpl(SUBROUTINE)
+    FortranSubroutineStmtImpl(SUBROUTINE_STMT)
+      PsiElement(keyword)('subroutine')
+      PsiWhiteSpace(' ')
+      FortranEntityDeclImpl(ENTITY_DECL)
+        PsiElement(identifier)('a')
+      PsiElement(()('(')
+      PsiElement())(')')
+    PsiElement(eol)('\n')
+    PsiWhiteSpace('    ')
+    FortranBlockImpl(BLOCK)
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
+        INTRINSIC_TYPE_SPEC
+          PsiElement(keyword)('integer')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        FortranEntityDeclImpl(ENTITY_DECL)
+          PsiElement(identifier)('i')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      PsiWhiteSpace('    ')
+      SELECT_TYPE_CONSTRUCT
+        SELECT_TYPE_STMT
+          PsiElement(keyword)('select')
+          PsiWhiteSpace(' ')
+          PsiElement(keyword)('type')
+          PsiElement(()('(')
+          DESIGNATOR
+            FortranDataPathImpl(DATA_PATH)
+              PsiElement(identifier)('i')
+          PsiElement())(')')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        TYPE_GUARD_STMT
+          PsiElement(keyword)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(keyword)('is')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          INTRINSIC_TYPE_SPEC
+            PsiElement(keyword)('integer')
+          PsiElement())(')')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace('        ')
+        FortranBlockImpl(BLOCK)
+          WRITE_STMT
+            PsiElement(keyword)('write')
+            PsiElement(()('(')
+            PARAMETERS_SPEC
+              PsiElement(*)('*')
+            PsiElement(,)(',')
+            PsiElement(*)('*')
+            PsiElement())(')')
+            PsiWhiteSpace(' ')
+            OUTPUT_ITEM
+              CONSTANT
+                PsiElement(stringliteral)('"integer"')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        TYPE_GUARD_STMT
+          PsiElement(keyword)('type')
+          PsiWhiteSpace(' ')
+          PsiElement(keyword)('is')
+          PsiWhiteSpace(' ')
+          PsiElement(()('(')
+          INTRINSIC_TYPE_SPEC
+            PsiElement(keyword)('real')
+            KIND_SELECTOR
+              PsiElement(()('(')
+              CONSTANT
+                PsiElement(integerliteral)('4')
+              PsiElement())(')')
+          PsiElement())(')')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace('        ')
+        FortranBlockImpl(BLOCK)
+          WRITE_STMT
+            PsiElement(keyword)('write')
+            PsiElement(()('(')
+            PARAMETERS_SPEC
+              PsiElement(*)('*')
+            PsiElement(,)(',')
+            PsiElement(*)('*')
+            PsiElement())(')')
+            PsiWhiteSpace(' ')
+            OUTPUT_ITEM
+              CONSTANT
+                PsiElement(stringliteral)('"real(4)"')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        TYPE_GUARD_STMT
+          PsiElement(keyword)('class')
+          PsiWhiteSpace(' ')
+          PsiElement(keyword)('default')
+        PsiElement(eol)('\n')
+        PsiWhiteSpace('        ')
+        FortranBlockImpl(BLOCK)
+          WRITE_STMT
+            PsiElement(keyword)('write')
+            PsiElement(()('(')
+            PARAMETERS_SPEC
+              PsiElement(*)('*')
+            PsiElement(,)(',')
+            PsiElement(*)('*')
+            PsiElement())(')')
+            PsiWhiteSpace(' ')
+            OUTPUT_ITEM
+              CONSTANT
+                PsiElement(stringliteral)('"unknown"')
+          PsiElement(eol)('\n')
+        PsiWhiteSpace('    ')
+        END_SELECT_STMT
+          PsiElement(keyword)('end')
+          PsiWhiteSpace(' ')
+          PsiElement(keyword)('select')
+      PsiElement(eol)('\n')
+    END_SUBROUTINE_STMT
+      PsiElement(keyword)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(keyword)('subroutine')
