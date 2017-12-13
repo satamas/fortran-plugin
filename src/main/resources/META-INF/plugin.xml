@@ -20,6 +20,7 @@
     <idea-version since-build="173" until-build="173.*"/>
 
     <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
+    <depends optional="true">com.intellij.clion-python</depends>
     <depends>com.intellij.modules.lang</depends>
 
 
