@@ -7,25 +7,25 @@ import com.intellij.util.PlatformUtils
 import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
 import com.intellij.xdebugger.impl.ui.tree.actions.XDebuggerTreeActionBase
 import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
-import com.jetbrains.cidr.execution.debugger.evaluation.CidrValue
+import com.jetbrains.cidr.execution.debugger.evaluation.CidrPhysicalValue
 import javax.swing.tree.TreePath
 
 
 class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
-    override fun perform(node: XValueNodeImpl?, nodeName: String, e: AnActionEvent) {
+
+    override fun perform(node : XValueNodeImpl?, nodeName : String , e : AnActionEvent) {
         val p = e.project
-        if (p != null && node != null && node.valueContainer is CidrValue) {
-            val debugValue = node.valueContainer as CidrValue
-            showFortranNumericViewer(p, debugValue)
+        if (p != null && node != null && node.valueContainer is CidrPhysicalValue && node.isComputed) {
+            val debugValue = node.valueContainer as CidrPhysicalValue
+            showNumericViewer(p, debugValue)
         }
     }
 
-    private fun getSelectedPaths(dataContext: DataContext): Array<TreePath>? {
-        val tree = XDebuggerTree.getTree(dataContext)
-        return tree?.selectionPaths
+    private fun showNumericViewer(project: Project, debugValue : CidrPhysicalValue) {
+        FortranDataView.getInstance(project).show(debugValue, PlatformUtils.isPyCharmPro())
     }
 
-    override fun update(e: AnActionEvent) {
+    override fun update(e : AnActionEvent) {
         e.presentation.isVisible = false
         val paths = getSelectedPaths(e.dataContext)
         if (paths != null) {
@@ -34,12 +34,29 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
                 return
             }
 
-            val node = XDebuggerTreeActionBase.getSelectedNode(e.dataContext)
-            e.presentation.isVisible = node != null && node.valueContainer is CidrValue
+            val node = getSelectedNode(e.dataContext)
+            if (node != null && node.valueContainer is CidrPhysicalValue && node.isComputed) {
+                val debugValue = node.valueContainer as CidrPhysicalValue
+
+                if (isFortranTypeArray(debugValue.type)) {
+                    e.presentation.text = "View as Array"
+                    e.presentation.isVisible = true
+                }
+            }
+            else
+            {
+                e.presentation.isVisible = false
+            }
         }
     }
 
-    private fun showFortranNumericViewer(project : Project, debugValue : CidrValue) {
-        FortranDataView.getInstance(project).show(debugValue, PlatformUtils.isPyCharmPro())
-  }
+    companion object {
+        fun getSelectedPaths(dataContext : DataContext):Array<TreePath>?  = XDebuggerTree.getTree(dataContext)?.selectionPaths
+
+        fun isFortranTypeArray(type : String) : Boolean {
+            return type.contains('(') && !type.substringAfterLast('(').contains("kind")
+                    && type.contains(Regex("integer|real|logical|complex"))
+                    && type.substringAfterLast('(').count { it ==',' } <= 1 // we don't know what to do with 3D
+        }
+    }
 }
