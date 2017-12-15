@@ -18,7 +18,8 @@ class FortranDataView(project: Project) : DataView(project) {
             showInToolwindow(fortranValue)
         } else {
             ApplicationManager.getApplication().invokeLater {
-                val dialog = FortranDataViewDialog(myProject, fortranValue)
+                val dialog = FortranDataViewDialog(myProject)
+                dialog.init(myProject, fortranValue)
                 dialog.show()
             }
         }
