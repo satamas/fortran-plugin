@@ -24,6 +24,7 @@ import org.jetbrains.fortran.debugger.FortranLineBreakpointType
 import org.jetbrains.fortran.debugger.dataView.FortranViewNumericContainerAction
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 import javax.swing.Icon
 
 class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, consoleBuilder: TextConsoleBuilder)
@@ -75,7 +76,11 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
                 node.setErrorMessage(errorMessage)
             }
         }, null)
-        return future.get(3000, TimeUnit.MILLISECONDS)
+        try {
+            return future.get(3000, TimeUnit.MILLISECONDS)
+        } catch (e : TimeoutException) {
+            throw PyDebuggerException("Timeout exception")
+        }
     }
 
 

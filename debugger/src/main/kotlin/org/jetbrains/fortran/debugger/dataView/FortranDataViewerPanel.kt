@@ -22,11 +22,7 @@ class FortranDataViewerPanel(project: Project, frameAccessor: FortranDebugProces
     }
 
     override fun getStrategy(debugValue: XNamedValue?): DataViewStrategy? {
-        val strategy = null
-        if (strategy == null) {
-            setError("Fortran is not supported")
-        }
-        return strategy
+        return FortranArrayViewStrategy()
     }
 
     override fun getDebugValueName(debugValue: XNamedValue, chunk: ArrayChunk): String {

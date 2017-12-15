@@ -44,14 +44,8 @@ class FortranDataView(project: Project) : DataView(project) {
         }
     }
 
-
     override fun createNewPanel(project: Project, dataViewAccessor: DataViewAccessor): DataViewerPanel {
-        throw NotImplementedError("createNewPanel")
-        //return FortranDataViewerPanel(project, dataViewAccessor as FortranDebugProcess)
-    }
-
-    fun getInstance(project: Project): PyDataView {
-        return ServiceManager.getService(project, PyDataView::class.java)
+        return FortranDataViewerPanel(project, dataViewAccessor as FortranDebugProcess)
     }
 
     companion object {
