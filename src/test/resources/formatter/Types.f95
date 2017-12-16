@@ -30,6 +30,8 @@ module types
         character(len = 20) :: forename
                 integer :: age
                 integer :: some
+             contains
+            procedure :: hi
     end type person
 
     ENUM, BIND(C)
