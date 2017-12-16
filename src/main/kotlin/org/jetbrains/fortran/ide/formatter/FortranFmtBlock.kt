@@ -19,7 +19,7 @@ class FortranFmtBlock(
         private val wrap: Wrap?,
         private val settings: CodeStyleSettings,
         private val spacingBuilder: SpacingBuilder,
-        private val isFixedForm : Boolean
+        private val isFixedForm: Boolean
 ) : ASTBlock {
     private val blockIsIncomplete: Boolean by lazy { FormatterUtil.isIncomplete(node) }
     private val blockSubBlocks: List<Block> by lazy { buildChildren() }
@@ -68,18 +68,18 @@ class FortranFmtBlock(
     }
 
     private fun newChildIndent(): Indent? = when {
-        // inside blocks
-           node.psi is FortranProgramUnit -> Indent.getNormalIndent()
-           node.psi is FortranExecutableConstruct -> Indent.getNormalIndent()
-           node.psi is FortranDeclarationConstruct -> Indent.getNormalIndent()
-           node.psi is FortranInternalSubprogramPart -> Indent.getNormalIndent()
-           node.psi is FortranModuleSubprogramPart -> Indent.getNormalIndent()
-           node.psi is FortranInterfaceSpecification -> Indent.getNormalIndent()
-       //    node.psi is FortranBlock -> Indent.getNormalIndent()
-       // line continuation
-           oneLineElement() -> Indent.getContinuationIndent()
+    // inside blocks
+        node.psi is FortranProgramUnit -> Indent.getNormalIndent()
+        node.psi is FortranExecutableConstruct -> Indent.getNormalIndent()
+        node.psi is FortranDeclarationConstruct -> Indent.getNormalIndent()
+        node.psi is FortranInternalSubprogramPart -> Indent.getNormalIndent()
+        node.psi is FortranModuleSubprogramPart -> Indent.getNormalIndent()
+        node.psi is FortranInterfaceSpecification -> Indent.getNormalIndent()
+    //    node.psi is FortranBlock -> Indent.getNormalIndent()
+    // line continuation
+        oneLineElement() -> Indent.getContinuationIndent()
 
-           else -> Indent.getNoneIndent()
+        else -> Indent.getNoneIndent()
     }
 
     private fun oneLineElement(): Boolean {
@@ -98,23 +98,30 @@ class FortranFmtBlock(
         return true
     }
 
-    private fun computeIndent(child: ASTNode): Indent = when {
+    private fun computeIndent(child: ASTNode): Indent {
+        if (child.psi is FortranContainsStmt) {
+            return Indent.getNoneIndent()
+        }
+
+        return when {
         // inside blocks
-        node.psi is FortranMainProgram && node.psi.firstChild !is FortranStmt -> Indent.getNoneIndent()
-        node.psi is FortranProgramUnit && child.psi !is FortranStmt
-                && child.psi !is FortranInternalSubprogramPart
-                && child.psi !is FortranModuleSubprogramPart -> Indent.getNormalIndent()
-        node.psi is FortranExecutableConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
-        node.psi is FortranEnumDef && child.psi is FortranEnumeratorDefStmt -> Indent.getNormalIndent()
-        node.psi is FortranEnumDef && child.psi !is FortranEnumeratorDefStmt -> Indent.getNoneIndent()
-        node.psi is FortranInterfaceSpecification -> Indent.getNoneIndent()
-        node.psi is FortranDeclarationConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
-        node.psi is FortranInternalSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
-        node.psi is FortranModuleSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
-        node.psi is FortranInterfaceSpecification && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranMainProgram && node.psi.firstChild !is FortranStmt -> Indent.getNoneIndent()
+            node.psi is FortranProgramUnit && child.psi !is FortranStmt
+                    && child.psi !is FortranInternalSubprogramPart
+                    && child.psi !is FortranModuleSubprogramPart -> Indent.getNormalIndent()
+            node.psi is FortranDerivedTypeDef && child.psi is FortranTypeBoundProcedurePart -> Indent.getNoneIndent()
+            node.psi is FortranTypeBoundProcedurePart -> Indent.getNormalIndent()
+            node.psi is FortranExecutableConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranEnumDef && child.psi is FortranEnumeratorDefStmt -> Indent.getNormalIndent()
+            node.psi is FortranEnumDef && child.psi !is FortranEnumeratorDefStmt -> Indent.getNoneIndent()
+            node.psi is FortranInterfaceSpecification -> Indent.getNoneIndent()
+            node.psi is FortranDeclarationConstruct && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranInternalSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
+            node.psi is FortranModuleSubprogramPart && child.psi !is FortranStmt -> Indent.getNormalIndent()
         // Line continuation
-        oneLineElement() && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
-        else -> Indent.getNoneIndent()
+            oneLineElement() && (node.firstChildNode !== child) -> Indent.getContinuationIndent()
+            else -> Indent.getNoneIndent()
+        }
     }
 
     private fun computeSpacing(child1: Block?, child2: Block): Spacing? {
@@ -132,7 +139,7 @@ class FortranFmtBlock(
                     || psi1 is FortranExecutableConstruct
                     || psi1 is FortranDeclarationConstruct
                     || psi1 is FortranBlock)
-                && ( psi2 is FortranStmt
+                    && (psi2 is FortranStmt
                     || psi2 is FortranExecutableConstruct
                     || psi2 is FortranDeclarationConstruct
                     || psi2 is FortranBlock)) {
@@ -157,15 +164,12 @@ class FortranFmtBlock(
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
             // after subprogram
             if ((psi1 is FortranModuleSubprogramPart || psi1 is FortranInternalSubprogramPart)
-                && (psi2 is FortranStmt || node2.elementType === FortranTokenType.LINE_COMMENT))
+                    && (psi2 is FortranStmt || node2.elementType === FortranTokenType.LINE_COMMENT))
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
         }
         return spacingBuilder.getSpacing(this, child1, child2)
     }
 
-    private fun getAlignmentStrategy(): AlignmentStrategy =
-            when (node.elementType) {
-                else -> AlignmentStrategy.getNullStrategy()
-            }
+    private fun getAlignmentStrategy(): AlignmentStrategy = AlignmentStrategy.getNullStrategy()
 
 }
