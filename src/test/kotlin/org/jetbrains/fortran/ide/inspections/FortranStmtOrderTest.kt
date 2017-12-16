@@ -25,6 +25,7 @@ class FortranStmtOrderTest()
       module gaussinter
       interface solve
         function solve(n, pmatrix, key);
+              implicit none
               real*8, dimension (:), pointer ::  solve;
               real(8), dimension (:,:), pointer :: pmatrix;
               integer n, key
