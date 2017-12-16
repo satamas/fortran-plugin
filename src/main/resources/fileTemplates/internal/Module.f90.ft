@@ -1,4 +1,5 @@
-#parse("File Header.java")
+#parse("Fortran File Header.f90")
+
 module ${NAME}
 
 end module ${NAME}
