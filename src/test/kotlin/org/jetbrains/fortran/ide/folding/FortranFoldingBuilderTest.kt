@@ -12,6 +12,7 @@ class FortranFoldingBuilderTest : LightPlatformCodeInsightFixtureTestCase() {
     fun testExecutableConstructs() = doTest()
     fun testDeclarationConstructs() = doTest()
     fun testLabeledDoConstruct() = doTest()
+    fun testEmptySubprogram() = doTest()
 
     private fun doTest() {
         myFixture.testFolding(testDataPath + File.separator + basePath + File.separator + getTestName(false) + ".f95")

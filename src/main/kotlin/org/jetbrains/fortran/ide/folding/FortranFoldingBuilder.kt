@@ -90,9 +90,10 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
             foldAfterContains(o)
         }
 
-        private fun foldAfterContains(subprogramPart : FortranCompositeElement) {
+        private fun foldAfterContains(subprogramPart: FortranCompositeElement) {
             val lastElement = subprogramPart.lastChildOfType(FortranCompositeElement::class) ?: return
-            val range = TextRange(subprogramPart.firstChild.node.startOffset + subprogramPart.firstChild.textLength, lastElement.node.startOffset+lastElement.node.textLength)
+            if (lastElement == subprogramPart.firstChild) return
+            val range = TextRange(subprogramPart.firstChild.node.startOffset + subprogramPart.firstChild.textLength, lastElement.node.startOffset + lastElement.node.textLength)
             descriptors += FoldingDescriptor(subprogramPart.node, range)
         }
 
