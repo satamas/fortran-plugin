@@ -37,7 +37,8 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
 
         when (constructOrUnit) {
             // program units
-            is FortranProgramUnit -> if (constructOrUnit.beginUnitStmt != null && constructOrUnit.endUnitStmt == null) {
+            is FortranProgramUnit -> if ((constructOrUnit.beginUnitStmt != null && constructOrUnit.endUnitStmt == null)
+                                             || sameTypeParentUnitHasNoEnd(constructOrUnit)) {
                 val programUnitName = constructOrUnit.beginUnitStmt!!.entityDecl!!.name
                 editor.document.insertString(offset, "\n${indentString}end ${constructOrUnit.unitType} $programUnitName")
                 return EnterHandlerDelegate.Result.DefaultForceIndent
@@ -76,7 +77,7 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
 
             }
             // executable constructs
-            is FortranExecutableConstruct -> if (constructOrUnit.endConstructStmt == null) {
+            is FortranExecutableConstruct -> if (constructOrUnit.endConstructStmt == null || sameTypeParentConstructHasNoEnd(constructOrUnit)) {
                 val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name
                 insertEndConstructString(editor, offset, indentString, constructOrUnit.constructType, constructName)
                 return EnterHandlerDelegate.Result.DefaultForceIndent
@@ -84,6 +85,28 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
         }
 
         return super.postProcessEnter(file, editor, dataContext)
+    }
+
+
+    private fun sameTypeParentUnitHasNoEnd(unit: FortranProgramUnit): Boolean {
+        var parent = PsiTreeUtil.getParentOfType(unit, FortranProgramUnit::class.java)
+        while (parent != null) {
+            if (parent.unitType != unit.unitType) return false
+            if (parent.endUnitStmt == null) return true
+            parent = PsiTreeUtil.getParentOfType(unit, FortranProgramUnit::class.java)
+        }
+        return false
+    }
+
+    private fun sameTypeParentConstructHasNoEnd(construct: FortranExecutableConstruct): Boolean {
+        // construct parent is block and blocks parent may be construct
+        var grandparent = construct.parent?.parent
+        while (grandparent != null) {
+            if (grandparent !is FortranExecutableConstruct || grandparent.constructType != construct.constructType) return false
+            if (grandparent.endConstructStmt == null) return true
+            grandparent = grandparent.parent?.parent
+        }
+        return false
     }
 
     private fun insertEndConstructString(editor: Editor, offset: Int, indentString: String?, construct: String?, constructName: String?) {
