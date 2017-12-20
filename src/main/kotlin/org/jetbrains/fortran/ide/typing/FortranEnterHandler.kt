@@ -56,6 +56,21 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
+            // subroutine subprogram
+            is FortranSubroutineSubprogram -> if (constructOrUnit.endSubroutineStmt == null) {
+                val programUnitName = constructOrUnit.beginUnitStmt!!.entityDecl!!.name
+                editor.document.insertString(offset, "\n${indentString}end ${constructOrUnit.unitType} $programUnitName")
+                return EnterHandlerDelegate.Result.DefaultForceIndent
+            }
+
+            // function subprogram
+            is FortranFunctionSubprogram -> if (constructOrUnit.endFunctionStmt == null) {
+                val programUnitName = constructOrUnit.beginUnitStmt!!.entityDecl!!.name
+                editor.document.insertString(offset, "\n${indentString}end ${constructOrUnit.unitType} $programUnitName")
+                return EnterHandlerDelegate.Result.DefaultForceIndent
+            }
+
+            // interface
             is FortranInterfaceBlock -> if (constructOrUnit.endInterfaceStmt == null) {
                 val interfaceName = constructOrUnit.interfaceStmt.entityDecl?.name
                 if (interfaceName != null){
