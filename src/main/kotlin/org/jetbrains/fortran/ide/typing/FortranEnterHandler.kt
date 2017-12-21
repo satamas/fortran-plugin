@@ -137,9 +137,9 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
         2 -> {endString = endString.toUpperCase()}
         }
         if (constructName != null){
-            editor.document.insertString(offset, "\n!${indentString}${nodeTextFirstLine}\n${indentString}${endString} $constructName")
+            editor.document.insertString(offset, "\n${indentString}${endString} $constructName")
         } else {
-            editor.document.insertString(offset, "\n!${indentString}${nodeTextFirstLine}\n${indentString}${endString}")
+            editor.document.insertString(offset, "\n${indentString}${endString}")
         }
     }
     
