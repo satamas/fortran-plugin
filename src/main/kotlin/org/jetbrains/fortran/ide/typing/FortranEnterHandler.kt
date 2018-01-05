@@ -37,31 +37,41 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
 
         when (constructOrUnit) {
             // program units
-            is FortranProgramUnit -> if (constructOrUnit.beginUnitStmt != null && constructOrUnit.endUnitStmt == null) {
+            is FortranProgramUnit -> if ((constructOrUnit.beginUnitStmt != null && constructOrUnit.endUnitStmt == null)
+                                             || sameTypeParentUnitHasNoEnd(constructOrUnit)) {
                 val programUnitName = constructOrUnit.beginUnitStmt!!.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end ${constructOrUnit.unitType} $programUnitName")
+                var unitText = constructOrUnit.text
+                insertEndString(editor, offset, unitText, indentString, constructOrUnit.unitType, programUnitName)
+                //editor.document.insertString(offset, "\n${indentString}end ${constructOrUnit.unitType} $programUnitName")
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
             // declaration constructs
             is FortranEnumDef -> if (constructOrUnit.endEnumStmt == null) {
-                editor.document.insertString(offset, "\n${indentString}end enum")
+                var unitText = constructOrUnit.text
+                insertEndString(editor, offset, unitText, indentString, "enum", null)
+                //editor.document.insertString(offset, "\n${indentString}end enum")
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
             is FortranDerivedTypeDef -> if (constructOrUnit.endTypeStmt == null) {
                 val typeName = constructOrUnit.derivedTypeStmt.typeDecl.name
-                editor.document.insertString(offset, "\n${indentString}end type $typeName")
+                var unitText = constructOrUnit.text
+                insertEndString(editor, offset, unitText, indentString, "type", typeName)
+                //editor.document.insertString(offset, "\n${indentString}end type $typeName")
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
-
+            
+            // interface
             is FortranInterfaceBlock -> if (constructOrUnit.endInterfaceStmt == null) {
                 val interfaceName = constructOrUnit.interfaceStmt.entityDecl?.name
-                if (interfaceName != null){
-                    editor.document.insertString(offset, "\n${indentString}end interface $interfaceName")
-                } else {
-                    editor.document.insertString(offset, "\n${indentString}end interface")
-                }
+                var unitText = constructOrUnit.text
+                insertEndString(editor, offset, unitText, indentString, "interface", interfaceName)
+                //if (interfaceName != null){
+                //    editor.document.insertString(offset, "\n${indentString}end interface $interfaceName")
+                //} else {
+                //    editor.document.insertString(offset, "\n${indentString}end interface")
+                //}
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
@@ -71,19 +81,127 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
                     && constructOrUnit.labeledDoTermConstract == null) {
                 val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name
                 val indentStringWithLabel = indentString + constructOrUnit.labelDoStmt.label.text + " "
-                insertEndConstructString(editor, offset, indentStringWithLabel, constructOrUnit.constructType, constructName)
+                var unitText = constructOrUnit.text
+                insertEndString(editor, offset, unitText, indentStringWithLabel, constructOrUnit.constructType, constructName)
+                //insertEndConstructString(editor, offset, indentStringWithLabel, constructOrUnit.constructType, constructName)
                 return EnterHandlerDelegate.Result.DefaultForceIndent
 
             }
             // executable constructs
-            is FortranExecutableConstruct -> if (constructOrUnit.endConstructStmt == null) {
+            is FortranExecutableConstruct -> if (constructOrUnit.endConstructStmt == null || sameTypeParentConstructHasNoEnd(constructOrUnit)) {
                 val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, constructOrUnit.constructType, constructName)
+                var unitText = constructOrUnit.text
+                insertEndString(editor, offset, unitText, indentString, constructOrUnit.constructType, constructName)
+                //insertEndConstructString(editor, offset, indentString, constructOrUnit.constructType, constructName)
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
         }
 
         return super.postProcessEnter(file, editor, dataContext)
+    }
+
+
+    private fun sameTypeParentUnitHasNoEnd(unit: FortranProgramUnit): Boolean {
+        var parent = PsiTreeUtil.getParentOfType(unit, FortranProgramUnit::class.java)
+        while (parent != null) {
+            if (parent.unitType != unit.unitType) return false
+            if (parent.endUnitStmt == null) return true
+            parent = PsiTreeUtil.getParentOfType(unit, FortranProgramUnit::class.java)
+        }
+        return false
+    }
+
+    private fun sameTypeParentConstructHasNoEnd(construct: FortranExecutableConstruct): Boolean {
+        // construct parent is block and blocks parent may be construct
+        var grandparent = construct.parent?.parent
+        while (grandparent != null) {
+            if (grandparent !is FortranExecutableConstruct || grandparent.constructType != construct.constructType) return false
+            if (grandparent.endConstructStmt == null) return true
+            grandparent = grandparent.parent?.parent
+        }
+        return false
+    }
+    
+    private fun insertEndString(editor: Editor, offset: Int, nodeText: String, indentString: String?, construct: String?, constructName: String?) {
+        var endString = "end $construct"
+        var nodeTextLines = nodeText.lines()
+        var nodeTextFirstLine = nodeTextLines.firstOrNull()
+        var nodePos=0
+        while(nodeTextFirstLine!!.trim().isEmpty()){
+            nodePos++
+            nodeTextFirstLine = nodeTextLines.getOrNull(nodePos)
+        }
+        when(beginStmtCapitalized(nodeTextFirstLine)){
+        0 -> {endString = endString.toLowerCase()}
+        1 -> {endString = endString.capitalize()}
+        2 -> {endString = endString.toUpperCase()}
+        }
+        if (constructName != null){
+            editor.document.insertString(offset, "\n${indentString}${endString} $constructName")
+        } else {
+            editor.document.insertString(offset, "\n${indentString}${endString}")
+        }
+    }
+    
+    private fun beginStmtCapitalized(construct: String): Int {
+        if(construct.trim().length<1)
+            return 0
+        var charCount = 0
+        var firstCharIsUpperCase = false
+        var subStringUpperCase = false
+        var subStirngLowerCase = false
+        //println("${firstCharIsUpperCase},${subStringUpperCase},${subStirngLowerCase}")
+        for( char: Char in construct) {
+            if ( char.isLetter()){
+                var charIsUpperCase = char.isUpperCase()
+                when(charCount){
+                0 -> {
+                    firstCharIsUpperCase = charIsUpperCase                    
+                }
+                1 -> {
+                    subStringUpperCase = charIsUpperCase
+                    subStirngLowerCase = !charIsUpperCase
+                }
+                else -> {
+                    subStringUpperCase = subStringUpperCase && charIsUpperCase
+                    subStirngLowerCase = subStirngLowerCase && (!charIsUpperCase)
+                }
+                
+                }
+                charCount++
+                //println("${char}, ${char.isUpperCase()}")   
+                
+            }
+        }
+        
+        //println("${firstCharIsUpperCase},${subStringUpperCase},${subStirngLowerCase}")
+        //println("${charCount}")
+        if(firstCharIsUpperCase)
+        {
+            if(subStringUpperCase){
+                // all upper case
+                return 2
+            } else{
+                if(subStirngLowerCase)
+                {
+                    // Captalized
+                    return 1
+                } else {
+                    // Unkonw
+                    return -1
+                }
+            }
+        }else{
+           if(subStirngLowerCase)
+            {
+                // all lower case
+                return 0
+            } else {
+                // Unkonw
+                return -1
+            } 
+        }
+        return -1
     }
 
     private fun insertEndConstructString(editor: Editor, offset: Int, indentString: String?, construct: String?, constructName: String?) {
