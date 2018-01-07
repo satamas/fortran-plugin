@@ -90,6 +90,7 @@ allprojects {
 
 project(":") {
     val clionVersion = prop("clionVersion")
+    version = "0.2.0.${prop("buildNumber")}"
     intellij {
         pluginName = "fortran-plugin"
         alternativeIdePath = "debugger/lib/clion-$clionVersion"

@@ -1049,7 +1049,7 @@ private program_stmt_with_eol ::= program_stmt eol+ {pin = 1}
 // R1102 +
 program_stmt ::= label_decl? program_ program_unit_name { pin = 2 }
 // R1103 +
-end_program_stmt ::=  label_decl? (endprogram_ data_name? | end_ (program_ data_name?)?) { pin = 2 }
+end_program_stmt ::=  label_decl? (end_ &(eol|<<eof>>) | end_ program_ data_name? | endprogram_ data_name?) { pin = 2 }
 // R1104
 module ::= module_stmt eol+ block module_subprogram_part? end_module_stmt {
 pin = 1; extends = program_unit
@@ -1060,7 +1060,7 @@ mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranModuleImplMixin"
 // R1105
 module_stmt ::= label_decl? module_ program_unit_name { pin = 2 }
 // R1106
-end_module_stmt ::= label_decl? (endmodule_ data_name? | end_ (module_ data_name?)?) { pin = 2 }
+end_module_stmt ::= label_decl? (end_ &(eol|<<eof>>) | end_ module_ data_name? | endmodule_ data_name?) { pin = 2 }
 // R1107
 module_subprogram_part ::= contains_stmt eol+ (eol | module_subprogram)* {
     pin = 1
@@ -1113,7 +1113,7 @@ submodule_stmt ::= label_decl? submodule_ '(' parent_identifier ')' program_unit
 // R1118
 parent_identifier ::= data_name (':' data_name)?
 // R1119
-end_submodule_stmt ::= label_decl? (endsubmodule_ data_name? | end_ (submodule_ data_name?)?)  { pin = 2 }
+end_submodule_stmt ::= label_decl? (end_ &(eol|<<eof>>) | end_ submodule_ data_name? | endsubmodule_ data_name?)  { pin = 2 }
 // R1120
 block_data ::= block_data_stmt eol+ block end_block_data_stmt {
 pin = 1; extends = program_unit
@@ -1124,8 +1124,10 @@ mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranBlockDataImplMixin"
 // R1121
 block_data_stmt ::= label_decl? (blockdata_ | (block_ data_)) program_unit_name? { pin = 2 }
 // R1122
-end_block_data_stmt ::= label_decl? ((endblockdata_ data_name?)| (end_ (((block_ data_) | blockdata_) data_name?)?)
-                      | (endblock_ data_ data_name?))  { pin = 2 }
+end_block_data_stmt ::= label_decl? (end_ &(eol|<<eof>>)
+                      | end_ (block_ data_ | blockdata_) data_name?
+                      | endblock_ data_ data_name?
+                      | endblockdata_ data_name?)  { pin = 2 }
 
 // Clause 12
 // R1201
@@ -1206,7 +1208,7 @@ function_stmt ::= label_decl? prefix? function_ program_unit_name '(' <<list dat
 // R1231
 suffix ::= (language_binding_spec (result_ '(' data_name ')')?) | (result_ '(' data_name ')' (language_binding_spec)?)
 // R1232
-end_function_stmt ::= label_decl? ((end_ (function_ data_name?)?) | (endfunction_ data_name?)) { pin = 2 }
+end_function_stmt ::= label_decl? (end_ &(eol|<<eof>>) | end_ function_ data_name? | endfunction_ data_name?) { pin = 2 }
 // R1233
 subroutine_subprogram ::= subroutine_stmt eol+ block internal_subprogram_part? end_subroutine_stmt {
     pin = 1; extends = program_unit
@@ -1220,7 +1222,7 @@ pin = 3; }
 // R1235
 private dummy_arg ::= '*' | data_name
 // R1236
-end_subroutine_stmt ::= label_decl? ((end_ (subroutine_ data_name?)?) | (endsubroutine_ data_name?)) { pin = 2 }
+end_subroutine_stmt ::= label_decl? (end_ &(eol|<<eof>>) | end_ subroutine_ data_name? | endsubroutine_ data_name?) { pin = 2 }
 // R1237
 separate_module_subprogram ::= mp_subprogram_stmt eol+ block internal_subprogram_part? end_mp_subprogram_stmt {
     pin = 1; extends = program_unit
@@ -1233,7 +1235,7 @@ mp_subprogram_stmt ::= label_decl? module_ procedure_ program_unit_name {
 pin = 3;
 }
 // R1239
-end_mp_subprogram_stmt ::= label_decl? ((end_ (procedure_ fidentifier?)?) | (endprocedure_ fidentifier?)) { pin = 2}
+end_mp_subprogram_stmt ::= label_decl? (end_ &(eol|<<eof>>) | end_ procedure_ fidentifier? | endprocedure_ fidentifier?) { pin = 2}
 // R1240
 entry_stmt ::= label_decl? entry_ fidentifier ('(' <<list dummy_arg>>? ')' suffix? )? { pin = 2; extends=declaration_stmt }
 // R1241
