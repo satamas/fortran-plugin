@@ -10,6 +10,7 @@ import org.jetbrains.fortran.FortranIcons
 
 class FortranRunConfigurationType
     : CMakeRunConfigurationType("FortranRunConfiguration",
+        "Application",
         "Fortran",
         "Fortran CMake run configuration",
         FortranIcons.runConfigurationIcon) {

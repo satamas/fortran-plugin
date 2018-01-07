@@ -1,0 +1,32 @@
+FILE
+  FortranModuleImpl(MODULE)
+    FortranModuleStmtImpl(MODULE_STMT)
+      PsiElement(keyword)('module')
+      PsiWhiteSpace(' ')
+      FortranEntityDeclImpl(ENTITY_DECL)
+        PsiElement(identifier)('a')
+    PsiElement(eol)('\n')
+    FortranBlockImpl(BLOCK)
+      <empty list>
+    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM PART)
+      CONTAINS_STMT
+        PsiElement(keyword)('contains')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      FortranSubroutineSubprogramImpl(SUBROUTINE)
+        FortranSubroutineStmtImpl(SUBROUTINE_STMT)
+          PsiElement(keyword)('subroutine')
+          PsiWhiteSpace(' ')
+          FortranEntityDeclImpl(ENTITY_DECL)
+            PsiElement(identifier)('b')
+          PsiElement(()('(')
+          PsiElement())(')')
+        PsiElement(eol)('\n')
+        FortranBlockImpl(BLOCK)
+          <empty list>
+      PsiErrorElement:eol, integerliteral or keyword expected, got 'end'
+        <empty list>
+    END_MODULE_STMT
+      PsiElement(keyword)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(keyword)('module')
