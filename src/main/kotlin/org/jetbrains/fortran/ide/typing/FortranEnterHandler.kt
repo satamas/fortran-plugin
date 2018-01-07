@@ -40,50 +40,53 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
         if (offset < endFirstStmtOffset) return superProcessor
 
         when (constructOrUnit) {
-            // program units
+        // program units
             is FortranProgramUnit -> if ((constructOrUnit.beginUnitStmt != null && constructOrUnit.endUnitStmt == null)
-                                             || sameTypeParentUnitHasNoEnd(constructOrUnit)) {
-                val programUnitName = constructOrUnit.beginUnitStmt!!.entityDecl!!.name
-                editor.document.insertString(offset, "\n${indentString}end ${constructOrUnit.unitType} $programUnitName")
+                    || sameTypeParentUnitHasNoEnd(constructOrUnit)) {
+                val beginStmt = constructOrUnit.beginUnitStmt!!
+                val programUnitName = beginStmt.entityDecl!!.name
+                val unit = constructOrUnit.unitType!!
+                insertEndString(editor, offset, indentString, unit, programUnitName, beginStmtStyle(beginStmt))
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
-            // declaration constructs
+        // declaration constructs
             is FortranEnumDef -> if (constructOrUnit.endEnumStmt == null) {
-                editor.document.insertString(offset, "\n${indentString}end enum")
+                val enumStmt = constructOrUnit.enumDefStmt
+                insertEndString(editor, offset, indentString, "enum", null, beginStmtStyle(enumStmt))
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
             is FortranDerivedTypeDef -> if (constructOrUnit.endTypeStmt == null) {
-                val typeName = constructOrUnit.derivedTypeStmt.typeDecl.name
-                editor.document.insertString(offset, "\n${indentString}end type $typeName")
+                val typeStmt = constructOrUnit.derivedTypeStmt
+                val typeName = typeStmt.typeDecl.name
+                insertEndString(editor, offset, indentString, "type", typeName, beginStmtStyle(typeStmt))
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
             is FortranInterfaceBlock -> if (constructOrUnit.endInterfaceStmt == null) {
-                val interfaceName = constructOrUnit.interfaceStmt.entityDecl?.name
-                if (interfaceName != null){
-                    editor.document.insertString(offset, "\n${indentString}end interface $interfaceName")
-                } else {
-                    editor.document.insertString(offset, "\n${indentString}end interface")
-                }
+                val interfaceStmt = constructOrUnit.interfaceStmt
+                val interfaceName = interfaceStmt.entityDecl?.name
+                insertEndString(editor, offset, indentString, "interface", interfaceName, beginStmtStyle(interfaceStmt))
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
 
-            // labeled do is not like all other peoples do
+        // labeled do is not like all other peoples do
             is FortranLabeledDoConstruct -> if (constructOrUnit.endConstructStmt == null
                     && constructOrUnit.doTermActionStmt == null
                     && constructOrUnit.labeledDoTermConstract == null) {
-                val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name
+                val beginStmt = constructOrUnit.beginConstructStmt!!
+                val constructName = beginStmt.constructNameDecl?.name
                 val indentStringWithLabel = indentString + constructOrUnit.labelDoStmt.label.text + " "
-                insertEndConstructString(editor, offset, indentStringWithLabel, constructOrUnit.constructType, constructName)
+                insertEndString(editor, offset, indentStringWithLabel, constructOrUnit.constructType, constructName, beginStmtStyle(beginStmt))
                 return EnterHandlerDelegate.Result.DefaultForceIndent
 
             }
-            // executable constructs
+        // executable constructs
             is FortranExecutableConstruct -> if (constructOrUnit.endConstructStmt == null || sameTypeParentConstructHasNoEnd(constructOrUnit)) {
-                val constructName = constructOrUnit.beginConstructStmt!!.constructNameDecl?.name
-                insertEndConstructString(editor, offset, indentString, constructOrUnit.constructType, constructName)
+                val beginStmt = constructOrUnit.beginConstructStmt!!
+                val constructName = beginStmt.constructNameDecl?.name
+                insertEndString(editor, offset, indentString, constructOrUnit.constructType, constructName, beginStmtStyle(beginStmt))
                 return EnterHandlerDelegate.Result.DefaultForceIndent
             }
         }
@@ -113,11 +116,45 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
         return false
     }
 
-    private fun insertEndConstructString(editor: Editor, offset: Int, indentString: String?, construct: String?, constructName: String?) {
-        if (constructName != null){
-            editor.document.insertString(offset, "\n${indentString}end $construct $constructName")
+    private enum class KeywordStyle {
+        UNKNOWN,
+        UPPERCASE,
+        LOWERCASE,
+        CAMELCASE
+    }
+
+    private fun beginStmtStyle(stmt: FortranStmt): KeywordStyle {
+        val keywordText = stmt.node.findChildByType(FortranTokenType.KEYWORD)?.text ?: return KeywordStyle.UNKNOWN
+        return when {
+            keywordText.all { it.isUpperCase() } -> KeywordStyle.UPPERCASE
+            keywordText.all { it.isLowerCase() } -> KeywordStyle.LOWERCASE
+            keywordText.first().isUpperCase() && keywordText.substring(1).all { it.isLowerCase() } ->
+                KeywordStyle.CAMELCASE
+            else -> KeywordStyle.UNKNOWN
+        }
+    }
+
+    private fun formatEndString(endString: String, style: KeywordStyle): String {
+        return when (style) {
+            KeywordStyle.UPPERCASE -> endString.toUpperCase()
+            KeywordStyle.CAMELCASE -> endString.capitalize()
+            else -> endString
+        }
+    }
+
+    private fun insertEndString(editor: Editor,
+                                offset: Int,
+                                indentString: String?,
+                                type: String?,
+                                name: String?,
+                                style: KeywordStyle
+    ) {
+        val end = formatEndString("end", style)
+        val formattedType = formatEndString(type ?: "", style)
+        if (name != null) {
+            editor.document.insertString(offset, "\n$indentString$end $formattedType $name")
         } else {
-            editor.document.insertString(offset, "\n${indentString}end $construct")
+            editor.document.insertString(offset, "\n$indentString$end $formattedType")
         }
     }
 
