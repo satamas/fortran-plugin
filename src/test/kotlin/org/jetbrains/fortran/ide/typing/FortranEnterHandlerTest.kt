@@ -6,6 +6,8 @@ class FortranEnterHandlerTest : LightPlatformCodeInsightFixtureTestCase() {
     override fun getTestDataPath(): String = "src/test/resources/enterhandler/"
 
     fun testProgram() = doTest()
+    fun testInsideProgramStmt() = doTest()
+    fun testInsideProgramName() = doTest()
 
     private fun doTest() {
         myFixture.configureByFile(getTestName(false) + ".f95")
