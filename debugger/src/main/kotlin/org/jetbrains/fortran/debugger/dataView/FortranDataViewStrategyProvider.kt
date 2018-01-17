@@ -32,7 +32,7 @@ class FortranDataViewStrategyProvider(val process: FortranDebugProcess) : DataVi
 
     @Throws(Exception::class)
     override fun getArrayItems(value: XNamedValue, rowOffset: Int, colOffset: Int, rows: Int, cols: Int, format: String): ArrayChunk {
-        return process.getArrayItems(value, rowOffset, colOffset, rows, cols, format)
+        return process.getArrayItems(value, format)
     }
 
     override fun getType(value: XNamedValue): String {

@@ -73,12 +73,12 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
     }
 
 
-    fun getArrayItems(value: XNamedValue, rowOffset: Int, colOffset: Int, rows: Int, cols: Int, format: String): ArrayChunk
+    fun getArrayItems(value: XNamedValue, format: String): ArrayChunk
     {
         val context = createEvaluationContext(driverInTests, null, session.currentStackFrame as CidrStackFrame)
 
         val future : CompletableFuture<ArrayChunkBuilder> = CompletableFuture()
-        val node = DataViewNode(context, future)
+        val node = DataViewNode(context, future, format)
 
         // (holder.value as CidrPhysicalValue).computeChildren(context, node) gives some problems with hashes
         // we don't use hashing. As a result, this part works
@@ -122,7 +122,8 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
     }
 
     private class DataViewNode(val context : EvaluationContext,
-                               val future : CompletableFuture<ArrayChunkBuilder>) : DataViewNodeBase() {
+                               val future : CompletableFuture<ArrayChunkBuilder>,
+                               val format : String) : DataViewNodeBase() {
 
         override fun addChildren(children: XValueChildrenList, last: Boolean) {
             val data = mutableListOf<MutableList<String>>()
@@ -168,13 +169,13 @@ class FortranDebugProcess(parameters: RunParameters, session: XDebugSession, con
             val colHeaders = mutableListOf<ArrayChunk.ColHeader>()
 
             if (arrayIs2D) {
-                colNames.mapTo(colHeaders) { ArrayChunk.ColHeader(it, arrayType, "%.5f", max, min) }
+                colNames.mapTo(colHeaders) { ArrayChunk.ColHeader(it, arrayType, format, max, min) }
             } else {
-                colHeaders.add(ArrayChunk.ColHeader("1", arrayType, "%.5f", max, min))
+                colHeaders.add(ArrayChunk.ColHeader("1", arrayType, format, max, min))
             }
             builder.setRows(data.size)
             builder.setColumns(data[0].size)
-            builder.setFormat("%.5f")
+            builder.setFormat(format)
             builder.setMin(min).setMax(max)
             builder.setRowLabels(rowNames)
             builder.setColHeaders(colHeaders)
