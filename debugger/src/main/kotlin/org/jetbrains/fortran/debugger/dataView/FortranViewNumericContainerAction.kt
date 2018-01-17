@@ -7,6 +7,7 @@ import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
 import com.intellij.xdebugger.impl.ui.tree.actions.XDebuggerTreeActionBase
 import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrValue
+import com.jetbrains.python.debugger.containerview.DataViewDialog
 import org.jetbrains.fortran.FortranFileType
 import javax.swing.tree.TreePath
 

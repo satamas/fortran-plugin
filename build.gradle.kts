@@ -111,7 +111,8 @@ project(":") {
             kotlin.srcDirs("debugger/src/main/kotlin")
             compileClasspath += getByName("main").compileClasspath +
                     getByName("main").output +
-                    files("debugger/lib/clion-$clionVersion/lib/clion.jar")
+                    files("debugger/lib/clion-$clionVersion/lib/clion.jar") +
+                    files("debugger/lib/clion-$clionVersion/plugins/python/lib/python.jar")
         }
     }
 
