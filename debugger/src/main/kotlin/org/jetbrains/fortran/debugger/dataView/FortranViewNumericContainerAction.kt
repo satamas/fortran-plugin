@@ -9,6 +9,7 @@ import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrValue
 import com.jetbrains.python.debugger.containerview.DataViewDialog
 import org.jetbrains.fortran.FortranFileType
+import org.jetbrains.fortran.debugger.runconfig.FortranDebugProcess
 import javax.swing.tree.TreePath
 
 
@@ -18,7 +19,7 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
         if (p != null && node != null && node.valueContainer is CidrValue) {
             val debugValue = node.valueContainer as CidrValue
             ApplicationManager.getApplication().invokeLater {
-                val dialog = DataViewDialog(debugValue.process.project, debugValue, FortranDataViewStrategyProvider(), FortranFileType)
+                val dialog = DataViewDialog(debugValue.process.project, debugValue, FortranDataViewStrategyProvider(debugValue.process as FortranDebugProcess), FortranFileType)
                 dialog.show()
             }
         }
@@ -40,6 +41,14 @@ class FortranViewNumericContainerAction : XDebuggerTreeActionBase() {
 
             val node = XDebuggerTreeActionBase.getSelectedNode(e.dataContext)
             e.presentation.isVisible = node != null && node.valueContainer is CidrValue
+        }
+    }
+
+    companion object {
+        fun isFortranTypeArray(type : String) : Boolean {
+            return type.contains('(') && !type.substringAfterLast('(').contains("kind")
+                    && type.contains(Regex("integer|real|logical|complex"))
+                    && type.substringAfterLast('(').count { it ==',' } <= 1 // we don't know what to do with 3D
         }
     }
 }
