@@ -34,7 +34,7 @@ class FortranDataView(project: Project) : DataView(project) {
         }
         window.contentManager.getReady(this).doWhenDone {
             val selectedInfo = addTab(fortranValue.process as FortranDebugProcess)
-            val dataViewerPanel = selectedInfo.component as PyDataViewerPanel
+            val dataViewerPanel = selectedInfo.component as FortranDataViewerPanel
             dataViewerPanel.apply(fortranValue)
         }
         window.show(null)
