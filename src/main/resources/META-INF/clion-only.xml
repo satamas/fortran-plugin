@@ -8,4 +8,10 @@
         <configurationType implementation="org.jetbrains.fortran.debugger.runconfig.FortranRunConfigurationType"/>
         <xdebugger.breakpointType implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointType"/>
     </extensions>
+
+    <actions>
+        <action id="Fortran.ViewArray" class="org.jetbrains.fortran.debugger.dataView.FortranViewNumericContainerAction" text="View as Array">
+            <add-to-group group-id="XDebugger.ValueGroup" anchor="after" relative-to-action="Debugger.AddToWatch"/>
+        </action>
+    </actions>
 </idea-plugin>
