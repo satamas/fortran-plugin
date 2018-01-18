@@ -51,7 +51,7 @@ class FortranGDBDriverProxy(val configuration : GDBDriverConfiguration) : Debugg
 
     companion object {
         fun getFortranPrettyPrinters(): File {
-            return File(PathManager.getConfigPath()+"/plugins/fortran-plugin/classes/gdb/renderers")
+            return File(PathManager.getPluginsPath() + "/fortran-plugin/lib/gdb/renderers")
         }
     }
 }

@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.gradle.api.JavaVersion.VERSION_1_8
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.jvm.tasks.Jar
+import org.jetbrains.intellij.tasks.PrepareSandboxTask
 import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.file.Path
@@ -95,17 +96,6 @@ project(":") {
         alternativeIdePath = "debugger/lib/clion-$clionVersion"
     }
 
-    repositories {
-        maven { setUrl("https://dl.bintray.com/jetbrains/markdown") }
-    }
-
-    dependencies {
-        compile("org.jetbrains:markdown:0.1.12") {
-            exclude(module = "kotlin-runtime")
-            exclude(module = "kotlin-stdlib")
-        }
-    }
-
     java.sourceSets {
         create("debugger") {
             kotlin.srcDirs("debugger/src/main/kotlin")
@@ -117,6 +107,18 @@ project(":") {
 
     tasks.withType<Jar> {
         from(java.sourceSets.getByName("debugger").output)
+    }
+
+    tasks.withType<Zip> {
+        from(fileTree("src/main/resources/gdb")) {
+            into("lib/gdb")
+        }
+    }
+
+    tasks.withType<PrepareSandboxTask> {
+        from("src/main/resources/gdb"){
+            into("$pluginName/lib/gdb")
+        }
     }
 
     val generateFortranLexer = task<GenerateLexer>("generateFortranLexer") {
