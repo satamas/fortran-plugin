@@ -2,6 +2,7 @@ package org.jetbrains.fortran.debugger.dataView
 
 import com.intellij.xdebugger.frame.XNamedValue
 import com.intellij.xdebugger.frame.XValueChildrenList
+import com.jetbrains.cidr.execution.debugger.evaluation.CidrEvaluatedValue
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrPhysicalValue
 import com.jetbrains.python.debugger.ArrayChunk
 import com.jetbrains.python.debugger.containerview.DataViewStrategy
@@ -9,6 +10,7 @@ import com.jetbrains.python.debugger.containerview.DataViewStrategyProvider
 import org.jetbrains.fortran.debugger.runconfig.FortranDebugProcess
 
 class FortranDataViewStrategyProvider(val process: FortranDebugProcess) : DataViewStrategyProvider(setOf<DataViewStrategy>(FortranArrayViewStrategy())) {
+    private var evaluatedExpression: String? = null
 
     /**
      * @return null if no strategy for this type
@@ -27,6 +29,7 @@ class FortranDataViewStrategyProvider(val process: FortranDebugProcess) : DataVi
 
     @Throws(Exception::class)
     override fun evaluate(expression: String): XNamedValue {
+        evaluatedExpression = expression
         return process.evaluate(expression)
     }
 
@@ -50,7 +53,12 @@ class FortranDataViewStrategyProvider(val process: FortranDebugProcess) : DataVi
 
     override fun getTitle(value: XNamedValue): String = value.name
 
-    override fun getSliceText(value: XNamedValue, chunk: ArrayChunk): String = value.name
+    override fun getSliceText(value: XNamedValue, chunk: ArrayChunk): String =
+            if (value is CidrEvaluatedValue) {
+               evaluatedExpression ?: "result"
+            } else {
+                value.name
+            }
 
     override fun isTemporary(value: XNamedValue): Boolean = false
 }
