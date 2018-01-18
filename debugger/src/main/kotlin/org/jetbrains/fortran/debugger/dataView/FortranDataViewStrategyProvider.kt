@@ -14,7 +14,10 @@ class FortranDataViewStrategyProvider(val process: FortranDebugProcess) : DataVi
      * @return null if no strategy for this type
      */
     override fun getStrategy(value: XNamedValue): DataViewStrategy? {
-        return myStrategies.first()
+        return if (FortranViewNumericContainerAction.isFortranTypeArray((value as CidrPhysicalValue).type))
+            myStrategies.first()
+        else
+            null
     }
 
     @Throws(Exception::class)
