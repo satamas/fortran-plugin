@@ -8,9 +8,9 @@ import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfiguration
 import com.jetbrains.cidr.cpp.execution.CMakeLauncher
 import com.jetbrains.cidr.cpp.execution.debugger.backend.GDBDriverConfiguration
 import com.jetbrains.cidr.execution.debugger.CidrDebugProcess
-import com.intellij.execution.runners.ExecutionEnvironment
 
-class FortranLauncher(environment : ExecutionEnvironment, configuration : CMakeAppRunConfiguration) : CMakeLauncher(environment, configuration) {
+
+class FortranLauncher(configuration : CMakeAppRunConfiguration) : CMakeLauncher(configuration) {
     @Throws(ExecutionException::class)
     override fun createDebugProcess(state: CommandLineState, session: XDebugSession): CidrDebugProcess {
         val cidrDebugProcess = super.createDebugProcess(state, session)

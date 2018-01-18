@@ -13,6 +13,6 @@ class FortranRunConfiguration(project: Project, factory: ConfigurationFactory, n
     : CMakeAppRunConfiguration(project, factory, name) {
     @Throws(ExecutionException::class)
     override fun getState(executor: Executor, env: ExecutionEnvironment): CidrCommandLineState? {
-        return CidrCommandLineState(env, FortranLauncher(env, this))
+        return CidrCommandLineState(env, FortranLauncher(this))
     }
 }
