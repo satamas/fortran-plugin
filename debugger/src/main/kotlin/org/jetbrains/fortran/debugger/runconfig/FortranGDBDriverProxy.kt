@@ -14,7 +14,7 @@ import com.jetbrains.cidr.execution.debugger.evaluation.EvaluationContext
 import java.io.File
 
 
-class FortranGDBDriverProxy(val configuration : GDBDriverConfiguration) : DebuggerDriverConfiguration() {
+class FortranGDBDriverProxy(val configuration: GDBDriverConfiguration) : DebuggerDriverConfiguration() {
     override fun getDriverName(): String {
         return configuration.driverName
     }
@@ -29,10 +29,10 @@ class FortranGDBDriverProxy(val configuration : GDBDriverConfiguration) : Debugg
     }
 
     @Throws(ExecutionException::class)
-    override fun createDriverCommandLine(driver: DebuggerDriver, installer : Installer): GeneralCommandLine {
+    override fun createDriverCommandLine(driver: DebuggerDriver, installer: Installer): GeneralCommandLine {
         val standardCommandLine = configuration.createDriverCommandLine(driver, installer)
         standardCommandLine.putUserData(GDBDriver.PRETTY_PRINTERS_PATH,
-            FileUtil.toSystemIndependentName(getFortranPrettyPrinters().absolutePath))
+                FileUtil.toSystemIndependentName(getFortranPrettyPrinters().absolutePath))
         return standardCommandLine
     }
 
@@ -52,7 +52,7 @@ class FortranGDBDriverProxy(val configuration : GDBDriverConfiguration) : Debugg
 
     companion object {
         fun getFortranPrettyPrinters(): File {
-            return File(PathManager.getConfigPath()+"/plugins/fortran-plugin/lib/gdb/renderers")
+            return File(PathManager.getPluginsPath() + "/fortran-plugin/lib/gdb/renderers")
         }
     }
 }
