@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.gradle.api.JavaVersion.VERSION_1_8
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.jvm.tasks.Jar
+import org.jetbrains.intellij.tasks.PrepareSandboxTask
 import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.file.Path
@@ -111,6 +112,12 @@ project(":") {
     tasks.withType<Zip> {
         from(fileTree("src/main/resources/gdb")) {
             into("lib/gdb")
+        }
+    }
+
+    tasks.withType<PrepareSandboxTask> {
+        from("src/main/resources/gdb"){
+            into("$pluginName/lib/gdb")
         }
     }
 
