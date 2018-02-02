@@ -180,6 +180,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     "*" { return MUL; }
     "/" { return DIV; }
     "," { return COMMA; }
+    "$" { return DOLLAR; }
     [:letter:]+([:digit:]+(\.[:digit:]+([:letter:][:digit:]+)?)?)? { return DATAEDIT; }
     {EOL}|(";") { popState(); return EOL; }
     . { popState(); return(BAD_CHARACTER); }

@@ -1036,7 +1036,7 @@ private inquire_with_iolength ::= '(' iolength_ '=' expr /*variable */')' <<list
 format_stmt ::= label_decl? format_ (('(' <<noncomalist format_item>>? ')')
               | ('('(<<noncomalist format_item>> ',')? '*' '(' <<noncomalist format_item>> ')'')' )) { pin = 2; extends=declaration_stmt }
 private format_item ::= dataedit | control_edit | string_literal | (integerliteral? '(' <<list format_item>> ')')
-control_edit ::= ":" | (integerliteral? '/') | (signed_int_literal dataedit)
+control_edit ::= ":" | "$" | (integerliteral? '/') | (signed_int_literal dataedit)
 // Clause 11
 // R1101
 main_program ::= (program_stmt_with_eol)? block internal_subprogram_part? end_program_stmt {

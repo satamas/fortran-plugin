@@ -47,6 +47,20 @@ FILE
         PsiElement())(')')
         PsiElement())(')')
       PsiElement(eol)('\n')
-    PsiWhiteSpace('\n')
+      FORMAT_STMT
+        LABEL_DECL
+          PsiElement(integerliteral)('3')
+        PsiWhiteSpace(' ')
+        PsiElement(keyword)('FORMAT')
+        PsiWhiteSpace(' ')
+        PsiElement(()('(')
+        PsiElement(stringliteral)('' Enter the node number: '')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        CONTROL_EDIT
+          PsiElement($)('$')
+        PsiWhiteSpace(' ')
+        PsiElement())(')')
+      PsiElement(eol)('\n')
     END_PROGRAM_STMT
       PsiElement(keyword)('end')
