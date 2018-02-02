@@ -15,9 +15,9 @@ class FortranLauncher(environment : ExecutionEnvironment, configuration : CMakeA
     @Throws(ExecutionException::class)
     override fun createDebugProcess(state: CommandLineState, session: XDebugSession): CidrDebugProcess {
         val cidrDebugProcess = super.createDebugProcess(state, session)
-        val configuration = FortranGDBDriverProxy(
-                (cidrDebugProcess.runParameters as CLionRunParameters).debuggerDriverConfiguration as GDBDriverConfiguration
-        )
+        val driverConfiguration = (cidrDebugProcess.runParameters as CLionRunParameters).debuggerDriverConfiguration as? GDBDriverConfiguration
+            ?: throw ExecutionException("Fortran debugger only works with GDB. LLDB is not supported. Please, select GDB in Toolchains -> Debugger.")
+        val configuration = FortranGDBDriverProxy(driverConfiguration)
         val installer = (cidrDebugProcess.runParameters as CLionRunParameters).installer
         return CidrLocalDebugProcess(CLionRunParameters(configuration, installer), cidrDebugProcess.session, state.consoleBuilder)
     }
