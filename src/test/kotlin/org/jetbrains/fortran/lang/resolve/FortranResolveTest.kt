@@ -7,6 +7,7 @@ import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.FortranStmt
 import org.jetbrains.fortran.lang.psi.impl.FortranConstructNameDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranLabelDeclImpl
+import org.jetbrains.fortran.lang.psi.impl.FortranUnitDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranWriteStmtImpl
 
 
@@ -232,5 +233,17 @@ class FortranResolveTest : LightCodeInsightFixtureTestCase() {
         myFixture.configureByFiles("Enum.f95")
         val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
         assertEquals("RED", ((element.reference as FortranPathReferenceImpl?)?.multiResolve()?.firstOrNull() as FortranEntityDecl).name)
+    }
+
+    // file-unit-number
+    fun testFileUnitNumber() {
+        myFixture.configureByFiles("testFileUnitNumber.f95")
+        val element = myFixture.file.findElementAt(myFixture.caretOffset)!!.parent
+        assertEquals(1, ((element.reference as FortranUnitReferenceImpl?)?.multiResolve()?.firstOrNull() as FortranUnitDeclImpl).getUnitValue())
+    }
+
+    fun testFindFileUnitNumberUsages() {
+        val usageInfos = myFixture.testFindUsages("testFileUnitNumberUsages.f95")
+        assertEquals(2, usageInfos.size)
     }
 }
