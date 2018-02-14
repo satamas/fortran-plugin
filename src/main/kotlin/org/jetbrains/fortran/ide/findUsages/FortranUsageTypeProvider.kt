@@ -14,6 +14,7 @@ object FortranUsageTypeProvider : UsageTypeProvider {
             is FortranTypeName -> UsageType("Type")
             is FortranDataPath -> UsageType("Entity")
             is FortranCommonBlockDecl -> UsageType("Common block")
+            is FortranUnit -> UsageType("Fortran Unit")
             else -> null
         }
     }

@@ -10,6 +10,7 @@ import java.lang.IllegalArgumentException
 class FortranFindUsagesHandlerFactory(project: Project) : FindUsagesHandlerFactory() {
     override fun canFindUsages(element: PsiElement): Boolean = element is FortranLabelDecl
             || element is FortranConstructNameDecl || element is FortranEntityDecl || element is FortranDataPath
+            || element is FortranUnitDecl
 
     override fun createFindUsagesHandler(element: PsiElement, forHighlightUsages: Boolean): FindUsagesHandler =
         when (element) {
@@ -21,6 +22,8 @@ class FortranFindUsagesHandlerFactory(project: Project) : FindUsagesHandlerFacto
                 FortranEntityDeclFindUsagesHandler(element, this)
             is FortranDataPath ->
                 FortranDataPathFindUsagesHandler(element, this)
+            is FortranUnitDecl->
+                FortranUnitDeclFindUsagesHandler(element, this)
             else ->
                 throw IllegalArgumentException("unexpected element type: $element")
         }
