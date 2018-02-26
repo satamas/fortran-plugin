@@ -1,20 +1,20 @@
 package org.jetbrains.fortran.debugger.lang
 
-import com.intellij.execution.configurations.RunProfile
 import com.intellij.xdebugger.XExpression
 import com.intellij.xdebugger.XSourcePosition
-import com.intellij.xdebugger.breakpoints.XBreakpoint
-import com.intellij.xdebugger.breakpoints.XBreakpointProperties
-import com.intellij.xdebugger.evaluation.XDebuggerEditorsProvider
 import com.jetbrains.cidr.execution.debugger.*
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
+import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver.StandardDebuggerLanguage.FORTRAN
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrDebuggerTypesHelper
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrEvaluatedValue
+import org.jetbrains.fortran.FortranLanguage
 
 class FortranDebuggerLanguageSupportFactory : CidrDebuggerLanguageSupportFactory() {
-    override fun createEditor(profile: RunProfile): XDebuggerEditorsProvider = FortranDebuggerEditorsProvider()
-
-    override fun createEditor(breakpoint: XBreakpoint<out XBreakpointProperties<Any>>?): XDebuggerEditorsProvider? = null
+    companion object {
+        init {
+            CidrDebuggerLanguageSupport.registerDebuggerLanguages(FortranLanguage, FORTRAN)
+        }
+    }
 
     override fun createTypesHelper(process: CidrDebugProcess): CidrDebuggerTypesHelper {
         return FortranDebuggerTypesHelper(process)
@@ -25,14 +25,5 @@ class FortranDebuggerLanguageSupportFactory : CidrDebuggerLanguageSupportFactory
             val v = driver.evaluate(frame.threadId, frame.frameIndex, expr.expression)
             return CidrEvaluatedValue(v, frame.process, position, frame, expr.expression)
         }
-    }
-
-    companion object {
-        // HACK: currently `CidrDebuggerTypesHelper` is tied to the process and not to the
-        // language of the stack frame, so we must use `order="first"` in clion-only.xml and
-        // delegate to existing TypesHelpers manually
-        val DELEGATE: CidrDebuggerLanguageSupportFactory?
-            get() = CidrDebuggerLanguageSupportFactory.EP_NAME.extensions
-                    .find { it !is FortranDebuggerLanguageSupportFactory }
     }
 }

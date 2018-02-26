@@ -2,13 +2,14 @@ package org.jetbrains.fortran.debugger.runconfig
 
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.CommandLineState
+import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.xdebugger.XDebugSession
 import com.jetbrains.cidr.cpp.execution.CLionRunParameters
 import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfiguration
 import com.jetbrains.cidr.cpp.execution.CMakeLauncher
 import com.jetbrains.cidr.cpp.execution.debugger.backend.GDBDriverConfiguration
 import com.jetbrains.cidr.execution.debugger.CidrDebugProcess
-import com.intellij.execution.runners.ExecutionEnvironment
+import com.jetbrains.cidr.execution.debugger.CidrLocalDebugProcess
 
 class FortranLauncher(environment : ExecutionEnvironment, configuration : CMakeAppRunConfiguration) : CMakeLauncher(environment, configuration) {
     @Throws(ExecutionException::class)
@@ -18,6 +19,6 @@ class FortranLauncher(environment : ExecutionEnvironment, configuration : CMakeA
                 (cidrDebugProcess.runParameters as CLionRunParameters).debuggerDriverConfiguration as GDBDriverConfiguration
         )
         val installer = (cidrDebugProcess.runParameters as CLionRunParameters).installer
-        return FortranDebugProcess(CLionRunParameters(configuration, installer), cidrDebugProcess.session, state.consoleBuilder)
+        return CidrLocalDebugProcess(CLionRunParameters(configuration, installer), cidrDebugProcess.session, state.consoleBuilder)
     }
 }

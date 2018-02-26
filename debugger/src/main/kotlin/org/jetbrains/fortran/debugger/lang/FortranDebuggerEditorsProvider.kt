@@ -1,18 +1,8 @@
 package org.jetbrains.fortran.debugger.lang
 
-import com.intellij.openapi.editor.Document
-import com.intellij.openapi.editor.EditorFactory
-import com.intellij.openapi.fileTypes.FileType
-import com.intellij.openapi.project.Project
-import com.intellij.xdebugger.XSourcePosition
-import com.intellij.xdebugger.evaluation.EvaluationMode
-import com.intellij.xdebugger.evaluation.XDebuggerEditorsProvider
-import org.jetbrains.fortran.FortranFileType
+import com.jetbrains.cidr.execution.debugger.CidrDebuggerEditorsExtensionBase
+import org.jetbrains.fortran.FortranLanguage
 
-class FortranDebuggerEditorsProvider : XDebuggerEditorsProvider() {
-    override fun getFileType(): FileType = FortranFileType
-
-    override fun createDocument(project: Project, text: String, sourcePosition: XSourcePosition?, mode: EvaluationMode): Document {
-        return EditorFactory.getInstance().createDocument(text)
-    }
+class FortranDebuggerEditorsProvider : CidrDebuggerEditorsExtensionBase() {
+    override fun getSupportedLanguage() = FortranLanguage
 }
