@@ -1,7 +1,7 @@
 <idea-plugin>
     <extensions defaultExtensionNs="cidr.debugger">
-        <languageSupportFactory language="Fortran"
-                                implementation="org.jetbrains.fortran.debugger.lang.FortranDebuggerLanguageSupportFactory"/>
+        <languageSupport language="Fortran"
+                         implementationClass="org.jetbrains.fortran.debugger.lang.FortranDebuggerLanguageSupport"/>
         <editorsExtension implementation="org.jetbrains.fortran.debugger.lang.FortranDebuggerEditorsProvider"/>
         <lineBreakpointFileTypesProvider
                 implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointFileTypesProvider"/>

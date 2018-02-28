@@ -7,14 +7,9 @@ import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver.StandardDebuggerLanguage.FORTRAN
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrDebuggerTypesHelper
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrEvaluatedValue
-import org.jetbrains.fortran.FortranLanguage
 
-class FortranDebuggerLanguageSupportFactory : CidrDebuggerLanguageSupportFactory() {
-    companion object {
-        init {
-            CidrDebuggerLanguageSupport.registerDebuggerLanguages(FortranLanguage, FORTRAN)
-        }
-    }
+class FortranDebuggerLanguageSupport : CidrDebuggerLanguageSupport() {
+    override fun getSupportedDebuggerLanguages() = setOf(FORTRAN)
 
     override fun createTypesHelper(process: CidrDebugProcess): CidrDebuggerTypesHelper {
         return FortranDebuggerTypesHelper(process)
