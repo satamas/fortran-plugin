@@ -109,18 +109,6 @@ project(":") {
         from(java.sourceSets.getByName("debugger").output)
     }
 
-    tasks.withType<Zip> {
-        from(fileTree("src/main/resources/gdb")) {
-            into("lib/gdb")
-        }
-    }
-
-    tasks.withType<PrepareSandboxTask> {
-        from("src/main/resources/gdb"){
-            into("$pluginName/lib/gdb")
-        }
-    }
-
     val generateFortranLexer = task<GenerateLexer>("generateFortranLexer") {
         source = "src/main/kotlin/org/jetbrains/fortran/lang/lexer/FortranLexer.flex"
         targetDir = "src/gen/org/jetbrains/fortran/lang/lexer"
