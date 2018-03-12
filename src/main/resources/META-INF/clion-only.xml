@@ -6,4 +6,9 @@
         <lineBreakpointFileTypesProvider
                 implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointFileTypesProvider"/>
     </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <directoryProjectGenerator
+                implementation="org.jetbrains.fortran.ide.newProject.FortranProjectGenerator"/>
+    </extensions>
 </idea-plugin>
