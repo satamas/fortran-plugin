@@ -29,7 +29,8 @@ In CLion it is also possible to load `CMake` based projects, see
 Example of Fortran project build with `CMake` can be found [here](https://cmake.org/Wiki/CMakeForFortranExample). 
 Using `CMake` project in CLion allows you to compile, run and debug project from the IDE.
 
-To debug Fortran projects please add Fortran run configuration `Edit Configurations > Add New Configuration > Fortran`, 
+Since CLion 2018.1 frotran project can be debugged with default `Application` run configuration. 
+To debug Fortran projects in previous versions of CLion please add Fortran run configuration `Edit Configurations > Add New Configuration > Fortran`, 
 select it in `Select Run/Debug configuration` menu and choose GDB as a working debugger. More detail about debugging in CLion
 is available in [CLion help](https://www.jetbrains.com/help/clion/debugger.html).
 
