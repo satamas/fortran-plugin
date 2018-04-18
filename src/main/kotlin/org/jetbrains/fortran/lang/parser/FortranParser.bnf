@@ -401,10 +401,12 @@ private type_spec ::= intrinsic_type_spec | derived_type_spec
 private declaration_type_spec ::= intrinsic_type_spec | (type_ '(' (intrinsic_type_spec | derived_type_spec)')')
                                 | (class_ '(' (derived_type_spec | '*') ')')
 // R404
-intrinsic_type_spec ::= (((integer_ | real_ | complex_ | logical_ | (double_ precision_) | doubleprecision_
-                        | (double_ complex_) | doublecomplex_ )
-                        (kind_selector | nonstandard_kind_selector)?) | (character_ (char_selector)?) | byte_/* nonstandard type*/)
+intrinsic_type_spec ::= (( (number_type_keyword)
+                        (kind_selector | nonstandard_kind_selector)?) | (character_type_keyword (char_selector)?) | byte_/* nonstandard type*/)
                         !('=' | '=>' | '[' | '%') { pin = 2 }
+number_type_keyword ::= (integer_ | real_ | complex_ | logical_ | (double_ precision_) | doubleprecision_
+                                         | (double_ complex_) | doublecomplex_)
+character_type_keyword ::= character_
 // R405
 kind_selector ::= '(' (kind_ '=')? expr ')' {pin = 3}
 nonstandard_kind_selector ::= '*' expr { pin = 1 }
@@ -780,18 +782,43 @@ expr ::= def_binary_operator_expr
 private add_expr_group ::= add_expr | unary_add_expr
 def_binary_operator_expr ::= expr defined_binary_op expr { pin = 2 }
 private defined_binary_op ::= defoperator
-equiv_expr  ::= expr ('.eqv.' | '.neqv.') expr { pin = 2 }
-or_expr     ::= expr '.or.' expr { pin = 2 }
-and_expr    ::= expr '.and.' expr { pin = 2 }
+equiv_expr  ::= expr ('.eqv.' | '.neqv.') expr {
+  implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr'
+  pin = 2
+}
+or_expr     ::= expr '.or.' expr {
+  implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr'
+  pin = 2
+}
+and_expr    ::= expr '.and.' expr {
+  implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr'
+  pin = 2
+}
 not_expr    ::= '.not.' expr { pin = 1 }
-rel_expr    ::= expr rel_op expr { pin = 2 }
+rel_expr    ::= expr rel_op expr {
+  implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr'
+  pin = 2
+}
 rel_op ::= '.eq.' | '.ne.' | '.lt.' | '.le.' | '.gt.' | '.ge.'
                  | '=='   | '/='   | '<'    | '<='   | '>'    | '>='
-concat_expr ::= expr '//' expr { pin = 2 }
-add_expr    ::= expr ('+' | '-') expr { pin = 2 }
+concat_expr ::= expr '//' expr {
+  implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr'
+  pin = 2
+}
+add_expr    ::= expr ('+' | '-') expr {
+  implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr'
+  pin = 2
+}
 unary_add_expr ::= ('+' | '-') expr { pin= 2 }
-mult_expr   ::= expr ('*' | '/') expr { pin = 2 }
-power_expr  ::= expr '**' expr { rightAssociative=true pin = 2 }
+mult_expr   ::= expr ('*' | '/') expr {
+  implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr'
+  pin = 2
+}
+power_expr  ::= expr '**' expr {
+  implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr'
+  rightAssociative=true
+  pin = 2
+}
 def_unary_operator_expr ::= defined_unary_op expr { pin = 1 }
 private defined_unary_op ::= defoperator
 private primary ::= constant | designator | (function_reference !'(') | (array_constructor !'(') /*| structure_constructor*/ | parenthesised_expr /*| type_param_inquiry */ { extends=expr }
@@ -811,7 +838,7 @@ logical_literal ::= truekwd | falsekwd
 // R724 - 731 are trivial
 
 // R732
-assignment_stmt ::=  label_decl? designator '=' expr {pin = 3; extends=action_stmt } // it was a variable here in the standard but we don't want to match an expression
+assignment_stmt ::=  label_decl? designator '=' expr {implements='org.jetbrains.fortran.lang.psi.FortranBinaryExpr' pin = 3; extends=action_stmt } // it was a variable here in the standard but we don't want to match an expression
 // R733
 pointer_assignment_stmt ::= pointer_a_with_data_pointer | pointer_a_with_proc_pointer { extends=action_stmt }
 private pointer_a_with_data_pointer ::= label_decl? data_pointer_object (('(' <<list bounds_remapping>> ')')
@@ -900,9 +927,9 @@ nonlabel_do_construct ::= nonlabel_do_stmt eol+ block end_do { pin = 1; extends=
 nonlabel_do_stmt ::= label_decl? construct_name_decl? do_ loop_control? { pin = 3 }
 // R818
 loop_control ::= while_loop_stmt | concurrent_loop_stmt | id_loop_stmt
-private id_loop_stmt ::= variable '=' expr ',' expr (',' expr)? {pin=1}
-private while_loop_stmt ::= while_ '(' expr ')' {pin=1}
-private concurrent_loop_stmt ::= concurrent_ forall_header {pin = 1}
+id_loop_stmt ::= variable '=' expr ',' expr (',' expr)? {pin=1}
+while_loop_stmt ::= while_ '(' expr ')' {pin=1}
+concurrent_loop_stmt ::= concurrent_ forall_header {pin = 1}
 // R819, R820 are trivial
 // R821
 private end_do ::= end_do_stmt //| continue at the end of a loop is f77 specific feature

@@ -33,6 +33,10 @@ abstract class FortranDataPathImplMixin : FortranStubbedElementImpl<FortranDataP
     override fun setName(name: String): PsiElement? {
         return this
     }
+
+    fun getSectionSubscript(): PsiElement? {
+        return if (children.isEmpty()) null else children[0]
+    }
 }
 
 

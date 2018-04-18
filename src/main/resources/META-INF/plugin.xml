@@ -169,6 +169,12 @@
                          applyToDialects="false"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranNonstandardKindInspection"/>
 
+        <localInspection language="Fortran" groupName="Fortran"
+                         displayName="Incorrect type"
+                         enabledByDefault="true" level="WARNING"
+                         applyToDialects="false"
+                         implementationClass="org.jetbrains.fortran.ide.inspections.FortranTypeCheckInspection"/>
+
     </extensions>
 
     <actions>
