@@ -11,6 +11,7 @@ class FortranEnterHandlerTest : LightPlatformCodeInsightFixtureTestCase() {
     fun testDo() = doTest()
     fun testEnum() = doTest()
     fun testLabelDo() = doTest()
+    fun testNestedSubroutine() = doTest()
 
     private fun doTest() {
         myFixture.configureByFile(getTestName(false) + ".f95")

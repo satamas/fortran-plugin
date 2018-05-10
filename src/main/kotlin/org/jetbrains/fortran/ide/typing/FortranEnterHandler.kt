@@ -100,7 +100,7 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
         while (parent != null) {
             if (parent.unitType != unit.unitType) return false
             if (parent.endUnitStmt == null) return true
-            parent = PsiTreeUtil.getParentOfType(unit, FortranProgramUnit::class.java)
+            parent = PsiTreeUtil.getParentOfType(parent, FortranProgramUnit::class.java)
         }
         return false
     }
