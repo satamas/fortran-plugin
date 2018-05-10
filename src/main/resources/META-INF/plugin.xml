@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2018.1-1</version>
+    <version>2018.1-2</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,7 +12,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        New clion debug api supported. Default Run configuration can be used now for Fortran debugging
+        Fix bug that leads to ide freezing
     ]]>
     </change-notes>
 
