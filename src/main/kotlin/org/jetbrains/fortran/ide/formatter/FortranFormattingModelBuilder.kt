@@ -48,8 +48,15 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .between(IDENTIFIER, KEYWORD).spaces(1)
                 .before(COMMA).spaceIf(fortranCommonSettings.SPACE_BEFORE_COMMA)
                 .after(COMMA).spaceIf(fortranCommonSettings.SPACE_AFTER_COMMA)
-                .before(COLON).spaceIf(fortranCommonSettings.SPACE_BEFORE_COLON)
-                .after(COLON).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
+
+                .beforeInside(COLON, CONSTRUCT_NAME_DECL).spaceIf(fortranCommonSettings.SPACE_BEFORE_COLON)
+                .afterInside(COLON, CONSTRUCT_NAME_DECL).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
+                .beforeInside(COLON, USE_STMT).spaceIf(fortranCommonSettings.SPACE_BEFORE_COLON)
+                .afterInside(COLON, USE_STMT).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
+                .beforeInside(COLON, PARENT_IDENTIFIER).spaceIf(fortranCommonSettings.SPACE_BEFORE_COLON)
+                .afterInside(COLON, PARENT_IDENTIFIER).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
+                .around(COLON).spaces(0)
+
                 .after(CONSTRUCT_NAME_DECL).spaceIf(fortranCommonSettings.SPACE_AFTER_COLON)
                 .before(COLONCOLON).spaceIf(fortranSettings.SPACE_BEFORE_DOUBLE_COLON)
                 .after(COLONCOLON).spaceIf(fortranSettings.SPACE_AFTER_DOUBLE_COLON)

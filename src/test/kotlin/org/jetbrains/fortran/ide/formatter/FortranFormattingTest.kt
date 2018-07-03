@@ -10,4 +10,5 @@ class FortranFormattingTest : FortranBaseFormattingTestCase() {
     fun testTypes() = doTest()
     fun testUnnamedProgram() = doTest()
     fun testOperator() = doTest()
+    fun testColons() = doTest()
 }

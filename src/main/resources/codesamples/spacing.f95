@@ -1,4 +1,5 @@
 program sample
+    use constants, only : pi
     integer :: a = +1
     integer, dimension (1:1000) :: array
     b = (1 + 2) * a + 2**2
@@ -7,4 +8,5 @@ program sample
         write (*,*) 'string1' // 'string2', b
     endif
     f = .true.; b = 1
+    array (2:5) = b
 end program sample
