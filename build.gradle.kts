@@ -31,7 +31,7 @@ val CI = System.getenv("CI") != null
 plugins {
     idea
     kotlin("jvm") version "1.1.4"
-    id("org.jetbrains.intellij") version "0.2.17"
+    id("org.jetbrains.intellij") version "0.3.4"
     id("de.undercouch.download") version "3.2.0"
 }
 
