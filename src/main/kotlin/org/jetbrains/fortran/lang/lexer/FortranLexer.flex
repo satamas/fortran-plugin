@@ -11,6 +11,7 @@ import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_CONTINUE;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.CPP;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.WORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.INCLUDE_KEYWORD;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.FIRST_WHITE_SPACE;
 %%
 
@@ -286,6 +287,8 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ".le." { return LE; }
     ".gt." { return GT; }
     ".ge." { return GE; }
+
+    "include" { return INCLUDE_KEYWORD; }
 
     {DEFOPERATOR} { return DEFOPERATOR; }
     {IDENTIFIER} { return WORD; }

@@ -2,13 +2,12 @@ package org.jetbrains.fortran.ide.highlighter
 
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
-import com.intellij.psi.tree.IElementType
 import com.intellij.psi.TokenType
+import com.intellij.psi.tree.IElementType
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 import org.jetbrains.fortran.lang.psi.FortranTokenType.FIRST_WHITE_SPACE
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
 
 class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
     val fFixedForm_ = fFixedForm
@@ -48,7 +47,6 @@ class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
             COMMA -> FortranHighlightingColors.COMMA
             COLON, COLONCOLON -> FortranHighlightingColors.COLON
 
-            KEYWORD -> FortranHighlightingColors.KEYWORD
             FIRST_WHITE_SPACE -> FortranHighlightingColors.FIRST_WHITE_SPACE
             TokenType.BAD_CHARACTER -> FortranHighlightingColors.BAD_CHARACTER
             else -> null

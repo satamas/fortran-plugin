@@ -9,7 +9,7 @@ import com.intellij.psi.search.searches.ReferencesSearch
 import org.jetbrains.fortran.ide.highlighter.FortranHighlightingColors
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.psi.FortranConstructNameDecl
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
+import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORDS
 
 class FortranHighlightingAnnotator : Annotator {
 
@@ -25,12 +25,9 @@ class FortranHighlightingAnnotator : Annotator {
                 }
             }
         }
-        if (element.node.elementType === KEYWORD) {
+        if (KEYWORDS.contains(element.node.elementType)) {
             holder.createInfoAnnotation(element, null).textAttributes = FortranHighlightingColors.KEYWORD.textAttributesKey
         }
-
-
-
     }
 }
 

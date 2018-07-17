@@ -4,7 +4,7 @@ import com.intellij.lang.PsiBuilder
 import com.intellij.lang.parser.GeneratedParserUtilBase.*
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.psi.FortranTokenType.WORD
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
+import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORDS
 
 class IdentifierParser : Parser {
     override fun parse(builder: PsiBuilder, level: Int): Boolean {
@@ -13,7 +13,7 @@ class IdentifierParser : Parser {
         val marker = enter_section_(builder)
         result = consumeToken(builder, IDENTIFIER)
         if (!result) {
-            if (builder.tokenType === WORD || builder.tokenType === KEYWORD) {
+            if (builder.tokenType === WORD || KEYWORDS.contains(builder.tokenType)) {
                 builder.remapCurrentToken(IDENTIFIER)
                 result = consumeToken(builder, IDENTIFIER)
             }

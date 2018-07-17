@@ -3,8 +3,8 @@ package org.jetbrains.fortran.lang.parser
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.parser.GeneratedParserUtilBase.*
 import org.jetbrains.fortran.lang.FortranTypes.*
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
-import org.jetbrains.fortran.lang.psi.FortranTokenType.WORD
+import org.jetbrains.fortran.lang.psi.FortranTokenType
+import org.jetbrains.fortran.lang.psi.FortranTokenType.*
 
 class KeywordParser(private val keyword_text: String) : Parser {
     override fun parse(builder: PsiBuilder, level: Int): Boolean {
@@ -12,10 +12,11 @@ class KeywordParser(private val keyword_text: String) : Parser {
         var result = false
         val marker = enter_section_(builder)
         if (builder.tokenType === IDENTIFIER || builder.tokenType === WORD
-                || builder.tokenType === KEYWORD) {
+                || KEYWORDS.contains(builder.tokenType)) {
             if (keyword_text.equals(builder.tokenText!!, ignoreCase = true)) {
-                builder.remapCurrentToken(KEYWORD)
-                result = consumeToken(builder, KEYWORD)
+                val expectedType = FortranTokenType.getKeyword(keyword_text.toLowerCase()) ?: KEYWORD
+                builder.remapCurrentToken(expectedType)
+                result = consumeToken(builder, expectedType)
             }
         }
         exit_section_(builder, marker, null, result)

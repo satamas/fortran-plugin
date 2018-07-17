@@ -8,7 +8,7 @@ import com.intellij.psi.codeStyle.CodeStyleSettings
 import org.jetbrains.fortran.FortranLanguage
 import org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettings
 import org.jetbrains.fortran.lang.FortranTypes.*
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
+import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORDS
 
 class FortranFormattingModelBuilder : FormattingModelBuilder {
 
@@ -43,9 +43,9 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .aroundInside(DIVDIV, CONCAT_EXPR).spaceIf(fortranSettings.SPACE_AROUND_CONCAT_OPERATOR)
                 .aroundInside(DEFOPERATOR, DEF_BINARY_OPERATOR_EXPR).spaceIf(fortranSettings.SPACE_AROUND_DEFINED_OPERATOR)
                 .aroundInside(DEFOPERATOR, DEF_UNARY_OPERATOR_EXPR).spaceIf(fortranSettings.SPACE_AROUND_DEFINED_OPERATOR)
-                .between(KEYWORD, KEYWORD).spaces(1)
-                .between(KEYWORD, IDENTIFIER).spaces(1)
-                .between(IDENTIFIER, KEYWORD).spaces(1)
+                .between(KEYWORDS, KEYWORDS).spaces(1)
+                .between(KEYWORDS, IDENTIFIER).spaces(1)
+                .between(IDENTIFIER, KEYWORDS).spaces(1)
                 .before(COMMA).spaceIf(fortranCommonSettings.SPACE_BEFORE_COMMA)
                 .after(COMMA).spaceIf(fortranCommonSettings.SPACE_AFTER_COMMA)
 
