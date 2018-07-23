@@ -37,8 +37,6 @@ public class FortranTokenType extends IElementType {
 
     public static IElementType INCLUDE_KEYWORD = keyword("include");
 
-    public static IElementType INLINED_CONTENT = new FortranTokenType("inlined_content");
-
     public static IElementType CPP = new FortranTokenType("c_pre_processor");
 
     public static TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE, FIRST_WHITE_SPACE);

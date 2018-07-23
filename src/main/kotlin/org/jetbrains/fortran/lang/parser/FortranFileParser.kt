@@ -2,12 +2,12 @@ package org.jetbrains.fortran.lang.parser
 
 import com.intellij.lang.ASTNode
 import com.intellij.lang.PsiBuilderFactory
+import com.intellij.psi.tree.IFileElementType
 import org.jetbrains.fortran.lang.lexer.FortranIncludeProcessingLexer
 import org.jetbrains.fortran.lang.psi.FortranFile
-import org.jetbrains.fortran.lang.psi.FortranFileElementType
 
 object FortranFileParser : FortranParser() {
-    fun parse(root: FortranFileElementType, chameleon: ASTNode): ASTNode? {
+    fun parse(root: IFileElementType, chameleon: ASTNode): ASTNode? {
         val startElement = chameleon.psi
         val startFile = startElement.containingFile
         val project = startFile.project

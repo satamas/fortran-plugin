@@ -7,7 +7,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IFileElementType
 import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranFile
-import org.jetbrains.fortran.lang.psi.FortranFileElementType
+import org.jetbrains.fortran.lang.stubs.FortranFileStub
 
 class FortranParserDefinition : FortranParserDefinitionBase() {
     override fun createLexer(project: Project): Lexer {
@@ -15,7 +15,7 @@ class FortranParserDefinition : FortranParserDefinitionBase() {
     }
 
     override fun getFileNodeType(): IFileElementType {
-        return FortranFileElementType()
+        return FortranFileStub.Type
     }
 
     override fun createFile(fileViewProvider: FileViewProvider): PsiFile {
