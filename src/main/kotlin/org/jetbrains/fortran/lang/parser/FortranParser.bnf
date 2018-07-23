@@ -1249,7 +1249,10 @@ stmt_function_stmt ::= label_decl? fidentifier '(' <<list fidentifier>>? ')' '='
 pause_stmt ::= label_decl? pause_ (expr)? { pin = 2; extends=action_stmt }
 assign_stmt ::= label_decl? assign_ label to_ variable { pin = 2; extends=action_stmt }
 assigned_goto_stmt ::= label_decl? (goto_ | (go_ to_)) fidentifier (','? '(' <<list label_decl>> ')' )?  { pin = 3; extends=action_stmt }
-include_stmt ::= label_decl? include_ string_literal { pin = 2 }
+include_stmt ::= label_decl? include_ string_literal {
+    pin = 2
+    mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranIncludeStmtMixin"
+}
 
 // nonstandard
 accept_stmt ::= label_decl? accept_  parameter_value (',' <<list input_item>>)?  {pin = 2; extends=action_stmt}
