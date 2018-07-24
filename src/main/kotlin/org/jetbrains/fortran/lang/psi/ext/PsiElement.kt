@@ -11,3 +11,6 @@ fun PsiElement.lastChildOfType(type: KClass<out PsiElement>) = children.findLast
 
 fun PsiElement.smartPointer()
         = SmartPointerManager.getInstance(this.project).createSmartPsiElementPointer(this)
+
+inline fun <reified T : PsiElement> PsiElement.descendantOfTypeStrict(): T? =
+        PsiTreeUtil.findChildOfType(this, T::class.java, /* strict */ true)

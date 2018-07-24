@@ -80,6 +80,10 @@
         <findUsagesHandlerFactory
                 implementation="org.jetbrains.fortran.ide.findUsages.FortranFindUsagesHandlerFactory"/>
 
+        <lang.elementManipulator forClass="org.jetbrains.fortran.lang.psi.FortranIncludeStmt"
+                                 implementationClass="org.jetbrains.fortran.lang.resolve.FortranIncludeManipulator"/>
+
+
         <!-- Structure View -->
         <lang.psiStructureViewFactory language="Fortran"
                                       implementationClass="org.jetbrains.fortran.ide.structure.FortranPsiStructureViewFactory"/>

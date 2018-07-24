@@ -9,8 +9,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
 import com.intellij.psi.TokenType
-import com.intellij.psi.tree.IElementType
-import com.intellij.psi.tree.TokenSet
 import com.intellij.util.indexing.IndexingDataKeys
 import org.jetbrains.fortran.lang.FortranTypes
 import org.jetbrains.fortran.lang.psi.FortranFile
@@ -85,8 +83,6 @@ class FortranIncludeProcessingLexer(val file: FortranFile?, val project: Project
     }
 
     fun getVirtualFile(file: PsiFile?): VirtualFile? {
-        if (file == null) return null
-        val vFile = file.originalFile.virtualFile
-        return vFile ?: file.getUserData(IndexingDataKeys.VIRTUAL_FILE)
+        return file?.originalFile?.virtualFile ?: file?.getUserData(IndexingDataKeys.VIRTUAL_FILE)
     }
 }

@@ -15,11 +15,12 @@ import com.intellij.util.SmartList
 
 fun resolveIncludedFile(
         context: VirtualFile?,
-        includePath: String,
+        includePath: String?,
         project: Project
 ): VirtualFile? {
-    val item = FileReferenceHelper.getPsiFileSystemItem(PsiManager.getInstance(project), context!!)
-    val pathElements = includePath.split('/')
+    if (context == null || !context.isValid) return null
+    val pathElements = includePath?.split('/') ?: return null
+    val item = FileReferenceHelper.getPsiFileSystemItem(PsiManager.getInstance(project), context)
     val first = pathElements.first()
     var file = findAbsoluteFile(includePath, first)
 
