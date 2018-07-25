@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2018.1-2</version>
+    <version>2018.2.0</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,12 +12,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        Fix bug that leads to ide freezing
+        Support for IntelliJ 2018.2. Initial support of include statements. Minor changes in formatting
     ]]>
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="181.4071" until-build="181.*"/>
+    <idea-version since-build="182.3684" until-build="182.*"/>
 
     <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
     <depends>com.intellij.modules.lang</depends>

@@ -129,12 +129,12 @@ class FortranFmtBlock(
             val fortranCommonSettings = settings.getCommonSettings(FortranLanguage)
             val node1 = child1.node
             val node2 = child2.node
-            val psi1 = node1.psi
-            val psi2 = node2.psi
+            val psi1 = node1?.psi
+            val psi2 = node2?.psi
 
             // MAYBE WE CAN MAKE IT BEAUTIFUL
             // NEED TO ADD MORE PSI HERE
-            if ((node1.elementType === FortranTokenType.LINE_COMMENT
+            if ((node1?.elementType === FortranTokenType.LINE_COMMENT
                     || psi1 is FortranStmt
                     || psi1 is FortranExecutableConstruct
                     || psi1 is FortranDeclarationConstruct
@@ -146,7 +146,7 @@ class FortranFmtBlock(
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_CODE)
             }
             // before comment
-            if (node1.elementType === EOL && node2.elementType === FortranTokenType.LINE_COMMENT) {
+            if (node1?.elementType === EOL && node2?.elementType === FortranTokenType.LINE_COMMENT) {
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_CODE)
             }
             // before subprogram part
@@ -160,11 +160,11 @@ class FortranFmtBlock(
             if (psi1 is FortranProgramUnit && psi2 is FortranProgramUnit)
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
             // between subprogram and comment
-            if (psi1 is FortranProgramUnit && node2.elementType === FortranTokenType.LINE_COMMENT)
+            if (psi1 is FortranProgramUnit && node2?.elementType === FortranTokenType.LINE_COMMENT)
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
             // after subprogram
             if ((psi1 is FortranModuleSubprogramPart || psi1 is FortranInternalSubprogramPart)
-                    && (psi2 is FortranStmt || node2.elementType === FortranTokenType.LINE_COMMENT))
+                    && (psi2 is FortranStmt || node2?.elementType === FortranTokenType.LINE_COMMENT))
                 return Spacing.createSpacing(0, Int.MAX_VALUE, 1, true, fortranCommonSettings.KEEP_BLANK_LINES_IN_DECLARATIONS)
         }
         return spacingBuilder.getSpacing(this, child1, child2)

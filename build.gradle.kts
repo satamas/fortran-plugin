@@ -21,7 +21,7 @@ buildscript {
         maven { setUrl("https://jitpack.io") }
     }
     dependencies {
-        classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
+        classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.1.7")
     }
 }
 
@@ -33,6 +33,8 @@ plugins {
     kotlin("jvm") version "1.1.4"
     id("org.jetbrains.intellij") version "0.3.4"
     id("de.undercouch.download") version "3.2.0"
+    //Plugin to create pathing jar for intellij list of dependencies
+    id("com.github.ManifestClasspath") version "0.1.0-RELEASE"
 }
 
 idea {
@@ -47,6 +49,7 @@ allprojects {
         plugin("kotlin")
         plugin("org.jetbrains.grammarkit")
         plugin("org.jetbrains.intellij")
+        plugin("com.github.ManifestClasspath")
     }
 
     repositories {
