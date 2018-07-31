@@ -39,11 +39,6 @@ class FortranIncludeProcessingLexer(val file: FortranFile?, val project: Project
 
             addToken(baseLexer.tokenType)
             baseLexer.advance()
-            skipWhiteSpaces(baseLexer)
-            if (FortranTypes.EOL == baseLexer.tokenType) {
-                addToken(FortranTypes.EOL)
-                baseLexer.advance()
-            }
 
             if (includedFile != null && includedFile.isValid) {
                 val resolved = file?.manager?.findFile(includedFile)
@@ -51,6 +46,7 @@ class FortranIncludeProcessingLexer(val file: FortranFile?, val project: Project
                     val substLexer = FortranIncludeProcessingLexer(file, project)
                     substLexer.start(resolved.text)
 
+                    addToken(baseLexer.tokenStart, FortranIncludeForeignLeafType(FortranTypes.EOL, "\n"))
                     var previousWhitespace = false
                     while (true) {
                         val type = substLexer.tokenType ?: break
@@ -68,7 +64,6 @@ class FortranIncludeProcessingLexer(val file: FortranFile?, val project: Project
                         substLexer.advance()
                     }
                 }
-                addToken(baseLexer.tokenStart, FortranIncludeForeignLeafType(FortranTypes.EOL, "\n"))
             }
         }
     }
