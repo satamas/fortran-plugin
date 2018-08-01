@@ -12,12 +12,15 @@ class FortranConstructNameReferenceImpl(element: FortranConstructNameImplMixin) 
 
     override val FortranConstructNameImplMixin.referenceAnchor: PsiElement get() = referenceNameElement
 
-    override fun getVariants(): Array<Any> = emptyArray()
-
-    override fun resolveInner(): List<FortranNamedElement>  {
+    override fun resolveInner(incompleteCode: Boolean): List<FortranNamedElement>  {
         val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return emptyList()
+        val constructNames = PsiTreeUtil.findChildrenOfType(programUnit, FortranConstructNameDeclImpl::class.java)
+
         // find all labels in it
-        return PsiTreeUtil.findChildrenOfType(programUnit, FortranConstructNameDeclImpl::class.java)
-                .filter {element.getLabelValue().equals(it.getLabelValue(), true) }
+        return if(incompleteCode) {
+            constructNames.toList()
+        } else{
+            constructNames.filter {element.getLabelValue().equals(it.getLabelValue(), true) }
+        }
     }
 }

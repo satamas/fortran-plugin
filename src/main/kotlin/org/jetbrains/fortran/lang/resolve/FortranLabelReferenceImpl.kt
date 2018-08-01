@@ -13,12 +13,13 @@ class FortranLabelReferenceImpl(element: FortranLabelImplMixin) :
 
     override val FortranLabelImplMixin.referenceAnchor: PsiElement get() = integerliteral
 
-    override fun getVariants(): Array<Any> = emptyArray()
-
-    override fun resolveInner(): List<FortranNamedElement> {
+    override fun resolveInner(incompleteCode: Boolean): List<FortranNamedElement> {
         val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return emptyList()
-        return PsiTreeUtil.findChildrenOfType(programUnit, FortranLabelDeclImpl::class.java)
-                .filter { element.getLabelValue() == it.getLabelValue() }
-                .toMutableList()
+        val labelDeclarations = PsiTreeUtil.findChildrenOfType(programUnit, FortranLabelDeclImpl::class.java)
+        return if(incompleteCode){
+            labelDeclarations.toList()
+        } else{
+            labelDeclarations.filter { element.getLabelValue() == it.getLabelValue() }
+        }
     }
 }

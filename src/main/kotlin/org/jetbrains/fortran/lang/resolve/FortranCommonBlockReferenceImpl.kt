@@ -11,7 +11,7 @@ class FortranCommonBlockReferenceImpl(element: FortranCommonBlockDeclImplMixin) 
 
     override fun getVariants(): Array<Any> = emptyArray()
 
-    override fun resolveInner(): List<FortranNamedElement> = listOf(this.element)
+    override fun resolveInner(incompleteCode: Boolean): List<FortranNamedElement> = listOf(this.element)
 
     override fun isReferenceTo(element: PsiElement?): Boolean
             = (element is FortranCommonBlockDeclImplMixin && (element.name?.equals(this.element.name, true) ?: false))
