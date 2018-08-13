@@ -324,7 +324,11 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         val useStmt = module.parent as FortranUseStmt
         if(useStmt.onlyStmtList.isNotEmpty()){
             if(incompleteCode){
-                return useStmt.onlyStmtList.mapNotNull { it.dataPath }
+                return useStmt.onlyStmtList.mapNotNull {
+                    val renameStmt = it.renameStmt
+                    val localNameElement: FortranNamedElement? = if(renameStmt == null) it.dataPath else renameStmt.entityDecl
+                    localNameElement
+                }
             }
             return  useStmt.onlyStmtList.mapNotNull { it.dataPath }.flatMap {
                 val resolvedResult = it.reference.multiResolve()

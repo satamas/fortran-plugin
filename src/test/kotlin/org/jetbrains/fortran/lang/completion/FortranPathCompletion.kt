@@ -11,4 +11,15 @@ class FortranPathCompletion : FortranCompletionTestBase() {
     bar = foo<caret>
     end
     """)
+
+    fun `test use only with rename`() = doSingleCompletion("""
+    use TestModule, only : foo => fo
+    bar = f<caret>
+    end
+    """,
+            """
+    use TestModule, only : foo => fo
+    bar = foo<caret>
+    end
+    """)
 }
