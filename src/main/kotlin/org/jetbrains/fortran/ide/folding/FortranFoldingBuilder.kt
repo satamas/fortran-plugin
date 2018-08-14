@@ -94,7 +94,7 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
             val lastElement = subprogramPart.lastChildOfType(FortranCompositeElement::class) ?: return
             if (lastElement == subprogramPart.firstChild) return
             val range = TextRange(subprogramPart.firstChild.node.startOffset + subprogramPart.firstChild.textLength, lastElement.node.startOffset + lastElement.node.textLength)
-            descriptors += FoldingDescriptor(subprogramPart.node, range)
+           createDescriptor(subprogramPart, range)
         }
 
         override fun visitDeclarationConstruct(o: FortranDeclarationConstruct) =
@@ -123,7 +123,7 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
                     endFoldableStatementType in foldableConstructStartStatements) {
                 val endStatement = block.lastChildOfType(FortranCompositeElement::class) ?: return
                 val range = TextRange(prev.node.startOffset + prev.textLength, endStatement.node.startOffset + endStatement.textLength)
-                descriptors += FoldingDescriptor(block.node, range)
+                createDescriptor(block, range)
             } else {
                 foldBetweenStatements(block, prev, next)
             }
@@ -142,7 +142,18 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
                     right.node.startOffset
                 }
                 val range = TextRange(left.node.startOffset + left.textLength, rightOffset)
-                descriptors += FoldingDescriptor(element.node, range)
+                createDescriptor(element, range)
+            }
+        }
+
+        private fun createDescriptor(psiElement: PsiElement, range: TextRange) =
+                createDescriptor(psiElement.node, range)
+
+        // Range can have zero length if all folded nodes are foreign leafs.
+        // For example, we can try to fold included file content
+        private fun createDescriptor(node: ASTNode, range: TextRange) {
+            if (range.length > 0) {
+                descriptors.add(FoldingDescriptor(node, range))
             }
         }
     }
