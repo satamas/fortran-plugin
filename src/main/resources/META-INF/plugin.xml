@@ -59,7 +59,8 @@
                 implementation="org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider
                 implementation="org.jetbrains.fortran.ide.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
-        <editorNotificationProvider implementation="org.jetbrains.fortran.ide.formatter.FortranSourceFormNotificationProvider"/>
+        <editorNotificationProvider
+                implementation="org.jetbrains.fortran.ide.formatter.FortranSourceFormNotificationProvider"/>
         <!-- Commenter -->
         <lang.commenter language="Fortran" implementationClass="org.jetbrains.fortran.ide.commenter.FortranCommenter"/>
         <lang.commenter language="Fortran fixed form"
@@ -90,6 +91,10 @@
 
         <!-- Indices -->
         <stubIndex implementation="org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex"/>
+
+        <!-- Completion -->
+        <completion.contributor language="Fortran"
+                                implementationClass="org.jetbrains.fortran.ide.completion.KeywordCompletionContributor"/>
 
         <!-- Intentions -->
         <intentionAction>

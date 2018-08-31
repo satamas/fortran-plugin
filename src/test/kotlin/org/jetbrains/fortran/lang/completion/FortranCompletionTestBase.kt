@@ -12,6 +12,22 @@ abstract class FortranCompletionTestBase : LightPlatformCodeInsightFixtureTestCa
         myFixture.checkResult(after)
     }
 
+    protected fun checkNoCompletion(@Language("Fortran") code: String) {
+        myFixture.configureByText(FortranFileType, code)
+        noCompletionCheck()
+    }
+
+    private fun noCompletionCheck() {
+        val variants = myFixture.completeBasic()
+        checkNotNull(variants) {
+            val element = myFixture.file.findElementAt(myFixture.caretOffset - 1)
+            "Expected zero completions, but one completion was auto inserted: `${element?.text}`."
+        }
+        check(variants.isEmpty()) {
+            "Expected zero completions, got ${variants.size}."
+        }
+    }
+
     protected fun executeSoloCompletion() {
         val variants = myFixture.completeBasic()
 
