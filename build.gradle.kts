@@ -87,7 +87,7 @@ allprojects {
         targetCompatibility = VERSION_1_8
     }
 
-    java.sourceSets {
+    sourceSets {
         getByName("main").java.srcDirs("src/gen")
     }
 }
@@ -99,7 +99,7 @@ project(":") {
         alternativeIdePath = "debugger/lib/clion-$clionVersion"
     }
 
-    java.sourceSets {
+    sourceSets {
         create("debugger") {
             kotlin.srcDirs("debugger/src/main/kotlin")
             compileClasspath += getByName("main").compileClasspath +
@@ -109,7 +109,7 @@ project(":") {
     }
 
     tasks.withType<Jar> {
-        from(java.sourceSets.getByName("debugger").output)
+        from(sourceSets.getByName("debugger").output)
     }
 
     val generateFortranLexer = task<GenerateLexer>("generateFortranLexer") {
