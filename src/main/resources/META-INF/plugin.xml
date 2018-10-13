@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2018.2.2</version>
+    <version>2018.2.3</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,7 +12,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        Fix major bug that prevented some file with includes from opening in IDE
+        Add keyword completion. Minor fix.
     ]]>
     </change-notes>
 
