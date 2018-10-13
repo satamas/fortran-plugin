@@ -78,7 +78,7 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
 
     override fun getIndentOptionsEditor(): IndentOptionsEditor = SmartIndentOptionsEditor()
 
-    override fun getDefaultCommonSettings(): CommonCodeStyleSettings? {
+    override fun getDefaultCommonSettings(): CommonCodeStyleSettings {
         val defaultSettings = CommonCodeStyleSettings(FortranLanguage)
         val indentOptions = defaultSettings.initIndentOptions()
         indentOptions.INDENT_SIZE = 4
