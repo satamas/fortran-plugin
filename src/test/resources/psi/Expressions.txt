@@ -197,33 +197,34 @@ FILE
                                     PsiElement(identifier)('counter')
                               PsiElement(,)(',')
                               PsiWhiteSpace(' ')
-                              DESIGNATOR
-                                FortranDataPathImpl(DATA_PATH)
-                                  PsiElement(identifier)('counter')
-                              PsiWhiteSpace(' ')
-                              PsiElement(=)('=')
-                              PsiWhiteSpace(' ')
-                              CONSTANT
-                                PsiElement(integerliteral)('1')
-                              PsiElement(,)(',')
-                              PsiWhiteSpace(' ')
-                              MULT_EXPR
+                              ID_LOOP_STMT
+                                DESIGNATOR
+                                  FortranDataPathImpl(DATA_PATH)
+                                    PsiElement(identifier)('counter')
+                                PsiWhiteSpace(' ')
+                                PsiElement(=)('=')
+                                PsiWhiteSpace(' ')
+                                CONSTANT
+                                  PsiElement(integerliteral)('1')
+                                PsiElement(,)(',')
+                                PsiWhiteSpace(' ')
                                 MULT_EXPR
-                                  DESIGNATOR
-                                    FortranDataPathImpl(DATA_PATH)
-                                      PsiElement(identifier)('numLats')
+                                  MULT_EXPR
+                                    DESIGNATOR
+                                      FortranDataPathImpl(DATA_PATH)
+                                        PsiElement(identifier)('numLats')
+                                    PsiWhiteSpace(' ')
+                                    PsiElement(*)('*')
+                                    PsiWhiteSpace(' ')
+                                    DESIGNATOR
+                                      FortranDataPathImpl(DATA_PATH)
+                                        PsiElement(identifier)('numLons')
                                   PsiWhiteSpace(' ')
                                   PsiElement(*)('*')
                                   PsiWhiteSpace(' ')
                                   DESIGNATOR
                                     FortranDataPathImpl(DATA_PATH)
-                                      PsiElement(identifier)('numLons')
-                                PsiWhiteSpace(' ')
-                                PsiElement(*)('*')
-                                PsiWhiteSpace(' ')
-                                DESIGNATOR
-                                  FortranDataPathImpl(DATA_PATH)
-                                    PsiElement(identifier)('numFrTimes')
+                                      PsiElement(identifier)('numFrTimes')
                               PsiElement())(')')
                         PsiWhiteSpace(' ')
                         PsiElement(/))('/)')

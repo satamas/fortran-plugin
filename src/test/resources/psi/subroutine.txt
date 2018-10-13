@@ -31,8 +31,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiElement(,)(',')
         ATTR_SPEC
           PsiElement(keyword)('intent')
@@ -47,8 +47,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('character')
+        CHARACTER_TYPE_SPEC
+          PsiElement(character)('character')
           CHAR_SELECTOR
             LENGTH_SELECTOR
               PsiElement(()('(')
@@ -70,8 +70,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('real')
+        NUMBER_TYPE_SPEC
+          PsiElement(real)('real')
           KIND_SELECTOR
             PsiElement(()('(')
             DESIGNATOR
@@ -92,8 +92,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('character')
+        CHARACTER_TYPE_SPEC
+          PsiElement(character)('character')
           CHAR_SELECTOR
             LENGTH_SELECTOR
               PsiElement(()('(')
@@ -118,8 +118,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('character')
+        CHARACTER_TYPE_SPEC
+          PsiElement(character)('character')
           CHAR_SELECTOR
             LENGTH_SELECTOR
               PsiElement(()('(')

@@ -18,15 +18,16 @@ FILE
           PsiElement(keyword)('do')
           PsiWhiteSpace(' ')
           LOOP_CONTROL
-            DESIGNATOR
-              FortranDataPathImpl(DATA_PATH)
-                PsiElement(identifier)('i')
-            PsiElement(=)('=')
-            CONSTANT
-              PsiElement(integerliteral)('1')
-            PsiElement(,)(',')
-            CONSTANT
-              PsiElement(integerliteral)('5')
+            ID_LOOP_STMT
+              DESIGNATOR
+                FortranDataPathImpl(DATA_PATH)
+                  PsiElement(identifier)('i')
+              PsiElement(=)('=')
+              CONSTANT
+                PsiElement(integerliteral)('1')
+              PsiElement(,)(',')
+              CONSTANT
+                PsiElement(integerliteral)('5')
         PsiElement(eol)('\n')
         FortranBlockImpl(BLOCK)
           ASSIGNMENT_STMT
@@ -60,18 +61,19 @@ FILE
           PsiElement(keyword)('do')
           PsiWhiteSpace(' ')
           LOOP_CONTROL
-            DESIGNATOR
-              FortranDataPathImpl(DATA_PATH)
-                PsiElement(identifier)('i')
-            PsiElement(=)('=')
-            CONSTANT
-              PsiElement(integerliteral)('1')
-            PsiElement(,)(',')
-            CONSTANT
-              PsiElement(integerliteral)('5')
-            PsiElement(,)(',')
-            CONSTANT
-              PsiElement(integerliteral)('7')
+            ID_LOOP_STMT
+              DESIGNATOR
+                FortranDataPathImpl(DATA_PATH)
+                  PsiElement(identifier)('i')
+              PsiElement(=)('=')
+              CONSTANT
+                PsiElement(integerliteral)('1')
+              PsiElement(,)(',')
+              CONSTANT
+                PsiElement(integerliteral)('5')
+              PsiElement(,)(',')
+              CONSTANT
+                PsiElement(integerliteral)('7')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         FortranBlockImpl(BLOCK)
@@ -105,20 +107,21 @@ FILE
           PsiElement(keyword)('do')
           PsiWhiteSpace(' ')
           LOOP_CONTROL
-            PsiElement(keyword)('while')
-            PsiWhiteSpace(' ')
-            PsiElement(()('(')
-            REL_EXPR
-              DESIGNATOR
-                FortranDataPathImpl(DATA_PATH)
-                  PsiElement(identifier)('j')
+            WHILE_LOOP_STMT
+              PsiElement(keyword)('while')
               PsiWhiteSpace(' ')
-              REL_OP
-                PsiElement(LT)('<')
-              PsiWhiteSpace(' ')
-              CONSTANT
-                PsiElement(integerliteral)('100')
-            PsiElement())(')')
+              PsiElement(()('(')
+              REL_EXPR
+                DESIGNATOR
+                  FortranDataPathImpl(DATA_PATH)
+                    PsiElement(identifier)('j')
+                PsiWhiteSpace(' ')
+                REL_OP
+                  PsiElement(LT)('<')
+                PsiWhiteSpace(' ')
+                CONSTANT
+                  PsiElement(integerliteral)('100')
+              PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         FortranBlockImpl(BLOCK)
@@ -160,42 +163,43 @@ FILE
           PsiElement(keyword)('do')
           PsiWhiteSpace(' ')
           LOOP_CONTROL
-            PsiElement(keyword)('concurrent')
-            PsiWhiteSpace(' ')
-            FORALL_HEADER
-              PsiElement(()('(')
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('integer')
+            CONCURRENT_LOOP_STMT
+              PsiElement(keyword)('concurrent')
               PsiWhiteSpace(' ')
-              PsiElement(::)('::')
-              PsiWhiteSpace(' ')
-              FORALL_TRIPLET_SPEC
-                FortranDataPathImpl(DATA_PATH)
-                  PsiElement(identifier)('a')
+              FORALL_HEADER
+                PsiElement(()('(')
+                NUMBER_TYPE_SPEC
+                  PsiElement(integer)('integer')
                 PsiWhiteSpace(' ')
-                PsiElement(=)('=')
+                PsiElement(::)('::')
                 PsiWhiteSpace(' ')
-                CONSTANT
-                  PsiElement(integerliteral)('1')
-                PsiElement(:)(':')
-                CONSTANT
-                  PsiElement(integerliteral)('10')
-                PsiElement(:)(':')
-                CONSTANT
-                  PsiElement(integerliteral)('2')
-              PsiElement(,)(',')
-              PsiWhiteSpace(' ')
-              REL_EXPR
-                DESIGNATOR
+                FORALL_TRIPLET_SPEC
                   FortranDataPathImpl(DATA_PATH)
                     PsiElement(identifier)('a')
+                  PsiWhiteSpace(' ')
+                  PsiElement(=)('=')
+                  PsiWhiteSpace(' ')
+                  CONSTANT
+                    PsiElement(integerliteral)('1')
+                  PsiElement(:)(':')
+                  CONSTANT
+                    PsiElement(integerliteral)('10')
+                  PsiElement(:)(':')
+                  CONSTANT
+                    PsiElement(integerliteral)('2')
+                PsiElement(,)(',')
                 PsiWhiteSpace(' ')
-                REL_OP
-                  PsiElement(GT)('>')
-                PsiWhiteSpace(' ')
-                CONSTANT
-                  PsiElement(integerliteral)('5')
-              PsiElement())(')')
+                REL_EXPR
+                  DESIGNATOR
+                    FortranDataPathImpl(DATA_PATH)
+                      PsiElement(identifier)('a')
+                  PsiWhiteSpace(' ')
+                  REL_OP
+                    PsiElement(GT)('>')
+                  PsiWhiteSpace(' ')
+                  CONSTANT
+                    PsiElement(integerliteral)('5')
+                PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('    ')
         FortranBlockImpl(BLOCK)

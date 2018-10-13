@@ -7,8 +7,8 @@ FILE
         PsiElement(keyword)('none')
       PsiElement(eol)('\n')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -21,8 +21,8 @@ FILE
             PsiElement(integerliteral)('1')
       PsiElement(eol)('\n')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('logical')
+        NUMBER_TYPE_SPEC
+          PsiElement(logical)('logical')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -35,8 +35,8 @@ FILE
             PsiElement(truekwd)('.true.')
       PsiElement(eol)('\n')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')

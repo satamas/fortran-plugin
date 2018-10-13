@@ -43,8 +43,8 @@ FILE
             PsiWhiteSpace('              ')
             FortranBlockImpl(BLOCK)
               FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(keyword)('real')
+                NUMBER_TYPE_SPEC
+                  PsiElement(real)('real')
                   NONSTANDARD_KIND_SELECTOR
                     PsiElement(*)('*')
                     CONSTANT
@@ -71,8 +71,8 @@ FILE
               PsiElement(eol)('\n')
               PsiWhiteSpace('              ')
               FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(keyword)('real')
+                NUMBER_TYPE_SPEC
+                  PsiElement(real)('real')
                   KIND_SELECTOR
                     PsiElement(()('(')
                     CONSTANT
@@ -103,8 +103,8 @@ FILE
               PsiElement(eol)('\n')
               PsiWhiteSpace('              ')
               FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(keyword)('integer')
+                NUMBER_TYPE_SPEC
+                  PsiElement(integer)('integer')
                 PsiWhiteSpace(' ')
                 FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('n')
@@ -149,8 +149,8 @@ FILE
             PsiWhiteSpace('          ')
             FortranBlockImpl(BLOCK)
               FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(keyword)('real')
+                NUMBER_TYPE_SPEC
+                  PsiElement(real)('real')
                   KIND_SELECTOR
                     PsiElement(()('(')
                     CONSTANT
@@ -164,8 +164,8 @@ FILE
               PsiElement(eol)('\n')
               PsiWhiteSpace('          ')
               FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(keyword)('real')
+                NUMBER_TYPE_SPEC
+                  PsiElement(real)('real')
                   KIND_SELECTOR
                     PsiElement(()('(')
                     CONSTANT
@@ -187,8 +187,8 @@ FILE
               PsiElement(eol)('\n')
               PsiWhiteSpace('          ')
               FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-                INTRINSIC_TYPE_SPEC
-                  PsiElement(keyword)('integer')
+                NUMBER_TYPE_SPEC
+                  PsiElement(integer)('integer')
                 PsiWhiteSpace(' ')
                 PsiElement(::)('::')
                 PsiWhiteSpace(' ')

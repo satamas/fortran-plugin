@@ -22,8 +22,8 @@ FILE
         PsiWhiteSpace('     ')
         FortranBlockImpl(BLOCK)
           FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-            INTRINSIC_TYPE_SPEC
-              PsiElement(keyword)('integer')
+            NUMBER_TYPE_SPEC
+              PsiElement(integer)('integer')
             PsiWhiteSpace(' ')
             FortranEntityDeclImpl(ENTITY_DECL)
               PsiElement(identifier)('a')

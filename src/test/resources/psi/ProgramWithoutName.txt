@@ -2,8 +2,8 @@ FILE
   FortranMainProgramImpl(MAIN PROGRAM)
     FortranBlockImpl(BLOCK)
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
           KIND_SELECTOR
             PsiElement(()('(')
             PsiElement(keyword)('kind')
@@ -16,8 +16,8 @@ FILE
           PsiElement(identifier)('a')
       PsiElement(eol)('\n')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('b')

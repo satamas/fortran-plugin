@@ -12,9 +12,9 @@ FILE
         PsiElement(keyword)('IMPLICIT')
         PsiWhiteSpace(' ')
         IMPLICIT_SPEC
-          PsiElement(keyword)('DOUBLE')
+          PsiElement(double)('DOUBLE')
           PsiWhiteSpace(' ')
-          PsiElement(keyword)('PRECISION')
+          PsiElement(precision)('PRECISION')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           LETTER_SPEC
@@ -30,8 +30,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('character')
+        CHARACTER_TYPE_SPEC
+          PsiElement(character)('character')
           CHAR_SELECTOR
             LENGTH_SELECTOR
               PsiElement(*)('*')
@@ -53,16 +53,16 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('a')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('character')
+        CHARACTER_TYPE_SPEC
+          PsiElement(character)('character')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('c')
@@ -74,8 +74,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('character')
+        CHARACTER_TYPE_SPEC
+          PsiElement(character)('character')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('c')
@@ -89,8 +89,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         ATTR_SPEC
@@ -107,8 +107,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('d')
@@ -120,8 +120,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('d')
@@ -138,8 +138,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('d')
@@ -158,8 +158,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('d')
@@ -331,10 +331,10 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('double')
+        NUMBER_TYPE_SPEC
+          PsiElement(double)('double')
           PsiWhiteSpace(' ')
-          PsiElement(keyword)('complex')
+          PsiElement(complex)('complex')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -343,7 +343,7 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
+        NUMBER_TYPE_SPEC
           PsiElement(keyword)('doublecomplex')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')

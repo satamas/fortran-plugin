@@ -8,8 +8,8 @@ FILE
     PsiElement(eol)('\n')
     FortranBlockImpl(BLOCK)
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('real')
+        NUMBER_TYPE_SPEC
+          PsiElement(real)('real')
           PsiWhiteSpace(' ')
           KIND_SELECTOR
             PsiElement(()('(')
@@ -39,8 +39,8 @@ FILE
           PsiElement(identifier)('x')
       PsiElement(eol)('\n')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('real')
+        NUMBER_TYPE_SPEC
+          PsiElement(real)('real')
           PsiWhiteSpace(' ')
           KIND_SELECTOR
             PsiElement(()('(')
@@ -66,8 +66,8 @@ FILE
           PsiElement(identifier)('px')
       PsiElement(eol)('\n')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         ATTR_SPEC
@@ -96,8 +96,8 @@ FILE
           PsiElement(identifier)('y')
       PsiElement(eol)('\n')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         ATTR_SPEC

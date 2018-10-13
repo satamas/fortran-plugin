@@ -37,7 +37,7 @@ class FortranInferenceContext(val element: FortranEntitiesOwner) {
                 typeDeclarationStmt.attrSpecList[0].text.substring(0, 9) == "dimension") {
             inferFortranArrayType(typeDeclarationStmt)
         } else {
-            FortranPrimitiveType.fromTypeSpec(typeDeclarationStmt.intrinsicTypeSpec)
+            FortranPrimitiveType.fromTypeSpec(typeDeclarationStmt)
         }
     }
 
@@ -420,7 +420,7 @@ class FortranInferenceContext(val element: FortranEntitiesOwner) {
     }
 
     private fun inferFortranArrayType(declarationStmt: FortranTypeDeclarationStmt): FortranType {
-        val primitiveType = FortranPrimitiveType.fromTypeSpec(declarationStmt.intrinsicTypeSpec)
+        val primitiveType = FortranPrimitiveType.fromTypeSpec(declarationStmt)
         if (primitiveType === FortranUnknownType) {
             return FortranUnknownType
         }

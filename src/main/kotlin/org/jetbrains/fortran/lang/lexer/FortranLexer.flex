@@ -12,6 +12,15 @@ import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_CONTINUE;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.CPP;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.WORD;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.INCLUDE_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.CHARACTER_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.COMPLEX_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.INTEGER_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.LOGICAL_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.REAL_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.CHARACTER_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.DOUBLE_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.PRECISION_KEYWORD;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.PRECISION_KEYWORD;
 import static org.jetbrains.fortran.lang.psi.FortranTokenType.FIRST_WHITE_SPACE;
 %%
 
@@ -289,6 +298,13 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ".ge." { return GE; }
 
     "include" { return INCLUDE_KEYWORD; }
+    "character" { return CHARACTER_KEYWORD; }
+    "logical" { return LOGICAL_KEYWORD; }
+    "complex" { return COMPLEX_KEYWORD; }
+    "integer" { return INTEGER_KEYWORD; }
+    "real" { return REAL_KEYWORD; }
+    "double" { return DOUBLE_KEYWORD; }
+    "precision" { return PRECISION_KEYWORD; }
 
     {DEFOPERATOR} { return DEFOPERATOR; }
     {IDENTIFIER} { return WORD; }

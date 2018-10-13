@@ -1,24 +1,34 @@
 package org.jetbrains.fortran.lang.types.ty
 
-import org.jetbrains.fortran.lang.psi.FortranIntrinsicTypeSpec
+import org.jetbrains.fortran.lang.psi.FortranTokenType
+import org.jetbrains.fortran.lang.psi.FortranTypeDeclarationStmt
 
-abstract class FortranPrimitiveType : FortranType() {
+sealed class FortranPrimitiveType : FortranType() {
     companion object {
-        fun fromTypeSpec(typeSpec: FortranIntrinsicTypeSpec?): FortranType {
+        fun fromTypeSpec(typeSpec: FortranTypeDeclarationStmt): FortranType {
 
-            if (typeSpec?.characterTypeKeyword != null) {
+            if (typeSpec.characterTypeSpec != null) {
                 return FortranCharacterType
             }
 
-            val keyword = typeSpec?.numberTypeKeyword?.text
+            val keyword = typeSpec.numberTypeSpec?.node?.firstChildNode
 
-            return when (keyword) {
-                "logical" -> FortranLogicalType
-                "character" -> FortranCharacterType
-                "complex" -> FortranComplexType
-                "integer" -> FortranIntegerType
-                "real" -> FortranRealType
-                "double precision" -> FortranDoublePrecisionType
+            return when (keyword?.elementType) {
+                FortranTokenType.LOGICAL_KEYWORD -> FortranLogicalType
+                FortranTokenType.COMPLEX_KEYWORD -> FortranComplexType
+                FortranTokenType.INTEGER_KEYWORD -> FortranIntegerType
+                FortranTokenType.REAL_KEYWORD -> FortranRealType
+                FortranTokenType.DOUBLE_KEYWORD -> {
+                    var nonWhitespaceElement = keyword?.treeNext ?: return FortranUnknownType
+                    while (FortranTokenType.WHITE_SPACES.contains(nonWhitespaceElement.elementType)) {
+                        nonWhitespaceElement = nonWhitespaceElement.treeNext
+                    }
+                    if (nonWhitespaceElement.elementType == FortranTokenType.PRECISION_KEYWORD) {
+                        FortranDoublePrecisionType
+                    } else {
+                        FortranUnknownType
+                    }
+                }
                 else -> FortranUnknownType
             }
         }
@@ -56,6 +66,12 @@ object FortranRealType : FortranPrimitiveType() {
 }
 
 object FortranDoublePrecisionType : FortranPrimitiveType() {
+    override fun toString(): String {
+        return "double precision"
+    }
+}
+
+object FortranDoubleComplexType : FortranPrimitiveType() {
     override fun toString(): String {
         return "double precision"
     }

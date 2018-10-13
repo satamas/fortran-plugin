@@ -11,8 +11,8 @@ FILE
     PsiWhiteSpace('    ')
     FortranBlockImpl(BLOCK)
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -39,8 +39,8 @@ FILE
           PsiElement(keyword)('is')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
-          INTRINSIC_TYPE_SPEC
-            PsiElement(keyword)('integer')
+          NUMBER_TYPE_SPEC
+            PsiElement(integer)('integer')
           PsiElement())(')')
         PsiElement(eol)('\n')
         PsiWhiteSpace('        ')
@@ -65,8 +65,8 @@ FILE
           PsiElement(keyword)('is')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
-          INTRINSIC_TYPE_SPEC
-            PsiElement(keyword)('real')
+          NUMBER_TYPE_SPEC
+            PsiElement(real)('real')
             KIND_SELECTOR
               PsiElement(()('(')
               CONSTANT

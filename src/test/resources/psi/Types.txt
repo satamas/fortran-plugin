@@ -21,8 +21,8 @@ FILE
         COMPONENT_PART
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('character')
+              CHARACTER_TYPE_SPEC
+                PsiElement(character)('character')
                 CHAR_SELECTOR
                   LENGTH_SELECTOR
                     PsiElement(()('(')
@@ -41,8 +41,8 @@ FILE
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('integer')
+              NUMBER_TYPE_SPEC
+                PsiElement(integer)('integer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -143,8 +143,8 @@ FILE
         COMPONENT_PART
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('LOGICAL')
+              NUMBER_TYPE_SPEC
+                PsiElement(logical)('LOGICAL')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -155,8 +155,8 @@ FILE
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('CHARACTER')
+              CHARACTER_TYPE_SPEC
+                PsiElement(character)('CHARACTER')
                 PsiWhiteSpace(' ')
                 CHAR_SELECTOR
                   LENGTH_SELECTOR
@@ -200,8 +200,8 @@ FILE
         COMPONENT_PART
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('INTEGER')
+              NUMBER_TYPE_SPEC
+                PsiElement(integer)('INTEGER')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -212,8 +212,8 @@ FILE
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('REAL')
+              NUMBER_TYPE_SPEC
+                PsiElement(real)('REAL')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -224,8 +224,8 @@ FILE
           PsiWhiteSpace('    ')
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('LOGICAL')
+              NUMBER_TYPE_SPEC
+                PsiElement(logical)('LOGICAL')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -255,8 +255,8 @@ FILE
         COMPONENT_PART
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('REAL')
+              NUMBER_TYPE_SPEC
+                PsiElement(real)('REAL')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')

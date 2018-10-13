@@ -21,8 +21,8 @@ FILE
         COMPONENT_PART
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('integer')
+              NUMBER_TYPE_SPEC
+                PsiElement(integer)('integer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -171,8 +171,8 @@ FILE
         COMPONENT_PART
           COMPONENT_DEF_STMT
             DATA_COMPONENT_DEF_STMT
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('integer')
+              NUMBER_TYPE_SPEC
+                PsiElement(integer)('integer')
               PsiWhiteSpace(' ')
               PsiElement(::)('::')
               PsiWhiteSpace(' ')
@@ -217,8 +217,8 @@ FILE
         FortranFunctionStmtImpl(FUNCTION_STMT)
           PREFIX
             PREFIX_SPEC
-              INTRINSIC_TYPE_SPEC
-                PsiElement(keyword)('real')
+              NUMBER_TYPE_SPEC
+                PsiElement(real)('real')
           PsiWhiteSpace(' ')
           PsiElement(keyword)('function')
           PsiWhiteSpace(' ')

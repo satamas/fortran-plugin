@@ -3,13 +3,12 @@ package org.jetbrains.fortran.lang.psi;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.fortran.FortranLanguage;
-import org.jetbrains.fortran.lang.FortranTypes;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.intellij.psi.TokenType.WHITE_SPACE;
-import static org.jetbrains.fortran.lang.FortranTypes.*;
+import static org.jetbrains.fortran.lang.FortranTypes.STRINGLITERAL;
 
 /**
  * Created by sergei on 13.03.17.
@@ -36,6 +35,14 @@ public class FortranTokenType extends IElementType {
     public static TokenSet KEYWORDS = TokenSet.create(KEYWORD);
 
     public static IElementType INCLUDE_KEYWORD = keyword("include");
+    public static IElementType CHARACTER_KEYWORD = keyword("character");
+    public static IElementType LOGICAL_KEYWORD = keyword("logical");
+    public static IElementType COMPLEX_KEYWORD = keyword("complex");
+    public static IElementType INTEGER_KEYWORD = keyword("integer");
+    public static IElementType REAL_KEYWORD = keyword("real");
+
+    public static IElementType DOUBLE_KEYWORD = keyword("double");
+    public static IElementType PRECISION_KEYWORD = keyword("precision");
 
     public static IElementType CPP = new FortranTokenType("c_pre_processor");
 

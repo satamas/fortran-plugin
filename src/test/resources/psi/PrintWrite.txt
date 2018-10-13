@@ -178,18 +178,19 @@ FILE
                     PsiElement())(')')
             PsiElement(,)(',')
             PsiWhiteSpace(' ')
-            DESIGNATOR
-              FortranDataPathImpl(DATA_PATH)
-                PsiElement(identifier)('i')
-            PsiWhiteSpace(' ')
-            PsiElement(=)('=')
-            PsiWhiteSpace(' ')
-            CONSTANT
-              PsiElement(integerliteral)('1')
-            PsiElement(,)(',')
-            PsiWhiteSpace(' ')
-            CONSTANT
-              PsiElement(integerliteral)('5')
+            ID_LOOP_STMT
+              DESIGNATOR
+                FortranDataPathImpl(DATA_PATH)
+                  PsiElement(identifier)('i')
+              PsiWhiteSpace(' ')
+              PsiElement(=)('=')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integerliteral)('1')
+              PsiElement(,)(',')
+              PsiWhiteSpace(' ')
+              CONSTANT
+                PsiElement(integerliteral)('5')
             PsiElement())(')')
       PsiElement(eol)('\n')
       PsiWhiteSpace('  ')

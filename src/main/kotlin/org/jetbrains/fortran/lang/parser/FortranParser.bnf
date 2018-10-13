@@ -401,12 +401,17 @@ private type_spec ::= intrinsic_type_spec | derived_type_spec
 private declaration_type_spec ::= intrinsic_type_spec | (type_ '(' (intrinsic_type_spec | derived_type_spec)')')
                                 | (class_ '(' (derived_type_spec | '*') ')')
 // R404
-intrinsic_type_spec ::= (( (number_type_keyword)
-                        (kind_selector | nonstandard_kind_selector)?) | (character_type_keyword (char_selector)?) | byte_/* nonstandard type*/)
+private intrinsic_type_spec ::= ( number_type_spec | character_type_spec | byte_type_spec/* nonstandard type*/)
                         !('=' | '=>' | '[' | '%') { pin = 2 }
-number_type_keyword ::= (integer_ | real_ | complex_ | logical_ | (double_ precision_) | doubleprecision_
+
+number_type_spec ::= number_type_keyword (kind_selector | nonstandard_kind_selector)?
+private number_type_keyword ::= (integer_ | real_ | complex_ | logical_ | (double_ precision_) | doubleprecision_
                                          | (double_ complex_) | doublecomplex_)
-character_type_keyword ::= character_
+
+character_type_spec ::= (character_ (char_selector)?)
+
+byte_type_spec ::= byte_
+
 // R405
 kind_selector ::= '(' (kind_ '=')? expr ')' {pin = 3}
 nonstandard_kind_selector ::= '*' expr { pin = 1 }

@@ -14,8 +14,8 @@ FILE
         LABEL_DECL
           PsiElement(integerliteral)('2')
         PsiWhiteSpace('   ')
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('real')
+        NUMBER_TYPE_SPEC
+          PsiElement(real)('real')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -73,8 +73,8 @@ FILE
               PsiWhiteSpace('     ')
               PREFIX
                 PREFIX_SPEC
-                  INTRINSIC_TYPE_SPEC
-                    PsiElement(keyword)('real')
+                  NUMBER_TYPE_SPEC
+                    PsiElement(real)('real')
               PsiWhiteSpace(' ')
               PsiElement(keyword)('function')
               PsiWhiteSpace(' ')

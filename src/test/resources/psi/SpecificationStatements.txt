@@ -3,8 +3,8 @@ FILE
     FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
-          INTRINSIC_TYPE_SPEC
-            PsiElement(keyword)('real')
+          NUMBER_TYPE_SPEC
+            PsiElement(real)('real')
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
@@ -64,7 +64,7 @@ FILE
         PsiElement(keyword)('implicit')
         PsiWhiteSpace(' ')
         IMPLICIT_SPEC
-          PsiElement(keyword)('character')
+          PsiElement(character)('character')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           LETTER_SPEC
@@ -78,8 +78,8 @@ FILE
         PsiElement(keyword)('implicit')
         PsiWhiteSpace(' ')
         IMPLICIT_SPEC
-          INTRINSIC_TYPE_SPEC
-            PsiElement(keyword)('character')
+          CHARACTER_TYPE_SPEC
+            PsiElement(character)('character')
             PsiWhiteSpace(' ')
             CHAR_SELECTOR
               LENGTH_SELECTOR
@@ -103,8 +103,8 @@ FILE
         PsiElement(keyword)('implicit')
         PsiWhiteSpace(' ')
         IMPLICIT_SPEC
-          INTRINSIC_TYPE_SPEC
-            PsiElement(keyword)('character')
+          CHARACTER_TYPE_SPEC
+            PsiElement(character)('character')
             PsiWhiteSpace(' ')
             CHAR_SELECTOR
               LENGTH_SELECTOR
@@ -136,7 +136,7 @@ FILE
         PsiElement(keyword)('implicit')
         PsiWhiteSpace(' ')
         IMPLICIT_SPEC
-          PsiElement(keyword)('complex')
+          PsiElement(complex)('complex')
           PsiWhiteSpace(' ')
           PsiElement(()('(')
           LETTER_SPEC
@@ -154,8 +154,8 @@ FILE
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         IMPLICIT_SPEC
-          INTRINSIC_TYPE_SPEC
-            PsiElement(keyword)('character')
+          CHARACTER_TYPE_SPEC
+            PsiElement(character)('character')
             CHAR_SELECTOR
               LENGTH_SELECTOR
                 PsiElement(*)('*')
@@ -172,8 +172,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('integer')
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
         PsiWhiteSpace(' ')
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('c')

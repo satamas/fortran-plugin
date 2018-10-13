@@ -9,8 +9,8 @@ FILE
     PsiWhiteSpace('   ')
     FortranBlockImpl(BLOCK)
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('real')
+        NUMBER_TYPE_SPEC
+          PsiElement(real)('real')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
         ATTR_SPEC
@@ -28,8 +28,8 @@ FILE
       PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
       FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
-        INTRINSIC_TYPE_SPEC
-          PsiElement(keyword)('real')
+        NUMBER_TYPE_SPEC
+          PsiElement(real)('real')
         PsiWhiteSpace(' ')
         PsiElement(::)('::')
         PsiWhiteSpace(' ')
@@ -100,8 +100,8 @@ FILE
     FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
-          INTRINSIC_TYPE_SPEC
-            PsiElement(keyword)('real')
+          NUMBER_TYPE_SPEC
+            PsiElement(real)('real')
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
@@ -188,8 +188,8 @@ FILE
     FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
-          INTRINSIC_TYPE_SPEC
-            PsiElement(keyword)('integer')
+          NUMBER_TYPE_SPEC
+            PsiElement(integer)('integer')
       PsiWhiteSpace(' ')
       PsiElement(keyword)('function')
       PsiWhiteSpace(' ')
