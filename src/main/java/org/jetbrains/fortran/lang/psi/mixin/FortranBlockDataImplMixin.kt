@@ -24,7 +24,7 @@ abstract class FortranBlockDataImplMixin : FortranProgramUnitImpl, FortranBlockD
     override val unit: FortranNamedElement?
         get() {
             val blockDataStmt = PsiTreeUtil.getStubChildOfType(this, FortranBlockDataStmt::class.java)
-            return PsiTreeUtil.getStubChildOfType(blockDataStmt, FortranEntityDecl::class.java) as FortranNamedElement
+            return PsiTreeUtil.getStubChildOfType(blockDataStmt, FortranEntityDecl::class.java)
         }
 
     override val types: List<FortranNamedElement>
