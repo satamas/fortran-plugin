@@ -4,10 +4,10 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.lang.stubs.FortranProgramUnitStub
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
+import org.jetbrains.fortran.lang.stubs.FortranProgramUnitStub
 
 abstract class FortranSubroutineSubprogramImplMixin : FortranProgramUnitImpl, FortranNamedElement, FortranSubroutineSubprogram {
     constructor(node: ASTNode) : super(node)
@@ -21,10 +21,10 @@ abstract class FortranSubroutineSubprogramImplMixin : FortranProgramUnitImpl, Fo
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranTypeDeclarationStmt::class.java)
                 .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
 
-    override val unit: FortranNamedElement
+    override val unit: FortranNamedElement?
         get() {
             val subroutineStmt = PsiTreeUtil.getStubChildOfType(this, FortranSubroutineStmt::class.java)
-            return PsiTreeUtil.getStubChildOfType(subroutineStmt, FortranEntityDecl::class.java) as FortranNamedElement
+            return PsiTreeUtil.getStubChildOfType(subroutineStmt, FortranEntityDecl::class.java)
         }
 
     override val subprograms: List<FortranNamedElement>

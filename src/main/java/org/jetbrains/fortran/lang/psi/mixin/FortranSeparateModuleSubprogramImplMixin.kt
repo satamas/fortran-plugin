@@ -4,10 +4,10 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.lang.stubs.FortranProgramUnitStub
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.impl.FortranProgramUnitImpl
+import org.jetbrains.fortran.lang.stubs.FortranProgramUnitStub
 
 abstract class FortranSeparateModuleSubprogramImplMixin : FortranProgramUnitImpl, FortranNamedElement, FortranSeparateModuleSubprogram {
 
@@ -21,16 +21,17 @@ abstract class FortranSeparateModuleSubprogramImplMixin : FortranProgramUnitImpl
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranTypeDeclarationStmt::class.java)
                 .flatMap { PsiTreeUtil.getStubChildrenOfTypeAsList(it, FortranEntityDecl::class.java) }
 
-    override val unit: FortranNamedElement
+    override val unit: FortranNamedElement?
         get() = PsiTreeUtil.getStubChildOfType(
                 PsiTreeUtil.getStubChildOfType(this, FortranMpSubprogramStmt::class.java),
-                FortranEntityDecl::class.java) as FortranNamedElement
+                FortranEntityDecl::class.java
+        )
 
     override val usedModules: List<FortranDataPath>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranUseStmt::class.java)
-                .mapNotNull{ it.dataPath }
+                .mapNotNull { it.dataPath }
 
     override val types: List<FortranNamedElement>
         get() = PsiTreeUtil.getStubChildrenOfTypeAsList(block, FortranDerivedTypeDef::class.java)
-                .mapNotNull{ it.derivedTypeStmt.typeDecl }
+                .mapNotNull { it.derivedTypeStmt.typeDecl }
 }
