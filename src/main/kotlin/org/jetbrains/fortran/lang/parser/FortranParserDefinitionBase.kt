@@ -22,6 +22,6 @@ abstract class FortranParserDefinitionBase : ParserDefinition {
             FortranManualPsiElementFactory.createElement(astNode)
             ?: FortranTypes.Factory.createElement(astNode)
 
-    override fun spaceExistanceTypeBetweenTokens(astNode: ASTNode, astNode1: ASTNode): ParserDefinition.SpaceRequirements =
+    override fun spaceExistenceTypeBetweenTokens(astNode: ASTNode, astNode1: ASTNode): ParserDefinition.SpaceRequirements =
             ParserDefinition.SpaceRequirements.MAY
 }

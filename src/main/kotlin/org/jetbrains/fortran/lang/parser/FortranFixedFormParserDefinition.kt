@@ -11,11 +11,10 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.lang.FortranTypes
-import org.jetbrains.fortran.lang.stubs.FortranFixedFormFileStub
 import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile
-
 import org.jetbrains.fortran.lang.psi.FortranTokenType.*
+import org.jetbrains.fortran.lang.stubs.FortranFixedFormFileStub
 
 class FortranFixedFormParserDefinition : ParserDefinition {
     override fun createLexer(project: Project): Lexer {
@@ -51,7 +50,7 @@ class FortranFixedFormParserDefinition : ParserDefinition {
         return FortranFixedFormFile(fileViewProvider)
     }
 
-    override fun spaceExistanceTypeBetweenTokens(astNode: ASTNode, astNode1: ASTNode): ParserDefinition.SpaceRequirements {
+    override fun spaceExistenceTypeBetweenTokens(astNode: ASTNode, astNode1: ASTNode): ParserDefinition.SpaceRequirements {
         return ParserDefinition.SpaceRequirements.MAY
     }
 }

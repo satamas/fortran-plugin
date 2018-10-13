@@ -2,12 +2,11 @@ package org.jetbrains.fortran.ide.findUsages
 
 import com.intellij.find.findUsages.FindUsagesHandler
 import com.intellij.find.findUsages.FindUsagesHandlerFactory
-import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.lang.psi.*
 import java.lang.IllegalArgumentException
 
-class FortranFindUsagesHandlerFactory(project: Project) : FindUsagesHandlerFactory() {
+class FortranFindUsagesHandlerFactory : FindUsagesHandlerFactory() {
     override fun canFindUsages(element: PsiElement): Boolean = element is FortranLabelDecl
             || element is FortranConstructNameDecl || element is FortranEntityDecl || element is FortranDataPath
             || element is FortranUnitDecl

@@ -71,6 +71,8 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
                 )
                 consumer.renameStandardOption("KEEP_BLANK_LINES_IN_DECLARATIONS", "Between subprograms")
             }
+            else -> {
+            }
         }
     }
 
