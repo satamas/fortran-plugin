@@ -30,8 +30,8 @@ val CI = System.getenv("CI") != null
 
 plugins {
     idea
-    kotlin("jvm") version "1.1.4"
-    id("org.jetbrains.intellij") version "0.3.4"
+    kotlin("jvm") version "1.3.11"
+    id("org.jetbrains.intellij") version "0.3.12"
     id("de.undercouch.download") version "3.2.0"
     //Plugin to create pathing jar for intellij list of dependencies
     id("com.github.ManifestClasspath") version "0.1.0-RELEASE"
