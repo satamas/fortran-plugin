@@ -5,10 +5,10 @@ import com.intellij.codeInsight.editorActions.enter.EnterHandlerDelegateAdapter
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
+import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiFile
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.openapi.util.Ref
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.*
 
@@ -44,7 +44,7 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
             is FortranProgramUnit -> if ((constructOrUnit.beginUnitStmt != null && constructOrUnit.endUnitStmt == null)
                     || sameTypeParentUnitHasNoEnd(constructOrUnit)) {
                 val beginStmt = constructOrUnit.beginUnitStmt!!
-                val programUnitName = beginStmt.entityDecl!!.name
+                val programUnitName = beginStmt.entityDecl?.name
                 val unit = constructOrUnit.unitType!!
                 insertEndString(editor, offset, indentString, unit, programUnitName, beginStmtStyle(beginStmt))
                 return EnterHandlerDelegate.Result.DefaultForceIndent
