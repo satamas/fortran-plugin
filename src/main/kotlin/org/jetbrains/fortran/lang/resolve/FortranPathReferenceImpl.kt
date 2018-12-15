@@ -2,16 +2,16 @@ package org.jetbrains.fortran.lang.resolve
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.fortran.lang.psi.*
-import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
-import org.jetbrains.fortran.lang.psi.mixin.FortranDataPathImplMixin
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.FortranFileType
 import org.jetbrains.fortran.FortranFixedFormFileType
+import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
+import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
+import org.jetbrains.fortran.lang.psi.mixin.FortranDataPathImplMixin
 import org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
@@ -32,10 +32,10 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         // module rename
         val useStmt = PsiTreeUtil.getParentOfType(element, FortranUseStmt::class.java)
         if (useStmt != null) {
-            if(element.parent is FortranRenameStmt){
-                return resolveModuleRename(useStmt, incompleteCode)
-            } else if(element.parent is FortranOnlyStmt) {
-                return resolveOnlyStmt(element.parent as FortranOnlyStmt, incompleteCode)
+            return when {
+                element.parent is FortranRenameStmt -> resolveModuleRename(useStmt, incompleteCode)
+                element.parent is FortranOnlyStmt -> resolveOnlyStmt(element.parent as FortranOnlyStmt, incompleteCode)
+                else -> resolveModules()
             }
         }
 
@@ -223,6 +223,14 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         }
         return result.toList()
     }
+
+    private fun resolveModules() = collectAllProjectFiles()
+            .map { PsiManager.getInstance(element.project).findFile(it) }
+            .map { programUnitsFromFile(it) }
+            .flatten()
+            .filter { it is FortranModule }
+            .mapNotNull { it.unit }
+
 
     private fun findSubModulesInProjectFiles(moduleName: String?, subModuleName: String?): MutableSet<FortranSubmodule> {
         val result: MutableSet<FortranSubmodule> = mutableSetOf()
