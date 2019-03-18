@@ -1,38 +1,23 @@
-import org.jetbrains.intellij.tasks.PublishTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import de.undercouch.gradle.tasks.download.Download
+import org.gradle.api.JavaVersion.VERSION_1_8
 import org.gradle.api.internal.HasConvention
-import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.jvm.tasks.Jar
 import org.jetbrains.grammarkit.GrammarKitPluginExtension
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-import org.gradle.api.JavaVersion.VERSION_1_8
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.jvm.tasks.Jar
-import org.jetbrains.intellij.tasks.PrepareSandboxTask
-import java.net.HttpURLConnection
-import java.net.URL
-import java.nio.file.Path
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import kotlin.concurrent.thread
-
-buildscript {
-    repositories {
-        maven { setUrl("https://jitpack.io") }
-    }
-    dependencies {
-        classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.1.7")
-    }
-}
-
 
 val CI = System.getenv("CI") != null
 
 plugins {
     idea
-    kotlin("jvm") version "1.3.11"
-    id("org.jetbrains.intellij") version "0.3.12"
-    id("de.undercouch.download") version "3.2.0"
+    id("org.jetbrains.grammarkit") version "2018.3.1"
+    kotlin("jvm") version "1.3.21"
+    id("org.jetbrains.intellij") version "0.4.5"
+    id("de.undercouch.download") version "3.4.3"
     //Plugin to create pathing jar for intellij list of dependencies
     id("com.github.ManifestClasspath") version "0.1.0-RELEASE"
 }
@@ -77,8 +62,6 @@ allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "1.8"
-            languageVersion = "1.1"
-            apiVersion = "1.1"
         }
     }
 
@@ -133,7 +116,7 @@ project(":") {
     val downloadClion = task<Download>("downloadClion") {
         if (isWindows) {
             onlyIf { !file("${project.projectDir}/debugger/lib/clion-$clionVersion.zip").exists() }
-            src("https://download.jetbrains.com/cpp/CLion-$clionVersion.zip")
+            src("https://download.jetbrains.com/cpp/CLion-$clionVersion.win.zip")
             dest(file("${project.projectDir}/debugger/lib/clion-$clionVersion.zip"))
         } else {
             onlyIf { !file("${project.projectDir}/debugger/lib/clion-$clionVersion.tar.gz").exists() }

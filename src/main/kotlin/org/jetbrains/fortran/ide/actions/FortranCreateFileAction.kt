@@ -9,8 +9,7 @@ import org.jetbrains.fortran.FortranIcons
 
 class FortranCreateFileAction : CreateFileFromTemplateAction(FortranCreateFileAction.CAPTION, "", FortranIcons.fileTypeIcon),
         DumbAware {
-
-    override fun getActionName(directory: PsiDirectory?, newName: String?, templateName: String?): String = CAPTION
+    override fun getActionName(directory: PsiDirectory?, newName: String, templateName: String?): String = CAPTION
 
     override fun buildDialog(project: Project?, directory: PsiDirectory?,
                              builder: CreateFileFromTemplateDialog.Builder) {
