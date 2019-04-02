@@ -83,6 +83,7 @@ FILE
               PsiWhiteSpace(' ')
               PsiElement(keyword)('associate')
               PsiWhiteSpace(' ')
+              PsiElement(()('(')
               ASSOCIATION
                 FortranEntityDeclImpl(ENTITY_DECL)
                   PsiElement(identifier)('e')
@@ -105,6 +106,7 @@ FILE
                   PsiElement(*)('*')
                   CONSTANT
                     PsiElement(integerliteral)('3')
+              PsiElement())(')')
             PsiElement(eol)('\n')
             PsiWhiteSpace('        ')
             FortranBlockImpl(BLOCK)

@@ -9,7 +9,7 @@ program a
   endblock
 
   b2: block
-     as: associate e=>1+4, b=>2*3
+     as: associate (e=>1+4, b=>2*3)
         c = 3
      end associate
   end block
