@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2018.3.3</version>
+    <version>2018.3.4</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,7 +12,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        Adequate module resolving in use statements
+        Fix associate statement parsing
     ]]>
     </change-notes>
 
