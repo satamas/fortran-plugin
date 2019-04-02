@@ -902,7 +902,7 @@ block ::= (eol | execution_part_construct)* {
 // R802
 associate_construct ::= associate_stmt eol+ block end_associate_stmt { pin = 1; extends=executable_construct }
 // R803
-associate_stmt ::= label_decl? construct_name_decl? associate_ <<list association>> { pin = 3 }
+associate_stmt ::= label_decl? construct_name_decl? associate_ '(' <<list association>> ')' { pin = 3 }
 // R804
 association ::= local_name '=>' selector { pin = 2 }
 // R805
