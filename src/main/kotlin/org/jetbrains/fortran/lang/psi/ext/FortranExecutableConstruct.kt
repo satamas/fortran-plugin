@@ -36,7 +36,7 @@ val FortranExecutableConstruct.endConstructStmt: FortranStmt? get() {
 
 val FortranExecutableConstruct.constructType: String? get() {
     return when (this) {
-        is FortranAssociateConstruct -> "asociate"
+        is FortranAssociateConstruct -> "associate"
         is FortranBlockConstruct -> "block"
         is FortranCaseConstruct -> "select"
         is FortranCriticalConstruct -> "critical"
