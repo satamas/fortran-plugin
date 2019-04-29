@@ -1,22 +1,10 @@
-import de.undercouch.gradle.tasks.download.Download
-import org.gradle.api.JavaVersion.VERSION_1_8
-import org.gradle.api.internal.HasConvention
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.jvm.tasks.Jar
-import org.jetbrains.grammarkit.GrammarKitPluginExtension
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kotlin.concurrent.thread
-
 val CI = System.getenv("CI") != null
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2018.3.1"
+    id("org.jetbrains.grammarkit") version "2019.1"
     kotlin("jvm") version "1.3.21"
-    id("org.jetbrains.intellij") version "0.4.5"
+    id("org.jetbrains.intellij") version "0.4.8"
     id("de.undercouch.download") version "3.4.3"
     //Plugin to create pathing jar for intellij list of dependencies
     id("com.github.ManifestClasspath") version "0.1.0-RELEASE"
@@ -53,10 +41,6 @@ allprojects {
         updateSinceUntilBuild = false
         instrumentCode = false
         ideaDependencyCachePath = file("deps").absolutePath
-    }
-
-    configure<GrammarKitPluginExtension> {
-        grammarKitRelease = "1.5.2"
     }
 
     tasks.withType<KotlinCompile> {
