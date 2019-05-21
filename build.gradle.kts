@@ -1,9 +1,18 @@
+import de.undercouch.gradle.tasks.download.Download
+import org.gradle.api.internal.HasConvention
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.jetbrains.grammarkit.tasks.GenerateLexer
+import org.jetbrains.grammarkit.tasks.GenerateParser
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import kotlin.concurrent.thread
+
 val CI = System.getenv("CI") != null
 
 plugins {
     idea
     id("org.jetbrains.grammarkit") version "2019.1"
-    kotlin("jvm") version "1.3.21"
+    kotlin("jvm") version "1.3.31"
     id("org.jetbrains.intellij") version "0.4.8"
     id("de.undercouch.download") version "3.4.3"
     //Plugin to create pathing jar for intellij list of dependencies
@@ -50,8 +59,8 @@ allprojects {
     }
 
     configure<JavaPluginConvention> {
-        sourceCompatibility = VERSION_1_8
-        targetCompatibility = VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     sourceSets {
