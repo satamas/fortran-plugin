@@ -5,7 +5,6 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import org.jetbrains.fortran.ide.inspections.FortranTypeCheckInspection
-import org.jetbrains.fortran.lang.psi.FortranCompositeElementType
 import org.jetbrains.fortran.lang.types.ty.FortranType
 import org.jetbrains.fortran.lang.types.ty.escaped
 
@@ -16,6 +15,7 @@ sealed class FortranDiagnostic(
     abstract fun prepare(): PreparedAnnotation
 
     fun addToHolder(holder: ProblemsHolder) {
+        if (element.textOffset >= element.textRange.endOffset) return
         val prepared = prepare()
         val descriptor = holder.manager.createProblemDescriptor(
                 element,
@@ -27,7 +27,6 @@ sealed class FortranDiagnostic(
         )
         holder.registerProblem(descriptor)
     }
-
 
 
     class TypeError(

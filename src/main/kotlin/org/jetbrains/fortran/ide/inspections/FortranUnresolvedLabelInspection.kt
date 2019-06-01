@@ -13,7 +13,12 @@ class FortranUnresolvedLabelInspection : LocalInspectionTool() {
             object : FortranVisitor() {
                 override fun visitLabel(label: FortranLabel) {
                     if (label.reference.multiResolve().isEmpty()) {
-                        holder.registerProblemForReference(label.reference, ProblemHighlightType.LIKE_UNKNOWN_SYMBOL, "Unresolved label")
+                        registerProblemForReference(
+                                holder,
+                                label.reference,
+                                ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
+                                "Unresolved label"
+                        )
                     }
                 }
             }

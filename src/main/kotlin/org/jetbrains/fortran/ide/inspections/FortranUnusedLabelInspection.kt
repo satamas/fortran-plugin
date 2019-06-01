@@ -24,7 +24,8 @@ class FortranUnusedLabelInspection : LocalInspectionTool() {
         return object : FortranVisitor() {
             override fun visitLabelDecl(label: FortranLabelDecl) {
                 if (isUnusedLabel(label)) {
-                    holder.registerProblem(
+                    registerProblem(
+                            holder,
                             label,
                             "Unused label declaration",
                             ProblemHighlightType.LIKE_UNUSED_SYMBOL,

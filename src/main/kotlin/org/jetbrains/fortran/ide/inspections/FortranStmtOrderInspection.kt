@@ -35,10 +35,10 @@ class FortranStmtOrderInspection : LocalInspectionTool() {
                     for (stmt in block.children) {
                         if (stmt is FortranStmt && stmt !is FortranAssignmentStmt && stmt !is FortranPointerAssignmentStmt
                                 && stmt !is FortranForallStmt && stmt !is FortranWhereStmt) {
-                            holder.registerProblem(stmt, "This statement is not allowed in forall construct")
+                            registerProblem(holder, stmt, "This statement is not allowed in forall construct")
                         } else if ((stmt is FortranExecutableConstruct || stmt is FortranDeclarationConstruct)
                                 && stmt !is FortranForallConstruct && stmt !is FortranWhereConstruct) {
-                            holder.registerProblem(stmt, "This construct is not allowed in forall construct")
+                            registerProblem(holder, stmt, "This construct is not allowed in forall construct")
                         }
                     }
                 }
@@ -46,10 +46,10 @@ class FortranStmtOrderInspection : LocalInspectionTool() {
                 private fun visitWhereBlock(block: FortranBlock) {
                     for (stmt in block.children) {
                         if (stmt is FortranStmt && stmt !is FortranAssignmentStmt && stmt !is FortranWhereStmt) {
-                            holder.registerProblem(stmt, "This statement is not allowed in where construct")
+                            registerProblem(holder, stmt, "This statement is not allowed in where construct")
                         } else if ((stmt is FortranExecutableConstruct || stmt is FortranDeclarationConstruct)
                                 && stmt !is FortranWhereConstruct) {
-                            holder.registerProblem(stmt, "This construct is not allowed in where construct")
+                            registerProblem(holder, stmt, "This construct is not allowed in where construct")
                         }
                     }
                 }
@@ -58,9 +58,9 @@ class FortranStmtOrderInspection : LocalInspectionTool() {
                     for (stmt in block.children) {
                         if (stmt is FortranStmt && stmt !is FortranActionStmt && stmt !is FortranFormatStmt
                                 && stmt !is FortranEntryStmt && stmt !is FortranDataStmt && stmt !is FortranIncludeStmt) {
-                            holder.registerProblem(stmt, "Specification statement is not allowed here")
+                            registerProblem(holder, stmt, "Specification statement is not allowed here")
                         } else if (stmt is FortranDeclarationConstruct) {
-                            holder.registerProblem(stmt, "Declaration construct is not allowed in executable construct")
+                            registerProblem(holder, stmt, "Declaration construct is not allowed in executable construct")
                         }
 
                     }
@@ -74,9 +74,9 @@ class FortranStmtOrderInspection : LocalInspectionTool() {
                                 && stmt !is FortranDeclarationStmt && stmt !is FortranIncludeStmt
                                 && stmt !is FortranImplicitStmt
                                 ) {
-                            holder.registerProblem(stmt, "This statement is not allowed inside the interface")
+                            registerProblem(holder, stmt, "This statement is not allowed inside the interface")
                         } else if (stmt is FortranExecutableConstruct) {
-                            holder.registerProblem(stmt, "Executable construct is not allowed in interface")
+                            registerProblem(holder, stmt, "Executable construct is not allowed in interface")
                         }
 
                     }
@@ -85,9 +85,9 @@ class FortranStmtOrderInspection : LocalInspectionTool() {
                 private fun visitModuleLikeProgramUnit(block: FortranBlock) {
                     for (stmt in block.children) {
                         if (stmt is FortranActionStmt) {
-                            holder.registerProblem(stmt, "This statement is not allowed in this program unit")
+                            registerProblem(holder, stmt, "This statement is not allowed in this program unit")
                         } else if (stmt is FortranExecutableConstruct) {
-                            holder.registerProblem(stmt, "Executable construct is not allowed in this program unit")
+                            registerProblem(holder, stmt, "Executable construct is not allowed in this program unit")
                         }
 
                     }
@@ -124,16 +124,16 @@ class FortranStmtOrderInspection : LocalInspectionTool() {
 
                 private fun checkStmtLevel(level: BlockPart, stmt: PsiElement) {
                     if (stmt is FortranUseStmt && level > BlockPart.USE_STATEMENTS) {
-                        holder.registerProblem(stmt, "Use statement is not allowed here")
+                        registerProblem(holder, stmt, "Use statement is not allowed here")
                     } else if (stmt is FortranImportStmt && level > BlockPart.IMPORT_STATEMENTS) {
-                        holder.registerProblem(stmt, "Import statement is not allowed here")
+                        registerProblem(holder, stmt, "Import statement is not allowed here")
                     } else if (stmt is FortranImplicitStmt && level > BlockPart.IMPLICIT_STATEMENTS) {
-                        holder.registerProblem(stmt, "Implicit statement must be in implicit part")
+                        registerProblem(holder, stmt, "Implicit statement must be in implicit part")
                     } else if (stmt is FortranDeclarationStmt && stmt !is FortranEntryStmt && stmt !is FortranFormatStmt
                             && level == BlockPart.EXECUTION_PART) {
-                        holder.registerProblem(stmt, "Specification statement must be in specification part")
+                        registerProblem(holder, stmt, "Specification statement must be in specification part")
                     } else if (stmt is FortranDeclarationConstruct && level == BlockPart.EXECUTION_PART) {
-                        holder.registerProblem(stmt, "Declaration construct must be in specification part")
+                        registerProblem(holder, stmt, "Declaration construct must be in specification part")
                     }
                 }
             }

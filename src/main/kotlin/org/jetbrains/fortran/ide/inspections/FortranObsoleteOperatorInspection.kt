@@ -4,7 +4,8 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
-import org.jetbrains.fortran.lang.psi.*
+import org.jetbrains.fortran.lang.psi.FortranRelExpr
+import org.jetbrains.fortran.lang.psi.FortranVisitor
 import org.jetbrains.fortran.lang.psi.ext.smartPointer
 
 class FortranObsoleteOperatorInspection : LocalInspectionTool() {
@@ -26,7 +27,9 @@ class FortranObsoleteOperatorInspection : LocalInspectionTool() {
                         else -> null
                     }
                     if (newOperatorText != null) {
-                        holder.registerProblem(operator,
+                        registerProblem(
+                                holder,
+                                operator,
                                 "Obsolete operator",
                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
                                 SubstituteTextFix(operator.smartPointer(), newOperatorText, "Obsolete operator fix")

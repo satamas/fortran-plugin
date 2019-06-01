@@ -26,7 +26,8 @@ class FortranUnusedConstructNameInspection : LocalInspectionTool() {
 
                 if (results.isEmpty())  {
                     val lastElement = if (name.nextSibling.node.elementType != TokenType.WHITE_SPACE) name else name.nextSibling
-                    holder.registerProblem(name,
+                    registerProblem(
+                            holder, name,
                             "Unused construct name",
                             ProblemHighlightType.LIKE_UNUSED_SYMBOL,
                             SubstituteTextFix(name.smartPointer(), lastElement.smartPointer(), "", "Delete construct name")

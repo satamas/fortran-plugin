@@ -20,7 +20,9 @@ class FortranContinueInspection : LocalInspectionTool() {
             object : FortranVisitor() {
                 override fun visitContinueStmt(continueStmt: FortranContinueStmt) {
                     if (continueStmt.labelDecl == null) {
-                        holder.registerProblem(continueStmt,
+                        registerProblem(
+                                holder,
+                                continueStmt,
                                 "Continue statement without label",
                                 ProblemHighlightType.LIKE_UNUSED_SYMBOL,
                                 createFix(continueStmt)
