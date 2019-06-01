@@ -19,7 +19,7 @@ class FortranDebuggerTypesHelper(process: CidrDebugProcess) : CidrDebuggerTypesH
 
     override fun resolveProperty(value: CidrMemberValue, dynamicTypeName: String?): XSourcePosition? = null
 
-    override fun resolveToDeclaration(position: XSourcePosition, variable: LLValue): PsiElement? {
+    override fun resolveToDeclaration(position: XSourcePosition?, variable: LLValue): PsiElement? {
         val context = getContextElement(position)
         val programUnit = PsiTreeUtil.getParentOfType(context, FortranProgramUnit::class.java)
         val declarations = programUnit?.variables?.filter { it.name.equals(variable.name, true) } ?: emptyList()

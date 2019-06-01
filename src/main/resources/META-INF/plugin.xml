@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2019.1.3</version>
+    <version>2019.2</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,12 +12,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-Fix exception thrown when inspection detects problem inside included content
+Support intellij 2019.2 builds
     ]]>
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="191.6014" until-build="191.*"/>
+    <idea-version since-build="192.4205.45" until-build="192.*"/>
 
     <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
     <depends>com.intellij.modules.lang</depends>
