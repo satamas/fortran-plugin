@@ -33,8 +33,8 @@ class FortranInferenceContext(val element: FortranEntitiesOwner) {
     }
 
     private fun processTypeDeclarationStatement(typeDeclarationStmt: FortranTypeDeclarationStmt) : FortranType {
-        return if (!typeDeclarationStmt.attrSpecList.isEmpty() &&
-                typeDeclarationStmt.attrSpecList[0].text.substring(0, 9) == "dimension") {
+        return if (typeDeclarationStmt.attrSpecList.isNotEmpty() &&
+                typeDeclarationStmt.attrSpecList[0].text.startsWith("dimension")) {
             inferFortranArrayType(typeDeclarationStmt)
         } else {
             FortranPrimitiveType.fromTypeSpec(typeDeclarationStmt)
