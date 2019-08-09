@@ -1,7 +1,7 @@
 package org.jetbrains.fortran.lang.resolve
 
 import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.jetbrains.fortran.lang.psi.FortranDataPath
 import org.jetbrains.fortran.lang.psi.FortranEntityDecl
 import org.jetbrains.fortran.lang.psi.FortranStmt
@@ -11,7 +11,7 @@ import org.jetbrains.fortran.lang.psi.impl.FortranUnitDeclImpl
 import org.jetbrains.fortran.lang.psi.impl.FortranWriteStmtImpl
 
 
-class FortranResolveTest : LightCodeInsightFixtureTestCase() {
+class FortranResolveTest : BasePlatformTestCase() {
 
     override fun getTestDataPath() = "src/test/resources/resolve"
 
