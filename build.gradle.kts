@@ -11,10 +11,10 @@ val CI = System.getenv("CI") != null
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2019.1"
-    kotlin("jvm") version "1.3.31"
-    id("org.jetbrains.intellij") version "0.4.8"
-    id("de.undercouch.download") version "3.4.3"
+    id("org.jetbrains.grammarkit") version "2019.2"
+    kotlin("jvm") version "1.3.41"
+    id("org.jetbrains.intellij") version "0.4.10"
+    id("de.undercouch.download") version "4.0.0"
     //Plugin to create pathing jar for intellij list of dependencies
     id("com.github.ManifestClasspath") version "0.1.0-RELEASE"
 }
