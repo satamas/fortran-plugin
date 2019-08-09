@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2019.2</version>
+    <version>2019.2.1</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,7 +12,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-Support intellij 2019.2 builds
+Fix #43. Remove usages of deprecated class and methods.
     ]]>
     </change-notes>
 
