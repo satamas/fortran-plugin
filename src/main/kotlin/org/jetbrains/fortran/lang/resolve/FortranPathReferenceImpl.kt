@@ -189,7 +189,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         // let's try to live without real declaration
         if (!incompleteCode && names.none { element.referenceName.equals(it.name, true) }) {
             val implicitStmts = PsiTreeUtil.findChildrenOfType(programUnit, FortranImplicitStmt::class.java)
-            if (implicitStmts.isEmpty() || implicitStmts.all { !it.implicitSpecList.isEmpty() }) {
+            if (implicitStmts.isEmpty() || implicitStmts.all { it.implicitSpecList.isNotEmpty() }) {
 
                 val outerProgramUnitBlock = PsiTreeUtil.findChildOfType(outerProgramUnit, FortranBlock::class.java)
                 val outerProgramUnitStmt = if (outerProgramUnit.firstChild != outerProgramUnitBlock) outerProgramUnit.firstChild else null
@@ -228,7 +228,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             .map { PsiManager.getInstance(element.project).findFile(it) }
             .map { programUnitsFromFile(it) }
             .flatten()
-            .filter { it is FortranModule }
+            .filterIsInstance<FortranModule>()
             .mapNotNull { it.unit }
 
 
@@ -330,17 +330,17 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
     private fun importNamesFromModule(module: FortranDataPath, incompleteCode: Boolean, allSeenModules: MutableSet<String>,
                                       onlyTypes: Boolean): Collection<FortranNamedElement> {
         val useStmt = module.parent as FortranUseStmt
-        if(useStmt.onlyStmtList.isNotEmpty()){
-            if(incompleteCode){
+        if (useStmt.onlyStmtList.isNotEmpty()) {
+            if (incompleteCode) {
                 return useStmt.onlyStmtList.mapNotNull {
                     val renameStmt = it.renameStmt
-                    val localNameElement: FortranNamedElement? = if(renameStmt == null) it.dataPath else renameStmt.entityDecl
+                    val localNameElement: FortranNamedElement? = if (renameStmt == null) it.dataPath else renameStmt.entityDecl
                     localNameElement
                 }
             }
-            return  useStmt.onlyStmtList.mapNotNull { it.dataPath }.flatMap {
+            return useStmt.onlyStmtList.mapNotNull { it.dataPath }.flatMap {
                 val resolvedResult = it.reference.multiResolve()
-                if(resolvedResult.isNotEmpty()) resolvedResult else listOf(it)
+                if (resolvedResult.isNotEmpty()) resolvedResult else listOf(it)
             }
         }
         val renameInOnly = useStmt.onlyStmtList.map { it.renameStmt }
@@ -357,12 +357,11 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         return body.variables + PsiTreeUtil.getChildOfType(body, FortranBeginUnitStmt::class.java)!!.entityDecl!!
     }
 
-    private fun <T : FortranDataPath> kotlin.collections.Iterable<T>.filterImplicitDeclaration(): T? =
-            filter { PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
-                .filter { it.name?.equals(element.name, true) ?: false }
-                .filter { (it as FortranDataPath).firstChild !is FortranDataPath }
-                    .toMutableList().firstOrNull()
-
+    private fun <T : FortranDataPath> Iterable<T>.filterImplicitDeclaration(): T? = asSequence()
+            .filter { PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
+            .filter { it.name?.equals(element.name, true) ?: false }
+            .filter { (it as FortranDataPath).firstChild !is FortranDataPath }
+            .firstOrNull()
 }
 
 
