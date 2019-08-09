@@ -20,7 +20,7 @@ class FortranSourceFormNotificationProvider(private val myProject: Project) : Ed
         return KEY
     }
 
-    override fun createNotificationPanel(file: VirtualFile, fileEditor: FileEditor): EditorNotificationPanel? {
+    override fun createNotificationPanel(file: VirtualFile, fileEditor: FileEditor, project: Project): EditorNotificationPanel? {
         if (userDoesntLikeUs || !FortranCodeStyleSettings.SHOW_SOURCE_FORM_CONVERTER_PANEL) return null
         val psiFile = (PsiManager.getInstance(myProject).findFile(file) ?: return null) as? FortranFixedFormFile ?: return null
 

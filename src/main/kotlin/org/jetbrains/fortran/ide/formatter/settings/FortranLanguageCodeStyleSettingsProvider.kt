@@ -78,20 +78,9 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
 
     override fun getIndentOptionsEditor(): IndentOptionsEditor = SmartIndentOptionsEditor()
 
-    override fun getDefaultCommonSettings(): CommonCodeStyleSettings {
-        val defaultSettings = CommonCodeStyleSettings(FortranLanguage)
-        val indentOptions = defaultSettings.initIndentOptions()
-        indentOptions.INDENT_SIZE = 4
-        indentOptions.CONTINUATION_INDENT_SIZE = 8
-        indentOptions.TAB_SIZE = 4
-        indentOptions.USE_TAB_CHARACTER = false
-
-        defaultSettings.KEEP_BLANK_LINES_IN_CODE = 1
-        defaultSettings.KEEP_BLANK_LINES_IN_DECLARATIONS = 2
-
-        defaultSettings.BLOCK_COMMENT_AT_FIRST_COLUMN = false
-        defaultSettings.LINE_COMMENT_AT_FIRST_COLUMN = true
-        return defaultSettings
+    override fun customizeDefaults(commonSettings: CommonCodeStyleSettings, indentOptions: CommonCodeStyleSettings.IndentOptions) {
+        commonSettings.KEEP_BLANK_LINES_IN_CODE = 1
+        commonSettings.BLOCK_COMMENT_AT_FIRST_COLUMN = false
     }
 
     private val INDENT_SAMPLE: String by lazy {
