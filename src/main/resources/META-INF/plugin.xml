@@ -30,13 +30,15 @@ Support intellij 2019.2 builds
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="org.jetbrains.fortran.FortranFileTypeFactory"/>
+        <fileType name="Fortran" implementationClass="org.jetbrains.fortran.FortranFileType"
+                  fieldName="INSTANCE" extensions="f90;f95;f03;f08"/>
         <lang.parserDefinition language="Fortran"
                                implementationClass="org.jetbrains.fortran.lang.parser.FortranParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran"
                                        implementationClass="org.jetbrains.fortran.ide.highlighter.FortranSyntaxHighlighterFactory"/>
         <!-- fixed form source-->
-        <fileTypeFactory implementation="org.jetbrains.fortran.FortranFixedFormFileTypeFactory"/>
+        <fileType name="Fortran fixed form" implementationClass="org.jetbrains.fortran.FortranFixedFormFileType"
+                  fieldName="INSTANCE" extensions="f;for"/>
         <lang.parserDefinition language="Fortran fixed form"
                                implementationClass="org.jetbrains.fortran.lang.parser.FortranFixedFormParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran fixed form"

@@ -358,10 +358,10 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
     }
 
     private fun <T : FortranDataPath> kotlin.collections.Iterable<T>.filterImplicitDeclaration(): T? =
-        filter { PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
+            filter { PsiTreeUtil.getParentOfType(it, FortranEntitiesOwner::class.java) is FortranProgramUnit }
                 .filter { it.name?.equals(element.name, true) ?: false }
                 .filter { (it as FortranDataPath).firstChild !is FortranDataPath }
-                .toMutableList().firstOrNull()
+                    .toMutableList().firstOrNull()
 
 }
 
