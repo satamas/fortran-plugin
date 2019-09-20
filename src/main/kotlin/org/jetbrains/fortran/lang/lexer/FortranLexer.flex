@@ -7,21 +7,7 @@ import java.util.Stack;
 
 import static com.intellij.psi.TokenType.*;
 import static org.jetbrains.fortran.lang.FortranTypes.*;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_COMMENT;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.LINE_CONTINUE;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.CPP;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.WORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.INCLUDE_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.CHARACTER_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.COMPLEX_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.INTEGER_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.LOGICAL_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.REAL_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.CHARACTER_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.DOUBLE_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.PRECISION_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.PRECISION_KEYWORD;
-import static org.jetbrains.fortran.lang.psi.FortranTokenType.FIRST_WHITE_SPACE;
+import static org.jetbrains.fortran.lang.psi.FortranTokenType.*;
 %%
 
 %class _FortranLexer
@@ -70,7 +56,7 @@ else
 %eof{  return;
 %eof}
 
-%xstate FREEFORM FIXEDFORM QUOTE_FIXED_STRING QUOTE_FREE_STRING APOSTR_FIXED_STRING APOSTR_FREE_STRING
+%xstate FREEFORM FIXEDFORM QUOTE_FIXED_STRING QUOTE_FREE_STRING APOSTR_FIXED_STRING APOSTR_FREE_STRING DIRECTIVE
 %xstate FIXED_FORMAT_STR FREE_FORMAT_STR FREEFORM_LINE_CONTINUE
 
 BDIGIT=[0-1](\040*[0-1])*
@@ -121,6 +107,9 @@ AP_FIXED_STRING_PART=[^\'\n]|(\'\')
 QUOTE_FREE_STRING_PART=[^\"\n\&]|(\"\")|{STR_AMP}
 AP_FREE_STRING_PART=[^\'\n\&]|(\'\')|{STR_AMP}
 
+HASH=#
+
+DIRECTIVE_CONTENT=[^\r\n]*
 CPP="#"[^\r\n]*{EOL}
 CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 %%
@@ -237,6 +226,11 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     . { popState(); yypushback(1); }
 }
 
+<DIRECTIVE> {
+    {DIRECTIVE_CONTENT} {return DIRECTIVE_CONTENT; }
+    {EOL} { popState(); return EOL; }
+}
+
 <FREEFORM,FIXEDFORM> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
     ^({WHITE_SPACE_CHAR})*{EOL} { return WHITE_SPACE; }
@@ -250,8 +244,19 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
     {DIGIT}\040*\./[^A-Za-z0-9_] { return FLOATINGPOINTLITERAL; }
     {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
-    {CPP} { return CPP; }
-    {CPPCOMMENT} { return LINE_COMMENT; }
+
+//    {CPP} { return CPP; }
+//    {CPPCOMMENT} { return LINE_COMMENT; }
+
+    {HASH} "define" { pushState(DIRECTIVE); return DEFINE_DIRECTIVE; }
+    {HASH} "undef" { pushState(DIRECTIVE); return UNDEFINE_DIRECTIVE; }
+    {HASH} "ifdef" { pushState(DIRECTIVE); return IF_DEFINED_DIRECTIVE; }
+    {HASH} "ifndef" { pushState(DIRECTIVE); return IF_NOT_DEFINED_DIRECTIVE; }
+    {HASH} "elif" { pushState(DIRECTIVE); return DEFINE_DIRECTIVE; }
+    {HASH} "else" { pushState(DIRECTIVE); return ELSE_DIRECTIVE; }
+    {HASH} "endif" { pushState(DIRECTIVE); return ENDIF_DIRECTIVE; }
+    {HASH} {IDENTIFIER} { pushState(DIRECTIVE); return UNKNOWN_DIRECTIVE; }
+
     ".true."(_{KIND_PARAM})? { return TRUEKWD; }
     ".false."(_{KIND_PARAM})? { return FALSEKWD; }
 
@@ -309,6 +314,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     {DEFOPERATOR} { return DEFOPERATOR; }
     {IDENTIFIER} { return WORD; }
 }
+
 
 <FREEFORM, FIXEDFORM, FREE_FORMAT_STR, FIXED_FORMAT_STR> {
     . { return BAD_CHARACTER; }

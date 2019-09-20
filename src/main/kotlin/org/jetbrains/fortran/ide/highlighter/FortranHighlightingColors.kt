@@ -1,15 +1,16 @@
 package org.jetbrains.fortran.ide.highlighter
 
-import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as DefColors
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.EditorColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.options.colors.AttributesDescriptor
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as DefColors
 
 
 enum class FortranHighlightingColors (humanName: String, val default: TextAttributesKey ) {
     IDENTIFIER("Identifier", DefColors.IDENTIFIER),
     LINE_COMMENT("Comment", DefColors.LINE_COMMENT),
+    CONDITIONALLY_NOT_COMPILED("Conditionally not compiled", DefColors.BLOCK_COMMENT),
     LINE_CONTINUE("Line continue sign", DefColors.LINE_COMMENT),
     KEYWORD("Keyword", DefColors.KEYWORD),
 
@@ -40,7 +41,7 @@ enum class FortranHighlightingColors (humanName: String, val default: TextAttrib
     COLON("Colon", DefColors.COMMA),
 
     // C preprocessor
-    CPP("C preprocessor", DefColors.TEMPLATE_LANGUAGE_COLOR),
+    DIRECTIVE("Fortran preprocessor directive", DefColors.METADATA),
 
     FIRST_WHITE_SPACE("Fixed Form leading whitespace", EditorColors.FOLDED_TEXT_ATTRIBUTES),
 
