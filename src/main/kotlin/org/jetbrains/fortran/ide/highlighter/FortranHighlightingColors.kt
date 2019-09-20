@@ -10,7 +10,7 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as DefColors
 enum class FortranHighlightingColors (humanName: String, val default: TextAttributesKey ) {
     IDENTIFIER("Identifier", DefColors.IDENTIFIER),
     LINE_COMMENT("Comment", DefColors.LINE_COMMENT),
-    CONDITIONALLY_NOT_COMPILED("Conditionally not compiled",
+    CONDITIONALLY_NOT_COMPILED("Conditionally non-compiled code",
             TextAttributesKey.createTextAttributesKey("OC.CONDITIONALLY_NOT_COMPILED", DefColors.BLOCK_COMMENT)
     ),
     LINE_CONTINUE("Line continue sign", DefColors.LINE_COMMENT),
