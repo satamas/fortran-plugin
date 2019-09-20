@@ -7,7 +7,6 @@ import com.intellij.psi.tree.IElementType
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranTokenType
-import org.jetbrains.fortran.lang.psi.FortranTokenType.FIRST_WHITE_SPACE
 
 class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
     val fFixedForm_ = fFixedForm
@@ -20,8 +19,9 @@ class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
         fun map(tokenType: IElementType?) : FortranHighlightingColors? = when(tokenType) {
             IDENTIFIER -> FortranHighlightingColors.IDENTIFIER
             FortranTokenType.LINE_COMMENT -> FortranHighlightingColors.LINE_COMMENT
+            FortranTokenType.CONDITIONALLY_NON_COMPILED_COMMENT -> FortranHighlightingColors.LINE_COMMENT
             FortranTokenType.LINE_CONTINUE -> FortranHighlightingColors.LINE_CONTINUE
-            FortranTokenType.CPP -> FortranHighlightingColors.CPP
+            in FortranTokenType.DIRECTIVES -> FortranHighlightingColors.DIRECTIVE
 
             DATAEDIT -> FortranHighlightingColors.INTEGER_LITERAL
             INTEGERLITERAL -> FortranHighlightingColors.INTEGER_LITERAL
@@ -47,7 +47,7 @@ class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
             COMMA -> FortranHighlightingColors.COMMA
             COLON, COLONCOLON -> FortranHighlightingColors.COLON
 
-            FIRST_WHITE_SPACE -> FortranHighlightingColors.FIRST_WHITE_SPACE
+            FortranTokenType.FIRST_WHITE_SPACE -> FortranHighlightingColors.FIRST_WHITE_SPACE
             TokenType.BAD_CHARACTER -> FortranHighlightingColors.BAD_CHARACTER
             else -> null
         }

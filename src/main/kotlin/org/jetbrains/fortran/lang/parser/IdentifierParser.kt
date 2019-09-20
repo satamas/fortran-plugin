@@ -6,9 +6,7 @@ import org.jetbrains.fortran.lang.parser.FortranParserUtil.consumeToken
 import org.jetbrains.fortran.lang.parser.FortranParserUtil.enter_section_
 import org.jetbrains.fortran.lang.parser.FortranParserUtil.exit_section_
 import org.jetbrains.fortran.lang.parser.FortranParserUtil.recursion_guard_
-import org.jetbrains.fortran.lang.psi.FortranIncludeForeignLeafType
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORDS
-import org.jetbrains.fortran.lang.psi.FortranTokenType.WORD
+import org.jetbrains.fortran.lang.psi.FortranTokenType
 
 class IdentifierParser : FortranParserUtil.Parser {
     override fun parse(builder: PsiBuilder, level: Int): Boolean {
@@ -18,7 +16,7 @@ class IdentifierParser : FortranParserUtil.Parser {
         result = consumeToken(builder, IDENTIFIER)
         if (!result) {
             val tokenType = builder.tokenType
-            if (tokenType === WORD || KEYWORDS.contains(tokenType)) {
+            if (tokenType === FortranTokenType.WORD || FortranTokenType.KEYWORDS.contains(tokenType)) {
                 builder.remapCurrentToken(FortranParserUtil.cloneTTwithBase(tokenType, IDENTIFIER))
                 result = consumeToken(builder, IDENTIFIER)
             }

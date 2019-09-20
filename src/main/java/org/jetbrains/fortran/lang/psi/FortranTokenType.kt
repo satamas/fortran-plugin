@@ -1,66 +1,76 @@
-package org.jetbrains.fortran.lang.psi;
+package org.jetbrains.fortran.lang.psi
 
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
-import org.jetbrains.fortran.FortranLanguage;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.intellij.psi.TokenType.WHITE_SPACE;
-import static org.jetbrains.fortran.lang.FortranTypes.STRINGLITERAL;
+import com.intellij.psi.TokenType.WHITE_SPACE
+import com.intellij.psi.tree.IElementType
+import com.intellij.psi.tree.TokenSet
+import org.jetbrains.fortran.FortranLanguage
+import org.jetbrains.fortran.lang.FortranTypes.*
+import java.util.*
 
 /**
  * Created by sergei on 13.03.17.
  * to have keywords highlighting
  * parameters type keywords must be deleted from here
  */
-public class FortranTokenType extends IElementType {
-    private static Map<String,IElementType> keywords = new HashMap<>();
+class FortranTokenType(debug: String) : IElementType(debug, FortranLanguage) {
+    companion object {
+        private val keywords = HashMap<String, IElementType>()
 
-    public FortranTokenType(String debug) {
-        super(debug, FortranLanguage.INSTANCE);
+        @JvmField
+        val LINE_COMMENT: IElementType = FortranTokenType("comment")
+        val CONDITIONALLY_NON_COMPILED_COMMENT: IElementType = FortranTokenType("conditionally_non_compiled_comment")
+
+        @JvmField
+        val FIRST_WHITE_SPACE: IElementType = FortranTokenType("white_space")
+
+        @JvmField
+        val LINE_CONTINUE: IElementType = FortranTokenType("line_continue")
+
+        @JvmField
+        val WORD: IElementType = FortranTokenType("identifier_or_keyword")
+
+        @JvmField
+        val KEYWORD: IElementType = FortranTokenType("keyword")
+
+        @JvmField
+        val INCLUDE_KEYWORD = keyword("include")
+        @JvmField
+        val CHARACTER_KEYWORD = keyword("character")
+        @JvmField
+        val LOGICAL_KEYWORD = keyword("logical")
+        @JvmField
+        val COMPLEX_KEYWORD = keyword("complex")
+        @JvmField
+        val INTEGER_KEYWORD = keyword("integer")
+        @JvmField
+        val REAL_KEYWORD = keyword("real")
+
+        @JvmField
+        val DOUBLE_KEYWORD = keyword("double")
+        @JvmField
+        val PRECISION_KEYWORD = keyword("precision")
+
+        val KEYWORDS = TokenSet.create(KEYWORD, INCLUDE_KEYWORD, CHARACTER_KEYWORD, LOGICAL_KEYWORD, COMPLEX_KEYWORD,
+                INTEGER_KEYWORD, REAL_KEYWORD, DOUBLE_KEYWORD, PRECISION_KEYWORD)
+
+        var WHITE_SPACES = TokenSet.create(WHITE_SPACE, FIRST_WHITE_SPACE)
+
+        var COMMENTS = TokenSet.create(LINE_COMMENT, LINE_CONTINUE, CONDITIONALLY_NON_COMPILED_COMMENT)
+
+        val DIRECTIVES = TokenSet.create(DEFINE_DIRECTIVE, UNDEFINE_DIRECTIVE, IF_DEFINED_DIRECTIVE,
+                IF_NOT_DEFINED_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE, ENDIF_DIRECTIVE, UNKNOWN_DIRECTIVE)
+
+        val IF_DIRECTIVES = TokenSet.create(IF_DEFINED_DIRECTIVE, IF_NOT_DEFINED_DIRECTIVE)
+        val END_IF_DIRECTIVES = TokenSet.create(ENDIF_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE)
+
+        var STRINGS = TokenSet.create(STRINGLITERAL)
+
+        fun keyword(name: String): IElementType {
+            val keyword = FortranTokenType(name)
+            keywords[name] = keyword
+            return keyword
+        }
+
+        fun getKeyword(name: String) = keywords[name]
     }
-
-    public static IElementType LINE_COMMENT = new FortranTokenType("comment");
-
-    public static IElementType FIRST_WHITE_SPACE = new FortranTokenType("white_space");
-
-    public static IElementType LINE_CONTINUE = new FortranTokenType("line_continue");
-
-    public static IElementType WORD = new FortranTokenType("identifier_or_keyword");
-
-    public static IElementType KEYWORD = new FortranTokenType("keyword");
-
-    public static TokenSet KEYWORDS = TokenSet.create(KEYWORD);
-
-    public static IElementType INCLUDE_KEYWORD = keyword("include");
-    public static IElementType CHARACTER_KEYWORD = keyword("character");
-    public static IElementType LOGICAL_KEYWORD = keyword("logical");
-    public static IElementType COMPLEX_KEYWORD = keyword("complex");
-    public static IElementType INTEGER_KEYWORD = keyword("integer");
-    public static IElementType REAL_KEYWORD = keyword("real");
-
-    public static IElementType DOUBLE_KEYWORD = keyword("double");
-    public static IElementType PRECISION_KEYWORD = keyword("precision");
-
-    public static IElementType CPP = new FortranTokenType("c_pre_processor");
-
-    public static TokenSet WHITE_SPACES = TokenSet.create(WHITE_SPACE, FIRST_WHITE_SPACE);
-
-    public static TokenSet COMMENTS = TokenSet.create(LINE_COMMENT, CPP, LINE_CONTINUE);
-
-    public static TokenSet STRINGS = TokenSet.create(STRINGLITERAL);
-
-    public static IElementType keyword(String name) {
-        IElementType keyword = new FortranTokenType(name);
-        KEYWORDS = TokenSet.orSet(KEYWORDS, TokenSet.create(keyword));
-        keywords.put(name, keyword);
-        return keyword;
-    }
-
-    public static IElementType getKeyword(String name) {
-        return keywords.get(name);
-    }
-
 }

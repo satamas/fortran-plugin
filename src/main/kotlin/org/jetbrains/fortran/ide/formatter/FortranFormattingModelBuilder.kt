@@ -3,12 +3,13 @@ package org.jetbrains.fortran.ide.formatter
 import com.intellij.formatting.*
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.*
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import org.jetbrains.fortran.FortranLanguage
 import org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettings
 import org.jetbrains.fortran.lang.FortranTypes.*
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORDS
+import org.jetbrains.fortran.lang.psi.FortranTokenType
 
 class FortranFormattingModelBuilder : FormattingModelBuilder {
 
@@ -43,9 +44,9 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .aroundInside(DIVDIV, CONCAT_EXPR).spaceIf(fortranSettings.SPACE_AROUND_CONCAT_OPERATOR)
                 .aroundInside(DEFOPERATOR, DEF_BINARY_OPERATOR_EXPR).spaceIf(fortranSettings.SPACE_AROUND_DEFINED_OPERATOR)
                 .aroundInside(DEFOPERATOR, DEF_UNARY_OPERATOR_EXPR).spaceIf(fortranSettings.SPACE_AROUND_DEFINED_OPERATOR)
-                .between(KEYWORDS, KEYWORDS).spaces(1)
-                .between(KEYWORDS, IDENTIFIER).spaces(1)
-                .between(IDENTIFIER, KEYWORDS).spaces(1)
+                .between(FortranTokenType.KEYWORDS, FortranTokenType.KEYWORDS).spaces(1)
+                .between(FortranTokenType.KEYWORDS, IDENTIFIER).spaces(1)
+                .between(IDENTIFIER, FortranTokenType.KEYWORDS).spaces(1)
                 .before(COMMA).spaceIf(fortranCommonSettings.SPACE_BEFORE_COMMA)
                 .after(COMMA).spaceIf(fortranCommonSettings.SPACE_AFTER_COMMA)
 

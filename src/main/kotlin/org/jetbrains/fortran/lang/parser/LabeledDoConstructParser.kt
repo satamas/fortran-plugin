@@ -2,18 +2,17 @@ package org.jetbrains.fortran.lang.parser
 
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.parser.GeneratedParserUtilBase.*
-import java.lang.Integer.parseInt
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.parser.FortranParser.*
 import org.jetbrains.fortran.lang.parser.FortranParserUtil.parseKeyword
-import org.jetbrains.fortran.lang.psi.FortranTokenType.KEYWORD
-import org.jetbrains.fortran.lang.psi.FortranTokenType.WORD
+import org.jetbrains.fortran.lang.psi.FortranTokenType
+import java.lang.Integer.parseInt
 
 class LabeledDoConstructParser : Parser {
 
     override fun parse(builder: PsiBuilder, level: Int): Boolean {
         if (!recursion_guard_(builder, level, "labeled_do_construct")) return false
-        if (!nextTokenIs(builder, "<labeled do construct>", WORD, KEYWORD, IDENTIFIER, INTEGERLITERAL)) return false
+        if (!nextTokenIs(builder, "<labeled do construct>", FortranTokenType.WORD, FortranTokenType.KEYWORD, IDENTIFIER, INTEGERLITERAL)) return false
         var result: Boolean
         val pinned: Boolean
         val marker = enter_section_(builder, level, _COLLAPSE_, LABELED_DO_CONSTRUCT, "<labeled do construct>")
@@ -31,7 +30,7 @@ class LabeledDoConstructParser : Parser {
 
     private fun parseDoStmtWithTheSameLabel(builder: PsiBuilder, level: Int, testLabel: Int): Boolean {
         if (!recursion_guard_(builder, level, "label_do_stmt")) return false
-        if (!nextTokenIs(builder, "<label do stmt>", WORD, KEYWORD, IDENTIFIER)) return false
+        if (!nextTokenIs(builder, "<label do stmt>", FortranTokenType.WORD, FortranTokenType.KEYWORD, IDENTIFIER)) return false
         var result: Boolean
         var pinned = false
         val marker_ = enter_section_(builder, level, _NONE_, LABEL_DO_STMT, "<label do stmt>")
@@ -72,7 +71,7 @@ class LabeledDoConstructParser : Parser {
     //
     private fun parseLabelDoStmt(builder: PsiBuilder, level: Int): Int {
         if (!recursion_guard_(builder, level, "label_do_stmt")) return -1
-        if (!nextTokenIs(builder, "<label do stmt>", WORD, KEYWORD, IDENTIFIER, INTEGERLITERAL)) return -1
+        if (!nextTokenIs(builder, "<label do stmt>", FortranTokenType.WORD, FortranTokenType.KEYWORD, IDENTIFIER, INTEGERLITERAL)) return -1
         var result: Boolean
         var pinned = false
         var labelValue = -1

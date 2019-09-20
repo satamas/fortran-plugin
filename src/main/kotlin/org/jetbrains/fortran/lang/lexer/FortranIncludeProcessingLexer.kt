@@ -11,12 +11,14 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.TokenType
 import com.intellij.util.indexing.IndexingDataKeys
 import org.jetbrains.fortran.lang.FortranTypes
+import org.jetbrains.fortran.lang.preprocessor.FortranPreprocessingLexer
 import org.jetbrains.fortran.lang.psi.FortranFile
 import org.jetbrains.fortran.lang.psi.FortranIncludeForeignLeafType
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 import org.jetbrains.fortran.lang.resolveIncludedFile
 
-class FortranIncludeProcessingLexer(val file: FortranFile?, val project: Project) : LookAheadLexer(FortranLexer(false)) {
+class FortranIncludeProcessingLexer(val file: FortranFile?, val project: Project) :
+        LookAheadLexer(FortranPreprocessingLexer()) {
     override fun lookAhead(baseLexer: Lexer) {
         val baseToken = baseLexer.tokenType
         if (baseToken == FortranTokenType.INCLUDE_KEYWORD) {
