@@ -41,7 +41,7 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
         if (tokenType == DIRECTIVE_CONTENT) {
             val content = LexerUtil.getTokenText(baseLexer)
             val def = FortranMacro.parseFromDirectiveContent(content)
-            baseLexer.advance()
+            advanceLexer(baseLexer)
             if (def != null) {
                 macrosContext.define(def)
             }
