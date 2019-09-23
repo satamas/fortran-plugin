@@ -252,6 +252,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     {HASH} "undef" { pushState(DIRECTIVE); return UNDEFINE_DIRECTIVE; }
     {HASH} "ifdef" { pushState(DIRECTIVE); return IF_DEFINED_DIRECTIVE; }
     {HASH} "ifndef" { pushState(DIRECTIVE); return IF_NOT_DEFINED_DIRECTIVE; }
+    {HASH} "if" { pushState(DIRECTIVE); return IF_DIRECTIVE; }
     {HASH} "elif" { pushState(DIRECTIVE); return DEFINE_DIRECTIVE; }
     {HASH} "else" { pushState(DIRECTIVE); return ELSE_DIRECTIVE; }
     {HASH} "endif" { pushState(DIRECTIVE); return ENDIF_DIRECTIVE; }
