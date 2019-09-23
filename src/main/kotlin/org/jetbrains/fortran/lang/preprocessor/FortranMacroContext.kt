@@ -8,17 +8,22 @@ interface FortranMacrosContext {
     fun define(macro: FortranMacro)
     fun undefine(name: String)
     fun isDefined(name: String): Boolean
-    fun enterIf(condition: Boolean)
+    fun enterIf(decision: Boolean)
     fun exitIf()
     fun enterElse()
-    fun enterElseIf(condition: Boolean)
+    fun enterElseIf(decision: Boolean)
     fun inEvaluatedContext(): Boolean
 }
 
 class FortranMacrosContextImpl : FortranMacrosContext {
 
+    class Condition(
+            val decision: Boolean,
+            val isElseIf: Boolean = false
+    )
+
     private val macros = THashMap<String, FortranMacro>()
-    private val nestedConditions = ArrayDeque<Boolean>()
+    private val nestedConditions = ArrayDeque<Condition>()
 
     override fun define(macro: FortranMacro) {
         macros[macro.name] = macro
@@ -30,29 +35,35 @@ class FortranMacrosContextImpl : FortranMacrosContext {
 
     override fun isDefined(name: String) = macros.contains(name)
 
-    override fun enterIf(condition: Boolean) {
-        nestedConditions.push(condition)
+    override fun enterIf(decision: Boolean) {
+        nestedConditions.push(Condition(decision))
     }
 
     override fun exitIf() {
         if (nestedConditions.size != 0) {
-            nestedConditions.pop()
+            var cnd = nestedConditions.pop()
+            while (nestedConditions.size != 0 && cnd.isElseIf){
+                cnd = nestedConditions.pop()
+            }
         }
     }
 
     override fun enterElse() {
         if (nestedConditions.size != 0) {
-            nestedConditions.push(!nestedConditions.pop())
+            val ifCond = nestedConditions.pop()
+            nestedConditions.push(Condition(!ifCond.decision, ifCond.isElseIf))
         }
     }
 
-    override fun enterElseIf(condition: Boolean) {
+    override fun enterElseIf(decision: Boolean) {
         if (nestedConditions.size != 0) {
-            nestedConditions.push(!nestedConditions.pop() && condition)
+            val ifCond = nestedConditions.pop()
+            nestedConditions.push(Condition(!ifCond.decision, ifCond.isElseIf))
+            nestedConditions.push(Condition(decision, isElseIf = true))
         }
     }
 
     override fun inEvaluatedContext(): Boolean {
-        return nestedConditions.fold(true) { total, el -> total && el }
+        return nestedConditions.fold(true) { total, el -> total && el.decision }
     }
 }
