@@ -20,7 +20,7 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
         macrosContext.isDefined(identifier)
     }
     private val ifNotDefinedDecisionEvaluator = { name: CharSequence -> !ifDefinedDecisionEvaluator(name) }
-    private val ifDecisionEvaluator = { directive_content: CharSequence -> true }
+    private val ifDecisionEvaluator = { directive_content: CharSequence -> !directive_content.endsWith("/* macro_eval: false */") }
 
     override fun lookAhead(baseLexer: Lexer) {
         val CONDITION_DIRECTIVES = TokenSet.create(IF_DIRECTIVE, IF_DEFINED_DIRECTIVE, IF_NOT_DEFINED_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE, ENDIF_DIRECTIVE)
@@ -117,7 +117,7 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
     private fun processElseIfDirective(lexer: Lexer) {
         advanceLexer(lexer)
         var decision = true
-        if (tokenType == DIRECTIVE_CONTENT) {
+        if (lexer.tokenType == DIRECTIVE_CONTENT) {
             val content = LexerUtil.getTokenText(lexer)
             advanceLexer(lexer)
             decision = ifDecisionEvaluator(content)
