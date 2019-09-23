@@ -23,7 +23,7 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
     private val ifDecisionEvaluator = { directive_content: CharSequence -> true }
 
     override fun lookAhead(baseLexer: Lexer) {
-        val CONDITION_DIRECTIVES = TokenSet.create(IF_DEFINED_DIRECTIVE, IF_NOT_DEFINED_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE, ENDIF_DIRECTIVE)
+        val CONDITION_DIRECTIVES = TokenSet.create(IF_DIRECTIVE, IF_DEFINED_DIRECTIVE, IF_NOT_DEFINED_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE, ENDIF_DIRECTIVE)
 
         when (val baseToken = baseLexer.tokenType) {
             DEFINE_DIRECTIVE -> processDefineDirective(baseLexer)
