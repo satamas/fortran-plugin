@@ -248,15 +248,15 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 //    {CPP} { return CPP; }
 //    {CPPCOMMENT} { return LINE_COMMENT; }
 
-    {HASH} "define" { pushState(DIRECTIVE); return DEFINE_DIRECTIVE; }
-    {HASH} "undef" { pushState(DIRECTIVE); return UNDEFINE_DIRECTIVE; }
-    {HASH} "ifdef" { pushState(DIRECTIVE); return IF_DEFINED_DIRECTIVE; }
-    {HASH} "ifndef" { pushState(DIRECTIVE); return IF_NOT_DEFINED_DIRECTIVE; }
-    {HASH} "if" { pushState(DIRECTIVE); return IF_DIRECTIVE; }
-    {HASH} "elif" { pushState(DIRECTIVE); return ELIF_DIRECTIVE; }
-    {HASH} "else" { pushState(DIRECTIVE); return ELSE_DIRECTIVE; }
-    {HASH} "endif" { pushState(DIRECTIVE); return ENDIF_DIRECTIVE; }
-    {HASH} {IDENTIFIER} { pushState(DIRECTIVE); return UNKNOWN_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* "define" { pushState(DIRECTIVE); return DEFINE_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* "undef" { pushState(DIRECTIVE); return UNDEFINE_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* "ifdef" { pushState(DIRECTIVE); return IF_DEFINED_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* "ifndef" { pushState(DIRECTIVE); return IF_NOT_DEFINED_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* "if" { pushState(DIRECTIVE); return IF_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* "elif" { pushState(DIRECTIVE); return ELIF_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* "else" { pushState(DIRECTIVE); return ELSE_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* "endif" { pushState(DIRECTIVE); return ENDIF_DIRECTIVE; }
+    {HASH} {WHITE_SPACE_CHAR}* {IDENTIFIER} { pushState(DIRECTIVE); return UNKNOWN_DIRECTIVE; }
 
     ".true."(_{KIND_PARAM})? { return TRUEKWD; }
     ".false."(_{KIND_PARAM})? { return FALSEKWD; }
