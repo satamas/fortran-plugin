@@ -6,6 +6,7 @@ import com.intellij.lexer.LexerUtil
 import com.intellij.lexer.LookAheadLexer
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.util.text.StringUtil
+import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranTokenType
@@ -19,17 +20,42 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
         macrosContext.isDefined(identifier)
     }
     private val ifNotDefinedDecisionEvaluator = { name: CharSequence -> !ifDefinedDecisionEvaluator(name) }
+    private val ifDecisionEvaluator = { directive_content: CharSequence -> !directive_content.endsWith("/* macro_eval: false */") }
 
     override fun lookAhead(baseLexer: Lexer) {
+        val CONDITION_DIRECTIVES = TokenSet.create(IF_DIRECTIVE, IF_DEFINED_DIRECTIVE, IF_NOT_DEFINED_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE, ENDIF_DIRECTIVE)
+
         when (val baseToken = baseLexer.tokenType) {
             DEFINE_DIRECTIVE -> processDefineDirective(baseLexer)
             UNDEFINE_DIRECTIVE -> processUndefineDirective(baseLexer)
             IF_DEFINED_DIRECTIVE -> processIfDirective(baseLexer, ifDefinedDecisionEvaluator)
             IF_NOT_DEFINED_DIRECTIVE -> processIfDirective(baseLexer, ifNotDefinedDecisionEvaluator)
+            IF_DIRECTIVE -> processIfDirective(baseLexer, ifDecisionEvaluator)
+            ELSE_DIRECTIVE -> processElseDirective(baseLexer)
+            ELIF_DIRECTIVE -> processElseIfDirective(baseLexer)
+            ENDIF_DIRECTIVE -> processEndIfDirective(baseLexer)
             else -> {
-                addToken(baseToken)
-                baseLexer.advance()
+                if (macrosContext.inEvaluatedContext() || baseLexer.tokenType == null) {
+                    addToken(baseToken)
+                    baseLexer.advance()
+                } else {
+                    skipNonDirectiveContent(baseLexer, CONDITION_DIRECTIVES)
+                }
+
             }
+        }
+    }
+
+    private fun skipNonDirectiveContent(baseLexer: Lexer, DIRECTIVES: TokenSet) {
+        assert(baseLexer.tokenType !in DIRECTIVES)
+        var beforeEnd: LexerPosition? = null
+        while (baseLexer.tokenType != null && baseLexer.tokenType !in DIRECTIVES) {
+            beforeEnd = baseLexer.currentPosition
+            baseLexer.advance()
+        }
+        if (beforeEnd != null) {
+            baseLexer.restore(beforeEnd)
+            advanceAs(baseLexer, FortranTokenType.CONDITIONALLY_NON_COMPILED_COMMENT)
         }
     }
 
@@ -41,7 +67,7 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
         if (tokenType == DIRECTIVE_CONTENT) {
             val content = LexerUtil.getTokenText(baseLexer)
             val def = FortranMacro.parseFromDirectiveContent(content)
-            baseLexer.advance()
+            advanceLexer(baseLexer)
             if (def != null) {
                 macrosContext.define(def)
             }
@@ -69,74 +95,34 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
 
     private fun processIfDirective(lexer: Lexer, decisionEvaluator: (input: CharSequence) -> Boolean) {
         advanceLexer(lexer)
-        if (lexer.tokenType != DIRECTIVE_CONTENT) return
-        val content = LexerUtil.getTokenText(lexer)
-        val decision = decisionEvaluator(content)
-
-        advanceLexer(lexer)
-
-        if (decision) {
-            processConditionals(lexer)
-            val tt = lexer.tokenType
-            if (tt == ELSE_DIRECTIVE || tt == ELIF_DIRECTIVE) {
-                skipDirectiveWithContent(lexer)
-                skipConditionals(lexer, false)
-            }
-        } else {
-            skipConditionals(lexer, true)
-
-            val tt = lexer.tokenType
-            if (tt == ELSE_DIRECTIVE || tt == ELIF_DIRECTIVE) {
-                skipDirectiveWithContent(lexer)
-
-                processConditionals(lexer)
-            }
-        }
-
-        if (lexer.tokenType === ENDIF_DIRECTIVE) advanceLexer(lexer)
-    }
-
-    private fun processConditionals(lexer: Lexer) {
-        var tokenType = lexer.tokenType
-        while (tokenType != null && tokenType !in FortranTokenType.END_IF_DIRECTIVES) {
-            lookAhead(lexer)
-            tokenType = lexer.tokenType
-        }
-    }
-
-    private fun skipDirectiveWithContent(lexer: Lexer) {
-        advanceLexer(lexer)
+        var decision = true
         if (lexer.tokenType == DIRECTIVE_CONTENT) {
+            val content = LexerUtil.getTokenText(lexer)
             advanceLexer(lexer)
+            decision = decisionEvaluator(content)
         }
+        macrosContext.enterIf(decision)
     }
 
-    private fun skipConditionals(lexer: Lexer, stopOnElse: Boolean) {
-        var nesting = 1
-
-        while (lexer.tokenType in FortranTokenType.WHITE_SPACES) advanceLexer(lexer)
-
-        var beforeEnd: LexerPosition? = null
-        while (true) {
-            val tokenType = lexer.tokenType ?: break
-
-            if (tokenType in FortranTokenType.IF_DIRECTIVES) {
-                nesting++
-            } else if ((stopOnElse && (tokenType == ELIF_DIRECTIVE || tokenType == ELSE_DIRECTIVE)) || tokenType == ENDIF_DIRECTIVE) {
-                nesting--
-                if (nesting == 0) break
-                if (tokenType !== ENDIF_DIRECTIVE) nesting++
-            }
-
-            beforeEnd = lexer.currentPosition
-            lexer.advance()
-        }
-
-        if (beforeEnd != null) {
-            lexer.restore(beforeEnd)
-            advanceAs(lexer, FortranTokenType.CONDITIONALLY_NON_COMPILED_COMMENT)
-        }
-
-        while (lexer.tokenType in FortranTokenType.WHITE_SPACES) advanceLexer(lexer)
+    private fun processElseDirective(lexer: Lexer) {
+        advanceLexer(lexer)
+        macrosContext.enterElse()
     }
+
+    private fun processEndIfDirective(lexer: Lexer) {
+        advanceLexer(lexer)
+        macrosContext.exitIf()
+    }
+
+    private fun processElseIfDirective(lexer: Lexer) {
+        advanceLexer(lexer)
+        var decision = true
+        if (lexer.tokenType == DIRECTIVE_CONTENT) {
+            val content = LexerUtil.getTokenText(lexer)
+            advanceLexer(lexer)
+            decision = ifDecisionEvaluator(content)
+        }
+        macrosContext.enterElseIf(decision)
+    }
+
 }

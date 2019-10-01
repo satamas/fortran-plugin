@@ -1293,12 +1293,13 @@ decode_stmt ::= label_decl? decode_ '(' expr ',' parameter_value ',' designator 
 type_stmt ::= label_decl? type_ parameter_value (','? <<list output_item>>?) { pin = 4; extends=action_stmt }
 
 //preprocessor
-macro ::= define_macro | undefine_macro | ifdef_macro | ifndef_macro | else_macro | endif_macro | unknown_macro
+macro ::= define_macro | undefine_macro | ifdef_macro | ifndef_macro | if_macro | else_macro | elif_macro | endif_macro | unknown_macro
 define_macro ::= define_directive directive_content?
 undefine_macro ::= undefine_directive directive_content?
+if_macro ::= if_directive directive_content?
 ifdef_macro ::= if_defined_directive directive_content?
 ifndef_macro ::= if_not_defined_directive directive_content?
-else_macro ::= else_directive
-elif_macro ::= elif_directive
-endif_macro ::= endif_directive
+else_macro ::= else_directive directive_content?
+elif_macro ::= elif_directive directive_content?
+endif_macro ::= endif_directive directive_content?
 unknown_macro ::= unknown_directive directive_content?
