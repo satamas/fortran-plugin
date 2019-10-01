@@ -4,7 +4,6 @@ import com.intellij.lang.ForeignLeafType
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.PsiParser
 import com.intellij.lang.TokenWrapper
-import com.intellij.lang.impl.PsiBuilderAdapter
 import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.TokenSet
@@ -184,7 +183,7 @@ object FortranParserUtil {
     fun adapt_builder_(root: IElementType, builder: PsiBuilder, parser: PsiParser, extendsSets: Array<TokenSet>?): PsiBuilder {
         val state = GeneratedParserUtilBase.ErrorState()
         GeneratedParserUtilBase.ErrorState.initState(state, builder, root, extendsSets)
-        return UnwrappingPsiBuilderAdapter(builder, state, parser)
+        return UnwrappingPsiBuilderAdapter(FortranPreprocessorAwareBuilderAdapter(builder, state, parser), state, parser)
     }
 
     @JvmStatic
@@ -201,7 +200,7 @@ class UnwrappingPsiBuilderAdapter(
 ) : GeneratedParserUtilBase.Builder(delegate, errorState, parser) {
     override fun getTokenType(): IElementType? {
         var tokenType = FortranParserUtil.getUnwrappedTokenType(delegate.tokenType)
-        while(FortranTokenType.WHITE_SPACES.contains(tokenType) || FortranTokenType.COMMENTS.contains(tokenType)){
+        while (FortranTokenType.WHITE_SPACES.contains(tokenType) || FortranTokenType.COMMENTS.contains(tokenType)) {
             delegate.advanceLexer()
             tokenType = FortranParserUtil.getUnwrappedTokenType(delegate.tokenType)
         }

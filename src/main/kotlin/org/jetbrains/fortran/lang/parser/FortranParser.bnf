@@ -64,6 +64,7 @@
   ]
 
   extends(".*(_expr|literal)")=expr
+  extends(".*(_macro)")=macro
   implements("(program_stmt|function_stmt|subroutine_stmt|mp_subprogram_stmt|block_data_stmt|module_stmt|submodule_stmt)")='org.jetbrains.fortran.lang.psi.FortranBeginUnitStmt'
   implements("(end_program_stmt|end_function_stmt|end_subroutine_stmt|end_mp_subprogram_stmt|end_block_data_stmt|end_module_stmt|end_submodule_stmt)")='org.jetbrains.fortran.lang.psi.FortranEndUnitStmt'
   implements("(associate_stmt|block_stmt|select_case_stmt|critical_stmt|nonlabel_do_stmt|labeled_do_stmt_stmt|forall_construct_stmt|if_then_stmt|select_type_stmt|where_construct_stmt)")='org.jetbrains.fortran.lang.psi.FortranBeginConstructStmt'
@@ -277,7 +278,7 @@ multiline_string_literal ::= (stringstart (stringmiddle)* stringend)
 
 // Clause 2
 // R201
-private program ::=  (eol | macro | program_unit)*
+private program ::=  (eol | program_unit)*
 // R202
 program_unit ::= !<<eof>> (external_subprogram | module | submodule | block_data | include_stmt | main_program ) {
   pin = 1
@@ -317,7 +318,7 @@ private end_block_keys ::= !assignment_stmt ( label_decl? ( end_ | endblock_ | e
                          | endprogram_ | endselect_ | endsubroutine_ | else_ | elseif_ | endassociate_ | case_ | contains_stmt | endwhere_
                          | endforall_ | elsewhere_ | (type_ is_) | (class_ is_) | (class_ default_)))
 // R210
-internal_subprogram_part ::= contains_stmt eol+ (eol | macro | internal_subprogram)* {
+internal_subprogram_part ::= contains_stmt eol+ (eol | internal_subprogram)* {
 pin = 1
     elementTypeFactory ="org.jetbrains.fortran.lang.stubs.FortranStubFactoryKt.fortranStubFactory"
     stubClass = 'org.jetbrains.fortran.lang.stubs.FortranInternalSubprogramPartStub'
@@ -894,7 +895,7 @@ forall_stmt ::= label_decl? forall_ forall_header forall_assignment_stmt { pin =
 
 // Clause 8
 // R801 + R208 we parse statements in any order while the standard has some restrictions. We'll check them in code revisions
-block ::= (eol | macro | execution_part_construct)* {
+block ::= (eol | execution_part_construct)* {
     elementTypeFactory ="org.jetbrains.fortran.lang.stubs.FortranStubFactoryKt.fortranStubFactory"
     stubClass = 'org.jetbrains.fortran.lang.stubs.FortranBlockStub'
     mixin = 'org.jetbrains.fortran.lang.psi.mixin.FortranBlockImplMixin'
@@ -1094,7 +1095,7 @@ module_stmt ::= label_decl? module_ program_unit_name { pin = 2 }
 // R1106
 end_module_stmt ::= label_decl? (end_ &(eol|<<eof>>) | end_ module_ data_name? | endmodule_ data_name?) { pin = 2 }
 // R1107
-module_subprogram_part ::= contains_stmt eol+ (eol | macro | module_subprogram)* {
+module_subprogram_part ::= contains_stmt eol+ (eol | module_subprogram)* {
     pin = 1
     elementTypeFactory ="org.jetbrains.fortran.lang.stubs.FortranStubFactoryKt.fortranStubFactory"
     stubClass = 'org.jetbrains.fortran.lang.stubs.FortranModuleSubprogramPartStub'
@@ -1170,7 +1171,7 @@ interface_block ::= interface_stmt eol+ interface_specification end_interface_st
  stubClass = 'org.jetbrains.fortran.lang.stubs.FortranInterfaceBlockStub'
 }
 // R1202
-interface_specification ::= !endinterface_keys ((eol) | macro | function_subprogram | subroutine_subprogram | (procedure_stmt))* {
+interface_specification ::= !endinterface_keys ((eol) | function_subprogram | subroutine_subprogram | (procedure_stmt))* {
 pin = 1
 recoverWhile = interface_recover
  mixin = "org.jetbrains.fortran.lang.psi.mixin.FortranInterfaceSpecificationImplMixin"
@@ -1292,14 +1293,32 @@ encode_stmt ::= label_decl? encode_ '(' expr ',' parameter_value ',' designator 
 decode_stmt ::= label_decl? decode_ '(' expr ',' parameter_value ',' designator (',' <<list parameters_spec>>)?')' <<list input_item>> { pin = 2; extends=action_stmt }
 type_stmt ::= label_decl? type_ parameter_value (','? <<list output_item>>?) { pin = 4; extends=action_stmt }
 
-//preprocessor
+//preprocessor directives, called directly from java code
 macro ::= define_macro | undefine_macro | ifdef_macro | ifndef_macro | if_macro | else_macro | elif_macro | endif_macro | unknown_macro
-define_macro ::= define_directive directive_content?
-undefine_macro ::= undefine_directive directive_content?
-if_macro ::= if_directive directive_content?
-ifdef_macro ::= if_defined_directive directive_content?
-ifndef_macro ::= if_not_defined_directive directive_content?
-else_macro ::= else_directive directive_content?
-elif_macro ::= elif_directive directive_content?
-endif_macro ::= endif_directive directive_content?
-unknown_macro ::= unknown_directive directive_content?
+define_macro ::= define_directive directive_content? {
+    pin=1
+}
+undefine_macro ::= undefine_directive directive_content? {
+    pin=1
+}
+if_macro ::= if_directive directive_content? {
+    pin=1
+}
+ifdef_macro ::= if_defined_directive directive_content? {
+    pin=1
+}
+ifndef_macro ::= if_not_defined_directive directive_content? {
+    pin=1
+}
+else_macro ::= else_directive directive_content? {
+    pin=1
+}
+elif_macro ::= elif_directive directive_content? {
+    pin=1
+}
+endif_macro ::= endif_directive directive_content? {
+    pin=1
+}
+unknown_macro ::= unknown_directive directive_content? {
+    pin=1
+}

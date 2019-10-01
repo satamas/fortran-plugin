@@ -95,8 +95,10 @@ project(":") {
         purgeOldFiles = true
     }
 
-
     val generateFortranParser = task<GenerateParser>("generateFortranParser") {
+        dependsOn(
+                generateFortranLexer
+        )
         source = "src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf"
         targetRoot = "src/gen"
         pathToParser = "/org/jetbrains/fortran/lang/parser/FortranParser.java"
@@ -133,7 +135,7 @@ project(":") {
 
     tasks.withType<KotlinCompile> {
         dependsOn(
-                generateFortranLexer, generateFortranParser, unpackClion
+                generateFortranParser, unpackClion
         )
     }
 

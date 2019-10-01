@@ -19,7 +19,7 @@ sealed class FortranPrimitiveType : FortranType() {
                 FortranTokenType.INTEGER_KEYWORD -> FortranIntegerType
                 FortranTokenType.REAL_KEYWORD -> FortranRealType
                 FortranTokenType.DOUBLE_KEYWORD -> {
-                    var nonWhitespaceElement = keyword?.treeNext ?: return FortranUnknownType
+                    var nonWhitespaceElement = keyword.treeNext ?: return FortranUnknownType
                     while (FortranTokenType.WHITE_SPACES.contains(nonWhitespaceElement.elementType)) {
                         nonWhitespaceElement = nonWhitespaceElement.treeNext
                     }
