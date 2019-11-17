@@ -1037,13 +1037,15 @@ print_stmt ::= label_decl? print_ parameter_value ','? <<list output_item>>? { p
 private parameter_value ::= '*'  | label_or_expression
 // we can match label when it's really an expression, but expression matches a label too
 // R916
-input_item ::= variable | io_implied_do
+input_item ::= variable | io_implied_do_input
 // R917
-output_item ::= io_implied_do | expr
+output_item ::= io_implied_do_output | expr
 // R918 + R920
-io_implied_do ::= '(' <<list io_implied_do_object>> ',' id_loop_stmt ')' { pin = 4 }
+io_implied_do_input ::= '(' <<list io_implied_do_object_input>> ',' id_loop_stmt ')' { pin = 4 }
+io_implied_do_output ::= '(' <<list io_implied_do_object_output>> ',' id_loop_stmt ')' { pin = 4 }
 // R919
-io_implied_do_object ::= (input_item | output_item) !'=' { pin = 2 }
+io_implied_do_object_input ::= input_item !'=' { pin = 2 }
+io_implied_do_object_output ::= output_item !'=' { pin = 2 }
 // R921 (unused maybe)
 //dtv_type_spec ::= (type | classkwd) '(' derived_type_spec ')' { pin =1 }
 // R922
