@@ -17,7 +17,7 @@ Fix #43. Remove usages of deprecated class and methods.
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="192.4205.45" until-build="192.*"/>
+    <idea-version since-build="193.5233.10" until-build="193.*"/>
 
     <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
     <depends>com.intellij.modules.lang</depends>
