@@ -166,7 +166,7 @@ Fix #43. Remove usages of deprecated class and methods.
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranObsoleteOperatorInspection"/>
 
         <localInspection language="Fortran" groupName="Fortran"
-                         displayName="Obsolete operator"
+                         displayName="Nonstandard kind"
                          enabledByDefault="true" level="WARNING"
                          applyToDialects="false"
                          implementationClass="org.jetbrains.fortran.ide.inspections.FortranNonstandardKindInspection"/>
