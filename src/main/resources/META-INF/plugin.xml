@@ -12,7 +12,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-Fix #43. Remove usages of deprecated class and methods.
+Support IntelliJ platform v 2019.3
     ]]>
     </change-notes>
 
@@ -30,14 +30,15 @@ Fix #43. Remove usages of deprecated class and methods.
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Fortran" implementationClass="org.jetbrains.fortran.FortranFileType"
+        <fileType language="Fortran" name="Fortran" implementationClass="org.jetbrains.fortran.FortranFileType"
                   fieldName="INSTANCE" extensions="f90;f95;f03;f08"/>
         <lang.parserDefinition language="Fortran"
                                implementationClass="org.jetbrains.fortran.lang.parser.FortranParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran"
                                        implementationClass="org.jetbrains.fortran.ide.highlighter.FortranSyntaxHighlighterFactory"/>
         <!-- fixed form source-->
-        <fileType name="Fortran fixed form" implementationClass="org.jetbrains.fortran.FortranFixedFormFileType"
+        <fileType language="Fortran fixed form" name="Fortran fixed form"
+                  implementationClass="org.jetbrains.fortran.FortranFixedFormFileType"
                   fieldName="INSTANCE" extensions="f;for"/>
         <lang.parserDefinition language="Fortran fixed form"
                                implementationClass="org.jetbrains.fortran.lang.parser.FortranFixedFormParserDefinition"/>
