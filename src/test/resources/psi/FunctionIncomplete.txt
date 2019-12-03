@@ -24,7 +24,7 @@ FILE
         PsiElement(eol)('\n')
         FortranBlockImpl(BLOCK)
           <empty list>
-      PsiErrorElement:eol, integerliteral or keyword expected, got 'end'
+      PsiErrorElement:<macro>, eol, integerliteral or keyword expected, got 'end'
         <empty list>
     END_MODULE_STMT
       PsiElement(keyword)('end')

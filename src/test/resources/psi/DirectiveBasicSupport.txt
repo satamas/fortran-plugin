@@ -1,0 +1,204 @@
+FILE
+  FortranMainProgramImpl(MAIN PROGRAM)
+    FortranProgramStmtImpl(PROGRAM_STMT)
+      PsiElement(keyword)('program')
+      PsiWhiteSpace(' ')
+      FortranEntityDeclImpl(ENTITY_DECL)
+        PsiElement(identifier)('a')
+    PsiElement(eol)('\n')
+    FortranBlockImpl(BLOCK)
+      MACRO
+        DEFINE_MACRO
+          PsiElement(define_directive)('#define')
+          PsiElement(directive_content)(' XXX')
+      PsiElement(eol)('\n')
+      MACRO
+        DEFINE_MACRO
+          PsiElement(define_directive)('#define')
+          PsiElement(directive_content)(' VALUE 1')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      MACRO
+        IFDEF_MACRO
+          PsiElement(if_defined_directive)('#ifdef')
+          PsiElement(directive_content)(' XXX')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      WRITE_STMT
+        PsiElement(keyword)('write')
+        PsiElement(()('(')
+        PARAMETERS_SPEC
+          PsiElement(*)('*')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(*)('*')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        OUTPUT_ITEM
+          CONSTANT
+            PsiElement(stringliteral)('"XXX defined"')
+      PsiElement(eol)('\n')
+      MACRO
+        IF_MACRO
+          PsiElement(if_directive)('#if')
+          PsiElement(directive_content)(' VALUE==1')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      WRITE_STMT
+        PsiElement(keyword)('write')
+        PsiElement(()('(')
+        PARAMETERS_SPEC
+          PsiElement(*)('*')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(*)('*')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        OUTPUT_ITEM
+          CONSTANT
+            PsiElement(stringliteral)('"Value is 1"')
+      PsiElement(eol)('\n')
+      MACRO
+        ELIF_MACRO
+          PsiElement(elif_directive)('#elif')
+          PsiElement(directive_content)(' VALUE==2')
+      PsiComment(conditionally_non_compiled_comment)('\n    write(*, *) "Value is 2"\n')
+      MACRO
+        ELSE_MACRO
+          PsiElement(else_directive)('#else')
+      PsiComment(conditionally_non_compiled_comment)('\n    write(*, *) "Value is not 1 nor 2"\n')
+      MACRO
+        ENDIF_MACRO
+          PsiElement(endif_directive)('#endif')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      WRITE_STMT
+        PsiElement(keyword)('write')
+        PsiElement(()('(')
+        PARAMETERS_SPEC
+          PsiElement(*)('*')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(*)('*')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        OUTPUT_ITEM
+          CONSTANT
+            PsiElement(stringliteral)('"Hello !"')
+      PsiElement(eol)('\n')
+      MACRO
+        ELSE_MACRO
+          PsiElement(else_directive)('#else')
+      PsiComment(conditionally_non_compiled_comment)('\n    write(*, *) "XXX is not defined"\n')
+      MACRO
+        ENDIF_MACRO
+          PsiElement(endif_directive)('#endif')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      MACRO
+        IF_MACRO
+          PsiElement(if_directive)('#if')
+          PsiElement(directive_content)(' Z /* macro_eval: false */')
+      PsiComment(conditionally_non_compiled_comment)('\n    write(*, *) "Value is 1"\n')
+      MACRO
+        ELIF_MACRO
+          PsiElement(elif_directive)('#elif')
+          PsiElement(directive_content)(' ZZZ==2  /* macro_eval: false */')
+      PsiComment(conditionally_non_compiled_comment)('\n    write(*, *) "Value is 1"\n')
+      MACRO
+        ELSE_MACRO
+          PsiElement(else_directive)('#else')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      MACRO
+        IFNDEF_MACRO
+          PsiElement(if_not_defined_directive)('#ifndef')
+          PsiElement(directive_content)(' YYY')
+      PsiElement(eol)('\n')
+      MACRO
+        DEFINE_MACRO
+          PsiElement(define_directive)('#define')
+          PsiElement(directive_content)(' YYY')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      WRITE_STMT
+        PsiElement(keyword)('write')
+        PsiElement(()('(')
+        PARAMETERS_SPEC
+          PsiElement(*)('*')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(*)('*')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        OUTPUT_ITEM
+          CONSTANT
+            PsiElement(stringliteral)('"YYY was not defined at this point"')
+      PsiElement(eol)('\n')
+      MACRO
+        IFNDEF_MACRO
+          PsiElement(if_not_defined_directive)('#ifndef')
+          PsiElement(directive_content)(' ZZZ')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('    ')
+      WRITE_STMT
+        PsiElement(keyword)('write')
+        PsiElement(()('(')
+        PARAMETERS_SPEC
+          PsiElement(*)('*')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(*)('*')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        OUTPUT_ITEM
+          CONSTANT
+            PsiElement(stringliteral)('"ZZZ is not defined"')
+      PsiElement(eol)('\n')
+      MACRO
+        ELSE_MACRO
+          PsiElement(else_directive)('#else')
+      PsiComment(conditionally_non_compiled_comment)('\n    write(*, *) "ZZZ is defined"\n')
+      MACRO
+        ENDIF_MACRO
+          PsiElement(endif_directive)('#endif')
+      PsiElement(eol)('\n')
+      MACRO
+        ELSE_MACRO
+          PsiElement(else_directive)('#else')
+      PsiComment(conditionally_non_compiled_comment)('\n    write(*, *) "YYY was defined at this point"\n')
+      MACRO
+        ENDIF_MACRO
+          PsiElement(endif_directive)('#endif')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      MACRO
+        UNKNOWN_MACRO
+          PsiElement(unknown_directive)('#pragma')
+          PsiElement(directive_content)(' Unknown directive content doesn't change macro context state')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      PsiWhiteSpace('    ')
+      WRITE_STMT
+        PsiElement(keyword)('write')
+        PsiElement(()('(')
+        PARAMETERS_SPEC
+          PsiElement(*)('*')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        PsiElement(*)('*')
+        PsiElement())(')')
+        PsiWhiteSpace(' ')
+        OUTPUT_ITEM
+          CONSTANT
+            PsiElement(stringliteral)('"World !"')
+      PsiElement(eol)('\n')
+      MACRO
+        ENDIF_MACRO
+          PsiElement(endif_directive)('#endif')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('\n')
+    END_PROGRAM_STMT
+      PsiElement(keyword)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(keyword)('program')
