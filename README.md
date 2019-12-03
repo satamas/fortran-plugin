@@ -26,7 +26,7 @@ General Usage Information
 To start work with your Fortran project use `New > Project from existing sources` action. 
 In CLion it is also possible to load `CMake` based projects, see 
 [instruction](https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html). 
-Example of Fortran project build with `CMake` can be found [here](https://cmake.org/Wiki/CMakeForFortranExample). 
+Example of Fortran project build with `CMake` can be found [here](https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/languages/fortran/ForFortranExample). 
 Using `CMake` project in CLion allows you to compile, run and debug project from the IDE.
 
 Since CLion 2018.1 frotran project can be debugged with default `Application` run configuration. 

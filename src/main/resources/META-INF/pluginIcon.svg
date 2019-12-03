@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#6E6153" x="0" y="0" width="512" height="512"></rect>
+        <text id="F" font-family="PlayfairDisplay-Black, Playfair Display Black" font-size="454" font-weight="700"
+              fill="#F0E6CF">
+            <tspan x="118" y="411">F</tspan>
+        </text>
+        <rect id="Rectangle" stroke="#F0E6CF" stroke-width="5" x="16" y="16" width="480" height="480"></rect>
+    </g>
+</svg>
