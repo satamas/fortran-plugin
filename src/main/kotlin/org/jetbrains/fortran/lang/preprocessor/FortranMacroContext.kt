@@ -1,21 +1,40 @@
 package org.jetbrains.fortran.lang.preprocessor
 
 import gnu.trove.THashMap
+import org.jetbrains.fortran.lang.FortranTypes.*
 import java.util.*
 
 
 interface FortranMacrosContext {
-    fun define(macro: FortranMacro)
-    fun undefine(name: String)
-    fun isDefined(name: String): Boolean
-    fun enterIf(decision: Boolean)
-    fun exitIf()
-    fun enterElse()
-    fun enterElseIf(decision: Boolean)
+
+    fun add(macro: FortranMacro)
+
+    fun isDefined(name: String?): Boolean
     fun inEvaluatedContext(): Boolean
+
 }
 
 class FortranMacrosContextImpl : FortranMacrosContext {
+
+
+    private fun ifDecisionEvaluator(directive_content: CharSequence): Boolean {
+        val result = !directive_content.endsWith("/* macro_eval: false */")
+        return result
+    }
+
+    override fun add(macro: FortranMacro) {
+        when (macro.type) {
+            DEFINE_DIRECTIVE -> processDefine(macro)
+            UNDEFINE_DIRECTIVE -> processUndefine(macro)
+            IF_DIRECTIVE -> processIf(macro)
+            IF_DEFINED_DIRECTIVE -> processIfDefined(macro)
+            IF_NOT_DEFINED_DIRECTIVE -> processIfNotDefined(macro)
+            ELIF_DIRECTIVE -> processElseIf(macro)
+            ELSE_DIRECTIVE -> processElse()
+            ENDIF_DIRECTIVE -> processEndIf()
+            UNKNOWN_DIRECTIVE -> processUnknown()
+        }
+    }
 
     class Condition(
             val decision: Boolean,
@@ -25,45 +44,59 @@ class FortranMacrosContextImpl : FortranMacrosContext {
     private val macros = THashMap<String, FortranMacro>()
     private val nestedConditions = ArrayDeque<Condition>()
 
-    override fun define(macro: FortranMacro) {
-        macros[macro.name] = macro
+    private fun processDefine(macro: FortranMacro) {
+        macros[macro.name ?: return] = macro
     }
 
-    override fun undefine(name: String) {
-        macros.remove(name)
+    private fun processUndefine(macro: FortranMacro) {
+        macros.remove(macro.name ?: return)
     }
 
-    override fun isDefined(name: String) = macros.contains(name)
-
-    override fun enterIf(decision: Boolean) {
-        nestedConditions.push(Condition(decision))
+    private fun processIf(macro: FortranMacro) {
+        nestedConditions.push(Condition(ifDecisionEvaluator(macro.text)))
     }
 
-    override fun exitIf() {
+    private fun processIfDefined(macro: FortranMacro) {
+        nestedConditions.push(Condition(isDefined(macro.name)))
+    }
+
+    private fun processIfNotDefined(macro: FortranMacro) {
+        nestedConditions.push(Condition(!isDefined(macro.name)))
+    }
+
+    private fun processEndIf() {
         if (nestedConditions.size != 0) {
             var cnd = nestedConditions.pop()
-            while (nestedConditions.size != 0 && cnd.isElseIf){
+            while (nestedConditions.size != 0 && cnd.isElseIf) {
                 cnd = nestedConditions.pop()
             }
         }
     }
 
-    override fun enterElse() {
+    private fun processElse() {
         if (nestedConditions.size != 0) {
             val ifCond = nestedConditions.pop()
             nestedConditions.push(Condition(!ifCond.decision, ifCond.isElseIf))
         }
     }
 
-    override fun enterElseIf(decision: Boolean) {
+    private fun processElseIf(macro: FortranMacro) {
         if (nestedConditions.size != 0) {
             val ifCond = nestedConditions.pop()
             nestedConditions.push(Condition(!ifCond.decision, ifCond.isElseIf))
-            nestedConditions.push(Condition(decision, isElseIf = true))
+            nestedConditions.push(Condition(ifDecisionEvaluator(macro.text), isElseIf = true))
         }
+    }
+
+    private fun processUnknown() {}
+
+    override fun isDefined(name: String?): Boolean {
+        val result = name != null && macros.contains(name)
+        return result
     }
 
     override fun inEvaluatedContext(): Boolean {
         return nestedConditions.fold(true) { total, el -> total && el.decision }
     }
 }
+
