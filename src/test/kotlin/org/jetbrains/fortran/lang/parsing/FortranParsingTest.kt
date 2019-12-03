@@ -9,6 +9,9 @@ class FortranParsingTest : FortranBaseParsingTestCase() {
     fun testSimpleProgram() = doParsingTest(FortranTestDataFixture().navigationMetadata("SimpleProgram.f95"))
 
     @Throws(Exception::class)
+    fun testDirectiveBasicSupport() = doParsingTest(FortranTestDataFixture().navigationMetadata("DirectiveBasicSupport.f95"))
+
+    @Throws(Exception::class)
     fun testIfStatements() = doParsingTest(FortranTestDataFixture().navigationMetadata("IfStatements.f95"))
 
     @Throws(Exception::class)
