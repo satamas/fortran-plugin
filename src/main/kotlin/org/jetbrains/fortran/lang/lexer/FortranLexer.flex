@@ -127,7 +127,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 }
 
 
-<YYINITIAL, FREEFORM_LINE_CONTINUE, FREEFORM, FIXEDFORM, FREE_FORMAT_STR, FIXED_FORMAT_STR>{
+<YYINITIAL, FREEFORM_LINE_CONTINUE, FREEFORM, FIXEDFORM>{
     ^ {HASH} {WHITE_SPACE_CHAR}* "define" { pushState(DIRECTIVE); return DEFINE_DIRECTIVE; }
     ^ {HASH} {WHITE_SPACE_CHAR}* "undef" { pushState(DIRECTIVE); return UNDEFINE_DIRECTIVE; }
     ^ {HASH} {WHITE_SPACE_CHAR}* "ifdef" { pushState(DIRECTIVE); return IF_DEFINED_DIRECTIVE; }
@@ -222,7 +222,6 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
     "format" { return WORD; }
     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return WORD; }
-    ^"#"+ { return LINE_COMMENT; }
     ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
     ^({WHITE_SPACE_CHAR})+ { if (yylength() > 6) yypushback(yylength()-6); return FIRST_WHITE_SPACE; }
     ^[^0-9cCdD#*!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
