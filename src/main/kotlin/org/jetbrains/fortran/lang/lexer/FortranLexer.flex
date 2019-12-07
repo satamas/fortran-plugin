@@ -114,6 +114,8 @@ CPP="#"[^\r\n]*{EOL}
 CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 %%
 
+
+
 <YYINITIAL> {
 {EOL}|";" { return EOL; }
 . { yypushback(1);
@@ -122,6 +124,19 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     else
         pushState(FREEFORM);
   }
+}
+
+
+<YYINITIAL, FREEFORM_LINE_CONTINUE, FREEFORM, FIXEDFORM>{
+    ^ {HASH} {WHITE_SPACE_CHAR}* "define" { pushState(DIRECTIVE); return DEFINE_DIRECTIVE; }
+    ^ {HASH} {WHITE_SPACE_CHAR}* "undef" { pushState(DIRECTIVE); return UNDEFINE_DIRECTIVE; }
+    ^ {HASH} {WHITE_SPACE_CHAR}* "ifdef" { pushState(DIRECTIVE); return IF_DEFINED_DIRECTIVE; }
+    ^ {HASH} {WHITE_SPACE_CHAR}* "ifndef" { pushState(DIRECTIVE); return IF_NOT_DEFINED_DIRECTIVE; }
+    ^ {HASH} {WHITE_SPACE_CHAR}* "if" { pushState(DIRECTIVE); return IF_DIRECTIVE; }
+    ^ {HASH} {WHITE_SPACE_CHAR}* "elif" { pushState(DIRECTIVE); return ELIF_DIRECTIVE; }
+    ^ {HASH} {WHITE_SPACE_CHAR}* "else" { pushState(DIRECTIVE); return ELSE_DIRECTIVE; }
+    ^ {HASH} {WHITE_SPACE_CHAR}* "endif" { pushState(DIRECTIVE); return ENDIF_DIRECTIVE; }
+    ^ {HASH} {WHITE_SPACE_CHAR}* {IDENTIFIER} { pushState(DIRECTIVE); return UNKNOWN_DIRECTIVE; }
 }
 
 
@@ -207,7 +222,6 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
     "format" { return WORD; }
     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return WORD; }
-    ^"#"+ { return LINE_COMMENT; }
     ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
     ^({WHITE_SPACE_CHAR})+ { if (yylength() > 6) yypushback(yylength()-6); return FIRST_WHITE_SPACE; }
     ^[^0-9cCdD#*!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
@@ -244,19 +258,6 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     {FLOATING_POINT_LITERAL} { return FLOATINGPOINTLITERAL; }
     {DIGIT}\040*\./[^A-Za-z0-9_] { return FLOATINGPOINTLITERAL; }
     {DOUBLE_PRECISION_LITERAL} { return DOUBLEPRECISIONLITERAL; }
-
-//    {CPP} { return CPP; }
-//    {CPPCOMMENT} { return LINE_COMMENT; }
-
-    {HASH} {WHITE_SPACE_CHAR}* "define" { pushState(DIRECTIVE); return DEFINE_DIRECTIVE; }
-    {HASH} {WHITE_SPACE_CHAR}* "undef" { pushState(DIRECTIVE); return UNDEFINE_DIRECTIVE; }
-    {HASH} {WHITE_SPACE_CHAR}* "ifdef" { pushState(DIRECTIVE); return IF_DEFINED_DIRECTIVE; }
-    {HASH} {WHITE_SPACE_CHAR}* "ifndef" { pushState(DIRECTIVE); return IF_NOT_DEFINED_DIRECTIVE; }
-    {HASH} {WHITE_SPACE_CHAR}* "if" { pushState(DIRECTIVE); return IF_DIRECTIVE; }
-    {HASH} {WHITE_SPACE_CHAR}* "elif" { pushState(DIRECTIVE); return ELIF_DIRECTIVE; }
-    {HASH} {WHITE_SPACE_CHAR}* "else" { pushState(DIRECTIVE); return ELSE_DIRECTIVE; }
-    {HASH} {WHITE_SPACE_CHAR}* "endif" { pushState(DIRECTIVE); return ENDIF_DIRECTIVE; }
-    {HASH} {WHITE_SPACE_CHAR}* {IDENTIFIER} { pushState(DIRECTIVE); return UNKNOWN_DIRECTIVE; }
 
     ".true."(_{KIND_PARAM})? { return TRUEKWD; }
     ".false."(_{KIND_PARAM})? { return FALSEKWD; }
