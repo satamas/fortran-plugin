@@ -8,7 +8,7 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.formatter.FormatterUtil
 import org.jetbrains.fortran.FortranLanguage
-import org.jetbrains.fortran.lang.FortranTypes.*
+import org.jetbrains.fortran.lang.FortranTypes.EOL
 import org.jetbrains.fortran.lang.psi.*
 import java.util.*
 
@@ -99,12 +99,12 @@ class FortranFmtBlock(
     }
 
     private fun computeIndent(child: ASTNode): Indent {
-        if (child.psi is FortranContainsStmt) {
-            return Indent.getNoneIndent()
-        }
 
         return when {
-        // inside blocks
+            // always not indented
+            child.psi is FortranContainsStmt -> return Indent.getNoneIndent()
+            child.psi is FortranMacro -> Indent.getAbsoluteNoneIndent()
+            // inside blocks
             node.psi is FortranMainProgram && node.psi.firstChild !is FortranStmt -> Indent.getNoneIndent()
             node.psi is FortranProgramUnit && child.psi !is FortranStmt
                     && child.psi !is FortranInternalSubprogramPart

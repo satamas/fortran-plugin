@@ -13,7 +13,7 @@ import org.jetbrains.fortran.lang.psi.FortranTokenSets
 
 class FortranFormattingModelBuilder : FormattingModelBuilder {
 
-    fun createSpacingBuilder(settings : CodeStyleSettings) : SpacingBuilder {
+    fun createSpacingBuilder(settings: CodeStyleSettings): SpacingBuilder {
         val fortranCommonSettings = settings.getCommonSettings(FortranLanguage)
         val fortranSettings = settings.getCustomSettings(FortranCodeStyleSettings::class.java)
 
@@ -63,6 +63,8 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .after(COLONCOLON).spaceIf(fortranSettings.SPACE_AFTER_DOUBLE_COLON)
                 .after(LPAR).spaces(0)
                 .before(RPAR).spaces(0)
+
+                .before(MACRO).spacing(0, 0, 0, true, 1)
 
     }
 
