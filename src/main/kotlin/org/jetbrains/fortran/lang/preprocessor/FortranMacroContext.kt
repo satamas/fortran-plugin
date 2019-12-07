@@ -7,7 +7,7 @@ import java.util.*
 interface FortranMacrosContext {
     fun define(macro: FortranMacro)
     fun undefine(name: String)
-    fun isDefined(name: String): Boolean
+    fun isDefined(name: String?): Boolean
     fun enterIf(decision: Boolean)
     fun exitIf()
     fun enterElse()
@@ -26,14 +26,18 @@ class FortranMacrosContextImpl : FortranMacrosContext {
     private val nestedConditions = ArrayDeque<Condition>()
 
     override fun define(macro: FortranMacro) {
-        macros[macro.name] = macro
+        if (inEvaluatedContext()) {
+            macros[macro.name] = macro
+        }
     }
 
     override fun undefine(name: String) {
-        macros.remove(name)
+        if (inEvaluatedContext()) {
+            macros.remove(name)
+        }
     }
 
-    override fun isDefined(name: String) = macros.contains(name)
+    override fun isDefined(name: String?) = name != null && macros.contains(name)
 
     override fun enterIf(decision: Boolean) {
         nestedConditions.push(Condition(decision))
@@ -42,7 +46,7 @@ class FortranMacrosContextImpl : FortranMacrosContext {
     override fun exitIf() {
         if (nestedConditions.size != 0) {
             var cnd = nestedConditions.pop()
-            while (nestedConditions.size != 0 && cnd.isElseIf){
+            while (nestedConditions.size != 0 && cnd.isElseIf) {
                 cnd = nestedConditions.pop()
             }
         }
