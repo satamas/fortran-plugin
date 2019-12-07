@@ -18,8 +18,7 @@ class FortranMacrosContextImpl : FortranMacrosContext {
 
 
     private fun ifDecisionEvaluator(directive_content: CharSequence): Boolean {
-        val result = !directive_content.endsWith("/* macro_eval: false */")
-        return result
+        return !directive_content.endsWith("/* macro_eval: false */")
     }
 
     override fun add(macro: FortranMacro) {
@@ -45,11 +44,15 @@ class FortranMacrosContextImpl : FortranMacrosContext {
     private val nestedConditions = ArrayDeque<Condition>()
 
     private fun processDefine(macro: FortranMacro) {
-        macros[macro.name ?: return] = macro
+        if (inEvaluatedContext()){
+            macros[macro.name ?: return] = macro
+        }
     }
 
     private fun processUndefine(macro: FortranMacro) {
-        macros.remove(macro.name ?: return)
+        if (inEvaluatedContext()){
+            macros.remove(macro.name ?: return)
+        }
     }
 
     private fun processIf(macro: FortranMacro) {
@@ -91,8 +94,7 @@ class FortranMacrosContextImpl : FortranMacrosContext {
     private fun processUnknown() {}
 
     override fun isDefined(name: String?): Boolean {
-        val result = name != null && macros.contains(name)
-        return result
+        return name != null && macros.contains(name)
     }
 
     override fun inEvaluatedContext(): Boolean {
