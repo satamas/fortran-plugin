@@ -99,11 +99,11 @@ class FortranFmtBlock(
     }
 
     private fun computeIndent(child: ASTNode): Indent {
-        if (child.psi is FortranContainsStmt) {
-            return Indent.getNoneIndent()
-        }
 
         return when {
+        // always not indented
+            child.psi is FortranContainsStmt -> return Indent.getNoneIndent()
+            child.psi is FortranMacro -> Indent.getAbsoluteNoneIndent()
         // inside blocks
             node.psi is FortranMainProgram && node.psi.firstChild !is FortranStmt -> Indent.getNoneIndent()
             node.psi is FortranProgramUnit && child.psi !is FortranStmt

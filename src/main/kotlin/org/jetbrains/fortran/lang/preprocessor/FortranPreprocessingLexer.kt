@@ -33,10 +33,11 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
     }
 
     private fun skipNonDirectiveContent(baseLexer: Lexer) {
-        val conditionalDirectives = TokenSet.create(IF_DIRECTIVE, IF_DEFINED_DIRECTIVE, IF_NOT_DEFINED_DIRECTIVE, ENDIF_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE)
-        assert(baseLexer.tokenType !in conditionalDirectives)
+        val directives = TokenSet.create(DEFINE_DIRECTIVE, UNDEFINE_DIRECTIVE, IF_DIRECTIVE, IF_DEFINED_DIRECTIVE,
+                IF_NOT_DEFINED_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE, ENDIF_DIRECTIVE, UNKNOWN_DIRECTIVE)
+        assert(baseLexer.tokenType !in directives)
         var beforeEnd: LexerPosition? = null
-        while (baseLexer.tokenType != null && baseLexer.tokenType !in conditionalDirectives) {
+        while (baseLexer.tokenType != null && baseLexer.tokenType !in directives) {
             beforeEnd = baseLexer.currentPosition
             baseLexer.advance()
         }
