@@ -207,7 +207,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
      ({KIND_PARAM}_)?\"{QUOTE_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(QUOTE_FREE_STRING); return(STRINGSTART); }
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
      "format" { return WORD; }
-     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FREE_FORMAT_STR); return WORD; }
+     "format"({WHITE_SPACE_CHAR}|{FREE_LINE_CONTINUE})*"(" { yypushback(yylength()-6); pushState(FREE_FORMAT_STR); return WORD; }
 }
 
 <FIXEDFORM> {
@@ -217,7 +217,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ({KIND_PARAM}_)?\"{QUOTE_FIXED_STRING_PART}* { pushState(QUOTE_FIXED_STRING); return(STRINGSTART); }
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
     "format" { return WORD; }
-    "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return WORD; }
+    "format"({WHITE_SPACE_CHAR}|{FIXED_LINE_CONTINUE})*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return WORD; }
     ^"#"+ { return LINE_COMMENT; }
     ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
     ^({WHITE_SPACE_CHAR})+ { if (yylength() > 6) yypushback(yylength()-6); return FIRST_WHITE_SPACE; }
