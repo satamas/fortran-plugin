@@ -9,6 +9,7 @@ import com.intellij.psi.search.searches.ReferencesSearch
 import org.jetbrains.fortran.ide.highlighter.FortranHighlightingColors
 import org.jetbrains.fortran.lang.FortranTypes.IDENTIFIER
 import org.jetbrains.fortran.lang.psi.FortranConstructNameDecl
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 
 class FortranHighlightingAnnotator : Annotator {
@@ -24,7 +25,7 @@ class FortranHighlightingAnnotator : Annotator {
                     }
                 }
             }
-            in FortranTokenType.KEYWORDS -> {
+            in FortranTokenSets.KEYWORDS -> {
                 holder.createInfoAnnotation(element, null).textAttributes = FortranHighlightingColors.KEYWORD.textAttributesKey
             }
             FortranTokenType.CONDITIONALLY_NON_COMPILED_COMMENT -> {

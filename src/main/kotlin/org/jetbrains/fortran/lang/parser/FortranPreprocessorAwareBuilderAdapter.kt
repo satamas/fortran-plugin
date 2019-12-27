@@ -4,7 +4,7 @@ import com.intellij.lang.PsiBuilder
 import com.intellij.lang.PsiParser
 import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.intellij.psi.tree.IElementType
-import org.jetbrains.fortran.lang.psi.FortranTokenType
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 
 
 class FortranPreprocessorAwareBuilderAdapter(
@@ -12,7 +12,7 @@ class FortranPreprocessorAwareBuilderAdapter(
 ) : GeneratedParserUtilBase.Builder(delegate, state_, parser_) {
     private fun parseMacros() {
         val builder = GeneratedParserUtilBase.Builder(delegate, state, parser)
-        if (builder.tokenType !in FortranTokenType.DIRECTIVES) return
+        if (builder.tokenType !in FortranTokenSets.DIRECTIVES) return
         FortranParser.macro(builder, 1)
     }
 

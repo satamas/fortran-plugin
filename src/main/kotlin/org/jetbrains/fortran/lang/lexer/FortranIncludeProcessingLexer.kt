@@ -14,6 +14,7 @@ import org.jetbrains.fortran.lang.FortranTypes
 import org.jetbrains.fortran.lang.preprocessor.FortranPreprocessingLexer
 import org.jetbrains.fortran.lang.psi.FortranFile
 import org.jetbrains.fortran.lang.psi.FortranIncludeForeignLeafType
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 import org.jetbrains.fortran.lang.resolveIncludedFile
 
@@ -55,7 +56,7 @@ class FortranIncludeProcessingLexer(val file: FortranFile?, val project: Project
                         if (type is ForeignLeafType) {
                             addToken(baseLexer.tokenStart, type)
                             previousWhitespace = false
-                        } else if (!FortranTokenType.WHITE_SPACES.contains(type)) {
+                        } else if (!FortranTokenSets.WHITE_SPACES.contains(type)) {
                             val tokenText = LexerUtil.getTokenText(substLexer)
                             addToken(baseLexer.tokenStart, FortranIncludeForeignLeafType(type, tokenText))
                             previousWhitespace = false
@@ -72,7 +73,7 @@ class FortranIncludeProcessingLexer(val file: FortranFile?, val project: Project
 
     fun skipWhiteSpaces(baseLexer: Lexer) {
         var tokenType = baseLexer.tokenType
-        while (FortranTokenType.WHITE_SPACES.contains(tokenType)) {
+        while (FortranTokenSets.WHITE_SPACES.contains(tokenType)) {
             addToken(tokenType)
             baseLexer.advance()
             tokenType = baseLexer.tokenType

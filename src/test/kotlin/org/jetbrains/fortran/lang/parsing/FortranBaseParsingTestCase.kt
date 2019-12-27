@@ -10,12 +10,18 @@ import org.jetbrains.fortran.FortranFixedFormLanguage
 import org.jetbrains.fortran.FortranLanguage
 import org.jetbrains.fortran.lang.parser.FortranFixedFormParserDefinition
 import org.jetbrains.fortran.lang.parser.FortranParserDefinition
-import org.jetbrains.fortran.test.FortranTestDataFixture
+import org.jetbrains.fortran.lang.stubs.FortranFileStub
 
-abstract class FortranBaseParsingTestCase : ParsingTestCase(".", "f", FortranParserDefinition(), FortranFixedFormParserDefinition()) {
+abstract class FortranBaseParsingTestCase : ParsingTestCase(
+        ".", "f", FortranParserDefinition(), FortranFixedFormParserDefinition()
+) {
     override fun getTestDataPath() = "src/test/resources/psi"
 
     override fun includeRanges() = true
+
+    fun doPreprocessorParsingTest(filePath: String) {
+        doBaseTest(filePath, FortranFileStub.Type)
+    }
 
     @Throws(Exception::class)
     fun doParsingTest(filePath: String) {

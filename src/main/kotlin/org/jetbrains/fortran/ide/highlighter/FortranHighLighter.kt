@@ -6,13 +6,14 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.lexer.FortranLexer
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 
 class FortranHighLighter(fFixedForm: Boolean) : SyntaxHighlighterBase() {
     private val keys = HashMap<IElementType, TextAttributesKey>()
 
     init {
-        fillMap(keys, FortranTokenType.DIRECTIVES, FortranHighlightingColors.DIRECTIVE.textAttributesKey)
+        fillMap(keys, FortranTokenSets.DIRECTIVES, FortranHighlightingColors.DIRECTIVE.textAttributesKey)
         keys[IDENTIFIER] = FortranHighlightingColors.IDENTIFIER.textAttributesKey
         keys[FortranTokenType.LINE_COMMENT] = FortranHighlightingColors.LINE_COMMENT.textAttributesKey
         keys[FortranTokenType.CONDITIONALLY_NON_COMPILED_COMMENT] = FortranHighlightingColors.LINE_COMMENT.textAttributesKey

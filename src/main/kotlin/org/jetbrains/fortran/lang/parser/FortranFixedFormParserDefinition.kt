@@ -13,7 +13,7 @@ import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.lang.FortranTypes
 import org.jetbrains.fortran.lang.lexer.FortranLexer
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile
-import org.jetbrains.fortran.lang.psi.FortranTokenType
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 import org.jetbrains.fortran.lang.stubs.FortranFixedFormFileStub
 
 class FortranFixedFormParserDefinition : ParserDefinition {
@@ -30,15 +30,15 @@ class FortranFixedFormParserDefinition : ParserDefinition {
     }
 
     override fun getWhitespaceTokens(): TokenSet {
-        return FortranTokenType.WHITE_SPACES
+        return FortranTokenSets.WHITE_SPACES
     }
 
     override fun getCommentTokens(): TokenSet {
-        return FortranTokenType.COMMENTS
+        return FortranTokenSets.COMMENTS
     }
 
     override fun getStringLiteralElements(): TokenSet {
-        return FortranTokenType.STRINGS
+        return FortranTokenSets.STRINGS
     }
 
     override fun createElement(astNode: ASTNode): PsiElement {

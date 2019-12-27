@@ -9,7 +9,7 @@ import com.intellij.psi.codeStyle.CodeStyleSettings
 import org.jetbrains.fortran.FortranLanguage
 import org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettings
 import org.jetbrains.fortran.lang.FortranTypes.*
-import org.jetbrains.fortran.lang.psi.FortranTokenType
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 
 class FortranFormattingModelBuilder : FormattingModelBuilder {
 
@@ -44,9 +44,9 @@ class FortranFormattingModelBuilder : FormattingModelBuilder {
                 .aroundInside(DIVDIV, CONCAT_EXPR).spaceIf(fortranSettings.SPACE_AROUND_CONCAT_OPERATOR)
                 .aroundInside(DEFOPERATOR, DEF_BINARY_OPERATOR_EXPR).spaceIf(fortranSettings.SPACE_AROUND_DEFINED_OPERATOR)
                 .aroundInside(DEFOPERATOR, DEF_UNARY_OPERATOR_EXPR).spaceIf(fortranSettings.SPACE_AROUND_DEFINED_OPERATOR)
-                .between(FortranTokenType.KEYWORDS, FortranTokenType.KEYWORDS).spaces(1)
-                .between(FortranTokenType.KEYWORDS, IDENTIFIER).spaces(1)
-                .between(IDENTIFIER, FortranTokenType.KEYWORDS).spaces(1)
+                .between(FortranTokenSets.KEYWORDS, FortranTokenSets.KEYWORDS).spaces(1)
+                .between(FortranTokenSets.KEYWORDS, IDENTIFIER).spaces(1)
+                .between(IDENTIFIER, FortranTokenSets.KEYWORDS).spaces(1)
                 .before(COMMA).spaceIf(fortranCommonSettings.SPACE_BEFORE_COMMA)
                 .after(COMMA).spaceIf(fortranCommonSettings.SPACE_AFTER_COMMA)
 

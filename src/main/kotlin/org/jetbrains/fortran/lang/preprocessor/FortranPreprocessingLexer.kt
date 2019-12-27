@@ -9,6 +9,7 @@ import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.lexer.FortranLexer
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 
 class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
@@ -90,7 +91,7 @@ class FortranPreprocessingLexer : LookAheadLexer(FortranLexer(false)) {
 
             val lexer = FortranLexer(false)
             lexer.start(contents)
-            while (FortranTokenType.WHITE_SPACES.contains(lexer.tokenType)) {
+            while (FortranTokenSets.WHITE_SPACES.contains(lexer.tokenType)) {
                 lexer.advance()
             }
 

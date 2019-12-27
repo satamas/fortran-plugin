@@ -1,5 +1,6 @@
 package org.jetbrains.fortran.lang.types.ty
 
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 import org.jetbrains.fortran.lang.psi.FortranTypeDeclarationStmt
 
@@ -20,7 +21,7 @@ sealed class FortranPrimitiveType : FortranType() {
                 FortranTokenType.REAL_KEYWORD -> FortranRealType
                 FortranTokenType.DOUBLE_KEYWORD -> {
                     var nonWhitespaceElement = keyword.treeNext ?: return FortranUnknownType
-                    while (FortranTokenType.WHITE_SPACES.contains(nonWhitespaceElement.elementType)) {
+                    while (FortranTokenSets.WHITE_SPACES.contains(nonWhitespaceElement.elementType)) {
                         nonWhitespaceElement = nonWhitespaceElement.treeNext
                     }
                     if (nonWhitespaceElement.elementType == FortranTokenType.PRECISION_KEYWORD) {

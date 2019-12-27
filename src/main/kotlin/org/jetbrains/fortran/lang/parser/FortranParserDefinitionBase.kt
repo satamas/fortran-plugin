@@ -7,16 +7,16 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.lang.FortranTypes
-import org.jetbrains.fortran.lang.psi.FortranTokenType
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 
 abstract class FortranParserDefinitionBase : ParserDefinition {
     override fun createParser(project: Project) : PsiParser = FortranParser()
 
-    override fun getWhitespaceTokens(): TokenSet = FortranTokenType.WHITE_SPACES
+    override fun getWhitespaceTokens(): TokenSet = FortranTokenSets.WHITE_SPACES
 
-    override fun getCommentTokens(): TokenSet = FortranTokenType.COMMENTS
+    override fun getCommentTokens(): TokenSet = FortranTokenSets.COMMENTS
 
-    override fun getStringLiteralElements(): TokenSet = FortranTokenType.STRINGS
+    override fun getStringLiteralElements(): TokenSet = FortranTokenSets.STRINGS
 
     override fun createElement(astNode: ASTNode): PsiElement =
             FortranManualPsiElementFactory.createElement(astNode)

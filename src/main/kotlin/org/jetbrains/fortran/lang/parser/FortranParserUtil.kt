@@ -4,11 +4,14 @@ import com.intellij.lang.ForeignLeafType
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.PsiParser
 import com.intellij.lang.TokenWrapper
+import com.intellij.lang.impl.PsiBuilderAdapter
+import com.intellij.lang.impl.PsiBuilderImpl
+import com.intellij.lang.impl.PsiBuilderImpl.ProductionMarker
 import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.lang.psi.FortranIncludeForeignLeafType
-import org.jetbrains.fortran.lang.psi.FortranTokenType
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 
 /**
  * Created by Sergei on 13.04.17.
@@ -198,9 +201,17 @@ class UnwrappingPsiBuilderAdapter(
         errorState: GeneratedParserUtilBase.ErrorState,
         parser: PsiParser
 ) : GeneratedParserUtilBase.Builder(delegate, errorState, parser) {
+    override fun getProductions(): List<ProductionMarker?>? {
+        var delegatedBuilder = myDelegate
+        while (delegatedBuilder is PsiBuilderAdapter) {
+            delegatedBuilder = delegatedBuilder.delegate
+        }
+        return (delegatedBuilder as PsiBuilderImpl).productions
+    }
+
     override fun getTokenType(): IElementType? {
         var tokenType = FortranParserUtil.getUnwrappedTokenType(delegate.tokenType)
-        while (FortranTokenType.WHITE_SPACES.contains(tokenType) || FortranTokenType.COMMENTS.contains(tokenType)) {
+        while (FortranTokenSets.WHITE_SPACES.contains(tokenType) || FortranTokenSets.COMMENTS.contains(tokenType)) {
             delegate.advanceLexer()
             tokenType = FortranParserUtil.getUnwrappedTokenType(delegate.tokenType)
         }

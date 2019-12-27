@@ -1,6 +1,7 @@
 package org.jetbrains.fortran.lang.preprocessor
 
 import org.jetbrains.fortran.lang.lexer.FortranLexer
+import org.jetbrains.fortran.lang.psi.FortranTokenSets
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 
 class FortranMacro(val name: String) {
@@ -8,7 +9,7 @@ class FortranMacro(val name: String) {
         fun parseFromDirectiveContent(content: CharSequence): FortranMacro? {
             val lexer = FortranLexer(false)
             lexer.start(content)
-            while (FortranTokenType.WHITE_SPACES.contains(lexer.tokenType)) {
+            while (FortranTokenSets.WHITE_SPACES.contains(lexer.tokenType)) {
                 lexer.advance()
             }
             if (lexer.tokenType == FortranTokenType.WORD) {

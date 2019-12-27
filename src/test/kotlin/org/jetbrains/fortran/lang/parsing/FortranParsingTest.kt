@@ -1,15 +1,11 @@
 package org.jetbrains.fortran.lang.parsing
 
 import org.jetbrains.fortran.test.FortranTestDataFixture
-import org.junit.Test
 
 @SuppressWarnings("all")
 class FortranParsingTest : FortranBaseParsingTestCase() {
     @Throws(Exception::class)
     fun testSimpleProgram() = doParsingTest(FortranTestDataFixture().navigationMetadata("SimpleProgram.f95"))
-
-    @Throws(Exception::class)
-    fun testDirectiveBasicSupport() = doParsingTest(FortranTestDataFixture().navigationMetadata("DirectiveBasicSupport.f95"))
 
     @Throws(Exception::class)
     fun testIfStatements() = doParsingTest(FortranTestDataFixture().navigationMetadata("IfStatements.f95"))

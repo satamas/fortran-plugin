@@ -4,7 +4,7 @@ import com.intellij.psi.TokenType.WHITE_SPACE
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.FortranLanguage
-import org.jetbrains.fortran.lang.FortranTypes.*
+import org.jetbrains.fortran.lang.FortranTypes
 import java.util.*
 
 /**
@@ -50,21 +50,6 @@ class FortranTokenType(debug: String) : IElementType(debug, FortranLanguage) {
         @JvmField
         val PRECISION_KEYWORD = keyword("precision")
 
-        val KEYWORDS = TokenSet.create(KEYWORD, INCLUDE_KEYWORD, CHARACTER_KEYWORD, LOGICAL_KEYWORD, COMPLEX_KEYWORD,
-                INTEGER_KEYWORD, REAL_KEYWORD, DOUBLE_KEYWORD, PRECISION_KEYWORD)
-
-        var WHITE_SPACES = TokenSet.create(WHITE_SPACE, FIRST_WHITE_SPACE)
-
-        var COMMENTS = TokenSet.create(LINE_COMMENT, LINE_CONTINUE, CONDITIONALLY_NON_COMPILED_COMMENT)
-
-        val DIRECTIVES = TokenSet.create(DEFINE_DIRECTIVE, UNDEFINE_DIRECTIVE, IF_DIRECTIVE, IF_DEFINED_DIRECTIVE,
-                IF_NOT_DEFINED_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE, ENDIF_DIRECTIVE, UNKNOWN_DIRECTIVE)
-
-        val IF_DIRECTIVES = TokenSet.create(IF_DIRECTIVE, IF_DEFINED_DIRECTIVE, IF_NOT_DEFINED_DIRECTIVE)
-        val END_IF_DIRECTIVES = TokenSet.create(ENDIF_DIRECTIVE, ELSE_DIRECTIVE, ELIF_DIRECTIVE)
-
-        var STRINGS = TokenSet.create(STRINGLITERAL)
-
         fun keyword(name: String): IElementType {
             val keyword = FortranTokenType(name)
             keywords[name] = keyword
@@ -73,4 +58,30 @@ class FortranTokenType(debug: String) : IElementType(debug, FortranLanguage) {
 
         fun getKeyword(name: String) = keywords[name]
     }
+}
+
+object FortranTokenSets {
+    val KEYWORDS = TokenSet.create(FortranTokenType.KEYWORD, FortranTokenType.INCLUDE_KEYWORD, FortranTokenType.CHARACTER_KEYWORD, FortranTokenType.LOGICAL_KEYWORD, FortranTokenType.COMPLEX_KEYWORD,
+            FortranTokenType.INTEGER_KEYWORD, FortranTokenType.REAL_KEYWORD, FortranTokenType.DOUBLE_KEYWORD, FortranTokenType.PRECISION_KEYWORD)
+
+    var WHITE_SPACES = TokenSet.create(WHITE_SPACE, FortranTokenType.FIRST_WHITE_SPACE)
+
+    var COMMENTS = TokenSet.create(FortranTokenType.LINE_COMMENT, FortranTokenType.LINE_CONTINUE, FortranTokenType.CONDITIONALLY_NON_COMPILED_COMMENT)
+
+    val DIRECTIVES = TokenSet.create(
+            FortranTypes.DEFINE_DIRECTIVE, FortranTypes.UNDEFINE_DIRECTIVE,
+            FortranTypes.IF_DIRECTIVE, FortranTypes.IF_DEFINED_DIRECTIVE,
+            FortranTypes.IF_NOT_DEFINED_DIRECTIVE, FortranTypes.ELSE_DIRECTIVE,
+            FortranTypes.ELIF_DIRECTIVE, FortranTypes.ENDIF_DIRECTIVE,
+            FortranTypes.UNKNOWN_DIRECTIVE
+    )
+
+    val IF_DIRECTIVES = TokenSet.create(
+            FortranTypes.IF_DIRECTIVE, FortranTypes.IF_DEFINED_DIRECTIVE, FortranTypes.IF_NOT_DEFINED_DIRECTIVE
+    )
+    val END_IF_DIRECTIVES = TokenSet.create(
+            FortranTypes.ENDIF_DIRECTIVE, FortranTypes.ELSE_DIRECTIVE, FortranTypes.ELIF_DIRECTIVE
+    )
+
+    var STRINGS = TokenSet.create(FortranTypes.STRINGLITERAL)
 }
