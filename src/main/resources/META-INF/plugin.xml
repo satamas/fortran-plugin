@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2019.3</version>
+    <version>2019.3.1</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,7 +12,8 @@
     ]]></description>
 
     <change-notes><![CDATA[
-Support IntelliJ platform v 2019.3
+Support fortran preprocessor. Currently it's limited, doesn't support expression evaluation and file includes.
+In some cases it may be worse than it was before so do not hesitate to submit issues
     ]]>
     </change-notes>
 
