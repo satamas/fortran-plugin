@@ -3,15 +3,10 @@ package org.jetbrains.fortran.lang.parser
 import com.intellij.lang.ForeignLeafType
 import com.intellij.lang.PsiBuilder
 import com.intellij.lang.PsiParser
-import com.intellij.lang.TokenWrapper
-import com.intellij.lang.impl.PsiBuilderAdapter
-import com.intellij.lang.impl.PsiBuilderImpl
-import com.intellij.lang.impl.PsiBuilderImpl.ProductionMarker
 import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.TokenSet
 import org.jetbrains.fortran.lang.psi.FortranIncludeForeignLeafType
-import org.jetbrains.fortran.lang.psi.FortranTokenSets
 
 /**
  * Created by Sergei on 13.04.17.
@@ -186,7 +181,7 @@ object FortranParserUtil {
     fun adapt_builder_(root: IElementType, builder: PsiBuilder, parser: PsiParser, extendsSets: Array<TokenSet>?): PsiBuilder {
         val state = GeneratedParserUtilBase.ErrorState()
         GeneratedParserUtilBase.ErrorState.initState(state, builder, root, extendsSets)
-        return UnwrappingPsiBuilderAdapter(FortranPreprocessorAwareBuilderAdapter(builder, state, parser), state, parser)
+        return FortranBuilderAdapter(builder, state, parser)
     }
 
     @JvmStatic
@@ -194,42 +189,6 @@ object FortranParserUtil {
             GeneratedParserUtilBase.addVariant(builder, text)
 
     interface Parser : GeneratedParserUtilBase.Parser
-}
-
-class UnwrappingPsiBuilderAdapter(
-        delegate: PsiBuilder,
-        errorState: GeneratedParserUtilBase.ErrorState,
-        parser: PsiParser
-) : GeneratedParserUtilBase.Builder(delegate, errorState, parser) {
-    override fun getProductions(): List<ProductionMarker?>? {
-        var delegatedBuilder = myDelegate
-        while (delegatedBuilder is PsiBuilderAdapter) {
-            delegatedBuilder = delegatedBuilder.delegate
-        }
-        return (delegatedBuilder as PsiBuilderImpl).productions
-    }
-
-    override fun getTokenType(): IElementType? {
-        var tokenType = FortranParserUtil.getUnwrappedTokenType(delegate.tokenType)
-        while (FortranTokenSets.WHITE_SPACES.contains(tokenType) || FortranTokenSets.COMMENTS.contains(tokenType)) {
-            delegate.advanceLexer()
-            tokenType = FortranParserUtil.getUnwrappedTokenType(delegate.tokenType)
-        }
-        return tokenType
-    }
-
-    override fun remapCurrentToken(type: IElementType) {
-        delegate.remapCurrentToken(FortranParserUtil.cloneTTwithBase(delegate.tokenType, type))
-    }
-
-    override fun getTokenText(): String? {
-        val tokenType = delegate.tokenType
-        return if (tokenType is TokenWrapper) {
-            tokenType.value
-        } else {
-            delegate.tokenText
-        }
-    }
 }
 
 
