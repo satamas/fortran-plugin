@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2019.3.3</version>
+    <version>2020.0</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,13 +12,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-Support fortran preprocessor. Currently it's limited, doesn't support expression evaluation and file includes.
-In some cases it may be worse than it was before so do not hesitate to submit issues
+IntelliJ platform version 2020 support
     ]]>
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="193.5233.10" until-build="193.*"/>
+    <idea-version since-build="201.5616.31" until-build="201.*"/>
 
     <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
     <depends>com.intellij.modules.lang</depends>
