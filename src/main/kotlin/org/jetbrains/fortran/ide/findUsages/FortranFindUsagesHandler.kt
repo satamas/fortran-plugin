@@ -11,16 +11,19 @@ import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.usageView.UsageInfo
 import com.intellij.util.Processor
 
-abstract class FortranFindUsagesHandler <out T : PsiElement>(psiElement: T,
-                                                             val factory: FortranFindUsagesHandlerFactory)
-    : FindUsagesHandler(psiElement) {
+abstract class FortranFindUsagesHandler<out T : PsiElement>(
+        psiElement: T, val factory: FortranFindUsagesHandlerFactory
+) : FindUsagesHandler(psiElement) {
 
-    @Suppress("UNCHECKED_CAST") fun getElement(): T {
+    @Suppress("UNCHECKED_CAST")
+    fun getElement(): T {
         return psiElement as T
     }
 
-    override fun processElementUsages(element: PsiElement, processor: Processor<UsageInfo>, options: FindUsagesOptions): Boolean {
-         val refProcessor = object : ReadActionProcessor<PsiReference>() {
+    override fun processElementUsages(
+            element: PsiElement, processor: Processor<in UsageInfo>, options: FindUsagesOptions
+    ): Boolean {
+        val refProcessor = object : ReadActionProcessor<PsiReference>() {
             override fun processInReadAction(ref: PsiReference): Boolean {
                 val rangeInElement = ref.rangeInElement
                 return processor.process(UsageInfo(ref.element, rangeInElement.startOffset, rangeInElement.endOffset, false))

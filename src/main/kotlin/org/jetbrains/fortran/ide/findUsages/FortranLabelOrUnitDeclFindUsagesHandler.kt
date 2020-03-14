@@ -14,11 +14,13 @@ abstract class FortranLabelOrUnitDeclFindUsagesHandler <out T : PsiElement>(
         element: T,
         factory: FortranFindUsagesHandlerFactory
 ) : FortranFindUsagesHandler<T>(element, factory) {
-    override fun processElementUsages(element: PsiElement, processor: Processor<UsageInfo>, options: FindUsagesOptions): Boolean {
+    override fun processElementUsages(
+            element: PsiElement, processor: Processor<in UsageInfo>, options: FindUsagesOptions
+    ): Boolean {
         return searchReferences(element, processor)
     }
 
-    private fun searchReferences(element: PsiElement, processor: Processor<UsageInfo>): Boolean {
+    private fun searchReferences(element: PsiElement, processor: Processor<in UsageInfo>): Boolean {
         val searcher = createSearcher(element, processor)
         if (!runReadAction { searcher.buildTaskList() })
             return false
@@ -54,18 +56,18 @@ abstract class FortranLabelOrUnitDeclFindUsagesHandler <out T : PsiElement>(
     }
 
     companion object {
-        internal fun processUsage(processor: Processor<UsageInfo>, ref: PsiReference): Boolean =
+        internal fun processUsage(processor: Processor<in UsageInfo>, ref: PsiReference): Boolean =
                 processor.processIfNotNull { if (ref.element.isValid) UsageInfo(ref) else null }
 
 
-        private fun Processor<UsageInfo>.processIfNotNull(callback: () -> UsageInfo?): Boolean {
+        private fun Processor<in UsageInfo>.processIfNotNull(callback: () -> UsageInfo?): Boolean {
             val usageInfo = runReadAction(callback)
             return if (usageInfo != null) process(usageInfo) else true
         }
     }
 
 
-    protected abstract fun createSearcher(element: PsiElement, processor: Processor<UsageInfo>): Searcher
+    protected abstract fun createSearcher(element: PsiElement, processor: Processor<in UsageInfo>): Searcher
 
     override fun calculateScope(element: PsiElement, searchScope: SearchScope) : SearchScope = searchScope
 }

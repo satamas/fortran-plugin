@@ -17,15 +17,16 @@ class FortranLabelDeclFindUsagesHandler (
         element: FortranLabelDecl,
         factory: FortranFindUsagesHandlerFactory
 ) : FortranLabelOrUnitDeclFindUsagesHandler<FortranLabelDecl>(element, factory) {
-    override fun createSearcher(element: PsiElement, processor: Processor<UsageInfo>): Searcher {
-        return object: Searcher() {
+    override fun createSearcher(element: PsiElement, processor: Processor<in UsageInfo>): Searcher {
+        return object : Searcher() {
             override fun buildTaskList(): Boolean {
                 addTask {
-                    runReadAction{ PsiTreeUtil.findChildrenOfType(
-                            PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) , FortranLabelImpl::class.java)
+                    runReadAction {
+                        PsiTreeUtil.findChildrenOfType(
+                                PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java), FortranLabelImpl::class.java)
                     }.filter { (element as FortranLabelDeclImpl).getLabelValue() == it.getLabelValue() }
-                     .map{ FortranLabelReferenceImpl(it as FortranLabelImplMixin) }
-                     .all { processUsage(processor, it) }
+                            .map { FortranLabelReferenceImpl(it as FortranLabelImplMixin) }
+                            .all { processUsage(processor, it) }
                 }
                 return true
             }
