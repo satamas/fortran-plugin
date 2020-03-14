@@ -1,9 +1,9 @@
 package org.jetbrains.fortran.ide.folding
 
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.io.File
 
-class FortranFoldingBuilderTest : LightPlatformCodeInsightFixtureTestCase() {
+class FortranFoldingBuilderTest : BasePlatformTestCase() {
     override fun getTestDataPath() = "src/test/resources"
 
     override fun getBasePath() = "folding/"

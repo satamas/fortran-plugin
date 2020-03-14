@@ -1,6 +1,4 @@
-package org.jetbrains.fortran.ide.Intentions
-
-import org.jetbrains.fortran.ide.intentions.FortranIfStatementToConstructIntention
+package org.jetbrains.fortran.ide.intentions
 
 class FortranIfStatementToConstructIntentionTest : FortranIntentionsBaseTestCase(FortranIfStatementToConstructIntention()) {
     fun testSimpleIfStmt() = testIntention("""

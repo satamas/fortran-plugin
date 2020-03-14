@@ -1,13 +1,12 @@
-package org.jetbrains.fortran.ide.Intentions
+package org.jetbrains.fortran.ide.intentions
 
 import com.intellij.codeInsight.intention.IntentionAction
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.intellij.lang.annotations.Language
 import org.jetbrains.fortran.lang.FortranTestUtils
 
 
-abstract class FortranIntentionsBaseTestCase(val intention: IntentionAction) : LightPlatformCodeInsightFixtureTestCase() {
-
+abstract class FortranIntentionsBaseTestCase(val intention: IntentionAction) : BasePlatformTestCase() {
     fun testIntentionHasDocumentation() {
         val directory = "intentionDescriptions/${intention.javaClass.simpleName}"
         val files = listOf("before.f90.template", "after.f90.template", "description.html")
@@ -26,11 +25,4 @@ abstract class FortranIntentionsBaseTestCase(val intention: IntentionAction) : L
         myFixture.launchAction(intention)
         myFixture.checkResult(after)
     }
-
-  /*  protected fun doUnavailableTest(@Language("Rust") before: String) {
-        InlineFile(before).withCaret()
-        check(intention.familyName !in myFixture.availableIntentions.mapNotNull { it.familyName }) {
-            "\"$intention\" intention should not be available"
-        }
-    }*/
 }
