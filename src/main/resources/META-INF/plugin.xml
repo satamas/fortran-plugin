@@ -184,7 +184,8 @@ IntelliJ platform version 2020 support
 
         <group id="ConvertFixedFormFortranGroup">
             <separator/>
-            <action id="ConvertFixedFormFortran" class="org.jetbrains.fortran.ide.intentions.FortranFixedFormConverter"
+            <action id="ConvertFixedFormFortran"
+                    class="org.jetbrains.fortran.ide.actions.FortranFixedFormConverterAction"
                     text="Convert Fortran Fixed Form File to Free Form">
                 <keyboard-shortcut keymap="$default" first-keystroke="control alt shift F"/>
             </action>

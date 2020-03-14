@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.ide.intentions
+package org.jetbrains.fortran.ide.actions
 
 import com.intellij.codeInsight.FileModificationService
 import com.intellij.openapi.actionSystem.AnAction
@@ -20,20 +20,13 @@ import org.jetbrains.fortran.ide.util.executeWriteCommand
 import org.jetbrains.fortran.lang.psi.FortranFixedFormFile
 import org.jetbrains.fortran.lang.psi.FortranTokenType
 
-class FortranFixedFormConverter : AnAction("Convert to Free Form Source") {
+class FortranFixedFormConverterAction : AnAction("Convert to Free Form Source") {
     override fun actionPerformed(event: AnActionEvent) {
         val files = selectedFortranFixedFormFiles(event).filter { it.isWritable }.toList()
         val project = CommonDataKeys.PROJECT.getData(event.dataContext)!!
 
         project.executeWriteCommand("Convert files from fixed to free form", null) {
-            files.forEach { file ->
-                if (!FileModificationService.getInstance().preparePsiElementForWrite(file)) return@forEach
-                val document = PsiDocumentManager.getInstance(project).getDocument(file) ?: return@forEach
-                document.setText(convertCode(document.charsSequence, file))
-                val newFile = PsiFileImplUtil.setName(file, file.name.substringBeforeLast('.') + "." + FortranFileType.defaultExtension)
-                PsiDocumentManager.getInstance(project).commitAllDocuments()
-                CodeStyleManagerImpl(project).reformatText(newFile, 0, newFile.textLength)
-            }
+            files.forEach { file -> FortranFileConverter.convertFile(project, file) }
         }
     }
 
@@ -62,31 +55,42 @@ class FortranFixedFormConverter : AnAction("Convert to Free Form Source") {
         }
         return result
     }
+}
 
+object FortranFileConverter {
+    fun convertFile(project: Project, file: PsiFile) {
+        if (!FileModificationService.getInstance().preparePsiElementForWrite(file)) return
+        val document = PsiDocumentManager.getInstance(project).getDocument(file) ?: return
+        document.setText(convertFile(document.charsSequence, file))
+        val newFileName = file.name.substringBeforeLast('.') + "." + FortranFileType.defaultExtension
+        val newFile = PsiFileImplUtil.setName(file, newFileName)
+        PsiDocumentManager.getInstance(project).commitAllDocuments()
+        CodeStyleManagerImpl(project).reformatText(newFile, 0, newFile.textLength)
+    }
 
-    private fun convertCode(codeInFixedForm: CharSequence, file: PsiFile): CharSequence {
-        if (codeInFixedForm.isEmpty()) return ""
+    private fun convertFile(fileContent: CharSequence, file: PsiFile): CharSequence {
+        if (fileContent.isEmpty()) return ""
         return StringBuilder().apply {
             var positionInFixedForm = 0
             PsiTreeUtil.findChildrenOfType(file, PsiComment::class.java).forEach {
                 positionInFixedForm = if (it.tokenType == FortranTokenType.LINE_COMMENT) {
-                    append(codeInFixedForm.subSequence(positionInFixedForm, it.textOffset))
+                    append(fileContent.subSequence(positionInFixedForm, it.textOffset))
                     append("!")
                     it.textOffset + 1
                 } else {
                     val prevSibling = it.prevSibling
                     if (prevSibling is PsiComment && prevSibling.tokenType == FortranTokenType.LINE_COMMENT) {
                         insert(length - 1, "&")
-                        append(codeInFixedForm.subSequence(positionInFixedForm, it.textOffset))
+                        append(fileContent.subSequence(positionInFixedForm, it.textOffset))
                         append("\n")
                     } else {
-                        append(codeInFixedForm.subSequence(positionInFixedForm, it.textOffset))
+                        append(fileContent.subSequence(positionInFixedForm, it.textOffset))
                         append("&\n")
                     }
                     it.textRange.endOffset
                 }
             }
-            append(codeInFixedForm.subSequence(positionInFixedForm, codeInFixedForm.length))
+            append(fileContent.subSequence(positionInFixedForm, fileContent.length))
         }
     }
 }
