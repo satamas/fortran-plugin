@@ -62,8 +62,6 @@ IntelliJ platform version 2020 support
                 implementation="org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider
                 implementation="org.jetbrains.fortran.ide.formatter.settings.FortranLanguageCodeStyleSettingsProvider"/>
-        <editorNotificationProvider
-                implementation="org.jetbrains.fortran.ide.formatter.FortranSourceFormNotificationProvider"/>
         <!-- Commenter -->
         <lang.commenter language="Fortran" implementationClass="org.jetbrains.fortran.ide.commenter.FortranCommenter"/>
         <lang.commenter language="Fortran fixed form"
@@ -100,10 +98,6 @@ IntelliJ platform version 2020 support
                                 implementationClass="org.jetbrains.fortran.ide.completion.KeywordCompletionContributor"/>
 
         <!-- Intentions -->
-        <intentionAction>
-            <className>org.jetbrains.fortran.ide.intentions.FortranFixedFormConverter</className>
-            <category>Fortran</category>
-        </intentionAction>
         <intentionAction>
             <className>org.jetbrains.fortran.ide.intentions.FortranIfStatementToConstructIntention</className>
             <category>Fortran</category>
@@ -187,6 +181,17 @@ IntelliJ platform version 2020 support
                 description="Create new Fortran file">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
         </action>
+
+        <group id="ConvertFixedFormFortranGroup">
+            <separator/>
+            <action id="ConvertFixedFormFortran" class="org.jetbrains.fortran.ide.intentions.FortranFixedFormConverter"
+                    text="Convert Fortran Fixed Form File to Free Form">
+                <keyboard-shortcut keymap="$default" first-keystroke="control alt shift F"/>
+            </action>
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>
+        </group>
     </actions>
 
 </idea-plugin>
