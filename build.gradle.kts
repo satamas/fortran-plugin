@@ -1,4 +1,3 @@
-import de.undercouch.gradle.tasks.download.Download
 import org.gradle.api.internal.HasConvention
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.grammarkit.tasks.GenerateLexer
@@ -8,15 +7,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import kotlin.concurrent.thread
 
 val CI = System.getenv("CI") != null
+val clionVersion = "CL-${prop("clionVersion")}"
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2020.1"
-    kotlin("jvm") version "1.3.50"
-    id("org.jetbrains.intellij") version "0.4.13"
+    id("org.jetbrains.grammarkit") version "2020.2.1"
+    kotlin("jvm") version "1.3.72"
+    id("org.jetbrains.intellij") version "0.4.21"
     id("de.undercouch.download") version "4.0.0"
-    //Plugin to create pathing jar for intellij list of dependencies
-    id("com.github.ManifestClasspath") version "0.1.0-RELEASE"
 }
 
 idea {
@@ -31,7 +29,6 @@ allprojects {
         plugin("kotlin")
         plugin("org.jetbrains.grammarkit")
         plugin("org.jetbrains.intellij")
-        plugin("com.github.ManifestClasspath")
     }
 
     repositories {
@@ -45,9 +42,7 @@ allprojects {
     }
 
     intellij {
-        version = prop("ideaVersion")
         downloadSources = !CI
-        updateSinceUntilBuild = false
         instrumentCode = false
         ideaDependencyCachePath = file("deps").absolutePath
     }
@@ -68,24 +63,18 @@ allprojects {
     }
 }
 
-project(":") {
-    val clionVersion = prop("clionVersion")
+project(":clion") {
     intellij {
-        pluginName = "fortran-plugin"
-        alternativeIdePath = "debugger/lib/clion-$clionVersion"
+        version = clionVersion
     }
-
-    sourceSets {
-        create("debugger") {
-            kotlin.srcDirs("debugger/src/main/kotlin")
-            compileClasspath += getByName("main").compileClasspath +
-                    getByName("main").output +
-                    files("debugger/lib/clion-$clionVersion/lib/clion.jar")
-        }
+    dependencies {
+        implementation(project(":"))
     }
+}
 
-    tasks.withType<Jar> {
-        from(sourceSets.getByName("debugger").output)
+project(":") {
+    intellij {
+        version = prop("ideaVersion")
     }
 
     val generateFortranLexer = task<GenerateLexer>("generateFortranLexer") {
@@ -96,9 +85,7 @@ project(":") {
     }
 
     val generateFortranParser = task<GenerateParser>("generateFortranParser") {
-        dependsOn(
-                generateFortranLexer
-        )
+        dependsOn(generateFortranLexer)
         source = "src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf"
         targetRoot = "src/gen"
         pathToParser = "/org/jetbrains/fortran/lang/parser/FortranParser.java"
@@ -106,37 +93,8 @@ project(":") {
         purgeOldFiles = true
     }
 
-    val isWindows = System.getProperty("os.name").toLowerCase().indexOf( "win" ) >= 0
-
-    val downloadClion = task<Download>("downloadClion") {
-        if (isWindows) {
-            onlyIf { !file("${project.projectDir}/debugger/lib/clion-$clionVersion.zip").exists() }
-            src("https://download.jetbrains.com/cpp/CLion-$clionVersion.win.zip")
-            dest(file("${project.projectDir}/debugger/lib/clion-$clionVersion.zip"))
-        } else {
-            onlyIf { !file("${project.projectDir}/debugger/lib/clion-$clionVersion.tar.gz").exists() }
-            src("https://download.jetbrains.com/cpp/CLion-$clionVersion.tar.gz")
-            dest(file("${project.projectDir}/debugger/lib/clion-$clionVersion.tar.gz"))
-        }
-    }
-
-    val unpackClion = task<Copy>("unpackClion") {
-        if (isWindows) {
-            onlyIf { !file("${project.projectDir}/debugger/lib/clion-$clionVersion").exists() }
-            from(zipTree("debugger/lib/clion-$clionVersion.zip"))
-            into(file("${project.projectDir}/debugger/lib/clion-$clionVersion"))
-        } else {
-            onlyIf { !file("${project.projectDir}/debugger/lib/clion-$clionVersion").exists() }
-            from(tarTree("debugger/lib/clion-$clionVersion.tar.gz"))
-            into(file("${project.projectDir}/debugger/lib/"))
-        }
-        dependsOn(downloadClion)
-    }
-
     tasks.withType<KotlinCompile> {
-        dependsOn(
-                generateFortranParser, unpackClion
-        )
+        dependsOn(generateFortranParser)
     }
 
     tasks.withType<Test> {
@@ -146,7 +104,6 @@ project(":") {
     }
 
     task("resolveDependencies") {
-        dependsOn(unpackClion)
         doLast {
             rootProject.allprojects
                     .map { it.configurations }
@@ -155,6 +112,20 @@ project(":") {
         }
     }
 }
+
+project(":plugin") {
+    intellij {
+        version = clionVersion
+        updateSinceUntilBuild = false
+        pluginName = "fortran-plugin"
+    }
+
+    dependencies {
+        implementation(project(":"))
+        implementation(project(":clion"))
+    }
+}
+
 
 
 

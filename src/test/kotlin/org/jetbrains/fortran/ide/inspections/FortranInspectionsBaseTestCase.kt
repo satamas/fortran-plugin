@@ -1,13 +1,11 @@
 package org.jetbrains.fortran.ide.inspections
 
 import com.intellij.codeInspection.LocalInspectionTool
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.intellij.lang.annotations.Language
 import org.jetbrains.fortran.lang.FortranTestUtils
 
-abstract class FortranInspectionsBaseTestCase(
-        val inspection: LocalInspectionTool
-) : LightPlatformCodeInsightFixtureTestCase() {
+abstract class FortranInspectionsBaseTestCase(val inspection: LocalInspectionTool) : BasePlatformTestCase() {
     protected fun checkByText(
             @Language("Fortran") text: String,
             checkWarn: Boolean = true, checkInfo: Boolean = false, checkWeakWarn: Boolean = false

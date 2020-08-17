@@ -2,7 +2,10 @@
     <extensions defaultExtensionNs="cidr.debugger">
         <languageSupport language="Fortran"
                          implementationClass="org.jetbrains.fortran.debugger.lang.FortranDebuggerLanguageSupport"/>
-        <editorsExtension implementation="org.jetbrains.fortran.debugger.lang.FortranDebuggerEditorsProvider"/>
+        <editorsExtension language="Fortran"
+                          implementation="org.jetbrains.fortran.debugger.lang.FortranDebuggerEditorsProvider"/>
+        <editorsExtension language="Fortran fixed form"
+                          implementation="org.jetbrains.fortran.debugger.lang.FortranDebuggerEditorsProvider"/>
         <lineBreakpointFileTypesProvider
                 implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointFileTypesProvider"/>
     </extensions>
