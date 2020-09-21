@@ -28,13 +28,13 @@ program a<fold text='...'>
         endwhere
     </fold>endforall
 
-    select case (a+b)
+    select case (a+b)<fold text='...'>
     case (1,2)<fold text='...'>
         c=1</fold>
     case (7:)
     case default<fold text='...'>
         c=4</fold>
-    endselect
+    </fold>endselect
 
     if (.not.c) then<fold text='...'>
         d = 3.1</fold>
