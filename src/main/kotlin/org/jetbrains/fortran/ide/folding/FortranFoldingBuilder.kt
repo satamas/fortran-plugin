@@ -100,6 +100,9 @@ class FortranFoldingBuilder : FoldingBuilderEx(), DumbAware {
         override fun visitDeclarationConstruct(o: FortranDeclarationConstruct) =
                 foldBetweenStatements(o, o.beginConstructStatement, o.endConstructStatement)
 
+        override fun visitCaseConstruct(o: FortranCaseConstruct) =
+                foldBetweenStatements(o, o.selectCaseStmt, o.endSelectStmt)
+
         override fun visitBlock(block: FortranBlock) {
             val parent = block.parent
 
