@@ -11,7 +11,7 @@ val CI = System.getenv("CI") != null
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2020.1"
+    id("org.jetbrains.grammarkit") version "2020.2.1"
     kotlin("jvm") version "1.3.50"
     id("org.jetbrains.intellij") version "0.4.13"
     id("de.undercouch.download") version "4.0.0"

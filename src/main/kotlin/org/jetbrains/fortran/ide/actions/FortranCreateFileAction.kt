@@ -11,7 +11,7 @@ class FortranCreateFileAction : CreateFileFromTemplateAction(FortranCreateFileAc
         DumbAware {
     override fun getActionName(directory: PsiDirectory?, newName: String, templateName: String?): String = CAPTION
 
-    override fun buildDialog(project: Project?, directory: PsiDirectory?,
+    override fun buildDialog(project: Project, directory: PsiDirectory,
                              builder: CreateFileFromTemplateDialog.Builder) {
         builder.setTitle(CAPTION).addKind("Empty File", FortranIcons.fileTypeIcon, "Fortran File")
                 .addKind("Main Program", FortranIcons.mainProgramIcon, "Main Program")
