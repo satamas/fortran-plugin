@@ -8,6 +8,7 @@ import kotlin.concurrent.thread
 
 val CI = System.getenv("CI") != null
 val clionVersion = "CL-${prop("clionVersion")}"
+val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 
 plugins {
     idea
@@ -66,6 +67,8 @@ allprojects {
 project(":clion") {
     intellij {
         version = clionVersion
+        setPlugins(*clionPlugins.toTypedArray())
+        type = "CL"
     }
     dependencies {
         implementation(project(":"))

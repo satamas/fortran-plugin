@@ -12,12 +12,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-IntelliJ platform version 2020 support
+IntelliJ platform version 2020.3 support
     ]]>
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="202.6397" until-build="202.*"/>
+    <idea-version since-build="203.5981.40" until-build="203.*"/>
 
     <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
     <depends>com.intellij.modules.lang</depends>

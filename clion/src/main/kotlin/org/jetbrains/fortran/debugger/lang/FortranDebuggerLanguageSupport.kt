@@ -2,7 +2,10 @@ package org.jetbrains.fortran.debugger.lang
 
 import com.intellij.xdebugger.XExpression
 import com.intellij.xdebugger.XSourcePosition
-import com.jetbrains.cidr.execution.debugger.*
+import com.jetbrains.cidr.execution.debugger.CidrDebugProcess
+import com.jetbrains.cidr.execution.debugger.CidrDebuggerLanguageSupport
+import com.jetbrains.cidr.execution.debugger.CidrEvaluator
+import com.jetbrains.cidr.execution.debugger.CidrStackFrame
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver.StandardDebuggerLanguage.FORTRAN
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrDebuggerTypesHelper
@@ -15,7 +18,7 @@ class FortranDebuggerLanguageSupport : CidrDebuggerLanguageSupport() {
         return FortranDebuggerTypesHelper(process)
     }
 
-    override fun createEvaluator(frame: CidrStackFrame): CidrEvaluator = object : OCEvaluator(frame) {
+    override fun createEvaluator(frame: CidrStackFrame): CidrEvaluator = object : CidrEvaluator(frame) {
         override fun doEvaluate(driver: DebuggerDriver, position: XSourcePosition?, expr: XExpression): CidrEvaluatedValue {
             val v = driver.evaluate(frame.threadId, frame.frameIndex, expr.expression)
             return CidrEvaluatedValue(v, frame.process, position, frame, expr.expression)
