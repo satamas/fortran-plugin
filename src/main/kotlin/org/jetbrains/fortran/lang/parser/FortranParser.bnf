@@ -611,7 +611,7 @@ assumed_size_spec ::= (explicit_shape_spec ',')* (expr ':')? '*'
 // R522
 implied_shape_spec ::= (expr ':')? '*'
 // R523
-private intent_spec ::= in_ | out_ | inout_
+private intent_spec ::= (in_ out_) | inout_ | in_ | out_
 // R524
 access_stmt ::= label_decl? access_spec (('::')? <<list access_id>>)? { pin = 2; extends=specification_stmt }
 // R525
