@@ -12,7 +12,7 @@ val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2020.2.1"
+    id("org.jetbrains.grammarkit") version "2020.3.2"
     kotlin("jvm") version "1.3.72"
     id("org.jetbrains.intellij") version "0.4.21"
     id("de.undercouch.download") version "4.0.0"
@@ -115,21 +115,6 @@ project(":") {
         }
     }
 }
-
-project(":plugin") {
-    intellij {
-        version = clionVersion
-        updateSinceUntilBuild = false
-        pluginName = "fortran-plugin"
-    }
-
-    dependencies {
-        implementation(project(":"))
-        implementation(project(":clion"))
-    }
-}
-
-
 
 
 fun prop(name: String): String =
