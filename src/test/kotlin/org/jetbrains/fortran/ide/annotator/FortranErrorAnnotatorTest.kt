@@ -1,9 +1,9 @@
 package org.jetbrains.fortran.ide.annotator
 
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.intellij.lang.annotations.Language
 
-class RsErrorAnnotatorTest : LightPlatformCodeInsightFixtureTestCase() {
+class RsErrorAnnotatorTest : BasePlatformTestCase() {
     override fun getTestDataPath(): String = "src/test/annotator"
 
     private fun checkErrors(@Language("Fortran") text: String) {

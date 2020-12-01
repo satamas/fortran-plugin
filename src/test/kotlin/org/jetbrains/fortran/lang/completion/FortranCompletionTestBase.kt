@@ -1,11 +1,11 @@
 package org.jetbrains.fortran.lang.completion
 
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.intellij.lang.annotations.Language
 import org.jetbrains.fortran.FortranFileType
 
-abstract class FortranCompletionTestBase : LightPlatformCodeInsightFixtureTestCase() {
+abstract class FortranCompletionTestBase : BasePlatformTestCase() {
     protected fun doSingleCompletion(@Language("Fortran") before: String, @Language("Fortran") after: String) {
         myFixture.configureByText(FortranFileType, before)
         executeSoloCompletion()

@@ -1,11 +1,11 @@
 package org.jetbrains.fortran.ide.typing
 
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
-import org.jetbrains.fortran.FortranFileType
 import com.intellij.codeInsight.highlighting.BraceMatchingUtil.getMatchedBraceOffset
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.intellij.lang.annotations.Language
+import org.jetbrains.fortran.FortranFileType
 
-class FortranBraceMatcherTest : LightPlatformCodeInsightFixtureTestCase() {
+class FortranBraceMatcherTest : BasePlatformTestCase() {
     fun testPar() = doMatch("""
              program a
              integer :: i
