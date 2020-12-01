@@ -14,7 +14,7 @@ plugins {
     idea
     id("org.jetbrains.grammarkit") version "2020.3.2"
     kotlin("jvm") version "1.3.72"
-    id("org.jetbrains.intellij") version "0.4.21"
+    id("org.jetbrains.intellij") version "0.6.5"
     id("de.undercouch.download") version "4.0.0"
 }
 
