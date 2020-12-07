@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2020.3</version>
+    <version>2020.3.1</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,7 +12,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-IntelliJ platform version 2020.3 support
+    Add missing CLion specific classes
     ]]>
     </change-notes>
 
