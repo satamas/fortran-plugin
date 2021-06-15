@@ -1,10 +1,8 @@
-import org.gradle.api.internal.HasConvention
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jetbrains.intellij.tasks.JarSearchableOptionsTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kotlin.concurrent.thread
 
 val CI = System.getenv("CI") != null
 val clionVersion = "CL-${prop("clionVersion")}"
@@ -14,7 +12,7 @@ plugins {
     idea
     id("org.jetbrains.grammarkit") version "2020.3.2"
     kotlin("jvm") version "1.3.72"
-    id("org.jetbrains.intellij") version "0.6.5"
+    id("org.jetbrains.intellij") version "1.0"
     id("de.undercouch.download") version "4.0.0"
 }
 
@@ -43,9 +41,9 @@ allprojects {
     }
 
     intellij {
-        downloadSources = !CI
-        instrumentCode = false
-        ideaDependencyCachePath = file("deps").absolutePath
+        downloadSources.set(!CI)
+        instrumentCode.set(false)
+        ideaDependencyCachePath.set(file("deps").absolutePath)
     }
 
     tasks.withType<KotlinCompile> {
@@ -66,18 +64,21 @@ allprojects {
 
 project(":clion") {
     intellij {
-        version = clionVersion
-        setPlugins(*clionPlugins.toTypedArray())
-        type = "CL"
+        version.set(clionVersion)
+        plugins.set(clionPlugins)
+        type.set("CL")
     }
     dependencies {
         implementation(project(":"))
+    }
+    tasks.withType<JarSearchableOptionsTask> {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 }
 
 project(":") {
     intellij {
-        version = prop("ideaVersion")
+        version.set(prop("ideaVersion"))
     }
 
     val generateFortranLexer = task<GenerateLexer>("generateFortranLexer") {
@@ -117,43 +118,5 @@ project(":") {
 }
 
 
-fun prop(name: String): String =
-        extra.properties[name] as? String
-                ?: error("Property `$name` is not defined in gradle.properties")
-
-
-inline operator fun <T : Task> T.invoke(a: T.() -> Unit): T = apply(a)
-
-val SourceSet.kotlin: SourceDirectorySet
-    get() =
-        (this as HasConvention)
-                .convention
-                .getPlugin(KotlinSourceSet::class.java)
-                .kotlin
-
-
-fun SourceSet.kotlin(action: SourceDirectorySet.() -> Unit) =
-        kotlin.action()
-
-
-fun String.execute(wd: String? = null, ignoreExitCode: Boolean = false): String =
-        split(" ").execute(wd, ignoreExitCode)
-
-fun List<String>.execute(wd: String? = null, ignoreExitCode: Boolean = false): String {
-    val process = ProcessBuilder(this)
-            .also { pb -> wd?.let { pb.directory(File(it)) } }
-            .start()
-    var result = ""
-    val errReader = thread { process.errorStream.bufferedReader().forEachLine { println(it) } }
-    val outReader = thread {
-        process.inputStream.bufferedReader().forEachLine { line ->
-            println(line)
-            result += line
-        }
-    }
-    process.waitFor()
-    outReader.join()
-    errReader.join()
-    if (process.exitValue() != 0 && !ignoreExitCode) error("Non-zero exit status for `$this`")
-    return result
-}
+fun prop(name: String): String = extra.properties[name] as? String
+    ?: error("Property `$name` is not defined in gradle.properties")
