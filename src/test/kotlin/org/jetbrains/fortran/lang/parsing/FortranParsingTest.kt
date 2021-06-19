@@ -71,6 +71,9 @@ class FortranParsingTest : FortranBaseParsingTestCase() {
     fun testOOP() = doParsingTest(FortranTestDataFixture().navigationMetadata("OOP.f95"))
 
     @Throws(Exception::class)
+    fun testIntent() = doParsingTest(FortranTestDataFixture().navigationMetadata("Intent.f95"))
+
+    @Throws(Exception::class)
     fun testInterface() = doParsingTest(FortranTestDataFixture().navigationMetadata("Interface.f95"))
 
     @Throws(Exception::class)
