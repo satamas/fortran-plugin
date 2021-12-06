@@ -11,8 +11,8 @@ val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 plugins {
     idea
     id("org.jetbrains.grammarkit") version "2021.1.3"
-    kotlin("jvm") version "1.3.72"
-    id("org.jetbrains.intellij") version "1.0"
+    kotlin("jvm") version "1.6.0"
+    id("org.jetbrains.intellij") version "1.3.0"
     id("de.undercouch.download") version "4.0.0"
 }
 
@@ -26,7 +26,6 @@ allprojects {
     apply {
         plugin("idea")
         plugin("kotlin")
-        plugin("org.jetbrains.grammarkit")
         plugin("org.jetbrains.intellij")
     }
 
@@ -81,6 +80,10 @@ project(":") {
         version.set(prop("ideaVersion"))
     }
 
+    grammarKit {
+        grammarKitRelease = "2021.1.2"
+    }
+
     val generateFortranLexer = task<GenerateLexer>("generateFortranLexer") {
         source = "src/main/kotlin/org/jetbrains/fortran/lang/lexer/FortranLexer.flex"
         targetDir = "src/gen/org/jetbrains/fortran/lang/lexer"
@@ -110,8 +113,8 @@ project(":") {
     task("resolveDependencies") {
         doLast {
             rootProject.allprojects
-                    .map { it.configurations }
-                    .flatMap { listOf(it.compile, it.testCompile) }
+                .map { it.configurations }
+                .flatMap { listOf(it.getByName("compile"), it.getByName("testCompile")) }
                     .forEach { it.resolve() }
         }
     }

@@ -1,9 +1,11 @@
 package org.jetbrains.fortran.ide.inspections
 
-class FortranProgramUnitNameTest()
-    : FortranInspectionsBaseTestCase(FortranProgramUnitNameMismatchInspection()) {
+import org.junit.Test
 
-    fun testIfConstruct() = checkByText("""
+class FortranProgramUnitNameTest() : FortranInspectionsBaseTestCase(FortranProgramUnitNameMismatchInspection()) {
+    @Test
+    fun testIfConstruct() = checkByText(
+        """
         program myProgram
             write(*,*) myFunction()
         contains
@@ -13,6 +15,7 @@ class FortranProgramUnitNameTest()
         end program <error descr="Program unit name mismatch">myFunction</error>
     """)
 
+    @Test
     fun testFix() = checkFixByText("Fix unit name", """
         program myProgram
             write(*,*) "!"

@@ -2,6 +2,7 @@ package org.jetbrains.fortran.ide.actions
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.jetbrains.fortran.ide.util.executeWriteCommand
+import org.junit.Test
 
 class FortranFixedFormConverterActionTest : BasePlatformTestCase() {
     override fun getTestDataPath() = "src/test/resources/converter/"
@@ -14,5 +15,6 @@ class FortranFixedFormConverterActionTest : BasePlatformTestCase() {
         myFixture.checkResultByFile("Before.f90", fileAfterName, false)
     }
 
+    @Test
     fun testFreeFormComment() = doTest("Before.f", "After.f90")
 }

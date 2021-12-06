@@ -1,7 +1,12 @@
 package org.jetbrains.fortran.ide.intentions
 
-class FortranIfStatementToConstructIntentionTest : FortranIntentionsBaseTestCase(FortranIfStatementToConstructIntention()) {
-    fun testSimpleIfStmt() = testIntention("""
+import org.junit.Test
+
+class FortranIfStatementToConstructIntentionTest :
+    FortranIntentionsBaseTestCase(FortranIfStatementToConstructIntention()) {
+    @Test
+    fun testSimpleIfStmt() = testIntention(
+        """
     program test
         if (.true.) write<caret>("AAA")
     end""", """
@@ -11,6 +16,7 @@ class FortranIfStatementToConstructIntentionTest : FortranIntentionsBaseTestCase
         end if
     end""")
 
+    @Test
     fun testLongIfStmt() = testIntention("""
     program test
         if (.true. &

@@ -1,8 +1,8 @@
 package org.jetbrains.fortran.ide.typing
 
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
-class FortranEnterHandlerTest : LightPlatformCodeInsightFixtureTestCase() {
+class FortranEnterHandlerTest : BasePlatformTestCase() {
     override fun getTestDataPath(): String = "src/test/resources/enterhandler/"
 
     fun testProgram() = doTest()

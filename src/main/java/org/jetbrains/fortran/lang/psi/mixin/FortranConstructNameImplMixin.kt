@@ -10,7 +10,7 @@ import org.jetbrains.fortran.lang.resolve.FortranReference
 
 
 abstract class FortranConstructNameImplMixin(node : ASTNode) : FortranCompositeElementImpl(node), FortranConstructName {
-    override val referenceNameElement: PsiElement get() = notNullChild(findChildByType(FortranTypes.IDENTIFIER))
+    override val referenceNameElement: PsiElement get() = notNullChild<PsiElement>(findChildByType(FortranTypes.IDENTIFIER))
 
     override val referenceName: String get() = referenceNameElement.text
 

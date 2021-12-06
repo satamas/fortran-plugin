@@ -1,9 +1,12 @@
 package org.jetbrains.fortran.ide.inspections
 
-class FortranNonstandardKindInspectionTest()
-    : FortranInspectionsBaseTestCase(FortranNonstandardKindInspection()) {
+import org.junit.Test
 
-    fun testReal8() = checkFixByText("Nonstandard Kind Selector fix","""program prog1
+class FortranNonstandardKindInspectionTest() : FortranInspectionsBaseTestCase(FortranNonstandardKindInspection()) {
+
+    @Test
+    fun testReal8() = checkFixByText(
+        "Nonstandard Kind Selector fix", """program prog1
         real<warning descr="Nonstandard Kind Selector">*8<caret></warning> :: a
     end
     """, """program prog1
@@ -11,6 +14,7 @@ class FortranNonstandardKindInspectionTest()
     end
     """, true)
 
+    @Test
     fun testComplex16() = checkFixByText("Nonstandard Kind Selector fix","""program prog1
         complex<warning descr="Nonstandard Kind Selector">*16<caret></warning> :: a
     end
@@ -19,6 +23,7 @@ class FortranNonstandardKindInspectionTest()
     end
     """, true)
 
+    @Test
     fun testRealN() = checkFixByText("Nonstandard Kind Selector fix","""program prog1
         real<warning descr="Nonstandard Kind Selector">*N<caret></warning> :: a
     end
@@ -27,6 +32,7 @@ class FortranNonstandardKindInspectionTest()
     end
     """, true)
 
+    @Test
     fun testComplexN() = checkFixByText("Nonstandard Kind Selector fix","""program prog1
         complex<warning descr="Nonstandard Kind Selector">*N<caret></warning> :: a
     end

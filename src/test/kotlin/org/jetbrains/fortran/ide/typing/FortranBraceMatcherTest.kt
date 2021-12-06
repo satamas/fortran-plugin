@@ -4,8 +4,10 @@ import com.intellij.codeInsight.highlighting.BraceMatchingUtil.getMatchedBraceOf
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.intellij.lang.annotations.Language
 import org.jetbrains.fortran.FortranFileType
+import org.junit.Test
 
 class FortranBraceMatcherTest : BasePlatformTestCase() {
+    @Test
     fun testPar() = doMatch("""
              program a
              integer :: i
@@ -16,6 +18,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
              """, ")"
     )
 
+    @Test
     fun testType() = doMatch("""
             <caret>program a
             type (met_data), intent(inout) :: fg_data
@@ -26,6 +29,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
             enddo
             end""", "end")
 
+    @Test
     fun testTypeDecl() = doMatch("""
             program a
             <caret>type :: fg_data
@@ -37,6 +41,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
             enddo
             end""", "endtype")
 
+    @Test
     fun testProgram() = doMatch("""
              <caret>program a
              integer :: i
@@ -47,6 +52,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
              """, "end"
     )
 
+    @Test
     fun testDo() = doMatch("""
              program a
              integer :: i
@@ -57,6 +63,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
              """, "enddo"
     )
 
+    @Test
     fun testLabeledDo() = doMatch("""
              program a
              integer :: i
@@ -67,6 +74,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
              """, "enddo"
     )
 
+    @Test
     fun testIf() = doMatch("""
              program a
              integer :: i
@@ -79,6 +87,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
              """, "else"
     )
 
+    @Test
     fun testForall() = doMatch("""
              program a
              integer :: i
@@ -88,6 +97,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
              """, "endforall"
     )
 
+    @Test
     fun testSubroutineWithSelectType() = doMatch("""
     <caret>subroutine a()
         integer :: i
@@ -103,6 +113,7 @@ class FortranBraceMatcherTest : BasePlatformTestCase() {
     endsubroutine
     """, "endsubroutine")
 
+    @Test
     fun testSelectType() = doMatch("""
     subroutine a()
         integer :: i

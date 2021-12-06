@@ -18,10 +18,10 @@ object FortranTestUtils {
         }
     }
 
-    @JvmStatic fun getResourceAsString(path: String): String? {
-        val stream = FortranInspectionsBaseTestCase::class.java.classLoader.getResourceAsStream(path)
-                ?: return null
-
-        return StreamUtil.readText(stream, Charsets.UTF_8)
+    @JvmStatic
+    fun getResourceAsString(path: String): String? {
+        return FortranInspectionsBaseTestCase::class.java.classLoader.getResourceAsStream(path)?.use {
+            StreamUtil.readText(it.reader(Charsets.UTF_8))
+        } ?: return null
     }
 }

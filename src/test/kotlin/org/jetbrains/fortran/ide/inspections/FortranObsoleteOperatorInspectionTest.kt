@@ -1,9 +1,11 @@
 package org.jetbrains.fortran.ide.inspections
 
-class FortranObsoleteOperatorInspectionTest()
-    : FortranInspectionsBaseTestCase(FortranObsoleteOperatorInspection()) {
+import org.junit.Test
 
-    fun testUppercaseObsoleteOperator() = checkFixByText("Obsolete operator fix","""program a
+class FortranObsoleteOperatorInspectionTest() : FortranInspectionsBaseTestCase(FortranObsoleteOperatorInspection()) {
+    @Test
+    fun testUppercaseObsoleteOperator() = checkFixByText(
+        "Obsolete operator fix", """program a
     if (1 <warning descr="Obsolete operator">.GE.<caret></warning> 2) write(*,*) "1>=2"
     end
     """, """program a
@@ -11,6 +13,7 @@ class FortranObsoleteOperatorInspectionTest()
     end
     """, true)
 
+    @Test
     fun testLowercaseObsoleteOperator() = checkFixByText("Obsolete operator fix","""program a
     if (1 <warning descr="Obsolete operator">.lt.<caret></warning> 2) write(*,*) "1<2"
     end
@@ -19,6 +22,7 @@ class FortranObsoleteOperatorInspectionTest()
     end
     """, true)
 
+    @Test
     fun testObsoleteOperatorWithoutSpacesAroundIt() = checkFixByText("Obsolete operator fix","""program a
     if (1<warning descr="Obsolete operator">.eq.<caret></warning>2) write(*,*) "1=2"
     end
@@ -27,6 +31,7 @@ class FortranObsoleteOperatorInspectionTest()
     end
     """, true)
 
+    @Test
     fun testObsoleteOperatorWithComments() = checkFixByText("Obsolete operator fix","""program a
     if (1 &
     ! Comment

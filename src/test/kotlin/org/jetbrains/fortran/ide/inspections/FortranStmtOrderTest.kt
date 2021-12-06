@@ -1,9 +1,11 @@
 package org.jetbrains.fortran.ide.inspections
 
-class FortranStmtOrderTest()
-    : FortranInspectionsBaseTestCase(FortranStmtOrderInspection()) {
+import org.junit.Test
 
-    fun testStmtsInForallConstruct() = checkByText("""
+class FortranStmtOrderTest() : FortranInspectionsBaseTestCase(FortranStmtOrderInspection()) {
+    @Test
+    fun testStmtsInForallConstruct() = checkByText(
+        """
         forall (i=1:10:2)
             <error descr="This statement is not allowed in forall construct">write(*,*) i</error>
             <error descr="This construct is not allowed in forall construct">do j=1,3
@@ -12,6 +14,7 @@ class FortranStmtOrderTest()
         end
     """)
 
+    @Test
     fun testStmtsInWhereConstruct() = checkByText("""
         where (1<2)
             <error descr="This statement is not allowed in where construct">write(*,*) i</error>
@@ -21,6 +24,7 @@ class FortranStmtOrderTest()
         end
     """)
 
+    @Test
     fun testStmtsInInterfaces() = checkByText("""
       module gaussinter
       interface solve
@@ -35,6 +39,7 @@ class FortranStmtOrderTest()
       end module
     """)
 
+    @Test
     fun testStmtsInModule() = checkByText("""
       module gaussinter
       integer :: a
@@ -44,7 +49,7 @@ class FortranStmtOrderTest()
       end module
     """)
 
-
+    @Test
     fun testSpecificationStmtsInConstruct() = checkByText("""
         do i=1,3
             <error descr="Specification statement is not allowed here">integer :: i</error>
@@ -53,6 +58,7 @@ class FortranStmtOrderTest()
         end
     """)
 
+    @Test
     fun testDeclarationConstructInConstruct() = checkByText("""
         do i=1,3
             <error descr="Declaration construct is not allowed in executable construct">type :: myType
@@ -62,6 +68,7 @@ class FortranStmtOrderTest()
         end
     """)
 
+    @Test
     fun testSmtOrder() = checkByText("""
         program testStmtsOrder
             import T

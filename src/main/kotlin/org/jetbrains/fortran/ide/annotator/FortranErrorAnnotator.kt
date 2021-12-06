@@ -3,6 +3,7 @@ package org.jetbrains.fortran.ide.annotator
 import com.intellij.codeInsight.daemon.impl.HighlightRangeExtension
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
@@ -18,22 +19,27 @@ class FortranErrorAnnotator : Annotator, HighlightRangeExtension {
             override fun visitLabelDecl(labelDecl: FortranLabelDecl) {
                 val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return
                 val declarations = PsiTreeUtil.findChildrenOfType(programUnit, FortranLabelDeclImpl::class.java)
-                        .filter { (labelDecl as FortranLabelDeclImpl).getLabelValue() == it.getLabelValue() }
+                    .filter { (labelDecl as FortranLabelDeclImpl).getLabelValue() == it.getLabelValue() }
                 if (declarations.size > 1) {
-                    holder.createErrorAnnotation(
-                            labelDecl, "Duplicated label `${(labelDecl as FortranLabelDeclImpl).getLabelValue()}` declaration"
-                    )
+                    holder
+                        .newAnnotation(
+                            HighlightSeverity.ERROR,
+                            "Duplicated label `${(labelDecl as FortranLabelDeclImpl).getLabelValue()}` declaration"
+                        )
+                        .range(labelDecl)
+                        .create()
                 }
             }
 
             override fun visitConstructNameDecl(decl: FortranConstructNameDecl) {
                 val programUnit = PsiTreeUtil.getParentOfType(element, FortranProgramUnit::class.java) ?: return
                 val declarations = PsiTreeUtil.findChildrenOfType(programUnit, FortranConstructNameDeclImpl::class.java)
-                        .filter { decl.name.equals(it.name, true) }
+                    .filter { decl.name.equals(it.name, true) }
                 if (declarations.size > 1) {
-                    holder.createErrorAnnotation(
-                            decl, "Duplicated construct name `${decl.name}` declaration"
-                    )
+                    holder
+                        .newAnnotation(HighlightSeverity.ERROR, "Duplicated construct name `${decl.name}` declaration")
+                        .range(decl)
+                        .create()
                 }
             }
         }

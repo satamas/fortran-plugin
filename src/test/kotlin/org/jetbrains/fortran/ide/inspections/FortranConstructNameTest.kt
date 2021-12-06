@@ -1,9 +1,12 @@
 package org.jetbrains.fortran.ide.inspections
 
-class FortranConstructNameTest()
-    : FortranInspectionsBaseTestCase(FortranConstructNameMismatchInspection()) {
+import org.junit.Test
 
-    fun testIfConstruct() = checkByText("""
+class FortranConstructNameTest() : FortranInspectionsBaseTestCase(FortranConstructNameMismatchInspection()) {
+
+    @Test
+    fun testIfConstruct() = checkByText(
+        """
         myIf: if (2 > 1) then
             write (*,*) "2>1"
         else if (2 == 1) then MYIF
@@ -18,6 +21,7 @@ class FortranConstructNameTest()
         end
     """)
 
+    @Test
     fun testFix() = checkFixByText("Construct name fix", """
         myDo: do i=1,5,1
             write(*,*) i

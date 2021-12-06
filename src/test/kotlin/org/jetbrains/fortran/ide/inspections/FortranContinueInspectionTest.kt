@@ -1,9 +1,12 @@
 package org.jetbrains.fortran.ide.inspections
 
-class FortranContinueInspectionTest()
-    : FortranInspectionsBaseTestCase(FortranContinueInspection()) {
+import org.junit.Test
 
-    fun testContinue() = checkFixByText("Continue statement without label fix","""program a
+class FortranContinueInspectionTest() : FortranInspectionsBaseTestCase(FortranContinueInspection()) {
+
+    @Test
+    fun testContinue() = checkFixByText(
+        "Continue statement without label fix", """program a
     b=1
     <warning descr="Continue statement without label">continue<caret></warning>
     end
@@ -12,6 +15,7 @@ class FortranContinueInspectionTest()
     end
     """, true)
 
+    @Test
     fun testContinueWithOtherStmts() = checkFixByText("Continue statement without label fix","""program a
     b=1
     <warning descr="Continue statement without label">continue<caret></warning>
@@ -23,6 +27,7 @@ class FortranContinueInspectionTest()
     end
     """, true)
 
+    @Test
     fun testContinueWithEmptyLines() = checkFixByText("Continue statement without label fix","""program a
     b = 1
 
@@ -36,6 +41,7 @@ class FortranContinueInspectionTest()
     end
     """, true)
 
+    @Test
     fun testContinueWithComment() = checkFixByText("Continue statement without label fix","""program a
     <warning descr="Continue statement without label">continue<caret></warning> ! comment
     end

@@ -1,14 +1,18 @@
 package org.jetbrains.fortran.ide.inspections
 
-class FortranUnusedConstructNameTest()
-    : FortranInspectionsBaseTestCase(FortranUnusedConstructNameInspection()) {
+import org.junit.Test
 
-    fun testUnusedConstructName() = checkByText("""
+class FortranUnusedConstructNameTest() : FortranInspectionsBaseTestCase(FortranUnusedConstructNameInspection()) {
+    @Test
+    fun testUnusedConstructName() = checkByText(
+        """
         <weak_warning descr="Unused construct name">myDo:</weak_warning> do i=1,2
         enddo
         end
-    """, true, false, true)
+    """, true, false, true
+    )
 
+    @Test
     fun testUnusedConstructNameFix() = checkFixByText("Delete construct name","""
         <weak_warning descr="Unused construct name"><caret>myDo:</weak_warning> do i=1,2
         enddo
@@ -19,6 +23,7 @@ class FortranUnusedConstructNameTest()
         end
     """, true, false, true)
 
+    @Test
     fun testUnusedConstructNameFixWithoutWhitesace() = checkFixByText("Delete construct name","""
         <weak_warning descr="Unused construct name"><caret>myDo:</weak_warning>do i=1,2
         enddo

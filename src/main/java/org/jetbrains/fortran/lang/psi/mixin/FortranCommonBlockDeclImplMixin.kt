@@ -15,7 +15,10 @@ abstract class FortranCommonBlockDeclImplMixin(node : ASTNode) : FortranNamedEle
         return this
     }
 
-    override val referenceNameElement: PsiElement get() = notNullChild(findChildByType(FortranTypes.IDENTIFIER))
+    override val referenceNameElement: PsiElement
+        get() {
+            return notNullChild<PsiElement>(findChildByType(FortranTypes.IDENTIFIER))
+        }
 
     override val referenceName: String get() = referenceNameElement.text
 

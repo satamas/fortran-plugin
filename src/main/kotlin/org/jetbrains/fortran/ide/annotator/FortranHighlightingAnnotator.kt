@@ -3,6 +3,7 @@ package org.jetbrains.fortran.ide.annotator
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.ReferencesSearch
@@ -17,20 +18,35 @@ class FortranHighlightingAnnotator : Annotator {
         when (element.node.elementType) {
             IDENTIFIER -> {
                 if (element.parent !is FortranConstructNameDecl) {
-                    holder.createInfoAnnotation(element, null).textAttributes = FortranHighlightingColors.IDENTIFIER.textAttributesKey
+                    holder
+                        .newAnnotation(HighlightSeverity.INFORMATION, "")
+                        .range(element)
+                        .textAttributes(FortranHighlightingColors.IDENTIFIER.textAttributesKey)
+                        .create()
                 } else {
                     val decl = element.parent
                     if (ReferencesSearch.search(decl, GlobalSearchScope.fileScope(decl.containingFile)).findFirst() != null) {
-                        holder.createInfoAnnotation(element, null).textAttributes = FortranHighlightingColors.IDENTIFIER.textAttributesKey
+                        holder
+                            .newAnnotation(HighlightSeverity.INFORMATION, "")
+                            .range(element)
+                            .textAttributes(FortranHighlightingColors.IDENTIFIER.textAttributesKey)
+                            .create()
                     }
                 }
             }
             in FortranTokenSets.KEYWORDS -> {
-                holder.createInfoAnnotation(element, null).textAttributes = FortranHighlightingColors.KEYWORD.textAttributesKey
+                holder
+                    .newAnnotation(HighlightSeverity.INFORMATION, "")
+                    .range(element)
+                    .textAttributes(FortranHighlightingColors.KEYWORD.textAttributesKey)
+                    .create()
             }
             FortranTokenType.CONDITIONALLY_NON_COMPILED_COMMENT -> {
-                holder.createInfoAnnotation(element, null).textAttributes =
-                        FortranHighlightingColors.CONDITIONALLY_NOT_COMPILED.textAttributesKey
+                holder
+                    .newAnnotation(HighlightSeverity.INFORMATION, "")
+                    .range(element)
+                    .textAttributes(FortranHighlightingColors.CONDITIONALLY_NOT_COMPILED.textAttributesKey)
+                    .create()
             }
         }
     }

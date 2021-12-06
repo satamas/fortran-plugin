@@ -2,6 +2,7 @@ package org.jetbrains.fortran.ide.annotator
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.intellij.lang.annotations.Language
+import org.junit.Test
 
 class RsErrorAnnotatorTest : BasePlatformTestCase() {
     override fun getTestDataPath(): String = "src/test/annotator"
@@ -11,6 +12,7 @@ class RsErrorAnnotatorTest : BasePlatformTestCase() {
         myFixture.testHighlighting(false, false, false)
     }
 
+    @Test
     fun testDuplicateLabels() = checkErrors("""
         program testDuplicateLabels
             goto 1
@@ -19,6 +21,7 @@ class RsErrorAnnotatorTest : BasePlatformTestCase() {
         end
         """)
 
+    @Test
     fun testDuplicateConstructs() = checkErrors("""
         program testDuplicateConstructs
             <error descr="Duplicated construct name `myDo` declaration">myDo:</error> do i =1,3

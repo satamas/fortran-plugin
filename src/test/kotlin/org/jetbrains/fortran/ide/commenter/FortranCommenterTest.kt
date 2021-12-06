@@ -1,12 +1,12 @@
 package org.jetbrains.fortran.ide.commenter
 
 import com.intellij.openapi.actionSystem.IdeActions
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
-class FortranCommenterTest : LightPlatformCodeInsightFixtureTestCase() {
+class FortranCommenterTest : BasePlatformTestCase() {
     override fun getTestDataPath() = "src/test/resources/commenter/"
 
-    private fun doTest(fileName: String, fileAfterName : String) {
+    private fun doTest(fileName: String, fileAfterName: String) {
         myFixture.configureByFile(fileName)
         myFixture.performEditorAction(IdeActions.ACTION_COMMENT_LINE)
         myFixture.checkResultByFile(fileAfterName)

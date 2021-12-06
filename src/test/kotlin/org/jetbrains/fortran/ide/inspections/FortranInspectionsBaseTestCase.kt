@@ -4,6 +4,7 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.intellij.lang.annotations.Language
 import org.jetbrains.fortran.lang.FortranTestUtils
+import org.junit.Test
 
 abstract class FortranInspectionsBaseTestCase(val inspection: LocalInspectionTool) : BasePlatformTestCase() {
     protected fun checkByText(
@@ -28,10 +29,11 @@ abstract class FortranInspectionsBaseTestCase(val inspection: LocalInspectionToo
         myFixture.checkResult(after)
     }
 
+    @Test
     fun testInspectionHasDocumentation() {
         val description = "inspectionDescriptions/${inspection.javaClass.simpleName?.dropLast("Inspection".length)}.html"
         val text = FortranTestUtils.getResourceAsString(description)
-                ?: error("No inspection description for ${inspection.javaClass} ($description)")
+            ?: error("No inspection description for ${inspection.javaClass} ($description)")
         FortranTestUtils.checkHtmlStyle(text)
     }
 

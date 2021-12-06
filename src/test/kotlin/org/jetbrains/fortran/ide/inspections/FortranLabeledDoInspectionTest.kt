@@ -1,9 +1,12 @@
 package org.jetbrains.fortran.ide.inspections
 
-class FortranLabeledDoInspectionTest()
-    : FortranInspectionsBaseTestCase(FortranLabeledDoInspection()) {
+import org.junit.Test
 
-    fun testEndDo() = checkFixByText("Convert to Nonlabaled do construct","""program a
+class FortranLabeledDoInspectionTest() : FortranInspectionsBaseTestCase(FortranLabeledDoInspection()) {
+
+    @Test
+    fun testEndDo() = checkFixByText(
+        "Convert to Nonlabaled do construct", """program a
     <warning descr="Labeled do construct is deprecated">do 1<caret> j = 1, 3</warning>
     1 end do
     end
@@ -13,6 +16,7 @@ class FortranLabeledDoInspectionTest()
     end
     """, true)
 
+    @Test
     fun testUsedLabel() = checkFixByText("Convert to Nonlabaled do construct","""program a
     <warning descr="Labeled do construct is deprecated">do 1 j = 1, 3<caret></warning>
     1 end do
@@ -25,6 +29,7 @@ class FortranLabeledDoInspectionTest()
     end
     """, true)
 
+    @Test
     fun testTermAction() = checkFixByText("Convert to Nonlabaled do construct","""program a
     <warning descr="Labeled do construct is deprecated">do 1<caret>j = 1, 3</warning>
         1 a = 1
@@ -36,6 +41,7 @@ class FortranLabeledDoInspectionTest()
     end
     """, true)
 
+    @Test
     fun testContinue() = checkFixByText("Convert to Nonlabaled do construct","""program a
     <warning descr="Labeled do construct is deprecated">do 1<caret>j = 1, 3</warning>
         a = 1
@@ -48,6 +54,7 @@ class FortranLabeledDoInspectionTest()
     end
     """, true)
 
+    @Test
     fun testTermConstruct() = checkFixByText("Convert to Nonlabaled do construct","""program a
     <warning descr="Labeled do construct is deprecated">do 1<caret> j = 1, 3</warning>
         do 1 i = 1,4
