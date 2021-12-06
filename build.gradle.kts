@@ -73,6 +73,10 @@ project(":clion") {
     tasks.withType<JarSearchableOptionsTask> {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
+
+    tasks.named<Zip>("buildPlugin") {
+        archiveBaseName.set("fortran-plugin")
+    }
 }
 
 project(":") {
