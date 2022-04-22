@@ -1,6 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.intellij.tasks.JarSearchableOptionsTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -10,9 +10,9 @@ val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2021.1.3"
-    kotlin("jvm") version "1.6.0"
-    id("org.jetbrains.intellij") version "1.3.0"
+    id("org.jetbrains.grammarkit") version "2021.2.2"
+    kotlin("jvm") version "1.6.20"
+    id("org.jetbrains.intellij") version "1.5.3"
     id("de.undercouch.download") version "4.0.0"
 }
 
@@ -47,13 +47,13 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "11"
         }
     }
 
-    configure<JavaPluginConvention> {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     sourceSets {
@@ -85,23 +85,23 @@ project(":") {
     }
 
     grammarKit {
-        grammarKitRelease = "2021.1.2"
+        grammarKitRelease.set("2021.1.2")
     }
 
-    val generateFortranLexer = task<GenerateLexer>("generateFortranLexer") {
-        source = "src/main/kotlin/org/jetbrains/fortran/lang/lexer/FortranLexer.flex"
-        targetDir = "src/gen/org/jetbrains/fortran/lang/lexer"
-        targetClass = "_FortranLexer"
-        purgeOldFiles = true
+    val generateFortranLexer = task<GenerateLexerTask>("generateFortranLexer") {
+        source.set("src/main/kotlin/org/jetbrains/fortran/lang/lexer/FortranLexer.flex")
+        targetDir.set("src/gen/org/jetbrains/fortran/lang/lexer")
+        targetClass.set("_FortranLexer")
+        purgeOldFiles.set(true)
     }
 
-    val generateFortranParser = task<GenerateParser>("generateFortranParser") {
+    val generateFortranParser = task<GenerateParserTask>("generateFortranParser") {
         dependsOn(generateFortranLexer)
-        source = "src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf"
-        targetRoot = "src/gen"
-        pathToParser = "/org/jetbrains/fortran/lang/parser/FortranParser.java"
-        pathToPsiRoot = "/org/jetbrains/fortran/lang/psi"
-        purgeOldFiles = true
+        source.set("src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf")
+        targetRoot.set("src/gen")
+        pathToParser.set("/org/jetbrains/fortran/lang/parser/FortranParser.java")
+        pathToPsiRoot.set("/org/jetbrains/fortran/lang/psi")
+        purgeOldFiles.set(true)
     }
 
     tasks.withType<KotlinCompile> {
