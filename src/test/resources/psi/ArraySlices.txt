@@ -263,6 +263,44 @@ FILE
                   PsiElement(integerliteral)('2')
             PsiElement())(')')
       PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(::)('::')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(::)('::')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
     PsiWhiteSpace('\n')
     END_PROGRAM_STMT
       PsiElement(keyword)('end')
