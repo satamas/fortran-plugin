@@ -741,7 +741,7 @@ data_name ::= fidentifier { elementType = data_path }
 // R620
 section_subscript ::= (fidentifier '=' expr) | subscript_triplet | expr
 // R621
-subscript_triplet ::= (expr)? ':' (expr)? (':' expr)?
+subscript_triplet ::= ((expr)? ':' (expr)? (':' expr)?) | ((expr)? '::' expr)
 // R622 - 623 are trivial
 // R624
 image_selector ::= '[' <<list expr>> ']'  { pin = 1 }

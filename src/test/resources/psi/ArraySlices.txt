@@ -1,0 +1,308 @@
+FILE
+  FortranMainProgramImpl(MAIN PROGRAM)
+    FortranBlockImpl(BLOCK)
+      FortranTypeDeclarationStmtImpl(TYPE_DECLARATION_STMT)
+        NUMBER_TYPE_SPEC
+          PsiElement(integer)('integer')
+        PsiWhiteSpace(' ')
+        PsiElement(::)('::')
+        PsiWhiteSpace(' ')
+        FortranEntityDeclImpl(ENTITY_DECL)
+          PsiElement(identifier)('A')
+          PsiElement(()('(')
+          ASSUMED_SHAPE_SPEC
+            PsiElement(:)(':')
+          PsiElement())(')')
+        PsiElement(,)(',')
+        PsiWhiteSpace(' ')
+        FortranEntityDeclImpl(ENTITY_DECL)
+          PsiElement(identifier)('B')
+          PsiElement(()('(')
+          ASSUMED_SHAPE_SPEC
+            PsiElement(:)(':')
+          PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            PsiWhiteSpace(' ')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(:)(':')
+            PsiWhiteSpace(' ')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            PsiWhiteSpace(' ')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(:)(':')
+            PsiWhiteSpace(' ')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(:)(':')
+                PsiWhiteSpace(' ')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            PsiWhiteSpace(' ')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            PsiWhiteSpace(' ')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(:)(':')
+                PsiWhiteSpace(' ')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(:)(':')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(:)(':')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      PsiWhiteSpace('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('5')
+                PsiElement(:)(':')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                CONSTANT
+                  PsiElement(integerliteral)('1')
+                PsiElement(::)('::')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+      ASSIGNMENT_STMT
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('A')
+        PsiWhiteSpace(' ')
+        PsiElement(=)('=')
+        PsiWhiteSpace(' ')
+        DESIGNATOR
+          FortranDataPathImpl(DATA_PATH)
+            PsiElement(identifier)('B')
+            PsiElement(()('(')
+            SECTION_SUBSCRIPT
+              SUBSCRIPT_TRIPLET
+                PsiElement(::)('::')
+                CONSTANT
+                  PsiElement(integerliteral)('2')
+            PsiElement())(')')
+      PsiElement(eol)('\n')
+    PsiWhiteSpace('\n')
+    END_PROGRAM_STMT
+      PsiElement(keyword)('end')
+      PsiWhiteSpace(' ')
+      PsiElement(keyword)('program')

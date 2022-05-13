@@ -125,5 +125,9 @@ class FortranParsingTest : FortranBaseParsingTestCase() {
     @Test
     fun testSelectType() = doParsingTest(FortranTestDataFixture().navigationMetadata("SelectType.f95"))
 
+    @Throws(Exception::class)
+    @Test
+    fun testArraySlices() = doParsingTest(FortranTestDataFixture().navigationMetadata("ArraySlices.f95"))
+
     fun testIncompleteFunction() = doParsingTest(FortranTestDataFixture().navigationMetadata("FunctionIncomplete.f95"))
 }
