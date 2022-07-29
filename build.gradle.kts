@@ -11,8 +11,8 @@ val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 plugins {
     idea
     id("org.jetbrains.grammarkit") version "2021.2.2"
-    kotlin("jvm") version "1.6.20"
-    id("org.jetbrains.intellij") version "1.5.3"
+    kotlin("jvm") version "1.7.10"
+    id("org.jetbrains.intellij") version "1.7.0"
     id("de.undercouch.download") version "4.0.0"
 }
 
