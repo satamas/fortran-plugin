@@ -57,7 +57,7 @@ else
 %eof}
 
 %xstate FREEFORM FIXEDFORM QUOTE_FIXED_STRING QUOTE_FREE_STRING APOSTR_FIXED_STRING APOSTR_FREE_STRING DIRECTIVE
-%xstate FIXED_FORMAT_STR FREE_FORMAT_STR FREEFORM_LINE_CONTINUE
+%xstate FIXED_FORMAT_STR FREE_FORMAT_STR FREEFORM_LINE_CONTINUE OPERATOR_DIV_FIXED OPERATOR_DIV_FREE
 
 BDIGIT=[0-1](\040*[0-1])*
 BINARY_LITERAL=[Bb]\'{BDIGIT}\'|[Bb]\"{BDIGIT}\"|\'{BDIGIT}\'[Bb]|\"{BDIGIT}\"[Bb]
@@ -181,6 +181,22 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
 }
 
+<OPERATOR_DIV_FIXED> {
+    ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+    {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
+    "/" { return DIV; }
+    "//" { return DIVDIV; }
+    ")" { popState(); return RPAR; }
+}
+
+<OPERATOR_DIV_FREE> {
+    ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
+    {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
+    "/" { return DIV; }
+    "//" { return DIVDIV; }
+    ")" { popState(); return RPAR; }
+}
+
 <FREE_FORMAT_STR, FIXED_FORMAT_STR> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
     {LINE_COMMENT} { return LINE_COMMENT; }
@@ -212,6 +228,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
      "format" { return WORD; }
      "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FREE_FORMAT_STR); return WORD; }
+      "("({WHITE_SPACE_CHAR}|{FREE_LINE_CONTINUE})*(("/")|("//"))({WHITE_SPACE_CHAR}|{FREE_LINE_CONTINUE})*")" { yypushback(yylength()-1); pushState(OPERATOR_DIV_FREE); return(LPAR); }
 }
 
 <FIXEDFORM> {
@@ -222,6 +239,8 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
     "format" { return WORD; }
     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return WORD; }
+    "("({WHITE_SPACE_CHAR}|{FIXED_LINE_CONTINUE})*(("/")|("//"))({WHITE_SPACE_CHAR}|{FIXED_LINE_CONTINUE})*")" { yypushback(yylength()-1); pushState(OPERATOR_DIV_FIXED); return(LPAR); }
+
     ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
     ^({WHITE_SPACE_CHAR})+ { if (yylength() > 6) yypushback(yylength()-6); return FIRST_WHITE_SPACE; }
     ^[^0-9cCdD#*!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
@@ -230,7 +249,6 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ^[0-9\040dD]{3}[^0-9!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
     ^[0-9\040dD]{4}[^0-9!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
     ^[0-9\040dD]{5}[^0-9!\040\t\n\r][^\n\r]* { return BAD_CHARACTER; }
-
 }
 
 <FREEFORM_LINE_CONTINUE> {
