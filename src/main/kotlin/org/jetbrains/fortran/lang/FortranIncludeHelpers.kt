@@ -1,8 +1,7 @@
 package org.jetbrains.fortran.lang
 
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.Ref
-import com.intellij.openapi.util.io.FileUtil
+import com.intellij.openapi.util.io.OSAgnosticPathUtil
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
@@ -35,7 +34,7 @@ fun resolveIncludedFile(
 }
 
 private fun findAbsoluteFile(path: String, first: String): VirtualFile? {
-    if (first.isEmpty() || FileUtil.isWindowsAbsolutePath(path)) {
+    if (first.isEmpty() || OSAgnosticPathUtil.isAbsoluteDosPath(path)) {
         val file = LocalFileSystem.getInstance().findFileByPath(path)
         return if (file == null || file.isDirectory) null else file
     }

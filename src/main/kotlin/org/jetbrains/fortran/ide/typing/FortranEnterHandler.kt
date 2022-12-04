@@ -136,8 +136,8 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
 
     private fun formatEndString(endString: String, style: KeywordStyle): String {
         return when (style) {
-            KeywordStyle.UPPERCASE -> endString.toUpperCase()
-            KeywordStyle.CAMELCASE -> endString.capitalize()
+            KeywordStyle.UPPERCASE -> endString.uppercase()
+            KeywordStyle.CAMELCASE -> endString.replaceFirstChar { it.titlecase() }
             else -> endString
         }
     }

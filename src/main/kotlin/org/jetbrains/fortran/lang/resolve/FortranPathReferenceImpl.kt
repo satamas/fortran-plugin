@@ -32,9 +32,9 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         // module rename
         val useStmt = PsiTreeUtil.getParentOfType(element, FortranUseStmt::class.java)
         if (useStmt != null) {
-            return when {
-                element.parent is FortranRenameStmt -> resolveModuleRename(useStmt, incompleteCode)
-                element.parent is FortranOnlyStmt -> resolveOnlyStmt(element.parent as FortranOnlyStmt, incompleteCode)
+            return when (element.parent) {
+                is FortranRenameStmt -> resolveModuleRename(useStmt, incompleteCode)
+                is FortranOnlyStmt -> resolveOnlyStmt(element.parent as FortranOnlyStmt, incompleteCode)
                 else -> resolveModules()
             }
         }
@@ -225,11 +225,13 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
     }
 
     private fun resolveModules() = collectAllProjectFiles()
+            .asSequence()
             .map { PsiManager.getInstance(element.project).findFile(it) }
             .map { programUnitsFromFile(it) }
             .flatten()
             .filterIsInstance<FortranModule>()
             .mapNotNull { it.unit }
+            .toList()
 
 
     private fun findSubModulesInProjectFiles(moduleName: String?, subModuleName: String?): MutableSet<FortranSubmodule> {
@@ -252,8 +254,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             return mutableSetOf()
         }
         // loop check
-        if (allSeenModules.contains(module.name!!.toLowerCase())) return mutableSetOf()
-        allSeenModules.add(module.name!!.toLowerCase())
+        if (allSeenModules.contains(module.name!!.lowercase())) return mutableSetOf()
+        allSeenModules.add(module.name!!.lowercase())
 
         val allNames: MutableSet<FortranNamedElement> = mutableSetOf()
 
@@ -288,7 +290,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             allNames.addAll(findSubModulesInProjectFiles(module.getModuleName(), module.getPersonalName())
                     .flatMap { findNamePsiInModule(it, incompleteCode, mutableSetOf(), onlyTypes) }.toList())
         }
-        allSeenModules.remove(module.name!!.toLowerCase())
+        allSeenModules.remove(module.name!!.lowercase())
         return allNames
     }
 
@@ -340,16 +342,16 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             }
             return useStmt.onlyStmtList.mapNotNull { it.dataPath }.flatMap {
                 val resolvedResult = it.reference.multiResolve()
-                if (resolvedResult.isNotEmpty()) resolvedResult else listOf(it)
+                resolvedResult.ifEmpty { listOf(it) }
             }
         }
         val renameInOnly = useStmt.onlyStmtList.map { it.renameStmt }
         val renameList = ((module.parent as FortranUseStmt).renameStmtList + renameInOnly)
-                .mapNotNull { it?.dataPath?.referenceName?.toLowerCase() }
+                .mapNotNull { it?.dataPath?.referenceName?.lowercase() }
         return module.reference.multiResolve().flatMap {
             findNamePsiInModule(PsiTreeUtil.getParentOfType(it, FortranModule::class.java), incompleteCode, allSeenModules, onlyTypes)
         }.filter {
-            element.referenceName.toLowerCase() !in renameList
+            element.referenceName.lowercase() !in renameList
         }
     }
 

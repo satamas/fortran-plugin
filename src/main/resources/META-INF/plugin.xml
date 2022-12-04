@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2022.2</version>
+    <version>2022.3</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,12 +12,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-    IntelliJ 2022.2 support
+    IntelliJ 2022.3 support
     ]]>
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="222.3345.118" until-build="222.*"/>
+    <idea-version since-build="223.7571.0" until-build="223.*"/>
 
     <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
     <depends>com.intellij.modules.lang</depends>

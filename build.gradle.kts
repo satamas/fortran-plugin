@@ -10,10 +10,10 @@ val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2021.2.2"
-    kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.intellij") version "1.7.0"
-    id("de.undercouch.download") version "4.0.0"
+    id("org.jetbrains.grammarkit") version "2022.3"
+    kotlin("jvm") version "1.7.21"
+    id("org.jetbrains.intellij") version "1.10.0"
+    id("de.undercouch.download") version "5.3.0"
 }
 
 idea {
@@ -47,13 +47,13 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = "17"
         }
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     sourceSets {
@@ -98,9 +98,13 @@ project(":") {
     val generateFortranParser = task<GenerateParserTask>("generateFortranParser") {
         dependsOn(generateFortranLexer)
         source.set("src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf")
+        sourceFile.set(project.layout.projectDirectory.file(source.get()))
         targetRoot.set("src/gen")
+        targetRootOutputDir.set(project.layout.projectDirectory.dir(targetRoot.get()))
         pathToParser.set("/org/jetbrains/fortran/lang/parser/FortranParser.java")
+        parserFile.set(project.layout.projectDirectory.file("${targetRoot.get()}/${pathToParser.get()}"))
         pathToPsiRoot.set("/org/jetbrains/fortran/lang/psi")
+        psiDir.set(project.layout.projectDirectory.dir("${targetRoot.get()}/${pathToPsiRoot.get()}"))
         purgeOldFiles.set(true)
     }
 

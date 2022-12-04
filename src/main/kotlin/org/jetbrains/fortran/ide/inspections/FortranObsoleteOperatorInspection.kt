@@ -17,7 +17,7 @@ class FortranObsoleteOperatorInspection : LocalInspectionTool() {
 
                     val operator = expr.relOp
 
-                    val newOperatorText = when (operator.text.toLowerCase()){
+                    val newOperatorText = when (operator.text.lowercase()) {
                         ".eq." -> "=="
                         ".ne." -> "/="
                         ".lt." -> "<"

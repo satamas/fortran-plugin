@@ -18,7 +18,7 @@ class FortranNonstandardKindInspection : LocalInspectionTool() {
             val spec = kindSelector.parent as FortranNumberTypeSpec
 
             val kindSelectorText = kindSelector.expr?.text
-            val newKindSelector = if (spec.text.toLowerCase().contains("complex")) {
+            val newKindSelector = if (spec.text.lowercase().contains("complex")) {
                 if ((kindSelector.expr as? FortranConstant)?.integerliteral != null) {
                     "(kind=${(kindSelectorText?.toInt()?.div(2).toString())})"
                 } else {

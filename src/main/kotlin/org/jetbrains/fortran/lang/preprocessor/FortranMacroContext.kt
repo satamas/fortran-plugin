@@ -1,6 +1,5 @@
 package org.jetbrains.fortran.lang.preprocessor
 
-import gnu.trove.THashMap
 import java.util.*
 
 
@@ -22,7 +21,7 @@ class FortranMacrosContextImpl : FortranMacrosContext {
             val isElseIf: Boolean = false
     )
 
-    private val macros = THashMap<String, FortranMacro>()
+    private val macros = mutableMapOf<String, FortranMacro>()
     private val nestedConditions = ArrayDeque<Condition>()
 
     override fun define(macro: FortranMacro) {

@@ -5,6 +5,7 @@ import com.intellij.application.options.SmartIndentOptionsEditor
 import com.intellij.lang.Language
 import com.intellij.openapi.util.io.StreamUtil
 import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable
+import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizableOptions
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider
 import org.jetbrains.fortran.FortranLanguage
@@ -45,24 +46,25 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
                 consumer.renameStandardOption("SPACE_AROUND_MULTIPLICATIVE_OPERATORS", "Multiplicative operators (*, /)")
                 consumer.renameStandardOption("SPACE_AROUND_UNARY_OPERATOR", "Unary operators (+, -)")
 
+                val codeStyleSettingsCustomizable = CodeStyleSettingsCustomizableOptions.getInstance()
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_NOT_OPERATOR", "Not operator (.not.)",
-                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                        codeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_POWER_OPERATOR", "Power operator (**)",
-                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                        codeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_EQUIVALENCE_OPERATOR", "Equivalence operators (.eqv., .neqv.)",
-                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                        codeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_CONCAT_OPERATOR", "Concatenation operator (//)",
-                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                        codeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AROUND_DEFINED_OPERATOR", "Defined operators",
-                        CodeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
+                        codeStyleSettingsCustomizable.SPACES_AROUND_OPERATORS)
 
-                consumer.moveStandardOption("SPACE_BEFORE_COLON", CodeStyleSettingsCustomizable.SPACES_OTHER)
-                consumer.moveStandardOption("SPACE_AFTER_COLON", CodeStyleSettingsCustomizable.SPACES_OTHER)
+                consumer.moveStandardOption("SPACE_BEFORE_COLON", codeStyleSettingsCustomizable.SPACES_OTHER)
+                consumer.moveStandardOption("SPACE_AFTER_COLON", codeStyleSettingsCustomizable.SPACES_OTHER)
 
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_BEFORE_DOUBLE_COLON", "Space before double-colon",
-                        CodeStyleSettingsCustomizable.SPACES_OTHER)
+                        codeStyleSettingsCustomizable.SPACES_OTHER)
                 consumer.showCustomOption(FortranCodeStyleSettings::class.java, "SPACE_AFTER_DOUBLE_COLON", "Space after double-colon",
-                        CodeStyleSettingsCustomizable.SPACES_OTHER)
+                        codeStyleSettingsCustomizable.SPACES_OTHER)
             }
             SettingsType.BLANK_LINES_SETTINGS -> {
                 consumer.showStandardOptions(
@@ -96,8 +98,9 @@ class FortranLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
     }
 
 
-    fun loadCodeSampleResource(resource: String): String {
-        val stream = javaClass.classLoader.getResourceAsStream(resource)
-        return StreamUtil.convertSeparators(StreamUtil.readText(stream, "UTF-8"))
+    private fun loadCodeSampleResource(resource: String): String {
+        return javaClass.classLoader.getResourceAsStream(resource)?.use { stream ->
+            StreamUtil.convertSeparators(String(stream.readAllBytes()))
+        } ?: error("Can't find resource $resource")
     }
 }
