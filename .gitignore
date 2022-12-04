@@ -4,3 +4,5 @@
 src/gen
 debugger/lib
 build
+deps
+clion/deps
