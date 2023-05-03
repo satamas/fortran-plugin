@@ -11,6 +11,7 @@ import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.fortran.lang.psi.*
 import org.jetbrains.fortran.lang.psi.ext.*
+import java.util.*
 
 class FortranEnterHandler : EnterHandlerDelegateAdapter() {
 
@@ -136,8 +137,8 @@ class FortranEnterHandler : EnterHandlerDelegateAdapter() {
 
     private fun formatEndString(endString: String, style: KeywordStyle): String {
         return when (style) {
-            KeywordStyle.UPPERCASE -> endString.toUpperCase()
-            KeywordStyle.CAMELCASE -> endString.capitalize()
+            KeywordStyle.UPPERCASE -> endString.uppercase(Locale.getDefault())
+            KeywordStyle.CAMELCASE -> endString.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             else -> endString
         }
     }

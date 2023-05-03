@@ -9,6 +9,7 @@ import org.jetbrains.fortran.lang.psi.FortranNonstandardKindSelector
 import org.jetbrains.fortran.lang.psi.FortranNumberTypeSpec
 import org.jetbrains.fortran.lang.psi.FortranVisitor
 import org.jetbrains.fortran.lang.psi.ext.smartPointer
+import java.util.*
 
 class FortranNonstandardKindInspection : LocalInspectionTool() {
     override fun getDisplayName() = "Nonstandard Kind Selector"
@@ -18,7 +19,7 @@ class FortranNonstandardKindInspection : LocalInspectionTool() {
             val spec = kindSelector.parent as FortranNumberTypeSpec
 
             val kindSelectorText = kindSelector.expr?.text
-            val newKindSelector = if (spec.text.toLowerCase().contains("complex")) {
+            val newKindSelector = if (spec.text.lowercase(Locale.getDefault()).contains("complex")) {
                 if ((kindSelector.expr as? FortranConstant)?.integerliteral != null) {
                     "(kind=${(kindSelectorText?.toInt()?.div(2).toString())})"
                 } else {

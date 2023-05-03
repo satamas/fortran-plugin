@@ -9,6 +9,7 @@ import org.jetbrains.fortran.FortranFixedFormFileType
 import org.jetbrains.fortran.FortranLanguage
 import org.jetbrains.fortran.lang.FortranTypes.*
 import org.jetbrains.fortran.lang.psi.FortranTokenType
+import java.util.*
 
 
 class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(), FortranLanguage) {
@@ -37,7 +38,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
     }
 
     private fun isWordBrace(iterator: HighlighterIterator, fileText: CharSequence, left: Boolean): Boolean {
-        val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
+        val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().lowercase(Locale.getDefault())
         if (left && tokenText in WORD_LEFT_BRACE) {
             if (aVariableOrType(iterator)) return false
             if (typeKeywordInSelectTypeConstruct(tokenText, fileText, iterator)) return false
@@ -74,7 +75,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                 if (iterator.atEnd()) return true
             }
 
-            return fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase() != "end"
+            return fileText.subSequence(iterator.start, iterator.end).toString().lowercase(Locale.getDefault()) != "end"
         } finally {
             advanceIteratorBack(iterator, count)
         }
@@ -92,7 +93,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                 count++
                 if (iterator.atEnd()) return false
             }
-            val wordText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
+            val wordText = fileText.subSequence(iterator.start, iterator.end).toString().lowercase(Locale.getDefault())
             return wordText == "if" || wordText == "where"
         } finally {
             retreatIteratorBack(iterator, count)
@@ -117,7 +118,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                 if (iterator.atEnd()) return false
             }
 
-            return (fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase() == "select")
+            return (fileText.subSequence(iterator.start, iterator.end).toString().lowercase(Locale.getDefault()) == "select")
         } finally {
             advanceIteratorBack(iterator, count)
         }
@@ -134,7 +135,7 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                 count++
                 if (iterator.atEnd()) return false
             }
-            val text = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
+            val text = fileText.subSequence(iterator.start, iterator.end).toString().lowercase(Locale.getDefault())
             return (text == "is" || text == "default")
         } finally {
             retreatIteratorBack(iterator, count)
@@ -261,7 +262,8 @@ class FortranBraceMatcher : PairedBraceMatcherAdapter(FortranBaseBraceMatcher(),
                         count++
                         if (iterator.atEnd()) return false
                     }
-                    val tokenText = fileText.subSequence(iterator.start, iterator.end).toString().toLowerCase()
+                    val tokenText = fileText.subSequence(iterator.start, iterator.end).toString()
+                        .lowercase(Locale.getDefault())
                     return (tokenText == "end" || tokenText == "enddo")
                 }
                 iterator.advance()

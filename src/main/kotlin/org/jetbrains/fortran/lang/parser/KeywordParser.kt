@@ -8,11 +8,12 @@ import org.jetbrains.fortran.lang.parser.FortranParserUtil.exit_section_
 import org.jetbrains.fortran.lang.parser.FortranParserUtil.recursion_guard_
 import org.jetbrains.fortran.lang.psi.FortranTokenSets
 import org.jetbrains.fortran.lang.psi.FortranTokenType
+import java.util.*
 
 class KeywordParser(private val keyword_text: String) : FortranParserUtil.Parser {
     override fun parse(builder: PsiBuilder, level: Int): Boolean {
         if (!recursion_guard_(builder, level, "Identifier")) return false
-        val expectedType = FortranTokenType.getKeyword(keyword_text.toLowerCase()) ?: FortranTokenType.KEYWORD
+        val expectedType = FortranTokenType.getKeyword(keyword_text.lowercase(Locale.getDefault())) ?: FortranTokenType.KEYWORD
         var result = false
         val marker = enter_section_(builder)
         val tokenType = builder.tokenType

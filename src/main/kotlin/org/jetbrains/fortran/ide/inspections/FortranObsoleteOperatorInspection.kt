@@ -7,6 +7,7 @@ import org.jetbrains.fortran.ide.inspections.fixes.SubstituteTextFix
 import org.jetbrains.fortran.lang.psi.FortranRelExpr
 import org.jetbrains.fortran.lang.psi.FortranVisitor
 import org.jetbrains.fortran.lang.psi.ext.smartPointer
+import java.util.*
 
 class FortranObsoleteOperatorInspection : LocalInspectionTool() {
     override fun getDisplayName() = "Obsolete operator"
@@ -17,7 +18,7 @@ class FortranObsoleteOperatorInspection : LocalInspectionTool() {
 
                     val operator = expr.relOp
 
-                    val newOperatorText = when (operator.text.toLowerCase()){
+                    val newOperatorText = when (operator.text.lowercase(Locale.getDefault())){
                         ".eq." -> "=="
                         ".ne." -> "/="
                         ".lt." -> "<"

@@ -31,7 +31,7 @@ abstract class FortranInspectionsBaseTestCase(val inspection: LocalInspectionToo
 
     @Test
     fun testInspectionHasDocumentation() {
-        val description = "inspectionDescriptions/${inspection.javaClass.simpleName?.dropLast("Inspection".length)}.html"
+        val description = "inspectionDescriptions/${inspection.javaClass.simpleName.dropLast("Inspection".length)}.html"
         val text = FortranTestUtils.getResourceAsString(description)
             ?: error("No inspection description for ${inspection.javaClass} ($description)")
         FortranTestUtils.checkHtmlStyle(text)

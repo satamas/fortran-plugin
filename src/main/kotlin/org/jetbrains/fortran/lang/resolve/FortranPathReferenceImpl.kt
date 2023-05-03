@@ -13,6 +13,7 @@ import org.jetbrains.fortran.lang.psi.ext.FortranEntitiesOwner
 import org.jetbrains.fortran.lang.psi.ext.FortranNamedElement
 import org.jetbrains.fortran.lang.psi.mixin.FortranDataPathImplMixin
 import org.jetbrains.fortran.lang.psi.mixin.FortranSubModuleImplMixin
+import java.util.*
 
 class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         FortranReferenceBase<FortranDataPathImplMixin>(element), FortranReference {
@@ -252,8 +253,8 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             return mutableSetOf()
         }
         // loop check
-        if (allSeenModules.contains(module.name!!.toLowerCase())) return mutableSetOf()
-        allSeenModules.add(module.name!!.toLowerCase())
+        if (allSeenModules.contains(module.name!!.lowercase(Locale.getDefault()))) return mutableSetOf()
+        allSeenModules.add(module.name!!.lowercase(Locale.getDefault()))
 
         val allNames: MutableSet<FortranNamedElement> = mutableSetOf()
 
@@ -288,7 +289,7 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
             allNames.addAll(findSubModulesInProjectFiles(module.getModuleName(), module.getPersonalName())
                     .flatMap { findNamePsiInModule(it, incompleteCode, mutableSetOf(), onlyTypes) }.toList())
         }
-        allSeenModules.remove(module.name!!.toLowerCase())
+        allSeenModules.remove(module.name!!.lowercase(Locale.getDefault()))
         return allNames
     }
 
@@ -345,11 +346,11 @@ class FortranPathReferenceImpl(element: FortranDataPathImplMixin) :
         }
         val renameInOnly = useStmt.onlyStmtList.map { it.renameStmt }
         val renameList = ((module.parent as FortranUseStmt).renameStmtList + renameInOnly)
-                .mapNotNull { it?.dataPath?.referenceName?.toLowerCase() }
+                .mapNotNull { it?.dataPath?.referenceName?.lowercase(Locale.getDefault()) }
         return module.reference.multiResolve().flatMap {
             findNamePsiInModule(PsiTreeUtil.getParentOfType(it, FortranModule::class.java), incompleteCode, allSeenModules, onlyTypes)
         }.filter {
-            element.referenceName.toLowerCase() !in renameList
+            element.referenceName.lowercase(Locale.getDefault()) !in renameList
         }
     }
 
