@@ -49,6 +49,13 @@ allprojects {
     sourceSets {
         getByName("main").java.srcDirs("src/gen")
     }
+    // Add jvm-default=all to allow for kotlin interface with defaults
+    // https://kotlinlang.org/docs/java-to-kotlin-interop.html#compatibility-modes-for-default-methods
+    tasks.named("compileKotlin", org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask::class.java) {
+        compilerOptions {
+            freeCompilerArgs.add("-Xjvm-default=all")
+        }
+    }
 }
 
 project(":clion") {
