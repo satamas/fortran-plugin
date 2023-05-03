@@ -9,7 +9,7 @@ val CI = System.getenv("CI") != null
 plugins {
     idea
     id("org.jetbrains.grammarkit") version "2021.2.2"
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.8.21"
     id("org.jetbrains.intellij") version "1.7.0"
     id("de.undercouch.download") version "4.0.0"
 }
@@ -21,9 +21,7 @@ idea {
 }
 
 kotlin{
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
+    jvmToolchain(17)
 }
 
 
