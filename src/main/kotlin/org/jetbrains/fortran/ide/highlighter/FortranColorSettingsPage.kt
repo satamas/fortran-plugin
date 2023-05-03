@@ -1,8 +1,9 @@
 package org.jetbrains.fortran.ide.highlighter
 
+import com.intellij.application.options.CodeStyleAbstractPanel
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
-import org.jetbrains.fortran.ide.formatter.settings.FortranCodeStyleSettingsProvider
+import org.jetbrains.fortran.ide.formatter.settings.FortranLanguageCodeStyleSettingsProvider
 
 class FortranColorSettingsPage : ColorSettingsPage {
     private val ATTRIBUTES = FortranHighlightingColors.values().map { it.attributesDescriptor }.toTypedArray()
@@ -15,6 +16,9 @@ class FortranColorSettingsPage : ColorSettingsPage {
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
     override fun getHighlighter() = FortranHighLighter(false)
     override fun getAdditionalHighlightingTagToDescriptorMap() = ANNOTATOR_TAGS
-    override fun getDemoText() = FortranCodeStyleSettingsProvider.getCodeSample("Colors.f95")
+    override fun getDemoText() = CodeStyleAbstractPanel.readFromFile(
+        FortranLanguageCodeStyleSettingsProvider::class.java,
+        "fortran/${"Colors.f95"}"
+    )
 }
 
