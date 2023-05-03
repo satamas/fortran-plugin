@@ -8,9 +8,9 @@ val CI = System.getenv("CI") != null
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2021.2.2"
+    id("org.jetbrains.grammarkit") version "2022.3.1"
     kotlin("jvm") version "1.8.21"
-    id("org.jetbrains.intellij") version "1.7.0"
+    id("org.jetbrains.intellij") version "1.13.3"
 }
 
 idea {
@@ -76,11 +76,10 @@ project(":") {
     }
 
     grammarKit {
-        grammarKitRelease.set("2021.1.2")
     }
 
     val generateFortranLexer = task<GenerateLexerTask>("generateFortranLexer") {
-        source.set("src/main/kotlin/org/jetbrains/fortran/lang/lexer/FortranLexer.flex")
+        sourceFile.set(file("src/main/kotlin/org/jetbrains/fortran/lang/lexer/FortranLexer.flex"))
         targetDir.set("src/gen/org/jetbrains/fortran/lang/lexer")
         targetClass.set("_FortranLexer")
         purgeOldFiles.set(true)
@@ -88,7 +87,7 @@ project(":") {
 
     val generateFortranParser = task<GenerateParserTask>("generateFortranParser") {
         dependsOn(generateFortranLexer)
-        source.set("src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf")
+        sourceFile.set(file("src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf"))
         targetRoot.set("src/gen")
         pathToParser.set("/org/jetbrains/fortran/lang/parser/FortranParser.java")
         pathToPsiRoot.set("/org/jetbrains/fortran/lang/psi")
