@@ -5,8 +5,6 @@ import org.jetbrains.intellij.tasks.JarSearchableOptionsTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val CI = System.getenv("CI") != null
-val clionVersion = "CL-${prop("clionVersion")}"
-val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 
 plugins {
     idea
@@ -21,6 +19,13 @@ idea {
         excludeDirs = excludeDirs + file("testData") + file("deps")
     }
 }
+
+kotlin{
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 
 allprojects {
     apply {
@@ -45,17 +50,6 @@ allprojects {
         ideaDependencyCachePath.set(file("deps").absolutePath)
     }
 
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "11"
-        }
-    }
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
     sourceSets {
         getByName("main").java.srcDirs("src/gen")
     }
@@ -63,8 +57,8 @@ allprojects {
 
 project(":clion") {
     intellij {
-        version.set(clionVersion)
-        plugins.set(clionPlugins)
+        version.set("CL-${prop("clionVersion")}")
+        plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
         type.set("CL")
     }
     dependencies {
