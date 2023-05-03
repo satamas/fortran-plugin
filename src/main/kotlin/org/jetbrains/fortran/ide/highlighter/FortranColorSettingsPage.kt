@@ -15,6 +15,6 @@ class FortranColorSettingsPage : ColorSettingsPage {
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
     override fun getHighlighter() = FortranHighLighter(false)
     override fun getAdditionalHighlightingTagToDescriptorMap() = ANNOTATOR_TAGS
-    override fun getDemoText() = FortranCodeStyleSettingsProvider.getCodeSample("Colors.f95")
+    override fun getDemoText(): String = FortranCodeStyleSettingsProvider.getCodeSample("Colors.f95")
 }
 

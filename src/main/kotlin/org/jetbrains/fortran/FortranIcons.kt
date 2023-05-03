@@ -5,7 +5,8 @@ import com.intellij.openapi.util.IconLoader
 import javax.swing.Icon
 
 object FortranIcons {
-    val fileTypeIcon = IconLoader.getIcon("/icons/fortran.png")
+    @JvmField
+    val fileTypeIcon = IconLoader.getIcon("/icons/fortran.png",javaClass)
 
     val mainProgramIcon : Icon = AllIcons.Nodes.Parameter
     val functionIcon : Icon = AllIcons.Nodes.Field

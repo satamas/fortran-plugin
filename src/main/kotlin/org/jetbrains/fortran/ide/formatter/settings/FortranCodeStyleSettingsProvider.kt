@@ -7,17 +7,20 @@ import com.intellij.psi.codeStyle.CodeStyleSettingsProvider
 
 class FortranCodeStyleSettingsProvider : CodeStyleSettingsProvider() {
     companion object {
-        fun getCodeSample(fileName: String) = CodeStyleAbstractPanel.readFromFile(
-                FortranLanguageCodeStyleSettingsProvider::class.java,
-                "fortran/$fileName"
+        fun getCodeSample(fileName: String): String = CodeStyleAbstractPanel.readFromFile(
+            FortranLanguageCodeStyleSettingsProvider::class.java,
+            "fortran/$fileName"
         )
     }
 
     override fun createCustomSettings(settings: CodeStyleSettings) = FortranCodeStyleSettings(settings)
 
-    override fun getConfigurableDisplayName(): String? = "Fortran"
+    override fun getConfigurableDisplayName(): String = "Fortran"
 
-    override fun createConfigurable(settings: CodeStyleSettings, originalSettings: CodeStyleSettings): CodeStyleConfigurable = FortranCodeStyleConfigurable(settings, originalSettings)
+    override fun createConfigurable(
+        settings: CodeStyleSettings,
+        originalSettings: CodeStyleSettings
+    ): CodeStyleConfigurable = FortranCodeStyleConfigurable(settings, originalSettings)
 }
 
 
