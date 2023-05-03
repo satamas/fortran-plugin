@@ -9,12 +9,13 @@ import com.jetbrains.cidr.execution.debugger.CidrStackFrame
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver
 import com.jetbrains.cidr.execution.debugger.backend.DebuggerDriver.StandardDebuggerLanguage.FORTRAN
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrDebuggerTypesHelper
+import com.jetbrains.cidr.execution.debugger.evaluation.CidrDebuggerTypesHelperBase
 import com.jetbrains.cidr.execution.debugger.evaluation.CidrEvaluatedValue
 
 class FortranDebuggerLanguageSupport : CidrDebuggerLanguageSupport() {
     override fun getSupportedDebuggerLanguages() = setOf(FORTRAN)
 
-    override fun createTypesHelper(process: CidrDebugProcess): CidrDebuggerTypesHelper {
+    override fun createDebuggerTypesHelper(process: CidrDebugProcess): CidrDebuggerTypesHelperBase {
         return FortranDebuggerTypesHelper(process)
     }
 
