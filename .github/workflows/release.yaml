@@ -4,25 +4,24 @@
 
 name: Release
 on:
-  release:
-    types: [prereleased, released]
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+"
 
 jobs:
-
-  # Prepare and publish the plugin to the Marketplace repository
+  tests:
+    uses: ./.github/workflows/test.yaml
+    secrets: inherit
   release:
+    needs: tests
     name: Publish Plugin
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     steps:
-
-      # Check out current repository
-      - name: Fetch Sources
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.release.tag_name }}
+      - uses: actions/checkout@v3
 
       # Setup Java environment for the next steps
       - name: Setup Java
@@ -63,35 +62,10 @@ jobs:
           PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
         run: ./gradlew publishPlugin
 
-      # Upload artifact as a release asset
-      - name: Upload Release Asset
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.event.release.tag_name }} ./build/distributions/*
-
-      # Create pull request
-      - name: Create Pull Request
-        if: ${{ steps.properties.outputs.changelog != '' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          VERSION="${{ github.event.release.tag_name }}"
-          BRANCH="changelog-update-$VERSION"
-          LABEL="release changelog"
-
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-
-          git checkout -b $BRANCH
-          git commit -am "Changelog update - $VERSION"
-          git push --set-upstream origin $BRANCH
-          
-          gh label create "$LABEL" \
-            --description "Pull requests with release changelog update" \
-            || true
-
-          gh pr create \
-            --title "Changelog update - \`$VERSION\`" \
-            --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
-            --label "$LABEL" \
-            --head $BRANCH
+      - name: Make Github release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Spglib ${{ github.ref_name }}
+          draft: true
+          prerelease: ${{ contains(github.ref, 'rc') }}
+          generate_release_notes: true
