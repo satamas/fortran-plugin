@@ -2,7 +2,7 @@
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
     <version>2023.2</version>
-    <vendor url="https://github.com/satamas/fortran-plugin"/>
+    <vendor email="semyon.atamas@jetbrains.com" url="https://github.com/satamas/fortran-plugin">Semyon Atamas</vendor>
 
     <description><![CDATA[
       Fortran language support<br>
