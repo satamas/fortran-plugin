@@ -11,8 +11,8 @@ val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 plugins {
     idea
     id("org.jetbrains.grammarkit") version "2022.3.1"
-    kotlin("jvm") version "1.8.20"
-    id("org.jetbrains.intellij") version "1.13.3"
+    kotlin("jvm") version "1.9.0"
+    id("org.jetbrains.intellij") version "1.15.0"
     id("de.undercouch.download") version "5.4.0"
 }
 
@@ -85,7 +85,7 @@ project(":") {
     }
 
     grammarKit {
-        grammarKitRelease.set("2021.1.2")
+        grammarKitRelease.set("2022.3.1")
     }
 
     val generateFortranLexer = task<GenerateLexerTask>("generateFortranLexer") {

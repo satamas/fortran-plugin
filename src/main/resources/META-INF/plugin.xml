@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2023.1</version>
+    <version>2023.2</version>
     <vendor url="https://github.com/satamas/fortran-plugin"/>
 
     <description><![CDATA[
@@ -12,12 +12,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-    IntelliJ 2023.1 support
+    IntelliJ 2023.2 support
     ]]>
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="231.0" until-build="231.*"/>
+    <idea-version since-build="232.8660.0" until-build="232.*"/>
 
     <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
     <depends>com.intellij.modules.lang</depends>
@@ -37,7 +37,7 @@
                                implementationClass="org.jetbrains.fortran.lang.parser.FortranFixedFormParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Fortran fixed form"
                                        implementationClass="org.jetbrains.fortran.ide.highlighter.FortranFixedFormSyntaxHighlighterFactory"/>
-        <stubElementTypeHolder class="org.jetbrains.fortran.lang.FortranTypes"/>
+        <stubElementTypeHolder externalIdPrefix="fortran." class="org.jetbrains.fortran.lang.FortranTypes"/>
 
         <!-- Color Settings -->
         <colorSettingsPage implementation="org.jetbrains.fortran.ide.highlighter.FortranColorSettingsPage"/>
@@ -93,6 +93,7 @@
         <!-- Intentions -->
         <intentionAction>
             <className>org.jetbrains.fortran.ide.intentions.FortranIfStatementToConstructIntention</className>
+            <language>Fortran</language>
             <category>Fortran</category>
         </intentionAction>
         <!-- Inspections -->
