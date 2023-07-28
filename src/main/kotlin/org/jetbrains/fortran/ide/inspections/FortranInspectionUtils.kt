@@ -28,7 +28,7 @@ fun registerProblemForReference(
         reference: PsiReference,
         highlightType: ProblemHighlightType,
         descriptionTemplate: String,
-        vararg fixes: LocalQuickFix?
+        vararg fixes: LocalQuickFix
 ) {
     val psiElement = reference.element
     if (psiElement.textOffset >= psiElement.textRange.endOffset) return

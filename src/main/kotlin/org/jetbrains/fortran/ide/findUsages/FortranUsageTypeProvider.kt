@@ -5,7 +5,7 @@ import com.intellij.usages.impl.rules.UsageType
 import com.intellij.usages.impl.rules.UsageTypeProvider
 import org.jetbrains.fortran.lang.psi.*
 
-object FortranUsageTypeProvider : UsageTypeProvider {
+class FortranUsageTypeProvider : UsageTypeProvider {
     override fun getUsageType(element: PsiElement): UsageType? {
         return when (element) {
             is FortranLabel -> UsageType { "Fortran label" }

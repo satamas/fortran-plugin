@@ -10,10 +10,10 @@ val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 
 plugins {
     idea
-    id("org.jetbrains.grammarkit") version "2022.3"
-    kotlin("jvm") version "1.7.21"
-    id("org.jetbrains.intellij") version "1.10.0"
-    id("de.undercouch.download") version "5.3.0"
+    id("org.jetbrains.grammarkit") version "2022.3.1"
+    kotlin("jvm") version "1.8.20"
+    id("org.jetbrains.intellij") version "1.13.3"
+    id("de.undercouch.download") version "5.4.0"
 }
 
 idea {
@@ -89,7 +89,7 @@ project(":") {
     }
 
     val generateFortranLexer = task<GenerateLexerTask>("generateFortranLexer") {
-        source.set("src/main/kotlin/org/jetbrains/fortran/lang/lexer/FortranLexer.flex")
+        sourceFile.set(file("src/main/kotlin/org/jetbrains/fortran/lang/lexer/FortranLexer.flex"))
         targetDir.set("src/gen/org/jetbrains/fortran/lang/lexer")
         targetClass.set("_FortranLexer")
         purgeOldFiles.set(true)
@@ -97,14 +97,11 @@ project(":") {
 
     val generateFortranParser = task<GenerateParserTask>("generateFortranParser") {
         dependsOn(generateFortranLexer)
-        source.set("src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf")
-        sourceFile.set(project.layout.projectDirectory.file(source.get()))
+        sourceFile.set(project.layout.projectDirectory.file("src/main/kotlin/org/jetbrains/fortran/lang/parser/FortranParser.bnf"))
         targetRoot.set("src/gen")
         targetRootOutputDir.set(project.layout.projectDirectory.dir(targetRoot.get()))
         pathToParser.set("/org/jetbrains/fortran/lang/parser/FortranParser.java")
-        parserFile.set(project.layout.projectDirectory.file("${targetRoot.get()}/${pathToParser.get()}"))
         pathToPsiRoot.set("/org/jetbrains/fortran/lang/psi")
-        psiDir.set(project.layout.projectDirectory.dir("${targetRoot.get()}/${pathToPsiRoot.get()}"))
         purgeOldFiles.set(true)
     }
 
