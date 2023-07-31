@@ -12,7 +12,7 @@ class FortranFixedFormFileStub(file: FortranFixedFormFile?) : PsiFileStubImpl<Fo
     override fun getType() = Type
 
     object Type : IStubFileElementType<FortranFixedFormFileStub>(FortranFixedFormLanguage) {
-        override fun getStubVersion(): Int = 2
+        override fun getStubVersion(): Int = 3
 
         override fun getBuilder(): StubBuilder = object : DefaultStubBuilder() {
             override fun createStubForFile(file: PsiFile): StubElement<*> = FortranFixedFormFileStub(file as FortranFixedFormFile)

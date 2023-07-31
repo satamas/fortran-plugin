@@ -18,7 +18,7 @@ class FortranFileStub(file: FortranFile?) : PsiFileStubImpl<FortranFile>(file) {
             return FortranFileParser.parse(this, chameleon)
         }
 
-        override fun getStubVersion(): Int = 2
+        override fun getStubVersion(): Int = 3
 
         override fun getBuilder(): StubBuilder = object : DefaultStubBuilder() {
             override fun createStubForFile(file: PsiFile): StubElement<*> = FortranFileStub(file as FortranFile)
