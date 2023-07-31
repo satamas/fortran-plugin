@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.jetbrains.fortran</id>
     <name>Fortran</name>
-    <version>2023.2</version>
+    <version>2023.2.1</version>
     <vendor email="semyon.atamas@jetbrains.com" url="https://github.com/satamas/fortran-plugin">Semyon Atamas</vendor>
 
     <description><![CDATA[
