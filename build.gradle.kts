@@ -62,7 +62,6 @@ project(":clion") {
     intellij {
         version.set("CL-${prop("clionVersion")}")
         plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
-        type.set("CL")
     }
     dependencies {
         implementation(project(":"))
