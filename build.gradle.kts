@@ -5,15 +5,12 @@ import org.jetbrains.intellij.tasks.JarSearchableOptionsTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val CI = System.getenv("CI") != null
-val clionVersion = "CL-${prop("clionVersion")}"
-val clionPlugins = listOf("com.intellij.cidr.base", "com.intellij.clion")
 
 plugins {
     idea
     id("org.jetbrains.grammarkit") version "2022.3.1"
     kotlin("jvm") version "1.9.0"
     id("org.jetbrains.intellij") version "1.15.0"
-    id("de.undercouch.download") version "5.4.0"
 }
 
 idea {
@@ -56,8 +53,8 @@ allprojects {
 
 project(":clion") {
     intellij {
-        version.set(clionVersion)
-        plugins.set(clionPlugins)
+        version.set("CL-${prop("clionVersion")}")
+        plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
         type.set("CL")
     }
     dependencies {
@@ -75,10 +72,6 @@ project(":clion") {
 project(":") {
     intellij {
         version.set(prop("ideaVersion"))
-    }
-
-    grammarKit {
-        grammarKitRelease.set("2022.3.1")
     }
 
     val generateFortranLexer = task<GenerateLexerTask>("generateFortranLexer") {
