@@ -213,6 +213,9 @@ project(":plugin") {
             dependsOn(mergePluginJarTask)
             enabled = true
         }
+        verifyPlugin {
+            dependsOn(mergePluginJarTask)
+        }
         patchPluginXml {
             val changelog = rootProject.changelog // local variable for configuration cache compatibility
             // Get the latest available change notes from the changelog file
@@ -299,6 +302,7 @@ project(":idea") {
 fun hasProp(name: String): Boolean = extra.has(name)
 fun prop(name: String): String = extra.properties[name] as? String
     ?: error("Property `$name` is not defined in gradle.properties")
+
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
 
