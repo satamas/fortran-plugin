@@ -1,7 +1,7 @@
 FILE
-  FortranMainProgramImpl(MAIN PROGRAM)
+  FortranMainProgramImpl(MAIN_PROGRAM)
     FortranBlockImpl(BLOCK)
-      FortranInterfaceBlockImpl(Interface block)
+      FortranInterfaceBlockImpl(INTERFACE_BLOCK)
         INTERFACE_STMT
           PsiElement(keyword)('interface')
           PsiWhiteSpace(' ')
@@ -11,7 +11,7 @@ FILE
             PsiElement(+)('+')
             PsiElement())(')')
         PsiElement(eol)('\n')
-        FortranInterfaceSpecificationImpl(Interface body)
+        FortranInterfaceSpecificationImpl(INTERFACE_SPECIFICATION)
           PROCEDURE_STMT
             PsiElement(keyword)('procedure')
             PsiWhiteSpace(' ')
@@ -29,7 +29,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('interface')
       PsiElement(eol)('\n')
-      FortranInterfaceBlockImpl(Interface block)
+      FortranInterfaceBlockImpl(INTERFACE_BLOCK)
         INTERFACE_STMT
           PsiElement(keyword)('interface')
           PsiWhiteSpace(' ')
@@ -40,7 +40,7 @@ FILE
             PsiElement(/)('/')
             PsiElement())(')')
         PsiElement(eol)('\n')
-        FortranInterfaceSpecificationImpl(Interface body)
+        FortranInterfaceSpecificationImpl(INTERFACE_SPECIFICATION)
           PROCEDURE_STMT
             PsiElement(keyword)('procedure')
             PsiWhiteSpace(' ')
@@ -54,7 +54,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('interface')
       PsiElement(eol)('\n')
-      FortranInterfaceBlockImpl(Interface block)
+      FortranInterfaceBlockImpl(INTERFACE_BLOCK)
         INTERFACE_STMT
           PsiElement(keyword)('interface')
           PsiWhiteSpace(' ')
@@ -65,7 +65,7 @@ FILE
             PsiWhiteSpace(' ')
             PsiElement())(')')
         PsiElement(eol)('\n')
-        FortranInterfaceSpecificationImpl(Interface body)
+        FortranInterfaceSpecificationImpl(INTERFACE_SPECIFICATION)
           PROCEDURE_STMT
             PsiElement(keyword)('procedure')
             PsiWhiteSpace(' ')
@@ -79,7 +79,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('interface')
       PsiElement(eol)('\n')
-      FortranInterfaceBlockImpl(Interface block)
+      FortranInterfaceBlockImpl(INTERFACE_BLOCK)
         INTERFACE_STMT
           PsiElement(keyword)('interface')
           PsiWhiteSpace(' ')
@@ -91,7 +91,7 @@ FILE
             PsiComment(line_continue)('&\n! comment\n')
             PsiElement())(')')
         PsiElement(eol)('\n')
-        FortranInterfaceSpecificationImpl(Interface body)
+        FortranInterfaceSpecificationImpl(INTERFACE_SPECIFICATION)
           PROCEDURE_STMT
             PsiElement(keyword)('procedure')
             PsiWhiteSpace(' ')
@@ -105,7 +105,7 @@ FILE
           PsiWhiteSpace(' ')
           PsiElement(keyword)('interface')
       PsiElement(eol)('\n')
-      FortranInterfaceBlockImpl(Interface block)
+      FortranInterfaceBlockImpl(INTERFACE_BLOCK)
         INTERFACE_STMT
           PsiElement(keyword)('interface')
           PsiWhiteSpace(' ')
@@ -115,7 +115,7 @@ FILE
             PsiElement(//)('//')
             PsiElement())(')')
         PsiElement(eol)('\n')
-        FortranInterfaceSpecificationImpl(Interface body)
+        FortranInterfaceSpecificationImpl(INTERFACE_SPECIFICATION)
           PROCEDURE_STMT
             PsiElement(keyword)('procedure')
             PsiWhiteSpace(' ')

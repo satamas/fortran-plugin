@@ -9,7 +9,8 @@ class FortranModuleSubprogramPartStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>
 ): StubBase<FortranModuleSubprogramPart>(parent, elementType){
 
-    object Type: FortranStubElementType<FortranModuleSubprogramPartStub, FortranModuleSubprogramPart>("MODULE SUBPROGRAM PART") {
+    object Type :
+        FortranStubElementType<FortranModuleSubprogramPartStub, FortranModuleSubprogramPart>("MODULE_SUBPROGRAM_PART") {
 
         override fun deserialize(dataStream: StubInputStream, parentStub: StubElement<*>?): FortranModuleSubprogramPartStub {
             return FortranModuleSubprogramPartStub(parentStub, this)

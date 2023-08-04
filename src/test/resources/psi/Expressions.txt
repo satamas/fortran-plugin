@@ -1,5 +1,5 @@
 FILE
-  FortranMainProgramImpl(MAIN PROGRAM)
+  FortranMainProgramImpl(MAIN_PROGRAM)
     FortranProgramStmtImpl(PROGRAM_STMT)
       PsiElement(keyword)('program')
       PsiWhiteSpace(' ')

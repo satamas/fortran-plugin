@@ -7,7 +7,7 @@ import org.jetbrains.fortran.lang.psi.impl.FortranEnumDefImpl
 class FortranEnumDefStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>
 ): StubBase<FortranEnumDef>(parent, elementType) {
-    object Type : FortranStubElementType<FortranEnumDefStub, FortranEnumDef>("Enum") {
+    object Type : FortranStubElementType<FortranEnumDefStub, FortranEnumDef>("ENUM_DEF") {
 
         override fun deserialize(dataStream: StubInputStream, parentStub: StubElement<*>?): FortranEnumDefStub =
                 FortranEnumDefStub(parentStub, this)

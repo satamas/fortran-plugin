@@ -8,7 +8,8 @@ import org.jetbrains.fortran.lang.psi.impl.FortranInterfaceSpecificationImpl
 class FortranInterfaceSpecificationStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>
 ): StubBase<FortranInterfaceSpecification>(parent, elementType) {
-    object Type : FortranStubElementType<FortranInterfaceSpecificationStub, FortranInterfaceSpecification>("Interface body") {
+    object Type :
+        FortranStubElementType<FortranInterfaceSpecificationStub, FortranInterfaceSpecification>("INTERFACE_SPECIFICATION") {
 
         override fun deserialize(dataStream: StubInputStream, parentStub: StubElement<*>?): FortranInterfaceSpecificationStub =
                 FortranInterfaceSpecificationStub(parentStub, this)

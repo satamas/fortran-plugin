@@ -1,5 +1,5 @@
 FILE
-  FortranMainProgramImpl(MAIN PROGRAM)
+  FortranMainProgramImpl(MAIN_PROGRAM)
     FortranBlockImpl(BLOCK)
       FortranUseStmtImpl(USE_STMT)
         PsiElement(keyword)('use')
@@ -8,7 +8,7 @@ FILE
           PsiElement(identifier)('a')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        FortranRenameStmtImpl(RENAME STMT)
+        FortranRenameStmtImpl(RENAME_STMT)
           FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('new')
           PsiWhiteSpace(' ')

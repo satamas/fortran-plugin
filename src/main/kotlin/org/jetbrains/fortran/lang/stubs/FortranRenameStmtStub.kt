@@ -9,7 +9,7 @@ class FortranRenameStmtStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>
 ): StubBase<FortranRenameStmt>(parent, elementType){
 
-    object Type: FortranStubElementType<FortranRenameStmtStub, FortranRenameStmt>("RENAME STMT") {
+    object Type : FortranStubElementType<FortranRenameStmtStub, FortranRenameStmt>("RENAME_STMT") {
 
         override fun deserialize(dataStream: StubInputStream, parentStub: StubElement<*>?): FortranRenameStmtStub {
             return FortranRenameStmtStub(parentStub, this)

@@ -8,7 +8,8 @@ class FortranInternalSubprogramPartStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>
 ): StubBase<FortranInternalSubprogramPart>(parent, elementType){
 
-    object Type: FortranStubElementType<FortranInternalSubprogramPartStub, FortranInternalSubprogramPart>("INTERNAL SUBPROGRAM PART") {
+    object Type :
+        FortranStubElementType<FortranInternalSubprogramPartStub, FortranInternalSubprogramPart>("INTERNAL_SUBPROGRAM_PART") {
 
         override fun deserialize(dataStream: StubInputStream, parentStub: StubElement<*>?): FortranInternalSubprogramPartStub {
             return FortranInternalSubprogramPartStub(parentStub, this)

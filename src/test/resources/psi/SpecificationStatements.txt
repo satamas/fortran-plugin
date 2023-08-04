@@ -1,5 +1,5 @@
 FILE
-  FortranFunctionSubprogramImpl(FUNCTION)
+  FortranFunctionSubprogramImpl(FUNCTION_SUBPROGRAM)
     FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
@@ -27,7 +27,7 @@ FILE
         PsiElement(:)(':')
         PsiWhiteSpace(' ')
         FortranOnlyStmtImpl(ONLY_STMT)
-          FortranRenameStmtImpl(RENAME STMT)
+          FortranRenameStmtImpl(RENAME_STMT)
             FortranEntityDeclImpl(ENTITY_DECL)
               PsiElement(identifier)('mp_set_compression')
             PsiWhiteSpace(' ')
@@ -44,7 +44,7 @@ FILE
           PsiElement(identifier)('lib')
         PsiElement(,)(',')
         PsiWhiteSpace(' ')
-        FortranRenameStmtImpl(RENAME STMT)
+        FortranRenameStmtImpl(RENAME_STMT)
           FortranEntityDeclImpl(ENTITY_DECL)
             PsiElement(identifier)('old_name')
           PsiWhiteSpace(' ')

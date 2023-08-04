@@ -36,12 +36,12 @@ FILE
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('radius')
       PsiElement(eol)('\n')
-    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM PART)
+    FortranModuleSubprogramPartImpl(MODULE_SUBPROGRAM_PART)
       CONTAINS_STMT
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
       PsiWhiteSpace('   ')
-      FortranSubroutineSubprogramImpl(SUBROUTINE)
+      FortranSubroutineSubprogramImpl(SUBROUTINE_SUBPROGRAM)
         FortranSubroutineStmtImpl(SUBROUTINE_STMT)
           PsiElement(keyword)('subroutine')
           PsiWhiteSpace(' ')
@@ -96,7 +96,7 @@ FILE
         PsiElement(identifier)('circle')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
-  FortranFunctionSubprogramImpl(FUNCTION)
+  FortranFunctionSubprogramImpl(FUNCTION_SUBPROGRAM)
     FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
@@ -184,7 +184,7 @@ FILE
       PsiElement(keyword)('end')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
-  FortranFunctionSubprogramImpl(FUNCTION)
+  FortranFunctionSubprogramImpl(FUNCTION_SUBPROGRAM)
     FortranFunctionStmtImpl(FUNCTION_STMT)
       PREFIX
         PREFIX_SPEC
@@ -214,7 +214,7 @@ FILE
       PsiElement(keyword)('endfunction')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
-  FortranSubroutineSubprogramImpl(SUBROUTINE)
+  FortranSubroutineSubprogramImpl(SUBROUTINE_SUBPROGRAM)
     FortranSubroutineStmtImpl(SUBROUTINE_STMT)
       PsiElement(keyword)('subroutine')
       PsiWhiteSpace(' ')
@@ -257,7 +257,7 @@ FILE
       PsiElement(keyword)('end')
   PsiElement(eol)('\n')
   PsiWhiteSpace('\n')
-  FortranBlockDataImpl(BLOCK DATA)
+  FortranBlockDataImpl(BLOCK_DATA)
     FortranBlockDataStmtImpl(BLOCK_DATA_STMT)
       PsiElement(keyword)('block')
       PsiWhiteSpace(' ')

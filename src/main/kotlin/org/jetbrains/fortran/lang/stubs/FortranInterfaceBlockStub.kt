@@ -1,15 +1,15 @@
 package org.jetbrains.fortran.lang.stubs
 
 import com.intellij.psi.stubs.*
-import org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex
 import org.jetbrains.fortran.lang.psi.FortranInterfaceBlock
 import org.jetbrains.fortran.lang.psi.impl.FortranInterfaceBlockImpl
+import org.jetbrains.fortran.lang.stubs.index.FortranNamedElementIndex
 
 class FortranInterfaceBlockStub(
         parent: StubElement<*>?, elementType: IStubElementType<*, *>,
         override val name: String?
 ): StubBase<FortranInterfaceBlock>(parent, elementType), FortranNamedStub {
-    object Type : FortranStubElementType<FortranInterfaceBlockStub, FortranInterfaceBlock>("Interface block") {
+    object Type : FortranStubElementType<FortranInterfaceBlockStub, FortranInterfaceBlock>("INTERFACE_BLOCK") {
 
         override fun deserialize(dataStream: StubInputStream, parentStub: StubElement<*>?): FortranInterfaceBlockStub =
                 FortranInterfaceBlockStub(parentStub, this, dataStream.readName()?.string)

@@ -4,14 +4,14 @@ import org.jetbrains.fortran.lang.psi.impl.*
 
 fun fortranStubFactory(name: String): FortranStubElementType<*, *> = when (name) {
 // program units
-    "MAIN_PROGRAM" -> FortranProgramUnitStub.Type("MAIN PROGRAM", ::FortranMainProgramImpl)
-    "FUNCTION_SUBPROGRAM" -> FortranProgramUnitStub.Type("FUNCTION", ::FortranFunctionSubprogramImpl)
-    "SUBROUTINE_SUBPROGRAM" -> FortranProgramUnitStub.Type("SUBROUTINE", ::FortranSubroutineSubprogramImpl)
+    "MAIN_PROGRAM" -> FortranProgramUnitStub.Type("MAIN_PROGRAM", ::FortranMainProgramImpl)
+    "FUNCTION_SUBPROGRAM" -> FortranProgramUnitStub.Type("FUNCTION_SUBPROGRAM", ::FortranFunctionSubprogramImpl)
+    "SUBROUTINE_SUBPROGRAM" -> FortranProgramUnitStub.Type("SUBROUTINE_SUBPROGRAM", ::FortranSubroutineSubprogramImpl)
     "MODULE" -> FortranProgramUnitStub.Type("MODULE", ::FortranModuleImpl)
     "SUBMODULE" -> FortranProgramUnitStub.Type("SUBMODULE", ::FortranSubmoduleImpl)
-    "BLOCK_DATA" -> FortranProgramUnitStub.Type("BLOCK DATA", ::FortranBlockDataImpl)
+    "BLOCK_DATA" -> FortranProgramUnitStub.Type("BLOCK_DATA", ::FortranBlockDataImpl)
     "SEPARATE_MODULE_SUBPROGRAM" -> FortranProgramUnitStub.Type("SEPARATE_MODULE_SUBPROGRAM", ::FortranSeparateModuleSubprogramImpl)
-    "PROGRAM_UNIT" -> FortranProgramUnitStub.Type("UNKNOWN PROGRAM UNIT", ::FortranProgramUnitImpl)
+    "PROGRAM_UNIT" -> FortranProgramUnitStub.Type("PROGRAM_UNIT", ::FortranProgramUnitImpl)
 
     "BLOCK" -> FortranBlockStub.Type
     "MODULE_SUBPROGRAM_PART" -> FortranModuleSubprogramPartStub.Type

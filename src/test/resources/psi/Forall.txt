@@ -1,5 +1,5 @@
 FILE
-  FortranMainProgramImpl(MAIN PROGRAM)
+  FortranMainProgramImpl(MAIN_PROGRAM)
     FortranBlockImpl(BLOCK)
       FORALL_CONSTRUCT
         FORALL_CONSTRUCT_STMT

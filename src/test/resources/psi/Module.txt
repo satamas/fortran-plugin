@@ -22,7 +22,7 @@ FILE
         FortranEntityDeclImpl(ENTITY_DECL)
           PsiElement(identifier)('q')
       PsiElement(eol)('\n')
-    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM PART)
+    FortranModuleSubprogramPartImpl(MODULE_SUBPROGRAM_PART)
       CONTAINS_STMT
         LABEL_DECL
           PsiElement(integerliteral)('3')
@@ -59,14 +59,14 @@ FILE
                 FortranDataPathImpl(DATA_PATH)
                   PsiElement(identifier)('z')
           PsiElement(eol)('\n')
-        FortranInternalSubprogramPartImpl(INTERNAL SUBPROGRAM PART)
+        FortranInternalSubprogramPartImpl(INTERNAL_SUBPROGRAM_PART)
           CONTAINS_STMT
             LABEL_DECL
               PsiElement(integerliteral)('6')
             PsiWhiteSpace('     ')
             PsiElement(keyword)('contains')
           PsiElement(eol)('\n')
-          FortranFunctionSubprogramImpl(FUNCTION)
+          FortranFunctionSubprogramImpl(FUNCTION_SUBPROGRAM)
             FortranFunctionStmtImpl(FUNCTION_STMT)
               LABEL_DECL
                 PsiElement(integerliteral)('7')
@@ -136,14 +136,14 @@ FILE
     PsiElement(eol)('\n')
     FortranBlockImpl(BLOCK)
       <empty list>
-    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM PART)
+    FortranModuleSubprogramPartImpl(MODULE_SUBPROGRAM_PART)
       CONTAINS_STMT
         LABEL_DECL
           PsiElement(integerliteral)('13')
         PsiWhiteSpace(' ')
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
-      FortranSubroutineSubprogramImpl(SUBROUTINE)
+      FortranSubroutineSubprogramImpl(SUBROUTINE_SUBPROGRAM)
         FortranSubroutineStmtImpl(SUBROUTINE_STMT)
           LABEL_DECL
             PsiElement(integerliteral)('14')

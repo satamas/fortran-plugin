@@ -8,12 +8,12 @@ FILE
     PsiElement(eol)('\n')
     FortranBlockImpl(BLOCK)
       <empty list>
-    FortranModuleSubprogramPartImpl(MODULE SUBPROGRAM PART)
+    FortranModuleSubprogramPartImpl(MODULE_SUBPROGRAM_PART)
       CONTAINS_STMT
         PsiElement(keyword)('contains')
       PsiElement(eol)('\n')
       PsiWhiteSpace('    ')
-      FortranSubroutineSubprogramImpl(SUBROUTINE)
+      FortranSubroutineSubprogramImpl(SUBROUTINE_SUBPROGRAM)
         FortranSubroutineStmtImpl(SUBROUTINE_STMT)
           PsiElement(keyword)('subroutine')
           PsiWhiteSpace(' ')
