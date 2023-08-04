@@ -47,6 +47,7 @@ allprojects {
         plugin("kotlin")
         plugin("org.jetbrains.intellij")
     }
+    group = prop("pluginGroup")
 
     repositories {
         mavenCentral()

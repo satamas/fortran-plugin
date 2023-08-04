@@ -1,4 +1,4 @@
-# Fortran IntelliJ Idea plugin
+# Fortran IntelliJ plugin
 
 <!-- Plugin description -->
 Fortran language support
