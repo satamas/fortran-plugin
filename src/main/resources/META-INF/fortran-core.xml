@@ -1,25 +1,4 @@
-<idea-plugin>
-    <id>org.jetbrains.fortran</id>
-    <name>Fortran</name>
-    <version>2023.2.2</version>
-    <vendor email="semyon.atamas@jetbrains.com" url="https://github.com/satamas/fortran-plugin">Semyon Atamas</vendor>
-
-    <description><![CDATA[
-      Fortran language support<br>
-      The plugin supports FORTRAN 77, FORTRAN 90, FORTRAN 95, FORTRAN 2003 and FORTRAN 2008 source code.
-      Several nonstandard extensions are also supported.
-      Lexer, parser, syntax highlighter, debugger, commenter, formatter, folding, navigation, structure view, brace matcher and some inspections are provided.
-    ]]></description>
-
-    <change-notes><![CDATA[
-    Stub problem fix
-    ]]>
-    </change-notes>
-
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="232.8660.0" until-build="232.*"/>
-
-    <depends optional="true" config-file="clion-only.xml">com.intellij.modules.clion</depends>
+<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude" allow-bundled-update="true">
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">

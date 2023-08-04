@@ -1,0 +1,4 @@
+<idea-plugin package="org.jetbrains.fortran" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <id>org.jetbrains.fortran</id>
+    <xi:include href="/META-INF/fortran-core.xml" xpointer="xpointer(/idea-plugin/*)"/>
+</idea-plugin>
