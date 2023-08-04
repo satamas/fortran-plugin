@@ -7,10 +7,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 val CI = System.getenv("CI") != null
 
 plugins {
-    idea
-    id("org.jetbrains.grammarkit") version "2022.3.1"
-    kotlin("jvm") version "1.9.0"
-    id("org.jetbrains.intellij") version "1.15.0"
+    id("java") // Java support
+    alias(libs.plugins.gradleIntelliJPlugin) // Gradle IntelliJ Plugin
+    alias(libs.plugins.kotlin) // Kotlin support
+    alias(libs.plugins.grammarkit) // IntelliJ Grammarkit
 }
 
 idea {
