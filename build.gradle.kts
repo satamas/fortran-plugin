@@ -27,12 +27,31 @@ plugins {
     alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.grammarkit) // IntelliJ Grammarkit
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
+    alias(libs.plugins.qodana) // Gradle Qodana Plugin
+    alias(libs.plugins.kover) // Gradle Kover Plugin
 }
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
     groups.empty()
     repositoryUrl = prop("pluginRepositoryUrl")
+}
+
+// Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
+qodana {
+    cachePath = provider { file(".qodana").canonicalPath }
+    reportPath = provider { file("build/reports/inspections").canonicalPath }
+    saveReport = true
+    showReport = environment("QODANA_SHOW_REPORT").map { it.toBoolean() }.getOrElse(false)
+}
+
+// Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
+koverReport {
+    defaults {
+        xml {
+            onCheck = true
+        }
+    }
 }
 
 idea {
@@ -281,6 +300,7 @@ fun hasProp(name: String): Boolean = extra.has(name)
 fun prop(name: String): String = extra.properties[name] as? String
     ?: error("Property `$name` is not defined in gradle.properties")
 fun properties(key: String) = providers.gradleProperty(key)
+fun environment(key: String) = providers.environmentVariable(key)
 
 fun File.isPluginJar(): Boolean {
     if (!isFile) return false
