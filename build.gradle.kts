@@ -1,4 +1,5 @@
 import groovy.xml.XmlParser
+import org.jetbrains.changelog.Changelog
 
 // Environment settings
 val CI = System.getenv("CI") != null
@@ -24,6 +25,13 @@ plugins {
     alias(libs.plugins.gradlePropertiesPlugin) // Gradle Properties Plugin
     alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.grammarkit) // IntelliJ Grammarkit
+    alias(libs.plugins.changelog) // Gradle Changelog Plugin
+}
+
+// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
+changelog {
+    groups.empty()
+    repositoryUrl = prop("pluginRepositoryUrl")
 }
 
 idea {
@@ -184,9 +192,23 @@ project(":plugin") {
             dependsOn(mergePluginJarTask)
             enabled = true
         }
+        patchPluginXml {
+            val changelog = rootProject.changelog // local variable for configuration cache compatibility
+            // Get the latest available change notes from the changelog file
+            changeNotes = properties("pluginVersion").map { pluginVersion ->
+                with(changelog) {
+                    renderItem(
+                        (getOrNull(pluginVersion) ?: getUnreleased())
+                            .withHeader(false)
+                            .withEmptySections(false),
+                        Changelog.OutputType.HTML,
+                    )
+                }
+            }
+        }
     }
 
-    // TODO: Add changelog, description, sign and publish info grabbers
+    // TODO: Add description, sign and publish info grabbers
 }
 
 // Main fortran language project

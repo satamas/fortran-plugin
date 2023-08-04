@@ -6,9 +6,11 @@ gradleIntelliJPlugin = "1.15.0"
 gradlePropertiesPlugin = "1.5.2"
 kotlin = "1.9.0"
 grammarkit = "2022.3.1"
+changelog = "2.1.2"
 
 [plugins]
 gradleIntelliJPlugin = { id = "org.jetbrains.intellij", version.ref = "gradleIntelliJPlugin" }
 gradlePropertiesPlugin = { id = "net.saliman.properties", version.ref = "gradlePropertiesPlugin" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
 grammarkit = { id = "org.jetbrains.grammarkit", version.ref = "grammarkit" }

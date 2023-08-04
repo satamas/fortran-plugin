@@ -10,11 +10,6 @@
       Lexer, parser, syntax highlighter, debugger, commenter, formatter, folding, navigation, structure view, brace matcher and some inspections are provided.
     ]]></description>
 
-    <change-notes><![CDATA[
-    IntelliJ 2023.2 support
-    ]]>
-    </change-notes>
-
     <xi:include href="/META-INF/fortran-core.xml" xpointer="xpointer(/idea-plugin/*)"/>
 
     <content>
