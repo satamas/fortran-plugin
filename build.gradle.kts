@@ -1,5 +1,6 @@
 import groovy.xml.XmlParser
 import org.jetbrains.changelog.Changelog
+import org.jetbrains.changelog.markdownToHTML
 
 // Environment settings
 val CI = System.getenv("CI") != null
@@ -205,10 +206,21 @@ project(":plugin") {
                     )
                 }
             }
+            pluginDescription = providers.fileContents(rootProject.layout.projectDirectory.file("README.md")).asText.map {
+                val start = "<!-- Plugin description -->"
+                val end = "<!-- Plugin description end -->"
+
+                with(it.lines()) {
+                    if (!containsAll(listOf(start, end))) {
+                        throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
+                    }
+                    subList(indexOf(start) + 1, indexOf(end)).joinToString("\n").let(::markdownToHTML)
+                }
+            }
         }
     }
 
-    // TODO: Add description, sign and publish info grabbers
+    // TODO: Add sign and publish info grabbers
 }
 
 // Main fortran language project

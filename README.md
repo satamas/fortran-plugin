@@ -1,5 +1,13 @@
 # Fortran IntelliJ Idea plugin
 
+<!-- Plugin description -->
+Fortran language support
+
+The plugin supports FORTRAN 77, FORTRAN 90, FORTRAN 95, FORTRAN 2003 and FORTRAN 2008 source code.
+Several nonstandard extensions are also supported.
+Lexer, parser, syntax highlighter, debugger, commenter, formatter, folding, navigation, structure view, brace matcher and some inspections are provided.
+<!-- Plugin description end -->
+
 Status
 ======
 
