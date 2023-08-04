@@ -9,6 +9,7 @@ val CI = System.getenv("CI") != null
 plugins {
     id("java") // Java support
     alias(libs.plugins.gradleIntelliJPlugin) // Gradle IntelliJ Plugin
+    alias(libs.plugins.gradlePropertiesPlugin) // Gradle Properties Plugin
     alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.grammarkit) // IntelliJ Grammarkit
 }
