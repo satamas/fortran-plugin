@@ -126,6 +126,7 @@ allprojects {
         runIde { enabled = false }
         prepareSandbox { enabled = false }
         buildSearchableOptions { enabled = false }
+        buildPlugin { enabled = false }
     }
 }
 
@@ -216,6 +217,7 @@ project(":plugin") {
         verifyPlugin {
             dependsOn(mergePluginJarTask)
         }
+        buildPlugin { enabled = true }
         patchPluginXml {
             val changelog = rootProject.changelog // local variable for configuration cache compatibility
             // Get the latest available change notes from the changelog file

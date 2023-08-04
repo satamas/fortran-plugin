@@ -1,0 +1,51 @@
+name: CI workflow
+on:
+  workflow_call:
+    secrets:
+      QODANA_TOKEN:
+        description: Qodana cloud token
+        required: false
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: write
+  checks: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: Build plugin
+    strategy:
+      matrix:
+        platform-version: [ 232 ]
+    uses: ./.github/workflows/step_build.yaml
+    with:
+      platform-version: ${{ matrix.platform-version }}
+    permissions:
+      contents: read
+  test:
+    name: Run tests
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        base-ide: [ idea,clion ]
+        platform-version: [ 232 ]
+    uses: ./.github/workflows/step_test.yaml
+    with:
+      base-ide: ${{ matrix.base-ide }}
+      platform-version: ${{ matrix.platform-version }}
+    permissions:
+      contents: read
+  code-inspect:
+    name: Run code inspection
+    needs: build
+    uses: ./.github/workflows/step_code-inspect.yaml
+    permissions:
+      contents: write
+      checks: write
+      pull-requests: write
+    secrets:
+      QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}

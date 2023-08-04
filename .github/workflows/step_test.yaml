@@ -1,0 +1,100 @@
+name: Test workflow
+on:
+  workflow_call:
+    inputs:
+      base-ide:
+        required: true
+        type: string
+        description: IDE to test for
+      platform-version:
+        required: true
+        type: number
+        description: IDE version
+
+permissions:
+  contents: read
+
+env:
+  ORG_GRADLE_PROJECT_baseIDE: ${{ inputs.base-ide }}
+  ORG_GRADLE_PROJECT_platformVersion: ${{ inputs.platform-version }}
+  CI: true
+
+jobs:
+  # Run tests and upload a code coverage report
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Maximize Build Space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: true
+      - name: Run Checks
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: check
+          cache-read-only: true
+      - name: Collect Tests Result
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: tests-result
+          path: ${{ github.workspace }}/build/reports/tests
+      - name: Upload Code Coverage Report
+        uses: codecov/codecov-action@v3
+        with:
+          # TODO: Add flags
+          files: ${{ github.workspace }}/build/reports/kover/report.xml
+
+  # Run plugin structure verification along with IntelliJ Plugin Verifier
+  verify:
+    name: Verify plugin
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Maximize Build Space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: true
+      - name: Get ProductReleases
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: :plugin:listProductsReleases
+      - name: Setup Plugin Verifier IDEs Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.pluginVerifier/ides
+          key: plugin-verifier-${{ hashFiles('plugin/build/listProductsReleases.txt') }}
+      - name: Run Plugin Verification tasks
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: |
+            :plugin:runPluginVerifier
+            -Dplugin.verifier.home.dir=~/.pluginVerifier/ides
+          cache-read-only: true
+      - name: Collect Plugin Verifier Result
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: pluginVerifier-result
+          path: ${{ github.workspace }}/plugin/build/reports/pluginVerifier

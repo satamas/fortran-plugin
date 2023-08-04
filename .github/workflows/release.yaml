@@ -11,8 +11,12 @@ on:
 
 jobs:
   tests:
-    uses: ./.github/workflows/test.yaml
+    uses: ./.github/workflows/ci.yaml
     secrets: inherit
+    permissions:
+      contents: write
+      checks: write
+      pull-requests: write
   release:
     needs: tests
     name: Publish Plugin
@@ -31,28 +35,6 @@ jobs:
           java-version: 17
           cache: gradle
 
-      # Set environment variables
-      - name: Export Properties
-        id: properties
-        shell: bash
-        run: |
-          CHANGELOG="$(cat << 'EOM' | sed -e 's/^[[:space:]]*$//g' -e '/./,$!d'
-          ${{ github.event.release.body }}
-          EOM
-          )"
-          
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      # Update Unreleased section with the current release note
-      - name: Patch Changelog
-        if: ${{ steps.properties.outputs.changelog != '' }}
-        env:
-          CHANGELOG: ${{ steps.properties.outputs.changelog }}
-        run: |
-          ./gradlew patchChangelog --release-note="$CHANGELOG"
-
       # Publish the plugin to the Marketplace
       - name: Publish Plugin
         env:
@@ -65,7 +47,6 @@ jobs:
       - name: Make Github release
         uses: softprops/action-gh-release@v1
         with:
-          name: Spglib ${{ github.ref_name }}
-          draft: true
+          name: Fortran IntelliJ plugin ${{ github.ref_name }}
           prerelease: ${{ contains(github.ref, 'rc') }}
           generate_release_notes: true
