@@ -208,6 +208,7 @@ project(":plugin") {
             archiveBaseName.set(basePluginArchiveName)
         }
         runIde {
+            dependsOn(mergePluginJarTask)
             jvmArgs("-Xmx768m", "-XX:+UseG1GC", "-XX:SoftRefLRUPolicyMSPerMB=50")
             jvmArgs("-Didea.auto.reload.plugins=false")
             jvmArgs("-Dide.show.tips.on.startup.default.value=false")
