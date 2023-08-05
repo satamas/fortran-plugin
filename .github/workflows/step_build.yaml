@@ -9,6 +9,7 @@ on:
 
 env:
   ORG_GRADLE_PROJECT_platformVersion: ${{ inputs.platform-version }}
+  ORG_GRADLE_PROJECT_enableBuildSearchableOptions: true
   CI: true
 
 permissions:

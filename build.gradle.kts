@@ -215,7 +215,7 @@ project(":plugin") {
         }
         buildSearchableOptions {
             dependsOn(mergePluginJarTask)
-            enabled = true
+            enabled = prop("enableBuildSearchableOptions").toBoolean()
         }
         verifyPlugin {
             dependsOn(mergePluginJarTask)
