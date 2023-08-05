@@ -3,7 +3,7 @@ import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 
 // Environment settings
-val CI = System.getenv("CI") != null
+val isCI = System.getenv("CI") != null
 
 // Platform and IDE settings
 val platformVersion = prop("platformVersion").toInt()
@@ -75,7 +75,7 @@ allprojects {
     intellij {
         version.set(baseVersion)
         type.set(baseIDE)
-        downloadSources.set(!CI)
+        downloadSources.set(!isCI)
         updateSinceUntilBuild.set(true)
         instrumentCode.set(false)
         ideaDependencyCachePath.set(file("deps").absolutePath)
@@ -227,10 +227,10 @@ project(":plugin") {
             changeNotes = properties("pluginVersion").map { pluginVersion ->
                 with(changelog) {
                     renderItem(
-                        (getOrNull(pluginVersion) ?: getUnreleased())
-                            .withHeader(false)
-                            .withEmptySections(false),
-                        Changelog.OutputType.HTML,
+                            (getOrNull(pluginVersion) ?: getUnreleased())
+                                    .withHeader(false)
+                                    .withEmptySections(false),
+                            Changelog.OutputType.HTML,
                     )
                 }
             }
@@ -275,9 +275,9 @@ project(":") {
     task("resolveDependencies") {
         doLast {
             rootProject.allprojects
-                .map { it.configurations }
-                .flatMap { it.filter { c -> c.isCanBeResolved } }
-                .forEach { it.resolve() }
+                    .map { it.configurations }
+                    .flatMap { it.filter { c -> c.isCanBeResolved } }
+                    .forEach { it.resolve() }
         }
     }
 }
@@ -321,7 +321,7 @@ project(":debugger") {
 
 fun hasProp(name: String): Boolean = extra.has(name)
 fun prop(name: String): String = extra.properties[name] as? String
-    ?: error("Property `$name` is not defined in gradle.properties")
+        ?: error("Property `$name` is not defined in gradle.properties")
 
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
