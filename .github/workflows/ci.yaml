@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base-ide: [ idea,clion ]
+        base-ide: [ IU,CL ]
         platform-version: [ 232 ]
     uses: ./.github/workflows/step_test.yaml
     with:

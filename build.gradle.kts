@@ -8,13 +8,7 @@ val CI = System.getenv("CI") != null
 // Platform and IDE settings
 val platformVersion = prop("platformVersion").toInt()
 val baseIDE = prop("baseIDE")
-val ideaVersion = prop("ideaVersion")
-val clionVersion = prop("clionVersion")
-val baseVersion = when (baseIDE) {
-    "idea" -> ideaVersion
-    "clion" -> clionVersion
-    else -> error("Unexpected IDE name: `$baseIDE`")
-}
+val baseVersion = prop("baseVersion")
 
 val pluginVersion = prop("pluginVersion")
 val basePluginArchiveName = "fortran-plugin"
@@ -80,6 +74,7 @@ allprojects {
 
     intellij {
         version.set(baseVersion)
+        type.set(baseIDE)
         downloadSources.set(!CI)
         updateSinceUntilBuild.set(true)
         instrumentCode.set(false)
@@ -136,7 +131,7 @@ project(":plugin") {
     intellij {
         pluginName.set("fortran-plugin")
         val pluginList = mutableListOf<String>()
-        if (baseIDE == "idea") {
+        if (type.get() == "IU") {
             pluginList += listOf(
                     prop("nativeDebugPlugin"),
             )
@@ -289,7 +284,7 @@ project(":") {
 
 project(":clion") {
     intellij {
-        version.set(clionVersion)
+        type.set("CL")
         plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
     }
     dependencies {
@@ -301,7 +296,7 @@ project(":clion") {
 
 project(":idea") {
     intellij {
-        version.set(ideaVersion)
+        type.set("IU")
         plugins.set(listOf("com.intellij.java", "com.intellij.java.ide"))
     }
     dependencies {
@@ -311,11 +306,9 @@ project(":idea") {
 }
 project(":debugger") {
     intellij {
-        if (baseIDE == "idea") {
-            version.set(ideaVersion)
+        if (type.get() == "IU") {
             plugins.set(listOf(prop("nativeDebugPlugin")))
         } else {
-            version.set(clionVersion)
             plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
         }
     }
