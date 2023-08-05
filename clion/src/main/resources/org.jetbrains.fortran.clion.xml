@@ -9,6 +9,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <directoryProjectGenerator
-                implementation="org.jetbrains.fortran.ide.newProject.FortranProjectGenerator"/>
+                implementation="org.jetbrains.fortran.clion.newProject.FortranProjectGenerator"/>
     </extensions>
 </idea-plugin>

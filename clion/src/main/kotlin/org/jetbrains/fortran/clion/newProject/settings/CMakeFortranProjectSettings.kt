@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.ide.newProject.settings
+package org.jetbrains.fortran.clion.newProject.settings
 
 import com.jetbrains.cidr.cpp.cmake.projectWizard.generators.settings.CMakeProjectSettings
 
