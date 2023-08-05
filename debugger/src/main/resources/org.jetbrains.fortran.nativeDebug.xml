@@ -1,0 +1,8 @@
+<idea-plugin package="org.jetbrains.fortran.nativeDebug" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <!--suppress PluginXmlValidity -->
+    <dependencies>
+        <module name="org.jetbrains.fortran.debugger"/>
+
+        <plugin id="com.intellij.nativeDebug"/>
+    </dependencies>
+</idea-plugin>

@@ -135,6 +135,13 @@ project(":plugin") {
     version = "$pluginVersion.${prop("buildNumber")}"
     intellij {
         pluginName.set("fortran-plugin")
+        val pluginList = mutableListOf<String>()
+        if (baseIDE == "idea") {
+            pluginList += listOf(
+                    prop("nativeDebugPlugin"),
+            )
+        }
+        plugins.set(pluginList)
     }
 
     dependencies {
@@ -286,6 +293,7 @@ project(":clion") {
     }
     dependencies {
         implementation(project(":"))
+        implementation(project(":debugger"))
 //        testImplementation(project(":", "testOutput"))
     }
 }
@@ -295,6 +303,22 @@ project(":idea") {
         version.set(ideaVersion)
         plugins.set(listOf("com.intellij.java", "com.intellij.java.ide"))
     }
+    dependencies {
+        implementation(project(":"))
+//        testImplementation(project(":", "testOutput"))
+    }
+}
+project(":debugger") {
+    intellij {
+        if (baseIDE == "idea") {
+            version.set(ideaVersion)
+            plugins.set(listOf(prop("nativeDebugPlugin")))
+        } else {
+            version.set(clionVersion)
+            plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
+        }
+    }
+
     dependencies {
         implementation(project(":"))
 //        testImplementation(project(":", "testOutput"))

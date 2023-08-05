@@ -1,14 +1,11 @@
 <idea-plugin package="org.jetbrains.fortran.clion">
-    <extensions defaultExtensionNs="cidr.debugger">
-        <languageSupport language="Fortran"
-                         implementationClass="org.jetbrains.fortran.debugger.lang.FortranDebuggerLanguageSupport"/>
-        <editorsExtension language="Fortran"
-                          implementationClass="org.jetbrains.fortran.debugger.lang.FortranDebuggerEditorsProvider"/>
-        <editorsExtension language="Fortran fixed form"
-                          implementationClass="org.jetbrains.fortran.debugger.lang.FortranDebuggerEditorsProvider"/>
-        <lineBreakpointFileTypesProvider
-                implementation="org.jetbrains.fortran.debugger.FortranLineBreakpointFileTypesProvider"/>
-    </extensions>
+    <!--suppress PluginXmlValidity -->
+    <dependencies>
+        <plugin id="com.intellij.clion"/>
+        <plugin id="com.intellij.cidr.base"/>
+
+        <module name="org.jetbrains.fortran.debugger"/>
+    </dependencies>
 
     <extensions defaultExtensionNs="com.intellij">
         <directoryProjectGenerator

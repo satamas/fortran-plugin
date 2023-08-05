@@ -5,6 +5,7 @@ include("plugin")
 include(
     "idea",
     "clion",
+    "debugger",
 )
 
 // Configure Gradle Build Cache. It is enabled in `gradle.properties` via `org.gradle.caching`.

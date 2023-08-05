@@ -8,5 +8,6 @@
     <content>
         <module name="org.jetbrains.fortran.idea"/>
         <module name="org.jetbrains.fortran.clion"/>
+        <module name="org.jetbrains.fortran.debugger"/>
     </content>
 </idea-plugin>
