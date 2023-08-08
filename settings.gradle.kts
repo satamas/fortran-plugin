@@ -3,7 +3,6 @@ rootProject.name = "fortran-plugin"
 // Special module with run, build and publish tasks
 include("plugin")
 include(
-    "idea",
     "clion",
     "debugger",
 )

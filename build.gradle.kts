@@ -293,17 +293,6 @@ project(":clion") {
 //        testImplementation(project(":", "testOutput"))
     }
 }
-
-project(":idea") {
-    intellij {
-        type.set("IU")
-        plugins.set(listOf("com.intellij.java", "com.intellij.java.ide"))
-    }
-    dependencies {
-        implementation(project(":"))
-//        testImplementation(project(":", "testOutput"))
-    }
-}
 project(":debugger") {
     intellij {
         if (type.get() == "IU") {
