@@ -1,0 +1,7 @@
+SUBROUTINE foo(a, b, c, d)
+    IMPLICIT  NONE
+    INTEGER, INTENT(IN) :: a
+    INTEGER, INTENT(OUT) :: b
+    INTEGER, INTENT(INOUT) :: c
+    INTEGER, INTENT(IN OUT) :: d
+END SUBROUTINE foo
