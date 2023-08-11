@@ -1,9 +1,9 @@
-package org.jetbrains.fortran.ide.newProject
+package org.jetbrains.fortran.clion.newProject
 
 import com.intellij.openapi.vfs.VirtualFile
 import com.jetbrains.cidr.cpp.cmake.projectWizard.CLionProjectWizardUtils.getCMakeFileHeader
 import com.jetbrains.cidr.cpp.cmake.projectWizard.generators.CMakeProjectGenerator
-import org.jetbrains.fortran.ide.newProject.settings.CMakeFortranProjectSettings
+import org.jetbrains.fortran.clion.newProject.settings.CMakeFortranProjectSettings
 
 class FortranProjectGenerator : CMakeProjectGenerator() {
     init {

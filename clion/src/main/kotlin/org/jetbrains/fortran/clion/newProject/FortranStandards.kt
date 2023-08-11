@@ -1,4 +1,4 @@
-package org.jetbrains.fortran.ide.newProject
+package org.jetbrains.fortran.clion.newProject
 
 enum class FortranStandards(val standard: String) {
     F90("90");

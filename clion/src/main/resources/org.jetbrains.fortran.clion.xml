@@ -1,0 +1,12 @@
+<idea-plugin package="org.jetbrains.fortran.clion">
+    <!--suppress PluginXmlValidity -->
+    <dependencies>
+        <plugin id="com.intellij.clion"/>
+        <plugin id="com.intellij.cidr.base"/>
+    </dependencies>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <directoryProjectGenerator
+                implementation="org.jetbrains.fortran.clion.newProject.FortranProjectGenerator"/>
+    </extensions>
+</idea-plugin>

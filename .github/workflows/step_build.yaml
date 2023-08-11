@@ -1,0 +1,56 @@
+name: Build plugin
+on:
+  workflow_call:
+    inputs:
+      platform-version:
+        required: true
+        type: number
+        description: IDE version
+
+env:
+  ORG_GRADLE_PROJECT_platformVersion: ${{ inputs.platform-version }}
+  ORG_GRADLE_PROJECT_enableBuildSearchableOptions: true
+  CI: true
+
+permissions:
+  contents: read
+
+jobs:
+  # Prepare environment and build the plugin
+  build:
+    name: Build for platform ${{ inputs.platform-version }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Maximize Build Space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+      - uses: actions/checkout@v3
+      - name: Gradle Wrapper Validation
+        uses: gradle/wrapper-validation-action@v1.0.6
+      - uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Build plugin
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: |
+            :plugin:buildPlugin
+      - name: Prepare Plugin Artifact
+        id: artifact
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}/plugin/build/distributions
+          FILENAME=`ls *.zip`
+          unzip "$FILENAME" -d content
+
+          echo "filename=${FILENAME:0:-4}" >> $GITHUB_OUTPUT
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.artifact.outputs.filename }}
+          path: ./plugin/build/distributions/content/*/*
