@@ -1,9 +1,0 @@
-<idea-plugin package="org.jetbrains.fortran" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <id>org.rust.lang</id>
-    <xi:include href="/META-INF/fortran-core.xml" xpointer="xpointer(/idea-plugin/*)"/>
-
-    <!--suppress PluginXmlValidity -->
-    <content>
-        <module name="org.jetbrains.fortran.debugger"/>
-    </content>
-</idea-plugin>
