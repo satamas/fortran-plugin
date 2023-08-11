@@ -1,4 +1,3 @@
-import groovy.xml.XmlParser
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 
@@ -141,7 +140,6 @@ project(":plugin") {
 
     dependencies {
         implementation(project(":"))
-        implementation(project(":idea"))
         implementation(project(":clion"))
     }
 
@@ -290,9 +288,9 @@ project(":clion") {
     dependencies {
         implementation(project(":"))
         implementation(project(":debugger"))
-//        testImplementation(project(":", "testOutput"))
     }
 }
+
 project(":debugger") {
     intellij {
         if (type.get() == "IU") {
@@ -304,7 +302,6 @@ project(":debugger") {
 
     dependencies {
         implementation(project(":"))
-//        testImplementation(project(":", "testOutput"))
     }
 }
 
@@ -314,21 +311,3 @@ fun prop(name: String): String = extra.properties[name] as? String
 
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
-
-fun File.isPluginJar(): Boolean {
-    if (!isFile) return false
-    if (extension != "jar") return false
-    return zipTree(this).files.any { it.isManifestFile() }
-}
-
-fun File.isManifestFile(): Boolean {
-    if (extension != "xml") return false
-    val rootNode = try {
-        val parser = XmlParser()
-        parser.parse(this)
-    } catch (e: Exception) {
-        logger.error("Failed to parse $path", e)
-        return false
-    }
-    return rootNode.name() == "idea-plugin"
-}
