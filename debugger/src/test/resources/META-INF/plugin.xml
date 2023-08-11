@@ -5,6 +5,5 @@
     <!--suppress PluginXmlValidity -->
     <content>
         <module name="org.jetbrains.fortran.debugger"/>
-        <module name="org.jetbrains.fortran.nativeDebug"/>
     </content>
 </idea-plugin>

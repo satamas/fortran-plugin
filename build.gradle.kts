@@ -131,11 +131,6 @@ project(":plugin") {
     intellij {
         pluginName.set("fortran-plugin")
         val pluginList = mutableListOf<String>()
-        if (type.get() == "IU") {
-            pluginList += listOf(
-                    prop("nativeDebugPlugin"),
-            )
-        }
         plugins.set(pluginList)
     }
 
@@ -294,11 +289,8 @@ project(":clion") {
 
 project(":debugger") {
     intellij {
-        if (type.get() == "IU") {
-            plugins.set(listOf(prop("nativeDebugPlugin")))
-        } else {
-            plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
-        }
+        type.set("CL")
+        plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
     }
 
     dependencies {
