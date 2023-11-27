@@ -4,7 +4,7 @@
 # plugins
 gradleIntelliJPlugin = "1.15.0"
 gradlePropertiesPlugin = "1.5.2"
-kotlin = "1.9.10"
+kotlin = "1.9.21"
 grammarkit = "2022.3.1"
 changelog = "2.2.0"
 qodana = "0.1.13"
