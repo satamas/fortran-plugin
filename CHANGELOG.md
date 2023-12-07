@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [2023.3.1] - 2023-12-07
+Fix structure view dialog
+
 ## [2023.3.0] - 2023-12-06
 IntelliJ 2023.3 support
 
