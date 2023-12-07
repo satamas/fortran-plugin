@@ -221,10 +221,10 @@ project(":plugin") {
             changeNotes = properties("pluginVersion").map { pluginVersion ->
                 with(changelog) {
                     renderItem(
-                            (getOrNull(pluginVersion) ?: getUnreleased())
+                            (getOrNull("$pluginVersion.${prop("buildNumber")}") ?: getUnreleased())
                                     .withHeader(false)
                                     .withEmptySections(false),
-                            Changelog.OutputType.HTML,
+                            Changelog.OutputType.PLAIN_TEXT,
                     )
                 }
             }
