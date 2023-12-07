@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [2023.3.0] - 2023-12-06
+IntelliJ 2023.3 support
+
 ### Project
 - Separate project into various subprojects
 - Add GitHub action workflows

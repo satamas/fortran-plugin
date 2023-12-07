@@ -290,7 +290,7 @@ project(":clion") {
 project(":debugger") {
     intellij {
         type.set("CL")
-        plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
+        plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion", "com.intellij.nativeDebug"))
     }
 
     dependencies {
