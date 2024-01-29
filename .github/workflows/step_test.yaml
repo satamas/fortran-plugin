@@ -36,11 +36,11 @@ jobs:
           distribution: zulu
           java-version: 17
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           cache-read-only: true
       - name: Run Checks
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: check
           cache-read-only: true
@@ -73,11 +73,11 @@ jobs:
           distribution: zulu
           java-version: 17
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           cache-read-only: true
       - name: Get ProductReleases
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: :plugin:listProductsReleases
       - name: Setup Plugin Verifier IDEs Cache
@@ -86,7 +86,7 @@ jobs:
           path: ~/.pluginVerifier/ides
           key: plugin-verifier-${{ hashFiles('plugin/build/listProductsReleases.txt') }}
       - name: Run Plugin Verification tasks
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: |
             :plugin:runPluginVerifier
