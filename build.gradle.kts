@@ -9,6 +9,7 @@ val isCI = System.getenv("CI") != null
 val platformVersion = prop("platformVersion").toInt()
 val baseIDE = prop("baseIDE")
 val baseVersion = prop("baseVersion")
+val clionVersion = prop("clionVersion")
 
 val pluginVersion = prop("pluginVersion")
 val basePluginArchiveName = "fortran-plugin"
@@ -73,7 +74,11 @@ allprojects {
     }
 
     intellij {
-        version.set(baseVersion)
+        if (baseIDE == "CL") {
+            version.set(clionVersion)
+        } else {
+            version.set(baseVersion)
+        }
         type.set(baseIDE)
         downloadSources.set(!isCI)
         updateSinceUntilBuild.set(true)
@@ -277,6 +282,7 @@ project(":") {
 
 project(":clion") {
     intellij {
+        version.set(clionVersion)
         type.set("CL")
         plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion"))
     }
@@ -288,6 +294,7 @@ project(":clion") {
 
 project(":debugger") {
     intellij {
+        version.set(clionVersion)
         type.set("CL")
         plugins.set(listOf("com.intellij.cidr.base", "com.intellij.clion", "com.intellij.nativeDebug"))
     }

@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2024.1.0] - 2024-04-04
+
+IntelliJ 2024.1 support
+
 ## [2023.3.1] - 2023-12-07
 Fix structure view dialog
 
@@ -21,18 +25,3 @@ IntelliJ 2023.3 support
 
 ### Fixes
 - Resolve various kotlin and intellij deprecations
-
-## [2023.2.0] - 2023-07-31
-IntelliJ 2023.2 support
-
-## [2023.1.0] - 2023-07-28
-IntelliJ 2023.1 support
-
-## [2022.3.0] - 2022-12-4
-IntelliJ 2022.3 support
-
-## [2022.2.0] - 2022-07-29
-IntelliJ 2022.2 support
-
-## [2022.1.0] - 2023-04-22
-IntelliJ 2022.1 support
