@@ -250,13 +250,12 @@ project(":") {
     tasks {
         generateLexer {
             sourceFile.set(file("src/main/grammars/FortranLexer.flex"))
-            targetDir.set("src/gen/org/jetbrains/fortran/lang/lexer")
-            targetClass.set("_FortranLexer")
+            targetOutputDir.set(layout.projectDirectory.dir("src/gen/org/jetbrains/fortran/lang/lexer"))
             purgeOldFiles.set(true)
         }
         generateParser {
             sourceFile.set(file("src/main/grammars/FortranParser.bnf"))
-            targetRoot.set("src/gen")
+            targetRootOutputDir.set(layout.projectDirectory.dir("src/gen"))
             pathToParser.set("org/jetbrains/fortran/lang/parser/FortranParser.java")
             pathToPsiRoot.set("org/jetbrains/fortran/lang/psi")
             purgeOldFiles.set(true)
