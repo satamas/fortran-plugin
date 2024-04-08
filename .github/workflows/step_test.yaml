@@ -51,7 +51,7 @@ jobs:
           name: tests-result
           path: ${{ github.workspace }}/build/reports/tests
       - name: Upload Code Coverage Report
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           # TODO: Add flags
           files: ${{ github.workspace }}/build/reports/kover/report.xml
