@@ -1,10 +1,10 @@
 rootProject.name = "fortran-plugin"
 
 // Special module with run, build and publish tasks
-include("plugin")
 include(
     "clion",
     "debugger",
+    "core"
 )
 
 // Configure Gradle Build Cache. It is enabled in `gradle.properties` via `org.gradle.caching`.

@@ -129,3 +129,5 @@ replay_pid*
 ### Project specific
 deps
 gen
+
+.intellijPlatform

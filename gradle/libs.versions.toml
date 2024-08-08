@@ -2,17 +2,19 @@
 # libraries
 
 # plugins
-gradleIntelliJPlugin = "1.17.4"
-gradlePropertiesPlugin = "1.5.2"
+gradleIntelliJPlugin = "2.0.0"
 kotlin = "2.0.0"
 grammarkit = "2022.3.2.2"
 changelog = "2.2.1"
 qodana = "0.1.13"
 kover = "0.8.2"
 
+[libraries]
+junit = { module = "junit:junit", version = "4.13.2" }
+test4j = { module = "org.opentest4j:opentest4j", version = "1.3.0" }
+
 [plugins]
-gradleIntelliJPlugin = { id = "org.jetbrains.intellij", version.ref = "gradleIntelliJPlugin" }
-gradlePropertiesPlugin = { id = "net.saliman.properties", version.ref = "gradlePropertiesPlugin" }
+gradleIntelliJPlugin = { id = "org.jetbrains.intellij.platform", version.ref = "gradleIntelliJPlugin" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
