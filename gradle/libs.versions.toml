@@ -2,8 +2,8 @@
 # libraries
 
 # plugins
-gradleIntelliJPlugin = "2.1.0"
-kotlin = "2.0.21"
+gradleIntelliJPlugin = "2.5.0"
+kotlin = "2.1.20"
 grammarkit = "2022.3.2.2"
 changelog = "2.2.1"
 qodana = "0.1.13"

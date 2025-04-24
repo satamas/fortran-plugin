@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.1.0] - 2025-04-24
+
+IntelliJ 2025.1 support
+
 ## [2024.2.0] - 2024-08-08
 
 IntelliJ 2024.2 support. Migrate to IntelliJ gradle plugin 2.0
