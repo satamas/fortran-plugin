@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.2.0] - 2025-10-01
+
+IntelliJ 2025.2 support
+
 ## [2025.1.0] - 2025-04-24
 
 IntelliJ 2025.1 support
