@@ -27,21 +27,25 @@ dependencies {
         when (baseIDE) {
             "IC" -> {
                 val version = providers.gradleProperty("baseVersion")
-                intellijIdeaCommunity(version, !version.get().contains("EAP"))
+                intellijIdeaCommunity(version) {
+                    useInstaller = !version.get().contains("EAP")
+                }
             }
 
             "CL" -> {
                 val version = providers.gradleProperty("clionVersion")
-                clion(version, !version.get().contains("EAP"))
+                clion(version) {
+                    useInstaller = !version.get().contains("EAP")
+                }
             }
 
             else -> throw GradleException("Unexpected IDE type: $baseIDE")
         }
-        instrumentationTools()
-        pluginModule(implementation(project(":core")))
-        pluginModule(runtimeOnly(project(":clion")))
-        pluginModule(runtimeOnly(project(":debugger")))
     }
+
+    implementation(project(":core"))
+    runtimeOnly(project(":clion"))
+    runtimeOnly(project(":debugger"))
 }
 
 kotlin {

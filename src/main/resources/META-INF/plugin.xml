@@ -1,8 +1,7 @@
 <idea-plugin package="org.jetbrains.fortran" xmlns:xi="http://www.w3.org/2001/XInclude" allow-bundled-update="true">
     <xi:include href="/META-INF/fortran-core.xml" xpointer="xpointer(/idea-plugin/*)"/>
 
-    <content>
-        <module name="org.jetbrains.fortran.clion"/>
-        <module name="org.jetbrains.fortran.debugger"/>
-    </content>
+    <depends optional="true" config-file="org.jetbrains.fortran.clion.xml">com.intellij.clion</depends>
+    <depends optional="true" config-file="org.jetbrains.fortran.debugger.xml">com.intellij.modules.cidr.debugger
+    </depends>
 </idea-plugin>

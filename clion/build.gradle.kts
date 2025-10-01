@@ -17,8 +17,9 @@ repositories {
 dependencies {
     intellijPlatform {
         val version = providers.gradleProperty("clionVersion")
-        bundledPlugins("com.intellij.cidr.base", "com.intellij.clion")
-        clion(version, useInstaller = !version.get().contains("EAP"))
-        instrumentationTools()
+        bundledPlugins("com.intellij.clion", "com.intellij.clion.cmake")
+        clion(version) {
+            useInstaller = !version.get().contains("EAP")
+        }
     }
 }
