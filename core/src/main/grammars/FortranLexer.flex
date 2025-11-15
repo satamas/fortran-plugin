@@ -184,16 +184,18 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
 <OPERATOR_DIV_FIXED> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
     {FIXED_LINE_CONTINUE} { return LINE_CONTINUE; }
-    "/" { return DIV; }
+    "/=" { return NEQ; }
     "//" { return DIVDIV; }
+    "/" { return DIV; }
     ")" { popState(); return RPAR; }
 }
 
 <OPERATOR_DIV_FREE> {
     ({WHITE_SPACE_CHAR})+ { return WHITE_SPACE; }
     {FREE_LINE_CONTINUE} { return LINE_CONTINUE; }
-    "/" { return DIV; }
+    "/=" { return NEQ; }
     "//" { return DIVDIV; }
+    "/" { return DIV; }
     ")" { popState(); return RPAR; }
 }
 
@@ -228,7 +230,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
      ({KIND_PARAM}_)?\'{AP_FREE_STRING_PART}*({WHITE_SPACE_CHAR}*\&)+ { yypushback(1); pushState(APOSTR_FREE_STRING); return(STRINGSTART); }
      "format" { return WORD; }
      "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FREE_FORMAT_STR); return WORD; }
-      "("({WHITE_SPACE_CHAR}|{FREE_LINE_CONTINUE})*(("/")|("//"))({WHITE_SPACE_CHAR}|{FREE_LINE_CONTINUE})*")" { yypushback(yylength()-1); pushState(OPERATOR_DIV_FREE); return(LPAR); }
+      "("({WHITE_SPACE_CHAR}|{FREE_LINE_CONTINUE})*(("/=")|("//")|("/"))({WHITE_SPACE_CHAR}|{FREE_LINE_CONTINUE})*")" { yypushback(yylength()-1); pushState(OPERATOR_DIV_FREE); return(LPAR); }
 }
 
 <FIXEDFORM> {
@@ -239,7 +241,7 @@ CPPCOMMENT="#"\040*"if"\040*0({EOL}[^\r\n]*)*{EOL}"#"\040*"endif"{EOL}
     ({KIND_PARAM}_)?\'{AP_FIXED_STRING_PART}* { pushState(APOSTR_FIXED_STRING); return(STRINGSTART); }
     "format" { return WORD; }
     "format"{WHITE_SPACE_CHAR}*"(" { yypushback(yylength()-6); pushState(FIXED_FORMAT_STR); return WORD; }
-    "("({WHITE_SPACE_CHAR}|{FIXED_LINE_CONTINUE})*(("/")|("//"))({WHITE_SPACE_CHAR}|{FIXED_LINE_CONTINUE})*")" { yypushback(yylength()-1); pushState(OPERATOR_DIV_FIXED); return(LPAR); }
+    "("({WHITE_SPACE_CHAR}|{FIXED_LINE_CONTINUE})*(("/=")|("//")|("/"))({WHITE_SPACE_CHAR}|{FIXED_LINE_CONTINUE})*")" { yypushback(yylength()-1); pushState(OPERATOR_DIV_FIXED); return(LPAR); }
 
     ^[dD][\0400-9]{4} { yypushback(yylength()-1); return LINE_COMMENT; }
     ^({WHITE_SPACE_CHAR})+ { if (yylength() > 6) yypushback(yylength()-6); return FIRST_WHITE_SPACE; }

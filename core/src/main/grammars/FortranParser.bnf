@@ -615,7 +615,7 @@ private intent_spec ::= in_ | out_ | inout_
 // R524
 access_stmt ::= label_decl? access_spec (('::')? <<list access_id>>)? { pin = 2; extends=specification_stmt }
 // R525
-access_id ::= fidentifier | generic_spec // generic_spec includes identifier
+access_id ::= (fidentifier !'(') | generic_spec
 // R526
 allocatable_stmt ::= label_decl? allocatable_ ('::')? <<list allocatable_decl>> { pin = 2; extends=specification_stmt }
 // R527
