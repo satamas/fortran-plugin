@@ -15,4 +15,7 @@ end interface
 interface operator(//)
 procedure :: foo_divdiv
 end interface
+interface operator(/=)
+    module procedure t_neq
+end interface
 end
