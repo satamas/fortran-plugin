@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [2025.2.1] - 2025-11-17
+
+Fix #171 Issue parsing interface operator(/=)
+
 ## [2025.2.0] - 2025-10-01
 
 IntelliJ 2025.2 support
