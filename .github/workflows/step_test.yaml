@@ -46,7 +46,7 @@ jobs:
           cache-read-only: true
       - name: Collect Tests Result
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: tests-result
           path: ${{ github.workspace }}/build/reports/tests
@@ -94,7 +94,7 @@ jobs:
           cache-read-only: true
       - name: Collect Plugin Verifier Result
         if: ${{ always() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: pluginVerifier-result
           path: ${{ github.workspace }}/plugin/build/reports/pluginVerifier
