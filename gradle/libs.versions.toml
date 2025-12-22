@@ -3,7 +3,7 @@
 
 # plugins
 gradleIntelliJPlugin = "2.10.5"
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 grammarkit = "2023.3.0.1"
 changelog = "2.5.0"
 qodana = "0.1.13"
