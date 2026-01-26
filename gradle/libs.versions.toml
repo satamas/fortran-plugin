@@ -2,7 +2,7 @@
 # libraries
 
 # plugins
-gradleIntelliJPlugin = "2.10.5"
+gradleIntelliJPlugin = "2.11.0"
 kotlin = "2.3.0"
 grammarkit = "2023.3.0.1"
 changelog = "2.5.0"
