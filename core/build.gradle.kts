@@ -20,8 +20,9 @@ repositories {
 dependencies {
     intellijPlatform {
         val version = providers.gradleProperty("baseVersion")
-        intellijIdeaCommunity(version, useInstaller = !version.get().contains("EAP"))
-        instrumentationTools()
+        intellijIdea(version) {
+            useInstaller = !version.get().contains("EAP")
+        }
         testFramework(TestFrameworkType.Platform)
     }
 

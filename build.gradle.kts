@@ -27,7 +27,7 @@ dependencies {
         when (baseIDE) {
             "IC" -> {
                 val version = providers.gradleProperty("baseVersion")
-                intellijIdeaCommunity(version) {
+                intellijIdea(version) {
                     useInstaller = !version.get().contains("EAP")
                 }
             }

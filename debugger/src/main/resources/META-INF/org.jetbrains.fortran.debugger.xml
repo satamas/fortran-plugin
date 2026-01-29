@@ -1,4 +1,4 @@
-<idea-plugin package="org.jetbrains.fortran.debugger">
+<idea-plugin>
     <extensions defaultExtensionNs="cidr.debugger">
         <languageSupport language="Fortran"
                          implementationClass="org.jetbrains.fortran.debugger.lang.FortranDebuggerLanguageSupport"/>
