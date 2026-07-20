@@ -7,7 +7,7 @@ kotlin = "2.3.20"
 grammarkit = "2023.3.0.3"
 changelog = "2.5.0"
 qodana = "0.1.13"
-kover = "0.9.8"
+kover = "0.9.9"
 
 [libraries]
 junit = { module = "junit:junit", version = "4.13.2" }
